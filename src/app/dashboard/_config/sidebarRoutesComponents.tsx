@@ -1,20 +1,28 @@
+import SidebarButton from '@/app/_components/SidebarButton';
 import { IconBaseProps } from 'react-icons';
 import { RxActivityLog, RxDashboard, RxSketchLogo } from 'react-icons/rx';
-import { DashboardRoutesSidebarReactElements } from './utils/RoutesMapping';
+import dashboardRoutes from './routesImpl';
+import { DashboardRoutes, DashboardRoutesSidebarReactElements } from './utils/RoutesMapping';
 
-const sidebarIconWrapperProps = { className: 'bg-purple-800 text-white my-4 p-3 rounded-lg inline-block' };
-const sidebarIconProps = { size: 20 };
+const createSidebarComponent = (__SidebarIcon: React.ComponentType<IconBaseProps>, href: string) => <SidebarButton {...{ __SidebarIcon, href }} />;
 
-const createSidebarComponent = (__SidebarIcon: React.ComponentType<IconBaseProps>) => (
-  <div {...sidebarIconWrapperProps}>
-    <__SidebarIcon {...sidebarIconProps} />
-  </div>
-);
-
-export const dashboardRoutesSidebarComponents: DashboardRoutesSidebarReactElements = {
-  BASE_PAGE: createSidebarComponent(RxSketchLogo),
-  FOO_PAGE: createSidebarComponent(RxDashboard),
-  BAR_PAGE: createSidebarComponent(RxActivityLog)
+type DashboardRoutesIcons = {
+  [Property in keyof DashboardRoutes]: React.ComponentType<IconBaseProps>;
 };
+
+const iconsAssoc: DashboardRoutesIcons = {
+  BASE_PAGE: RxSketchLogo,
+  FOO_PAGE: RxDashboard,
+  BAR_PAGE: RxActivityLog
+};
+
+const computedDashboardRoutesSidebarComponents: Partial<DashboardRoutesSidebarReactElements> = {};
+Object.entries(iconsAssoc).forEach(([k, icon]) => {
+  const href = dashboardRoutes[k as keyof DashboardRoutes];
+  computedDashboardRoutesSidebarComponents[k as keyof DashboardRoutesSidebarReactElements] = createSidebarComponent(icon, href);
+});
+
+export const dashboardRoutesSidebarComponents: DashboardRoutesSidebarReactElements =
+  computedDashboardRoutesSidebarComponents as DashboardRoutesSidebarReactElements;
 
 export default dashboardRoutesSidebarComponents;

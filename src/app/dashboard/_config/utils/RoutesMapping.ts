@@ -10,6 +10,7 @@ export type DashboardRoutes = {
 export type DashboardRoutesTitles = {
   [Property in keyof DashboardRoutes]: NavDataRouteTitleGetter;
 };
+
 export type DashboardRoutesSidebarReactElements = {
   [Property in keyof DashboardRoutes]: ReactElement;
 };

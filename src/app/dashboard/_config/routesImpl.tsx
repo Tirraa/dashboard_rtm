@@ -6,7 +6,7 @@ const b = getSlashEnvelope(dashboardRouteBase);
 
 // {ToDo} i18n this?
 export const dashboardRoutes: DashboardRoutes = {
-  BASE_PAGE: b,
+  BASE_PAGE: dashboardRouteBase,
   FOO_PAGE: b + 'foo',
   BAR_PAGE: b + 'bar'
 };
