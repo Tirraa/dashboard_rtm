@@ -1,12 +1,12 @@
 import { usePathname } from 'next/navigation';
-import { FunctionComponent } from 'react';
+import { ComponentType, FunctionComponent } from 'react';
 import { IconBaseProps } from 'react-icons';
 import { hrefMatchesPathname } from '../_lib/hrefPathnameMatching';
 import SidebarButtonStyle from './_config/_styles/SidebarButtonStyle';
 
 interface SidebarButtonProps {
   href: string;
-  __SidebarIcon: React.ComponentType<IconBaseProps>;
+  __SidebarIcon: ComponentType<IconBaseProps>;
 }
 
 const active = { className: SidebarButtonStyle.isActiveClassList };

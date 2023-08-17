@@ -1,15 +1,16 @@
 'use client';
 
 import SidebarButton from '@/app/_components/SidebarButton';
+import { ComponentType } from 'react';
 import { IconBaseProps } from 'react-icons';
 import { RxActivityLog, RxDashboard, RxSketchLogo } from 'react-icons/rx';
 import dashboardRoutes from './routesImpl';
 import { DashboardRoutes, DashboardRoutesSidebarReactElements } from './utils/RoutesMapping';
 
-const createSidebarComponent = (__SidebarIcon: React.ComponentType<IconBaseProps>, href: string) => <SidebarButton {...{ __SidebarIcon, href }} />;
+const createSidebarComponent = (__SidebarIcon: ComponentType<IconBaseProps>, href: string) => <SidebarButton {...{ __SidebarIcon, href }} />;
 
 type DashboardRoutesIcons = {
-  [Property in keyof DashboardRoutes]: React.ComponentType<IconBaseProps>;
+  [Property in keyof DashboardRoutes]: ComponentType<IconBaseProps>;
 };
 
 const iconsAssoc: DashboardRoutesIcons = {

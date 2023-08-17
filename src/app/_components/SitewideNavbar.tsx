@@ -1,13 +1,13 @@
 'use client';
 
 import { Button, Collapse, IconButton, Navbar, Typography } from '@material-tailwind/react';
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import navbarElements from '../_config/SitewideNavbar/sitewideNavbarRoutesComponents';
 
 interface SitewideNavbarProps {}
 
 export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
-  const [openNav, setOpenNav] = React.useState(false);
+  const [openNav, setOpenNav] = useState(false);
   const wrappedNavbarElements = navbarElements.map((elm, index) => {
     return (
       <Typography key={`navbar-btn-typography-${index}`} as="li" variant="small" color="blue-gray" className="p-1 font-normal">
@@ -16,7 +16,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
     );
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const collapseNavbarMenuWhenWindowIsLargeEnough = () => window.innerWidth >= 960 && setOpenNav(false);
     window.addEventListener('resize', collapseNavbarMenuWhenWindowIsLargeEnough);
     return () => window.removeEventListener('resize', collapseNavbarMenuWhenWindowIsLargeEnough);
