@@ -18,7 +18,7 @@ function sidebarBtnsGenerator() {
     const component = dashboardRoutesSidebarComponents[k as keyof DashboardRoutesSidebarReactElements];
 
     return (
-      <div key={`sidebar-component-${k}`}>
+      <div key={`sidebar-btn-component-${k}`}>
         <Link href={url}>{component}</Link>
         {k !== lastKey && sidebarSeparator}
       </div>
