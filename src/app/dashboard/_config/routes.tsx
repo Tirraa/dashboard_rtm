@@ -1,5 +1,5 @@
 import getSlashEnvelope from '@/app/_lib/getSlashEnvelope';
-import { DashboardRoutes, DashboardRoutesTitles } from './utils/types';
+import { DashboardRoutes, DashboardRoutesTitles } from './utils/RoutesMapping';
 
 export const dashboardRouteBase = '/dashboard';
 const b = getSlashEnvelope(dashboardRouteBase);

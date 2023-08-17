@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { FunctionComponent, ReactElement } from 'react';
 import dashboardRoutesSidebarComponents from '../dashboard/_config/SidebarRoutesComponents';
 import dashboardRoutes from '../dashboard/_config/routes';
-import { DashboardRoutes, DashboardRoutesSidebarReactElements } from '../dashboard/_config/utils/types';
+import { DashboardRoutes, DashboardRoutesSidebarReactElements } from '../dashboard/_config/utils/RoutesMapping';
 
 interface SidebarProps {}
 

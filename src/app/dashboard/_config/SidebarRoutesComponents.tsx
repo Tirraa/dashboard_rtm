@@ -1,5 +1,5 @@
 import { RxActivityLog, RxDashboard, RxSketchLogo } from 'react-icons/rx';
-import { DashboardRoutesSidebarReactElements } from './utils/types';
+import { DashboardRoutesSidebarReactElements } from './utils/RoutesMapping';
 
 const p = { className: 'bg-purple-800 text-white my-4 p-3 rounded-lg inline-block' };
 const p2 = { size: 20 };
