@@ -2,25 +2,28 @@
 
 import Link from 'next/link';
 import { FunctionComponent, ReactElement } from 'react';
-import dashboardRoutesSidebarComponents from '../dashboard/_config/SidebarRoutesComponents';
-import dashboardRoutes from '../dashboard/_config/routesImpl';
-import { DashboardRoutes, DashboardRoutesSidebarReactElements } from '../dashboard/_config/utils/RoutesMapping';
+import dashboardRoutes, { dashboardRoutesTitles } from '../dashboard/_config/routesImpl';
+import dashboardRoutesSidebarComponents from '../dashboard/_config/sidebarRoutesComponents';
+import { DashboardRoutes, DashboardRoutesSidebarReactElements, DashboardRoutesTitles } from '../dashboard/_config/utils/RoutesMapping';
 
 interface SidebarProps {}
 
 function sidebarBtnsGenerator() {
   const keys = Object.keys(dashboardRoutesSidebarComponents);
   const lastKey = keys[keys.length - 1];
-  const sidebarSeparator = <hr className="relative right-0.5 w-10 m-auto" />;
+  const sidebarBtnsSeparator = <hr className="relative right-0.5 w-10 m-auto" />;
 
   return keys.map((k): ReactElement => {
-    const url = dashboardRoutes[k as keyof DashboardRoutes];
-    const component = dashboardRoutesSidebarComponents[k as keyof DashboardRoutesSidebarReactElements];
+    const btnHref = dashboardRoutes[k as keyof DashboardRoutes];
+    const btnTitle = dashboardRoutesTitles[k as keyof DashboardRoutesTitles]();
+    const btnComponent = dashboardRoutesSidebarComponents[k as keyof DashboardRoutesSidebarReactElements];
 
     return (
       <div key={`sidebar-btn-component-${k}`}>
-        <Link href={url}>{component}</Link>
-        {k !== lastKey && sidebarSeparator}
+        <Link title={btnTitle} href={btnHref}>
+          {btnComponent}
+        </Link>
+        {k !== lastKey && sidebarBtnsSeparator}
       </div>
     );
   });
