@@ -2,9 +2,9 @@
 
 import { FunctionComponent } from 'react';
 
-interface DashboardNavbarProps {}
+interface SitewideNavbarProps {}
 
-export const DashboardNavbar: FunctionComponent<DashboardNavbarProps> = () => {
+export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   return (
     <nav className="bg-gray-800">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -122,4 +122,4 @@ export const DashboardNavbar: FunctionComponent<DashboardNavbarProps> = () => {
   );
 };
 
-export default DashboardNavbar;
+export default SitewideNavbar;

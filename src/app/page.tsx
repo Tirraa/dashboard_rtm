@@ -1,14 +1,13 @@
-import Caca from '@/components/Caca';
-import CacaAsync from '@/components/CacaAsync';
-import DashboardNavbar from '@/components/Navbar';
+import Test from '@/app/_components/Test';
+import TestAsync from '@/app/_components/TestAsync';
+import Link from 'next/link';
 
 export default function Home() {
   return (
-    <main>
-      <DashboardNavbar />
-      <Caca />
-      <br />
-      <CacaAsync />
+    <main className="flex-1">
+      <Test />
+      <TestAsync />
+      <Link href="/dashboard">Go to Dashboard</Link>
     </main>
   );
 }
