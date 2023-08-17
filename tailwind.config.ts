@@ -1,6 +1,9 @@
 import type { Config } from 'tailwindcss';
 
-const config: Config = {
+import withMT from '@material-tailwind/react/utils/withMT';
+import colors from 'tailwindcss/colors';
+
+const config: Config = withMT({
   content: ['./src/components/**/*.{js,ts,jsx,tsx,mdx}', './src/app/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
@@ -8,12 +11,19 @@ const config: Config = {
         inter: ['var(--font-inter)', 'Sans-Serif']
       },
       colors: {
-        evOrange: '#FF441D'
+        transparent: 'transparent',
+        current: 'currentColor',
+        black: colors.black,
+        white: colors.white,
+        gray: colors.gray,
+        emerald: colors.emerald,
+        indigo: colors.indigo,
+        yellow: colors.yellow
       }
     }
   },
 
   plugins: []
-};
+}) as Config;
 
 export default config;
