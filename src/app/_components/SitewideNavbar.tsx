@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, Collapse, IconButton, Navbar, Typography } from '@material-tailwind/react';
+import Link from 'next/link';
 import { FunctionComponent, useEffect, useState } from 'react';
 import navbarElements from '../_config/SitewideNavbar/sitewideNavbarRoutesComponents';
 
@@ -27,9 +28,11 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   return (
     <Navbar color="blue" fullWidth={true} className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4">
       <div className="flex items-center justify-between text-white">
-        <Typography as="a" href="#" className="mr-4 cursor-pointer py-1.5 font-medium">
-          Material Tailwind
-        </Typography>
+        <Link href="#">
+          <Typography as="span" className="mr-4 cursor-pointer py-1.5 font-medium">
+            Material Tailwind
+          </Typography>
+        </Link>
         <div className="flex items-center gap-4">
           <div className="mr-4 hidden lg:block">{navList}</div>
           <Button variant="gradient" size="sm" className="hidden lg:inline-block">
