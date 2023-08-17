@@ -1,5 +1,11 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# * ... I fell into a burning ring of fire; Went down, down, down; And the flames went higher;;
+.env
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
 # dependencies
 /node_modules
 /.pnp
