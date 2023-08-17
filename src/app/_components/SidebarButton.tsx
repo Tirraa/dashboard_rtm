@@ -15,10 +15,10 @@ const iconProps = { ...SidebarButtonStyle.sidebarIconProps };
 
 const SidebarButton: FunctionComponent<SidebarButtonProps> = ({ __SidebarIcon, href }) => {
   const currentPathname = usePathname();
-  const activeStateClassList = hrefMatchesPathname(href, currentPathname) ? active : inactive;
+  const classList = hrefMatchesPathname(href, currentPathname) ? active : inactive;
 
   return (
-    <div {...activeStateClassList}>
+    <div {...classList}>
       <__SidebarIcon {...iconProps} />
     </div>
   );

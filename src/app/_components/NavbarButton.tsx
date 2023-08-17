@@ -17,8 +17,8 @@ const inactive = { className: NavbarButtonStyle.isNotActiveClassList };
 
 const NavbarButton: FunctionComponent<NavbarButtonProps> = ({ href, title }) => {
   const currentPathname = usePathname();
-  const activeStateClassList = hrefMatchesPathname(href, currentPathname) ? active : inactive;
-  const p = { ...activeStateClassList, href };
+  const classList = hrefMatchesPathname(href, currentPathname) ? active : inactive;
+  const p = { ...classList, href };
 
   return <Link {...p}>{title()}</Link>;
 };

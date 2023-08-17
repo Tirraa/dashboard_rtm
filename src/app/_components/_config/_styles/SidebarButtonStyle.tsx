@@ -1,8 +1,9 @@
 import IButtonStyleReactIcon from './_types/IButtonStyleReactIcon';
 
+const commons = 'text-white my-4 p-3 rounded-lg inline-block';
 export const SidebarButtonStyle: IButtonStyleReactIcon = {
-  isActiveClassList: 'bg-purple-800 text-white my-4 p-3 rounded-lg inline-block',
-  isNotActiveClassList: 'bg-purple-400 text-white my-4 p-3 rounded-lg inline-block',
+  isActiveClassList: commons + ' ' + 'bg-purple-800',
+  isNotActiveClassList: commons + ' ' + 'bg-purple-400',
   sidebarIconProps: { size: 20 }
 };
 
