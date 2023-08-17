@@ -1,6 +1,6 @@
-import StyleBase from './IStyleBase';
+import IStyleBase from './IStyleBase';
 
-export interface IButtonStyleBase extends StyleBase {
+export interface IButtonStyleBase extends IStyleBase {
   isActiveClassList: string;
   isNotActiveClassList: string;
 }

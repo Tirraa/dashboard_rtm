@@ -1,3 +1,3 @@
-export interface StyleBase {}
+export interface IStyleBase {}
 
-export default StyleBase;
+export default IStyleBase;
