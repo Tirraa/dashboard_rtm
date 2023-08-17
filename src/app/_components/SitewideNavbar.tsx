@@ -7,6 +7,8 @@ import navbarElements from '../_config/SitewideNavbar/sitewideNavbarRoutesCompon
 
 interface SitewideNavbarProps {}
 
+const navbarId = 'sitewide-navbar';
+
 export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const [openNav, setOpenNav] = useState(false);
   const wrappedNavbarElements = navbarElements.map((elm, index) => {
@@ -23,10 +25,29 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
     return () => window.removeEventListener('resize', collapseNavbarMenuWhenWindowIsLargeEnough);
   }, []);
 
+  useEffect(() => {
+    const navbarCollapseElement = document.getElementById(navbarId);
+    const closeNavbarOnOutsideClick = (e: Event) => {
+      if (openNav && e.target instanceof Node && navbarCollapseElement) {
+        if (!navbarCollapseElement.contains(e.target)) {
+          setOpenNav(false);
+        }
+      }
+    };
+
+    document.addEventListener('click', closeNavbarOnOutsideClick);
+    return () => document.removeEventListener('click', closeNavbarOnOutsideClick);
+  }, [openNav]);
+
   const navList = <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">{wrappedNavbarElements}</ul>;
 
   return (
-    <Navbar color="blue" fullWidth={true} className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4">
+    <Navbar
+      id={navbarId}
+      color="blue"
+      fullWidth={true}
+      className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4"
+    >
       <div className="flex items-center justify-between text-white">
         <Link href="#">
           <Typography as="span" className="mr-4 cursor-pointer py-1.5 font-medium">
