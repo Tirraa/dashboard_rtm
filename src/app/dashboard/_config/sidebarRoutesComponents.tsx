@@ -1,3 +1,5 @@
+'use client';
+
 import SidebarButton from '@/app/_components/SidebarButton';
 import { IconBaseProps } from 'react-icons';
 import { RxActivityLog, RxDashboard, RxSketchLogo } from 'react-icons/rx';
