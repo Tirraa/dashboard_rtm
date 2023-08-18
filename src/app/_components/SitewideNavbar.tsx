@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Collapse, IconButton, Navbar, Typography } from '@material-tailwind/react';
+import { Collapse, IconButton, Navbar, Typography } from '@material-tailwind/react';
 import Link from 'next/link';
 import { FunctionComponent, useEffect, useState } from 'react';
 import navbarElements from '../_config/SitewideNavbar/sitewideNavbarRoutesComponents';
@@ -13,7 +13,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const [openNav, setOpenNav] = useState(false);
   const wrappedNavbarElements = navbarElements.map((elm, index) => {
     return (
-      <Typography key={`navbar-btn-typography-${index}`} as="li" variant="small" color="blue-gray" className="p-1 font-normal">
+      <Typography key={`navbar-btn-typography-${index}`} as="li" color="blue-gray" className="p-1 font-normal">
         {elm}
       </Typography>
     );
@@ -56,9 +56,6 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
         </Link>
         <div className="flex items-center gap-4">
           <div className="mr-4 hidden lg:block">{navList}</div>
-          <Button variant="gradient" size="sm" className="hidden lg:inline-block">
-            <span>Buy Now</span>
-          </Button>
           <IconButton
             variant="text"
             className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
@@ -77,12 +74,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
           </IconButton>
         </div>
       </div>
-      <Collapse open={openNav}>
-        {navList}
-        <Button variant="gradient" size="sm" fullWidth className="mb-2">
-          <span>Buy Now</span>
-        </Button>
-      </Collapse>
+      <Collapse open={openNav}>{navList}</Collapse>
     </Navbar>
   );
 };
