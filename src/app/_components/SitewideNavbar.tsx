@@ -4,11 +4,12 @@ import { Collapse, IconButton, Navbar, Typography } from '@material-tailwind/rea
 import Link from 'next/link';
 import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import navbarElements from '../_config/SitewideNavbar/sitewideNavbarRoutesComponents';
-import { getRefCurrentPtr } from '../_lib/getRefCurrentPtr';
+import collapseNavbarMenuWhenWindowIsLargeEnough from './_customHooks/_hotfixes/collapseNavbarMenuWhenWindowIsLargeEnough';
 
 interface SitewideNavbarProps {}
 
 const navbarId = 'sitewide-navbar';
+const forceNavbarMenuCollapseBreakpointPxValue = 960;
 
 export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const mobileMenuInstanceRef = useRef<HTMLDivElement>(null);
@@ -21,42 +22,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
     );
   });
 
-  const getMobileMenuInstance = () => getRefCurrentPtr(mobileMenuInstanceRef);
-
-  useEffect(() => {
-    let hiddenMobileMenuInstance = false;
-    let coroutine: NodeJS.Timeout | null = null;
-    const hotfixClassList = ['opacity-0', 'hidden'];
-    const collapseNavbarMenuWhenWindowIsLargeEnough = () => {
-      if (window.innerWidth >= 960) {
-        if (!hiddenMobileMenuInstance) {
-          const mobileMenuInstance = getMobileMenuInstance();
-          mobileMenuInstance?.classList.add(...hotfixClassList);
-          hiddenMobileMenuInstance = true;
-          coroutine = setTimeout(() => {
-            setOpenNav(false);
-            clearTimeout(coroutine as NodeJS.Timeout);
-            coroutine = null;
-          }, 250);
-        }
-      } else {
-        if (hiddenMobileMenuInstance) {
-          const mobileMenuInstance = getMobileMenuInstance();
-          mobileMenuInstance?.classList.remove(...hotfixClassList);
-          hiddenMobileMenuInstance = false;
-        }
-        if (coroutine) {
-          clearTimeout(coroutine);
-          coroutine = null;
-        }
-      }
-    };
-    window.addEventListener('resize', collapseNavbarMenuWhenWindowIsLargeEnough);
-    return () => {
-      window.removeEventListener('resize', collapseNavbarMenuWhenWindowIsLargeEnough);
-      if (coroutine) clearTimeout(coroutine);
-    };
-  }, []);
+  useEffect(collapseNavbarMenuWhenWindowIsLargeEnough(forceNavbarMenuCollapseBreakpointPxValue, mobileMenuInstanceRef, setOpenNav), []);
 
   useEffect(() => {
     const navbarCollapseElement = document.getElementById(navbarId);
