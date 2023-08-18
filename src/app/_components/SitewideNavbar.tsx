@@ -72,7 +72,15 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
     return () => document.removeEventListener('click', closeNavbarOnOutsideClick);
   }, [openNav]);
 
-  const navList = <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">{wrappedNavbarElements}</ul>;
+  const mobileNavList = (
+    <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">{wrappedNavbarElements}</ul>
+  );
+
+  const wrappedNavbarElements2 = [...wrappedNavbarElements];
+  const loginElement = wrappedNavbarElements2.pop();
+  const desktopNavList = (
+    <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">{wrappedNavbarElements2}</ul>
+  );
 
   return (
     <Navbar
@@ -88,7 +96,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
           </Typography>
         </Link>
         <div className="flex items-center gap-4">
-          <div className="mr-4 hidden lg:block">{navList}</div>
+          <div className="hidden lg:block">{desktopNavList}</div>
           <IconButton
             variant="text"
             className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
@@ -106,9 +114,10 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
             )}
           </IconButton>
         </div>
+        <div className="hidden lg:block">{loginElement}</div>
       </div>
       <Collapse ref={mobileMenuInstanceRef} className="flex justify-center text-center" open={openNav}>
-        {navList}
+        {mobileNavList}
       </Collapse>
     </Navbar>
   );
