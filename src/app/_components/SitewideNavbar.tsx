@@ -4,12 +4,12 @@ import { Collapse, IconButton, Navbar, Typography } from '@material-tailwind/rea
 import Link from 'next/link';
 import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import navbarElements from '../_config/SitewideNavbar/sitewideNavbarRoutesComponents';
-import collapseNavbarMenuWhenWindowIsLargeEnough from './_customHooks/_hotfixes/collapseNavbarMenuWhenWindowIsLargeEnough';
+import useCollapseNavbarOnResize from './_customHooks/_hotfixes/useCollapseNavbarOnResize';
 
 interface SitewideNavbarProps {}
 
 const navbarId = 'sitewide-navbar';
-const forceNavbarMenuCollapseBreakpointPxValue = 960;
+const forceNavbarMenuToCollapseBreakpointPxValue = 960;
 
 export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const mobileMenuInstanceRef = useRef<HTMLDivElement>(null);
@@ -22,7 +22,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
     );
   });
 
-  useEffect(collapseNavbarMenuWhenWindowIsLargeEnough(forceNavbarMenuCollapseBreakpointPxValue, mobileMenuInstanceRef, setOpenNav), []);
+  useCollapseNavbarOnResize(forceNavbarMenuToCollapseBreakpointPxValue, mobileMenuInstanceRef, setOpenNav);
 
   useEffect(() => {
     const navbarCollapseElement = document.getElementById(navbarId);

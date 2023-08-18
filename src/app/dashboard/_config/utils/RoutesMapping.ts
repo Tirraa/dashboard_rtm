@@ -1,7 +1,7 @@
-import { RouteDefinition, RouteReactElement, RouteTitles } from '@/app/_types/RoutesMapping';
+import { RoutesDefinition, RoutesReactElement, RoutesTitles } from '@/app/_types/RoutesMapping';
 
 type DashboardRoutesKeys = 'BASE_PAGE' | 'FOO_PAGE' | 'BAR_PAGE';
 
-export type DashboardRoutes = RouteDefinition<DashboardRoutesKeys>;
-export type DashboardRoutesTitles = RouteTitles<keyof DashboardRoutes>;
-export type DashboardRoutesSidebarReactElements = RouteReactElement<keyof DashboardRoutes>;
+export type DashboardRoutes = RoutesDefinition<DashboardRoutesKeys>;
+export type DashboardRoutesTitles = RoutesTitles<keyof DashboardRoutes>;
+export type DashboardRoutesSidebarReactElements = RoutesReactElement<keyof DashboardRoutes>;
