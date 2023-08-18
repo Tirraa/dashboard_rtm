@@ -2,15 +2,16 @@
 
 import { Collapse, IconButton, Navbar, Typography } from '@material-tailwind/react';
 import Link from 'next/link';
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import navbarElements from '../_config/SitewideNavbar/sitewideNavbarRoutesComponents';
+import { getRefCurrentPtr } from '../_lib/getRefCurrentPtr';
 
 interface SitewideNavbarProps {}
 
 const navbarId = 'sitewide-navbar';
-const getMobileMenuInstance = () => document.querySelector(`#${navbarId} > div ~ div`);
 
 export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
+  const mobileMenuInstanceRef = useRef<HTMLDivElement>(null);
   const [openNav, setOpenNav] = useState(false);
   const wrappedNavbarElements = navbarElements.map((elm, index) => {
     return (
@@ -19,6 +20,8 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       </Typography>
     );
   });
+
+  const getMobileMenuInstance = () => getRefCurrentPtr(mobileMenuInstanceRef);
 
   useEffect(() => {
     let hiddenMobileMenuInstance = false;
@@ -69,7 +72,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
     return () => document.removeEventListener('click', closeNavbarOnOutsideClick);
   }, [openNav]);
 
-  const navList = <ul className="mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">{wrappedNavbarElements}</ul>;
+  const navList = <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">{wrappedNavbarElements}</ul>;
 
   return (
     <Navbar
@@ -104,7 +107,9 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
           </IconButton>
         </div>
       </div>
-      <Collapse open={openNav}>{navList}</Collapse>
+      <Collapse ref={mobileMenuInstanceRef} className="flex justify-center text-center" open={openNav}>
+        {navList}
+      </Collapse>
     </Navbar>
   );
 };
