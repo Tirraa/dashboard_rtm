@@ -39,7 +39,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
     return () => document.removeEventListener('click', closeNavbarOnOutsideClick);
   }, [openNav]);
 
-  const navList = <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">{wrappedNavbarElements}</ul>;
+  const navList = <ul className="mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">{wrappedNavbarElements}</ul>;
 
   return (
     <Navbar
@@ -59,7 +59,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
           <IconButton
             variant="text"
             className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
-            ripple={false}
+            ripple={true}
             onClick={() => setOpenNav(!openNav)}
           >
             {openNav ? (

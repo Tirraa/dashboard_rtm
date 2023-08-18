@@ -20,7 +20,10 @@ function sidebarBtnsGenerator() {
 
     return (
       <div key={`sidebar-btn-component-${k}`}>
-        <Link {...{ title, href }}>{btnComponent}</Link>
+        <Link {...{ title, href }}>
+          <span className="sr-only">{title}</span>
+          {btnComponent}
+        </Link>
         {k !== lastKey && sidebarBtnsSeparator}
       </div>
     );
