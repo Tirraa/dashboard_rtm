@@ -17,25 +17,23 @@ const logoSizeInPx = 50;
 export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const mobileMenuInstanceRef = useRef<HTMLDivElement>(null);
   const [openNav, setOpenNav] = useState(false);
-  const wrappedNavbarElements = navbarElements.map((elm, index) => {
-    return (
-      <Typography key={`navbar-btn-typography-${index}`} as="li" color="blue-gray" className="p-1 font-normal">
-        {elm}
-      </Typography>
-    );
-  });
+  const wrappedNavbarElements = navbarElements.map((elm, index) => (
+    <Typography key={`navbar-btn-typography-${index}`} as="li" color="blue-gray" className="p-1 font-normal">
+      {elm}
+    </Typography>
+  ));
 
   useCollapseNavbarOnResize(forceNavbarMenuToCollapseBreakpointPxValue, mobileMenuInstanceRef, setOpenNav);
 
   useEffect(() => {
     const navbarCollapseElement = document.getElementById(navbarId);
-    const closeNavbarOnOutsideClick = (e: Event) => {
+    function closeNavbarOnOutsideClick(e: Event) {
       if (openNav && e.target instanceof Node && navbarCollapseElement) {
         if (!navbarCollapseElement.contains(e.target)) {
           setOpenNav(false);
         }
       }
-    };
+    }
 
     document.addEventListener('click', closeNavbarOnOutsideClick);
     return () => document.removeEventListener('click', closeNavbarOnOutsideClick);

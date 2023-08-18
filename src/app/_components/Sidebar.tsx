@@ -30,8 +30,8 @@ function sidebarBtnsGenerator() {
   });
 }
 
-const Sidebar: FunctionComponent<SidebarProps> = () => {
-  return <aside className="fixed w-20 h-screen border-r-[1px] p-4 bg-black flex flex-col">{sidebarBtnsGenerator()}</aside>;
-};
+const Sidebar: FunctionComponent<SidebarProps> = () => (
+  <aside className="fixed w-20 h-screen border-r-[1px] p-4 bg-black flex flex-col">{sidebarBtnsGenerator()}</aside>
+);
 
 export default Sidebar;
