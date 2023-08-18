@@ -1,16 +1,7 @@
-import { NavDataRouteTitleGetter } from '@/app/_types/NavData';
-import { ReactElement } from 'react';
+import { RouteDefinition, RouteReactElement, RouteTitles } from '@/app/_types/RoutesMapping';
 
-export type DashboardRoutes = {
-  BASE_PAGE: string;
-  FOO_PAGE: string;
-  BAR_PAGE: string;
-};
+type DashboardRoutesKeys = 'BASE_PAGE' | 'FOO_PAGE' | 'BAR_PAGE';
 
-export type DashboardRoutesTitles = {
-  [Property in keyof DashboardRoutes]: NavDataRouteTitleGetter;
-};
-
-export type DashboardRoutesSidebarReactElements = {
-  [Property in keyof DashboardRoutes]: ReactElement;
-};
+export type DashboardRoutes = RouteDefinition<DashboardRoutesKeys>;
+export type DashboardRoutesTitles = RouteTitles<keyof DashboardRoutes>;
+export type DashboardRoutesSidebarReactElements = RouteReactElement<keyof DashboardRoutes>;
