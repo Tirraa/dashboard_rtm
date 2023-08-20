@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import navbarElements from '../_config/SitewideNavbar/sitewideNavbarRoutesComponents';
+import RoutesBase from '../_config/routes';
 import RtmTextNode from './RtmTextNodeWithUppercaseEffect';
 import useCollapseNavbarOnResize from './_customHooks/_hotfixes/useCollapseNavbarOnResize';
 
@@ -57,7 +58,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4"
     >
       <div className="flex items-center justify-between text-white">
-        <Link href="/">
+        <Link href={RoutesBase.sitewide}>
           <div className="flex">
             <Image src="/rtm-logo.svg" height={logoSizeInPx} width={logoSizeInPx} alt="Rust Team Management (logo)" />
             <Typography as="span" className="hidden lg:block ml-4 py-1.5 font-medium">

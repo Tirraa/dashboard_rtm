@@ -1,15 +1,14 @@
 import getSlashEnvelope from '@/app/_lib/getSlashEnvelope';
-import { dashboardRouteBase } from '@/app/dashboard/_config/routesImpl';
+import { RoutesBase } from '../routes';
 import { SitewideNavbarRoutes, SitewideNavbarRoutesTitles } from './utils/RoutesMapping';
 
-export const sitewideNavbarRouteBase = '/';
-const b = getSlashEnvelope(sitewideNavbarRouteBase);
+const b = getSlashEnvelope(RoutesBase.sitewide);
 
 // {ToDo} i18n this?
 export const sitewideNavbarRoutes: SitewideNavbarRoutes = {
   HOME_PAGE: b,
-  DASHBOARD_PAGE: dashboardRouteBase,
-  PATCH_NOTES_PAGE: b + 'patch-notes',
+  DASHBOARD_PAGE: RoutesBase.dashboard,
+  PATCH_NOTES_PAGE: RoutesBase.patchNotes,
   SUPPORT_PAGE: b + 'support',
   LOGIN_PAGE: b + 'login'
 };
