@@ -8,8 +8,9 @@ interface AtomicNavDataEntity {
   getPath: NavDataRoutePathGetter;
 }
 
+export type embeddedEntities = AtomicNavDataEntity[];
 export interface NavDataEntity extends AtomicNavDataEntity {
-  embedEntities?: AtomicNavDataEntity[];
+  embeddedEntities?: embeddedEntities;
 }
 
 export type NavDataEntities = NavDataEntity[];
