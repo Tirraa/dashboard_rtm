@@ -1,8 +1,8 @@
-import getSlashEnvelope from '@/app/_lib/getSlashEnvelope';
 import { RoutesBase } from '../routes';
 import { SitewideNavbarRoutes, SitewideNavbarRoutesTitles } from './utils/RoutesMapping';
 
-const b = getSlashEnvelope(RoutesBase.sitewide);
+const b = RoutesBase.sitewide;
+// const b = getSlashEnvelope(RoutesBase.sitewide); // REM: Useless for now, since RoutesBase.sitewide is '/'
 
 // {ToDo} i18n this?
 export const sitewideNavbarRoutes: SitewideNavbarRoutes = {
