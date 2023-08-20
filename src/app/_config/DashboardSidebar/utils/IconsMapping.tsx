@@ -15,8 +15,9 @@ const createSidebarComponent = (__SidebarIcon: ComponentType<IconBaseProps>, hre
 
 const computedDashboardRoutesSidebarComponents: Partial<DashboardRoutesSidebarReactElements> = {};
 Object.entries(sidebarRoutesIcons).forEach(([k, icon]) => {
-  const href = dashboardRoutes[k as DashboardRoutesKeys];
-  computedDashboardRoutesSidebarComponents[k as DashboardRoutesKeys] = createSidebarComponent(icon, href);
+  const k2 = k as DashboardRoutesKeys;
+  const href = dashboardRoutes[k2];
+  computedDashboardRoutesSidebarComponents[k2] = createSidebarComponent(icon, href);
 });
 
 export const dashboardRoutesSidebarComponents: DashboardRoutesSidebarReactElements =

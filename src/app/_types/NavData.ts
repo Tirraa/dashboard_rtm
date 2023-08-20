@@ -9,7 +9,7 @@ interface AtomicNavDataEntity {
 }
 
 export interface NavDataEntity extends AtomicNavDataEntity {
-  otherEntities?: AtomicNavDataEntity[];
+  embedEntities?: AtomicNavDataEntity[];
 }
 
 export type NavDataEntities = NavDataEntity[];

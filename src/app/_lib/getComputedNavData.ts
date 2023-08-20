@@ -1,22 +1,24 @@
+import { DropdownsConfig } from '../_types/DropdownConfig';
 import { NavDataEntities, NavDataEntity, NavDataRoutesTitles } from '../_types/NavData';
-import RoutesTypesUnion, { RoutesSumType } from '../_types/RoutesTypesUnion';
+import RoutesTypesUnion from '../_types/RoutesTypesUnion';
 
-type NavDataEntitiesRec = Record<RoutesSumType, NavDataEntity>;
-export function getComputedNavData(routes: RoutesTypesUnion, routesTitles: NavDataRoutesTitles): NavDataEntities {
-  const generatedRecord: Partial<NavDataEntitiesRec> = {};
-  const computedNavData: NavDataEntities = [];
-
-  for (let k in routes) {
-    generatedRecord[k as keyof NavDataEntitiesRec] = {
-      getPath: routes[k as keyof RoutesTypesUnion],
-      getTitle: () => routesTitles[k]()
+export function getComputedNavData(
+  routes: RoutesTypesUnion,
+  routesTitles: NavDataRoutesTitles,
+  dropDownConfig?: DropdownsConfig<keyof RoutesTypesUnion>
+): NavDataEntities {
+  const computedNavData: NavDataEntities = Object.keys(routes).map((k) => {
+    const k2 = k as keyof RoutesTypesUnion;
+    const currentEntity: NavDataEntity = {
+      getPath: routes[k2],
+      getTitle: () => routesTitles[k](),
+      ...(dropDownConfig && dropDownConfig[k2]
+        ? {
+            embedEntities: [...dropDownConfig[k2]]
+          }
+        : {})
     };
-  }
-
-  // * ... {ToDo} Merge dropdowns config
-
-  Object.entries(generatedRecord).forEach(([_, navDataEntity]) => {
-    computedNavData.push(navDataEntity);
+    return currentEntity;
   });
   return computedNavData;
 }

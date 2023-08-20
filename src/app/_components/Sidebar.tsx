@@ -14,9 +14,10 @@ function sidebarBtnsGenerator() {
   const sidebarBtnsSeparator = <hr className="relative right-0.5 w-10 m-auto" />;
 
   return keys.map((k): ReactElement => {
-    const href = dashboardRoutes[k as DashboardRoutesKeys];
-    const title = dashboardRoutesTitles[k as DashboardRoutesKeys]();
-    const btnComponent = dashboardRoutesSidebarComponents[k as DashboardRoutesKeys];
+    const k2 = k as DashboardRoutesKeys;
+    const href = dashboardRoutes[k2];
+    const title = dashboardRoutesTitles[k2]();
+    const btnComponent = dashboardRoutesSidebarComponents[k2];
 
     return (
       <div key={`sidebar-btn-component-${k}`}>
