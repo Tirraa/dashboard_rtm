@@ -1,14 +1,9 @@
-import Test from '@/app/_components/Test';
-import TestAsync from '@/app/_components/TestAsync';
-import Link from 'next/link';
-import RoutesBase from './_config/routes';
+import HomepageInner from './_components/PagesInner/Homepage';
 
 export default function Home() {
   return (
-    <main className="flex-1">
-      <Test />
-      <TestAsync />
-      <Link href={RoutesBase.dashboard}>Go to Dashboard</Link>
+    <main className="fixed w-full h-screen flex flex-col text-center align-center justify-center">
+      <HomepageInner />
     </main>
   );
 }
