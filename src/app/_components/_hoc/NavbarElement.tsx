@@ -1,19 +1,19 @@
 import { FunctionComponent } from 'react';
-import { embeddedEntities, NavDataRouteTitleGetter } from '../../_types/NavData';
+import { EmbeddedEntities, NavDataRouteTitleGetter } from '../../_types/NavData';
 import NavbarButton from '../NavbarButton';
+import NavbarDropdown from '../NavbarDropdown';
 
 interface NavbarElementProps {
   href: string;
   title: NavDataRouteTitleGetter;
-  embeddedEntities?: embeddedEntities;
+  embeddedEntities?: EmbeddedEntities;
 }
 
 const NavbarElement: FunctionComponent<NavbarElementProps> = ({ href, title, embeddedEntities }) => {
   if (!embeddedEntities) {
     return <NavbarButton {...{ href, title }} />;
   }
-  // * ... {ToDo} Dropdown!
-  return <NavbarButton {...{ href, title }} />;
+  return <NavbarDropdown {...{ href, title, embeddedEntities }} />;
 };
 
 export default NavbarElement;

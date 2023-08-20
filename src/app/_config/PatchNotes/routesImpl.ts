@@ -12,8 +12,8 @@ export const patchNotesRoutes: PatchNotesRoutes = {
 
 // {ToDo} i18n this!
 export const patchNotesRoutesTitles: PatchNotesRoutesTitles = {
-  DASHBOARD_PATCH_NOTES_PAGE: () => 'BBB Page',
-  DISCORD_BOT_PATCH_NOTES_PAGE: () => 'CCC Page'
+  DASHBOARD_PATCH_NOTES_PAGE: () => 'Dashboard',
+  DISCORD_BOT_PATCH_NOTES_PAGE: () => 'Bot Discord'
 };
 
 export default patchNotesRoutes;
