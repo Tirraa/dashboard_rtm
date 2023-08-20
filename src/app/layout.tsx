@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="fr">
-      <body className={`flex flex-col ${interFont.variable}`}>
+      <body className={`flex flex-col min-h-screen ${interFont.variable}`}>
         <SitewideNavbar />
         {children}
       </body>
