@@ -1,7 +1,7 @@
 import { getRefCurrentPtr } from '@/app/_lib/getRefCurrentPtr';
 import { RefObject, useEffect } from 'react';
 
-const hotfixClassList = ['opacity-0', 'hidden'];
+const hotfixClassList = ['opacity-0'];
 const animationStartLatencyInMs = 250;
 
 export function useCollapseNavbarOnResize(breakpointPxValue: number, mobileMenuInstanceRef: RefObject<HTMLDivElement>, setOpenNav: Function) {

@@ -4,10 +4,10 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Menu, MenuHandler, MenuItem, MenuList } from '@material-tailwind/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { hrefMatchesPathname } from '../_lib/hrefPathnameMatching';
 import { EmbeddedEntities, NavDataRouteTitleGetter } from '../_types/NavData';
-import NavbarButtonStyle from './_config/_styles/NavbarButtonStyle';
+import NavbarDropdownButtonStyle, { navbarDropdownComponentProps } from './_config/_styles/NavbarDropdownButtonStyle';
 
 interface NavbarButtonProps {
   href: string;
@@ -15,8 +15,8 @@ interface NavbarButtonProps {
   embeddedEntities: EmbeddedEntities;
 }
 
-const activeCls = { className: NavbarButtonStyle.isActiveClassList };
-const inactiveCls = { className: NavbarButtonStyle.isNotActiveClassList };
+const activeCls = { className: NavbarDropdownButtonStyle.isActiveClassList };
+const inactiveCls = { className: NavbarDropdownButtonStyle.isNotActiveClassList };
 
 function menuItemsGenerator(embeddedEntities: EmbeddedEntities) {
   return embeddedEntities.map(({ getPath: href, getTitle }) => {
@@ -31,15 +31,16 @@ function menuItemsGenerator(embeddedEntities: EmbeddedEntities) {
 }
 
 const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ href, title, embeddedEntities }) => {
+  const [openMenu, setOpenMenu] = useState(false);
   const currentPathname = usePathname();
-  const classList = hrefMatchesPathname(href, currentPathname) ? activeCls : inactiveCls;
+  const classList = hrefMatchesPathname(href, currentPathname) || openMenu ? activeCls : inactiveCls;
 
   return (
-    <Menu>
+    <Menu {...navbarDropdownComponentProps} handler={setOpenMenu} open={openMenu}>
       <MenuHandler>
         <div {...classList}>
           {title()}
-          <ChevronDownIcon className="relative top-1 ml-1 h-5 w-5" aria-hidden="true" />
+          <ChevronDownIcon className={`transition-all relative top-1 ml-1 h-5 w-5 ${openMenu ? 'rotate-180' : ''}`} aria-hidden="true" />
         </div>
       </MenuHandler>
       <MenuList>{menuItemsGenerator(embeddedEntities)}</MenuList>
