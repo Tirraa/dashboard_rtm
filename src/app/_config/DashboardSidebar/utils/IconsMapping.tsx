@@ -5,7 +5,7 @@ import { ComponentType } from 'react';
 import { IconBaseProps } from 'react-icons';
 import dashboardRoutes from '../routesImpl';
 import sidebarRoutesIcons from '../sidebarRoutesIcons';
-import { DashboardRoutes, DashboardRoutesSidebarReactElements } from './RoutesMapping';
+import { DashboardRoutes, DashboardRoutesKeys, DashboardRoutesSidebarReactElements } from './RoutesMapping';
 
 export type DashboardRoutesIcons = {
   [Property in keyof DashboardRoutes]: ComponentType<IconBaseProps>;
@@ -15,8 +15,8 @@ const createSidebarComponent = (__SidebarIcon: ComponentType<IconBaseProps>, hre
 
 const computedDashboardRoutesSidebarComponents: Partial<DashboardRoutesSidebarReactElements> = {};
 Object.entries(sidebarRoutesIcons).forEach(([k, icon]) => {
-  const href = dashboardRoutes[k as keyof DashboardRoutes];
-  computedDashboardRoutesSidebarComponents[k as keyof DashboardRoutesSidebarReactElements] = createSidebarComponent(icon, href);
+  const href = dashboardRoutes[k as DashboardRoutesKeys];
+  computedDashboardRoutesSidebarComponents[k as DashboardRoutesKeys] = createSidebarComponent(icon, href);
 });
 
 export const dashboardRoutesSidebarComponents: DashboardRoutesSidebarReactElements =

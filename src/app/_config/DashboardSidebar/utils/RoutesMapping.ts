@@ -1,6 +1,6 @@
 import { RoutesDefinition, RoutesReactElement, RoutesTitles } from '@/app/_types/RoutesMapping';
 
-type DashboardRoutesKeys = 'BASE_PAGE' | 'FOO_PAGE' | 'BAR_PAGE';
+export type DashboardRoutesKeys = 'BASE_PAGE' | 'FOO_PAGE' | 'BAR_PAGE';
 
 export type DashboardRoutes = RoutesDefinition<DashboardRoutesKeys>;
 export type DashboardRoutesTitles = RoutesTitles<keyof DashboardRoutes>;

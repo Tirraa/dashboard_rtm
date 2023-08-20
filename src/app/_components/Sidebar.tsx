@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { FunctionComponent, ReactElement } from 'react';
 import dashboardRoutes, { dashboardRoutesTitles } from '../_config/DashboardSidebar/routesImpl';
 import dashboardRoutesSidebarComponents from '../_config/DashboardSidebar/utils/IconsMapping';
-import { DashboardRoutes, DashboardRoutesSidebarReactElements, DashboardRoutesTitles } from '../_config/DashboardSidebar/utils/RoutesMapping';
+import { DashboardRoutesKeys } from '../_config/DashboardSidebar/utils/RoutesMapping';
 
 interface SidebarProps {}
 
@@ -14,9 +14,9 @@ function sidebarBtnsGenerator() {
   const sidebarBtnsSeparator = <hr className="relative right-0.5 w-10 m-auto" />;
 
   return keys.map((k): ReactElement => {
-    const href = dashboardRoutes[k as keyof DashboardRoutes];
-    const title = dashboardRoutesTitles[k as keyof DashboardRoutesTitles]();
-    const btnComponent = dashboardRoutesSidebarComponents[k as keyof DashboardRoutesSidebarReactElements];
+    const href = dashboardRoutes[k as DashboardRoutesKeys];
+    const title = dashboardRoutesTitles[k as DashboardRoutesKeys]();
+    const btnComponent = dashboardRoutesSidebarComponents[k as DashboardRoutesKeys];
 
     return (
       <div key={`sidebar-btn-component-${k}`}>

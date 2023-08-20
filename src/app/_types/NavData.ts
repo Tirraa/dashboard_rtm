@@ -3,5 +3,13 @@ type NavDataRoutePathGetter = string;
 export type NavDataRouteTitleGetter = () => string;
 export type NavDataRoutesTitles = Record<string, NavDataRouteTitleGetter>;
 
-export type NavDataEntity = { getTitle: NavDataRouteTitleGetter; getPath: NavDataRoutePathGetter };
+interface AtomicNavDataEntity {
+  getTitle: NavDataRouteTitleGetter;
+  getPath: NavDataRoutePathGetter;
+}
+
+export interface NavDataEntity extends AtomicNavDataEntity {
+  otherEntities?: AtomicNavDataEntity[];
+}
+
 export type NavDataEntities = NavDataEntity[];
