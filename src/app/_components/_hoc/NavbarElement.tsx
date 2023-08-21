@@ -4,16 +4,12 @@ import NavbarButton from '../NavbarButton';
 import NavbarDropdown from '../NavbarDropdown';
 
 interface NavbarElementProps {
-  href: string;
   title: NavDataRouteTitleGetter;
+  href: string;
   embeddedEntities?: EmbeddedEntities;
 }
 
-const NavbarElement: FunctionComponent<NavbarElementProps> = ({ href, title, embeddedEntities }) => {
-  if (!embeddedEntities) {
-    return <NavbarButton {...{ href, title }} />;
-  }
-  return <NavbarDropdown {...{ href, title, embeddedEntities }} />;
-};
+const NavbarElement: FunctionComponent<NavbarElementProps> = ({ title, href, embeddedEntities }) =>
+  embeddedEntities ? <NavbarDropdown {...{ title, href, embeddedEntities }} /> : <NavbarButton {...{ title, href }} />;
 
 export default NavbarElement;

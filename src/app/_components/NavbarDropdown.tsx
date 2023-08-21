@@ -13,8 +13,8 @@ import NavbarDropdownButtonStyle, {
 } from './_config/_styles/NavbarDropdownButtonStyle';
 
 interface NavbarButtonProps {
-  href: string;
   title: NavDataRouteTitleGetter;
+  href: string;
   embeddedEntities: EmbeddedEntities;
 }
 
@@ -35,7 +35,7 @@ function menuItemsGenerator(embeddedEntities: EmbeddedEntities) {
   });
 }
 
-const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ href, title, embeddedEntities }) => {
+const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ title, href, embeddedEntities }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const currentPathname = usePathname();
   const classList = hrefMatchesPathname(href, currentPathname) || openMenu ? activeCls : inactiveCls;
