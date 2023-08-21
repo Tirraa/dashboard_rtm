@@ -1,3 +1,4 @@
+import DiscordConfig from '../discord';
 import { RoutesBase } from '../routes';
 import { SitewideNavbarRoutes, SitewideNavbarRoutesTitles } from './utils/RoutesMapping';
 
@@ -9,7 +10,7 @@ export const sitewideNavbarRoutes: SitewideNavbarRoutes = {
   HOME_PAGE: b,
   DASHBOARD_PAGE: RoutesBase.dashboard,
   PATCH_NOTES_PAGE: RoutesBase.patchNotes,
-  SUPPORT_PAGE: b + 'support',
+  SUPPORT_PAGE: DiscordConfig.supportServerInviteLink,
   LOGIN_PAGE: b + 'login'
 };
 

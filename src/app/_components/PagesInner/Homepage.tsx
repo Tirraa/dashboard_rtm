@@ -1,6 +1,6 @@
 'use client';
 
-import { Discord as DiscordConfig } from '@/app/_config/discord';
+import DiscordConfig from '@/app/_config/discord';
 import { CogIcon } from '@heroicons/react/20/solid';
 import { Button } from '@material-tailwind/react';
 import Image from 'next/image';
