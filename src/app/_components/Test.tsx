@@ -16,11 +16,7 @@ const Test: FunctionComponent<TestProps> = () => {
     getData();
   }, []);
 
-  return (
-    <>
-      <p>{testData.title as string}</p>
-    </>
-  );
+  return <p>{testData.title as string}</p>;
 };
 
 export default Test;

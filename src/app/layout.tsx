@@ -10,13 +10,13 @@ export const metadata: Metadata = {
   description: 'lorem ipsum dolor sit amet'
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
-  return (
-    <html lang="fr">
-      <body className={`flex flex-col min-h-screen ${interFont.variable}`}>
-        <SitewideNavbar />
-        {children}
-      </body>
-    </html>
-  );
-}
+export const RootLayout = ({ children }: { children: ReactNode }) => (
+  <html lang="fr">
+    <body className={`flex flex-col min-h-screen ${interFont.variable}`}>
+      <SitewideNavbar />
+      {children}
+    </body>
+  </html>
+);
+
+export default RootLayout;

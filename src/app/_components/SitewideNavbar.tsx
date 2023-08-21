@@ -18,18 +18,7 @@ const logoSizeInPx = 50;
 
 export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const mobileMenuInstanceRef = useRef<HTMLDivElement>(null);
-  const [openNav, setOpenNav] = useState(false);
-  const desktopNavbarElements = navbarElements.map((elm, index) => (
-    <Typography key={`navbar-btn-typography-${index}`} as="li" color="blue-gray" className="p-1 font-normal">
-      {elm}
-    </Typography>
-  ));
-
-  const mobileNavbarElements = navbarElements.map((elm, index) => (
-    <Typography key={`navbar-btn-typography-${index}`} as="li" color="blue-gray" className="p-1 font-normal">
-      {elm.props.embeddedEntities ? <NavbarButton {...elm.props} /> : elm}
-    </Typography>
-  ));
+  const [openNav, setOpenNav] = useState<boolean>(false);
 
   useCollapseNavbarOnResize(forceNavbarMenuToCollapseBreakpointPxValue, mobileMenuInstanceRef, setOpenNav);
 
@@ -47,13 +36,25 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
     return () => document.removeEventListener('click', closeNavbarOnOutsideClick);
   }, [openNav]);
 
-  const mobileNavList = (
-    <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">{mobileNavbarElements}</ul>
-  );
+  const desktopNavbarElements = navbarElements.map((elm, index) => (
+    <Typography key={`navbar-btn-typography-${index}`} as="li" color="blue-gray" className="p-1 font-normal">
+      {elm}
+    </Typography>
+  ));
 
-  const destkopNavbarLastElement = desktopNavbarElements.pop();
+  const mobileNavbarElements = navbarElements.map((elm, index) => (
+    <Typography key={`navbar-btn-typography-${index}`} as="li" color="blue-gray" className="p-1 font-normal">
+      {elm.props.embeddedEntities ? <NavbarButton {...elm.props} /> : elm}
+    </Typography>
+  ));
+
+  const desktopNavbarLastElement = desktopNavbarElements.pop();
   const desktopNavList = (
     <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">{desktopNavbarElements}</ul>
+  );
+
+  const mobileNavList = (
+    <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">{mobileNavbarElements}</ul>
   );
 
   return (
@@ -98,7 +99,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
             )}
           </IconButton>
         </div>
-        <div className="hidden lg:block">{destkopNavbarLastElement}</div>
+        <div className="hidden lg:block">{desktopNavbarLastElement}</div>
       </div>
       <Collapse ref={mobileMenuInstanceRef} className="flex justify-center text-center" open={openNav}>
         {mobileNavList}

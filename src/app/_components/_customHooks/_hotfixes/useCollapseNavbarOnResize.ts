@@ -1,4 +1,4 @@
-import { getRefCurrentPtr } from '@/app/_lib/getRefCurrentPtr';
+import getRefCurrentPtr from '@/app/_lib/getRefCurrentPtr';
 import { RefObject, useEffect } from 'react';
 
 const hotfixClassList = ['opacity-0'];

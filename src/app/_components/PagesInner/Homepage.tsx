@@ -15,19 +15,16 @@ const [width, height]: [number, number] = [226, 69];
 
 // {ToDo} i18n this!
 // {ToDo} Implement bot invitation feature
-const HomepageInner: FunctionComponent<HomepageInnerProps> = () => {
-  return (
-    <div className="m-auto">
-      <Image src="/rtm-txt-logo.svg" {...{ style, width, height }} alt="Rust Team Management (text logo)" />
-      <h1 className="mt-2">Rust Team Management</h1>
-      <Link href="#invite-bot">
-        <Button className="mt-4 text-xl normal-case flex items-center gap-2" variant="gradient" size="lg">
-          <CogIcon className="h-7 w-7" /> Inviter le bot
-        </Button>
-      </Link>
-      <i className="fa-solid fa-globe"></i>
-    </div>
-  );
-};
+const HomepageInner: FunctionComponent<HomepageInnerProps> = () => (
+  <div className="m-auto">
+    <Image src="/rtm-txt-logo.svg" {...{ style, width, height }} alt="Rust Team Management (text logo)" />
+    <h1 className="mt-2">Rust Team Management</h1>
+    <Link href="#invite-bot">
+      <Button className="mt-4 text-xl normal-case flex items-center gap-2" variant="gradient" size="lg">
+        <CogIcon className="h-7 w-7" /> Inviter le bot
+      </Button>
+    </Link>
+  </div>
+);
 
 export default HomepageInner;

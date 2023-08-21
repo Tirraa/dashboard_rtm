@@ -4,4 +4,5 @@ import { SitewideNavbarRoutes } from '../_config/SitewideNavbar/utils/RoutesMapp
 
 export type RoutesTypesUnion = DashboardRoutes | SitewideNavbarRoutes | PatchNotesRoutesKeys;
 export type RoutesSumType = (keyof DashboardRoutes | keyof SitewideNavbarRoutes | keyof PatchNotesRoutesKeys) & string;
+export type RoutesTypesUnionKey = keyof RoutesTypesUnion;
 export default RoutesTypesUnion;

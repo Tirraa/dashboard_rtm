@@ -2,8 +2,7 @@ import { FunctionComponent } from 'react';
 
 interface RtmTextNodeProps {}
 
-const uppercasedStyle = { className: 'uppercase text-xs' };
-const p = uppercasedStyle;
+const p = { className: 'uppercase text-xs' };
 
 const RtmTextNode: FunctionComponent<RtmTextNodeProps> = () => (
   <>

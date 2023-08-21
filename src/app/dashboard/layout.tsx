@@ -7,11 +7,11 @@ export const metadata: Metadata = {
   description: 'lorem ipsum dolor sit amet'
 };
 
-export default function DashboardLayout({ children }: { children: ReactNode }) {
-  return (
-    <div className="flex">
-      <Sidebar />
-      <main className="ml-20 flex-1">{children}</main>
-    </div>
-  );
-}
+export const DashboardLayout = ({ children }: { children: ReactNode }) => (
+  <div className="flex">
+    <Sidebar />
+    <main className="ml-20 flex-1">{children}</main>
+  </div>
+);
+
+export default DashboardLayout;

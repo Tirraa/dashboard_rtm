@@ -18,11 +18,11 @@ interface NavbarButtonProps {
   embeddedEntities: EmbeddedEntities;
 }
 
-const activeCls = { className: NavbarDropdownButtonStyle.isActiveClassList };
-const inactiveCls = { className: NavbarDropdownButtonStyle.isNotActiveClassList };
+const active = { className: NavbarDropdownButtonStyle.isActiveClassList };
+const inactive = { className: NavbarDropdownButtonStyle.isNotActiveClassList };
 
-function menuItemsGenerator(embeddedEntities: EmbeddedEntities) {
-  return embeddedEntities.map(({ getPath: href, getTitle }) => {
+const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) =>
+  embeddedEntities.map(({ getPath: href, getTitle }) => {
     const title = getTitle();
 
     return (
@@ -33,12 +33,11 @@ function menuItemsGenerator(embeddedEntities: EmbeddedEntities) {
       </MenuItem>
     );
   });
-}
 
 const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ title, href, embeddedEntities }) => {
-  const [openMenu, setOpenMenu] = useState(false);
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
   const currentPathname = usePathname();
-  const classList = hrefMatchesPathname(href, currentPathname) || openMenu ? activeCls : inactiveCls;
+  const classList = hrefMatchesPathname(href, currentPathname) || openMenu ? active : inactive;
 
   return (
     <Menu {...navbarDropdownComponentProps} handler={setOpenMenu} open={openMenu}>
