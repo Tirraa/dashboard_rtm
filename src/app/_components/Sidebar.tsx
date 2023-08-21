@@ -11,7 +11,7 @@ interface SidebarProps {}
 function sidebarBtnsGenerator() {
   const keys = Object.keys(dashboardRoutesSidebarComponents);
   const lastKey = keys[keys.length - 1];
-  const sidebarBtnsSeparator = <hr className="relative right-0.5 w-10 m-auto" />;
+  const sidebarBtnsSeparator = <hr className="relative bottom-1 right-0.5 w-10 m-auto" />;
 
   return keys.map((k): ReactElement => {
     const k2 = k as DashboardRoutesKeys;
