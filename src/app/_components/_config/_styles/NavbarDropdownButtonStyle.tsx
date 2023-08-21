@@ -14,4 +14,6 @@ export const navbarDropdownComponentProps = {
   allowHover: true
 };
 
+export const navbarDropdownInnerButtonsClassList = 'flex items-center h-full px-4 py-2.5';
+
 export default NavbarDropdownButtonStyle;

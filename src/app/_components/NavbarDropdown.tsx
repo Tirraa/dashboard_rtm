@@ -7,7 +7,10 @@ import { usePathname } from 'next/navigation';
 import { FunctionComponent, useState } from 'react';
 import { hrefMatchesPathname } from '../_lib/hrefPathnameMatching';
 import { EmbeddedEntities, NavDataRouteTitleGetter } from '../_types/NavData';
-import NavbarDropdownButtonStyle, { navbarDropdownComponentProps } from './_config/_styles/NavbarDropdownButtonStyle';
+import NavbarDropdownButtonStyle, {
+  navbarDropdownComponentProps,
+  navbarDropdownInnerButtonsClassList
+} from './_config/_styles/NavbarDropdownButtonStyle';
 
 interface NavbarButtonProps {
   href: string;
@@ -23,8 +26,10 @@ function menuItemsGenerator(embeddedEntities: EmbeddedEntities) {
     const title = getTitle();
 
     return (
-      <MenuItem key={href + title}>
-        <Link {...{ title, href }}>{title}</Link>
+      <MenuItem key={href + title} className="p-0">
+        <Link className={navbarDropdownInnerButtonsClassList} {...{ title, href }}>
+          {title}
+        </Link>
       </MenuItem>
     );
   });
