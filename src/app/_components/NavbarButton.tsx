@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FunctionComponent } from 'react';
+import getLinkTarget from '../_lib/getLinkTarget';
 import { hrefMatchesPathname } from '../_lib/hrefPathnameMatching';
 import { NavDataRouteTitleGetter } from '../_types/NavData';
 import NavbarButtonStyle from './_config/_styles/NavbarButtonStyle';
@@ -18,8 +19,9 @@ const inactive = { className: NavbarButtonStyle.isNotActiveClassList };
 const NavbarButton: FunctionComponent<NavbarButtonProps> = ({ title, href }) => {
   const currentPathname = usePathname();
   const classList = hrefMatchesPathname(href, currentPathname) ? active : inactive;
+  const target = getLinkTarget(href);
 
-  return <Link {...{ ...classList, href }}>{title()}</Link>;
+  return <Link {...{ ...classList, href, ...target }}>{title()}</Link>;
 };
 
 export default NavbarButton;
