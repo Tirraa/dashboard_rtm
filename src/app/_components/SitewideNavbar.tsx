@@ -24,13 +24,8 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
 
   useEffect(() => {
     const navbarCollapseElement = document.getElementById(navbarId);
-    function closeNavbarOnOutsideClick(e: Event) {
-      if (openNav && e.target instanceof Node && navbarCollapseElement) {
-        if (!navbarCollapseElement.contains(e.target)) {
-          setOpenNav(false);
-        }
-      }
-    }
+    const closeNavbarOnOutsideClick = (e: Event) =>
+      openNav && e.target instanceof Node && !navbarCollapseElement?.contains(e.target) ? setOpenNav(false) : undefined;
 
     document.addEventListener('click', closeNavbarOnOutsideClick);
     return () => document.removeEventListener('click', closeNavbarOnOutsideClick);

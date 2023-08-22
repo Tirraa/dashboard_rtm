@@ -15,9 +15,7 @@ function sidebarBtnsGenerator() {
 
   return keys.map((k): ReactElement => {
     const k2 = k as DashboardRoutesKeys;
-    const href = dashboardRoutes[k2];
-    const title = dashboardRoutesTitles[k2]();
-    const btnComponent = dashboardRoutesSidebarComponents[k2];
+    const [btnComponent, href, title] = [dashboardRoutesSidebarComponents[k2], dashboardRoutes[k2], dashboardRoutesTitles[k2]()];
 
     return (
       <div key={`sidebar-btn-component-${k}`}>

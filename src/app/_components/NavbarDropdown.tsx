@@ -18,8 +18,9 @@ interface NavbarButtonProps {
   embeddedEntities: EmbeddedEntities;
 }
 
-const active = { className: NavbarDropdownButtonStyle.isActiveClassList };
-const inactive = { className: NavbarDropdownButtonStyle.isNotActiveClassList };
+const { isActiveClassList, isNotActiveClassList } = NavbarDropdownButtonStyle;
+const active = { className: isActiveClassList };
+const inactive = { className: isNotActiveClassList };
 
 const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) =>
   embeddedEntities.map(({ getPath: href, getTitle }) => {

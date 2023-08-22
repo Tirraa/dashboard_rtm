@@ -9,9 +9,10 @@ interface SidebarButtonProps {
   __SidebarIcon: ComponentType<IconBaseProps>;
 }
 
-const active = { className: SidebarButtonStyle.isActiveClassList };
-const inactive = { className: SidebarButtonStyle.isNotActiveClassList };
-const iconProps = { ...SidebarButtonStyle.sidebarIconProps };
+const { isActiveClassList, isNotActiveClassList, sidebarIconProps } = SidebarButtonStyle;
+const active = { className: isActiveClassList };
+const inactive = { className: isNotActiveClassList };
+const iconProps = { ...sidebarIconProps };
 
 const SidebarButton: FunctionComponent<SidebarButtonProps> = ({ __SidebarIcon, href }) => {
   const currentPathname = usePathname();
