@@ -2,7 +2,7 @@ import { getBlogPostCategoryBasedOnSlugPathname } from '@/app/_lib/blogPostCateg
 import { getPost } from '@/app/_lib/getPost';
 import useServerSidePathnameWorkaround from '@/app/_lib/useServerSidePathname';
 import BlogTaxonomy from '@/app/_taxonomies/blog';
-import BlogPostProps from '@/app/_types/BlogPostProps';
+import { BlogPostProps } from '@/app/_types/BlogProps';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
 import BlogPostInner from '../PagesInner/BlogPost';

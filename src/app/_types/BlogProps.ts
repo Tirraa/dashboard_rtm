@@ -6,4 +6,8 @@ export interface BlogPostProps {
   };
 }
 
-export default BlogPostProps;
+export interface BlogLayoutProps {
+  params: {
+    [BlogTaxonomy.category]: string;
+  };
+}
