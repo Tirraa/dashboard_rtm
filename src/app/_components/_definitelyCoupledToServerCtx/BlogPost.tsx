@@ -8,8 +8,8 @@ import { FunctionComponent } from 'react';
 import BlogPostInner from '../PagesInner/BlogPost';
 
 export const BlogPost: FunctionComponent<BlogPostProps> = ({ params }) => {
-  const pathname = useServerSidePathnameWorkaround();
-  const categ = getBlogPostCategoryBasedOnSlugPathname(pathname);
+  const currentPathname = useServerSidePathnameWorkaround();
+  const categ = getBlogPostCategoryBasedOnSlugPathname(currentPathname);
 
   const post = getPost(params[BlogTaxonomy.slug], categ);
   if (!post) notFound();

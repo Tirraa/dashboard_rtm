@@ -1,7 +1,9 @@
-export function indexOfNthOccurrence(str: string, needle: string, n: number) {
+type NeedleNthOccurrenceIndex = number;
+
+export function indexOfNthOccurrence(strHaystack: string, needle: string, n: number): -1 | NeedleNthOccurrenceIndex {
   let index = -1;
   for (let i = 0; i < n; i++) {
-    index = str.indexOf(needle, index + 1);
+    index = strHaystack.indexOf(needle, index + 1);
     if (index === -1) break;
   }
   return index;

@@ -1,4 +1,5 @@
-import { allPosts } from 'contentlayer/generated';
+import { Post, allPosts } from 'contentlayer/generated';
+import { BlogCategory, BlogSlug } from '../_types/BlogProps';
 
-export const getPost = (slug: string, curCategory: string) =>
-  allPosts.find((post) => post._raw.flattenedPath === (curCategory !== '' ? `${curCategory}/${slug}` : slug));
+export const getPost = (targettedSlug: BlogSlug, targettedCateg: '' | BlogCategory): undefined | Post =>
+  allPosts.find((post) => post._raw.flattenedPath === (targettedCateg !== '' ? `${targettedCateg}/${targettedSlug}` : targettedSlug));

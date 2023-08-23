@@ -7,10 +7,12 @@ import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
 
 export const generateMetadata = ({ params }: BlogPostProps) => {
-  const pathname = useServerSidePathnameWorkaround();
-  const categ = getBlogPostCategoryBasedOnSlugPathname(pathname);
+  const currentPathname = useServerSidePathnameWorkaround();
+  const categ = getBlogPostCategoryBasedOnSlugPathname(currentPathname);
+
   const post = getPost(params.slug, categ);
   if (!post) notFound();
+
   return { title: post.title, description: post.description };
 };
 

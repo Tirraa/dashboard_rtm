@@ -1,12 +1,14 @@
-export function getBlogPostCategoryBasedOnCategPathname(pathname: string): '' | string {
-  const parts = pathname.split('/');
+import { BlogCategory } from '../_types/BlogProps';
 
-  if (parts.length > 1) return parts[parts.length - 1];
+export function getBlogPostCategoryBasedOnCategPathname(pathname: string): '' | BlogCategory {
+  const pathnameTokens = pathname.split('/');
+
+  if (pathnameTokens.length > 1) return pathnameTokens[pathnameTokens.length - 1] as BlogCategory;
   return '';
 }
 
-export function getBlogPostCategoryBasedOnSlugPathname(pathname: string) {
+export function getBlogPostCategoryBasedOnSlugPathname(pathname: string): '' | BlogCategory {
   const parts = pathname.split('/');
-  const folder = parts.length >= 2 ? parts[parts.length - 2] : '';
-  return folder;
+  const blogCategoryRetrievedByFolder = parts.length >= 2 ? parts[parts.length - 2] : '';
+  return blogCategoryRetrievedByFolder as BlogCategory;
 }

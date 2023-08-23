@@ -17,8 +17,8 @@ function relatedBlogPostsGeneration(posts: Post[]) {
 
 // {ToDo} i18n this!
 const FolderRelatedBlogPosts: FunctionComponent<FolderRelatedBlogPostsProps> = ({ title }) => {
-  const pathname = useServerSidePathnameWorkaround();
-  const categ = getBlogPostCategoryBasedOnCategPathname(pathname);
+  const currentPathname = useServerSidePathnameWorkaround();
+  const categ = getBlogPostCategoryBasedOnCategPathname(currentPathname);
   if (allPosts.every((post) => post._raw.sourceFileDir !== categ)) notFound();
   const relatedPosts = allPosts.filter((post) => post._raw.sourceFileDir === categ);
 
