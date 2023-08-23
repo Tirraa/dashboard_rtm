@@ -1,7 +1,12 @@
 import { RoutesDefinition, RoutesReactElement, RoutesTitles } from '@/app/_types/RoutesMapping';
 
-export type DashboardRoutesKeys = 'BASE_PAGE' | 'FOO_PAGE' | 'BAR_PAGE';
+enum EDashboardRoutes {
+  BASE_PAGE,
+  FOO_PAGE,
+  BAR_PAGE
+}
+export type DashboardRoutesKeys = keyof typeof EDashboardRoutes;
 
 export type DashboardRoutes = RoutesDefinition<DashboardRoutesKeys>;
-export type DashboardRoutesTitles = RoutesTitles<keyof DashboardRoutes>;
-export type DashboardRoutesSidebarReactElements = RoutesReactElement<keyof DashboardRoutes>;
+export type DashboardRoutesTitles = RoutesTitles<DashboardRoutesKeys>;
+export type DashboardRoutesSidebarReactElements = RoutesReactElement<DashboardRoutesKeys>;
