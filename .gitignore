@@ -1,13 +1,16 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# * ... Fly so high, where I need to come down for oxygen;; 
+# * ... Won't you open for me; The door to your ice world; To your white desert;;
 package-lock.json
 
-# * ... (then) I fell into a burning ring of fire; Went down, down, down; And the flames went higher;;
+# * ... I just want to stare; Out over these snowfields; Until we are one again; We belong to the frozen world;;
 .env
 .vscode/*
 !.vscode/settings.json
 !.vscode/extensions.json
+
+# When the ice begins to thaw; Becomes the sea; Oh, you will see; How beautiful we can be;;
+.contentlayer
 
 # dependencies
 /node_modules
