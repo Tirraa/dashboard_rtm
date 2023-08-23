@@ -1,5 +1,6 @@
 ---
 title: Discord bot note
+description: Discord bot note meta description
 date: 2021-12-24
 ---
 

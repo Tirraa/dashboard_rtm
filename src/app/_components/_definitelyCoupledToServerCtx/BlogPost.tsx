@@ -1,22 +1,17 @@
-import doGenerateBlogStaticParams from '@/app/_lib/doGenerateBlogStaticParams';
-import getCurrentBlogDir from '@/app/_lib/getCurrentBlogDir';
+import getBlogPostCategoryBasedOnSlugPathname from '@/app/_lib/getBlogPostCategoryBasedOnSlugPathname';
 import { getPost } from '@/app/_lib/getPost';
+import useServerSidePathnameWorkaround from '@/app/_lib/useServerSidePathname';
 import BlogTaxonomy from '@/app/_taxonomies/blog';
 import BlogPostProps from '@/app/_types/BlogPostProps';
 import { format, parseISO } from 'date-fns';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
 
-export const generateStaticParams = doGenerateBlogStaticParams;
-
-export const generateMetadata = ({ params }: BlogPostProps) => {
-  const post = getPost(params[BlogTaxonomy.slug], getCurrentBlogDir());
-  if (!post) notFound();
-  return { title: post.title };
-};
-
 export const BlogPost: FunctionComponent<BlogPostProps> = ({ params }) => {
-  const post = getPost(params[BlogTaxonomy.slug], getCurrentBlogDir());
+  const pathname = useServerSidePathnameWorkaround();
+  const categ = getBlogPostCategoryBasedOnSlugPathname(pathname);
+
+  const post = getPost(params[BlogTaxonomy.slug], categ);
   if (!post) notFound();
 
   return (
