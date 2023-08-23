@@ -12,7 +12,7 @@ interface InviteBotButtonProps {}
 const href = DiscordConfig.botInviteLink;
 const target = getLinkTarget(href);
 
-const InviteBotButton: FunctionComponent<InviteBotButtonProps> = () => {
+export const InviteBotButton: FunctionComponent<InviteBotButtonProps> = () => {
   return (
     <Link {...{ href, ...target }}>
       <Button className="mt-4 text-xl normal-case flex items-center gap-2" variant="gradient" size="lg">

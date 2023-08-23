@@ -1,5 +1,5 @@
 export namespace BlogConfig {
-  export const postCardDescriptionCharactersLimitForPreview = 250;
+  export const blogPostPeviewDescriptionCharactersLimit = 250;
 }
 
 export default BlogConfig;
