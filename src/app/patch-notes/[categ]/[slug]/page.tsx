@@ -1,5 +1,5 @@
 import BlogPost from '@/app/_components/_definitelyCoupledToServerCtx/BlogPost';
-import getBlogPostCategoryBasedOnSlugPathname from '@/app/_lib/getBlogPostCategoryBasedOnSlugPathname';
+import { getBlogPostCategoryBasedOnSlugPathname } from '@/app/_lib/blogPostCategoryGetters';
 import { getPost } from '@/app/_lib/getPost';
 import useServerSidePathnameWorkaround from '@/app/_lib/useServerSidePathname';
 import BlogPostProps from '@/app/_types/BlogPostProps';

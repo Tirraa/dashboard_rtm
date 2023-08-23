@@ -11,7 +11,7 @@ export function Page() {
     <div className="mx-auto max-w-xl py-8">
       <h1 className="mb-8 text-center text-2xl font-black">Patch notes</h1>
       {posts.map((post, index) => (
-        <PostCard key={index} {...post} />
+        <PostCard key={index} {...{ post }} />
       ))}
     </div>
   );

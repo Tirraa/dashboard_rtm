@@ -1,5 +1,5 @@
 import PostCard from '@/app/_components/PostCard';
-import getBlogPostCategoryBasedOnCategPathname from '@/app/_lib/getBlogPostCategoryBasedOnCategPathname';
+import { getBlogPostCategoryBasedOnCategPathname } from '@/app/_lib/blogPostCategoryGetters';
 import { Post, allPosts } from 'contentlayer/generated';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
@@ -12,7 +12,7 @@ interface FolderRelatedBlogPostsProps {
 // {ToDo} i18n this!
 function relatedBlogPostsGeneration(posts: Post[]) {
   if (posts.length === 0) return <p>Rien à afficher ici !</p>;
-  return posts.map((post, index) => <PostCard key={index} {...post} />);
+  return posts.map((post, index) => <PostCard key={index} {...{ post }} />);
 }
 
 // {ToDo} i18n this!
