@@ -5,9 +5,9 @@ import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
 import BlogPostInner from '../PagesInner/BlogPost';
 
-export const BlogPost: FunctionComponent<BlogPostProps> = ({ params, postsCollection }) => {
+export const BlogPost: FunctionComponent<BlogPostProps> = ({ params }) => {
   const categ = params[BlogTaxonomy.category];
-  const post = getPost(params[BlogTaxonomy.slug], categ, postsCollection);
+  const post = getPost(params[BlogTaxonomy.slug], categ);
 
   if (!post) notFound();
   return <BlogPostInner {...{ post }} />;

@@ -1,5 +1,5 @@
 import BlogPost from '@/app/_components/_definitelyCoupledToServerCtx/BlogPost';
-import { getAllPostsByCateg, getPost } from '@/app/_lib/blog';
+import { getPost } from '@/app/_lib/blog';
 import BlogTaxonomy from '@/app/_taxonomies/blog';
 import { BlogPostProps } from '@/app/_types/Blog';
 import { notFound } from 'next/navigation';
@@ -9,13 +9,11 @@ export const generateMetadata = ({ params }: BlogPostProps) => {
   const slug = params[BlogTaxonomy.slug];
   const categ = params[BlogTaxonomy.category];
 
-  const post = getPost(slug, categ, getAllPostsByCateg(categ));
+  const post = getPost(slug, categ);
   if (!post) notFound();
 
   return { title: post.title, description: post.description };
 };
 
-export const Page: FunctionComponent<BlogPostProps> = ({ params }) => (
-  <BlogPost {...{ params }} postsCollection={getAllPostsByCateg(params[BlogTaxonomy.category])} />
-);
+export const Page: FunctionComponent<BlogPostProps> = ({ params }) => <BlogPost {...{ params }} />;
 export default Page;

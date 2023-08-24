@@ -28,8 +28,9 @@ export function getBlogPostCategoryAndSlugStr(post: PostBase) {
 
 export const getAllPostsByCateg = (categ: BlogCategory): PostBase[] => BlogConfig.allPostsTypesAssoc[categ]();
 
-export function getPost(targettedSlug: BlogSlug, targettedCateg: '' | BlogCategory, postsCollection: PostBase[]): undefined | PostBase {
+export function getPost(targettedSlug: BlogSlug, targettedCateg: '' | BlogCategory): undefined | PostBase {
   if (targettedCateg === '') return undefined;
+  const postsCollection: PostBase[] = getAllPostsByCateg(targettedCateg);
   return postsCollection.find((post) => getBlogPostCategoryAndSlugStr(post) === `${targettedCateg}/${targettedSlug}`);
 }
 

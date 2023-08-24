@@ -13,7 +13,6 @@ export interface BlogPostProps {
     [BlogTaxonomy.category]: BlogCategory;
     [BlogTaxonomy.slug]: BlogSlug;
   };
-  postsCollection: PostBase[];
 }
 
 export interface BlogLayoutProps {
