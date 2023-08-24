@@ -1,4 +1,4 @@
-import { DropdownsConfig } from '@/app/_types/DropdownConfig';
+import { DropdownsConfig } from '@/app/_types/NavData';
 import patchNotesRoutes, { patchNotesRoutesTitles } from '../PatchNotes/routesImpl';
 import { PatchNotesRoutesKeys } from '../PatchNotes/utils/RoutesMapping';
 import { SitewideNavbarRoutesKeys } from './utils/RoutesMapping';

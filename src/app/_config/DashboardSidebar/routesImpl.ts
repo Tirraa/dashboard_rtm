@@ -1,5 +1,5 @@
 import RoutesBase from '@/app/_config/routes';
-import getSlashEnvelope from '@/app/_lib/getSlashEnvelope';
+import { getSlashEnvelope } from '@/app/_lib/str';
 import { DashboardRoutes, DashboardRoutesTitles } from './utils/RoutesMapping';
 
 const b = getSlashEnvelope(RoutesBase.dashboard);

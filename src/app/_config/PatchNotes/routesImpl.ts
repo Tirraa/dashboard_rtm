@@ -1,5 +1,5 @@
 import RoutesBase from '@/app/_config/routes';
-import getSlashEnvelope from '@/app/_lib/getSlashEnvelope';
+import { getSlashEnvelope } from '@/app/_lib/str';
 import { PatchNotesRoutes, PatchNotesRoutesTitles } from './utils/RoutesMapping';
 
 const b = getSlashEnvelope(RoutesBase.patchNotes);

@@ -5,7 +5,7 @@ import { Menu, MenuHandler, MenuItem, MenuList } from '@material-tailwind/react'
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FunctionComponent, useState } from 'react';
-import { hrefMatchesPathname } from '../_lib/hrefPathnameMatching';
+import { hrefMatchesPathname } from '../_lib/str';
 import { EmbeddedEntities, NavDataRouteTitleGetter } from '../_types/NavData';
 import NavbarDropdownButtonStyle, {
   navbarDropdownComponentProps,

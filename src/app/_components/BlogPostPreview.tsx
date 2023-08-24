@@ -1,11 +1,11 @@
-import { Post } from 'contentlayer/generated';
 import { format, parseISO } from 'date-fns';
 import Link from 'next/link';
 import { FunctionComponent } from 'react';
-import { getSlicedBlogPostDescription } from '../_lib/getSlicedBlogPostDescription';
+import { getSlicedBlogPostDescription } from '../_lib/str';
+import PostBase from '../_types/BlogPostAbstractions';
 
 interface BlogPostPeviewProps {
-  post: Post;
+  post: PostBase;
 }
 
 // {ToDo} Attempt to create even worse graphically designed Blog Posts Previews.

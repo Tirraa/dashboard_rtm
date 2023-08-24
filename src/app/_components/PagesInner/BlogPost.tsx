@@ -1,9 +1,9 @@
-import { Post } from 'contentlayer/generated';
+import PostBase from '@/app/_types/BlogPostAbstractions';
 import { format, parseISO } from 'date-fns';
 import { FunctionComponent } from 'react';
 
 interface BlogPostInnerProps {
-  post: Post;
+  post: PostBase;
 }
 
 const BlogPostInner: FunctionComponent<BlogPostInnerProps> = ({ post }) => (

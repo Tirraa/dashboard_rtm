@@ -5,7 +5,7 @@ import { Button } from '@material-tailwind/react';
 import Link from 'next/link';
 import { FunctionComponent } from 'react';
 import DiscordConfig from '../_config/discord';
-import getLinkTarget from '../_lib/getLinkTarget';
+import { getLinkTarget } from '../_lib/react';
 
 interface InviteBotButtonProps {}
 

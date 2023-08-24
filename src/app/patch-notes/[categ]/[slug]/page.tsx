@@ -1,20 +1,21 @@
 import BlogPost from '@/app/_components/_definitelyCoupledToServerCtx/BlogPost';
-import { getBlogPostCategoryBasedOnSlugPathname } from '@/app/_lib/blogPostCategoryGetters';
-import { getPost } from '@/app/_lib/getPost';
-import useServerSidePathnameWorkaround from '@/app/_lib/useServerSidePathname';
-import { BlogPostProps } from '@/app/_types/BlogProps';
+import { getAllPostsByCateg, getPost } from '@/app/_lib/blog';
+import BlogTaxonomy from '@/app/_taxonomies/blog';
+import { BlogPostProps } from '@/app/_types/Blog';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
 
 export const generateMetadata = ({ params }: BlogPostProps) => {
-  const currentPathname = useServerSidePathnameWorkaround();
-  const categ = getBlogPostCategoryBasedOnSlugPathname(currentPathname);
+  const slug = params[BlogTaxonomy.slug];
+  const categ = params[BlogTaxonomy.category];
 
-  const post = getPost(params.slug, categ);
+  const post = getPost(slug, categ, getAllPostsByCateg(categ));
   if (!post) notFound();
 
   return { title: post.title, description: post.description };
 };
 
-export const Page: FunctionComponent<BlogPostProps> = ({ params }) => <BlogPost {...{ params }} />;
+export const Page: FunctionComponent<BlogPostProps> = ({ params }) => (
+  <BlogPost {...{ params }} postsCollection={getAllPostsByCateg(params[BlogTaxonomy.category])} />
+);
 export default Page;

@@ -14,3 +14,5 @@ export interface NavDataEntity extends AtomicNavDataEntity {
 }
 
 export type NavDataEntities = NavDataEntity[];
+
+export type DropdownsConfig<T extends string> = Partial<Record<T, NavDataEntities>>;

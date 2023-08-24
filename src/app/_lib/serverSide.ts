@@ -1,5 +1,5 @@
 import { headers } from 'next/headers';
-import indexOfNthOccurrence from './indexOfNthOccurence';
+import { indexOfNthOccurrence } from './str';
 
 type Pathname = string;
 
@@ -13,5 +13,3 @@ export function useServerSidePathnameWorkaround(): '' | Pathname {
   const pathname = url.substring(pathnameStartIndex);
   return pathname;
 }
-
-export default useServerSidePathnameWorkaround;

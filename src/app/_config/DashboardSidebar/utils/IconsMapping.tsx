@@ -8,7 +8,7 @@ import sidebarRoutesIcons from '../sidebarRoutesIcons';
 import { DashboardRoutes, DashboardRoutesKeys, DashboardRoutesSidebarReactElements } from './RoutesMapping';
 
 export type DashboardRoutesIcons = {
-  [Property in keyof DashboardRoutes]: ComponentType<IconBaseProps>;
+  [_ in keyof DashboardRoutes]: ComponentType<IconBaseProps>;
 };
 
 const createSidebarComponent = (__SidebarIcon: ComponentType<IconBaseProps>, href: string) => <SidebarButton {...{ __SidebarIcon, href }} />;

@@ -1,5 +1,4 @@
-import { DropdownsConfig } from '../_types/DropdownConfig';
-import { NavDataEntities, NavDataEntity, NavDataRoutesTitles } from '../_types/NavData';
+import { DropdownsConfig, NavDataEntities, NavDataEntity, NavDataRoutesTitles } from '../_types/NavData';
 import RoutesTypesUnion, { RoutesTypesUnionKey } from '../_types/RoutesTypesUnion';
 
 export function getComputedNavData(
