@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
+import SitewideNavbar from '@/components/navbar/SitewideNavbar';
 import { interFont } from '@/fonts';
 import { ReactNode } from 'react';
-import SitewideNavbar from './_components/navbar/SitewideNavbar';
 
 export const metadata: Metadata = {
   title: 'Dashboard',

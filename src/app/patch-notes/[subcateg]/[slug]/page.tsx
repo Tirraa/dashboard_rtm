@@ -1,7 +1,7 @@
-import BlogPost from '@/app/_components/blog/BlogPost';
-import { getPost } from '@/app/_lib/blog';
-import BlogTaxonomy from '@/app/_taxonomies/blog';
-import { BlogPostProps } from '@/app/_types/Blog';
+import BlogPost from '@/components/blog/BlogPost';
+import { getPost } from '@/lib/blog';
+import BlogTaxonomy from '@/taxonomies/blog';
+import { BlogPostProps } from '@/types/Blog';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
 

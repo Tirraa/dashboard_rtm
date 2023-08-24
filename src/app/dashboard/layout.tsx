@@ -1,6 +1,6 @@
+import Sidebar from '@/components/dashboard/Sidebar';
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
-import Sidebar from '../_components/dashboard/Sidebar';
 
 export const metadata: Metadata = {
   title: 'Dashboard',

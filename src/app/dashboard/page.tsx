@@ -1,5 +1,5 @@
+import RoutesBase from '@/config/routes';
 import Link from 'next/link';
-import RoutesBase from '../_config/routes';
 
 export const Page = () => (
   <>

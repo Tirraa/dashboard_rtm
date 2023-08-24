@@ -1,11 +1,11 @@
+import BlogPostPeview from '@/components/blog/BlogPostPreview';
+import BlogConfig from '@/config/blog';
+import { getBlogPostSubCategoryAndSlugStr } from '@/lib/blog';
+import useServerSidePathnameWorkaround from '@/lib/misc/useServerSidePathname';
+import { getLastPathStrPart } from '@/lib/str';
+import BlogTaxonomy from '@/taxonomies/blog';
+import { BlogCategory } from '@/types/Blog';
 import { compareDesc } from 'date-fns';
-import BlogPostPeview from '../_components/blog/BlogPostPreview';
-import BlogConfig from '../_config/blog';
-import { getBlogPostSubCategoryAndSlugStr } from '../_lib/blog';
-import useServerSidePathnameWorkaround from '../_lib/misc/useServerSidePathname';
-import { getLastPathStrPart } from '../_lib/str';
-import BlogTaxonomy from '../_taxonomies/blog';
-import { BlogCategory } from '../_types/Blog';
 
 function lol(s: string) {
   return s.substring(1);

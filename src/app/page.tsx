@@ -1,4 +1,4 @@
-import HomepageInner from './_components/pagesInner/Homepage';
+import HomepageInner from '@/components/pagesInner/Homepage';
 
 export const Home = () => (
   <main className="flex flex-1 flex-col align-center justify-center w-screen text-center p-0">
