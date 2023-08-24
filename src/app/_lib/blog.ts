@@ -1,6 +1,7 @@
 import BlogConfig from '../_config/blog';
 import { BlogCategory, BlogSlug } from '../_types/Blog';
 import PostBase from '../_types/BlogPostAbstractions';
+import { Pathname, PathnameSegment } from '../_types/DomainDefinitions';
 import { getLastPathStrPart } from './str';
 
 export function getBlogPostCategoryBasedOnCategPathname(pathname: string): '' | BlogCategory {
@@ -30,4 +31,14 @@ export const getAllPostsByCateg = (categ: BlogCategory): PostBase[] => BlogConfi
 export function getPost(targettedSlug: BlogSlug, targettedCateg: '' | BlogCategory, postsCollection: PostBase[]): undefined | PostBase {
   if (targettedCateg === '') return undefined;
   return postsCollection.find((post) => getBlogPostCategoryAndSlugStr(post) === `${targettedCateg}/${targettedSlug}`);
+}
+
+export function getFirstPathnameSegment(pathname: Pathname): PathnameSegment {
+  const firstIndex = pathname.indexOf('/');
+  if (firstIndex === -1) return pathname;
+
+  const secondIndex = pathname.indexOf('/', firstIndex + 1);
+
+  if (secondIndex !== -1) return pathname.substring(firstIndex + 1, secondIndex);
+  return pathname.substring(firstIndex + 1);
 }

@@ -1,5 +1,5 @@
 import { allPatchPosts } from 'contentlayer/generated';
-import { BlogCategory, PatchPostCategory, PostsCollectionAssoc } from '../_types/Blog';
+import { BlogCategory, BlogMainCategory, PatchPostCategory, PostsCollectionAssoc } from '../_types/Blog';
 
 const allPatchPostsTypesAssoc: PostsCollectionAssoc<PatchPostCategory> = {
   dashboard: () => allPatchPosts,
@@ -8,10 +8,8 @@ const allPatchPostsTypesAssoc: PostsCollectionAssoc<PatchPostCategory> = {
 
 export namespace BlogConfig {
   export const blogPostPeviewDescriptionCharactersLimit = 250;
-
-  export const allPostsTypesAssoc: PostsCollectionAssoc<BlogCategory> = {
-    ...allPatchPostsTypesAssoc
-  };
+  export const allPostsTypesAssoc: PostsCollectionAssoc<BlogCategory> = { ...allPatchPostsTypesAssoc };
+  export const blogRootCategoriesAllPostsTypesAssoc: PostsCollectionAssoc<BlogMainCategory> = { 'patch-notes': () => allPatchPosts };
 }
 
 export default BlogConfig;

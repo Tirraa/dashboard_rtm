@@ -1,6 +1,8 @@
 import BlogTaxonomy from '../_taxonomies/blog';
 import PostBase from './BlogPostAbstractions';
 
+export type BlogMainCategory = 'patch-notes' & string;
+
 export type PatchPostCategory = ('dashboard' | 'discord-bot') & string;
 
 export type BlogCategory = PatchPostCategory & string;

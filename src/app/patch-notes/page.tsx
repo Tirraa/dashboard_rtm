@@ -1,14 +1,17 @@
 import { allPatchPosts } from 'contentlayer/generated';
 import { compareDesc } from 'date-fns';
 import BlogPostPeview from '../_components/BlogPostPreview';
+import { getBlogPostCategoryAndSlugStr } from '../_lib/blog';
+import BlogTaxonomy from '../_taxonomies/blog';
+
+const relatedPosts = allPatchPosts;
+
+export const generateStaticParams = async () => relatedPosts.map((post) => ({ [BlogTaxonomy.slug]: getBlogPostCategoryAndSlugStr(post) }));
 
 // {ToDo} i18n this!
 // {ToDo} Filter by category, limit to 5, and generate 'Show more' buttons!
-
-// {ToDo} dynamically associate categ's parent folder name with postsCollection
-// So we will write: verySmartFunction().map((post) => ...)
 export function Page() {
-  const posts = allPatchPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
+  const posts = relatedPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
 
   return (
     <div className="mx-auto max-w-xl py-8">
