@@ -1,15 +1,15 @@
 import { allPatchPosts } from 'contentlayer/generated';
 import { compareDesc } from 'date-fns';
 import BlogPostPeview from '../_components/BlogPostPreview';
-import { getBlogPostCategoryAndSlugStr } from '../_lib/blog';
+import { getBlogPostSubCategoryAndSlugStr } from '../_lib/blog';
 import BlogTaxonomy from '../_taxonomies/blog';
 
 const relatedPosts = allPatchPosts;
 
-export const generateStaticParams = async () => relatedPosts.map((post) => ({ [BlogTaxonomy.slug]: getBlogPostCategoryAndSlugStr(post) }));
+export const generateStaticParams = async () => relatedPosts.map((post) => ({ [BlogTaxonomy.slug]: getBlogPostSubCategoryAndSlugStr(post) }));
 
 // {ToDo} i18n this!
-// {ToDo} Filter by category, limit to 5, and generate 'Show more' buttons!
+// {ToDo} Filter by subCategory, limit to 5, and generate 'Show more' buttons!
 export function Page() {
   const posts = relatedPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
 

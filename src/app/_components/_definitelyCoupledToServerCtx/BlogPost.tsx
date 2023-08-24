@@ -6,8 +6,8 @@ import { FunctionComponent } from 'react';
 import BlogPostInner from '../PagesInner/BlogPost';
 
 export const BlogPost: FunctionComponent<BlogPostProps> = ({ params }) => {
-  const categ = params[BlogTaxonomy.category];
-  const post = getPost(params[BlogTaxonomy.slug], categ);
+  const subCateg = params[BlogTaxonomy.subCategory];
+  const post = getPost(params[BlogTaxonomy.slug], subCateg);
 
   if (!post) notFound();
   return <BlogPostInner {...{ post }} />;

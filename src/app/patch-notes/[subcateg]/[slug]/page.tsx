@@ -7,9 +7,9 @@ import { FunctionComponent } from 'react';
 
 export const generateMetadata = ({ params }: BlogPostProps) => {
   const slug = params[BlogTaxonomy.slug];
-  const categ = params[BlogTaxonomy.category];
+  const subCateg = params[BlogTaxonomy.subCategory];
 
-  const post = getPost(slug, categ);
+  const post = getPost(slug, subCateg);
   if (!post) notFound();
 
   return { title: post.title, description: post.description };

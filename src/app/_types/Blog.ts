@@ -1,23 +1,23 @@
 import BlogTaxonomy from '../_taxonomies/blog';
 import PostBase from './BlogPostAbstractions';
 
-export type BlogMainCategory = 'patch-notes' & string;
+export type BlogCategory = 'patch-notes' & string;
 
-export type PatchPostCategory = ('dashboard' | 'discord-bot') & string;
+export type PatchPostSubCategory = ('dashboard' | 'discord-bot') & string;
 
-export type BlogCategory = PatchPostCategory & string;
+export type BlogSubCategory = PatchPostSubCategory & string;
 export type BlogSlug = string;
 
 export interface BlogPostProps {
   params: {
-    [BlogTaxonomy.category]: BlogCategory;
+    [BlogTaxonomy.subCategory]: BlogSubCategory;
     [BlogTaxonomy.slug]: BlogSlug;
   };
 }
 
-export interface BlogLayoutProps {
+export interface BlogSubCategoryPageProps {
   params: {
-    [BlogTaxonomy.category]: BlogCategory;
+    [BlogTaxonomy.subCategory]: BlogSubCategory;
   };
 }
 
