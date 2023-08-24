@@ -1,17 +1,32 @@
-import { allPatchPosts } from 'contentlayer/generated';
 import { compareDesc } from 'date-fns';
 import BlogPostPeview from '../_components/blog/BlogPostPreview';
+import BlogConfig from '../_config/blog';
 import { getBlogPostSubCategoryAndSlugStr } from '../_lib/blog';
+import useServerSidePathnameWorkaround from '../_lib/misc/useServerSidePathname';
+import { getLastPathStrPart } from '../_lib/str';
 import BlogTaxonomy from '../_taxonomies/blog';
+import { BlogCategory } from '../_types/Blog';
 
-const relatedPosts = allPatchPosts;
+function lol(s: string) {
+  return s.substring(1);
+}
 
-export const generateStaticParams = async () => relatedPosts.map((post) => ({ [BlogTaxonomy.slug]: getBlogPostSubCategoryAndSlugStr(post) }));
+// * {ToDo} As it may crash in prod, stress-test it when the times come!
+export async function generateStaticParams() {
+  const onTheFlyBlogCategoryBuildtimeCtx: BlogCategory = getLastPathStrPart(__dirname) as BlogCategory;
+  const unsafeRelatedPostsGetter = BlogConfig.blogCategoriesAllPostsTypesAssoc[onTheFlyBlogCategoryBuildtimeCtx];
+  const gettedOnTheFlyPosts = unsafeRelatedPostsGetter();
+
+  return gettedOnTheFlyPosts.map((post) => ({ [BlogTaxonomy.slug]: getBlogPostSubCategoryAndSlugStr(post) }));
+}
 
 // {ToDo} i18n this!
 // {ToDo} Filter by subCategory, limit to 5, and generate 'Show more' buttons!
 export function Page() {
-  const posts = relatedPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
+  const onTheFlyBlogCategoryRuntimeCtx: BlogCategory = lol(useServerSidePathnameWorkaround()) as BlogCategory;
+  const trickyRelatedPostsGetter = BlogConfig.blogCategoriesAllPostsTypesAssoc[onTheFlyBlogCategoryRuntimeCtx];
+  const gettedOnTheFlyPosts = trickyRelatedPostsGetter();
+  const posts = gettedOnTheFlyPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
 
   return (
     <div className="mx-auto max-w-xl py-8">
