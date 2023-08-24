@@ -3,7 +3,7 @@ import './globals.css';
 
 import { interFont } from '@/fonts';
 import { ReactNode } from 'react';
-import SitewideNavbar from './_components/SitewideNavbar';
+import SitewideNavbar from './_components/navbar/SitewideNavbar';
 
 export const metadata: Metadata = {
   title: 'Dashboard',

@@ -5,12 +5,12 @@ import { Menu, MenuHandler, MenuItem, MenuList } from '@material-tailwind/react'
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FunctionComponent, useState } from 'react';
-import { hrefMatchesPathname } from '../_lib/str';
-import { EmbeddedEntities, NavDataRouteTitleGetter } from '../_types/NavData';
+import { hrefMatchesPathname } from '../../_lib/str';
+import { EmbeddedEntities, NavDataRouteTitleGetter } from '../../_types/NavData';
 import NavbarDropdownButtonStyle, {
   navbarDropdownComponentProps,
   navbarDropdownInnerButtonsClassList
-} from './_config/_styles/NavbarDropdownButtonStyle';
+} from '../_config/_styles/NavbarDropdownButtonStyle';
 
 interface NavbarButtonProps {
   title: NavDataRouteTitleGetter;

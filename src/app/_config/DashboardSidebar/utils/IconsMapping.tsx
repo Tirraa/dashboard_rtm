@@ -1,6 +1,6 @@
 'use client';
 
-import SidebarButton from '@/app/_components/SidebarButton';
+import SidebarButton from '@/app/_components/dashboard/SidebarButton';
 import { ComponentType } from 'react';
 import { IconBaseProps } from 'react-icons';
 import dashboardRoutes from '../routesImpl';

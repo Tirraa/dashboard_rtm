@@ -1,4 +1,4 @@
-import BlogPost from '@/app/_components/_definitelyCoupledToServerCtx/BlogPost';
+import BlogPost from '@/app/_components/blog/BlogPost';
 import { getPost } from '@/app/_lib/blog';
 import BlogTaxonomy from '@/app/_taxonomies/blog';
 import { BlogPostProps } from '@/app/_types/Blog';

@@ -3,7 +3,7 @@ import BlogTaxonomy from '@/app/_taxonomies/blog';
 import { BlogPostProps } from '@/app/_types/Blog';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
-import BlogPostInner from '../PagesInner/BlogPost';
+import BlogPostInner from '../pagesInner/blog/BlogPost';
 
 export const BlogPost: FunctionComponent<BlogPostProps> = ({ params }) => {
   const subCateg = params[BlogTaxonomy.subCategory];

@@ -1,6 +1,6 @@
 import { allPatchPosts } from 'contentlayer/generated';
 import { compareDesc } from 'date-fns';
-import BlogPostPeview from '../_components/BlogPostPreview';
+import BlogPostPeview from '../_components/blog/BlogPostPreview';
 import { getBlogPostSubCategoryAndSlugStr } from '../_lib/blog';
 import BlogTaxonomy from '../_taxonomies/blog';
 

@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { FunctionComponent, ReactElement } from 'react';
-import dashboardRoutes, { dashboardRoutesTitles } from '../_config/DashboardSidebar/routesImpl';
-import dashboardRoutesSidebarComponents from '../_config/DashboardSidebar/utils/IconsMapping';
-import { DashboardRoutesKeys } from '../_config/DashboardSidebar/utils/RoutesMapping';
+import dashboardRoutes, { dashboardRoutesTitles } from '../../_config/DashboardSidebar/routesImpl';
+import dashboardRoutesSidebarComponents from '../../_config/DashboardSidebar/utils/IconsMapping';
+import { DashboardRoutesKeys } from '../../_config/DashboardSidebar/utils/RoutesMapping';
 
 interface SidebarProps {}
 

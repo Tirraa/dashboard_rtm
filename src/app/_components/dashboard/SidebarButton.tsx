@@ -1,8 +1,8 @@
 import { usePathname } from 'next/navigation';
 import { ComponentType, FunctionComponent } from 'react';
 import { IconBaseProps } from 'react-icons';
-import { hrefMatchesPathname } from '../_lib/str';
-import SidebarButtonStyle from './_config/_styles/SidebarButtonStyle';
+import { hrefMatchesPathname } from '../../_lib/str';
+import SidebarButtonStyle from '../_config/_styles/SidebarButtonStyle';
 
 interface SidebarButtonProps {
   href: string;

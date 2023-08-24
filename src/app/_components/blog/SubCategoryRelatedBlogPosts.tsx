@@ -4,7 +4,7 @@ import { BlogSubCategoryPageProps } from '@/app/_types/Blog';
 import PostBase from '@/app/_types/BlogPostAbstractions';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
-import BlogPostPeview from '../BlogPostPreview';
+import BlogPostPeview from './BlogPostPreview';
 
 interface SubCategoryRelatedBlogPostsProps extends BlogSubCategoryPageProps {}
 

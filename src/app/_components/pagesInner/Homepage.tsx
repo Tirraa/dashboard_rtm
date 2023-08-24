@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { CSSProperties, FunctionComponent } from 'react';
-import InviteBotButton from '../InviteBotButton';
+import InviteBotButton from '../misc/InviteBotButton';
 
 interface HomepageInnerProps {}
 

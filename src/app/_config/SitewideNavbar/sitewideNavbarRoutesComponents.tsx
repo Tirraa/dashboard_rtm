@@ -1,5 +1,5 @@
-import NavbarElement from '@/app/_components/_hoc/NavbarElement';
-import getComputedNavData from '@/app/_lib/getComputedNavData';
+import NavbarElement from '@/app/_components/_hoc/navbar/NavbarElement';
+import getComputedNavData from '@/app/_lib/misc/getComputedNavData';
 import sitewideNavbarDropdownsConfig from './dropDownsConfig';
 import sitewideNavbarRoutes, { sitewideNavbarRoutesTitles } from './routesImpl';
 

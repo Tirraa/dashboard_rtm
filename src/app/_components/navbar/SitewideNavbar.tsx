@@ -4,11 +4,11 @@ import { Collapse, IconButton, Navbar, Typography } from '@material-tailwind/rea
 import Image from 'next/image';
 import Link from 'next/link';
 import { FunctionComponent, useEffect, useRef, useState } from 'react';
-import navbarElements from '../_config/SitewideNavbar/sitewideNavbarRoutesComponents';
-import RoutesBase from '../_config/routes';
+import navbarElements from '../../_config/SitewideNavbar/sitewideNavbarRoutesComponents';
+import RoutesBase from '../../_config/routes';
+import useCollapseNavbarOnResize from '../_customHooks/_hotfixes/useCollapseNavbarOnResize';
+import RtmTextNode from '../misc/RtmTextNodeWithUppercaseEffect';
 import NavbarButton from './NavbarButton';
-import RtmTextNode from './RtmTextNodeWithUppercaseEffect';
-import useCollapseNavbarOnResize from './_customHooks/_hotfixes/useCollapseNavbarOnResize';
 
 interface SitewideNavbarProps {}
 
