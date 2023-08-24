@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react';
 
 interface TestAsyncProps {}
 
-const TestAsync: FunctionComponent<TestAsyncProps> = async () => {
+export const TestAsync: FunctionComponent<TestAsyncProps> = async () => {
   const testData = await (
     await fetch('https://worldtimeapi.org/api/timezone/Europe/Paris', {
       next: {

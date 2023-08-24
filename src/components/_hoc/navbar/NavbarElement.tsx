@@ -9,7 +9,7 @@ interface NavbarElementProps {
   embeddedEntities?: EmbeddedEntities;
 }
 
-const NavbarElement: FunctionComponent<NavbarElementProps> = ({ title, href, embeddedEntities }) =>
+export const NavbarElement: FunctionComponent<NavbarElementProps> = ({ title, href, embeddedEntities }) =>
   embeddedEntities ? <NavbarDropdown {...{ title, href, embeddedEntities }} /> : <NavbarButton {...{ title, href }} />;
 
 export default NavbarElement;

@@ -11,7 +11,7 @@ const style: CSSProperties = {
 const [width, height]: [number, number] = [226, 69];
 
 // {ToDo} i18n this!
-const HomepageInner: FunctionComponent<HomepageInnerProps> = () => (
+export const HomepageInner: FunctionComponent<HomepageInnerProps> = () => (
   <div className="m-auto">
     <Image src="/rtm-txt-logo.svg" {...{ style, width, height }} alt="Rust Team Management (text logo)" />
     <h1 className="mt-2">Rust Team Management</h1>

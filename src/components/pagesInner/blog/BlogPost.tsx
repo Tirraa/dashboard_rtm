@@ -6,7 +6,7 @@ interface BlogPostInnerProps {
   post: PostBase;
 }
 
-const BlogPostInner: FunctionComponent<BlogPostInnerProps> = ({ post }) => (
+export const BlogPostInner: FunctionComponent<BlogPostInnerProps> = ({ post }) => (
   <article className="mx-auto max-w-xl py-8">
     <div className="mb-8 text-center">
       <time dateTime={post.date} className="mb-1 text-xs text-gray-600">

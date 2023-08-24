@@ -6,7 +6,7 @@ import { BlogCategory, BlogPostProps } from '@/types/Blog';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
 
-export const generateMetadata = ({ params }: BlogPostProps) => {
+export function generateMetadata({ params }: BlogPostProps) {
   const categ = getBlogCategoryFromPathname(useServerSidePathnameWorkaround()) as BlogCategory;
   const subCateg = params[BlogTaxonomy.subCategory];
   const slug = params[BlogTaxonomy.slug];
@@ -15,7 +15,7 @@ export const generateMetadata = ({ params }: BlogPostProps) => {
   if (!post) notFound();
 
   return { title: post.title, description: post.description };
-};
+}
 
 export const Page: FunctionComponent<BlogPostProps> = ({ params }) => {
   const params2 = adHocBlogPostsParamsRestBuilder();

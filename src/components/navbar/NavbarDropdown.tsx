@@ -23,7 +23,7 @@ const active = { className: isActiveClassList };
 const inactive = { className: isNotActiveClassList };
 
 const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) =>
-  embeddedEntities.map(({ getPath: href, getTitle }) => {
+  embeddedEntities.map(({ path: href, getTitle }) => {
     const title = getTitle();
 
     return (
@@ -35,7 +35,7 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) =>
     );
   });
 
-const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ title, href, embeddedEntities }) => {
+export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ title, href, embeddedEntities }) => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const currentPathname = usePathname();
   const classList = hrefMatchesPathname(href, currentPathname) || openMenu ? active : inactive;

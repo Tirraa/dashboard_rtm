@@ -1,4 +1,6 @@
 import { PhantomPost } from 'contentlayer/generated';
 
-export type PostBase = Omit<PhantomPost, 'type'>;
+type PhantomType = 'type';
+
+export type PostBase = Omit<PhantomPost, PhantomType>;
 export default PostBase;

@@ -1,4 +1,4 @@
-import { NavDataRouteTitleGetter } from '@/_types/NavData';
+import { NavDataRouteTitleGetter } from '@/types/NavData';
 import { ReactElement } from 'react';
 
 export type RoutesDefinition<RoutesKeys extends string> = {

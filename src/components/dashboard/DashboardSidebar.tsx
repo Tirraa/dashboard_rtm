@@ -6,7 +6,7 @@ import { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMappi
 import Link from 'next/link';
 import { FunctionComponent, ReactElement } from 'react';
 
-interface SidebarProps {}
+interface DashboardSidebarProps {}
 
 function sidebarBtnsGenerator() {
   const keys = Object.keys(dashboardRoutesSidebarComponents);
@@ -29,8 +29,8 @@ function sidebarBtnsGenerator() {
   });
 }
 
-const Sidebar: FunctionComponent<SidebarProps> = () => (
+export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => (
   <aside className="fixed w-20 h-screen border-r-[1px] p-4 bg-black flex flex-col">{sidebarBtnsGenerator()}</aside>
 );
 
-export default Sidebar;
+export default DashboardSidebar;

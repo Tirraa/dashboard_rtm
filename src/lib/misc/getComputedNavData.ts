@@ -9,9 +9,9 @@ export function getComputedNavData(
   const computedNavData: NavDataEntities = Object.keys(routes).map((k) => {
     const k2 = k as RoutesTypesUnionKey;
     const currentEntity: NavDataEntity = {
-      getPath: routes[k2],
+      path: routes[k2],
       getTitle: () => routesTitles[k2](),
-      ...(dropdownConfig?.[k2] ? { embeddedEntities: [...(dropdownConfig as Record<string, NavDataEntities>)[k2]] } : {})
+      ...(dropdownConfig?.[k2] ? { embeddedEntities: [...(dropdownConfig as Record<RoutesTypesUnionKey, NavDataEntities>)[k2]] } : {})
     };
     return currentEntity;
   });

@@ -1,11 +1,11 @@
-type NavDataRoutePathGetter = string;
+type NavDataRouteTitle = string;
 
-export type NavDataRouteTitleGetter = () => string;
-export type NavDataRoutesTitles = Record<string, NavDataRouteTitleGetter>;
+export type NavDataRouteTitleGetter = () => NavDataRouteTitle;
+export type NavDataRoutesTitles = Record<NavDataRouteTitle, NavDataRouteTitleGetter>;
 
 interface AtomicNavDataEntity {
   getTitle: NavDataRouteTitleGetter;
-  getPath: NavDataRoutePathGetter;
+  path: NavDataRouteTitle;
 }
 
 export type EmbeddedEntities = AtomicNavDataEntity[];

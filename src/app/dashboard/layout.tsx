@@ -1,15 +1,18 @@
-import Sidebar from '@/components/dashboard/Sidebar';
-import type { Metadata } from 'next';
-import { ReactNode } from 'react';
+import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
+import LayoutBaseProps from '@/types/Next';
+import { Metadata } from 'next';
+import { FunctionComponent } from 'react';
+
+interface DashboardLayoutProps extends LayoutBaseProps {}
 
 export const metadata: Metadata = {
   title: 'Dashboard',
   description: 'lorem ipsum dolor sit amet'
 };
 
-export const DashboardLayout = ({ children }: { children: ReactNode }) => (
+export const DashboardLayout: FunctionComponent<DashboardLayoutProps> = ({ children }) => (
   <div className="flex">
-    <Sidebar />
+    <DashboardSidebar />
     <main className="ml-20 flex-1">{children}</main>
   </div>
 );

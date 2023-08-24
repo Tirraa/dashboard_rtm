@@ -1,7 +1,6 @@
 import { indexOfNthOccurrence } from '@/lib/str';
+import { Pathname } from '@/types/DomainDefinitions';
 import { headers } from 'next/headers';
-
-type Pathname = string;
 
 export function useServerSidePathnameWorkaround(): '' | Pathname {
   const headersSet: Headers = headers();

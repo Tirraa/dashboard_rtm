@@ -1,4 +1,4 @@
-import { BlogCategory, BlogSubCategory, PatchPostSubCategory, PostsCollectionAssoc } from '@/types/Blog';
+import { AllPostsTypesAssoc, BlogCategory, PatchPostSubCategory, PostsCollectionAssoc } from '@/types/Blog';
 import { allPatchPosts } from 'contentlayer/generated';
 
 const allPatchPostsTypesAssoc: PostsCollectionAssoc<PatchPostSubCategory> = {
@@ -8,7 +8,7 @@ const allPatchPostsTypesAssoc: PostsCollectionAssoc<PatchPostSubCategory> = {
 
 export namespace BlogConfig {
   export const blogPostPeviewDescriptionCharactersLimit = 250;
-  export const allPostsTypesAssoc: Record<BlogCategory, PostsCollectionAssoc<BlogSubCategory>> = {
+  export const allPostsTypesAssoc: AllPostsTypesAssoc = {
     'patch-notes': { ...allPatchPostsTypesAssoc }
   };
   export const blogCategoriesAllPostsTypesAssoc: PostsCollectionAssoc<BlogCategory> = { 'patch-notes': () => allPatchPosts };

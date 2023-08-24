@@ -4,7 +4,7 @@ import { FunctionComponent, useEffect, useState } from 'react';
 
 interface TestProps {}
 
-const Test: FunctionComponent<TestProps> = () => {
+export const Test: FunctionComponent<TestProps> = () => {
   const defaultTestDataValue = { title: 'dummy placeholder' };
   const [testData, setTestData] = useState<Record<string, unknown>>(defaultTestDataValue);
 

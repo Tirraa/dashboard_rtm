@@ -16,7 +16,7 @@ interface NavbarButtonProps {
 const active = { className: NavbarButtonStyle.isActiveClassList };
 const inactive = { className: NavbarButtonStyle.isNotActiveClassList };
 
-const NavbarButton: FunctionComponent<NavbarButtonProps> = ({ title, href }) => {
+export const NavbarButton: FunctionComponent<NavbarButtonProps> = ({ title, href }) => {
   const currentPathname = usePathname();
   const classList = hrefMatchesPathname(href, currentPathname) ? active : inactive;
   const target = getLinkTarget(href);

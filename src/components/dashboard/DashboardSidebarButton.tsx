@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import { ComponentType, FunctionComponent } from 'react';
 import { IconBaseProps } from 'react-icons';
 
-interface SidebarButtonProps {
+interface DashboardSidebarButtonProps {
   href: string;
   __SidebarIcon: ComponentType<IconBaseProps>;
 }
@@ -14,7 +14,7 @@ const active = { className: isActiveClassList };
 const inactive = { className: isNotActiveClassList };
 const iconProps = { ...sidebarIconProps };
 
-const SidebarButton: FunctionComponent<SidebarButtonProps> = ({ __SidebarIcon, href }) => {
+export const DashboardSidebarButton: FunctionComponent<DashboardSidebarButtonProps> = ({ __SidebarIcon, href }) => {
   const currentPathname = usePathname();
   const classList = hrefMatchesPathname(href, currentPathname) ? active : inactive;
 
@@ -25,4 +25,4 @@ const SidebarButton: FunctionComponent<SidebarButtonProps> = ({ __SidebarIcon, h
   );
 };
 
-export default SidebarButton;
+export default DashboardSidebarButton;

@@ -6,6 +6,9 @@ import { getLastPathStrPart } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
 import { BlogCategory } from '@/types/Blog';
 import { compareDesc } from 'date-fns';
+import { FunctionComponent } from 'react';
+
+interface BlogCategoryPageProps {}
 
 // * {ToDo} As it may crash in prod, stress-test it when the times come!
 export async function generateStaticParams() {
@@ -22,7 +25,7 @@ export async function generateStaticParams() {
 
 // {ToDo} i18n this!
 // {ToDo} Filter by subCategory, limit to 5, and generate 'Show more' buttons! (⚠️ Using a HoC, this autonomous code must be and stay agnostic!)
-export function Page() {
+export const Page: FunctionComponent<BlogCategoryPageProps> = () => {
   const onTheFlyBlogCategoryRuntimeCtx: BlogCategory = getBlogCategoryFromPathname(useServerSidePathnameWorkaround()) as BlogCategory;
   const trickyRelatedPostsGetter = BlogConfig.blogCategoriesAllPostsTypesAssoc[onTheFlyBlogCategoryRuntimeCtx];
   const gettedOnTheFlyPosts = trickyRelatedPostsGetter();
@@ -36,6 +39,6 @@ export function Page() {
       ))}
     </div>
   );
-}
+};
 
 export default Page;
