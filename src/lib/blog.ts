@@ -21,8 +21,16 @@ export function getBlogPostSubCategoryBasedOnPostObj(post: PostBase) {
   return getLastPathStrPart(sourceFileDir);
 }
 
+export function getBlogPostSubCategory(post: PostBase) {
+  return getBlogPostSubCategoryBasedOnPostObj(post);
+}
+
+export function getBlogPostSlug(post: PostBase) {
+  return getLastPathStrPart(post._raw.flattenedPath);
+}
+
 export function getBlogPostSubCategoryAndSlugStr(post: PostBase) {
-  return `${getBlogPostSubCategoryBasedOnPostObj(post)}/${getLastPathStrPart(post._raw.flattenedPath)}`;
+  return `${getBlogPostSubCategory(post)}/${getBlogPostSlug(post)}`;
 }
 
 export const getAllPostsByCategoryAndSubCategory = (categ: BlogCategory, subCateg: BlogSubCategory): PostBase[] =>

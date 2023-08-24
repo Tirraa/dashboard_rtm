@@ -1,6 +1,6 @@
 import BlogPostPeview from '@/components/blog/BlogPostPreview';
 import BlogConfig from '@/config/blog';
-import { getBlogCategoryFromPathname, getBlogPostSubCategoryAndSlugStr } from '@/lib/blog';
+import { getBlogCategoryFromPathname, getBlogPostSlug, getBlogPostSubCategory } from '@/lib/blog';
 import useServerSidePathnameWorkaround from '@/lib/misc/useServerSidePathname';
 import { getLastPathStrPart } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
@@ -9,15 +9,19 @@ import { compareDesc } from 'date-fns';
 
 // * {ToDo} As it may crash in prod, stress-test it when the times come!
 export async function generateStaticParams() {
-  const onTheFlyBlogCategoryBuildtimeCtx: BlogCategory = getLastPathStrPart(__dirname) as BlogCategory;
-  const unsafeRelatedPostsGetter = BlogConfig.blogCategoriesAllPostsTypesAssoc[onTheFlyBlogCategoryBuildtimeCtx];
-  const gettedOnTheFlyPosts = unsafeRelatedPostsGetter();
+  const probsUnsafePathname = __dirname; // * ... __dirname is UNSAFE to use in the Runtime Ctx, but seems safer in the Build time Ctx
+  const onTheFlyBlogCategoryBuildtimeCtx: BlogCategory = getLastPathStrPart(probsUnsafePathname) as BlogCategory;
+  const postsGetter = BlogConfig.blogCategoriesAllPostsTypesAssoc[onTheFlyBlogCategoryBuildtimeCtx];
+  const gettedOnTheFlyPosts = postsGetter();
 
-  return gettedOnTheFlyPosts.map((post) => ({ [BlogTaxonomy.slug]: getBlogPostSubCategoryAndSlugStr(post) }));
+  return gettedOnTheFlyPosts.map((post) => ({
+    [BlogTaxonomy.subCategory]: getBlogPostSubCategory(post),
+    [BlogTaxonomy.slug]: getBlogPostSlug(post)
+  }));
 }
 
 // {ToDo} i18n this!
-// {ToDo} Filter by subCategory, limit to 5, and generate 'Show more' buttons!
+// {ToDo} Filter by subCategory, limit to 5, and generate 'Show more' buttons! (⚠️ Using a HoC, this autonomous code must be and stay agnostic!)
 export function Page() {
   const onTheFlyBlogCategoryRuntimeCtx: BlogCategory = getBlogCategoryFromPathname(useServerSidePathnameWorkaround()) as BlogCategory;
   const trickyRelatedPostsGetter = BlogConfig.blogCategoriesAllPostsTypesAssoc[onTheFlyBlogCategoryRuntimeCtx];
