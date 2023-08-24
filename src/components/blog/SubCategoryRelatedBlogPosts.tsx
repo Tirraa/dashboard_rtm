@@ -1,4 +1,4 @@
-import { getAllPostsBySubCategory, getBlogPostSubCategoryBasedOnPostObj } from '@/lib/blog';
+import { getAllPostsByCategoryAndSubCategory, getBlogPostSubCategoryBasedOnPostObj } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import { BlogSubCategoryPageProps } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
@@ -15,12 +15,13 @@ function subCategoryRelatedBlogPostsGeneration(posts: PostBase[]) {
 }
 
 // {ToDo} i18n this!
-export const SubCategoryRelatedBlogPosts: FunctionComponent<SubCategoryRelatedBlogPostsProps> = ({ params }) => {
+export const SubCategoryRelatedBlogPosts: FunctionComponent<SubCategoryRelatedBlogPostsProps> = ({ params, ...params2 }) => {
+  const categ = params2[BlogTaxonomy.category];
   const subCateg = params[BlogTaxonomy.subCategory];
 
   let postsCollection: PostBase[] = [];
   try {
-    postsCollection = getAllPostsBySubCategory(subCateg);
+    postsCollection = getAllPostsByCategoryAndSubCategory(categ, subCateg);
   } catch {
     notFound();
   }

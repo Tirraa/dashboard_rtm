@@ -1,6 +1,7 @@
 export namespace BlogTaxonomy {
-  export const slug = 'slug';
+  export const category = 'categ';
   export const subCategory = 'subcateg';
+  export const slug = 'slug';
 }
 
 export default BlogTaxonomy;

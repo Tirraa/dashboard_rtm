@@ -5,9 +5,12 @@ import { BlogPostProps } from '@/types/Blog';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
 
-export const BlogPost: FunctionComponent<BlogPostProps> = ({ params }) => {
+export const BlogPost: FunctionComponent<BlogPostProps> = ({ params, ...params2 }) => {
+  const categ = params2[BlogTaxonomy.category];
   const subCateg = params[BlogTaxonomy.subCategory];
-  const post = getPost(params[BlogTaxonomy.slug], subCateg);
+  const slug = params[BlogTaxonomy.slug];
+
+  const post = getPost(categ, subCateg, slug);
 
   if (!post) notFound();
   return <BlogPostInner {...{ post }} />;

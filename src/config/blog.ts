@@ -8,7 +8,9 @@ const allPatchPostsTypesAssoc: PostsCollectionAssoc<PatchPostSubCategory> = {
 
 export namespace BlogConfig {
   export const blogPostPeviewDescriptionCharactersLimit = 250;
-  export const allPostsTypesAssoc: PostsCollectionAssoc<BlogSubCategory> = { ...allPatchPostsTypesAssoc };
+  export const allPostsTypesAssoc: Record<BlogCategory, PostsCollectionAssoc<BlogSubCategory>> = {
+    'patch-notes': { ...allPatchPostsTypesAssoc }
+  };
   export const blogCategoriesAllPostsTypesAssoc: PostsCollectionAssoc<BlogCategory> = { 'patch-notes': () => allPatchPosts };
 }
 

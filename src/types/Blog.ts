@@ -13,12 +13,14 @@ export interface BlogPostProps {
     [BlogTaxonomy.subCategory]: BlogSubCategory;
     [BlogTaxonomy.slug]: BlogSlug;
   };
+  [BlogTaxonomy.category]: BlogCategory;
 }
 
 export interface BlogSubCategoryPageProps {
   params: {
     [BlogTaxonomy.subCategory]: BlogSubCategory;
   };
+  [BlogTaxonomy.category]: BlogCategory;
 }
 
 export type AllPostsGetter = () => PostBase[];
