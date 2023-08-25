@@ -10,8 +10,8 @@ import PostBase from '@/types/BlogPostAbstractions';
 import { compareDesc } from 'date-fns';
 
 export async function generateStaticParams() {
-  const probsUnsafePathname = __dirname;
-  const onTheFlyBlogCategoryBuildtimeCtx: BlogCategory = getLastPathStrPart(probsUnsafePathname) as BlogCategory;
+  const trickyPathname = __dirname;
+  const onTheFlyBlogCategoryBuildtimeCtx: BlogCategory = getLastPathStrPart(trickyPathname) as BlogCategory;
   const postsGetter = BlogConfig.blogCategoriesAllPostsTypesAssoc[onTheFlyBlogCategoryBuildtimeCtx];
   const gettedOnTheFlyPosts = postsGetter();
 
