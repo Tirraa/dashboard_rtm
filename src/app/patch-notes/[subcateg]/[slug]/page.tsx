@@ -4,7 +4,6 @@ import getServerSidePathnameWorkaround from '@/lib/misc/getServerSidePathname';
 import BlogTaxonomy from '@/taxonomies/blog';
 import { BlogCategory, BlogPostProps } from '@/types/Blog';
 import { notFound } from 'next/navigation';
-import { FunctionComponent } from 'react';
 
 export function generateMetadata({ params }: BlogPostProps) {
   const categ = getBlogCategoryFromPathname(getServerSidePathnameWorkaround()) as BlogCategory;
@@ -17,9 +16,7 @@ export function generateMetadata({ params }: BlogPostProps) {
   return { title: post.title, description: post.metadescription };
 }
 
-export const Page: FunctionComponent<BlogPostProps> = ({ params }) => {
+export default function Page({ params }: BlogPostProps) {
   const params2 = adHocBlogPostsParamsRestBuilder();
   return <BlogPost {...{ params, ...params2 }} />;
-};
-
-export default Page;
+}

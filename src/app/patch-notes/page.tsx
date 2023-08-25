@@ -8,9 +8,6 @@ import BlogTaxonomy from '@/taxonomies/blog';
 import { BlogCategory } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { compareDesc } from 'date-fns';
-import { FunctionComponent } from 'react';
-
-interface BlogCategoryPageProps {}
 
 // * {ToDo} As it may crash in prod, stress-test it when the times come!
 export async function generateStaticParams() {
@@ -39,7 +36,7 @@ function postsGenerator(posts: PostBase[]) {
 }
 
 // {ToDo} i18n this!
-export const Page: FunctionComponent<BlogCategoryPageProps> = () => {
+export default function Page() {
   const onTheFlyBlogCategoryRuntimeCtx: BlogCategory = getBlogCategoryFromPathname(getServerSidePathnameWorkaround()) as BlogCategory;
   const trickyRelatedPostsGetter = BlogConfig.blogCategoriesAllPostsTypesAssoc[onTheFlyBlogCategoryRuntimeCtx];
   const gettedOnTheFlyPosts = trickyRelatedPostsGetter();
@@ -51,6 +48,4 @@ export const Page: FunctionComponent<BlogCategoryPageProps> = () => {
       {postsGenerator(posts)}
     </div>
   );
-};
-
-export default Page;
+}
