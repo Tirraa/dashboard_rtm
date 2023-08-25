@@ -5,12 +5,12 @@ import PostBase from '@/types/BlogPostAbstractions';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
 import BlogPostPeview from './BlogPostPreview';
+import BlogPostsNotFound from './BlogPostsNotFound';
 
 interface SubCategoryRelatedBlogPostsProps extends BlogSubCategoryPageProps {}
 
-// {ToDo} i18n this!
 function subCategoryRelatedBlogPostsGeneration(posts: PostBase[]) {
-  if (posts.length === 0) return <p>Rien à afficher ici !</p>;
+  if (posts.length === 0) return <BlogPostsNotFound />;
   return posts.map((post, index) => <BlogPostPeview key={index} {...{ post }} />);
 }
 

@@ -1,6 +1,7 @@
 ---
 title: Dashboard note
-description: Dashboard note meta description
+metadescription: Dashboard note meta description
+description: Dashboard note description for post snippet
 date: 2021-12-24
 ---
 

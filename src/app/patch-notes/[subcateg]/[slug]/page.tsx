@@ -14,7 +14,7 @@ export function generateMetadata({ params }: BlogPostProps) {
   const post = getPost(categ, subCateg, slug);
   if (!post) notFound();
 
-  return { title: post.title, description: post.description };
+  return { title: post.title, description: post.metadescription };
 }
 
 export const Page: FunctionComponent<BlogPostProps> = ({ params }) => {

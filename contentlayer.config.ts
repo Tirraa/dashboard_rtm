@@ -5,7 +5,8 @@ export const PhantomPost = defineDocumentType(() => ({
   filePathPattern: '',
   fields: {
     title: { type: 'string', required: true },
-    description: { type: 'string', required: true },
+    metadescription: { type: 'string', required: true },
+    description: { type: 'string', required: false },
     date: { type: 'date', required: true },
     url: { type: 'string', required: true }
   }
@@ -16,7 +17,8 @@ export const PatchPost = defineDocumentType(() => ({
   filePathPattern: '**/patch-notes/**/*.md',
   fields: {
     title: { type: 'string', required: true },
-    description: { type: 'string', required: true },
+    metadescription: { type: 'string', required: true },
+    description: { type: 'string', required: false },
     date: { type: 'date', required: true }
   },
   computedFields: {
