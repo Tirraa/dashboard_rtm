@@ -2,7 +2,7 @@ import BlogPostPeview from '@/components/blog/BlogPostPreview';
 import BlogPostsNotFound from '@/components/blog/BlogPostsNotFound';
 import BlogConfig from '@/config/blog';
 import { getBlogCategoryFromPathname, getBlogPostSlug, getBlogPostSubCategory } from '@/lib/blog';
-import useServerSidePathnameWorkaround from '@/lib/misc/useServerSidePathname';
+import getServerSidePathnameWorkaround from '@/lib/misc/getServerSidePathname';
 import { getLastPathStrPart } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
 import { BlogCategory } from '@/types/Blog';
@@ -19,6 +19,13 @@ export async function generateStaticParams() {
   const postsGetter = BlogConfig.blogCategoriesAllPostsTypesAssoc[onTheFlyBlogCategoryBuildtimeCtx];
   const gettedOnTheFlyPosts = postsGetter();
 
+  console.log('TESTING UNSAFE PATHNAME');
+  console.log('__dirname:');
+  console.log(__dirname);
+
+  console.log('gettedOnTheFlyPosts:');
+  console.log(gettedOnTheFlyPosts);
+
   return gettedOnTheFlyPosts.map((post) => ({
     [BlogTaxonomy.subCategory]: getBlogPostSubCategory(post),
     [BlogTaxonomy.slug]: getBlogPostSlug(post)
@@ -33,7 +40,7 @@ function postsGenerator(posts: PostBase[]) {
 
 // {ToDo} i18n this!
 export const Page: FunctionComponent<BlogCategoryPageProps> = () => {
-  const onTheFlyBlogCategoryRuntimeCtx: BlogCategory = getBlogCategoryFromPathname(useServerSidePathnameWorkaround()) as BlogCategory;
+  const onTheFlyBlogCategoryRuntimeCtx: BlogCategory = getBlogCategoryFromPathname(getServerSidePathnameWorkaround()) as BlogCategory;
   const trickyRelatedPostsGetter = BlogConfig.blogCategoriesAllPostsTypesAssoc[onTheFlyBlogCategoryRuntimeCtx];
   const gettedOnTheFlyPosts = trickyRelatedPostsGetter();
   const posts = gettedOnTheFlyPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
