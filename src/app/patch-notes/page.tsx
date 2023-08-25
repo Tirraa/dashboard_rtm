@@ -16,13 +16,6 @@ export async function generateStaticParams() {
   const postsGetter = BlogConfig.blogCategoriesAllPostsTypesAssoc[onTheFlyBlogCategoryBuildtimeCtx];
   const gettedOnTheFlyPosts = postsGetter();
 
-  console.log('TESTING UNSAFE PATHNAME');
-  console.log('__dirname:');
-  console.log(__dirname);
-
-  console.log('gettedOnTheFlyPosts:');
-  console.log(gettedOnTheFlyPosts);
-
   return gettedOnTheFlyPosts.map((post) => ({
     [BlogTaxonomy.subCategory]: getBlogPostSubCategory(post),
     [BlogTaxonomy.slug]: getBlogPostSlug(post)
