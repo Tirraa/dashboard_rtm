@@ -32,6 +32,8 @@ export function getBlogPostSubCategoryAndSlugStr(post: PostBase) {
   return `${getBlogPostSubCategory(post)}/${getBlogPostSlug(post)}`;
 }
 
+export const getAllPostsByCategory = (categ: BlogCategory): PostBase[] => BlogConfig.blogCategoriesAllPostsTypesAssoc[categ]();
+
 export const getAllPostsByCategoryAndSubCategory = (categ: BlogCategory, subCateg: BlogSubCategory): PostBase[] =>
   BlogConfig.allPostsTypesAssoc[categ][subCateg]();
 

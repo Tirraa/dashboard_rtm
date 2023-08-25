@@ -1,7 +1,7 @@
 import BlogPostPeview from '@/components/blog/BlogPostPreview';
 import BlogPostsNotFound from '@/components/blog/BlogPostsNotFound';
 import BlogConfig from '@/config/blog';
-import { getBlogCategoryFromPathname, getBlogPostSlug, getBlogPostSubCategory } from '@/lib/blog';
+import { getAllPostsByCategory, getBlogCategoryFromPathname, getBlogPostSlug, getBlogPostSubCategory } from '@/lib/blog';
 import getServerSidePathnameWorkaround from '@/lib/misc/getServerSidePathname';
 import { getLastPathStrPart } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
@@ -12,8 +12,7 @@ import { compareDesc } from 'date-fns';
 export async function generateStaticParams() {
   const trickyPathname = __dirname;
   const onTheFlyBlogCategoryBuildtimeCtx: BlogCategory = getLastPathStrPart(trickyPathname) as BlogCategory;
-  const postsGetter = BlogConfig.blogCategoriesAllPostsTypesAssoc[onTheFlyBlogCategoryBuildtimeCtx];
-  const gettedOnTheFlyPosts = postsGetter();
+  const gettedOnTheFlyPosts = getAllPostsByCategory(onTheFlyBlogCategoryBuildtimeCtx);
 
   return gettedOnTheFlyPosts.map((post) => ({
     [BlogTaxonomy.subCategory]: getBlogPostSubCategory(post),
