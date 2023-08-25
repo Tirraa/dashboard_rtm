@@ -1,13 +1,13 @@
 import { getAllPostsByCategoryAndSubCategory, getBlogPostSubCategoryBasedOnPostObj } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
-import { BlogSubCategoryPageProps } from '@/types/Blog';
+import { BlogSubCategoryProps } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
 import BlogPostPeview from './BlogPostPreview';
 import BlogPostsNotFound from './BlogPostsNotFound';
 
-interface SubCategoryRelatedBlogPostsProps extends BlogSubCategoryPageProps {}
+interface SubCategoryRelatedBlogPostsProps extends BlogSubCategoryProps {}
 
 function subCategoryRelatedBlogPostsGeneration(posts: PostBase[]) {
   if (posts.length === 0) return <BlogPostsNotFound />;

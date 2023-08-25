@@ -1,4 +1,4 @@
-import { RoutesDefinition, RoutesReactElement, RoutesTitles } from '@/_types/RoutesMapping';
+import { RoutesDefinition, RoutesReactElement, RoutesTitles } from '@/types/RoutesMapping';
 
 enum EDashboardRoutes {
   BASE_PAGE,

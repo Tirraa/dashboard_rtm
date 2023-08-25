@@ -2,7 +2,7 @@ import BlogConfig from '@/config/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import { BlogCategory, BlogSlug, BlogSubCategory } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
-import useServerSidePathnameWorkaround from './misc/useServerSidePathname';
+import getServerSidePathnameWorkaround from './misc/getServerSidePathname';
 import { getLastPathStrPart } from './str';
 
 export function getBlogCategoryFromPathname(pathname: string) {
@@ -41,6 +41,6 @@ export function getPost(targettedCateg: BlogCategory, targettedSubCateg: BlogSub
 }
 
 export function adHocBlogPostsParamsRestBuilder() {
-  const params2 = { [BlogTaxonomy.category]: getBlogCategoryFromPathname(useServerSidePathnameWorkaround()) as BlogCategory };
+  const params2 = { [BlogTaxonomy.category]: getBlogCategoryFromPathname(getServerSidePathnameWorkaround()) as BlogCategory };
   return params2;
 }

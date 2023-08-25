@@ -14,7 +14,7 @@ const [width, height]: [number, number] = [226, 69];
 export const HomepageInner: FunctionComponent<HomepageInnerProps> = () => (
   <div className="m-auto">
     <Image src="/rtm-txt-logo.svg" {...{ style, width, height }} alt="Rust Team Management (text logo)" />
-    <h1 className="mt-2">Rust Team Management</h1>
+    <h1 className="mt-2">Rust Team Management (Prod)</h1>
     <InviteBotButton />
   </div>
 );

@@ -2,7 +2,7 @@ import { indexOfNthOccurrence } from '@/lib/str';
 import { Pathname } from '@/types/DomainDefinitions';
 import { headers } from 'next/headers';
 
-export function useServerSidePathnameWorkaround(): '' | Pathname {
+export function getServerSidePathnameWorkaround(): '' | Pathname {
   const headersSet: Headers = headers();
   const url = headersSet.get('x-url') || '';
   if (url === '') {
@@ -13,4 +13,4 @@ export function useServerSidePathnameWorkaround(): '' | Pathname {
   return pathname;
 }
 
-export default useServerSidePathnameWorkaround;
+export default getServerSidePathnameWorkaround;

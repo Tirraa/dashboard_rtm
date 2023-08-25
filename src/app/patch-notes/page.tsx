@@ -2,19 +2,15 @@ import BlogPostPeview from '@/components/blog/BlogPostPreview';
 import BlogPostsNotFound from '@/components/blog/BlogPostsNotFound';
 import BlogConfig from '@/config/blog';
 import { getBlogCategoryFromPathname, getBlogPostSlug, getBlogPostSubCategory } from '@/lib/blog';
-import useServerSidePathnameWorkaround from '@/lib/misc/useServerSidePathname';
+import getServerSidePathnameWorkaround from '@/lib/misc/getServerSidePathname';
 import { getLastPathStrPart } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
 import { BlogCategory } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { compareDesc } from 'date-fns';
-import { FunctionComponent } from 'react';
 
-interface BlogCategoryPageProps {}
-
-// * {ToDo} As it may crash in prod, stress-test it when the times come!
 export async function generateStaticParams() {
-  const probsUnsafePathname = __dirname; // * ... __dirname is UNSAFE to use in the Runtime Ctx, but seems safer in the Build time Ctx
+  const probsUnsafePathname = __dirname;
   const onTheFlyBlogCategoryBuildtimeCtx: BlogCategory = getLastPathStrPart(probsUnsafePathname) as BlogCategory;
   const postsGetter = BlogConfig.blogCategoriesAllPostsTypesAssoc[onTheFlyBlogCategoryBuildtimeCtx];
   const gettedOnTheFlyPosts = postsGetter();
@@ -32,8 +28,8 @@ function postsGenerator(posts: PostBase[]) {
 }
 
 // {ToDo} i18n this!
-export const Page: FunctionComponent<BlogCategoryPageProps> = () => {
-  const onTheFlyBlogCategoryRuntimeCtx: BlogCategory = getBlogCategoryFromPathname(useServerSidePathnameWorkaround()) as BlogCategory;
+export default function Page() {
+  const onTheFlyBlogCategoryRuntimeCtx: BlogCategory = getBlogCategoryFromPathname(getServerSidePathnameWorkaround()) as BlogCategory;
   const trickyRelatedPostsGetter = BlogConfig.blogCategoriesAllPostsTypesAssoc[onTheFlyBlogCategoryRuntimeCtx];
   const gettedOnTheFlyPosts = trickyRelatedPostsGetter();
   const posts = gettedOnTheFlyPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
@@ -44,6 +40,4 @@ export const Page: FunctionComponent<BlogCategoryPageProps> = () => {
       {postsGenerator(posts)}
     </div>
   );
-};
-
-export default Page;
+}

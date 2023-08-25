@@ -1,13 +1,12 @@
 import BlogPost from '@/components/blog/BlogPost';
 import { adHocBlogPostsParamsRestBuilder, getBlogCategoryFromPathname, getPost } from '@/lib/blog';
-import useServerSidePathnameWorkaround from '@/lib/misc/useServerSidePathname';
+import getServerSidePathnameWorkaround from '@/lib/misc/getServerSidePathname';
 import BlogTaxonomy from '@/taxonomies/blog';
-import { BlogCategory, BlogPostProps } from '@/types/Blog';
+import { BlogCategory, BlogPostPageProps } from '@/types/Blog';
 import { notFound } from 'next/navigation';
-import { FunctionComponent } from 'react';
 
-export function generateMetadata({ params }: BlogPostProps) {
-  const categ = getBlogCategoryFromPathname(useServerSidePathnameWorkaround()) as BlogCategory;
+export function generateMetadata({ params }: BlogPostPageProps) {
+  const categ = getBlogCategoryFromPathname(getServerSidePathnameWorkaround()) as BlogCategory;
   const subCateg = params[BlogTaxonomy.subCategory];
   const slug = params[BlogTaxonomy.slug];
 
@@ -17,9 +16,7 @@ export function generateMetadata({ params }: BlogPostProps) {
   return { title: post.title, description: post.metadescription };
 }
 
-export const Page: FunctionComponent<BlogPostProps> = ({ params }) => {
+export default function Page({ params }: BlogPostPageProps) {
   const params2 = adHocBlogPostsParamsRestBuilder();
   return <BlogPost {...{ params, ...params2 }} />;
-};
-
-export default Page;
+}
