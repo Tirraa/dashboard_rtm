@@ -2,7 +2,6 @@ import BlogConfig from '@/config/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import { BlogCategory, BlogSlug, BlogSubCategory } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
-import { Pathname, PathnameSegment } from '@/types/DomainDefinitions';
 import useServerSidePathnameWorkaround from './misc/useServerSidePathname';
 import { getLastPathStrPart } from './str';
 
@@ -39,16 +38,6 @@ export const getAllPostsByCategoryAndSubCategory = (categ: BlogCategory, subCate
 export function getPost(targettedCateg: BlogCategory, targettedSubCateg: BlogSubCategory, targettedSlug: BlogSlug): undefined | PostBase {
   const postsCollection: PostBase[] = getAllPostsByCategoryAndSubCategory(targettedCateg, targettedSubCateg);
   return postsCollection.find((post) => getBlogPostSubCategoryAndSlugStr(post) === `${targettedSubCateg}/${targettedSlug}`);
-}
-
-export function getFirstPathnameSegment(pathname: Pathname): PathnameSegment {
-  const firstIndex = pathname.indexOf('/');
-  if (firstIndex === -1) return pathname;
-
-  const secondIndex = pathname.indexOf('/', firstIndex + 1);
-
-  if (secondIndex !== -1) return pathname.substring(firstIndex + 1, secondIndex);
-  return pathname.substring(firstIndex + 1);
 }
 
 export function adHocBlogPostsParamsRestBuilder() {
