@@ -39,7 +39,7 @@ export function useCollapseNavbarOnResize(breakpointPxValue: number, mobileMenuI
       window.removeEventListener('resize', collapseNavbarMenuWhenWindowIsLargeEnough);
       if (coroutine) clearTimeout(coroutine);
     };
-  }, []);
+  }, [breakpointPxValue, mobileMenuInstanceRef, setOpenNav]); // * ... Empty deps array's driving nut the linter on build. ¯\_(ツ)_/¯
 }
 
 export default useCollapseNavbarOnResize;
