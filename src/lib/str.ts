@@ -1,10 +1,10 @@
 import BlogConfig from '@/config/blog';
 import RoutesBase from '@/config/routes';
+import { PathnameSegment } from '@/types/Next';
 
 type DescriptionAsIs = string;
 type CroppedDescription = string;
 type SlashEnvelope = string;
-type PathStrPart = string;
 type NeedleNthOccurrenceIndex = number;
 
 export const getSlashEnvelope = (str: string, slashSymbol: string = '/'): SlashEnvelope =>
@@ -31,7 +31,7 @@ export function getSlicedBlogPostDescription(description: string): DescriptionAs
   return slicedDescription;
 }
 
-export function getLastPathStrPart(path: string): PathStrPart {
+export function getLastPathStrPart(path: string): PathnameSegment {
   const lastIndex = path.lastIndexOf('/');
 
   if (lastIndex !== -1 && lastIndex !== path.length - 1) return path.substring(lastIndex + 1);

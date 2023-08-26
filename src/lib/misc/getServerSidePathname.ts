@@ -1,5 +1,5 @@
 import { indexOfNthOccurrence } from '@/lib/str';
-import { Pathname } from '@/types/DomainDefinitions';
+import { Pathname } from '@/types/Next';
 import { headers } from 'next/headers';
 
 export function getServerSidePathnameWorkaround(): '' | Pathname {
