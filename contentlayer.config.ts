@@ -1,5 +1,7 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files';
 
+const contentDirPath = 'posts';
+
 export const PhantomPost = defineDocumentType(() => ({
   name: 'PhantomPost',
   filePathPattern: '',
@@ -26,4 +28,4 @@ export const PatchPost = defineDocumentType(() => ({
   }
 }));
 
-export default makeSource({ contentDirPath: 'blog-posts', documentTypes: [PhantomPost, PatchPost] });
+export default makeSource({ contentDirPath, documentTypes: [PhantomPost, PatchPost] });
