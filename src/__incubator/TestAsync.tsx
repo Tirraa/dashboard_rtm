@@ -10,7 +10,11 @@ export const TestAsync: FunctionComponent<TestAsyncProps> = async () => {
       }
     })
   ).json();
-  return <p className="font-inter">{testData.datetime}</p>;
+  return (
+    <>
+      <p className="font-inter">{testData.datetime}</p>
+    </>
+  );
 };
 
 export default TestAsync;

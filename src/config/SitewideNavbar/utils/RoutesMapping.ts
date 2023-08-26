@@ -7,7 +7,7 @@ enum ESitewideNavbarRoutes {
   SUPPORT_PAGE,
   LOGIN_PAGE
 }
-export type SitewideNavbarRoutesKeys = keyof typeof ESitewideNavbarRoutes;
 
+export type SitewideNavbarRoutesKeys = keyof typeof ESitewideNavbarRoutes;
 export type SitewideNavbarRoutes = RoutesDefinition<SitewideNavbarRoutesKeys>;
 export type SitewideNavbarRoutesTitles = RoutesTitles<SitewideNavbarRoutesKeys>;

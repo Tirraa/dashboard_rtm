@@ -11,7 +11,7 @@ export function getComputedNavData(
     const currentEntity: NavDataEntity = {
       path: routes[k2],
       getTitle: () => routesTitles[k2](),
-      ...(dropdownConfig?.[k2] ? { embeddedEntities: [...(dropdownConfig as Record<RoutesTypesUnionKey, NavDataEntities>)[k2]] } : {})
+      ...(dropdownConfig?.[k2] ? { embeddedEntities: [...dropdownConfig[k2]] } : {})
     };
     return currentEntity;
   });
