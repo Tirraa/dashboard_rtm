@@ -6,6 +6,7 @@ import NavbarDropdownButtonStyle, {
 } from '@/components/_config/_styles/NavbarDropdownButtonStyle';
 import { hrefMatchesPathname } from '@/lib/str';
 import { EmbeddedEntities, NavDataRouteTitleGetter } from '@/types/NavData';
+import { ClassName } from '@/types/React';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Menu, MenuHandler, MenuItem, MenuList } from '@material-tailwind/react';
 import Link from 'next/link';
@@ -19,8 +20,8 @@ interface NavbarButtonProps {
 }
 
 const { isActiveClassList, isNotActiveClassList } = NavbarDropdownButtonStyle;
-const active = { className: isActiveClassList };
-const inactive = { className: isNotActiveClassList };
+const active: ClassName = { className: isActiveClassList };
+const inactive: ClassName = { className: isNotActiveClassList };
 
 const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) =>
   embeddedEntities.map(({ path: href, getTitle }) => {

@@ -1,5 +1,6 @@
 import SidebarButtonStyle from '@/components/_config/_styles/SidebarButtonStyle';
 import { hrefMatchesPathname } from '@/lib/str';
+import { ClassName } from '@/types/React';
 import { usePathname } from 'next/navigation';
 import { ComponentType, FunctionComponent } from 'react';
 import { IconBaseProps } from 'react-icons';
@@ -10,8 +11,8 @@ interface DashboardSidebarButtonProps {
 }
 
 const { isActiveClassList, isNotActiveClassList, sidebarIconProps } = SidebarButtonStyle;
-const active = { className: isActiveClassList };
-const inactive = { className: isNotActiveClassList };
+const active: ClassName = { className: isActiveClassList };
+const inactive: ClassName = { className: isNotActiveClassList };
 const iconProps = { ...sidebarIconProps };
 
 export const DashboardSidebarButton: FunctionComponent<DashboardSidebarButtonProps> = ({ __SidebarIcon, href }) => {

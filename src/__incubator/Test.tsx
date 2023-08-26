@@ -1,5 +1,7 @@
 'use client';
 
+import { fInter } from '@/fonts';
+import { fCls } from '@/lib/fonts';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 interface TestProps {}
@@ -16,7 +18,7 @@ export const Test: FunctionComponent<TestProps> = () => {
     getData();
   }, []);
 
-  return <p>{testData.title as string}</p>;
+  return <p {...fCls(fInter)}>{testData.title as string}</p>;
 };
 
 export default Test;

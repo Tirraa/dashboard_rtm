@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import './globals.css';
 
 import SitewideNavbar from '@/components/navbar/SitewideNavbar';
-import { interFont } from '@/fonts';
 import LayoutBaseProps from '@/types/Next';
 
 interface RootLayoutProps extends LayoutBaseProps {}
@@ -15,7 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="fr">
-      <body className={`flex flex-col min-h-screen ${interFont.variable}`}>
+      <body className="flex flex-col min-h-screen">
         <SitewideNavbar />
         {children}
       </body>

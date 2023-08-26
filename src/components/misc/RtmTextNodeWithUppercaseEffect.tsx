@@ -1,8 +1,9 @@
+import { Properties } from '@/types/React';
 import { FunctionComponent } from 'react';
 
 interface RtmTextNodeProps {}
 
-const p = { className: 'uppercase text-xs' };
+const p: Properties = { className: 'uppercase text-xs' };
 
 export const RtmTextNode: FunctionComponent<RtmTextNodeProps> = () => (
   <>
