@@ -37,3 +37,9 @@ export function getLastPathStrPart(path: string): PathnameSegment {
   if (lastIndex !== -1 && lastIndex !== path.length - 1) return path.substring(lastIndex + 1);
   return path;
 }
+
+export function gsub(str: string, needle: string, replaceWith: string) {
+  return str.split(needle).join(replaceWith);
+}
+
+export const buildPathFromParts = (...args: string[]) => args.join('/');

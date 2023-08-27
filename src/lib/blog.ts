@@ -3,49 +3,60 @@ import BlogTaxonomy from '@/taxonomies/blog';
 import { BlogCategory, BlogSlug, BlogSubCategory } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { PathnameSegment } from '@/types/Next';
+import { getBlogPostLanguageFlag, getCurrentLanguageFlag } from './i18n';
 import getServerSidePathnameWorkaround from './misc/getServerSidePathname';
-import { getLastPathStrPart } from './str';
+import { buildPathFromParts, getLastPathStrPart, indexOfNthOccurrence } from './str';
 
-const getFormattedBlogPostSubCategoryAndSlugStr = (sa: string, sb: string): string => `${sa}/${sb}`;
-const getBlogPostSubCategoryAndSlugStr = (post: PostBase): string =>
-  getFormattedBlogPostSubCategoryAndSlugStr(getBlogPostSubCategory(post), getBlogPostSlug(post));
+const getBlogPostSubCategoryAndSlugStr = (post: PostBase): string => buildPathFromParts(getBlogPostSubCategory(post), getBlogPostSlug(post));
+
+const getBlogPostSubCategoryAndSlugStrAndLangFlag = (post: PostBase): string =>
+  buildPathFromParts(getBlogPostSubCategory(post), getBlogPostSlug(post), getBlogPostLanguageFlag(post));
 
 export function getBlogCategoryFromPathname(pathname: string) {
-  const firstIndex = pathname.indexOf('/');
+  const firstIndex = indexOfNthOccurrence(pathname, '/', 1);
   if (firstIndex !== -1) {
-    const secondIndex = pathname.indexOf('/', firstIndex + 1);
+    const secondIndex = indexOfNthOccurrence(pathname, '/', 2);
     if (secondIndex !== -1) return pathname.substring(firstIndex + 1, secondIndex);
     return pathname.substring(firstIndex + 1);
   }
   return pathname;
 }
 
-export function getBlogPostSubCategoryBasedOnPostObj(post: PostBase): '' | BlogSubCategory {
+function getBlogPostSubCategoryFromStr(sourceFileDir: string) {
   function subCategGetter(sourceFileDir: string, firstSlashIndex: number, secondSlashIndex: number): string {
     if (secondSlashIndex !== -1) return sourceFileDir.slice(firstSlashIndex + 1, secondSlashIndex);
     return sourceFileDir.slice(firstSlashIndex + 1);
   }
 
-  const { sourceFileDir } = post._raw;
-  const firstSlashIndex = sourceFileDir.indexOf('/');
+  const firstSlashIndex = indexOfNthOccurrence(sourceFileDir, '/', 1);
   if (firstSlashIndex !== -1) {
-    const secondSlashIndex = sourceFileDir.indexOf('/', firstSlashIndex + 1);
+    const secondSlashIndex = indexOfNthOccurrence(sourceFileDir, '/', 2);
     const subCateg = subCategGetter(sourceFileDir, firstSlashIndex, secondSlashIndex);
     return subCateg as BlogSubCategory;
   }
   return '';
 }
 
-export const getBlogPostSubCategory = (post: PostBase): '' | BlogSubCategory => getBlogPostSubCategoryBasedOnPostObj(post);
+function getBlogPostSubCategoryFromPostObj(post: PostBase): '' | BlogSubCategory {
+  const { sourceFileDir } = post._raw;
+  return getBlogPostSubCategoryFromStr(sourceFileDir);
+}
+
+export const getBlogPostSubCategory = (post: PostBase): '' | BlogSubCategory => getBlogPostSubCategoryFromPostObj(post);
 export const getBlogPostSlug = (post: PostBase): PathnameSegment => getLastPathStrPart(post._raw.flattenedPath);
 export const getAllPostsByCategory = (categ: BlogCategory): PostBase[] => BlogConfig.blogCategoriesAllPostsTypesAssoc[categ]();
 export const getAllPostsByCategoryAndSubCategory = (categ: BlogCategory, subCateg: BlogSubCategory): PostBase[] =>
   BlogConfig.allPostsTypesAssoc[categ][subCateg]();
 
 export function getPost(targettedCateg: BlogCategory, targettedSubCateg: BlogSubCategory, targettedSlug: BlogSlug): undefined | PostBase {
+  const languageFlag = getCurrentLanguageFlag();
   const postsCollection: PostBase[] = getAllPostsByCategoryAndSubCategory(targettedCateg, targettedSubCateg);
+
+  if (languageFlag === '') {
+    return postsCollection.find((post) => getBlogPostSubCategoryAndSlugStr(post) === buildPathFromParts(targettedSubCateg, targettedSlug));
+  }
   return postsCollection.find(
-    (post) => getBlogPostSubCategoryAndSlugStr(post) === getFormattedBlogPostSubCategoryAndSlugStr(targettedSubCateg, targettedSlug)
+    (post) => getBlogPostSubCategoryAndSlugStrAndLangFlag(post) === buildPathFromParts(targettedSubCateg, targettedSlug, languageFlag)
   );
 }
 

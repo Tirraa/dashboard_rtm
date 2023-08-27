@@ -1,4 +1,5 @@
-import { getAllPostsByCategoryAndSubCategory, getBlogPostSubCategoryBasedOnPostObj } from '@/lib/blog';
+import { getAllPostsByCategoryAndSubCategory, getBlogPostSubCategory } from '@/lib/blog';
+import { getBlogPostLanguageFlag, getCurrentLanguageFlag } from '@/lib/i18n';
 import BlogTaxonomy from '@/taxonomies/blog';
 import { BlogSubCategoryProps } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
@@ -11,7 +12,12 @@ interface SubCategoryRelatedBlogPostsProps extends BlogSubCategoryProps {}
 
 function subCategoryRelatedBlogPostsGeneration(posts: PostBase[]) {
   if (posts.length === 0) return <BlogPostsNotFound />;
-  return posts.map((post, index) => <BlogPostPeview key={index} {...{ post }} />);
+
+  return posts.map((post, index) => {
+    const postLanguageFlag = getBlogPostLanguageFlag(post);
+    if (postLanguageFlag !== getCurrentLanguageFlag()) return null;
+    return <BlogPostPeview key={index} {...{ post }} />;
+  });
 }
 
 // {ToDo} i18n this!
@@ -26,7 +32,7 @@ export const SubCategoryRelatedBlogPosts: FunctionComponent<SubCategoryRelatedBl
     notFound();
   }
 
-  const relatedPosts = postsCollection.filter((post) => getBlogPostSubCategoryBasedOnPostObj(post) === subCateg);
+  const relatedPosts = postsCollection.filter((post) => getBlogPostSubCategory(post) === subCateg);
   return (
     <div className="mx-auto max-w-xl py-8">
       <h1 className="mb-8 text-center text-2xl font-black">{subCateg}</h1>

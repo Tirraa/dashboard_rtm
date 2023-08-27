@@ -2,6 +2,7 @@ import BlogPostPeview from '@/components/blog/BlogPostPreview';
 import BlogPostsNotFound from '@/components/blog/BlogPostsNotFound';
 import BlogConfig from '@/config/blog';
 import { getAllPostsByCategory, getBlogCategoryFromPathname, getBlogPostSlug, getBlogPostSubCategory } from '@/lib/blog';
+import { getBlogPostLanguageFlag, getCurrentLanguageFlag } from '@/lib/i18n';
 import getServerSidePathnameWorkaround from '@/lib/misc/getServerSidePathname';
 import { getLastPathStrPart } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
@@ -14,16 +15,21 @@ export async function generateStaticParams() {
   const onTheFlyBlogCategoryBuildtimeCtx: BlogCategory = getLastPathStrPart(trickyPathname) as BlogCategory;
   const gettedOnTheFlyPosts = getAllPostsByCategory(onTheFlyBlogCategoryBuildtimeCtx);
 
-  return gettedOnTheFlyPosts.map((post) => ({
-    [BlogTaxonomy.subCategory]: getBlogPostSubCategory(post),
-    [BlogTaxonomy.slug]: getBlogPostSlug(post)
-  }));
+  return gettedOnTheFlyPosts
+    .filter((post) => getBlogPostLanguageFlag(post) === '')
+    .map((post) => ({
+      [BlogTaxonomy.subCategory]: getBlogPostSubCategory(post),
+      [BlogTaxonomy.slug]: getBlogPostSlug(post)
+    }));
 }
 
 // {ToDo} Filter by subCategory, limit to 5, and generate 'Show more' buttons! (⚠️ Using a HoC or making this generator function external, this autonomous code must be and stay agnostic!)
 function postsGenerator(posts: PostBase[]) {
   if (posts.length === 0) return <BlogPostsNotFound />;
-  return posts.map((post, index) => <BlogPostPeview key={index} {...{ post }} />);
+  return posts.map((post, index) => {
+    if (getBlogPostLanguageFlag(post) !== getCurrentLanguageFlag()) return null;
+    return <BlogPostPeview key={index} {...{ post }} />;
+  });
 }
 
 // {ToDo} i18n this!
