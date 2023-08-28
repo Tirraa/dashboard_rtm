@@ -1,15 +1,16 @@
-import { fallbackLng as DEFAULT_LANGUAGE } from '@/app/i18n/settings';
+import { languages } from '@/app/i18n/settings';
 import BlogPostPeview from '@/components/blog/BlogPostPreview';
 import BlogPostsNotFound from '@/components/blog/BlogPostsNotFound';
 import BlogConfig, { BlogCategory } from '@/config/blog';
-import { getAllPostsByCategory, getBlogCategoryFromPathname, getBlogPostSlug, getBlogPostSubCategory } from '@/lib/blog';
+import { getBlogCategoryFromPathname } from '@/lib/blog';
 import { getBlogPostLanguageFlag } from '@/lib/i18n';
 import getServerSidePathnameWorkaround from '@/lib/misc/getServerSidePathname';
-import { getLastPathStrPart } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
+import { BlogStaticParams, BlogStaticParamsValue } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { i18nParams } from '@/types/Next';
+import { PartialRecord } from '@/types/UglyTypes';
 import { compareDesc } from 'date-fns';
 
 interface BlogCategoryPageProps {
@@ -17,16 +18,27 @@ interface BlogCategoryPageProps {
 }
 
 export async function generateStaticParams() {
-  const trickyPathname = __dirname;
-  const onTheFlyBlogCategoryBuildtimeCtx: BlogCategory = getLastPathStrPart(trickyPathname) as BlogCategory;
-  const gettedOnTheFlyPosts = getAllPostsByCategory(onTheFlyBlogCategoryBuildtimeCtx);
+  function generateBlogStaticParams(): Partial<BlogStaticParams>[] {
+    const blogStaticParams: PartialRecord<keyof BlogStaticParams, BlogStaticParamsValue>[] = [];
+    const blogCategories = Object.keys(BlogConfig.blogCategoriesAllPostsTypesAssoc);
 
-  return gettedOnTheFlyPosts
-    .filter((post) => getBlogPostLanguageFlag(post) === DEFAULT_LANGUAGE)
-    .map((post) => ({
-      [BlogTaxonomy.subCategory]: getBlogPostSubCategory(post),
-      [BlogTaxonomy.slug]: getBlogPostSlug(post)
-    }));
+    blogCategories.forEach((category) => {
+      const categ = category as BlogCategory;
+      const entity = { [BlogTaxonomy.category]: categ };
+      blogStaticParams.push(entity);
+    });
+    return blogStaticParams as Partial<BlogStaticParams>[];
+  }
+
+  const blogStaticParamsEntities = generateBlogStaticParams();
+  const staticParams = languages.flatMap((lng) =>
+    blogStaticParamsEntities.map((entity) => ({
+      lng,
+      ...entity
+    }))
+  );
+
+  return staticParams;
 }
 
 // {ToDo} Filter by subCategory, limit to 5, and generate 'Show more' buttons! (⚠️ Using a HoC or making this generator function external, this autonomous code must be and stay agnostic!)

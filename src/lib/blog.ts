@@ -1,12 +1,9 @@
 import { fallbackLng as DEFAULT_LANGUAGE } from '@/app/i18n/settings';
-import BlogConfig, { BlogCategory, BlogSubCategory } from '@/config/blog';
+import BlogConfig, { BlogCategory } from '@/config/blog';
 import { LanguageFlag } from '@/config/i18n';
-import BlogTaxonomy from '@/taxonomies/blog';
-import { BlogSlug } from '@/types/Blog';
+import { BlogSlug, BlogSubCategory } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
-import { PathnameSegment } from '@/types/Next';
 import { getBlogPostLanguageFlag } from './i18n';
-import getServerSidePathnameWorkaround from './misc/getServerSidePathname';
 import { buildPathFromParts, getLastPathStrPart, indexOfNthOccurrence } from './str';
 
 const getBlogPostSubCategoryAndSlugStr = (post: PostBase): string => buildPathFromParts(getBlogPostSubCategory(post), getBlogPostSlug(post));
@@ -45,10 +42,10 @@ function getBlogPostSubCategoryFromPostObj(post: PostBase): '' | BlogSubCategory
 }
 
 export const getBlogPostSubCategory = (post: PostBase): '' | BlogSubCategory => getBlogPostSubCategoryFromPostObj(post);
-export const getBlogPostSlug = (post: PostBase): PathnameSegment => getLastPathStrPart(post._raw.flattenedPath);
+export const getBlogPostSlug = (post: PostBase): BlogSlug => getLastPathStrPart(post._raw.flattenedPath);
 export const getAllPostsByCategory = (categ: BlogCategory): PostBase[] => BlogConfig.blogCategoriesAllPostsTypesAssoc[categ]();
 export const getAllPostsByCategoryAndSubCategory = (categ: BlogCategory, subCateg: BlogSubCategory): PostBase[] =>
-  BlogConfig.allPostsTypesAssoc[categ][subCateg]();
+  getAllPostsByCategory(categ).filter((post) => getBlogPostSubCategory(post) === subCateg);
 
 export function getPost(
   targettedCateg: BlogCategory,
@@ -64,9 +61,4 @@ export function getPost(
   return postsCollection.find(
     (post) => getBlogPostSubCategoryAndSlugStrAndLangFlag(post) === buildPathFromParts(targettedSubCateg, targettedSlug, langFlag)
   );
-}
-
-export function adHocBlogPostsParamsRestBuilder() {
-  const params2 = { [BlogTaxonomy.category]: getBlogCategoryFromPathname(getServerSidePathnameWorkaround()) as BlogCategory };
-  return params2;
 }

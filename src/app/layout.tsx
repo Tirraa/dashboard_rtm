@@ -1,10 +1,6 @@
-import { ReactNode } from 'react';
+import { PhantomLayoutProps } from '@/types/UglyTypes';
 import './globals.css';
 
-type VeryRootLayoutProps = {
-  children: ReactNode;
-};
-
-export default function VeryRootLayout({ children }: VeryRootLayoutProps) {
+export default function PhantomLayout({ children }: PhantomLayoutProps) {
   return children;
 }

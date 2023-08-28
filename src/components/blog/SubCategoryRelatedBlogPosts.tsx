@@ -2,14 +2,12 @@ import { getAllPostsByCategoryAndSubCategory, getBlogPostSubCategory } from '@/l
 import { getBlogPostLanguageFlag } from '@/lib/i18n';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogSubCategoryProps } from '@/types/Blog';
+import { BlogSubCategoryPageProps } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
 import BlogPostPeview from './BlogPostPreview';
 import BlogPostsNotFound from './BlogPostsNotFound';
-
-interface SubCategoryRelatedBlogPostsProps extends BlogSubCategoryProps {}
 
 function subCategoryRelatedBlogPostsGeneration(posts: PostBase[], langFlag: string) {
   if (posts.length === 0) return <BlogPostsNotFound />;
@@ -22,8 +20,8 @@ function subCategoryRelatedBlogPostsGeneration(posts: PostBase[], langFlag: stri
 }
 
 // {ToDo} i18n this!
-export const SubCategoryRelatedBlogPosts: FunctionComponent<SubCategoryRelatedBlogPostsProps> = ({ params, ...params2 }) => {
-  const categ = params2[BlogTaxonomy.category];
+export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageProps> = ({ params }) => {
+  const categ = params[BlogTaxonomy.category];
   const subCateg = params[BlogTaxonomy.subCategory];
   const langFlag = params[i18nTaxonomy.langFlag];
 

@@ -1,10 +1,11 @@
 import { ELanguageFlag, LanguageFlag } from '@/config/i18n';
+import getEnumKeys, { getEnumFirstKey } from '@/lib/misc/getEnumKeys';
 import { i18nNamespace } from '@/types/i18nInitOptions';
 import { InitOptions } from 'i18next';
 
 export const cookieName: string = 'i18next';
-export const languages: string[] = Object.keys(ELanguageFlag).filter((key) => isNaN(Number(key))) as string[];
-export const fallbackLng: LanguageFlag = Object.values(ELanguageFlag)[0] as LanguageFlag;
+export const languages: string[] = getEnumKeys(ELanguageFlag);
+export const fallbackLng: LanguageFlag = getEnumFirstKey(ELanguageFlag) as LanguageFlag;
 export const defaultNS = 'vocab';
 
 export function getOptions(lng: string = fallbackLng, ns: i18nNamespace = defaultNS): InitOptions {
