@@ -19,12 +19,13 @@ function headersWithCurrentUrl(request: NextRequest): Headers {
 
 function i18nSupport(request: NextRequest, requestHeaders: Headers): NextResponse | Void {
   let lng = undefined;
-  if (!lng) lng = acceptLanguage.get(request.headers.get('Accept-Language'));
   let cookieCurrentValue = undefined;
+
   if (request.cookies.has(cookieName)) {
     cookieCurrentValue = request.cookies.get(cookieName)?.value;
   }
   if (!lng && cookieCurrentValue) lng = acceptLanguage.get(cookieCurrentValue);
+  if (!lng) lng = acceptLanguage.get(request.headers.get('Accept-Language'));
   if (!lng) lng = fallbackLng;
 
   const response = NextResponse.next({
