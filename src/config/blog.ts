@@ -1,8 +1,17 @@
 import { AllPostsTypesAssoc, PostsCollectionAssoc } from '@/types/Blog';
 import { allPatchPosts } from 'contentlayer/generated';
 
-export type BlogCategory = 'patch-notes'; // 'categ1' | 'categ2' | 'categ3'
-export type PatchPostSubCategory = 'dashboard' | 'discord-bot';
+enum EBlogCategory {
+  'patch-notes'
+}
+export type BlogCategory = keyof typeof EBlogCategory & string;
+
+enum EPatchPostSubCategory {
+  dashboard,
+  'discord-bot'
+}
+
+export type PatchPostSubCategory = keyof typeof EPatchPostSubCategory & string;
 export type BlogSubCategory = PatchPostSubCategory & string; // (A | B | C | D) & string
 
 const allPatchPostsTypesAssoc: PostsCollectionAssoc<PatchPostSubCategory> = {

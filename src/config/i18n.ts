@@ -3,5 +3,5 @@ export enum ELanguageFlag {
   en
 }
 
-export type LanguageFlagKey = keyof typeof ELanguageFlag;
+type LanguageFlagKey = keyof typeof ELanguageFlag;
 export type LanguageFlag = LanguageFlagKey & string;
