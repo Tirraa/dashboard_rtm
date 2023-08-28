@@ -8,7 +8,7 @@ import { CookiesProvider, useCookies } from 'react-cookie';
 
 interface HotFixPhantomComponentProps {}
 
-function Phantom() {
+function I18nCookieHotFixPhantom() {
   const pathname = usePathname();
   const langFlag = getPathnameI18nPart(pathname);
   const [cookies, setCookie] = useCookies([cookieName]);
@@ -20,7 +20,7 @@ function Phantom() {
 const HotFixPhantomComponent: FunctionComponent<HotFixPhantomComponentProps> = () => {
   return (
     <CookiesProvider defaultSetOptions={{ path: '/' }}>
-      <Phantom />
+      <I18nCookieHotFixPhantom />
     </CookiesProvider>
   );
 };
