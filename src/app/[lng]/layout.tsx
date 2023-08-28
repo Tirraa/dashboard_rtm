@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import '../globals.css';
 
 import { languages } from '@/app/i18n/settings';
+import HotFixPhantomComponent from '@/components/misc/HotfixPhantomComponent';
 import SitewideNavbar from '@/components/navbar/SitewideNavbar';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import LayoutBaseProps from '@/types/Next';
@@ -24,6 +25,7 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
   return (
     <html lang={lng} dir={dir(lng)}>
       <body className="flex flex-col min-h-screen">
+        <HotFixPhantomComponent />
         <SitewideNavbar />
         {children}
       </body>

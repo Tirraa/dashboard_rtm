@@ -1,4 +1,4 @@
-import { fallbackLng, languages } from '@/app/i18n/settings';
+import { cookieName, fallbackLng, languages } from '@/app/i18n/settings';
 import { Void } from '@/types/UglyTypes';
 import acceptLanguage from 'accept-language';
 import { NextRequest, NextResponse } from 'next/server';
@@ -10,8 +10,6 @@ export const config = {
   matcher: ['/((?!api|_next/static|_next/image|assets|favicon.ico|apple-icon.png|icon.svg|robots.txt|sw.js)(?!.*\\.xml$).*)']
 };
 
-const cookieName = 'i18next';
-
 // * ... Work-around (1): used for getServerSidePathnameWorkaround
 function headersWithCurrentUrl(request: NextRequest): Headers {
   const requestHeaders = new Headers(request.headers);
@@ -20,9 +18,13 @@ function headersWithCurrentUrl(request: NextRequest): Headers {
 }
 
 function i18nSupport(request: NextRequest, requestHeaders: Headers): NextResponse | Void {
-  let lng;
-  if (request.cookies.has(cookieName)) lng = acceptLanguage.get(request.cookies.get(cookieName)?.value);
+  let lng = undefined;
   if (!lng) lng = acceptLanguage.get(request.headers.get('Accept-Language'));
+  let cookieCurrentValue = undefined;
+  if (request.cookies.has(cookieName)) {
+    cookieCurrentValue = request.cookies.get(cookieName)?.value;
+  }
+  if (!lng && cookieCurrentValue) lng = acceptLanguage.get(cookieCurrentValue);
   if (!lng) lng = fallbackLng;
 
   const response = NextResponse.next({
@@ -31,7 +33,6 @@ function i18nSupport(request: NextRequest, requestHeaders: Headers): NextRespons
     }
   });
 
-  // Redirect if lng in path is not supported
   if (!languages.some((loc) => request.nextUrl.pathname.startsWith(`/${loc}`)) && !request.nextUrl.pathname.startsWith('/_next')) {
     return NextResponse.redirect(new URL(`/${lng}${request.nextUrl.pathname}`, request.url));
   }

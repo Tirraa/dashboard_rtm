@@ -11,8 +11,9 @@ export function generateMetadata({ params }: BlogPostPageProps) {
   const categ = getBlogCategoryFromPathname(getServerSidePathnameWorkaround()) as BlogCategory;
   const subCateg = params[BlogTaxonomy.subCategory];
   const slug = params[BlogTaxonomy.slug];
+  const lang = params[i18nTaxonomy.langFlag];
 
-  const post = getPost(categ, subCateg, slug, params[i18nTaxonomy.langFlag]);
+  const post = getPost(categ, subCateg, slug, lang);
   if (!post) notFound();
 
   return { title: post.title, description: post.metadescription };
