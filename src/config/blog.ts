@@ -10,8 +10,8 @@ enum EPatchPostSubCategory {
   dashboard,
   'discord-bot'
 }
-
 export type PatchPostSubCategory = keyof typeof EPatchPostSubCategory & string;
+
 export type BlogSubCategory = PatchPostSubCategory & string; // (A | B | C | D) & string
 
 const allPatchPostsTypesAssoc: PostsCollectionAssoc<PatchPostSubCategory> = {
