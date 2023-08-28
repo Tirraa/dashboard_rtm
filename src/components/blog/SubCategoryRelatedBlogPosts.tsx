@@ -1,6 +1,7 @@
 import { getAllPostsByCategoryAndSubCategory, getBlogPostSubCategory } from '@/lib/blog';
-import { getBlogPostLanguageFlag, getCurrentLanguageFlag } from '@/lib/i18n';
+import { getBlogPostLanguageFlag } from '@/lib/i18n';
 import BlogTaxonomy from '@/taxonomies/blog';
+import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogSubCategoryProps } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { notFound } from 'next/navigation';
@@ -10,12 +11,12 @@ import BlogPostsNotFound from './BlogPostsNotFound';
 
 interface SubCategoryRelatedBlogPostsProps extends BlogSubCategoryProps {}
 
-function subCategoryRelatedBlogPostsGeneration(posts: PostBase[]) {
+function subCategoryRelatedBlogPostsGeneration(posts: PostBase[], langFlag: string) {
   if (posts.length === 0) return <BlogPostsNotFound />;
 
   return posts.map((post, index) => {
     const postLanguageFlag = getBlogPostLanguageFlag(post);
-    if (postLanguageFlag !== getCurrentLanguageFlag()) return null;
+    if (postLanguageFlag !== langFlag) return null;
     return <BlogPostPeview key={index} {...{ post }} />;
   });
 }
@@ -24,6 +25,7 @@ function subCategoryRelatedBlogPostsGeneration(posts: PostBase[]) {
 export const SubCategoryRelatedBlogPosts: FunctionComponent<SubCategoryRelatedBlogPostsProps> = ({ params, ...params2 }) => {
   const categ = params2[BlogTaxonomy.category];
   const subCateg = params[BlogTaxonomy.subCategory];
+  const langFlag = params[i18nTaxonomy.langFlag];
 
   let postsCollection: PostBase[] = [];
   try {
@@ -36,7 +38,7 @@ export const SubCategoryRelatedBlogPosts: FunctionComponent<SubCategoryRelatedBl
   return (
     <div className="mx-auto max-w-xl py-8">
       <h1 className="mb-8 text-center text-2xl font-black">{subCateg}</h1>
-      {subCategoryRelatedBlogPostsGeneration(relatedPosts)}
+      {subCategoryRelatedBlogPostsGeneration(relatedPosts, langFlag)}
     </div>
   );
 };

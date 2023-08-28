@@ -1,4 +1,4 @@
-import { getBlogPostAbsolutePath } from '@/lib/i18n';
+import { getBlogPostPathWithoutI18nPart } from '@/lib/i18n';
 import { getSlicedBlogPostDescription } from '@/lib/str';
 import PostBase from '@/types/BlogPostAbstractions';
 import { format, parseISO } from 'date-fns';
@@ -16,7 +16,7 @@ export const BlogPostPeview: FunctionComponent<BlogPostPeviewProps> = ({ post })
   return (
     <div className="mb-8">
       <h2 className="mb-1 text-xl">
-        <Link href={getBlogPostAbsolutePath(post)} className="text-blue-700 hover:text-blue-900 dark:text-blue-400">
+        <Link href={getBlogPostPathWithoutI18nPart(post)} className="text-blue-700 hover:text-blue-900 dark:text-blue-400">
           {post.title}
         </Link>
       </h2>

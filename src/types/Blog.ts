@@ -1,18 +1,21 @@
+import { BlogCategory, BlogSubCategory } from '@/config/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import PostBase from './BlogPostAbstractions';
+import { i18nParams } from './Next';
 
-export type BlogCategory = 'patch-notes'; // 'categ1' | 'categ2' | 'categ3'
-
-export type PatchPostSubCategory = 'dashboard' | 'discord-bot';
-
-export type BlogSubCategory = PatchPostSubCategory & string; // (A | B | C | D) & string
 export type BlogSlug = string;
 
+type BlogPostPagePropsParams = {
+  [BlogTaxonomy.subCategory]: BlogSubCategory;
+  [BlogTaxonomy.slug]: BlogSlug;
+};
+
+type BlogSubCategoryPagePropsParams = {
+  [BlogTaxonomy.subCategory]: BlogSubCategory;
+};
+
 export interface BlogPostPageProps {
-  params: {
-    [BlogTaxonomy.subCategory]: BlogSubCategory;
-    [BlogTaxonomy.slug]: BlogSlug;
-  };
+  params: BlogPostPagePropsParams & i18nParams;
 }
 
 export interface BlogPostProps extends BlogPostPageProps {
@@ -20,9 +23,7 @@ export interface BlogPostProps extends BlogPostPageProps {
 }
 
 export interface BlogSubCategoryPageProps {
-  params: {
-    [BlogTaxonomy.subCategory]: BlogSubCategory;
-  };
+  params: BlogSubCategoryPagePropsParams & i18nParams;
 }
 
 export interface BlogSubCategoryProps extends BlogSubCategoryPageProps {

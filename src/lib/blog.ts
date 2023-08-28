@@ -1,9 +1,11 @@
-import BlogConfig from '@/config/blog';
+import { fallbackLng as DEFAULT_LANGUAGE } from '@/app/i18n/settings';
+import BlogConfig, { BlogCategory, BlogSubCategory } from '@/config/blog';
+import { LanguageFlag } from '@/config/i18n';
 import BlogTaxonomy from '@/taxonomies/blog';
-import { BlogCategory, BlogSlug, BlogSubCategory } from '@/types/Blog';
+import { BlogSlug } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { PathnameSegment } from '@/types/Next';
-import { getBlogPostLanguageFlag, getCurrentLanguageFlag } from './i18n';
+import { getBlogPostLanguageFlag } from './i18n';
 import getServerSidePathnameWorkaround from './misc/getServerSidePathname';
 import { buildPathFromParts, getLastPathStrPart, indexOfNthOccurrence } from './str';
 
@@ -48,15 +50,19 @@ export const getAllPostsByCategory = (categ: BlogCategory): PostBase[] => BlogCo
 export const getAllPostsByCategoryAndSubCategory = (categ: BlogCategory, subCateg: BlogSubCategory): PostBase[] =>
   BlogConfig.allPostsTypesAssoc[categ][subCateg]();
 
-export function getPost(targettedCateg: BlogCategory, targettedSubCateg: BlogSubCategory, targettedSlug: BlogSlug): undefined | PostBase {
-  const languageFlag = getCurrentLanguageFlag();
+export function getPost(
+  targettedCateg: BlogCategory,
+  targettedSubCateg: BlogSubCategory,
+  targettedSlug: BlogSlug,
+  langFlag: LanguageFlag
+): undefined | PostBase {
   const postsCollection: PostBase[] = getAllPostsByCategoryAndSubCategory(targettedCateg, targettedSubCateg);
 
-  if (languageFlag === '') {
+  if (langFlag === DEFAULT_LANGUAGE) {
     return postsCollection.find((post) => getBlogPostSubCategoryAndSlugStr(post) === buildPathFromParts(targettedSubCateg, targettedSlug));
   }
   return postsCollection.find(
-    (post) => getBlogPostSubCategoryAndSlugStrAndLangFlag(post) === buildPathFromParts(targettedSubCateg, targettedSlug, languageFlag)
+    (post) => getBlogPostSubCategoryAndSlugStrAndLangFlag(post) === buildPathFromParts(targettedSubCateg, targettedSlug, langFlag)
   );
 }
 

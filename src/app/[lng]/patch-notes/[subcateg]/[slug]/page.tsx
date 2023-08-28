@@ -1,8 +1,10 @@
 import BlogPost from '@/components/blog/BlogPost';
+import { BlogCategory } from '@/config/blog';
 import { adHocBlogPostsParamsRestBuilder, getBlogCategoryFromPathname, getPost } from '@/lib/blog';
 import getServerSidePathnameWorkaround from '@/lib/misc/getServerSidePathname';
 import BlogTaxonomy from '@/taxonomies/blog';
-import { BlogCategory, BlogPostPageProps } from '@/types/Blog';
+import i18nTaxonomy from '@/taxonomies/i18n';
+import { BlogPostPageProps } from '@/types/Blog';
 import { notFound } from 'next/navigation';
 
 export function generateMetadata({ params }: BlogPostPageProps) {
@@ -10,7 +12,7 @@ export function generateMetadata({ params }: BlogPostPageProps) {
   const subCateg = params[BlogTaxonomy.subCategory];
   const slug = params[BlogTaxonomy.slug];
 
-  const post = getPost(categ, subCateg, slug);
+  const post = getPost(categ, subCateg, slug, params[i18nTaxonomy.langFlag]);
   if (!post) notFound();
 
   return { title: post.title, description: post.metadescription };

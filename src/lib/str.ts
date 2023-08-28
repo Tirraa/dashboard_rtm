@@ -1,6 +1,7 @@
 import BlogConfig from '@/config/blog';
 import RoutesBase from '@/config/routes';
 import { PathnameSegment } from '@/types/Next';
+import { getPathnameWithoutI18nPart } from './i18n';
 
 type DescriptionAsIs = string;
 type CroppedDescription = string;
@@ -19,8 +20,12 @@ export function indexOfNthOccurrence(strHaystack: string, needle: string, n: num
   return index;
 }
 
-export const hrefMatchesPathname = (href: string, pathname: string): boolean =>
-  pathname === href || (href !== RoutesBase.sitewide && pathname.startsWith(getSlashEnvelope(href)));
+export function hrefMatchesPathname(href: string, pathname: string): boolean {
+  const pathnameWithouti18n = getPathnameWithoutI18nPart(pathname);
+  if (pathnameWithouti18n === href) return true;
+  if (href !== RoutesBase.sitewide && pathnameWithouti18n.startsWith(getSlashEnvelope(href))) return true;
+  return false;
+}
 
 export function getSlicedBlogPostDescription(description: string): DescriptionAsIs | CroppedDescription {
   const takeLimit = BlogConfig.blogPostPeviewDescriptionCharactersLimit - 1;

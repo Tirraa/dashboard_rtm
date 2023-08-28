@@ -62,7 +62,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       <div className="flex items-center justify-between text-white">
         <Link href={RoutesBase.sitewide}>
           <div className="flex">
-            <Image src="/rtm-logo.svg" height={logoSizeInPx} width={logoSizeInPx} alt="Rust Team Management (logo)" />
+            <Image src="/assets/rtm-logo.svg" height={logoSizeInPx} width={logoSizeInPx} alt="Rust Team Management (logo)" />
             <Typography as="span" className="hidden lg:block ml-4 py-1.5 font-medium">
               <RtmTextNode />
             </Typography>

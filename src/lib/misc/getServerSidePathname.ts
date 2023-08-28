@@ -8,7 +8,7 @@ export function getServerSidePathnameWorkaround(): '' | Pathname {
   if (url === '') {
     return '';
   }
-  const pathnameStartIndex = indexOfNthOccurrence(url, '/', 3);
+  const pathnameStartIndex = indexOfNthOccurrence(url, '/', 4);
   const pathname = url.substring(pathnameStartIndex);
   return pathname;
 }

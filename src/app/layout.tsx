@@ -1,23 +1,10 @@
-import { Metadata } from 'next';
+import { ReactNode } from 'react';
 import './globals.css';
 
-import SitewideNavbar from '@/components/navbar/SitewideNavbar';
-import LayoutBaseProps from '@/types/Next';
-
-interface RootLayoutProps extends LayoutBaseProps {}
-
-export const metadata: Metadata = {
-  title: 'Dashboard',
-  description: 'lorem ipsum dolor sit amet'
+type VeryRootLayoutProps = {
+  children: ReactNode;
 };
 
-export default function RootLayout({ children }: RootLayoutProps) {
-  return (
-    <html lang="fr">
-      <body className="flex flex-col min-h-screen">
-        <SitewideNavbar />
-        {children}
-      </body>
-    </html>
-  );
+export default function VeryRootLayout({ children }: VeryRootLayoutProps) {
+  return children;
 }
