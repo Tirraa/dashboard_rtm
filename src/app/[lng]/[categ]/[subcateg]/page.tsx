@@ -6,12 +6,11 @@ import { blogSubCategoriesByCategory } from '@/app/proxies/blog';
 import BlogConfig, { BlogCategory } from '@/config/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import { BlogStaticParams, BlogStaticParamsValue, BlogSubCategory } from '@/types/Blog';
-import { PartialRecord } from '@/types/UglyTypes';
 
 export async function generateStaticParams() {
   function generateBlogStaticParams(): Partial<BlogStaticParams>[] {
     const existingParams = new Set<string>();
-    const blogStaticParams: PartialRecord<keyof BlogStaticParams, BlogStaticParamsValue>[] = [];
+    const blogStaticParams: Partial<Record<keyof BlogStaticParams, BlogStaticParamsValue>>[] = [];
     const blogCategories = Object.keys(BlogConfig.blogCategoriesAllPostsTypesAssoc);
 
     blogCategories.forEach((category) => {

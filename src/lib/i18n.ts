@@ -1,7 +1,7 @@
 import { fallbackLng as DEFAULT_LANGUAGE, languages as LANGUAGES } from '@/app/i18n/settings';
 import { LanguageFlag } from '@/config/i18n';
 import PostBase from '@/types/BlogPostAbstractions';
-import { Pathname } from '@/types/Next';
+import { Path } from '@/types/Next';
 import { gsub, indexOfNthOccurrence } from './str';
 
 const isValidLanguageFlag = (key: string): boolean => LANGUAGES.includes(key);
@@ -30,7 +30,7 @@ function getBlogPostLanguageFlagFromPostObj(post: PostBase): LanguageFlag {
   return getBlogPostLanguageFlagFromStr(sourceFileDir);
 }
 
-export function getBlogPostPathWithoutI18nPart(post: PostBase): Pathname {
+export function getBlogPostPathWithoutI18nPart(post: PostBase): Path {
   const langFlag = getBlogPostLanguageFlagFromPostObj(post);
   if (langFlag === DEFAULT_LANGUAGE) return post.url;
   return gsub(post.url, `/${langFlag}/`, '/');
@@ -38,7 +38,7 @@ export function getBlogPostPathWithoutI18nPart(post: PostBase): Pathname {
 
 export const getBlogPostLanguageFlag = (post: PostBase): LanguageFlag => getBlogPostLanguageFlagFromPostObj(post);
 
-export function getPathnameWithoutI18nPart(pathname: string): Pathname {
+export function getPathnameWithoutI18nPart(pathname: string): Path {
   const secondSlashIndex = indexOfNthOccurrence(pathname, '/', 2);
   const pathnameWithouti18n = secondSlashIndex === -1 ? '/' : pathname.substring(secondSlashIndex);
   return pathnameWithouti18n;

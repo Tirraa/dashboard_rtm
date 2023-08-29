@@ -14,7 +14,7 @@ export interface LayoutBaseProps extends i18nParamsProps {
   children: ReactNode;
 }
 
-export type Pathname = string;
-export type PathnameSegment = string;
+export type Path = string;
+export type PathSegment = string;
 
 export default LayoutBaseProps;

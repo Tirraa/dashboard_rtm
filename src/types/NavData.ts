@@ -1,3 +1,5 @@
+import { Path } from '@/types/Next';
+
 type NavDataRouteTitle = string;
 
 export type NavDataRouteTitleGetter = () => NavDataRouteTitle;
@@ -5,7 +7,7 @@ export type NavDataRoutesTitles = Record<NavDataRouteTitle, NavDataRouteTitleGet
 
 interface AtomicNavDataEntity {
   getTitle: NavDataRouteTitleGetter;
-  path: NavDataRouteTitle;
+  path: Path;
 }
 
 export type EmbeddedEntities = AtomicNavDataEntity[];

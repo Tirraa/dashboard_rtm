@@ -1,10 +1,9 @@
 import BlogConfig, { BlogCategory } from '@/config/blog';
 import { getBlogPostSubCategory } from '@/lib/blog';
 import { BlogSubCategory } from '@/types/Blog';
-import { PartialRecord } from '@/types/UglyTypes';
 
 namespace BlogProxy {
-  export let subCategoriesPtr: PartialRecord<BlogCategory, BlogSubCategory[]> = {};
+  export let subCategoriesPtr: Partial<Record<BlogCategory, BlogSubCategory[]>> = {};
 }
 
 function buildSubCategoriesSet(category: BlogCategory) {

@@ -1,8 +1,8 @@
 import { indexOfNthOccurrence } from '@/lib/str';
-import { Pathname } from '@/types/Next';
+import { Path } from '@/types/Next';
 import { headers } from 'next/headers';
 
-export function getServerSidePathnameWorkaround(): '' | Pathname {
+export function getServerSidePathnameWorkaround(): '' | Path {
   const headersSet: Headers = headers();
   const url = headersSet.get('x-url') || '';
   if (url === '') {

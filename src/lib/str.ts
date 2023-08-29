@@ -1,6 +1,6 @@
 import BlogConfig from '@/config/blog';
 import RoutesBase from '@/config/routes';
-import { PathnameSegment } from '@/types/Next';
+import { PathSegment } from '@/types/Next';
 import { getPathnameWithoutI18nPart } from './i18n';
 
 type DescriptionAsIs = string;
@@ -36,7 +36,7 @@ export function getSlicedBlogPostDescription(description: string): DescriptionAs
   return slicedDescription;
 }
 
-export function getLastPathStrPart(path: string): PathnameSegment {
+export function getLastPathStrPart(path: string): PathSegment {
   const lastIndex = path.lastIndexOf('/');
 
   if (lastIndex !== -1 && lastIndex !== path.length - 1) return path.substring(lastIndex + 1);

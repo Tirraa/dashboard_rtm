@@ -7,7 +7,6 @@ import getServerSidePathnameWorkaround from '@/lib/misc/getServerSidePathname';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogPostPageProps, BlogStaticParams, BlogStaticParamsValue, BlogSubCategory } from '@/types/Blog';
-import { PartialRecord } from '@/types/UglyTypes';
 import { notFound } from 'next/navigation';
 
 export function generateMetadata({ params }: BlogPostPageProps) {
@@ -25,7 +24,7 @@ export function generateMetadata({ params }: BlogPostPageProps) {
 export async function generateStaticParams() {
   function generateBlogStaticParams(): BlogStaticParams[] {
     const existingParams = new Set<string>();
-    const blogStaticParams: PartialRecord<keyof BlogStaticParams, BlogStaticParamsValue>[] = [];
+    const blogStaticParams: Partial<Record<keyof BlogStaticParams, BlogStaticParamsValue>>[] = [];
     const blogCategories = Object.keys(BlogConfig.blogCategoriesAllPostsTypesAssoc);
 
     blogCategories.forEach((category) => {
