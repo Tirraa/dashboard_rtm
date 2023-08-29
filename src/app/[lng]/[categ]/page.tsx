@@ -9,13 +9,11 @@ import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogStaticParams, BlogStaticParamsValue } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
-import { i18nParams } from '@/types/Next';
+import { i18nParamsProps } from '@/types/Next';
 import { PartialRecord } from '@/types/UglyTypes';
 import { compareDesc } from 'date-fns';
 
-interface BlogCategoryPageProps {
-  params: i18nParams;
-}
+interface BlogCategoryPageProps extends i18nParamsProps {}
 
 export async function generateStaticParams() {
   function generateBlogStaticParams(): Partial<BlogStaticParams>[] {

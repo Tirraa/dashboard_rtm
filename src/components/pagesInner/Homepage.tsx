@@ -1,3 +1,4 @@
+import CommonsVocab from '@/app/i18n/locales/commons';
 import InviteBotButton from '@/components/misc/InviteBotButton';
 import Image from 'next/image';
 import { CSSProperties, FunctionComponent } from 'react';
@@ -10,13 +11,14 @@ const style: CSSProperties = {
 };
 const [width, height]: [number, number] = [226, 69];
 
-// {ToDo} i18n this!
-export const HomepageInner: FunctionComponent<HomepageInnerProps> = () => (
-  <div className="m-auto">
-    <Image src="/assets/rtm-txt-logo.svg" {...{ style, width, height }} alt="Rust Team Management (text logo)" />
-    <h1 className="mt-2">Rust Team Management</h1>
-    <InviteBotButton />
-  </div>
-);
+export const HomepageInner: FunctionComponent<HomepageInnerProps> = () => {
+  return (
+    <div className="m-auto">
+      <Image src="/assets/rtm-txt-logo.svg" {...{ style, width, height }} alt={`${CommonsVocab.brand} (${CommonsVocab.logo})`} />
+      <h1 className="mt-2">{CommonsVocab.brand}</h1>
+      <InviteBotButton />
+    </div>
+  );
+};
 
 export default HomepageInner;
