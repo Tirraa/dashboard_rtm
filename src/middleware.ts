@@ -1,4 +1,4 @@
-import { cookieName, fallbackLng, languages } from '@/app/i18n/settings';
+import { cookieName, fallbackLng, languages } from '@/i18n/settings';
 import { Void } from '@/types/UglyTypes';
 import acceptLanguage from 'accept-language';
 import { NextRequest, NextResponse } from 'next/server';

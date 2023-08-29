@@ -4,9 +4,9 @@ import '../globals.css';
 
 import HotFixPhantomComponent from '@/components/misc/HotfixPhantomComponent';
 import SitewideNavbar from '@/components/navbar/SitewideNavbar';
+import { languages } from '@/i18n/settings';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import LayoutBaseProps from '@/types/Next';
-import { languages } from '../i18n/settings';
 
 interface RootLayoutProps extends LayoutBaseProps {}
 
@@ -26,7 +26,7 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
     <html lang={lng} dir={dir(lng)}>
       <body className="flex flex-col min-h-screen">
         <HotFixPhantomComponent />
-        <SitewideNavbar />
+        <SitewideNavbar {...{ i18nProps: { [i18nTaxonomy.langFlag]: lng } }} />
         {children}
       </body>
     </html>

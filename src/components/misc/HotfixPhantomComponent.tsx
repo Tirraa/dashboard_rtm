@@ -1,6 +1,6 @@
 'use client';
 
-import { cookieName } from '@/app/i18n/settings';
+import { cookieName } from '@/i18n/settings';
 import { getPathnameI18nPart } from '@/lib/i18n';
 import { usePathname } from 'next/navigation';
 import { FunctionComponent } from 'react';

@@ -17,12 +17,20 @@ type BlogSubCategoryPagePropsParams = {
   [BlogTaxonomy.subCategory]: BlogSubCategory;
 };
 
-export interface BlogPostPageProps {
-  params: BlogPostPagePropsParams & i18nParams;
+type BlogCategoryPagePropsParams = {
+  [BlogTaxonomy.category]: BlogCategory;
+};
+
+export interface BlogCategoryPageProps {
+  params: BlogCategoryPagePropsParams & i18nParams;
 }
 
 export interface BlogSubCategoryPageProps {
   params: BlogSubCategoryPagePropsParams & i18nParams;
+}
+
+export interface BlogPostPageProps {
+  params: BlogPostPagePropsParams & i18nParams;
 }
 
 type AllPostsGetter = () => PostBase[];
@@ -35,3 +43,5 @@ export type BlogStaticParamsValue = string;
 export type BlogStaticParams = {
   [_ in keyof TBlogTaxonomy]: BlogStaticParamsValue;
 };
+
+export type ForcedBlogSubCategoriesPaths = Partial<Record<BlogCategory, string[]>>;

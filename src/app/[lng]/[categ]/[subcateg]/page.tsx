@@ -1,9 +1,9 @@
 import SubCategoryRelatedBlogPosts from '@/components/blog/SubCategoryRelatedBlogPosts';
 import { BlogSubCategoryPageProps } from '@/types/Blog';
 
-import { languages } from '@/app/i18n/settings';
 import { blogSubCategoriesByCategory } from '@/app/proxies/blog';
 import BlogConfig, { BlogCategory } from '@/config/blog';
+import { languages } from '@/i18n/settings';
 import BlogTaxonomy from '@/taxonomies/blog';
 import { BlogStaticParams, BlogStaticParamsValue, BlogSubCategory } from '@/types/Blog';
 

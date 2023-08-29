@@ -1,10 +1,10 @@
 import DiscordConfig from '@/config/discord';
+import { i18ns } from '@/config/i18n';
 import { RoutesBase } from '@/config/routes';
 import { SitewideNavbarRoutes, SitewideNavbarRoutesTitles } from './utils/RoutesMapping';
 
 const b = RoutesBase.sitewide;
 
-// {ToDo} i18n this?
 export const sitewideNavbarRoutes: SitewideNavbarRoutes = {
   HOME_PAGE: b,
   DASHBOARD_PAGE: RoutesBase.dashboard,
@@ -13,13 +13,13 @@ export const sitewideNavbarRoutes: SitewideNavbarRoutes = {
   LOGIN_PAGE: b + 'login'
 };
 
-// {ToDo} i18n this!
+const ns = i18ns.navbar;
 export const sitewideNavbarRoutesTitles: SitewideNavbarRoutesTitles = {
-  HOME_PAGE: () => 'Accueil',
-  DASHBOARD_PAGE: () => 'Dashboard',
-  PATCH_NOTES_PAGE: () => 'Patch notes',
-  SUPPORT_PAGE: () => 'Support',
-  LOGIN_PAGE: () => 'Connexion'
+  HOME_PAGE: { targetKey: 'home', ns },
+  DASHBOARD_PAGE: { targetKey: 'dashboard', ns },
+  PATCH_NOTES_PAGE: { targetKey: 'patch-notes', ns },
+  SUPPORT_PAGE: { targetKey: 'assistance', ns },
+  LOGIN_PAGE: { targetKey: 'login', ns }
 };
 
 export default sitewideNavbarRoutes;

@@ -1,10 +1,15 @@
+import { LanguageFlag } from '@/config/i18n';
+import { getServerSideTranslation } from '@/i18n';
 import { FunctionComponent } from 'react';
 
-interface BlogPostsNotFoundProps {}
+interface BlogPostsNotFoundProps {
+  lng: LanguageFlag;
+}
 
-// {ToDo} i18n this!
-export const BlogPostsNotFound: FunctionComponent<BlogPostsNotFoundProps> = () => {
-  return <p>Rien à afficher ici !</p>;
+export const BlogPostsNotFound: FunctionComponent<BlogPostsNotFoundProps> = async ({ lng }) => {
+  const { t } = await getServerSideTranslation(lng);
+  const txt = t('no-blog-post');
+  return <p>{txt}</p>;
 };
 
 export default BlogPostsNotFound;

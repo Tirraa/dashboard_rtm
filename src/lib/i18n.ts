@@ -1,5 +1,5 @@
-import { fallbackLng as DEFAULT_LANGUAGE, languages as LANGUAGES } from '@/app/i18n/settings';
 import { LanguageFlag } from '@/config/i18n';
+import { fallbackLng as DEFAULT_LANGUAGE, languages as LANGUAGES } from '@/i18n/settings';
 import PostBase from '@/types/BlogPostAbstractions';
 import { Path } from '@/types/Next';
 import { gsub, indexOfNthOccurrence } from './str';

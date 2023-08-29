@@ -3,6 +3,7 @@
 import NotFoundInner from '@/components/pagesInner/Notfound';
 import { LanguageFlag } from '@/config/i18n';
 import { getPathnameI18nPart } from '@/lib/i18n';
+import i18nTaxonomy from '@/taxonomies/i18n';
 import { usePathname } from 'next/navigation';
 
 export default function NotFound() {
@@ -12,7 +13,7 @@ export default function NotFound() {
   return (
     <html lang={lng} dir={lng}>
       <body className="flex flex-col min-h-screen">
-        <NotFoundInner forcedLang={lng} />
+        <NotFoundInner {...{ i18nProps: { [i18nTaxonomy.langFlag]: lng } }} />
       </body>
     </html>
   );

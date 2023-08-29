@@ -1,4 +1,4 @@
-import UniversalVocab from '@/app/i18n/locales/Universal';
+import UniversalVocab from '@/i18n/locales/UniversalVocab';
 import { Properties } from '@/types/React';
 import { FunctionComponent } from 'react';
 

@@ -1,6 +1,6 @@
-import { fallbackLng as DEFAULT_LANGUAGE } from '@/app/i18n/settings';
 import BlogConfig, { BlogCategory } from '@/config/blog';
 import { LanguageFlag } from '@/config/i18n';
+import { fallbackLng as DEFAULT_LANGUAGE } from '@/i18n/settings';
 import { BlogSlug, BlogSubCategory } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { getBlogPostLanguageFlag } from './i18n';

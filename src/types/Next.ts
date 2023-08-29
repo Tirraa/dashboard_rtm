@@ -10,6 +10,10 @@ export interface i18nPageProps {
   params: i18nParams;
 }
 
+export interface i18nComponentProps {
+  i18nProps: i18nParams;
+}
+
 export interface LayoutBaseProps extends i18nPageProps {
   children: ReactNode;
 }

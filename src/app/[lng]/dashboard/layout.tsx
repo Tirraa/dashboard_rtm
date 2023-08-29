@@ -9,10 +9,10 @@ export const metadata: Metadata = {
   description: 'lorem ipsum dolor sit amet'
 };
 
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
+export default function DashboardLayout({ params, children }: DashboardLayoutProps) {
   return (
     <div className="flex">
-      <DashboardSidebar />
+      <DashboardSidebar {...{ i18nProps: { ...params } }} />
       <main className="ml-20 flex-1">{children}</main>
     </div>
   );

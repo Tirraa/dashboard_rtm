@@ -1,8 +1,9 @@
-import { languages } from '@/app/i18n/settings';
 import { blogSubCategoriesByCategory } from '@/app/proxies/blog';
 import BlogPost from '@/components/blog/BlogPost';
 import BlogConfig, { BlogCategory } from '@/config/blog';
+import { languages } from '@/i18n/settings';
 import { getAllPostsByCategoryAndSubCategory, getBlogCategoryFromPathname, getBlogPostSlug, getPost } from '@/lib/blog';
+import { getPathnameWithoutI18nPart } from '@/lib/i18n';
 import getServerSidePathnameWorkaround from '@/lib/misc/getServerSidePathname';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
@@ -10,7 +11,7 @@ import { BlogPostPageProps, BlogStaticParams, BlogStaticParamsValue, BlogSubCate
 import { notFound } from 'next/navigation';
 
 export function generateMetadata({ params }: BlogPostPageProps) {
-  const categ = getBlogCategoryFromPathname(getServerSidePathnameWorkaround()) as BlogCategory;
+  const categ = getBlogCategoryFromPathname(getPathnameWithoutI18nPart(getServerSidePathnameWorkaround())) as BlogCategory;
   const subCateg = params[BlogTaxonomy.subCategory];
   const slug = params[BlogTaxonomy.slug];
   const lang = params[i18nTaxonomy.langFlag];

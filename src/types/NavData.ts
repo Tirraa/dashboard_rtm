@@ -1,12 +1,13 @@
 import { Path } from '@/types/Next';
+import { I18nVocabAccessInfos } from './I18n';
 
 type NavDataRouteTitle = string;
 
-export type NavDataRouteTitleGetter = () => NavDataRouteTitle;
-export type NavDataRoutesTitles = Record<NavDataRouteTitle, NavDataRouteTitleGetter>;
+export type NavDataRouteTitleInfos = I18nVocabAccessInfos;
+export type NavDataRoutesTitles = Record<NavDataRouteTitle, NavDataRouteTitleInfos>;
 
-interface AtomicNavDataEntity {
-  getTitle: NavDataRouteTitleGetter;
+export interface AtomicNavDataEntity {
+  i18nTitleInfos: NavDataRouteTitleInfos;
   path: Path;
 }
 
@@ -15,6 +16,7 @@ export interface NavDataEntity extends AtomicNavDataEntity {
   embeddedEntities?: EmbeddedEntities;
 }
 
+export interface NavbarDropdownElement extends Required<NavDataEntity> {}
 export type NavDataEntities = NavDataEntity[];
 
 export type DropdownsConfig<T extends string> = Partial<Record<T, NavDataEntities>>;

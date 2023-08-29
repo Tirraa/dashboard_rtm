@@ -1,25 +1,41 @@
 'use client';
 
-import UniversalVocab from '@/app/i18n/locales/Universal';
 import useCollapseNavbarOnResize from '@/components/_customHooks/_hotfixes/useCollapseNavbarOnResize';
 import RtmTextNode from '@/components/misc/RtmTextNodeWithUppercaseEffect';
-import navbarElements from '@/config/SitewideNavbar/sitewideNavbarRoutesComponents';
+import sitewideNavbarDropdownsConfig from '@/config/SitewideNavbar/dropDownsConfig';
+import sitewideNavbarRoutes, { sitewideNavbarRoutesTitles } from '@/config/SitewideNavbar/routesImpl';
 import RoutesBase from '@/config/routes';
+import { getClientSideTranslation } from '@/i18n/client';
+import UniversalVocab from '@/i18n/locales/UniversalVocab';
+import getComputedNavData from '@/lib/misc/getComputedNavData';
+import i18nTaxonomy from '@/taxonomies/i18n';
+import { i18nComponentProps } from '@/types/Next';
 import { Collapse, IconButton, Navbar, Typography } from '@material-tailwind/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FunctionComponent, useEffect, useRef, useState } from 'react';
+import NavbarElement from '../_hoc/navbar/NavbarElement';
 import NavbarButton from './NavbarButton';
 
-interface SitewideNavbarProps {}
+interface SitewideNavbarProps extends i18nComponentProps {}
 
 const navbarId = 'sitewide-navbar';
 const forceNavbarMenuToCollapseBreakpointPxValue = 960;
 const logoSizeInPx = 50;
 
-export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
+export function buildNavbarElements({ i18nProps }: i18nComponentProps) {
+  const computedNavData = getComputedNavData(sitewideNavbarRoutes, sitewideNavbarRoutesTitles, sitewideNavbarDropdownsConfig);
+  const navbarElements = computedNavData.map(({ i18nTitleInfos, path, embeddedEntities }) => {
+    return <NavbarElement key={`navbar-btn-${i18nTitleInfos.targetKey}${path}`} {...{ i18nProps, i18nTitleInfos, path, embeddedEntities }} />;
+  });
+  return navbarElements;
+}
+
+export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = ({ i18nProps }) => {
   const mobileMenuInstanceRef = useRef<HTMLDivElement>(null);
   const [openNav, setOpenNav] = useState<boolean>(false);
+  const lng = i18nProps[i18nTaxonomy.langFlag];
+  const { t } = getClientSideTranslation(lng);
 
   useCollapseNavbarOnResize(forceNavbarMenuToCollapseBreakpointPxValue, mobileMenuInstanceRef, setOpenNav);
 
@@ -32,6 +48,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
     return () => document.removeEventListener('click', closeNavbarOnOutsideClick);
   }, [openNav]);
 
+  const navbarElements = buildNavbarElements({ i18nProps });
   const desktopNavbarElements = navbarElements.map((elm, index) => (
     <Typography key={`navbar-btn-typography-${index}`} as="li" color="blue-gray" className="p-1 font-normal">
       {elm}
@@ -63,7 +80,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       <div className="flex items-center justify-between text-white">
         <Link href={RoutesBase.sitewide}>
           <div className="flex">
-            <Image src="/assets/rtm-logo.svg" height={logoSizeInPx} width={logoSizeInPx} alt={`${UniversalVocab.brand} (${UniversalVocab.logo})`} />
+            <Image src="/assets/rtm-logo.svg" height={logoSizeInPx} width={logoSizeInPx} alt={`${UniversalVocab.brand} (${t('logo')})`} />
             <Typography as="span" className="hidden lg:block ml-4 py-1.5 font-medium">
               <RtmTextNode />
             </Typography>
