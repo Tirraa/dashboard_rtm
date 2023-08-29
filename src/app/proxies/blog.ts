@@ -14,8 +14,8 @@ function buildSubCategoriesSet(category: BlogCategory) {
   return subCategoriesSet;
 }
 
-function subCategoriesByCategoryAccessor(category: BlogCategory, lazy = true) {
-  if (!lazy || BlogProxy.subCategoriesPtr[category] === undefined) {
+function subCategoriesByCategoryAccessor(category: BlogCategory) {
+  if (BlogProxy.subCategoriesPtr[category] === undefined) {
     const subCategsSet = buildSubCategoriesSet(category);
     BlogProxy.subCategoriesPtr[category] = Array.from(subCategsSet);
   }
