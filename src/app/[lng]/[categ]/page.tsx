@@ -51,7 +51,6 @@ function postsGenerator(posts: PostBase[], lng: string) {
   return generatedPosts.some((item) => item !== null) ? generatedPosts : <BlogPostsNotFound />;
 }
 
-// {ToDo} i18n this!
 export default function Page({ params }: BlogCategoryPageProps) {
   const onTheFlyBlogCategoryRuntimeCtx: BlogCategory = getBlogCategoryFromPathname(getServerSidePathnameWorkaround()) as BlogCategory;
   const trickyRelatedPostsGetter = BlogConfig.blogCategoriesAllPostsTypesAssoc[onTheFlyBlogCategoryRuntimeCtx];

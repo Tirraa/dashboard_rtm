@@ -22,11 +22,10 @@ export async function generateStaticParams() {
         const subcateg = subCateg as BlogSubCategory;
         const staticParamsKey = `${categ}-${subcateg}`;
 
-        if (!existingParams.has(staticParamsKey)) {
-          existingParams.add(staticParamsKey);
-          const entity = { [BlogTaxonomy.category]: categ, [BlogTaxonomy.subCategory]: subcateg };
-          blogStaticParams.push(entity);
-        }
+        if (existingParams.has(staticParamsKey)) return;
+        existingParams.add(staticParamsKey);
+        const entity = { [BlogTaxonomy.category]: categ, [BlogTaxonomy.subCategory]: subcateg };
+        blogStaticParams.push(entity);
       });
     });
     return blogStaticParams as Partial<BlogStaticParams>[];

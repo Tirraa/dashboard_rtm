@@ -40,11 +40,11 @@ export async function generateStaticParams() {
           const slug = getBlogPostSlug(post);
           const staticParamsKey = `${categ}-${subcateg}-${slug}`;
 
-          if (!existingParams.has(staticParamsKey)) {
-            existingParams.add(staticParamsKey);
-            const entity: BlogStaticParams = { [BlogTaxonomy.category]: categ, [BlogTaxonomy.subCategory]: subcateg, [BlogTaxonomy.slug]: slug };
-            blogStaticParams.push(entity);
-          }
+          if (existingParams.has(staticParamsKey)) return;
+
+          existingParams.add(staticParamsKey);
+          const entity: BlogStaticParams = { [BlogTaxonomy.category]: categ, [BlogTaxonomy.subCategory]: subcateg, [BlogTaxonomy.slug]: slug };
+          blogStaticParams.push(entity);
         });
       });
     });
