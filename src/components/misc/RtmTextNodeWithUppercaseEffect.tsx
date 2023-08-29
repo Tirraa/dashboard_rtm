@@ -1,3 +1,4 @@
+import UniversalVocab from '@/app/i18n/locales/Universal';
 import { Properties } from '@/types/React';
 import { FunctionComponent } from 'react';
 
@@ -7,7 +8,15 @@ const p: Properties = { className: 'uppercase text-xs' };
 
 export const RtmTextNode: FunctionComponent<RtmTextNodeProps> = () => (
   <>
-    R<span {...p}>ust</span> T<span {...p}>eam</span> M<span {...p}>anagement</span>
+    {UniversalVocab.brand.split('').map((char, index) =>
+      char.toLowerCase() === char ? (
+        <span key={index} {...p}>
+          {char}
+        </span>
+      ) : (
+        <span key={index}>{char}</span>
+      )
+    )}
   </>
 );
 
