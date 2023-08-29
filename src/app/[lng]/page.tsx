@@ -1,7 +1,7 @@
 import HomepageInner from '@/components/pagesInner/Homepage';
-import { i18nParamsProps } from '@/types/Next';
+import { i18nPageProps } from '@/types/Next';
 
-interface PageParams extends i18nParamsProps {}
+interface PageParams extends i18nPageProps {}
 
 export default function Page(params: PageParams) {
   return (

@@ -6,11 +6,11 @@ export type i18nParams = {
   [i18nTaxonomy.langFlag]: LanguageFlag;
 };
 
-export interface i18nParamsProps {
+export interface i18nPageProps {
   params: i18nParams;
 }
 
-export interface LayoutBaseProps extends i18nParamsProps {
+export interface LayoutBaseProps extends i18nPageProps {
   children: ReactNode;
 }
 
