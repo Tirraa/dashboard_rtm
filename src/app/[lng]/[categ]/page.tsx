@@ -75,7 +75,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
 
       let showMoreLink = null;
       if (posts.length > limit) {
-        showMoreLink = <RtmButton label={t2('see-more')} ripple={false} {...{ href }} />;
+        showMoreLink = <RtmButton label={t2('see-more')} {...{ href, ripple: false }} />;
         posts.pop();
       }
 

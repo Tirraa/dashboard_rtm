@@ -27,19 +27,19 @@ export const RtmButton: FunctionComponent<InviteBotButtonProps> = ({
   __IconComponent,
   href,
   title: titleValue,
-  className,
+  className: classNameValue,
   variant: variantValue,
   size: sizeValue,
   ripple: rippleValue
 }) => {
-  const classList = className ? { className } : defClassList;
+  const className = classNameValue ? { className: classNameValue } : defClassList;
   const variant = variantValue || defVariant;
   const size = sizeValue || defSize;
   const title = titleValue || label;
   const ripple = rippleValue !== undefined ? rippleValue : true;
 
   const btn = (
-    <Button {...{ ripple, title, classList, variant, size }}>
+    <Button {...{ ...className, ripple, title, variant, size }}>
       <span className="flex items-center gap-2">
         <>{__IconComponent}</>
         <>{label}</>

@@ -1,6 +1,7 @@
 import '@/app/globals.css';
 import { dir } from 'i18next';
 import { Metadata } from 'next';
+import NextTopLoader from 'nextjs-toploader';
 
 import HotFixPhantomComponent from '@/components/misc/HotfixPhantomComponent';
 import SitewideNavbar from '@/components/navbar/SitewideNavbar';
@@ -27,6 +28,7 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
       <body className="flex flex-col min-h-screen">
         <HotFixPhantomComponent />
         <SitewideNavbar {...{ i18nProps: { [i18nTaxonomy.langFlag]: lng } }} />
+        <NextTopLoader color="#1e2529" showSpinner={false} height={5} />
         {children}
       </body>
     </html>
