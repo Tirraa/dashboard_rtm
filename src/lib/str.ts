@@ -48,3 +48,5 @@ export function gsub(str: string, needle: string, replaceWith: string) {
 }
 
 export const buildPathFromParts = (...args: string[]) => args.join('/');
+
+export const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.substring(1);

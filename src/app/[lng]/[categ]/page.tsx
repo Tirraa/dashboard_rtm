@@ -55,7 +55,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
 
   function buildPostsCollectionsSnippet() {
     for (const [subCategory, posts2] of Object.entries(histogram)) {
-      postsCollectionsSnippets[subCategory] = posts2.map((post, index) => <BlogPostPeview key={index} {...{ post }} />);
+      postsCollectionsSnippets[subCategory] = posts2.map((post, index) => <BlogPostPeview key={index} {...{ post, lng }} />);
     }
   }
 

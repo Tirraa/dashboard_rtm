@@ -18,7 +18,7 @@ function subCategoryRelatedBlogPostsGeneration(posts: PostBase[], lng: LanguageF
   const generatedPosts: ReactNode[] = posts.map((post, index) => {
     const postLanguageFlag = getBlogPostLanguageFlag(post);
     if (postLanguageFlag !== lng) return null;
-    return <BlogPostPeview key={index} {...{ post }} />;
+    return <BlogPostPeview key={index} {...{ post, lng }} />;
   });
   return BlogPostsBasedOnReactNodeCollection(generatedPosts, lng);
 }
