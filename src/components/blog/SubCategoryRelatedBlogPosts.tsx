@@ -1,3 +1,4 @@
+import BlogPostsBasedOnReactNodeCollection from '@/components/_hoc/navbar/BlogPostsBasedOnReactNodeCollection';
 import BlogConfig, { BlogCategory } from '@/config/blog';
 import { LanguageFlag, i18ns } from '@/config/i18n';
 import { getServerSideTranslation } from '@/i18n';
@@ -10,7 +11,6 @@ import { BlogSubCategory, BlogSubCategoryPageProps } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { notFound } from 'next/navigation';
 import { FunctionComponent, ReactNode } from 'react';
-import BlogPostsBasedOnReactNodeCollection from '../_hoc/navbar/BlogPostsBasedOnReactNodeCollection';
 import BlogPostPeview from './BlogPostPreview';
 import BlogPostsNotFound from './BlogPostsNotFound';
 

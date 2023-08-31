@@ -1,6 +1,6 @@
+import '@/app/globals.css';
 import { dir } from 'i18next';
 import { Metadata } from 'next';
-import '../globals.css';
 
 import HotFixPhantomComponent from '@/components/misc/HotfixPhantomComponent';
 import SitewideNavbar from '@/components/navbar/SitewideNavbar';

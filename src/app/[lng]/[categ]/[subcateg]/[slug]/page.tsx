@@ -1,4 +1,4 @@
-import { blogSubCategoriesByCategory } from '@/app/proxies/blog';
+import { getBlogSubCategoriesByCategory } from '@/app/proxies/blog';
 import BlogPost from '@/components/blog/BlogPost';
 import BlogConfig, { BlogCategory } from '@/config/blog';
 import { languages } from '@/i18n/settings';
@@ -30,7 +30,7 @@ export async function generateStaticParams() {
 
     blogCategories.forEach((category) => {
       const categ = category as BlogCategory;
-      const curSubCategs = blogSubCategoriesByCategory(categ);
+      const curSubCategs = getBlogSubCategoriesByCategory(categ);
 
       curSubCategs.forEach((subCateg) => {
         const subcateg = subCateg as BlogSubCategory;

@@ -21,6 +21,6 @@ function subCategoriesByCategoryAccessor(category: BlogCategory, fresh: boolean)
   return BlogProxy.subCategoriesPtr[category] as BlogSubCategory[];
 }
 
-export function blogSubCategoriesByCategory(category: BlogCategory, fresh: boolean = true): BlogSubCategory[] {
+export function getBlogSubCategoriesByCategory(category: BlogCategory, fresh: boolean = true): BlogSubCategory[] {
   return subCategoriesByCategoryAccessor(category, fresh);
 }

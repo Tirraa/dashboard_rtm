@@ -1,7 +1,7 @@
 import SubCategoryRelatedBlogPosts from '@/components/blog/SubCategoryRelatedBlogPosts';
 import { BlogSubCategoryPageProps } from '@/types/Blog';
 
-import { blogSubCategoriesByCategory } from '@/app/proxies/blog';
+import { getBlogSubCategoriesByCategory } from '@/app/proxies/blog';
 import BlogConfig, { BlogCategory } from '@/config/blog';
 import { languages } from '@/i18n/settings';
 import BlogTaxonomy from '@/taxonomies/blog';
@@ -15,7 +15,7 @@ export async function generateStaticParams() {
 
     blogCategories.forEach((category) => {
       const categ = category as BlogCategory;
-      const curSubCategs = blogSubCategoriesByCategory(categ);
+      const curSubCategs = getBlogSubCategoriesByCategory(categ);
 
       curSubCategs.forEach((subCateg) => {
         const subcateg = subCateg as BlogSubCategory;

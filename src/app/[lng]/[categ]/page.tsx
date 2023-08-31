@@ -1,4 +1,4 @@
-import { blogSubCategoriesByCategory } from '@/app/proxies/blog';
+import { getBlogSubCategoriesByCategory } from '@/app/proxies/blog';
 import BlogPostPeview from '@/components/blog/BlogPostPreview';
 import BlogPostsNotFound from '@/components/blog/BlogPostsNotFound';
 import RtmButton from '@/components/misc/RtmButton';
@@ -53,7 +53,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
     }
   }
 
-  function buildPostsCollectionsSnippet() {
+  function buildPostsCollectionsSnippets() {
     for (const [subCategory, posts2] of Object.entries(histogram)) {
       postsCollectionsSnippets[subCategory] = posts2.map((post, index) => <BlogPostPeview key={index} {...{ post, lng }} />);
     }
@@ -89,7 +89,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
   if (posts.length === 0) return <BlogPostsNotFound {...{ lng }} />;
   const { t } = await getServerSideTranslation(lng, i18ns.blogCategories);
   const { t: t2 } = await getServerSideTranslation(lng);
-  const subCategs: BlogSubCategory[] = blogSubCategoriesByCategory(category);
+  const subCategs: BlogSubCategory[] = getBlogSubCategoriesByCategory(category);
   const entries = subCategs.map((subCateg) => [subCateg, []]);
   const [histogram, postsCollectionsSnippets] = [
     Object.fromEntries(entries) as Record<BlogSubCategory, PostBase[]>,
@@ -98,7 +98,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
   const limit = BlogConfig.displayedBlogPostsPerSubCategoryOnBlogCategoryPageLimit;
 
   buildHistogram();
-  buildPostsCollectionsSnippet();
+  buildPostsCollectionsSnippets();
   if (isEmptySnippets()) return <BlogPostsNotFound {...{ lng }} />;
 
   const result: ReactNode[] = generateContent();
