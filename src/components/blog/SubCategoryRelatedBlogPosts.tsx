@@ -1,5 +1,7 @@
 import BlogConfig, { BlogCategory } from '@/config/blog';
-import { LanguageFlag } from '@/config/i18n';
+import { LanguageFlag, i18ns } from '@/config/i18n';
+import { getServerSideTranslation } from '@/i18n';
+import { keySeparator } from '@/i18n/settings';
 import { getAllPostsByCategoryAndSubCategory, getBlogPostSubCategory } from '@/lib/blog';
 import { getBlogPostLanguageFlag } from '@/lib/i18n';
 import BlogTaxonomy from '@/taxonomies/blog';
@@ -28,10 +30,11 @@ function shouldTriggerNotFound(postsCollection: PostBase[], categ: BlogCategory,
 }
 
 // {ToDo} i18n this!
-export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageProps> = ({ params }) => {
+export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageProps> = async ({ params }) => {
   const categ = params[BlogTaxonomy.category];
   const subCateg = params[BlogTaxonomy.subCategory];
   const lng = params[i18nTaxonomy.langFlag];
+  const { t } = await getServerSideTranslation(lng, i18ns.blogCategories);
 
   const postsCollection: PostBase[] = getAllPostsByCategoryAndSubCategory(categ, subCateg);
   if (shouldTriggerNotFound(postsCollection, categ, subCateg)) {
@@ -41,7 +44,7 @@ export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageP
   const relatedPosts = postsCollection.filter((post) => getBlogPostSubCategory(post) === subCateg);
   return (
     <div className="mx-auto max-w-xl py-8">
-      <h1 className="mb-8 text-center text-2xl font-black">{subCateg}</h1>
+      <h1 className="text-center">{t(categ + keySeparator + subCateg)}</h1>
       {subCategoryRelatedBlogPostsGeneration(relatedPosts, lng)}
     </div>
   );

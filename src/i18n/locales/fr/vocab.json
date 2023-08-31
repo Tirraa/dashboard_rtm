@@ -1,7 +1,10 @@
 {
-  "logo": "logo",
+  "brand": "Rust Team Management",
   "invite-the-bot": "Inviter le bot",
   "no-blog-post": "Rien à afficher ici !",
   "404": "404 - Page introuvable !",
-  "see-more": "See more!"
+  "see-more": "See more!",
+  "ugly": {
+    "logo": "logo"
+  }
 }

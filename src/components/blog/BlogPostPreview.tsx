@@ -16,7 +16,7 @@ export const BlogPostPeview: FunctionComponent<BlogPostPeviewProps> = ({ post, l
   const formattedDate = capitalize(new Intl.DateTimeFormat(lng, { dateStyle: 'full', timeStyle: 'short' }).format(new Date(post.date)).toString());
   return (
     <div className="mb-8">
-      <h2 className="mb-1 text-xl">
+      <h2 className="mb-1">
         <Link href={getBlogPostPathWithoutI18nPart(post)} className="text-blue-700 hover:text-blue-900 dark:text-blue-400">
           {post.title}
         </Link>

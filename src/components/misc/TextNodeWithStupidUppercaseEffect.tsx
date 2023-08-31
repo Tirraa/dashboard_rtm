@@ -1,14 +1,15 @@
-import UniversalVocab from '@/i18n/locales/UniversalVocab';
 import { Properties } from '@/types/React';
 import { FunctionComponent } from 'react';
 
-interface RtmTextNodeProps {}
+interface RtmTextNodeProps {
+  str: string;
+}
 
 const p: Properties = { className: 'uppercase text-xs' };
 
-export const RtmTextNode: FunctionComponent<RtmTextNodeProps> = () => (
+export const TextNodeWithStupidUppercaseEffect: FunctionComponent<RtmTextNodeProps> = ({ str }) => (
   <>
-    {UniversalVocab.brand.split('').map((char, index) =>
+    {str.split('').map((char, index) =>
       char.toLowerCase() === char ? (
         <span key={index} {...p}>
           {char}
@@ -20,4 +21,4 @@ export const RtmTextNode: FunctionComponent<RtmTextNodeProps> = () => (
   </>
 );
 
-export default RtmTextNode;
+export default TextNodeWithStupidUppercaseEffect;

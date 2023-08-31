@@ -107,6 +107,8 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
 
 export default async function Page({ params }: BlogCategoryPageProps) {
   const categ: BlogCategory = params[BlogTaxonomy.category];
+  const lng = params[i18nTaxonomy.langFlag];
+  const { t } = await getServerSideTranslation(lng, i18ns.blogCategories);
   let gettedOnTheFlyPosts: PostBase[] = [];
   try {
     gettedOnTheFlyPosts = BlogConfig.blogCategoriesAllPostsTypesAssoc[categ]();
@@ -119,7 +121,7 @@ export default async function Page({ params }: BlogCategoryPageProps) {
 
   return (
     <div className="mx-auto max-w-xl py-8">
-      <h1 className="mb-8 text-center text-2xl font-black">Patch notes</h1>
+      <h1 className="text-center">{t(categ + keySeparator + '_title')}</h1>
       {generatedContent}
     </div>
   );

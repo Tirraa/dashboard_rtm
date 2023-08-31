@@ -1,12 +1,11 @@
 'use client';
 
 import useCollapseNavbarOnResize from '@/components/_customHooks/_hotfixes/useCollapseNavbarOnResize';
-import RtmTextNode from '@/components/misc/RtmTextNodeWithUppercaseEffect';
 import sitewideNavbarDropdownsConfig from '@/config/SitewideNavbar/dropDownsConfig';
 import sitewideNavbarRoutes, { sitewideNavbarRoutesTitles } from '@/config/SitewideNavbar/routesImpl';
 import RoutesBase from '@/config/routes';
 import { getClientSideTranslation } from '@/i18n/client';
-import UniversalVocab from '@/i18n/locales/UniversalVocab';
+import { keySeparator } from '@/i18n/settings';
 import getComputedNavData from '@/lib/misc/getComputedNavData';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { i18nComponentProps } from '@/types/Next';
@@ -15,6 +14,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import NavbarElement from '../_hoc/navbar/NavbarElement';
+import TextNodeWithStupidUppercaseEffect from '../misc/TextNodeWithStupidUppercaseEffect';
 import NavbarButton from './NavbarButton';
 
 interface SitewideNavbarProps extends i18nComponentProps {}
@@ -70,6 +70,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = ({ i18nPro
     <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">{mobileNavbarElements}</ul>
   );
 
+  // {ToDo} use a formatter for the img alt (i18next is blocking for now)
   return (
     <Navbar
       id={navbarId}
@@ -80,9 +81,14 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = ({ i18nPro
       <div className="flex items-center justify-between text-white">
         <Link href={RoutesBase.sitewide}>
           <div className="flex">
-            <Image src="/assets/rtm-logo.svg" height={logoSizeInPx} width={logoSizeInPx} alt={`${UniversalVocab.brand} (${t('logo')})`} />
+            <Image
+              src="/assets/rtm-logo.svg"
+              height={logoSizeInPx}
+              width={logoSizeInPx}
+              alt={`${t('brand')} (${t('ugly' + keySeparator + 'logo')})`}
+            />
             <Typography as="span" className="hidden lg:block ml-4 py-1.5 font-medium">
-              <RtmTextNode />
+              <TextNodeWithStupidUppercaseEffect str={t('brand')} />
             </Typography>
           </div>
         </Link>
