@@ -1,4 +1,5 @@
 import BlogConfig from '@/config/blog';
+import { LanguageFlag } from '@/config/i18n';
 import RoutesBase from '@/config/routes';
 import { PathSegment } from '@/types/Next';
 import { getPathnameWithoutI18nPart } from './i18n';
@@ -50,3 +51,6 @@ export function gsub(str: string, needle: string, replaceWith: string) {
 export const buildPathFromParts = (...args: string[]) => args.join('/');
 
 export const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.substring(1);
+
+export const getFormattedDate = (lng: LanguageFlag, date: Date) =>
+  capitalize(new Intl.DateTimeFormat(lng, { dateStyle: 'full', timeStyle: 'short' }).format(date).toString());

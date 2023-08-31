@@ -10,12 +10,12 @@ export const BlogPost: FunctionComponent<BlogPostPageProps> = ({ params }) => {
   const categ = params[BlogTaxonomy.category];
   const subCateg = params[BlogTaxonomy.subCategory];
   const slug = params[BlogTaxonomy.slug];
-  const lang = params[i18nTaxonomy.langFlag];
+  const lng = params[i18nTaxonomy.langFlag];
 
-  const post = getPost(categ, subCateg, slug, lang);
+  const post = getPost(categ, subCateg, slug, lng);
 
   if (!post) notFound();
-  return <BlogPostInner {...{ post }} />;
+  return <BlogPostInner {...{ post, lng }} />;
 };
 
 export default BlogPost;

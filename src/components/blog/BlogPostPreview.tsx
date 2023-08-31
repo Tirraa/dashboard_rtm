@@ -1,6 +1,6 @@
 import { LanguageFlag } from '@/config/i18n';
 import { getBlogPostPathWithoutI18nPart } from '@/lib/i18n';
-import { capitalize, getSlicedBlogPostDescription } from '@/lib/str';
+import { getFormattedDate, getSlicedBlogPostDescription } from '@/lib/str';
 import PostBase from '@/types/BlogPostAbstractions';
 import Link from 'next/link';
 import { FunctionComponent } from 'react';
@@ -13,7 +13,7 @@ interface BlogPostPeviewProps {
 export const BlogPostPeview: FunctionComponent<BlogPostPeviewProps> = ({ post, lng }) => {
   const descriptionSnippet = post.description ? getSlicedBlogPostDescription(post.description) : getSlicedBlogPostDescription(post.metadescription);
 
-  const formattedDate = capitalize(new Intl.DateTimeFormat(lng, { dateStyle: 'full', timeStyle: 'short' }).format(new Date(post.date)).toString());
+  const formattedDate = getFormattedDate(lng, new Date(post.date));
   return (
     <div className="mb-8">
       <h2 className="mb-1">
