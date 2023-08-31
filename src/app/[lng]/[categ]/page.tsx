@@ -67,16 +67,19 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
       if (posts.length === 0) continue;
       const curSubCategTitle = t(category + keySeparator + subCategory);
       const href = buildPathFromParts(category, subCategory);
-      result.push(
-        <h2>
+      const title = (
+        <h2 key={`${subCategory}-${curSubCategTitle}-h2`}>
           <Link {...{ href }}>{curSubCategTitle}</Link>
         </h2>
       );
+
       let showMoreLink = null;
       if (posts.length > limit) {
         showMoreLink = <RtmButton label={t2('see-more')} ripple={false} {...{ href }} />;
         posts.pop();
       }
+
+      result.push(title);
       result.push(posts);
       result.push(showMoreLink);
     }

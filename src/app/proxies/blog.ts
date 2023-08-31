@@ -3,7 +3,7 @@ import { getBlogPostSubCategory } from '@/lib/blog';
 import { BlogSubCategory } from '@/types/Blog';
 
 namespace BlogProxy {
-  export let subCategoriesPtr: Partial<Record<BlogCategory, BlogSubCategory[]>> = {};
+  export const subCategoriesPtr: Partial<Record<BlogCategory, BlogSubCategory[]>> = {};
 }
 
 function buildSubCategoriesSet(category: BlogCategory) {
@@ -13,7 +13,7 @@ function buildSubCategoriesSet(category: BlogCategory) {
   return subCategoriesSet;
 }
 
-function subCategoriesByCategoryAccessor(category: BlogCategory, fresh = true) {
+function subCategoriesByCategoryAccessor(category: BlogCategory, fresh: boolean) {
   if (fresh || BlogProxy.subCategoriesPtr[category] === undefined) {
     const subCategsSet = buildSubCategoriesSet(category);
     BlogProxy.subCategoriesPtr[category] = Array.from(subCategsSet);
@@ -21,6 +21,6 @@ function subCategoriesByCategoryAccessor(category: BlogCategory, fresh = true) {
   return BlogProxy.subCategoriesPtr[category] as BlogSubCategory[];
 }
 
-export function blogSubCategoriesByCategory(category: BlogCategory): BlogSubCategory[] {
-  return subCategoriesByCategoryAccessor(category);
+export function blogSubCategoriesByCategory(category: BlogCategory, fresh: boolean = true): BlogSubCategory[] {
+  return subCategoriesByCategoryAccessor(category, fresh);
 }
