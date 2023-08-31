@@ -1,8 +1,10 @@
-import InviteBotButton from '@/components/misc/InviteBotButton';
+import RtmButton from '@/components/misc/RtmButton';
+import DiscordConfig from '@/config/discord';
 import { getServerSideTranslation } from '@/i18n';
 import UniversalVocab from '@/i18n/locales/UniversalVocab';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { i18nComponentProps } from '@/types/Next';
+import { CogIcon } from '@heroicons/react/20/solid';
 import Image from 'next/image';
 import { CSSProperties, FunctionComponent } from 'react';
 
@@ -22,7 +24,7 @@ export const HomepageInner: FunctionComponent<HomepageInnerProps> = async ({ i18
     <div className="m-auto">
       <Image src="/assets/rtm-txt-logo.svg" {...{ style, width, height }} alt={`${UniversalVocab.brand} (${t('logo')})`} />
       <h1 className="mt-2">{UniversalVocab.brand}</h1>
-      <InviteBotButton {...{ lng }} />
+      <RtmButton label={t('invite-the-bot')} __IconComponent={<CogIcon className="h-7 w-7" />} href={DiscordConfig.botInviteLink} />
     </div>
   );
 };

@@ -13,8 +13,8 @@ function buildSubCategoriesSet(category: BlogCategory) {
   return subCategoriesSet;
 }
 
-function subCategoriesByCategoryAccessor(category: BlogCategory) {
-  if (BlogProxy.subCategoriesPtr[category] === undefined) {
+function subCategoriesByCategoryAccessor(category: BlogCategory, fresh = true) {
+  if (fresh || BlogProxy.subCategoriesPtr[category] === undefined) {
     const subCategsSet = buildSubCategoriesSet(category);
     BlogProxy.subCategoriesPtr[category] = Array.from(subCategsSet);
   }

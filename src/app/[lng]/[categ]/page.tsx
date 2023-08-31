@@ -1,16 +1,22 @@
-import BlogPostsBasedOnReactNodeCollection from '@/components/_hoc/navbar/BlogPostsBasedOnReactNodeCollection';
+import { blogSubCategoriesByCategory } from '@/app/proxies/blog';
 import BlogPostPeview from '@/components/blog/BlogPostPreview';
 import BlogPostsNotFound from '@/components/blog/BlogPostsNotFound';
+import RtmButton from '@/components/misc/RtmButton';
 import BlogConfig, { BlogCategory } from '@/config/blog';
-import { LanguageFlag } from '@/config/i18n';
-import { languages } from '@/i18n/settings';
+import { LanguageFlag, i18ns } from '@/config/i18n';
+import { getServerSideTranslation } from '@/i18n';
+import { keySeparator, languages } from '@/i18n/settings';
+import { getBlogPostSubCategory } from '@/lib/blog';
 import { getBlogPostLanguageFlag } from '@/lib/i18n';
+import { buildPathFromParts } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogCategoryPageProps, BlogStaticParams, BlogStaticParamsValue } from '@/types/Blog';
+import { BlogCategoryPageProps, BlogStaticParams, BlogStaticParamsValue, BlogSubCategory } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { compareDesc } from 'date-fns';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { ReactNode } from 'react';
 
 export async function generateStaticParams() {
   function generateBlogStaticParams(): Partial<BlogStaticParams>[] {
@@ -36,17 +42,67 @@ export async function generateStaticParams() {
   return staticParams;
 }
 
-// {ToDo} Filter by subCategory, limit to 5, and generate 'Show more' buttons! (⚠️ Using a HoC or making this generator function external, this autonomous code must be and stay agnostic!)
-function postsGenerator(posts: PostBase[], lng: LanguageFlag) {
+async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: LanguageFlag) {
+  function buildHistogram() {
+    for (const post of posts) {
+      const curSubCateg = getBlogPostSubCategory(post);
+      if (histogram[curSubCateg].length < limit + 1 && getBlogPostLanguageFlag(post) === lng) {
+        histogram[curSubCateg].push(post);
+        if (Object.values(histogram).every((posts2) => posts2.length >= limit + 1)) break;
+      }
+    }
+  }
+
+  function buildPostsCollectionsSnippet() {
+    for (const [subCategory, posts2] of Object.entries(histogram)) {
+      postsCollectionsSnippets[subCategory] = posts2.map((post, index) => <BlogPostPeview key={index} {...{ post }} />);
+    }
+  }
+
+  const isEmptySnippets = () => Object.values(postsCollectionsSnippets).every((posts2) => posts2.length === 0);
+
+  function generateContent(): ReactNode[] {
+    const result: ReactNode[] = [];
+    for (const [subCategory, posts] of Object.entries(postsCollectionsSnippets)) {
+      if (posts.length === 0) continue;
+      const curSubCategTitle = t(category + keySeparator + subCategory);
+      const href = buildPathFromParts(category, subCategory);
+      result.push(
+        <h2>
+          <Link {...{ href }}>{curSubCategTitle}</Link>
+        </h2>
+      );
+      let showMoreLink = null;
+      if (posts.length > limit) {
+        showMoreLink = <RtmButton label={t2('see-more')} ripple={false} {...{ href }} />;
+        posts.pop();
+      }
+      result.push(posts);
+      result.push(showMoreLink);
+    }
+    return result;
+  }
+
   if (posts.length === 0) return <BlogPostsNotFound {...{ lng }} />;
-  const generatedPosts = posts.map((post, index) => {
-    if (getBlogPostLanguageFlag(post) !== lng) return null;
-    return <BlogPostPeview key={index} {...{ post }} />;
-  });
-  return BlogPostsBasedOnReactNodeCollection(generatedPosts, lng);
+  const { t } = await getServerSideTranslation(lng, i18ns.blogCategories);
+  const { t: t2 } = await getServerSideTranslation(lng);
+  const subCategs: BlogSubCategory[] = blogSubCategoriesByCategory(category);
+  const entries = subCategs.map((subCateg) => [subCateg, []]);
+  const [histogram, postsCollectionsSnippets] = [
+    Object.fromEntries(entries) as Record<BlogSubCategory, PostBase[]>,
+    Object.fromEntries(entries) as Record<BlogSubCategory, ReactNode[]>
+  ];
+  const limit = BlogConfig.displayedBlogPostsPerSubCategoryOnBlogCategoryPageLimit;
+
+  buildHistogram();
+  buildPostsCollectionsSnippet();
+  if (isEmptySnippets()) return <BlogPostsNotFound {...{ lng }} />;
+
+  const result: ReactNode[] = generateContent();
+  return result;
 }
 
-export default function Page({ params }: BlogCategoryPageProps) {
+export default async function Page({ params }: BlogCategoryPageProps) {
   const categ: BlogCategory = params[BlogTaxonomy.category];
   let gettedOnTheFlyPosts: PostBase[] = [];
   try {
@@ -54,12 +110,14 @@ export default function Page({ params }: BlogCategoryPageProps) {
   } catch {
     notFound();
   }
+
   const posts = gettedOnTheFlyPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
+  const generatedContent = await postsGenerator(posts, categ, params[i18nTaxonomy.langFlag]);
 
   return (
     <div className="mx-auto max-w-xl py-8">
       <h1 className="mb-8 text-center text-2xl font-black">Patch notes</h1>
-      {postsGenerator(posts, params[i18nTaxonomy.langFlag])}
+      {generatedContent}
     </div>
   );
 }
