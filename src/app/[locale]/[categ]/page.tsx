@@ -2,17 +2,18 @@ import { getBlogSubCategoriesByCategory } from '@/app/proxies/blog';
 import BlogPostPeview from '@/components/blog/BlogPostPreview';
 import BlogPostsNotFound from '@/components/blog/BlogPostsNotFound';
 import RtmButton from '@/components/misc/RtmButton';
-import BlogConfig, { BlogCategory } from '@/config/blog';
-import { LanguageFlag, i18ns } from '@/config/i18n';
-import { getServerSideTranslation } from '@/i18n';
-import { keySeparator, languages } from '@/i18n/settings';
-import { getBlogPostSubCategory } from '@/lib/blog';
+import BlogConfig from '@/config/blog';
+import { i18ns } from '@/config/i18n';
+import { getScopedI18n, getServerSideI18n } from '@/i18n/server';
+import { languages, sep } from '@/i18n/settings';
+import { getAllCategories, getBlogPostSubCategory } from '@/lib/blog';
 import { getBlogPostLanguageFlag } from '@/lib/i18n';
 import { buildPathFromParts } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogCategoryPageProps, BlogStaticParams, BlogStaticParamsKey, BlogStaticParamsValue, BlogSubCategory } from '@/types/Blog';
+import { BlogCategory, BlogCategoryPageProps, BlogStaticParams, BlogSubCategory } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
+import { LanguageFlag } from '@/types/i18n';
 import { compareDesc } from 'date-fns';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -20,21 +21,21 @@ import { ReactNode } from 'react';
 
 export async function generateStaticParams() {
   function generateBlogStaticParams(): Partial<BlogStaticParams>[] {
-    const blogStaticParams: Partial<Record<BlogStaticParamsKey, BlogStaticParamsValue>>[] = [];
-    const blogCategories = Object.keys(BlogConfig.blogCategoriesAllPostsTypesAssoc);
+    const blogStaticParams: Partial<BlogStaticParams>[] = [];
+    const blogCategories = getAllCategories();
 
-    blogCategories.forEach((category) => {
-      const categ = category as BlogCategory;
-      const entity = { [BlogTaxonomy.category]: categ };
+    blogCategories.forEach((categ) => {
+      const category = categ as BlogCategory;
+      const entity = { [BlogTaxonomy.category]: category };
       blogStaticParams.push(entity);
     });
     return blogStaticParams as Partial<BlogStaticParams>[];
   }
 
   const blogStaticParamsEntities = generateBlogStaticParams();
-  const staticParams = languages.flatMap((lng) =>
+  const staticParams = languages.flatMap((locale) =>
     blogStaticParamsEntities.map((entity) => ({
-      lng,
+      [i18nTaxonomy.langFlag]: locale,
       ...entity
     }))
   );
@@ -45,7 +46,7 @@ export async function generateStaticParams() {
 async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: LanguageFlag) {
   function buildHistogram() {
     for (const post of posts) {
-      const curSubCateg = getBlogPostSubCategory(post);
+      const curSubCateg = getBlogPostSubCategory(post) as BlogSubCategory<typeof category>;
       if (histogram[curSubCateg].length < limit + 1 && getBlogPostLanguageFlag(post) === lng) {
         histogram[curSubCateg].push(post);
         if (Object.values(histogram).every((posts2) => posts2.length >= limit + 1)) break;
@@ -55,7 +56,9 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
 
   function buildPostsCollectionsSnippets() {
     for (const [subCategory, posts2] of Object.entries(histogram)) {
-      postsCollectionsSnippets[subCategory] = posts2.map((post, index) => <BlogPostPeview key={index} {...{ post, lng }} />);
+      postsCollectionsSnippets[subCategory as BlogSubCategory<typeof category>] = posts2.map((post, index) => (
+        <BlogPostPeview key={index} {...{ post, lng }} />
+      ));
     }
   }
 
@@ -65,7 +68,8 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
     const result: ReactNode[] = [];
     for (const [subCategory, posts] of Object.entries(postsCollectionsSnippets)) {
       if (posts.length === 0) continue;
-      const curSubCategTitle = t(category + keySeparator + subCategory);
+      // @ts-ignore
+      const curSubCategTitle = scopedT(`${category}${sep}${subCategory}`);
       const href = buildPathFromParts(category, subCategory);
       const title = (
         <h2 key={`${subCategory}-${curSubCategTitle}-h2`}>
@@ -75,7 +79,12 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
 
       let showMoreLink = null;
       if (posts.length > limit) {
-        showMoreLink = <RtmButton label={t2('see-more')} {...{ href, ripple: false }} />;
+        showMoreLink = (
+          <RtmButton
+            label={globalT(`vocab${sep}see-more`)}
+            {...{ href, ripple: false, size: 'sm', textCls: 'text-sm', className: 'mb-5 normal-case flex items-center gap-2' }}
+          />
+        );
         posts.pop();
       }
 
@@ -87,13 +96,14 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
   }
 
   if (posts.length === 0) return <BlogPostsNotFound {...{ lng }} />;
-  const { t } = await getServerSideTranslation(lng, i18ns.blogCategories);
-  const { t: t2 } = await getServerSideTranslation(lng);
-  const subCategs: BlogSubCategory[] = getBlogSubCategoriesByCategory(category);
+
+  const globalT = await getServerSideI18n();
+  const scopedT = await getScopedI18n(i18ns.blogCategories);
+  const subCategs: BlogSubCategory<typeof category>[] = getBlogSubCategoriesByCategory(category);
   const entries = subCategs.map((subCateg) => [subCateg, []]);
   const [histogram, postsCollectionsSnippets] = [
-    Object.fromEntries(entries) as Record<BlogSubCategory, PostBase[]>,
-    Object.fromEntries(entries) as Record<BlogSubCategory, ReactNode[]>
+    Object.fromEntries(entries) as Record<BlogSubCategory<typeof category>, PostBase[]>,
+    Object.fromEntries(entries) as Record<BlogSubCategory<typeof category>, ReactNode[]>
   ];
   const limit = BlogConfig.displayedBlogPostsPerSubCategoryOnBlogCategoryPageLimit;
 
@@ -106,22 +116,23 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
 }
 
 export default async function Page({ params }: BlogCategoryPageProps) {
-  const categ: BlogCategory = params[BlogTaxonomy.category];
+  const category: BlogCategory = params[BlogTaxonomy.category];
+  const scopedT = await getScopedI18n(i18ns.blogCategories);
   const lng = params[i18nTaxonomy.langFlag];
-  const { t } = await getServerSideTranslation(lng, i18ns.blogCategories);
   let gettedOnTheFlyPosts: PostBase[] = [];
   try {
-    gettedOnTheFlyPosts = BlogConfig.blogCategoriesAllPostsTypesAssoc[categ]();
+    gettedOnTheFlyPosts = BlogConfig.blogCategoriesAllPostsTypesAssoc[category]();
   } catch {
     notFound();
   }
 
   const posts = gettedOnTheFlyPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
-  const generatedContent = await postsGenerator(posts, categ, params[i18nTaxonomy.langFlag]);
+  const generatedContent = await postsGenerator(posts, category, lng);
+  const title = scopedT(`${category}${sep}_title`);
 
   return (
     <div className="mx-auto max-w-xl py-8">
-      <h1 className="text-center">{t(categ + keySeparator + '_title')}</h1>
+      <h1 className="text-center">{title}</h1>
       {generatedContent}
     </div>
   );

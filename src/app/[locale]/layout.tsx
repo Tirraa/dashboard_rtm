@@ -1,13 +1,12 @@
 import '@/app/globals.css';
-import { dir } from 'i18next';
-import { Metadata } from 'next';
 import NextTopLoader from 'nextjs-toploader';
 
-import HotFixPhantomComponent from '@/components/misc/HotfixPhantomComponent';
+import HotFixPhantomComponent from '@/components/misc/HotFixPhantomComponentProps';
 import SitewideNavbar from '@/components/navbar/SitewideNavbar';
 import { languages } from '@/i18n/settings';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import LayoutBaseProps from '@/types/Next';
+import { Metadata } from 'next';
 
 interface RootLayoutProps extends LayoutBaseProps {}
 
@@ -21,13 +20,13 @@ export async function generateStaticParams() {
 }
 
 export default function RootLayout({ children, params }: RootLayoutProps) {
-  const lng = params[i18nTaxonomy.langFlag];
+  const locale = params[i18nTaxonomy.langFlag];
 
   return (
-    <html lang={lng} dir={dir(lng)}>
+    <html lang={locale}>
       <body className="flex flex-col min-h-screen">
         <HotFixPhantomComponent />
-        <SitewideNavbar {...{ i18nProps: { [i18nTaxonomy.langFlag]: lng } }} />
+        <SitewideNavbar {...{ i18nProps: { [i18nTaxonomy.langFlag]: locale } }} />
         <NextTopLoader color="#1e2529" showSpinner={false} height={5} />
         {children}
       </body>

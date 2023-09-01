@@ -1,5 +1,5 @@
-import { LanguageFlag } from '@/config/i18n';
 import i18nTaxonomy from '@/taxonomies/i18n';
+import { LanguageFlag } from '@/types/i18n';
 import { ReactNode } from 'react';
 
 export type i18nParams = {

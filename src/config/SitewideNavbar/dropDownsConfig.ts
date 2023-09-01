@@ -5,7 +5,7 @@ import { SitewideNavbarRoutesKeys } from './utils/RoutesMapping';
 
 const PATCH_NOTES_PAGE: EmbeddedEntities = Object.keys(patchNotesRoutes).map((k) => {
   const k2 = k as PatchNotesRoutesKeys;
-  return { path: patchNotesRoutes[k2], i18nTitleInfos: patchNotesRoutesTitles[k2] };
+  return { path: patchNotesRoutes[k2], i18nTitle: patchNotesRoutesTitles[k2] };
 });
 
 export const sitewideNavbarDropdownsConfig: DropdownsConfig<SitewideNavbarRoutesKeys> = { PATCH_NOTES_PAGE };

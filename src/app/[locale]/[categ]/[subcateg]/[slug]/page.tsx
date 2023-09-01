@@ -1,22 +1,20 @@
 import { getBlogSubCategoriesByCategory } from '@/app/proxies/blog';
 import BlogPost from '@/components/blog/BlogPost';
-import BlogConfig, { BlogCategory } from '@/config/blog';
 import { languages } from '@/i18n/settings';
-import { getAllPostsByCategoryAndSubCategory, getBlogCategoryFromPathname, getBlogPostSlug, getPost } from '@/lib/blog';
+import { getAllCategories, getAllPostsByCategoryAndSubCategory, getBlogCategoryFromPathname, getBlogPostSlug, getPost } from '@/lib/blog';
 import { getPathnameWithoutI18nPart } from '@/lib/i18n';
 import getServerSidePathnameWorkaround from '@/lib/misc/getServerSidePathname';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogPostPageProps, BlogStaticParams, BlogStaticParamsKey, BlogStaticParamsValue, BlogSubCategory } from '@/types/Blog';
+import { BlogCategory, BlogPostPageProps, BlogStaticParams, BlogSubCategory } from '@/types/Blog';
 import { notFound } from 'next/navigation';
 
 export function generateMetadata({ params }: BlogPostPageProps) {
-  const categ = getBlogCategoryFromPathname(getPathnameWithoutI18nPart(getServerSidePathnameWorkaround())) as BlogCategory;
-  const subCateg = params[BlogTaxonomy.subCategory];
+  const category: BlogCategory = getBlogCategoryFromPathname(getPathnameWithoutI18nPart(getServerSidePathnameWorkaround())) as BlogCategory;
+  const subCategory = params[BlogTaxonomy.subCategory] as BlogSubCategory<typeof category>;
   const slug = params[BlogTaxonomy.slug];
   const lang = params[i18nTaxonomy.langFlag];
-
-  const post = getPost(categ, subCateg, slug, lang);
+  const post = getPost({ category, subCategory }, slug, lang);
   if (!post) notFound();
 
   return { title: post.title, description: post.metadescription };
@@ -25,25 +23,29 @@ export function generateMetadata({ params }: BlogPostPageProps) {
 export async function generateStaticParams() {
   function generateBlogStaticParams(): BlogStaticParams[] {
     const existingParams = new Set<string>();
-    const blogStaticParams: Partial<Record<BlogStaticParamsKey, BlogStaticParamsValue>>[] = [];
-    const blogCategories = Object.keys(BlogConfig.blogCategoriesAllPostsTypesAssoc);
+    const blogStaticParams: Partial<BlogStaticParams>[] = [];
+    const blogCategories = getAllCategories();
 
-    blogCategories.forEach((category) => {
-      const categ = category as BlogCategory;
+    blogCategories.forEach((categ) => {
+      const category = categ as BlogCategory;
       const curSubCategs = getBlogSubCategoriesByCategory(categ);
 
       curSubCategs.forEach((subCateg) => {
-        const subcateg = subCateg as BlogSubCategory;
-        const relatedPosts = getAllPostsByCategoryAndSubCategory(categ, subcateg);
+        const subCategory = subCateg as BlogSubCategory<typeof category>;
+        const relatedPosts = getAllPostsByCategoryAndSubCategory({ category, subCategory });
 
         relatedPosts.forEach((post) => {
           const slug = getBlogPostSlug(post);
-          const staticParamsKey = `${categ}-${subcateg}-${slug}`;
+          const staticParamsKey = `${categ}-${subCategory}-${slug}`;
 
           if (existingParams.has(staticParamsKey)) return;
 
           existingParams.add(staticParamsKey);
-          const entity: BlogStaticParams = { [BlogTaxonomy.category]: categ, [BlogTaxonomy.subCategory]: subcateg, [BlogTaxonomy.slug]: slug };
+          const entity: BlogStaticParams = {
+            [BlogTaxonomy.category]: category,
+            [BlogTaxonomy.subCategory]: subCategory,
+            [BlogTaxonomy.slug]: slug
+          };
           blogStaticParams.push(entity);
         });
       });
@@ -52,9 +54,9 @@ export async function generateStaticParams() {
   }
 
   const blogStaticParamsEntities = generateBlogStaticParams();
-  const staticParams = languages.flatMap((lng) =>
+  const staticParams = languages.flatMap((locale) =>
     blogStaticParamsEntities.map((entity) => ({
-      lng,
+      [i18nTaxonomy.langFlag]: locale,
       ...entity
     }))
   );

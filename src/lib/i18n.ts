@@ -1,7 +1,7 @@
-import { LanguageFlag } from '@/config/i18n';
 import { fallbackLng as DEFAULT_LANGUAGE, languages as LANGUAGES } from '@/i18n/settings';
 import PostBase from '@/types/BlogPostAbstractions';
 import { Path } from '@/types/Next';
+import { LanguageFlag } from '@/types/i18n';
 import { gsub, indexOfNthOccurrence } from './str';
 
 const isValidLanguageFlag = (key: string): boolean => LANGUAGES.includes(key);

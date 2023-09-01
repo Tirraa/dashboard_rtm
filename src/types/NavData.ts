@@ -1,13 +1,12 @@
 import { Path } from '@/types/Next';
-import { I18nVocabAccessInfos } from './I18n';
+import { I18nVocabTarget } from './i18n';
 
 type NavDataRouteTitle = string;
 
-export type NavDataRouteTitleInfos = I18nVocabAccessInfos;
-export type NavDataRoutesTitles = Record<NavDataRouteTitle, NavDataRouteTitleInfos>;
+export type NavDataRoutesTitles = Record<NavDataRouteTitle, I18nVocabTarget>;
 
 export interface AtomicNavDataEntity {
-  i18nTitleInfos: NavDataRouteTitleInfos;
+  i18nTitle: I18nVocabTarget;
   path: Path;
 }
 

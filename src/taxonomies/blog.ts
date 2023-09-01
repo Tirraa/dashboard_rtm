@@ -1,5 +1,4 @@
-import { BlogCategory } from '@/config/blog';
-import { BlogSlug, BlogSubCategory } from '@/types/Blog';
+import { BlogCategory, BlogSlug, BlogSubCategoryUnknownKey } from '@/types/Blog';
 
 export namespace BlogTaxonomy {
   export const category = 'categ';
@@ -9,7 +8,7 @@ export namespace BlogTaxonomy {
 
 export type TBlogTaxonomy = {
   [BlogTaxonomy.category]: BlogCategory;
-  [BlogTaxonomy.subCategory]: BlogSubCategory;
+  [BlogTaxonomy.subCategory]: BlogSubCategoryUnknownKey;
   [BlogTaxonomy.slug]: BlogSlug;
 };
 

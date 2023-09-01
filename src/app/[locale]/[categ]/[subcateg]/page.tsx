@@ -1,29 +1,30 @@
 import SubCategoryRelatedBlogPosts from '@/components/blog/SubCategoryRelatedBlogPosts';
-import { BlogStaticParamsKey, BlogSubCategoryPageProps } from '@/types/Blog';
+import { BlogSubCategoryPageProps } from '@/types/Blog';
 
 import { getBlogSubCategoriesByCategory } from '@/app/proxies/blog';
-import BlogConfig, { BlogCategory } from '@/config/blog';
 import { languages } from '@/i18n/settings';
+import { getAllCategories } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
-import { BlogStaticParams, BlogStaticParamsValue, BlogSubCategory } from '@/types/Blog';
+import i18nTaxonomy from '@/taxonomies/i18n';
+import { BlogCategory, BlogStaticParams, BlogSubCategory } from '@/types/Blog';
 
 export async function generateStaticParams() {
   function generateBlogStaticParams(): Partial<BlogStaticParams>[] {
     const existingParams = new Set<string>();
-    const blogStaticParams: Partial<Record<BlogStaticParamsKey, BlogStaticParamsValue>>[] = [];
-    const blogCategories = Object.keys(BlogConfig.blogCategoriesAllPostsTypesAssoc);
+    const blogStaticParams: Partial<BlogStaticParams>[] = [];
+    const blogCategories = getAllCategories();
 
-    blogCategories.forEach((category) => {
-      const categ = category as BlogCategory;
+    blogCategories.forEach((categ) => {
+      const category = categ as BlogCategory;
       const curSubCategs = getBlogSubCategoriesByCategory(categ);
 
       curSubCategs.forEach((subCateg) => {
-        const subcateg = subCateg as BlogSubCategory;
-        const staticParamsKey = `${categ}-${subcateg}`;
+        const subCategory = subCateg as BlogSubCategory<typeof category>;
+        const staticParamsKey = `${categ}-${subCategory}`;
 
         if (existingParams.has(staticParamsKey)) return;
         existingParams.add(staticParamsKey);
-        const entity = { [BlogTaxonomy.category]: categ, [BlogTaxonomy.subCategory]: subcateg };
+        const entity = { [BlogTaxonomy.category]: categ, [BlogTaxonomy.subCategory]: subCategory };
         blogStaticParams.push(entity);
       });
     });
@@ -31,9 +32,9 @@ export async function generateStaticParams() {
   }
 
   const blogStaticParamsEntities = generateBlogStaticParams();
-  const staticParams = languages.flatMap((lng) =>
+  const staticParams = languages.flatMap((locale) =>
     blogStaticParamsEntities.map((entity) => ({
-      lng,
+      [i18nTaxonomy.langFlag]: locale,
       ...entity
     }))
   );

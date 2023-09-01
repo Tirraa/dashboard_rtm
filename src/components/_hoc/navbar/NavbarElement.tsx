@@ -8,11 +8,11 @@ interface NavbarElementProps extends NavDataEntity {
   i18nProps: i18nParams;
 }
 
-export const NavbarElement: FunctionComponent<NavbarElementProps> = ({ i18nProps, i18nTitleInfos, path, embeddedEntities }) => {
+export const NavbarElement: FunctionComponent<NavbarElementProps> = ({ i18nProps, i18nTitle, path, embeddedEntities }) => {
   return embeddedEntities ? (
-    <NavbarDropdown {...{ i18nProps, i18nTitleInfos, path, embeddedEntities }} />
+    <NavbarDropdown {...{ i18nProps, i18nTitle, path, embeddedEntities }} />
   ) : (
-    <NavbarButton {...{ i18nProps, i18nTitleInfos, path }} />
+    <NavbarButton {...{ i18nProps, i18nTitle, path }} />
   );
 };
 

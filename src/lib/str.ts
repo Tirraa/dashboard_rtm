@@ -1,7 +1,7 @@
 import BlogConfig from '@/config/blog';
-import { LanguageFlag } from '@/config/i18n';
 import RoutesBase from '@/config/routes';
 import { PathSegment } from '@/types/Next';
+import { LanguageFlag } from '@/types/i18n';
 import { getPathnameWithoutI18nPart } from './i18n';
 
 type DescriptionAsIs = string;

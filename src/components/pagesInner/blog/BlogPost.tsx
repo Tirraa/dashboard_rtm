@@ -1,6 +1,6 @@
-import { LanguageFlag } from '@/config/i18n';
 import { getFormattedDate } from '@/lib/str';
 import PostBase from '@/types/BlogPostAbstractions';
+import { LanguageFlag } from '@/types/i18n';
 import { FunctionComponent } from 'react';
 
 interface BlogPostInnerProps {

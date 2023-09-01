@@ -12,13 +12,17 @@ interface InviteBotButtonProps {
   __IconComponent?: ReactElement;
   href?: Path;
   title?: string;
+  textCls?: string;
   className?: string;
   variant?: variant;
   size?: size;
   ripple?: boolean;
 }
 
-const defClassList = { className: 'mt-4 text-xl normal-case flex items-center gap-2' };
+const defTextCls = 'text-xl';
+const defClassList = (txtCls: string) => {
+  className: `mt-4 ${txtCls} normal-case flex items-center gap-2`;
+};
 const defVariant: variant = 'gradient';
 const defSize: size = 'lg';
 
@@ -28,11 +32,13 @@ export const RtmButton: FunctionComponent<InviteBotButtonProps> = ({
   href,
   title: titleValue,
   className: classNameValue,
+  textCls: textClsValue,
   variant: variantValue,
   size: sizeValue,
   ripple: rippleValue
 }) => {
-  const className = classNameValue ? { className: classNameValue } : defClassList;
+  const textCls = textClsValue || defTextCls;
+  const className = classNameValue ? { className: classNameValue + ' ' + textCls } : defClassList(textCls);
   const variant = variantValue || defVariant;
   const size = sizeValue || defSize;
   const title = titleValue || label;
@@ -47,7 +53,7 @@ export const RtmButton: FunctionComponent<InviteBotButtonProps> = ({
     </Button>
   );
 
-  // ToDo: fix Material Tailwind? This code is not W3C compliant.
+  // {ToDo} fix Material Tailwind? This code is not W3C compliant.
   if (href) return <Link {...{ href, ...{ ...getLinkTarget(href) } }}>{btn}</Link>;
   return btn;
 };

@@ -1,5 +1,5 @@
 import BlogPostsNotFound from '@/components/blog/BlogPostsNotFound';
-import { LanguageFlag } from '@/config/i18n';
+import { LanguageFlag } from '@/types/i18n';
 import { ReactNode } from 'react';
 
 export const BlogPostsBasedOnReactNodeCollection = (generatedPosts: ReactNode[], lng: LanguageFlag) =>

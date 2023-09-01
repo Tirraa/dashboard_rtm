@@ -6,8 +6,8 @@ import TextNodeWithStupidUppercaseEffect from '@/components/misc/TextNodeWithStu
 import sitewideNavbarDropdownsConfig from '@/config/SitewideNavbar/dropDownsConfig';
 import sitewideNavbarRoutes, { sitewideNavbarRoutesTitles } from '@/config/SitewideNavbar/routesImpl';
 import RoutesBase from '@/config/routes';
-import { getClientSideTranslation } from '@/i18n/client';
-import { keySeparator } from '@/i18n/settings';
+import { I18nProviderClient, getClientSideI18n } from '@/i18n/client';
+import { sep } from '@/i18n/settings';
 import getComputedNavData from '@/lib/misc/getComputedNavData';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { i18nComponentProps } from '@/types/Next';
@@ -25,17 +25,16 @@ const logoSizeInPx = 50;
 
 export function buildNavbarElements({ i18nProps }: i18nComponentProps) {
   const computedNavData = getComputedNavData(sitewideNavbarRoutes, sitewideNavbarRoutesTitles, sitewideNavbarDropdownsConfig);
-  const navbarElements = computedNavData.map(({ i18nTitleInfos, path, embeddedEntities }) => {
-    return <NavbarElement key={`navbar-btn-${i18nTitleInfos.targetKey}${path}`} {...{ i18nProps, i18nTitleInfos, path, embeddedEntities }} />;
+  const navbarElements = computedNavData.map(({ i18nTitle, path, embeddedEntities }) => {
+    return <NavbarElement key={`navbar-btn-${i18nTitle}${path}`} {...{ i18nProps, i18nTitle, path, embeddedEntities }} />;
   });
   return navbarElements;
 }
 
-export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = ({ i18nProps }) => {
+const SitewideNavbarImpl: FunctionComponent<SitewideNavbarProps> = ({ i18nProps }) => {
   const mobileMenuInstanceRef = useRef<HTMLDivElement>(null);
   const [openNav, setOpenNav] = useState<boolean>(false);
-  const lng = i18nProps[i18nTaxonomy.langFlag];
-  const { t } = getClientSideTranslation(lng);
+  const globalT = getClientSideI18n();
 
   useCollapseNavbarOnResize(forceNavbarMenuToCollapseBreakpointPxValue, mobileMenuInstanceRef, setOpenNav);
 
@@ -70,7 +69,10 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = ({ i18nPro
     <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">{mobileNavbarElements}</ul>
   );
 
-  // {ToDo} use a formatter for the img alt (i18next is blocking for now)
+  const logo = globalT(`ugly${sep}logo`);
+  const brand = globalT(`vocab${sep}brand`);
+
+  // {ToDo} use a formatter for the img alt
   return (
     <Navbar
       id={navbarId}
@@ -81,14 +83,9 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = ({ i18nPro
       <div className="flex items-center justify-between text-white">
         <Link href={RoutesBase.sitewide}>
           <div className="flex">
-            <Image
-              src="/assets/rtm-logo.svg"
-              height={logoSizeInPx}
-              width={logoSizeInPx}
-              alt={`${t('brand')} (${t('ugly' + keySeparator + 'logo')})`}
-            />
+            <Image src="/assets/rtm-logo.svg" height={logoSizeInPx} width={logoSizeInPx} alt={`${brand} (${logo})`} />
             <Typography as="span" className="hidden lg:block ml-4 py-1.5 font-medium">
-              <TextNodeWithStupidUppercaseEffect str={t('brand')} />
+              <TextNodeWithStupidUppercaseEffect str={brand} />
             </Typography>
           </div>
         </Link>
@@ -124,6 +121,15 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = ({ i18nPro
         {mobileNavList}
       </Collapse>
     </Navbar>
+  );
+};
+
+export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = ({ i18nProps }) => {
+  const locale = i18nProps[i18nTaxonomy.langFlag];
+  return (
+    <I18nProviderClient {...{ locale }}>
+      <SitewideNavbarImpl {...{ i18nProps: { [i18nTaxonomy.langFlag]: locale } }} />
+    </I18nProviderClient>
   );
 };
 
