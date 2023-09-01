@@ -31,7 +31,7 @@ export function getClientSideTranslation(lng: LanguageFlag, ns: string = default
   if (serverSideCtx && lng && i18n.resolvedLanguage !== lng) {
     i18n.changeLanguage(lng);
   } else {
-    const [activeLng, setActiveLng] = __useState(i18n.resolvedLanguage);
+    const [activeLng, setActiveLng] = __useState<string | undefined>(i18n.resolvedLanguage);
     __useEffect(() => {
       if (activeLng === i18n.resolvedLanguage) return;
       setActiveLng(i18n.resolvedLanguage);

@@ -11,7 +11,7 @@ import { getBlogPostLanguageFlag } from '@/lib/i18n';
 import { buildPathFromParts } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogCategoryPageProps, BlogStaticParams, BlogStaticParamsValue, BlogSubCategory } from '@/types/Blog';
+import { BlogCategoryPageProps, BlogStaticParams, BlogStaticParamsKey, BlogStaticParamsValue, BlogSubCategory } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { compareDesc } from 'date-fns';
 import Link from 'next/link';
@@ -20,7 +20,7 @@ import { ReactNode } from 'react';
 
 export async function generateStaticParams() {
   function generateBlogStaticParams(): Partial<BlogStaticParams>[] {
-    const blogStaticParams: Partial<Record<keyof BlogStaticParams, BlogStaticParamsValue>>[] = [];
+    const blogStaticParams: Partial<Record<BlogStaticParamsKey, BlogStaticParamsValue>>[] = [];
     const blogCategories = Object.keys(BlogConfig.blogCategoriesAllPostsTypesAssoc);
 
     blogCategories.forEach((category) => {

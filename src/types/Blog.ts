@@ -43,5 +43,6 @@ export type BlogStaticParamsValue = string;
 export type BlogStaticParams = {
   [_ in keyof TBlogTaxonomy]: BlogStaticParamsValue;
 };
+export type BlogStaticParamsKey = keyof BlogStaticParams;
 
 export type ForcedBlogSubCategoriesPaths = Partial<Record<BlogCategory, string[]>>;

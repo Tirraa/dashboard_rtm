@@ -1,5 +1,5 @@
 import SubCategoryRelatedBlogPosts from '@/components/blog/SubCategoryRelatedBlogPosts';
-import { BlogSubCategoryPageProps } from '@/types/Blog';
+import { BlogStaticParamsKey, BlogSubCategoryPageProps } from '@/types/Blog';
 
 import { getBlogSubCategoriesByCategory } from '@/app/proxies/blog';
 import BlogConfig, { BlogCategory } from '@/config/blog';
@@ -10,7 +10,7 @@ import { BlogStaticParams, BlogStaticParamsValue, BlogSubCategory } from '@/type
 export async function generateStaticParams() {
   function generateBlogStaticParams(): Partial<BlogStaticParams>[] {
     const existingParams = new Set<string>();
-    const blogStaticParams: Partial<Record<keyof BlogStaticParams, BlogStaticParamsValue>>[] = [];
+    const blogStaticParams: Partial<Record<BlogStaticParamsKey, BlogStaticParamsValue>>[] = [];
     const blogCategories = Object.keys(BlogConfig.blogCategoriesAllPostsTypesAssoc);
 
     blogCategories.forEach((category) => {

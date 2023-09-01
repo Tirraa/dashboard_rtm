@@ -24,9 +24,16 @@ export const HomepageInner: FunctionComponent<HomepageInnerProps> = async ({ i18
 
   return (
     <div className="m-auto">
-      <Image src="/assets/rtm-txt-logo.svg" {...{ style, width, height }} alt={`${brand} (${t('ugly' + keySeparator + 'logo')})`} />
-      <h1 className="mt-2">{brand}</h1>
-      <RtmButton label={t('invite-the-bot')} __IconComponent={<CogIcon className="h-7 w-7" />} href={DiscordConfig.botInviteLink} />
+      <div className="flex flex-col items-center align-center justify-center">
+        <Image
+          src="/assets/rtm-txt-logo.svg"
+          {...{ style, width, height }}
+          alt={`${brand} (${t('ugly' + keySeparator + 'logo')})`}
+          className="flex"
+        />
+        <h1 className="mt-2">{brand}</h1>
+        <RtmButton label={t('invite-the-bot')} __IconComponent={<CogIcon className="h-7 w-7" />} href={DiscordConfig.botInviteLink} />
+      </div>
     </div>
   );
 };
