@@ -1,15 +1,15 @@
 import BlogConfig from '@/config/blog';
 import { getBlogPostSubCategory } from '@/lib/blog';
-import { BlogCategory, BlogSubCategory, BlogSubCategoryUnknownKey } from '@/types/Blog';
+import { BlogCategory, BlogSubCategoryFromUnknownCategory } from '@/types/Blog';
 
 namespace BlogProxy {
-  export const subCategoriesPtr: Partial<Record<BlogCategory, BlogSubCategoryUnknownKey[]>> = {};
+  export const subCategoriesPtr: Partial<Record<BlogCategory, BlogSubCategoryFromUnknownCategory[]>> = {};
 }
 
-function buildSubCategoriesSet(category: BlogCategory): Set<BlogSubCategory<BlogCategory>> {
-  const subCategoriesSet = new Set<BlogSubCategory<BlogCategory>>();
+function buildSubCategoriesSet(category: BlogCategory): Set<BlogSubCategoryFromUnknownCategory> {
+  const subCategoriesSet = new Set<BlogSubCategoryFromUnknownCategory>();
   const relatedPosts = BlogConfig.blogCategoriesAllPostsTypesAssoc[category]();
-  relatedPosts.forEach((post) => subCategoriesSet.add(getBlogPostSubCategory(post) as BlogSubCategory<BlogCategory>));
+  relatedPosts.forEach((post) => subCategoriesSet.add(getBlogPostSubCategory(post) as BlogSubCategoryFromUnknownCategory));
   return subCategoriesSet;
 }
 
@@ -18,9 +18,9 @@ function subCategoriesByCategoryAccessor(category: BlogCategory, fresh: boolean)
     const subCategsSet = buildSubCategoriesSet(category);
     BlogProxy.subCategoriesPtr[category] = Array.from(subCategsSet);
   }
-  return BlogProxy.subCategoriesPtr[category] as BlogSubCategory<BlogCategory>[];
+  return BlogProxy.subCategoriesPtr[category] as BlogSubCategoryFromUnknownCategory[];
 }
 
-export function getBlogSubCategoriesByCategory(category: BlogCategory, fresh: boolean = true): BlogSubCategory<BlogCategory>[] {
+export function getBlogSubCategoriesByCategory(category: BlogCategory, fresh: boolean = true): BlogSubCategoryFromUnknownCategory[] {
   return subCategoriesByCategoryAccessor(category, fresh);
 }

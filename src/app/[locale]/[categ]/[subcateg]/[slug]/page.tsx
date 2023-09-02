@@ -6,13 +6,13 @@ import { getPathnameWithoutI18nPart } from '@/lib/i18n';
 import getServerSidePathnameWorkaround from '@/lib/misc/getServerSidePathname';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogCategory, BlogPostPageProps, BlogStaticParams, BlogSubCategory } from '@/types/Blog';
+import { BlogCategory, BlogPostPageProps, BlogStaticParams, BlogSubCategoryFromUnknownCategory } from '@/types/Blog';
 import { LanguageFlag } from '@/types/i18n';
 import { notFound } from 'next/navigation';
 
 export function generateMetadata({ params }: BlogPostPageProps) {
   const category = getBlogCategoryFromPathname(getPathnameWithoutI18nPart(getServerSidePathnameWorkaround())) as BlogCategory;
-  const subCategory = params[BlogTaxonomy.subCategory] as BlogSubCategory<BlogCategory>;
+  const subCategory = params[BlogTaxonomy.subCategory] as BlogSubCategoryFromUnknownCategory;
   const slug = params[BlogTaxonomy.slug];
   const lang = params[i18nTaxonomy.langFlag];
   const post = getPost({ category, subCategory }, slug, lang);
@@ -32,7 +32,7 @@ export async function generateStaticParams() {
       const curSubCategs = getBlogSubCategoriesByCategory(categ);
 
       curSubCategs.forEach((subCateg) => {
-        const subCategory = subCateg as BlogSubCategory<BlogCategory>;
+        const subCategory = subCateg as BlogSubCategoryFromUnknownCategory;
         const relatedPosts = getAllPostsByCategoryAndSubCategory({ category, subCategory });
 
         relatedPosts.forEach((post) => {

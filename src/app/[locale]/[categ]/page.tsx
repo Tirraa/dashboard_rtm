@@ -11,7 +11,7 @@ import { getBlogPostLanguageFlag } from '@/lib/i18n';
 import { buildPathFromParts } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogCategory, BlogCategoryPageProps, BlogStaticParams, BlogSubCategory } from '@/types/Blog';
+import { BlogCategory, BlogCategoryPageProps, BlogStaticParams, BlogSubCategoryFromUnknownCategory } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { LanguageFlag } from '@/types/i18n';
 import { compareDesc } from 'date-fns';
@@ -46,7 +46,7 @@ export async function generateStaticParams() {
 async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: LanguageFlag) {
   function buildHistogram() {
     for (const post of posts) {
-      const curSubCateg = getBlogPostSubCategory(post) as BlogSubCategory<BlogCategory>;
+      const curSubCateg = getBlogPostSubCategory(post) as BlogSubCategoryFromUnknownCategory;
       if (histogram[curSubCateg].length < limit + 1 && getBlogPostLanguageFlag(post) === lng) {
         histogram[curSubCateg].push(post);
         if (Object.values(histogram).every((posts2) => posts2.length >= limit + 1)) break;
@@ -56,7 +56,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
 
   function buildPostsCollectionsSnippets() {
     for (const [subCategory, posts2] of Object.entries(histogram)) {
-      postsCollectionsSnippets[subCategory as BlogSubCategory<BlogCategory>] = posts2.map((post, index) => (
+      postsCollectionsSnippets[subCategory as BlogSubCategoryFromUnknownCategory] = posts2.map((post, index) => (
         <BlogPostPeview key={index} {...{ post, lng }} />
       ));
     }
@@ -99,11 +99,11 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
 
   const globalT = await getServerSideI18n();
   const scopedT = await getScopedI18n(i18ns.blogCategories);
-  const subCategs: BlogSubCategory<BlogCategory>[] = getBlogSubCategoriesByCategory(category);
+  const subCategs: BlogSubCategoryFromUnknownCategory[] = getBlogSubCategoriesByCategory(category);
   const entries = subCategs.map((subCateg) => [subCateg, []]);
   const [histogram, postsCollectionsSnippets] = [
-    Object.fromEntries(entries) as Record<BlogSubCategory<BlogCategory>, PostBase[]>,
-    Object.fromEntries(entries) as Record<BlogSubCategory<BlogCategory>, ReactNode[]>
+    Object.fromEntries(entries) as Record<BlogSubCategoryFromUnknownCategory, PostBase[]>,
+    Object.fromEntries(entries) as Record<BlogSubCategoryFromUnknownCategory, ReactNode[]>
   ];
   const limit = BlogConfig.displayedBlogPostsPerSubCategoryOnBlogCategoryPageLimit;
 

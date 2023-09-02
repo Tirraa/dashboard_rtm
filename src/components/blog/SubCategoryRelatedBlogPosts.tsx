@@ -6,7 +6,7 @@ import { getAllPostsByCategoryAndSubCategory, getBlogPostSubCategory } from '@/l
 import { getBlogPostLanguageFlag } from '@/lib/i18n';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogCategory, BlogSubCategory, BlogSubCategoryPageProps, CategoryAndSubcategory } from '@/types/Blog';
+import { BlogCategory, BlogSubCategory, BlogSubCategoryFromUnknownCategory, BlogSubCategoryPageProps, CategoryAndSubcategory } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
@@ -25,7 +25,7 @@ type IsValidCategoryAndSubcategory<C extends BlogCategory, S extends BlogSubCate
 
 export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageProps> = async ({ params }) => {
   const category = params[BlogTaxonomy.category];
-  const subCategory = params[BlogTaxonomy.subCategory] as BlogSubCategory<BlogCategory>;
+  const subCategory = params[BlogTaxonomy.subCategory] as BlogSubCategoryFromUnknownCategory;
   const lng = params[i18nTaxonomy.langFlag];
   const scopedT = await getScopedI18n(i18ns.blogCategories);
 
