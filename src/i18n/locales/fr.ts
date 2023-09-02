@@ -19,6 +19,11 @@ export default {
       _title: 'Patch Notes',
       'discord-bot': 'Bot Discord',
       dashboard: 'Dashboard'
+    },
+    'patch-notes-bis': {
+      _title: 'Patch Notes (bis)',
+      'discord-bot': 'Bot Discord (bis)',
+      dashboard: 'Dashboard (bis)'
     }
   },
 

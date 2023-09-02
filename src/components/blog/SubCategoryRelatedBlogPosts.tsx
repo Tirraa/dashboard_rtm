@@ -2,7 +2,7 @@ import BlogConfig from '@/config/blog';
 import { i18ns } from '@/config/i18n';
 import { getScopedI18n } from '@/i18n/server';
 import { sep } from '@/i18n/settings';
-import { getAllPostsByCategoryAndSubCategory, getBlogPostSubCategory } from '@/lib/blog';
+import { getAllPostsByCategoryAndSubCategoryUnstrict, getBlogPostSubCategory } from '@/lib/blog';
 import { getBlogPostLanguageFlag } from '@/lib/i18n';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
@@ -14,8 +14,10 @@ import PaginatedElements from '../misc/PaginatedElements';
 import BlogPostPeview from './BlogPostPreview';
 import BlogPostsNotFound from './BlogPostsNotFound';
 
-const shouldTriggerNotFound = (postsCollection: PostBase[], { category, subCategory }: UnknownCategoryAndUnknownSubCategory): boolean =>
-  postsCollection.length === 0 && !BlogConfig.forcedBlogSubCategoriesPaths[category]?.includes(subCategory);
+const shouldTriggerNotFound = (postsCollection: PostBase[], { category, subCategory }: UnknownCategoryAndUnknownSubCategory): boolean => {
+  // @ts-ignore
+  return postsCollection.length === 0 && !BlogConfig.forcedBlogSubCategoriesPaths[category]?.includes(subCategory);
+};
 
 export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageProps> = async ({ params }) => {
   const category = params[BlogTaxonomy.category];
@@ -23,7 +25,7 @@ export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageP
   const lng = params[i18nTaxonomy.langFlag];
   const scopedT = await getScopedI18n(i18ns.blogCategories);
 
-  const postsCollection: PostBase[] = getAllPostsByCategoryAndSubCategory({ category, subCategory });
+  const postsCollection: PostBase[] = getAllPostsByCategoryAndSubCategoryUnstrict({ category, subCategory });
   if (shouldTriggerNotFound(postsCollection, { category, subCategory })) notFound();
   const relatedPosts = postsCollection.filter((post) => getBlogPostSubCategory(post) === subCategory && getBlogPostLanguageFlag(post) === lng);
 

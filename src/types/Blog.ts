@@ -10,6 +10,12 @@ type BlogSubCategoryMappedToBlogCategory = {
   [K in BlogCategory]: BlogsArchitectures[K];
 };
 
+type SanitizedBlogSubCategory = {
+  [K in BlogCategory]: K extends keyof BlogsArchitectures ? BlogsArchitectures[K] : never;
+};
+
+export type BlogSubCategoryUnknownKey = SanitizedBlogSubCategory[keyof SanitizedBlogSubCategory];
+
 type BlogSubCategory<K extends keyof BlogSubCategoryMappedToBlogCategory> = BlogSubCategoryMappedToBlogCategory[K];
 export type BlogSubCategoryFromUnknownCategory = BlogSubCategory<BlogCategory>;
 

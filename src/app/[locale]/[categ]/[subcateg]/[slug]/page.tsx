@@ -1,7 +1,13 @@
 import { getBlogSubCategoriesByCategory } from '@/app/proxies/blog';
 import BlogPost from '@/components/blog/BlogPost';
 import { languages } from '@/i18n/settings';
-import { getAllCategories, getAllPostsByCategoryAndSubCategory, getBlogCategoryFromPathname, getBlogPostSlug, getPost } from '@/lib/blog';
+import {
+  getAllCategories,
+  getAllPostsByCategoryAndSubCategoryUnstrict,
+  getBlogCategoryFromPathname,
+  getBlogPostSlug,
+  getPostUnstrict
+} from '@/lib/blog';
 import { getPathnameWithoutI18nPart } from '@/lib/i18n';
 import getServerSidePathnameWorkaround from '@/lib/misc/getServerSidePathname';
 import BlogTaxonomy from '@/taxonomies/blog';
@@ -15,7 +21,7 @@ export function generateMetadata({ params }: BlogPostPageProps) {
   const subCategory = params[BlogTaxonomy.subCategory] as BlogSubCategoryFromUnknownCategory;
   const slug = params[BlogTaxonomy.slug];
   const lang = params[i18nTaxonomy.langFlag];
-  const post = getPost({ category, subCategory }, slug, lang);
+  const post = getPostUnstrict({ category, subCategory }, slug, lang);
   if (!post) notFound();
 
   return { title: post.title, description: post.metadescription };
@@ -33,13 +39,13 @@ export async function generateStaticParams() {
 
       curSubCategs.forEach((subCateg) => {
         const subCategory = subCateg as BlogSubCategoryFromUnknownCategory;
-        const relatedPosts = getAllPostsByCategoryAndSubCategory({ category, subCategory });
+        const relatedPosts = getAllPostsByCategoryAndSubCategoryUnstrict({ category, subCategory });
 
         relatedPosts.forEach((post) => {
           languages.forEach((language) => {
             const slug = getBlogPostSlug(post);
 
-            const blogPostExists = getPost({ category, subCategory }, slug, language as LanguageFlag);
+            const blogPostExists = getPostUnstrict({ category, subCategory }, slug, language as LanguageFlag);
             if (!blogPostExists) return;
 
             const staticParamsKey = `${categ}-${subCategory}-${slug}-${language}`;
