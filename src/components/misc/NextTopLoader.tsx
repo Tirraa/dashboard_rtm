@@ -147,7 +147,7 @@ const NextTopLoader = ({
               [].forEach.call(npgclass, function (el: Element) {
                 el.classList.remove('nprogress-busy');
               });
-              // eslint-disable-next-line prefer-rest-params, @typescript-eslint/no-explicit-any
+              // eslint-disable-next-line prefer-rest-params
               return pushState.apply(history, arguments as any);
             };
           })();
@@ -161,7 +161,7 @@ const NextTopLoader = ({
     document.addEventListener('click', handleClick);
 
     return () => document.removeEventListener('click', handleClick);
-  }, []);
+  }, [crawl, crawlSpeed, easing, initialPosition, showSpinner, speed]);
 
   return styles;
 };

@@ -1,7 +1,6 @@
 import RtmButton from '@/components/misc/RtmButton';
 import DiscordConfig from '@/config/discord';
 import { getServerSideI18n } from '@/i18n/server';
-import { sep } from '@/i18n/settings';
 import { CogIcon } from '@heroicons/react/20/solid';
 import Image from 'next/image';
 import { CSSProperties, FunctionComponent } from 'react';
@@ -17,9 +16,9 @@ const [width, height]: [number, number] = [226, 69];
 // {ToDo} use a formatter for the img alt
 export const HomepageInner: FunctionComponent<HomepageInnerProps> = async () => {
   const globalT = await getServerSideI18n();
-  const brand = globalT(`vocab${sep}brand`);
-  const logo = globalT(`ugly${sep}logo`);
-  const inviteTheBot = globalT(`vocab${sep}invite-the-bot`);
+  const brand = globalT('vocab.brand');
+  const logo = globalT('ugly.logo');
+  const inviteTheBot = globalT('vocab.invite-the-bot');
 
   return (
     <div className="m-auto">

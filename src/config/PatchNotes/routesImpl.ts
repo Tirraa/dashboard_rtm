@@ -1,5 +1,4 @@
 import RoutesBase from '@/config/routes';
-import { sep } from '@/i18n/settings';
 import { getSlashEnvelope } from '@/lib/str';
 import { i18ns } from '../i18n';
 import { PatchNotesRoutes, PatchNotesRoutesTitles } from './utils/RoutesMapping';
@@ -13,8 +12,8 @@ export const patchNotesRoutes: PatchNotesRoutes = {
 
 const navbar = i18ns.navbar;
 export const patchNotesRoutesTitles: PatchNotesRoutesTitles = {
-  DASHBOARD_PATCH_NOTES_PAGE: `${navbar}${sep}dashboard`,
-  DISCORD_BOT_PATCH_NOTES_PAGE: `${navbar}${sep}discord-bot`
+  DASHBOARD_PATCH_NOTES_PAGE: `${navbar}.dashboard`,
+  DISCORD_BOT_PATCH_NOTES_PAGE: `${navbar}.discord-bot`
 };
 
 export default patchNotesRoutes;

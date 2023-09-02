@@ -1,5 +1,4 @@
 import { getServerSideI18n } from '@/i18n/server';
-import { sep } from '@/i18n/settings';
 import { LanguageFlag } from '@/types/i18n';
 import { FunctionComponent } from 'react';
 
@@ -9,7 +8,7 @@ interface BlogPostsNotFoundProps {
 
 export const BlogPostsNotFound: FunctionComponent<BlogPostsNotFoundProps> = async ({ lng }) => {
   const globalT = await getServerSideI18n();
-  const txt = globalT(`vocab${sep}no-blog-post`);
+  const txt = globalT(`vocab.no-blog-post`);
   return <p>{txt}</p>;
 };
 

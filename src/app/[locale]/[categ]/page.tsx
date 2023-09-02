@@ -81,7 +81,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
       if (posts.length > limit) {
         showMoreLink = (
           <RtmButton
-            label={globalT(`vocab${sep}see-more`)}
+            label={globalT(`vocab.see-more`)}
             {...{ href, ripple: false, size: 'sm', textCls: 'text-sm', className: 'mb-5 normal-case flex items-center gap-2' }}
           />
         );
@@ -128,7 +128,7 @@ export default async function Page({ params }: BlogCategoryPageProps) {
 
   const posts = gettedOnTheFlyPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
   const generatedContent = await postsGenerator(posts, category, lng);
-  const title = scopedT(`${category}${sep}_title`);
+  const title = scopedT(`${category}._title`);
 
   return (
     <div className="mx-auto max-w-xl py-8">

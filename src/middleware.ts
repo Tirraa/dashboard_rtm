@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { createI18nMiddleware } from 'next-international/middleware';
-import { fallbackLng, languages } from './i18n/settings';
+import { fallbackLng } from './config/i18n';
+import { languages } from './i18n/settings';
 
 const I18nMiddleware = createI18nMiddleware({
   locales: languages,

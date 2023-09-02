@@ -1,5 +1,4 @@
 import RoutesBase from '@/config/routes';
-import { sep } from '@/i18n/settings';
 import { getSlashEnvelope } from '@/lib/str';
 import { i18ns } from '../i18n';
 import { DashboardRoutes, DashboardRoutesTitles } from './utils/RoutesMapping';
@@ -14,9 +13,9 @@ export const dashboardRoutes: DashboardRoutes = {
 
 const dashboard = i18ns.dashboard;
 export const dashboardRoutesTitles: DashboardRoutesTitles = {
-  BASE_PAGE: `${dashboard}${sep}base-page`,
-  FOO_PAGE: `${dashboard}${sep}foo-page`,
-  BAR_PAGE: `${dashboard}${sep}bar-page`
+  BASE_PAGE: `${dashboard}.base-page`,
+  FOO_PAGE: `${dashboard}.foo-page`,
+  BAR_PAGE: `${dashboard}.bar-page`
 };
 
 export default dashboardRoutes;

@@ -7,7 +7,6 @@ import sitewideNavbarDropdownsConfig from '@/config/SitewideNavbar/dropDownsConf
 import sitewideNavbarRoutes, { sitewideNavbarRoutesTitles } from '@/config/SitewideNavbar/routesImpl';
 import RoutesBase from '@/config/routes';
 import { I18nProviderClient, getClientSideI18n } from '@/i18n/client';
-import { sep } from '@/i18n/settings';
 import getComputedNavData from '@/lib/misc/getComputedNavData';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { i18nComponentProps } from '@/types/Next';
@@ -69,8 +68,8 @@ const SitewideNavbarImpl: FunctionComponent<SitewideNavbarProps> = ({ i18nProps 
     <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">{mobileNavbarElements}</ul>
   );
 
-  const logo = globalT(`ugly${sep}logo`);
-  const brand = globalT(`vocab${sep}brand`);
+  const logo = globalT('ugly.logo');
+  const brand = globalT('vocab.brand');
 
   // {ToDo} use a formatter for the img alt
   return (
@@ -127,7 +126,7 @@ const SitewideNavbarImpl: FunctionComponent<SitewideNavbarProps> = ({ i18nProps 
 export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = ({ i18nProps }) => {
   const locale = i18nProps[i18nTaxonomy.langFlag];
   return (
-    <I18nProviderClient {...{ locale }}>
+    <I18nProviderClient>
       <SitewideNavbarImpl {...{ i18nProps: { [i18nTaxonomy.langFlag]: locale } }} />
     </I18nProviderClient>
   );

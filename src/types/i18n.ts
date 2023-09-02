@@ -1,5 +1,5 @@
 import { BlogsArchitectures } from '@/config/blog';
-import { ELanguageFlag } from '@/config/i18n';
+import { ELanguageFlag, VocabBase } from '@/config/i18n';
 
 export type KeySeparator = '.';
 
@@ -17,7 +17,6 @@ type CreateInterfaceFromObject<T> = {
   [K in keyof T]: T[K] extends RecursiveStringObject ? CreateInterfaceFromObject<T[K]> : string;
 };
 
-type VocabBase = typeof import('../i18n/locales/fr').default;
 export type I18nVocabTarget = RecursiveKeys<VocabBase>;
 export type VocabInterface = CreateInterfaceFromObject<VocabBase>;
 
