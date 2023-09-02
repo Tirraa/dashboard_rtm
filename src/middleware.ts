@@ -10,9 +10,7 @@ const I18nMiddleware = createI18nMiddleware({
 });
 
 // * ... Work-around (1): used for getServerSidePathnameWorkaround
-function appendCurrentUrlHeader(request: NextRequest, i18nResponse: NextResponse) {
-  i18nResponse.headers.set('x-url', request.url);
-}
+const appendCurrentUrlHeader = (request: NextRequest, i18nResponse: NextResponse) => i18nResponse.headers.set('x-url', request.url);
 
 export function middleware(request: NextRequest) {
   const i18nResponse: NextResponse = I18nMiddleware(request);

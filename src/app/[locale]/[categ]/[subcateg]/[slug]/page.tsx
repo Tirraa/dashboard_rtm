@@ -39,8 +39,8 @@ export async function generateStaticParams() {
           languages.forEach((language) => {
             const slug = getBlogPostSlug(post);
 
-            const blogPostDoesExist = getPost({ category, subCategory }, slug, language as LanguageFlag);
-            if (!blogPostDoesExist) return;
+            const blogPostExists = getPost({ category, subCategory }, slug, language as LanguageFlag);
+            if (!blogPostExists) return;
 
             const staticParamsKey = `${categ}-${subCategory}-${slug}-${language}`;
             if (existingParams.has(staticParamsKey)) return;

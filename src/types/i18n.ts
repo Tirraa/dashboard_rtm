@@ -1,4 +1,3 @@
-import { BlogsArchitectures } from '@/config/blog';
 import { ELanguageFlag, VocabBase } from '@/config/i18n';
 
 export type KeySeparator = '.';
@@ -22,7 +21,3 @@ export type VocabInterface = CreateInterfaceFromObject<VocabBase>;
 
 type LanguageFlagKey = keyof typeof ELanguageFlag;
 export type LanguageFlag = LanguageFlagKey & string;
-
-export type ReverseMapping<T extends keyof BlogsArchitectures> = {
-  [K in BlogsArchitectures[T]]: T;
-};

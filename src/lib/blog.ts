@@ -1,6 +1,6 @@
 import BlogConfig from '@/config/blog';
 import { fallbackLng as DEFAULT_LANGUAGE } from '@/config/i18n';
-import { BlogCategory, BlogSlug, CategoryAndSubcategory } from '@/types/Blog';
+import { BlogCategory, BlogSlug, UnknownCategoryAndUnknownSubCategory } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { LanguageFlag } from '@/types/i18n';
 import { getBlogPostLanguageFlag } from './i18n';
@@ -43,14 +43,12 @@ function getBlogPostSubCategoryFromPostObj(post: PostBase): '' | string {
 
 export const getBlogPostSubCategory = (post: PostBase): '' | string => getBlogPostSubCategoryFromPostObj(post);
 export const getBlogPostSlug = (post: PostBase): BlogSlug => getLastPathStrPart(post._raw.flattenedPath);
-//export const getAllPostsByCategory = (categ: BlogCategory): PostBase[] => BlogConfig.blogCategoriesAllPostsTypesAssoc[categ]();
-export const getAllPostsByCategory = (categ: BlogCategory): PostBase[] => BlogConfig.blogCategoriesAllPostsTypesAssoc['patch-notes']();
-
-export const getAllPostsByCategoryAndSubCategory = <C extends BlogCategory>({ category, subCategory }: CategoryAndSubcategory<C>): PostBase[] =>
+export const getAllPostsByCategory = (categ: BlogCategory): PostBase[] => BlogConfig.blogCategoriesAllPostsTypesAssoc[categ]();
+export const getAllPostsByCategoryAndSubCategory = ({ category, subCategory }: UnknownCategoryAndUnknownSubCategory): PostBase[] =>
   getAllPostsByCategory(category).filter((post) => getBlogPostSubCategory(post) === subCategory);
 
-export function getPost<C extends BlogCategory>(
-  { category, subCategory }: CategoryAndSubcategory<C>,
+export function getPost(
+  { category, subCategory }: UnknownCategoryAndUnknownSubCategory,
   targettedSlug: BlogSlug,
   langFlag: LanguageFlag
 ): undefined | PostBase {

@@ -10,7 +10,7 @@ type BlogSubCategoryMappedToBlogCategory = {
   [K in BlogCategory]: BlogsArchitectures[K];
 };
 
-export type BlogSubCategory<K extends keyof BlogSubCategoryMappedToBlogCategory> = BlogSubCategoryMappedToBlogCategory[K];
+type BlogSubCategory<K extends keyof BlogSubCategoryMappedToBlogCategory> = BlogSubCategoryMappedToBlogCategory[K];
 export type BlogSubCategoryFromUnknownCategory = BlogSubCategory<BlogCategory>;
 
 export type BlogSlug = string;
@@ -45,7 +45,7 @@ export type BlogStaticParams = {
   [_ in keyof TBlogTaxonomy]: BlogStaticParamsValue;
 };
 
-export type CategoryAndSubcategory<C extends BlogCategory> = {
-  category: C;
-  subCategory: BlogSubCategory<C>;
+export type UnknownCategoryAndUnknownSubCategory = {
+  category: BlogCategory;
+  subCategory: BlogSubCategoryFromUnknownCategory;
 };
