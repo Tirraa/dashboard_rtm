@@ -1,4 +1,4 @@
-import BlogConfig from '@/config/blog';
+import BlogConfig, { BlogsArchitectures } from '@/config/blog';
 import { fallbackLng as DEFAULT_LANGUAGE } from '@/config/i18n';
 import { BlogCategory, BlogSlug, UnknownCategoryAndUnknownSubCategory } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
@@ -44,15 +44,15 @@ function getBlogPostSubCategoryFromPostObj(post: PostBase): '' | string {
 export const getBlogPostSubCategory = (post: PostBase): '' | string => getBlogPostSubCategoryFromPostObj(post);
 export const getBlogPostSlug = (post: PostBase): BlogSlug => getLastPathStrPart(post._raw.flattenedPath);
 export const getAllPostsByCategory = (categ: BlogCategory): PostBase[] => BlogConfig.blogCategoriesAllPostsTypesAssoc[categ]();
-export const getAllPostsByCategoryAndSubCategory = ({ category, subCategory }: UnknownCategoryAndUnknownSubCategory): PostBase[] =>
+export const getAllPostsByCategoryAndSubCategoryUnstrict = ({ category, subCategory }: UnknownCategoryAndUnknownSubCategory): PostBase[] =>
   getAllPostsByCategory(category).filter((post) => getBlogPostSubCategory(post) === subCategory);
 
-export function getPost(
+export function getPostUnstrict(
   { category, subCategory }: UnknownCategoryAndUnknownSubCategory,
   targettedSlug: BlogSlug,
   langFlag: LanguageFlag
 ): undefined | PostBase {
-  const postsCollection: PostBase[] = getAllPostsByCategoryAndSubCategory({ category, subCategory });
+  const postsCollection: PostBase[] = getAllPostsByCategoryAndSubCategoryUnstrict({ category, subCategory });
 
   if (langFlag === DEFAULT_LANGUAGE) {
     return postsCollection.find((post) => getBlogPostSubCategoryAndSlugStr(post) === buildPathFromParts(subCategory, targettedSlug));
@@ -60,6 +60,20 @@ export function getPost(
   return postsCollection.find(
     (post) => getBlogPostSubCategoryAndSlugStrAndLangFlag(post) === buildPathFromParts(subCategory, targettedSlug, langFlag)
   );
+}
+
+export const getAllPostsByCategoryAndSubCategoryStrict = <Category extends keyof BlogsArchitectures>(
+  category: Category,
+  subCategory: BlogsArchitectures[Category]
+): PostBase[] => getAllPostsByCategoryAndSubCategoryUnstrict({ category, subCategory });
+
+export function getPostStrict<Category extends keyof BlogsArchitectures>(
+  category: Category,
+  subCategory: BlogsArchitectures[Category],
+  targettedSlug: BlogSlug,
+  langFlag: LanguageFlag
+): undefined | PostBase {
+  return getPostUnstrict({ category, subCategory }, targettedSlug, langFlag);
 }
 
 export const getAllCategories = (): BlogCategory[] => Object.keys(BlogConfig.blogCategoriesAllPostsTypesAssoc) as BlogCategory[];

@@ -1,5 +1,5 @@
 import BlogPostInner from '@/components/pagesInner/blog/BlogPost';
-import { getPost } from '@/lib/blog';
+import { getPostUnstrict } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogPostPageProps, BlogSubCategoryFromUnknownCategory } from '@/types/Blog';
@@ -12,7 +12,7 @@ export const BlogPost: FunctionComponent<BlogPostPageProps> = ({ params }) => {
   const slug = params[BlogTaxonomy.slug];
   const lng = params[i18nTaxonomy.langFlag];
 
-  const post = getPost({ category, subCategory }, slug, lng);
+  const post = getPostUnstrict({ category, subCategory }, slug, lng);
 
   if (!post) notFound();
   return <BlogPostInner {...{ post, lng }} />;
