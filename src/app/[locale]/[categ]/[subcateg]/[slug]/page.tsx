@@ -7,6 +7,7 @@ import getServerSidePathnameWorkaround from '@/lib/misc/getServerSidePathname';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogCategory, BlogPostPageProps, BlogStaticParams, BlogSubCategory } from '@/types/Blog';
+import { LanguageFlag } from '@/types/i18n';
 import { notFound } from 'next/navigation';
 
 export function generateMetadata({ params }: BlogPostPageProps) {
@@ -35,18 +36,24 @@ export async function generateStaticParams() {
         const relatedPosts = getAllPostsByCategoryAndSubCategory({ category, subCategory });
 
         relatedPosts.forEach((post) => {
-          const slug = getBlogPostSlug(post);
-          const staticParamsKey = `${categ}-${subCategory}-${slug}`;
+          languages.forEach((language) => {
+            const slug = getBlogPostSlug(post);
 
-          if (existingParams.has(staticParamsKey)) return;
+            const blogPostDoesExist = getPost({ category, subCategory }, slug, language as LanguageFlag);
+            if (!blogPostDoesExist) return;
 
-          existingParams.add(staticParamsKey);
-          const entity: BlogStaticParams = {
-            [BlogTaxonomy.category]: category,
-            [BlogTaxonomy.subCategory]: subCategory,
-            [BlogTaxonomy.slug]: slug
-          };
-          blogStaticParams.push(entity);
+            const staticParamsKey = `${categ}-${subCategory}-${slug}-${language}`;
+            if (existingParams.has(staticParamsKey)) return;
+
+            existingParams.add(staticParamsKey);
+            const entity: BlogStaticParams = {
+              [i18nTaxonomy.langFlag]: language,
+              [BlogTaxonomy.category]: category,
+              [BlogTaxonomy.subCategory]: subCategory,
+              [BlogTaxonomy.slug]: slug
+            };
+            blogStaticParams.push(entity);
+          });
         });
       });
     });
@@ -54,12 +61,7 @@ export async function generateStaticParams() {
   }
 
   const blogStaticParamsEntities = generateBlogStaticParams();
-  const staticParams = languages.flatMap((locale) =>
-    blogStaticParamsEntities.map((entity) => ({
-      [i18nTaxonomy.langFlag]: locale,
-      ...entity
-    }))
-  );
+  const staticParams = blogStaticParamsEntities.map((entity) => ({ ...entity }));
 
   return staticParams;
 }
