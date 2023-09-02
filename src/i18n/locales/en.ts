@@ -26,10 +26,10 @@ const enVocab: VocabInterface = {
 
   vocab: {
     brand: 'Rust Team Management',
-    'invite-the-bot': 'Inviter le bot',
-    'no-blog-post': 'Rien à afficher ici !',
-    '404': '404 - Page introuvable !',
-    'see-more': 'Voir plus !'
+    'invite-the-bot': 'Invite the bot',
+    'no-blog-post': 'Nobody here but us chickens!',
+    '404': '404 - Page not found!',
+    'see-more': 'See more!'
   },
 
   ugly: {
