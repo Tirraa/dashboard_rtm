@@ -1,5 +1,5 @@
 import '@/app/globals.css';
-import NextTopLoader from 'nextjs-toploader';
+import NextTopLoader from '@/components/misc/NextTopLoader';
 
 import HotFixPhantomComponent from '@/components/misc/HotFixPhantomComponentProps';
 import SitewideNavbar from '@/components/navbar/SitewideNavbar';

@@ -3486,15 +3486,6 @@ next@^13.4.19:
     "@next/swc-win32-ia32-msvc" "13.4.19"
     "@next/swc-win32-x64-msvc" "13.4.19"
 
-nextjs-toploader@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/nextjs-toploader/-/nextjs-toploader-1.4.2.tgz#00c34e0267c05cc678143157ea69032a2e8036b8"
-  integrity sha512-FS5+zCdNHLq0YA+SijkbDifOMFNayKfxkCLTiM6TIrvSaf6kAzCGlNjwgVpoG3zpampVMQSVf5L/jrWFJgs23g==
-  dependencies:
-    "@types/nprogress" "^0.2.0"
-    nprogress "^0.2.0"
-    prop-types "^15.8.1"
-
 no-case@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/no-case/-/no-case-3.0.4.tgz#d361fd5c9800f558551a8369fc0dcd4662b6124d"
