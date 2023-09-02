@@ -8,9 +8,7 @@ const isValidLanguageFlag = (key: string): boolean => LANGUAGES.includes(key);
 
 function getBlogPostLanguageFlagFromStr(sourceFileDir: string): LanguageFlag {
   const firstSlashIndex = indexOfNthOccurrence(sourceFileDir, '/', 1);
-  if (firstSlashIndex === -1) {
-    return DEFAULT_LANGUAGE;
-  }
+  if (firstSlashIndex === -1) return DEFAULT_LANGUAGE;
 
   const envelopeBeginSlashIndex = indexOfNthOccurrence(sourceFileDir, '/', 2);
   const envelopeEndSlashIndex = indexOfNthOccurrence(sourceFileDir, '/', 3);
@@ -40,6 +38,10 @@ export const getBlogPostLanguageFlag = (post: PostBase): LanguageFlag => getBlog
 
 export function getPathnameWithoutI18nPart(pathname: string): Path {
   const secondSlashIndex = indexOfNthOccurrence(pathname, '/', 2);
+
+  const pathnameI18nPart = secondSlashIndex === -1 ? pathname.substring(1) : pathname.substring(1, secondSlashIndex);
+  if (!isValidLanguageFlag(pathnameI18nPart)) return pathname;
+
   const pathnameWithouti18n = secondSlashIndex === -1 ? '/' : pathname.substring(secondSlashIndex);
   return pathnameWithouti18n;
 }

@@ -4,7 +4,6 @@ import dashboardRoutes, { dashboardRoutesTitles } from '@/config/DashboardSideba
 import dashboardRoutesSidebarComponents from '@/config/DashboardSidebar/utils/IconsMapping';
 import { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMapping';
 import { I18nProviderClient, getClientSideI18n } from '@/i18n/client';
-import i18nTaxonomy from '@/taxonomies/i18n';
 import { i18nComponentProps } from '@/types/Next';
 import Link from 'next/link';
 import { FunctionComponent, ReactElement } from 'react';
@@ -37,7 +36,7 @@ function sidebarBtnsGenerator() {
 const DashboardSidebarImpl = () => <aside className="fixed w-20 h-screen border-r-[1px] p-4 bg-black flex flex-col">{sidebarBtnsGenerator()}</aside>;
 
 export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = ({ i18nProps }) => (
-  <I18nProviderClient locale={i18nProps[i18nTaxonomy.langFlag]}>
+  <I18nProviderClient>
     <DashboardSidebarImpl />
   </I18nProviderClient>
 );

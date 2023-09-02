@@ -1,11 +1,9 @@
 'use client';
 
 import { I18nProviderClient, getClientSideI18n } from '@/i18n/client';
-import i18nTaxonomy from '@/taxonomies/i18n';
-import { i18nComponentProps } from '@/types/Next';
 import { FunctionComponent } from 'react';
 
-interface NotFoundInnerProps extends i18nComponentProps {}
+interface NotFoundInnerProps {}
 
 const NotFoundInnerImpl = () => {
   const globalT = getClientSideI18n();
@@ -17,8 +15,8 @@ const NotFoundInnerImpl = () => {
   );
 };
 
-export const NotFoundInner: FunctionComponent<NotFoundInnerProps> = ({ i18nProps }) => (
-  <I18nProviderClient locale={i18nProps[i18nTaxonomy.langFlag]}>
+export const NotFoundInner: FunctionComponent<NotFoundInnerProps> = () => (
+  <I18nProviderClient>
     <NotFoundInnerImpl />
   </I18nProviderClient>
 );

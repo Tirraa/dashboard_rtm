@@ -4,5 +4,5 @@ const siteUrl = 'https://example.com'; // {ToDo}
 module.exports = {
   siteUrl,
   generateRobotsTxt: true,
-  exclude: ['/icon.svg', '/apple-icon.png'],
+  exclude: ['/favicon.ico', '/icon.svg', '/apple-icon.png'],
 }
