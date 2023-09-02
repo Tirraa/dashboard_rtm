@@ -6,7 +6,7 @@ import { getAllPostsByCategoryAndSubCategoryUnstrict, getBlogPostSubCategory } f
 import { getBlogPostLanguageFlag } from '@/lib/i18n';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogSubCategoryFromUnknownCategory, BlogSubCategoryPageProps, UnknownCategoryAndUnknownSubCategory } from '@/types/Blog';
+import { BlogCategory, BlogCategoryAndSubcategoryPair, BlogSubCategoryFromUnknownCategory, BlogSubCategoryPageProps } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
@@ -14,8 +14,10 @@ import PaginatedElements from '../misc/PaginatedElements';
 import BlogPostPeview from './BlogPostPreview';
 import BlogPostsNotFound from './BlogPostsNotFound';
 
-const shouldTriggerNotFound = (postsCollection: PostBase[], { category, subCategory }: UnknownCategoryAndUnknownSubCategory): boolean => {
-  // @ts-ignore
+const shouldTriggerNotFound = <C extends BlogCategory>(
+  postsCollection: PostBase[],
+  { category, subCategory }: BlogCategoryAndSubcategoryPair<C>
+): boolean => {
   return postsCollection.length === 0 && !BlogConfig.forcedBlogSubCategoriesPaths[category]?.includes(subCategory);
 };
 
