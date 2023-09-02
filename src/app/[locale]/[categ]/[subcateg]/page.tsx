@@ -6,7 +6,7 @@ import { languages } from '@/i18n/settings';
 import { getAllCategories } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogCategory, BlogStaticParams, BlogSubCategory } from '@/types/Blog';
+import { BlogStaticParams } from '@/types/Blog';
 
 export async function generateStaticParams() {
   function generateBlogStaticParams(): Partial<BlogStaticParams>[] {
@@ -15,16 +15,14 @@ export async function generateStaticParams() {
     const blogCategories = getAllCategories();
 
     blogCategories.forEach((categ) => {
-      const category = categ as BlogCategory;
       const curSubCategs = getBlogSubCategoriesByCategory(categ);
 
       curSubCategs.forEach((subCateg) => {
-        const subCategory = subCateg as BlogSubCategory<typeof category>;
-        const staticParamsKey = `${categ}-${subCategory}`;
+        const staticParamsKey = `${categ}-${subCateg}`;
 
         if (existingParams.has(staticParamsKey)) return;
         existingParams.add(staticParamsKey);
-        const entity = { [BlogTaxonomy.category]: categ, [BlogTaxonomy.subCategory]: subCategory };
+        const entity = { [BlogTaxonomy.category]: categ, [BlogTaxonomy.subCategory]: subCateg };
         blogStaticParams.push(entity);
       });
     });

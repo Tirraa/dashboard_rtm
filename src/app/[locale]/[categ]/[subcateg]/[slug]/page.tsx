@@ -11,8 +11,8 @@ import { LanguageFlag } from '@/types/i18n';
 import { notFound } from 'next/navigation';
 
 export function generateMetadata({ params }: BlogPostPageProps) {
-  const category: BlogCategory = getBlogCategoryFromPathname(getPathnameWithoutI18nPart(getServerSidePathnameWorkaround())) as BlogCategory;
-  const subCategory = params[BlogTaxonomy.subCategory] as BlogSubCategory<typeof category>;
+  const category = getBlogCategoryFromPathname(getPathnameWithoutI18nPart(getServerSidePathnameWorkaround())) as BlogCategory;
+  const subCategory = params[BlogTaxonomy.subCategory] as BlogSubCategory<BlogCategory>;
   const slug = params[BlogTaxonomy.slug];
   const lang = params[i18nTaxonomy.langFlag];
   const post = getPost({ category, subCategory }, slug, lang);
@@ -32,7 +32,7 @@ export async function generateStaticParams() {
       const curSubCategs = getBlogSubCategoriesByCategory(categ);
 
       curSubCategs.forEach((subCateg) => {
-        const subCategory = subCateg as BlogSubCategory<typeof category>;
+        const subCategory = subCateg as BlogSubCategory<BlogCategory>;
         const relatedPosts = getAllPostsByCategoryAndSubCategory({ category, subCategory });
 
         relatedPosts.forEach((post) => {

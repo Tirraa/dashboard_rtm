@@ -46,7 +46,7 @@ export async function generateStaticParams() {
 async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: LanguageFlag) {
   function buildHistogram() {
     for (const post of posts) {
-      const curSubCateg = getBlogPostSubCategory(post) as BlogSubCategory<typeof category>;
+      const curSubCateg = getBlogPostSubCategory(post) as BlogSubCategory<BlogCategory>;
       if (histogram[curSubCateg].length < limit + 1 && getBlogPostLanguageFlag(post) === lng) {
         histogram[curSubCateg].push(post);
         if (Object.values(histogram).every((posts2) => posts2.length >= limit + 1)) break;
@@ -56,7 +56,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
 
   function buildPostsCollectionsSnippets() {
     for (const [subCategory, posts2] of Object.entries(histogram)) {
-      postsCollectionsSnippets[subCategory as BlogSubCategory<typeof category>] = posts2.map((post, index) => (
+      postsCollectionsSnippets[subCategory as BlogSubCategory<BlogCategory>] = posts2.map((post, index) => (
         <BlogPostPeview key={index} {...{ post, lng }} />
       ));
     }
@@ -99,11 +99,11 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
 
   const globalT = await getServerSideI18n();
   const scopedT = await getScopedI18n(i18ns.blogCategories);
-  const subCategs: BlogSubCategory<typeof category>[] = getBlogSubCategoriesByCategory(category);
+  const subCategs: BlogSubCategory<BlogCategory>[] = getBlogSubCategoriesByCategory(category);
   const entries = subCategs.map((subCateg) => [subCateg, []]);
   const [histogram, postsCollectionsSnippets] = [
-    Object.fromEntries(entries) as Record<BlogSubCategory<typeof category>, PostBase[]>,
-    Object.fromEntries(entries) as Record<BlogSubCategory<typeof category>, ReactNode[]>
+    Object.fromEntries(entries) as Record<BlogSubCategory<BlogCategory>, PostBase[]>,
+    Object.fromEntries(entries) as Record<BlogSubCategory<BlogCategory>, ReactNode[]>
   ];
   const limit = BlogConfig.displayedBlogPostsPerSubCategoryOnBlogCategoryPageLimit;
 

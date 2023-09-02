@@ -25,7 +25,7 @@ type IsValidCategoryAndSubcategory<C extends BlogCategory, S extends BlogSubCate
 
 export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageProps> = async ({ params }) => {
   const category = params[BlogTaxonomy.category];
-  const subCategory = params[BlogTaxonomy.subCategory] as BlogSubCategory<typeof category>;
+  const subCategory = params[BlogTaxonomy.subCategory] as BlogSubCategory<BlogCategory>;
   const lng = params[i18nTaxonomy.langFlag];
   const scopedT = await getScopedI18n(i18ns.blogCategories);
 

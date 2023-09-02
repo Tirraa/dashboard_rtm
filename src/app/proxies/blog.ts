@@ -6,10 +6,10 @@ namespace BlogProxy {
   export const subCategoriesPtr: Partial<Record<BlogCategory, BlogSubCategoryUnknownKey[]>> = {};
 }
 
-function buildSubCategoriesSet(category: BlogCategory): Set<BlogSubCategory<typeof category>> {
-  const subCategoriesSet = new Set<BlogSubCategory<typeof category>>();
+function buildSubCategoriesSet(category: BlogCategory): Set<BlogSubCategory<BlogCategory>> {
+  const subCategoriesSet = new Set<BlogSubCategory<BlogCategory>>();
   const relatedPosts = BlogConfig.blogCategoriesAllPostsTypesAssoc[category]();
-  relatedPosts.forEach((post) => subCategoriesSet.add(getBlogPostSubCategory(post) as BlogSubCategory<typeof category>));
+  relatedPosts.forEach((post) => subCategoriesSet.add(getBlogPostSubCategory(post) as BlogSubCategory<BlogCategory>));
   return subCategoriesSet;
 }
 
@@ -18,9 +18,9 @@ function subCategoriesByCategoryAccessor(category: BlogCategory, fresh: boolean)
     const subCategsSet = buildSubCategoriesSet(category);
     BlogProxy.subCategoriesPtr[category] = Array.from(subCategsSet);
   }
-  return BlogProxy.subCategoriesPtr[category] as BlogSubCategory<typeof category>[];
+  return BlogProxy.subCategoriesPtr[category] as BlogSubCategory<BlogCategory>[];
 }
 
-export function getBlogSubCategoriesByCategory(category: BlogCategory, fresh: boolean = true): BlogSubCategory<typeof category>[] {
+export function getBlogSubCategoriesByCategory(category: BlogCategory, fresh: boolean = true): BlogSubCategory<BlogCategory>[] {
   return subCategoriesByCategoryAccessor(category, fresh);
 }
