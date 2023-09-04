@@ -25,7 +25,7 @@ export const HomepageInner: FunctionComponent<HomepageInnerProps> = async () => 
       <div className="flex flex-col items-center align-center justify-center">
         <Image src="/assets/rtm-txt-logo.svg" {...{ style, width, height }} alt={`${brand} (${logo})`} className="flex" />
         <h1 className="mt-2">{brand}</h1>
-        <RtmButton label={inviteTheBot} __IconComponent={<CogIcon className="h-7 w-7" />} href={DiscordConfig.botInviteLink} />
+        <RtmButton label={inviteTheBot} __IconComponent={<CogIcon className="h-7 w-7" />} href={DiscordConfig.BOT_INVITE_LINK} />
       </div>
     </div>
   );

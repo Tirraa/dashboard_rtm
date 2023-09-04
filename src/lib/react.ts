@@ -1,6 +1,7 @@
+import { AppPath } from '@/types/Next';
 import { RefObject } from 'react';
 
-type LinkTargetAttr = { target: string };
+type LinkTargetAttr = { target: AppPath };
 
 export const getRefCurrentPtr = <T>(ref: RefObject<T>): T => ref.current as T;
-export const getLinkTarget = (href: string): {} | LinkTargetAttr => (href.startsWith('http') ? { target: '_blank' } : {});
+export const getLinkTarget = (href: AppPath): {} | LinkTargetAttr => (href.startsWith('http') ? { target: '_blank' } : {});

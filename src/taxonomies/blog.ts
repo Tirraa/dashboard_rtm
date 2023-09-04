@@ -3,16 +3,16 @@ import { LanguageFlag } from '@/types/i18n';
 import i18nTaxonomy from './i18n';
 
 export namespace BlogTaxonomy {
-  export const category = 'categ';
-  export const subCategory = 'subcateg';
-  export const slug = 'slug';
+  export const CATEGORY = 'categ';
+  export const SUBCATEGORY = 'subcateg';
+  export const SLUG = 'slug';
 }
 
 export type TBlogTaxonomy = {
-  [BlogTaxonomy.category]: BlogCategory;
-  [BlogTaxonomy.subCategory]: BlogSubCategoryUnknownKey;
-  [BlogTaxonomy.slug]: BlogSlug;
-  [i18nTaxonomy.langFlag]?: LanguageFlag;
+  [BlogTaxonomy.CATEGORY]: BlogCategory;
+  [BlogTaxonomy.SUBCATEGORY]: BlogSubCategoryUnknownKey;
+  [BlogTaxonomy.SLUG]: BlogSlug;
+  [i18nTaxonomy.LANG_FLAG]?: LanguageFlag;
 };
 
 export default BlogTaxonomy;

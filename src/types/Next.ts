@@ -3,7 +3,7 @@ import { LanguageFlag } from '@/types/i18n';
 import { ReactNode } from 'react';
 
 export type i18nParams = {
-  [i18nTaxonomy.langFlag]: LanguageFlag;
+  [i18nTaxonomy.LANG_FLAG]: LanguageFlag;
 };
 
 export interface i18nPageProps {
@@ -18,7 +18,7 @@ export interface LayoutBaseProps extends i18nPageProps {
   children: ReactNode;
 }
 
-export type Path = string;
+export type AppPath = string;
 export type PathSegment = string;
 
 export default LayoutBaseProps;

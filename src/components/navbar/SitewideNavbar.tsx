@@ -3,8 +3,8 @@
 import useCollapseNavbarOnResize from '@/components/_customHooks/_hotfixes/useCollapseNavbarOnResize';
 import NavbarElement from '@/components/_hoc/navbar/NavbarElement';
 import TextNodeWithStupidUppercaseEffect from '@/components/misc/TextNodeWithStupidUppercaseEffect';
-import sitewideNavbarDropdownsConfig from '@/config/SitewideNavbar/dropDownsConfig';
-import sitewideNavbarRoutes, { sitewideNavbarRoutesTitles } from '@/config/SitewideNavbar/routesImpl';
+import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropDownsConfig';
+import SITEWIDE_NAVBAR_ROUTES, { SITEWIDE_NAVBAR_ROUTES_TITLES } from '@/config/SitewideNavbar/routesImpl';
 import RoutesBase from '@/config/routes';
 import { I18nProviderClient, getClientSideI18n } from '@/i18n/client';
 import getComputedNavData from '@/lib/misc/getComputedNavData';
@@ -19,13 +19,13 @@ import NavbarButton from './NavbarButton';
 
 interface SitewideNavbarProps extends i18nComponentProps {}
 
-const { navbarId, forceNavbarMenuToCollapseBreakpointPxValue, logoSizeInPx } = NavbarConfig;
+const { NAVBAR_ID, FORCE_NAVBAR_MENU_TO_COLLAPSE_BREAKPOINT_PX_VALUE, LOGO_SIZE_PX_VALUE } = NavbarConfig;
 
 export function buildNavbarElements({ i18nProps }: i18nComponentProps) {
-  const computedNavData = getComputedNavData(sitewideNavbarRoutes, sitewideNavbarRoutesTitles, sitewideNavbarDropdownsConfig);
-  const navbarElements = computedNavData.map(({ i18nTitle, path, embeddedEntities }) => {
-    return <NavbarElement key={`navbar-btn-${i18nTitle}${path}`} {...{ i18nProps, i18nTitle, path, embeddedEntities }} />;
-  });
+  const computedNavData = getComputedNavData(SITEWIDE_NAVBAR_ROUTES, SITEWIDE_NAVBAR_ROUTES_TITLES, SITEWIDE_NAVBAR_DROPDOWNS_CONFIG);
+  const navbarElements = computedNavData.map(({ i18nTitle, path, embeddedEntities }) => (
+    <NavbarElement key={`navbar-btn-${i18nTitle}${path}`} {...{ i18nProps, i18nTitle, path, embeddedEntities }} />
+  ));
   return navbarElements;
 }
 
@@ -34,10 +34,10 @@ const SitewideNavbarImpl: FunctionComponent<SitewideNavbarProps> = ({ i18nProps 
   const [openNav, setOpenNav] = useState<boolean>(false);
   const globalT = getClientSideI18n();
 
-  useCollapseNavbarOnResize(forceNavbarMenuToCollapseBreakpointPxValue, mobileMenuInstanceRef, setOpenNav);
+  useCollapseNavbarOnResize(FORCE_NAVBAR_MENU_TO_COLLAPSE_BREAKPOINT_PX_VALUE, mobileMenuInstanceRef, setOpenNav);
 
   useEffect(() => {
-    const navbarCollapseElement = document.getElementById(navbarId as string);
+    const navbarCollapseElement = document.getElementById(NAVBAR_ID as string);
     const closeNavbarOnOutsideClick = (e: Event) =>
       openNav && e.target instanceof Node && !navbarCollapseElement?.contains(e.target) ? setOpenNav(false) : undefined;
 
@@ -73,15 +73,15 @@ const SitewideNavbarImpl: FunctionComponent<SitewideNavbarProps> = ({ i18nProps 
   // {ToDo} use a formatter for the img alt
   return (
     <Navbar
-      id={navbarId as string}
+      id={NAVBAR_ID as string}
       color="blue"
       fullWidth={true}
       className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4"
     >
       <div className="flex items-center justify-between text-white">
-        <Link href={RoutesBase.sitewide}>
+        <Link href={RoutesBase.SITEWIDE}>
           <div className="flex">
-            <Image src="/assets/rtm-logo.svg" height={logoSizeInPx} width={logoSizeInPx} alt={`${brand} (${logo})`} />
+            <Image src="/assets/rtm-logo.svg" height={LOGO_SIZE_PX_VALUE} width={LOGO_SIZE_PX_VALUE} alt={`${brand} (${logo})`} />
             <Typography as="span" className="hidden lg:block ml-4 py-1.5 font-medium">
               <TextNodeWithStupidUppercaseEffect str={brand} />
             </Typography>
@@ -123,10 +123,10 @@ const SitewideNavbarImpl: FunctionComponent<SitewideNavbarProps> = ({ i18nProps 
 };
 
 export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = ({ i18nProps }) => {
-  const locale = i18nProps[i18nTaxonomy.langFlag];
+  const locale = i18nProps[i18nTaxonomy.LANG_FLAG];
   return (
     <I18nProviderClient>
-      <SitewideNavbarImpl {...{ i18nProps: { [i18nTaxonomy.langFlag]: locale } }} />
+      <SitewideNavbarImpl {...{ i18nProps: { [i18nTaxonomy.LANG_FLAG]: locale } }} />
     </I18nProviderClient>
   );
 };

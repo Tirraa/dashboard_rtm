@@ -1,41 +1,48 @@
 import SubCategoryRelatedBlogPosts from '@/components/blog/SubCategoryRelatedBlogPosts';
-import { BlogSubCategoryPageProps } from '@/types/Blog';
+import { BlogCategory, BlogSubCategoryPageProps } from '@/types/Blog';
 
 import { getBlogSubCategoriesByCategory } from '@/app/proxies/blog';
-import { languages } from '@/i18n/settings';
-import { getAllCategories } from '@/lib/blog';
+import { LANGUAGES } from '@/i18n/settings';
+import { getAllCategories, getAllPostsByCategoryAndSubCategoryAndLanguageFlagUnstrict, subCategoryShouldTriggerNotFound } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogStaticParams } from '@/types/Blog';
+import PostBase from '@/types/BlogPostAbstractions';
+import { LanguageFlag } from '@/types/i18n';
 
 export async function generateStaticParams() {
   function generateBlogStaticParams(): Partial<BlogStaticParams>[] {
-    const existingParams = new Set<string>();
+    const indexedParams = new Set<string>();
     const blogStaticParams: Partial<BlogStaticParams>[] = [];
     const blogCategories = getAllCategories();
 
     blogCategories.forEach((categ) => {
       const curSubCategs = getBlogSubCategoriesByCategory(categ);
 
-      curSubCategs.forEach((subCateg) => {
-        const staticParamsKey = `${categ}-${subCateg}`;
+      curSubCategs.forEach((subCategory) => {
+        LANGUAGES.forEach((language) => {
+          const category = categ as BlogCategory;
+          const postsCollection: PostBase[] = getAllPostsByCategoryAndSubCategoryAndLanguageFlagUnstrict(
+            { category, subCategory },
+            language as LanguageFlag
+          );
 
-        if (existingParams.has(staticParamsKey)) return;
-        existingParams.add(staticParamsKey);
-        const entity = { [BlogTaxonomy.category]: categ, [BlogTaxonomy.subCategory]: subCateg };
-        blogStaticParams.push(entity);
+          if (subCategoryShouldTriggerNotFound(postsCollection, { category, subCategory })) return;
+
+          const staticParamsIndexKey = `${categ}-${subCategory}-${language}`;
+          if (indexedParams.has(staticParamsIndexKey)) return;
+
+          indexedParams.add(staticParamsIndexKey);
+          const entity = { [BlogTaxonomy.CATEGORY]: categ, [BlogTaxonomy.SUBCATEGORY]: subCategory, [i18nTaxonomy.LANG_FLAG]: language };
+          blogStaticParams.push(entity);
+        });
       });
     });
     return blogStaticParams as Partial<BlogStaticParams>[];
   }
 
   const blogStaticParamsEntities = generateBlogStaticParams();
-  const staticParams = languages.flatMap((locale) =>
-    blogStaticParamsEntities.map((entity) => ({
-      [i18nTaxonomy.langFlag]: locale,
-      ...entity
-    }))
-  );
+  const staticParams = blogStaticParamsEntities.map((entity) => ({ ...entity }));
 
   return staticParams;
 }

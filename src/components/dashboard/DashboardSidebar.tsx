@@ -13,8 +13,7 @@ import SidebarBtnSeparator from './SidebarBtnsSeparator';
 
 interface DashboardSidebarProps {}
 
-const mainBoxId: string = DashboardSidebarDynamicRenderingConfig.mainBoxId;
-const sidebarIconClass: string = DashboardSidebarDynamicRenderingConfig.iconClass;
+const { MAIN_BOX_ID, ICON_CLASS: SIDEBAR_ICON_CLASS } = DashboardSidebarDynamicRenderingConfig;
 
 function sidebarBtnsGenerator(separatorWidth: number) {
   const keys = Object.keys(dashboardRoutesSidebarComponents);
@@ -29,7 +28,7 @@ function sidebarBtnsGenerator(separatorWidth: number) {
 
     return (
       <div key={`sidebar-btn-component-${k}`} className="flex flex-col items-center m-2">
-        <Link {...{ title, href }} className={sidebarIconClass}>
+        <Link {...{ title, href }} className={SIDEBAR_ICON_CLASS}>
           <span className="sr-only">{title}</span>
           {btnComponent}
         </Link>
@@ -42,16 +41,16 @@ function sidebarBtnsGenerator(separatorWidth: number) {
 function DashboardSidebarImpl() {
   const sidebarInstanceRef = useRef<HTMLDivElement>(null);
   const [dynamicWidth, setDynamicWidth] = useState<number>(-1);
-  const [dynamicPaddingBottom, setDynamicPaddingBottom] = useState(0);
+  const [dynamicPaddingBottom, setDynamicPaddingBottom] = useState<number>(0);
   const [dynamicSeparatorWidth, setDynamicSeparatorWidth] = useState<number>(-1);
   const [dynamicLeft, setDynamicLeft] = useState<string>('100vw');
 
   useEffect(
     () => {
-      const sidebarFirstIconInstance = document.querySelector(`.${sidebarIconClass}`);
-      const mainBoxInstance = document.querySelector(`#${mainBoxId}`) as HTMLElement;
+      const sidebarFirstIconInstance = document.querySelector(`.${SIDEBAR_ICON_CLASS}`);
+      const mainBoxInstance = document.querySelector(`#${MAIN_BOX_ID}`) as HTMLElement;
       const navbarInstance: HTMLElement | null =
-        NavbarConfig.navbarId !== null ? (document.querySelector(`#${NavbarConfig.navbarId}`) as HTMLElement) : null;
+        NavbarConfig.NAVBAR_ID !== null ? (document.querySelector(`#${NavbarConfig.NAVBAR_ID}`) as HTMLElement) : null;
 
       if (!sidebarFirstIconInstance) {
         console.error("DashboardSidebar: Unable to retrieve any sidebar icon! The sidebar won't be displayed.");
@@ -65,18 +64,18 @@ function DashboardSidebarImpl() {
 
       if (!navbarInstance && navbarInstance !== null) {
         console.error(
-          "DashboardSidebar: Unable to retrieve your navbar element! If you don't have any navbar, set the navbarId value to `null`. The sidebar won't be displayed."
+          "DashboardSidebar: Unable to retrieve your navbar element! If you don't have any navbar, set the NAVBAR_ID value to `null`. The sidebar won't be displayed."
         );
         return;
       }
 
       const computedPaddingBottom = navbarInstance ? computeHTMLElementHeight(navbarInstance) : 0;
       const computedIconWidth = computeHTMLElementWidth(sidebarFirstIconInstance as HTMLElement);
-      const computedSeparatorWidth = computedIconWidth * DashboardSidebarDynamicRenderingConfig.iconSeparatorWidthFactor;
-      const computedWidth = computedIconWidth * DashboardSidebarDynamicRenderingConfig.iconWidthFactor;
+      const computedSeparatorWidth = computedIconWidth * DashboardSidebarDynamicRenderingConfig.ICON_SEPARATOR_WIDTH_FACTOR;
+      const computedWidth = computedIconWidth * DashboardSidebarDynamicRenderingConfig.ICON_MARGIN_X_FACTOR;
       if (mainBoxInstance) {
         mainBoxInstance.classList.add('transition-[margin-left]');
-        mainBoxInstance.style.marginLeft = `${computedWidth}` + 'px';
+        mainBoxInstance.style.marginLeft = computedWidth + 'px';
       }
       setDynamicSeparatorWidth(computedSeparatorWidth);
       setDynamicWidth(computedWidth);
@@ -86,9 +85,9 @@ function DashboardSidebarImpl() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       sidebarInstanceRef,
-      DashboardSidebarDynamicRenderingConfig.sidebarIconSizeInPx,
-      DashboardSidebarDynamicRenderingConfig.iconWidthFactor,
-      DashboardSidebarDynamicRenderingConfig.iconSeparatorWidthFactor
+      DashboardSidebarDynamicRenderingConfig.SIDEBAR_ICON_SIZE_PX_VALUE,
+      DashboardSidebarDynamicRenderingConfig.ICON_MARGIN_X_FACTOR,
+      DashboardSidebarDynamicRenderingConfig.ICON_SEPARATOR_WIDTH_FACTOR
     ]
   );
 

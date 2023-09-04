@@ -117,8 +117,7 @@ const NextTopLoader = ({
       return true;
     }
 
-    // eslint-disable-next-line no-var
-    var npgclass = document.querySelectorAll('html');
+    const npgclass = document.querySelector('html');
     function findClosestAnchor(element: HTMLElement | null): HTMLAnchorElement | null {
       while (element && element.tagName.toLowerCase() !== 'a') {
         element = element.parentElement;

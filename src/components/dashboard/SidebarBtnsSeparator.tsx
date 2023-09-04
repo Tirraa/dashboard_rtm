@@ -5,12 +5,13 @@ interface SidebarBtnSeparatorProps {
   style?: CSSProperties;
 }
 
-const defaultStyleValue = {};
+const DEFAULT_STYLE_VALUE = {};
 
-const sidebarIconSeparatorClass: string = DashboardSidebarDynamicRenderingConfig.iconSeparatorClass;
-const SidebarBtnSeparator: FunctionComponent<SidebarBtnSeparatorProps> = ({ style: styleValue }) => {
-  const style = styleValue || defaultStyleValue;
-  return <hr className={'relative top-2 m-auto' + ' ' + sidebarIconSeparatorClass} {...{ style }} />;
-};
+const STYLING_CLASSLIST = 'relative top-2 m-auto';
+
+const { ICON_SEPARATOR_CLASS } = DashboardSidebarDynamicRenderingConfig;
+const SidebarBtnSeparator: FunctionComponent<SidebarBtnSeparatorProps> = ({ style: styleValue }) => (
+  <hr className={STYLING_CLASSLIST + ' ' + ICON_SEPARATOR_CLASS} {...{ style: styleValue || DEFAULT_STYLE_VALUE }} />
+);
 
 export default SidebarBtnSeparator;

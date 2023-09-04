@@ -12,15 +12,15 @@ import { FunctionComponent } from 'react';
 
 interface NavbarButtonProps extends AtomicNavDataEntity {}
 
-const active: ClassName = { className: NavbarButtonStyle.isActiveClassList };
-const inactive: ClassName = { className: NavbarButtonStyle.isNotActiveClassList };
+const ACTIVE: ClassName = { className: NavbarButtonStyle.isActiveClassList };
+const INACTIVE: ClassName = { className: NavbarButtonStyle.isNotActiveClassList };
 
 export const NavbarButton: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, path: href }) => {
   const globalT = getClientSideI18n();
   const title = globalT(i18nTitle);
 
   const currentPathname = usePathname();
-  const classList = hrefMatchesPathname(href, currentPathname) ? active : inactive;
+  const classList = hrefMatchesPathname(href, currentPathname) ? ACTIVE : INACTIVE;
   const target = getLinkTarget(href);
 
   return <Link {...{ ...classList, href, ...target }}>{title}</Link>;

@@ -1,14 +1,11 @@
 import { getServerSideI18n } from '@/i18n/server';
-import { LanguageFlag } from '@/types/i18n';
 import { FunctionComponent } from 'react';
 
-interface BlogPostsNotFoundProps {
-  lng: LanguageFlag;
-}
+interface BlogPostsNotFoundProps {}
 
-export const BlogPostsNotFound: FunctionComponent<BlogPostsNotFoundProps> = async ({ lng }) => {
+export const BlogPostsNotFound: FunctionComponent<BlogPostsNotFoundProps> = async () => {
   const globalT = await getServerSideI18n();
-  const txt = globalT(`vocab.no-blog-post`);
+  const txt = globalT('vocab.no-blog-post');
   return <p>{txt}</p>;
 };
 

@@ -3,12 +3,12 @@ import { getSlashEnvelope } from '@/lib/str';
 import { i18ns } from '../i18n';
 import { DashboardRoutes, DashboardRoutesTitles } from './utils/RoutesMapping';
 
-const b = getSlashEnvelope(RoutesBase.dashboard);
+const BASE = getSlashEnvelope(RoutesBase.DASHBOARD);
 
 export const dashboardRoutes: DashboardRoutes = {
-  BASE_PAGE: RoutesBase.dashboard,
-  FOO_PAGE: b + 'foo',
-  BAR_PAGE: b + 'bar'
+  BASE_PAGE: RoutesBase.DASHBOARD,
+  FOO_PAGE: BASE + 'foo',
+  BAR_PAGE: BASE + 'bar'
 };
 
 const dashboard = i18ns.dashboard;

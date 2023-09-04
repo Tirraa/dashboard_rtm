@@ -1,4 +1,4 @@
-export function computeHTMLElementHeight(HtmlElement: HTMLElement) {
+export function computeHTMLElementHeight(HtmlElement: HTMLElement): number {
   const { height } = HtmlElement.getBoundingClientRect();
   const { paddingTop, paddingBottom, marginTop, marginBottom } = getComputedStyle(HtmlElement);
   const heightDeltas = [paddingTop, paddingBottom, marginTop, marginBottom].map(parseFloat);
@@ -6,7 +6,7 @@ export function computeHTMLElementHeight(HtmlElement: HTMLElement) {
   return computedHeight;
 }
 
-export function computeHTMLElementWidth(HtmlElement: HTMLElement) {
+export function computeHTMLElementWidth(HtmlElement: HTMLElement): number {
   const { width } = HtmlElement.getBoundingClientRect();
   const { paddingRight, paddingLeft, marginRight, marginLeft } = getComputedStyle(HtmlElement);
   const widthDeltas = [paddingRight, paddingLeft, marginRight, marginLeft].map(parseFloat);

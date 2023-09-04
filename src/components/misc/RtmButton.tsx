@@ -1,7 +1,8 @@
 'use client';
 
 import { getLinkTarget } from '@/lib/react';
-import { Path } from '@/types/Next';
+import { AppPath } from '@/types/Next';
+import { ClassName } from '@/types/React';
 import { Button } from '@material-tailwind/react';
 import { size, variant } from '@material-tailwind/react/types/components/button';
 import Link from 'next/link';
@@ -10,7 +11,7 @@ import { FunctionComponent, ReactElement } from 'react';
 interface InviteBotButtonProps {
   label: string;
   __IconComponent?: ReactElement;
-  href?: Path;
+  href?: AppPath;
   title?: string;
   textCls?: string;
   className?: string;
@@ -19,12 +20,13 @@ interface InviteBotButtonProps {
   ripple?: boolean;
 }
 
-const defTextCls = 'text-xl';
-const defClassList = (txtCls: string) => {
-  className: `mt-4 ${txtCls} normal-case flex items-center gap-2`;
-};
-const defVariant: variant = 'gradient';
-const defSize: size = 'lg';
+const DEFAULT_TEXT_CLS = 'text-xl';
+const DEFAULT_VARIANT: variant = 'gradient';
+const DEFAULT_SIZE: size = 'lg';
+
+const defClassList = (txtCls: string): ClassName => ({
+  className: `mt-4 ${txtCls} normal-case flex items-center gap-2`
+});
 
 export const RtmButton: FunctionComponent<InviteBotButtonProps> = ({
   label,
@@ -37,10 +39,10 @@ export const RtmButton: FunctionComponent<InviteBotButtonProps> = ({
   size: sizeValue,
   ripple: rippleValue
 }) => {
-  const textCls = textClsValue || defTextCls;
-  const className = classNameValue ? { className: classNameValue + ' ' + textCls } : defClassList(textCls);
-  const variant = variantValue || defVariant;
-  const size = sizeValue || defSize;
+  const textCls = textClsValue || DEFAULT_TEXT_CLS;
+  const className: ClassName = classNameValue ? { className: classNameValue + ' ' + textCls } : defClassList(textCls);
+  const variant = variantValue || DEFAULT_VARIANT;
+  const size = sizeValue || DEFAULT_SIZE;
   const title = titleValue || label;
   const ripple = rippleValue !== undefined ? rippleValue : true;
 
@@ -54,6 +56,7 @@ export const RtmButton: FunctionComponent<InviteBotButtonProps> = ({
   );
 
   // {ToDo} fix Material Tailwind? This code is not W3C compliant.
+  // https://github.com/creativetimofficial/material-tailwind/issues/448
   if (href) return <Link {...{ href, ...{ ...getLinkTarget(href) } }}>{btn}</Link>;
   return btn;
 };

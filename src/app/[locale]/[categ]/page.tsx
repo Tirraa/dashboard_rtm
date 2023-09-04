@@ -5,7 +5,7 @@ import RtmButton from '@/components/misc/RtmButton';
 import BlogConfig from '@/config/blog';
 import { i18ns } from '@/config/i18n';
 import { getScopedI18n, getServerSideI18n } from '@/i18n/server';
-import { languages } from '@/i18n/settings';
+import { LANGUAGES } from '@/i18n/settings';
 import { getAllCategories, getBlogPostSubCategory } from '@/lib/blog';
 import { getBlogPostLanguageFlag } from '@/lib/i18n';
 import { buildPathFromParts } from '@/lib/str';
@@ -26,19 +26,16 @@ export async function generateStaticParams() {
 
     blogCategories.forEach((categ) => {
       const category = categ as BlogCategory;
-      const entity = { [BlogTaxonomy.category]: category };
-      blogStaticParams.push(entity);
+      LANGUAGES.forEach((language) => {
+        const entity = { [BlogTaxonomy.CATEGORY]: category, [i18nTaxonomy.LANG_FLAG]: language };
+        blogStaticParams.push(entity);
+      });
     });
     return blogStaticParams as Partial<BlogStaticParams>[];
   }
 
   const blogStaticParamsEntities = generateBlogStaticParams();
-  const staticParams = languages.flatMap((locale) =>
-    blogStaticParamsEntities.map((entity) => ({
-      [i18nTaxonomy.langFlag]: locale,
-      ...entity
-    }))
-  );
+  const staticParams = blogStaticParamsEntities.map((entity) => ({ ...entity }));
 
   return staticParams;
 }
@@ -68,7 +65,8 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
     const result: ReactNode[] = [];
     for (const [subCategory, posts] of Object.entries(postsCollectionsSnippets)) {
       if (posts.length === 0) continue;
-      // {ToDo} Try to cast subCategory as BlogSubCategoryFromUnknownCategory, then try to retrieve the i18nKey via a BlogCategoryAndSubcategoryPair?
+      // https://github.com/QuiiBz/next-international/issues/154
+      // {ToDo} https://github.com/Tirraa/dashboard_rtm/issues/11
       // @ts-ignore
       const curSubCategTitle = scopedT(`${category}.${subCategory}`);
       const href = buildPathFromParts(category, subCategory);
@@ -106,7 +104,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
     Object.fromEntries(entries) as Record<BlogSubCategoryFromUnknownCategory, PostBase[]>,
     Object.fromEntries(entries) as Record<BlogSubCategoryFromUnknownCategory, ReactNode[]>
   ];
-  const limit = BlogConfig.displayedBlogPostsPerSubCategoryOnBlogCategoryPageLimit;
+  const limit = BlogConfig.DISPLAYED_BLOG_POST_PER_SUBCATEGORY_ON_BLOG_CATEGORY_PAGE_LIMIT;
 
   buildHistogram();
   buildPostsCollectionsSnippets();
@@ -117,12 +115,12 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
 }
 
 export default async function Page({ params }: BlogCategoryPageProps) {
-  const category: BlogCategory = params[BlogTaxonomy.category];
+  const category: BlogCategory = params[BlogTaxonomy.CATEGORY];
   const scopedT = await getScopedI18n(i18ns.blogCategories);
-  const lng = params[i18nTaxonomy.langFlag];
+  const lng = params[i18nTaxonomy.LANG_FLAG];
   let gettedOnTheFlyPosts: PostBase[] = [];
   try {
-    gettedOnTheFlyPosts = BlogConfig.blogCategoriesAllPostsTypesAssoc[category]();
+    gettedOnTheFlyPosts = BlogConfig.BLOG_CATEGORIES_ALL_POSTS_TYPES_ASSOC[category]();
   } catch {
     notFound();
   }

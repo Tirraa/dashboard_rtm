@@ -8,5 +8,5 @@ export default function NotFoundPage() {
   const pathname = getServerSidePathnameWorkaround();
   const lng: LanguageFlag = getPathnameI18nFlag(pathname);
 
-  return <NotFoundInner {...{ i18nProps: { [i18nTaxonomy.langFlag]: lng } }} />;
+  return <NotFoundInner {...{ i18nProps: { [i18nTaxonomy.LANG_FLAG]: lng } }} />;
 }

@@ -1,21 +1,20 @@
 import { BlogCategory, ForcedBlogSubCategoriesPaths, PostsCollectionAssoc } from '@/types/Blog';
 import { allPatchPosts } from 'contentlayer/generated';
 
-export type BlogsArchitecture = {
+export type BlogArchitecture = {
   'patch-notes': 'dashboard' | 'discord-bot';
-  'patch-notes-bis': 'dashboard-bis' | 'discord-bot-bis';
 };
 
 export namespace BlogConfig {
-  export const displayedBlogPostsPerSubCategoryOnBlogCategoryPageLimit = 2;
-  export const blogPostPeviewDescriptionCharactersLimit = 250;
-  export const blogCategoriesAllPostsTypesAssoc: PostsCollectionAssoc<BlogCategory> = {
-    'patch-notes': () => allPatchPosts,
-    'patch-notes-bis': () => allPatchPosts
+  export const DISPLAYED_BLOG_POST_PER_SUBCATEGORY_ON_BLOG_CATEGORY_PAGE_LIMIT = 2;
+  export const BLOG_POST_PREVIEW_DESCRIPTION_CHARACTERS_LIMIT = 250;
+
+  export const BLOG_CATEGORIES_ALL_POSTS_TYPES_ASSOC: PostsCollectionAssoc<BlogCategory> = {
+    'patch-notes': () => allPatchPosts
   };
-  export const forcedBlogSubCategoriesPaths: ForcedBlogSubCategoriesPaths = {
-    'patch-notes': ['dashboard', 'discord-bot'],
-    'patch-notes-bis': ['dashboard-bis']
+
+  export const FORCED_BLOG_SUBCATEGORIES_PATHS: ForcedBlogSubCategoriesPaths = {
+    'patch-notes': ['dashboard', 'discord-bot']
   };
 }
 

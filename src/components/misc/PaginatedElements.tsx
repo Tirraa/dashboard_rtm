@@ -1,5 +1,6 @@
 'use client';
 
+import { ClassName } from '@/types/React';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { FunctionComponent, ReactNode, useState } from 'react';
 import ReactPaginate from 'react-paginate';
@@ -9,8 +10,9 @@ interface PaginatedElementsProps {
   elementsPerPage: number;
 }
 
-const classList = { className: 'w-10 h-10 flex items-centers justify-center bg-gray-500 rounded-md' };
+const NEXT_AND_PREV_ICONS_CLASSLIST: ClassName = { className: 'w-10 h-10 flex items-centers justify-center bg-gray-500 rounded-md' };
 
+// {ToDo} Some sr-only elements/aria-labels for accessibility concerns would be welcome!
 const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({ paginatedElements, elementsPerPage }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const pagesAmount = Math.ceil(paginatedElements.length / elementsPerPage);
@@ -23,7 +25,7 @@ const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({ paginate
 
   function handlePageClick(event: { selected: number }) {
     const targetPage = event.selected + 1;
-    if (currentPage !== targetPage) setCurrentPage(targetPage);
+    setCurrentPage(targetPage);
   }
 
   return (
@@ -32,12 +34,12 @@ const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({ paginate
       <ReactPaginate
         breakLabel="..."
         previousLabel={
-          <span {...classList}>
+          <span {...NEXT_AND_PREV_ICONS_CLASSLIST}>
             <ChevronLeftIcon />
           </span>
         }
         nextLabel={
-          <span {...classList}>
+          <span {...NEXT_AND_PREV_ICONS_CLASSLIST}>
             <ChevronRightIcon />
           </span>
         }

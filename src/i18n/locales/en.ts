@@ -21,11 +21,6 @@ const enVocab: VocabInterface = {
       _title: 'Patch Notes',
       'discord-bot': 'Discord bot',
       dashboard: 'Dashboard'
-    },
-    'patch-notes-bis': {
-      _title: 'Patch Notes (bis)',
-      'discord-bot': 'Bot Discord (bis)',
-      dashboard: 'Dashboard (bis)'
     }
   },
 

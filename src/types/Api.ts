@@ -1,1 +1,1 @@
-export type JSONResponse = Record<string, unknown>;
+export type JSONData = Record<string, unknown>;

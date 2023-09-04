@@ -1,8 +1,8 @@
 import { getRefCurrentPtr } from '@/lib/react';
 import { RefObject, useEffect } from 'react';
 
-const hotfixClassList = ['opacity-0'];
-const animationStartLatencyInMs = 250;
+const HOTFIX_CLASSLIST = ['opacity-0'];
+const ANIMATION_START_LATENCY_MS_VALUE = 250;
 
 export function useCollapseNavbarOnResize(breakpointPxValue: number, mobileMenuInstanceRef: RefObject<HTMLDivElement>, setOpenNav: Function) {
   useEffect(
@@ -14,18 +14,18 @@ export function useCollapseNavbarOnResize(breakpointPxValue: number, mobileMenuI
         if (window.innerWidth >= breakpointPxValue) {
           if (!hiddenMobileMenuInstance) {
             const mobileMenuInstance = getRefCurrentPtr(mobileMenuInstanceRef);
-            mobileMenuInstance?.classList.add(...hotfixClassList);
+            mobileMenuInstance?.classList.add(...HOTFIX_CLASSLIST);
             hiddenMobileMenuInstance = true;
             coroutine = setTimeout(() => {
               setOpenNav(false);
               clearTimeout(coroutine as NodeJS.Timeout);
               coroutine = null;
-            }, animationStartLatencyInMs);
+            }, ANIMATION_START_LATENCY_MS_VALUE);
           }
         } else {
           if (hiddenMobileMenuInstance) {
             const mobileMenuInstance = mobileMenuInstanceRef.current;
-            mobileMenuInstance?.classList.remove(...hotfixClassList);
+            mobileMenuInstance?.classList.remove(...HOTFIX_CLASSLIST);
             hiddenMobileMenuInstance = false;
           }
           if (coroutine) {

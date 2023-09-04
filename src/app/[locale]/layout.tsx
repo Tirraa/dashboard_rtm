@@ -3,7 +3,8 @@ import NextTopLoader from '@/components/misc/NextTopLoader';
 
 import HotFixPhantomComponent from '@/components/misc/HotFixPhantomComponentProps';
 import SitewideNavbar from '@/components/navbar/SitewideNavbar';
-import { languages } from '@/i18n/settings';
+import { ProgressbarConfig } from '@/config/progressbar';
+import { LANGUAGES } from '@/i18n/settings';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import LayoutBaseProps from '@/types/Next';
 import { Metadata } from 'next';
@@ -16,18 +17,18 @@ export const metadata: Metadata = {
 };
 
 export async function generateStaticParams() {
-  return languages.map((lng) => ({ [i18nTaxonomy.langFlag]: lng }));
+  return LANGUAGES.map((lng) => ({ [i18nTaxonomy.LANG_FLAG]: lng }));
 }
 
 export default function RootLayout({ children, params }: RootLayoutProps) {
-  const locale = params[i18nTaxonomy.langFlag];
+  const locale = params[i18nTaxonomy.LANG_FLAG];
 
   return (
     <html lang={locale}>
       <body className="flex flex-col min-h-screen">
         <HotFixPhantomComponent />
-        <SitewideNavbar {...{ i18nProps: { [i18nTaxonomy.langFlag]: locale } }} />
-        <NextTopLoader color="#1e2529" showSpinner={false} height={5} />
+        <SitewideNavbar {...{ i18nProps: { [i18nTaxonomy.LANG_FLAG]: locale } }} />
+        <NextTopLoader {...{ ...ProgressbarConfig.PROPS }} />
         {children}
       </body>
     </html>

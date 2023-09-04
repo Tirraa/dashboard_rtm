@@ -1,11 +1,9 @@
-import BlogConfig from '@/config/blog';
 import { i18ns } from '@/config/i18n';
 import { getScopedI18n } from '@/i18n/server';
-import { getAllPostsByCategoryAndSubCategoryUnstrict, getBlogPostSubCategory } from '@/lib/blog';
-import { getBlogPostLanguageFlag } from '@/lib/i18n';
+import { getAllPostsByCategoryAndSubCategoryAndLanguageFlagUnstrict, subCategoryShouldTriggerNotFound } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogCategory, BlogCategoryAndSubcategoryPair, BlogSubCategoryFromUnknownCategory, BlogSubCategoryPageProps } from '@/types/Blog';
+import { BlogSubCategoryPageProps } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
@@ -13,29 +11,22 @@ import PaginatedElements from '../misc/PaginatedElements';
 import BlogPostPeview from './BlogPostPreview';
 import BlogPostsNotFound from './BlogPostsNotFound';
 
-const shouldTriggerNotFound = <C extends BlogCategory>(
-  postsCollection: PostBase[],
-  { category, subCategory }: BlogCategoryAndSubcategoryPair<C>
-): boolean => {
-  return postsCollection.length === 0 && !BlogConfig.forcedBlogSubCategoriesPaths[category]?.includes(subCategory);
-};
-
 export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageProps> = async ({ params }) => {
-  const category = params[BlogTaxonomy.category];
-  const subCategory = params[BlogTaxonomy.subCategory] as BlogSubCategoryFromUnknownCategory;
-  const lng = params[i18nTaxonomy.langFlag];
+  const category = params[BlogTaxonomy.CATEGORY];
+  const subCategory = params[BlogTaxonomy.SUBCATEGORY];
+  const lng = params[i18nTaxonomy.LANG_FLAG];
   const scopedT = await getScopedI18n(i18ns.blogCategories);
 
-  const postsCollection: PostBase[] = getAllPostsByCategoryAndSubCategoryUnstrict({ category, subCategory });
-  if (shouldTriggerNotFound(postsCollection, { category, subCategory })) notFound();
-  const relatedPosts = postsCollection.filter((post) => getBlogPostSubCategory(post) === subCategory && getBlogPostLanguageFlag(post) === lng);
+  const postsCollection: PostBase[] = getAllPostsByCategoryAndSubCategoryAndLanguageFlagUnstrict({ category, subCategory }, lng);
 
-  if (relatedPosts.length === 0) return <BlogPostsNotFound {...{ lng }} />;
-  // {ToDo} Try to cast subCategory as BlogSubCategoryFromUnknownCategory, then try to retrieve the i18nKey via a BlogCategoryAndSubcategoryPair?
+  if (subCategoryShouldTriggerNotFound(postsCollection, { category, subCategory })) notFound();
+  if (postsCollection.length === 0) return <BlogPostsNotFound {...{ lng }} />;
+  // https://github.com/QuiiBz/next-international/issues/154
+  // {ToDo} https://github.com/Tirraa/dashboard_rtm/issues/11
   // @ts-ignore
   const title = scopedT(`${category}.${subCategory}`);
 
-  const paginatedElements = relatedPosts.map((post, index) => <BlogPostPeview key={index} {...{ post, lng }} />);
+  const paginatedElements = postsCollection.map((post, index) => <BlogPostPeview key={index} {...{ post, lng }} />);
   return (
     <div className="mx-auto max-w-xl py-8">
       <h1 className="text-center">{title}</h1>

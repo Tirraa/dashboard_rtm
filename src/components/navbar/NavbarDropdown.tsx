@@ -1,8 +1,8 @@
 'use client';
 
 import NavbarDropdownButtonStyle, {
-  navbarDropdownComponentProps,
-  navbarDropdownInnerButtonsClassList
+  NAVBAR_DROPDOWN_INNER_BUTTONS_CLASSLIST,
+  navbarDropdownComponentProps
 } from '@/components/_config/_styles/NavbarDropdownButtonStyle';
 import { getClientSideI18n } from '@/i18n/client';
 import { hrefMatchesPathname } from '@/lib/str';
@@ -17,8 +17,8 @@ import { FunctionComponent, useState } from 'react';
 interface NavbarButtonProps extends NavbarDropdownElement {}
 
 const { isActiveClassList, isNotActiveClassList } = NavbarDropdownButtonStyle;
-const active: ClassName = { className: isActiveClassList };
-const inactive: ClassName = { className: isNotActiveClassList };
+const ACTIVE: ClassName = { className: isActiveClassList };
+const INACTIVE: ClassName = { className: isNotActiveClassList };
 
 const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) => {
   const globalT = getClientSideI18n();
@@ -27,7 +27,7 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) => {
 
     return (
       <MenuItem key={href + title} className="p-0">
-        <Link className={navbarDropdownInnerButtonsClassList} {...{ title, href }}>
+        <Link className={NAVBAR_DROPDOWN_INNER_BUTTONS_CLASSLIST} {...{ title, href }}>
           {title}
         </Link>
       </MenuItem>
@@ -38,7 +38,7 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) => {
 export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, path: href, embeddedEntities }) => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const currentPathname = usePathname();
-  const classList = hrefMatchesPathname(href, currentPathname) || openMenu ? active : inactive;
+  const classList = hrefMatchesPathname(href, currentPathname) || openMenu ? ACTIVE : INACTIVE;
   const globalT = getClientSideI18n();
   const title = globalT(i18nTitle);
 

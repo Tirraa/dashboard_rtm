@@ -3,18 +3,18 @@ import { RoutesBase } from '@/config/routes';
 import { i18ns } from '../i18n';
 import { SitewideNavbarRoutes, SitewideNavbarRoutesTitles } from './utils/RoutesMapping';
 
-const b = RoutesBase.sitewide;
+const BASE = RoutesBase.SITEWIDE;
 
-export const sitewideNavbarRoutes: SitewideNavbarRoutes = {
-  HOME_PAGE: b,
-  DASHBOARD_PAGE: RoutesBase.dashboard,
-  PATCH_NOTES_PAGE: RoutesBase.patchNotes,
-  SUPPORT_PAGE: DiscordConfig.supportServerInviteLink,
-  LOGIN_PAGE: b + 'login'
+export const SITEWIDE_NAVBAR_ROUTES: SitewideNavbarRoutes = {
+  HOME_PAGE: BASE,
+  DASHBOARD_PAGE: RoutesBase.DASHBOARD,
+  PATCH_NOTES_PAGE: RoutesBase.PATCH_NOTES,
+  SUPPORT_PAGE: DiscordConfig.SUPPORT_SERVER_INVITE_LINK,
+  LOGIN_PAGE: BASE + 'login'
 };
 
 const navbar = i18ns.navbar;
-export const sitewideNavbarRoutesTitles: SitewideNavbarRoutesTitles = {
+export const SITEWIDE_NAVBAR_ROUTES_TITLES: SitewideNavbarRoutesTitles = {
   HOME_PAGE: `${navbar}.home`,
   DASHBOARD_PAGE: `${navbar}.dashboard`,
   PATCH_NOTES_PAGE: `${navbar}.patch-notes`,
@@ -22,4 +22,4 @@ export const sitewideNavbarRoutesTitles: SitewideNavbarRoutesTitles = {
   LOGIN_PAGE: `${navbar}.login`
 };
 
-export default sitewideNavbarRoutes;
+export default SITEWIDE_NAVBAR_ROUTES;

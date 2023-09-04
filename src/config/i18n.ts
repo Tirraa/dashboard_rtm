@@ -13,4 +13,4 @@ export const i18ns = {
   blogCategories: 'blog-categories'
 } as const;
 
-export const fallbackLng: LanguageFlag = getEnumFirstKey(ELanguageFlag) as LanguageFlag;
+export const DEFAULT_LANGUAGE: LanguageFlag = getEnumFirstKey(ELanguageFlag) as LanguageFlag;

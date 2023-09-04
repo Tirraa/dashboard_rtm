@@ -1,6 +1,6 @@
 import { getBlogSubCategoriesByCategory } from '@/app/proxies/blog';
 import BlogPost from '@/components/blog/BlogPost';
-import { languages } from '@/i18n/settings';
+import { LANGUAGES } from '@/i18n/settings';
 import {
   getAllCategories,
   getAllPostsByCategoryAndSubCategoryUnstrict,
@@ -18,18 +18,19 @@ import { notFound } from 'next/navigation';
 
 export function generateMetadata({ params }: BlogPostPageProps) {
   const category = getBlogCategoryFromPathname(getPathnameWithoutI18nFlag(getServerSidePathnameWorkaround())) as BlogCategory;
-  const subCategory = params[BlogTaxonomy.subCategory] as BlogSubCategoryFromUnknownCategory;
-  const slug = params[BlogTaxonomy.slug];
-  const lang = params[i18nTaxonomy.langFlag];
+  const subCategory = params[BlogTaxonomy.SUBCATEGORY];
+  const slug = params[BlogTaxonomy.SLUG];
+  const lang = params[i18nTaxonomy.LANG_FLAG];
   const post = getPostUnstrict({ category, subCategory }, slug, lang);
   if (!post) notFound();
 
-  return { title: post.title, description: post.metadescription };
+  const { title, metadescription: description } = post;
+  return { title, description };
 }
 
 export async function generateStaticParams() {
   function generateBlogStaticParams(): BlogStaticParams[] {
-    const existingParams = new Set<string>();
+    const indexedParams = new Set<string>();
     const blogStaticParams: Partial<BlogStaticParams>[] = [];
     const blogCategories = getAllCategories();
 
@@ -42,21 +43,21 @@ export async function generateStaticParams() {
         const relatedPosts = getAllPostsByCategoryAndSubCategoryUnstrict({ category, subCategory });
 
         relatedPosts.forEach((post) => {
-          languages.forEach((language) => {
+          LANGUAGES.forEach((language) => {
             const slug = getBlogPostSlug(post);
 
             const blogPostExists = getPostUnstrict({ category, subCategory }, slug, language as LanguageFlag);
             if (!blogPostExists) return;
 
-            const staticParamsKey = `${categ}-${subCategory}-${slug}-${language}`;
-            if (existingParams.has(staticParamsKey)) return;
+            const staticParamsIndexKey = `${categ}-${subCategory}-${slug}-${language}`;
+            if (indexedParams.has(staticParamsIndexKey)) return;
 
-            existingParams.add(staticParamsKey);
+            indexedParams.add(staticParamsIndexKey);
             const entity: BlogStaticParams = {
-              [i18nTaxonomy.langFlag]: language,
-              [BlogTaxonomy.category]: category,
-              [BlogTaxonomy.subCategory]: subCategory,
-              [BlogTaxonomy.slug]: slug
+              [i18nTaxonomy.LANG_FLAG]: language,
+              [BlogTaxonomy.CATEGORY]: category,
+              [BlogTaxonomy.SUBCATEGORY]: subCategory,
+              [BlogTaxonomy.SLUG]: slug
             };
             blogStaticParams.push(entity);
           });

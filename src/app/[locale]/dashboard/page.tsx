@@ -5,7 +5,7 @@ export default function Page() {
   return (
     <>
       <h1>Hello there</h1>
-      <Link href={RoutesBase.sitewide}>Go back to the homepage</Link>
+      <Link href={RoutesBase.SITEWIDE}>Go back to the homepage</Link>
     </>
   );
 }
