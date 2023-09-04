@@ -21,10 +21,10 @@ export function indexOfNthOccurrence(strHaystack: string, needle: string, n: num
   return index;
 }
 
-export function hrefMatchesPathname(href: string, pathname: string): boolean {
+export function hrefMatchesPathname(href: string, pathname: string, root: string = RoutesBase.sitewide): boolean {
   const pathnameWithouti18n = getPathnameWithoutI18nPart(pathname);
   if (pathnameWithouti18n === href) return true;
-  if (href !== RoutesBase.sitewide && pathnameWithouti18n.startsWith(getSlashEnvelope(href))) return true;
+  if (href !== root && pathnameWithouti18n.startsWith(getSlashEnvelope(href))) return true;
   return false;
 }
 
