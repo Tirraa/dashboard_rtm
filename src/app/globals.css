@@ -26,3 +26,7 @@ body {
 main {
   padding: 1rem;
 }
+
+[dir="rtl"] #sitewide-navbar * {
+  flex-direction: row-reverse;
+}
