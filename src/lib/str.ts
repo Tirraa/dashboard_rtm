@@ -2,7 +2,7 @@ import BlogConfig from '@/config/blog';
 import RoutesBase from '@/config/routes';
 import { PathSegment } from '@/types/Next';
 import { LanguageFlag } from '@/types/i18n';
-import { getPathnameWithoutI18nPart } from './i18n';
+import { getPathnameWithoutI18nFlag } from './i18n';
 
 type DescriptionAsIs = string;
 type CroppedDescription = string;
@@ -22,7 +22,7 @@ export function indexOfNthOccurrence(strHaystack: string, needle: string, n: num
 }
 
 export function hrefMatchesPathname(href: string, pathname: string, root: string = RoutesBase.sitewide): boolean {
-  const pathnameWithouti18n = getPathnameWithoutI18nPart(pathname);
+  const pathnameWithouti18n = getPathnameWithoutI18nFlag(pathname);
   if (pathnameWithouti18n === href) return true;
   if (href !== root && pathnameWithouti18n.startsWith(getSlashEnvelope(href))) return true;
   return false;

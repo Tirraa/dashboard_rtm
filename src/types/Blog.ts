@@ -1,16 +1,16 @@
-import { BlogsArchitectures } from '@/config/blog';
+import { BlogsArchitecture } from '@/config/blog';
 import { TBlogTaxonomy } from '@/taxonomies/blog';
 import PostBase from './BlogPostAbstractions';
 import { RequiredFieldsOnly } from './CustomUtilitaryTypes';
 import { i18nParams } from './Next';
 
-export type BlogCategory = keyof BlogsArchitectures;
+export type BlogCategory = keyof BlogsArchitecture;
 
 type BlogSubCategoryMappedToBlogCategory = {
-  [K in BlogCategory]: BlogsArchitectures[K];
+  [K in BlogCategory]: BlogsArchitecture[K];
 };
 
-export type BlogSubCategoryUnknownKey = BlogsArchitectures[keyof BlogsArchitectures];
+export type BlogSubCategoryUnknownKey = BlogsArchitecture[keyof BlogsArchitecture];
 
 type BlogSubCategory<K extends keyof BlogSubCategoryMappedToBlogCategory> = BlogSubCategoryMappedToBlogCategory[K];
 export type BlogSubCategoryFromUnknownCategory = BlogSubCategory<BlogCategory>;

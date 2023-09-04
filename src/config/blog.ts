@@ -1,7 +1,7 @@
 import { BlogCategory, ForcedBlogSubCategoriesPaths, PostsCollectionAssoc } from '@/types/Blog';
 import { allPatchPosts } from 'contentlayer/generated';
 
-export type BlogsArchitectures = {
+export type BlogsArchitecture = {
   'patch-notes': 'dashboard' | 'discord-bot';
   'patch-notes-bis': 'dashboard-bis' | 'discord-bot-bis';
 };

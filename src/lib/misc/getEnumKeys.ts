@@ -1,9 +1,4 @@
-export function getEnumKeys(e: object): string[] {
-  return Object.keys(e).filter((key) => isNaN(Number(key))) as string[];
-}
-
-export function getEnumFirstKey(e: object): string {
-  return Object.values(e)[0] as string;
-}
+export const getEnumKeys = (e: object): string[] => Object.keys(e).filter((key) => isNaN(Number(key)));
+export const getEnumFirstKey = (e: object): string => getEnumKeys(e)[0];
 
 export default getEnumKeys;

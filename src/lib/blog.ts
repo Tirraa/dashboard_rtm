@@ -1,4 +1,4 @@
-import BlogConfig, { BlogsArchitectures } from '@/config/blog';
+import BlogConfig, { BlogsArchitecture } from '@/config/blog';
 import { fallbackLng as DEFAULT_LANGUAGE } from '@/config/i18n';
 import { BlogCategory, BlogSlug, UnknownCategoryAndUnknownSubCategory } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
@@ -62,14 +62,14 @@ export function getPostUnstrict(
   );
 }
 
-export const getAllPostsByCategoryAndSubCategoryStrict = <Category extends keyof BlogsArchitectures>(
+export const getAllPostsByCategoryAndSubCategoryStrict = <Category extends keyof BlogsArchitecture>(
   category: Category,
-  subCategory: BlogsArchitectures[Category]
+  subCategory: BlogsArchitecture[Category]
 ): PostBase[] => getAllPostsByCategoryAndSubCategoryUnstrict({ category, subCategory });
 
-export function getPostStrict<Category extends keyof BlogsArchitectures>(
+export function getPostStrict<Category extends keyof BlogsArchitecture>(
   category: Category,
-  subCategory: BlogsArchitectures[Category],
+  subCategory: BlogsArchitecture[Category],
   targettedSlug: BlogSlug,
   langFlag: LanguageFlag
 ): undefined | PostBase {

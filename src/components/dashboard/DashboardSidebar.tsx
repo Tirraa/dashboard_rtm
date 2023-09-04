@@ -9,17 +9,17 @@ import { computeHTMLElementHeight, computeHTMLElementWidth } from '@/lib/html';
 import Link from 'next/link';
 import { FunctionComponent, ReactElement, useEffect, useRef, useState } from 'react';
 import NavbarConfig from '../_config/_styles/Navbar';
+import SidebarBtnSeparator from './SidebarBtnsSeparator';
 
 interface DashboardSidebarProps {}
 
 const mainBoxId: string = DashboardSidebarDynamicRenderingConfig.mainBoxId;
 const sidebarIconClass: string = DashboardSidebarDynamicRenderingConfig.iconClass;
-const sidebarIconSeparatorClass: string = DashboardSidebarDynamicRenderingConfig.iconSeparatorClass;
 
 function sidebarBtnsGenerator(separatorWidth: number) {
   const keys = Object.keys(dashboardRoutesSidebarComponents);
   const lastKey = keys[keys.length - 1];
-  const sidebarBtnsSeparator = <hr className={'relative top-2 m-auto' + ' ' + sidebarIconSeparatorClass} style={{ width: separatorWidth }} />;
+  const sidebarBtnsSeparator = <SidebarBtnSeparator style={{ width: separatorWidth }} />;
 
   const globalT = getClientSideI18n();
   return keys.map((k): ReactElement => {

@@ -9,6 +9,7 @@ namespace BlogProxy {
 function buildSubCategoriesSet(category: BlogCategory): Set<BlogSubCategoryFromUnknownCategory> {
   const subCategoriesSet = new Set<BlogSubCategoryFromUnknownCategory>();
   const relatedPosts = BlogConfig.blogCategoriesAllPostsTypesAssoc[category]();
+
   relatedPosts.forEach((post) => subCategoriesSet.add(getBlogPostSubCategory(post) as BlogSubCategoryFromUnknownCategory));
   return subCategoriesSet;
 }
@@ -21,6 +22,5 @@ function subCategoriesByCategoryAccessor(category: BlogCategory, fresh: boolean)
   return BlogProxy.subCategoriesPtr[category] as BlogSubCategoryFromUnknownCategory[];
 }
 
-export function getBlogSubCategoriesByCategory(category: BlogCategory, fresh: boolean = true): BlogSubCategoryFromUnknownCategory[] {
-  return subCategoriesByCategoryAccessor(category, fresh);
-}
+export const getBlogSubCategoriesByCategory = (category: BlogCategory, fresh: boolean = true): BlogSubCategoryFromUnknownCategory[] =>
+  subCategoriesByCategoryAccessor(category, fresh);

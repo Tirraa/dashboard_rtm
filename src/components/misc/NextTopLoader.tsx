@@ -1,6 +1,6 @@
 'use client';
 
-import { getPathnameWithoutI18nPart } from '@/lib/i18n';
+import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
 /* eslint-disable max-len */
 
 // A Next.js Top Loading Bar component made using nprogress, works with Next.js 13.
@@ -111,7 +111,7 @@ const NextTopLoader = ({
 
       if (currentUrlObj.origin !== newUrlObj.origin) {
         return true;
-      } else if (getPathnameWithoutI18nPart(currentUrlObj.pathname) !== getPathnameWithoutI18nPart(newUrlObj.pathname)) {
+      } else if (getPathnameWithoutI18nFlag(currentUrlObj.pathname) !== getPathnameWithoutI18nFlag(newUrlObj.pathname)) {
         return false;
       }
       return true;
