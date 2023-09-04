@@ -7,9 +7,9 @@ export function computeHTMLElementHeight(HtmlElement: HTMLElement) {
 }
 
 export function computeHTMLElementWidth(HtmlElement: HTMLElement) {
-  const { height } = HtmlElement.getBoundingClientRect();
+  const { width } = HtmlElement.getBoundingClientRect();
   const { paddingRight, paddingLeft, marginRight, marginLeft } = getComputedStyle(HtmlElement);
-  const heightDeltas = [paddingRight, paddingLeft, marginRight, marginLeft].map(parseFloat);
-  const computedHeight = height + heightDeltas.reduce((acc, value) => acc + value, 0);
-  return computedHeight;
+  const widthDeltas = [paddingRight, paddingLeft, marginRight, marginLeft].map(parseFloat);
+  const computedWidth = width + widthDeltas.reduce((acc, value) => acc + value, 0);
+  return computedWidth;
 }
