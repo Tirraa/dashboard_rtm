@@ -13,7 +13,9 @@ export default function DashboardLayout({ params, children }: DashboardLayoutPro
   return (
     <div className="flex">
       <DashboardSidebar {...{ i18nProps: { ...params } }} />
-      <main className="ml-20 flex-1">{children}</main>
+      <main className="flex-1" id="main-box-id">
+        {children}
+      </main>
     </div>
   );
 }

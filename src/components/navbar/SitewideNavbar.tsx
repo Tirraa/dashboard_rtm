@@ -14,13 +14,12 @@ import { Collapse, IconButton, Navbar, Typography } from '@material-tailwind/rea
 import Image from 'next/image';
 import Link from 'next/link';
 import { FunctionComponent, useEffect, useRef, useState } from 'react';
+import NavbarConfig from '../_config/_styles/Navbar';
 import NavbarButton from './NavbarButton';
 
 interface SitewideNavbarProps extends i18nComponentProps {}
 
-const navbarId = 'sitewide-navbar';
-const forceNavbarMenuToCollapseBreakpointPxValue = 960;
-const logoSizeInPx = 50;
+const { navbarId, forceNavbarMenuToCollapseBreakpointPxValue, logoSizeInPx } = NavbarConfig;
 
 export function buildNavbarElements({ i18nProps }: i18nComponentProps) {
   const computedNavData = getComputedNavData(sitewideNavbarRoutes, sitewideNavbarRoutesTitles, sitewideNavbarDropdownsConfig);
@@ -38,7 +37,7 @@ const SitewideNavbarImpl: FunctionComponent<SitewideNavbarProps> = ({ i18nProps 
   useCollapseNavbarOnResize(forceNavbarMenuToCollapseBreakpointPxValue, mobileMenuInstanceRef, setOpenNav);
 
   useEffect(() => {
-    const navbarCollapseElement = document.getElementById(navbarId);
+    const navbarCollapseElement = document.getElementById(navbarId as string);
     const closeNavbarOnOutsideClick = (e: Event) =>
       openNav && e.target instanceof Node && !navbarCollapseElement?.contains(e.target) ? setOpenNav(false) : undefined;
 
@@ -74,7 +73,7 @@ const SitewideNavbarImpl: FunctionComponent<SitewideNavbarProps> = ({ i18nProps 
   // {ToDo} use a formatter for the img alt
   return (
     <Navbar
-      id={navbarId}
+      id={navbarId as string}
       color="blue"
       fullWidth={true}
       className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4"

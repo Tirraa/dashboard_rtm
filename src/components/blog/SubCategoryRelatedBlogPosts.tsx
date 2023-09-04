@@ -1,7 +1,6 @@
 import BlogConfig from '@/config/blog';
 import { i18ns } from '@/config/i18n';
 import { getScopedI18n } from '@/i18n/server';
-import { sep } from '@/i18n/settings';
 import { getAllPostsByCategoryAndSubCategoryUnstrict, getBlogPostSubCategory } from '@/lib/blog';
 import { getBlogPostLanguageFlag } from '@/lib/i18n';
 import BlogTaxonomy from '@/taxonomies/blog';
@@ -32,8 +31,9 @@ export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageP
   const relatedPosts = postsCollection.filter((post) => getBlogPostSubCategory(post) === subCategory && getBlogPostLanguageFlag(post) === lng);
 
   if (relatedPosts.length === 0) return <BlogPostsNotFound {...{ lng }} />;
+  // {ToDo} Try to cast subCategory as BlogSubCategoryFromUnknownCategory, then try to retrieve the i18nKey via a BlogCategoryAndSubcategoryPair?
   // @ts-ignore
-  const title = scopedT(`${category}${sep}${subCategory}`);
+  const title = scopedT(`${category}.${subCategory}`);
 
   const paginatedElements = relatedPosts.map((post, index) => <BlogPostPeview key={index} {...{ post, lng }} />);
   return (

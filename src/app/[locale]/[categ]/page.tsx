@@ -5,7 +5,7 @@ import RtmButton from '@/components/misc/RtmButton';
 import BlogConfig from '@/config/blog';
 import { i18ns } from '@/config/i18n';
 import { getScopedI18n, getServerSideI18n } from '@/i18n/server';
-import { languages, sep } from '@/i18n/settings';
+import { languages } from '@/i18n/settings';
 import { getAllCategories, getBlogPostSubCategory } from '@/lib/blog';
 import { getBlogPostLanguageFlag } from '@/lib/i18n';
 import { buildPathFromParts } from '@/lib/str';
@@ -68,8 +68,9 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
     const result: ReactNode[] = [];
     for (const [subCategory, posts] of Object.entries(postsCollectionsSnippets)) {
       if (posts.length === 0) continue;
+      // {ToDo} Try to cast subCategory as BlogSubCategoryFromUnknownCategory, then try to retrieve the i18nKey via a BlogCategoryAndSubcategoryPair?
       // @ts-ignore
-      const curSubCategTitle = scopedT(`${category}${sep}${subCategory}`);
+      const curSubCategTitle = scopedT(`${category}.${subCategory}`);
       const href = buildPathFromParts(category, subCategory);
       const title = (
         <h2 key={`${subCategory}-${curSubCategTitle}-h2`}>
