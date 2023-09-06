@@ -4,8 +4,10 @@ import DashboardSidebarDynamicRenderingConfig from '@/config/DashboardSidebar/dy
 import dashboardRoutes, { dashboardRoutesTitles } from '@/config/DashboardSidebar/routesImpl';
 import dashboardRoutesSidebarComponents from '@/config/DashboardSidebar/utils/IconsMapping';
 import { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMapping';
+import { sidebarErrorVocab } from '@/errors/vocab/sidebar';
 import { I18nProviderClient, getClientSideI18n } from '@/i18n/client';
 import { computeHTMLElementHeight, computeHTMLElementWidth } from '@/lib/html';
+import { NextCtx } from '@/lib/next';
 import Link from 'next/link';
 import { FunctionComponent, ReactElement, useEffect, useRef, useState } from 'react';
 import NavbarConfig from '../_config/_styles/Navbar';
@@ -13,7 +15,7 @@ import SidebarBtnSeparator from './SidebarBtnsSeparator';
 
 interface DashboardSidebarProps {}
 
-const { MAIN_BOX_ID, ICON_CLASS: SIDEBAR_ICON_CLASS } = DashboardSidebarDynamicRenderingConfig;
+const { MAIN_BOX_ID, ICON_CLASS: SIDEBAR_ICON_CLASS, ICON_SEPARATOR_WIDTH_FACTOR, ICON_MARGIN_X_FACTOR } = DashboardSidebarDynamicRenderingConfig;
 
 function sidebarBtnsGenerator(separatorWidth: number) {
   const keys = Object.keys(dashboardRoutesSidebarComponents);
@@ -53,26 +55,24 @@ function DashboardSidebarImpl() {
         NavbarConfig.NAVBAR_ID !== null ? (document.querySelector(`#${NavbarConfig.NAVBAR_ID}`) as HTMLElement) : null;
 
       if (!sidebarFirstIconInstance) {
-        console.error("DashboardSidebar: Unable to retrieve any sidebar icon! The sidebar won't be displayed.");
+        console.error(sidebarErrorVocab('UNABLE_TO_RETRIEVE_ANY_SIDEBAR_ICON'));
         return;
       }
 
       if (!mainBoxInstance) {
-        console.error("DashboardSidebar: Unable to retrieve your <main> element! The sidebar won't be displayed.");
+        console.error(sidebarErrorVocab('UNABLE_TO_RETRIEVE_MAIN_ELEMENT'));
         return;
       }
 
       if (!navbarInstance && navbarInstance !== null) {
-        console.error(
-          "DashboardSidebar: Unable to retrieve your navbar element! If you don't have any navbar, set the NAVBAR_ID value to `null`. The sidebar won't be displayed."
-        );
+        console.error(sidebarErrorVocab('UNABLE_TO_RETRIEVE_THE_NAVBAR_ELEMENT'));
         return;
       }
 
       const computedPaddingBottom = navbarInstance ? computeHTMLElementHeight(navbarInstance) : 0;
       const computedIconWidth = computeHTMLElementWidth(sidebarFirstIconInstance as HTMLElement);
-      const computedSeparatorWidth = computedIconWidth * DashboardSidebarDynamicRenderingConfig.ICON_SEPARATOR_WIDTH_FACTOR;
-      const computedWidth = computedIconWidth * DashboardSidebarDynamicRenderingConfig.ICON_MARGIN_X_FACTOR;
+      const computedSeparatorWidth = computedIconWidth * ICON_SEPARATOR_WIDTH_FACTOR;
+      const computedWidth = computedIconWidth * ICON_MARGIN_X_FACTOR;
       if (mainBoxInstance) {
         mainBoxInstance.classList.add('transition-[margin-left]');
         mainBoxInstance.style.marginLeft = computedWidth + 'px';
@@ -83,12 +83,14 @@ function DashboardSidebarImpl() {
       setDynamicPaddingBottom(computedPaddingBottom);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      sidebarInstanceRef,
-      DashboardSidebarDynamicRenderingConfig.SIDEBAR_ICON_SIZE_PX_VALUE,
-      DashboardSidebarDynamicRenderingConfig.ICON_MARGIN_X_FACTOR,
-      DashboardSidebarDynamicRenderingConfig.ICON_SEPARATOR_WIDTH_FACTOR
-    ]
+    NextCtx.DEV
+      ? [
+          sidebarInstanceRef,
+          DashboardSidebarDynamicRenderingConfig.SIDEBAR_ICON_SIZE_PX_VALUE,
+          DashboardSidebarDynamicRenderingConfig.ICON_MARGIN_X_FACTOR,
+          DashboardSidebarDynamicRenderingConfig.ICON_SEPARATOR_WIDTH_FACTOR
+        ]
+      : [sidebarInstanceRef]
   );
 
   return (

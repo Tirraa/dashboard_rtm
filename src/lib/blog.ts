@@ -1,6 +1,6 @@
 import BlogConfig, { BlogArchitecture } from '@/config/blog';
 import { DEFAULT_LANGUAGE } from '@/config/i18n';
-import InvalidArgumentsError from '@/objects/exceptions/InvalidArgument';
+import InvalidArgumentsError from '@/errors/exceptions/InvalidArgument';
 import {
   BlogCategory,
   BlogCategoryAndSubcategoriesPair,
@@ -24,8 +24,8 @@ const getBlogPostSubCategoryAndSlugStrAndLangFlag = (post: PostBase): string =>
  */
 function getBlogPostSubCategoryFromStr(sourceFileDir: string): BlogSubCategoryUnknownKey {
   function subCategGetter(sourceFileDir: string, firstSlashIndex: number, secondSlashIndex: number): BlogSubCategoryUnknownKey {
-    if (secondSlashIndex !== -1) return sourceFileDir.slice(firstSlashIndex + 1, secondSlashIndex) as BlogSubCategoryUnknownKey;
-    return sourceFileDir.slice(firstSlashIndex + 1) as BlogSubCategoryUnknownKey;
+    if (secondSlashIndex !== -1) return sourceFileDir.substring(firstSlashIndex + 1, secondSlashIndex) as BlogSubCategoryUnknownKey;
+    return sourceFileDir.substring(firstSlashIndex + 1) as BlogSubCategoryUnknownKey;
   }
 
   const firstSlashIndex = indexOfNthOccurrence(sourceFileDir, '/', 1);

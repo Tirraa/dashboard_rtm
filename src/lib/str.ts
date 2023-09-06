@@ -31,7 +31,7 @@ export function getSlicedBlogPostDescription(description: string): DescriptionAs
   if (description.length <= takeLimit) {
     return description;
   }
-  const slicedDescription = description.slice(0, takeLimit) + '…';
+  const slicedDescription = description.substring(0, takeLimit) + '…';
   return slicedDescription;
 }
 

@@ -1,6 +1,6 @@
 import NextConfig from '@/config/next';
+import HeaderNotFoundError from '@/errors/exceptions/HeaderNotFound';
 import { indexOfNthOccurrence } from '@/lib/str';
-import HeaderNotFoundError from '@/objects/exceptions/HeaderNotFound';
 import { AppPath } from '@/types/Next';
 import { headers } from 'next/headers';
 

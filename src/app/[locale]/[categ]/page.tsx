@@ -31,7 +31,7 @@ export async function generateStaticParams() {
         blogStaticParams.push(entity);
       });
     });
-    return blogStaticParams as Partial<BlogStaticParams>[];
+    return blogStaticParams;
   }
 
   const blogStaticParamsEntities = generateBlogStaticParams();
@@ -43,7 +43,7 @@ export async function generateStaticParams() {
 async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: LanguageFlag) {
   function buildHistogram() {
     for (const post of posts) {
-      const curSubCateg = getBlogPostSubCategory(post) as BlogSubCategoryFromUnknownCategory;
+      const curSubCateg = getBlogPostSubCategory(post);
       if (histogram[curSubCateg].length < limit + 1 && getBlogPostLanguageFlag(post) === lng) {
         histogram[curSubCateg].push(post);
         if (Object.values(histogram).every((posts2) => posts2.length >= limit + 1)) break;
@@ -80,7 +80,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
       if (posts.length > limit) {
         showMoreLink = (
           <RtmButton
-            label={globalT(`vocab.see-more`)}
+            label={globalT('vocab.see-more')}
             {...{ href, ripple: false, size: 'sm', textCls: 'text-sm', className: 'mb-5 normal-case flex items-center gap-2' }}
           />
         );

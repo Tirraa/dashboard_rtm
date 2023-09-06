@@ -1,6 +1,7 @@
 import { DropdownsConfig, NavDataEntities, NavDataEntity, NavDataRoutesTitles } from '@/types/NavData';
 import RoutesTypesUnion, { RoutesTypesUnionKey } from '@/types/RoutesTypesUnion';
 
+// {ToDo} Recursive embeddedEntities?
 export function getComputedNavData(
   routes: RoutesTypesUnion,
   routesTitles: NavDataRoutesTitles,

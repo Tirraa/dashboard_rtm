@@ -164,7 +164,6 @@ const NextTopLoader = ({
 
   return styles;
 };
-export default NextTopLoader;
 
 NextTopLoader.propTypes = {
   color: PropTypes.string,
@@ -177,3 +176,5 @@ NextTopLoader.propTypes = {
   speed: PropTypes.number,
   shadow: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
 };
+
+export default NextTopLoader;

@@ -17,7 +17,7 @@ import { LanguageFlag } from '@/types/i18n';
 import { notFound } from 'next/navigation';
 
 export function generateMetadata({ params }: BlogPostPageProps) {
-  const category = getBlogCategoryFromPathname(getPathnameWithoutI18nFlag(getServerSidePathnameWorkaround())) as BlogCategory;
+  const category = getBlogCategoryFromPathname(getPathnameWithoutI18nFlag(getServerSidePathnameWorkaround()));
   const subCategory = params[BlogTaxonomy.SUBCATEGORY];
   const slug = params[BlogTaxonomy.SLUG];
   const lang = params[i18nTaxonomy.LANG_FLAG];

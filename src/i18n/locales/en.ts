@@ -1,6 +1,6 @@
-import { VocabInterface } from '@/types/i18n';
+import { VocabType } from '@/types/i18n';
 
-const enVocab: VocabInterface = {
+const enVocab: VocabType = {
   navbar: {
     home: 'Homepage',
     dashboard: 'Dashboard',

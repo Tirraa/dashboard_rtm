@@ -1,15 +1,15 @@
 'use client';
 
 import { fInter } from '@/fonts';
-import { fCls } from '@/lib/fonts';
-import { JSONResponse } from '@/types/Api';
+import { fCls } from '@/lib/next';
+import { JSONData } from '@/types/Api';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 interface TestProps {}
 
 export const Test: FunctionComponent<TestProps> = () => {
   const defaultTestDataValue = { title: 'dummy placeholder' };
-  const [testData, setTestData] = useState<JSONResponse>(defaultTestDataValue);
+  const [testData, setTestData] = useState<JSONData>(defaultTestDataValue);
 
   useEffect(() => {
     async function getData() {

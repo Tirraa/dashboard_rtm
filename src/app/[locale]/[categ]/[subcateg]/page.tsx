@@ -38,7 +38,7 @@ export async function generateStaticParams() {
         });
       });
     });
-    return blogStaticParams as Partial<BlogStaticParams>[];
+    return blogStaticParams;
   }
 
   const blogStaticParamsEntities = generateBlogStaticParams();

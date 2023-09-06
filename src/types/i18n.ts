@@ -11,16 +11,16 @@ type VocabRecursiveKeys<T, K extends VocabObjKeyOrValue = ''> = T extends object
     }[keyof T]
   : K;
 
-type RecursiveVocabInterface<T = string> = {
-  [key: VocabObjKey]: T | RecursiveVocabInterface<T>;
+type RecursiveVocabType<T = string> = {
+  [key: VocabObjKey]: T | RecursiveVocabType<T>;
 };
 
-type MakeVocabInterface<T> = {
-  [K in keyof T]: T[K] extends RecursiveVocabInterface ? MakeVocabInterface<T[K]> : VocabObjValue;
+type MakeVocabType<T> = {
+  [K in keyof T]: T[K] extends RecursiveVocabType ? MakeVocabType<T[K]> : VocabObjValue;
 };
 
 export type I18nVocabTarget = VocabRecursiveKeys<VocabBase>;
-export type VocabInterface = MakeVocabInterface<VocabBase>;
+export type VocabType = MakeVocabType<VocabBase>;
 
 type LanguageFlagKey = keyof typeof ELanguageFlag;
 export type LanguageFlag = LanguageFlagKey;
