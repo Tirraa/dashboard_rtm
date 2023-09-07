@@ -1,7 +1,9 @@
+import { AppPath } from '@/types/Next';
+
 type TRoutesBase = {
-  SITEWIDE: string;
-  DASHBOARD: string;
-  PATCH_NOTES: string;
+  SITEWIDE: AppPath;
+  DASHBOARD: AppPath;
+  PATCH_NOTES: AppPath;
 };
 
 export const RoutesBase: TRoutesBase = {

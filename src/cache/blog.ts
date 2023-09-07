@@ -2,8 +2,8 @@ import BlogConfig from '@/config/blog';
 import { getBlogPostSubCategory } from '@/lib/blog';
 import { BlogCategory, BlogSubCategoryFromUnknownCategory } from '@/types/Blog';
 
-namespace BlogProxy {
-  export const subCategoriesPtr: Partial<Record<BlogCategory, BlogSubCategoryFromUnknownCategory[]>> = {};
+namespace BlogCache {
+  export const subCategoriesCollection: Partial<Record<BlogCategory, BlogSubCategoryFromUnknownCategory[]>> = {};
 }
 
 function buildSubCategoriesSet(category: BlogCategory): Set<BlogSubCategoryFromUnknownCategory> {
@@ -15,11 +15,11 @@ function buildSubCategoriesSet(category: BlogCategory): Set<BlogSubCategoryFromU
 }
 
 function subCategoriesByCategoryAccessor(category: BlogCategory, fresh: boolean) {
-  if (fresh || BlogProxy.subCategoriesPtr[category] === undefined) {
+  if (fresh || BlogCache.subCategoriesCollection[category] === undefined) {
     const subCategsSet = buildSubCategoriesSet(category);
-    BlogProxy.subCategoriesPtr[category] = Array.from(subCategsSet);
+    BlogCache.subCategoriesCollection[category] = Array.from(subCategsSet);
   }
-  return BlogProxy.subCategoriesPtr[category] as BlogSubCategoryFromUnknownCategory[];
+  return BlogCache.subCategoriesCollection[category] as BlogSubCategoryFromUnknownCategory[];
 }
 
 export const getBlogSubCategoriesByCategory = (category: BlogCategory, fresh: boolean = true): BlogSubCategoryFromUnknownCategory[] =>

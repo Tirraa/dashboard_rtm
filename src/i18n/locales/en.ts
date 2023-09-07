@@ -35,6 +35,6 @@ const enVocab: VocabType = {
   ugly: {
     logo: 'logo'
   }
-} as const;
+};
 
 export default enVocab;

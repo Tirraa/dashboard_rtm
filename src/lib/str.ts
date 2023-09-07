@@ -7,7 +7,7 @@ import { getPathnameWithoutI18nFlag } from './i18n';
 type DescriptionAsIs = string;
 type CroppedDescription = string;
 
-export const getSlashEnvelope = (str: string, slashSymbol: string = '/'): string =>
+export const getSlashEnvelope = (str: string, slashSymbol: '/' | '\\' = '/'): string =>
   (str.charAt(0) !== slashSymbol ? slashSymbol : '') + str + (str.charAt(str.length - 1) !== slashSymbol ? slashSymbol : '');
 
 export function indexOfNthOccurrence(strHaystack: string, needle: string, n: number): -1 | number {
@@ -28,9 +28,8 @@ export function hrefMatchesPathname(href: AppPath, pathname: AppPath, root: AppP
 
 export function getSlicedBlogPostDescription(description: string): DescriptionAsIs | CroppedDescription {
   const takeLimit = BlogConfig.BLOG_POST_PREVIEW_DESCRIPTION_CHARACTERS_LIMIT - 1;
-  if (description.length <= takeLimit) {
-    return description;
-  }
+  if (description.length <= takeLimit) return description;
+
   const slicedDescription = description.substring(0, takeLimit) + '…';
   return slicedDescription;
 }
@@ -46,7 +45,6 @@ export const gsub = (str: string, needle: string, replaceWith: string): string =
 
 export const buildPathFromParts = (...args: string[]): AppPath => args.join('/');
 
-export const capitalize = (str: string): string => str.charAt(0).toUpperCase() + str.substring(1);
-
+const capitalize = (str: string): string => str.charAt(0).toUpperCase() + str.substring(1);
 export const getFormattedDate = (lng: LanguageFlag, date: Date): string =>
   capitalize(new Intl.DateTimeFormat(lng, { dateStyle: 'full', timeStyle: 'short' }).format(date).toString());

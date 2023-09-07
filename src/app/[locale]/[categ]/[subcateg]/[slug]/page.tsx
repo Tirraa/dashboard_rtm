@@ -1,4 +1,4 @@
-import { getBlogSubCategoriesByCategory } from '@/app/proxies/blog';
+import { getBlogSubCategoriesByCategory } from '@/cache/blog';
 import BlogPost from '@/components/blog/BlogPost';
 import { LANGUAGES } from '@/i18n/settings';
 import {

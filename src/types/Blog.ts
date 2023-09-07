@@ -37,7 +37,7 @@ export interface BlogPostPageProps {
 }
 
 type AllPostsGetter = () => PostBase[];
-export type PostsCollectionAssoc<T extends string> = {
+export type PostsCollectionAssoc<T extends BlogCategory> = {
   [_ in T]: AllPostsGetter;
 };
 

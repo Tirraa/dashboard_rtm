@@ -2,7 +2,6 @@ import { ELanguageFlag, VocabBase } from '@/config/i18n';
 
 type KeySeparator = '.';
 type VocabObjKeyOrValue = string;
-type VocabObjKey = string;
 type VocabObjValue = string;
 
 type VocabRecursiveKeys<T, K extends VocabObjKeyOrValue = ''> = T extends object
@@ -11,8 +10,8 @@ type VocabRecursiveKeys<T, K extends VocabObjKeyOrValue = ''> = T extends object
     }[keyof T]
   : K;
 
-type RecursiveVocabType<T = string> = {
-  [key: VocabObjKey]: T | RecursiveVocabType<T>;
+type RecursiveVocabType<T = VocabObjKeyOrValue> = {
+  [_: VocabObjKeyOrValue]: T | RecursiveVocabType<T>;
 };
 
 type MakeVocabType<T> = {

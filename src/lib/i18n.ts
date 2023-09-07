@@ -1,9 +1,12 @@
 import { DEFAULT_LANGUAGE } from '@/config/i18n';
+import RoutesBase from '@/config/routes';
 import { LANGUAGES } from '@/i18n/settings';
 import PostBase from '@/types/BlogPostAbstractions';
 import { AppPath } from '@/types/Next';
 import { LanguageFlag } from '@/types/i18n';
 import { gsub, indexOfNthOccurrence } from './str';
+
+type AppPathAsIs = AppPath;
 
 const isValidLanguageFlag = (key: string): boolean => LANGUAGES.includes(key);
 
@@ -52,13 +55,13 @@ export function getBlogPostPathWithoutI18nPart(post: PostBase): AppPath {
 
 export const getBlogPostLanguageFlag = (post: PostBase): LanguageFlag => getBlogPostLanguageFlagFromPostObj(post);
 
-export function getPathnameWithoutI18nFlag(pathname: AppPath): AppPath {
+export function getPathnameWithoutI18nFlag(pathname: AppPath): AppPathAsIs | AppPath {
   const secondSlashIndex = indexOfNthOccurrence(pathname, '/', 2);
 
   const pathnameI18nFlag = computePathnameI18nFlagUnstrict(pathname, secondSlashIndex);
   if (!isValidLanguageFlag(pathnameI18nFlag)) return pathname;
 
-  const pathnameWithouti18n = secondSlashIndex === -1 ? '/' : pathname.substring(secondSlashIndex);
+  const pathnameWithouti18n = secondSlashIndex === -1 ? RoutesBase.SITEWIDE : pathname.substring(secondSlashIndex);
   return pathnameWithouti18n;
 }
 

@@ -1,7 +1,7 @@
 import SubCategoryRelatedBlogPosts from '@/components/blog/SubCategoryRelatedBlogPosts';
 import { BlogCategory, BlogSubCategoryPageProps } from '@/types/Blog';
 
-import { getBlogSubCategoriesByCategory } from '@/app/proxies/blog';
+import { getBlogSubCategoriesByCategory } from '@/cache/blog';
 import { LANGUAGES } from '@/i18n/settings';
 import { getAllCategories, getAllPostsByCategoryAndSubCategoryAndLanguageFlagUnstrict, subCategoryShouldTriggerNotFound } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';

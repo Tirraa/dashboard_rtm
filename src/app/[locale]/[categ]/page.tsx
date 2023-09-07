@@ -1,4 +1,4 @@
-import { getBlogSubCategoriesByCategory } from '@/app/proxies/blog';
+import { getBlogSubCategoriesByCategory } from '@/cache/blog';
 import BlogPostPeview from '@/components/blog/BlogPostPreview';
 import BlogPostsNotFound from '@/components/blog/BlogPostsNotFound';
 import RtmButton from '@/components/misc/RtmButton';
@@ -52,11 +52,11 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
   }
 
   function buildPostsCollectionsSnippets() {
-    for (const [subCategory, posts2] of Object.entries(histogram)) {
+    Object.entries(histogram).forEach(([subCategory, posts2]) => {
       postsCollectionsSnippets[subCategory as BlogSubCategoryFromUnknownCategory] = posts2.map((post, index) => (
         <BlogPostPeview key={index} {...{ post, lng }} />
       ));
-    }
+    });
   }
 
   const isEmptySnippets = () => Object.values(postsCollectionsSnippets).every((posts2) => posts2.length === 0);
@@ -65,7 +65,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
     const result: ReactNode[] = [];
     for (const [subCategory, posts] of Object.entries(postsCollectionsSnippets)) {
       if (posts.length === 0) continue;
-      // https://github.com/QuiiBz/next-international/issues/154
+      // [WON'T FIX] https://github.com/QuiiBz/next-international/issues/154
       // @ts-ignore
       const curSubCategTitle = scopedT(`${category}.${subCategory}`);
       const href = buildPathFromParts(category, subCategory);
@@ -124,7 +124,7 @@ export default async function Page({ params }: BlogCategoryPageProps) {
     notFound();
   }
 
-  const posts = gettedOnTheFlyPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
+  const posts = gettedOnTheFlyPosts.sort((post1, post2) => compareDesc(new Date(post1.date), new Date(post2.date)));
   const generatedContent = await postsGenerator(posts, category, lng);
   const title = scopedT(`${category}._title`);
 

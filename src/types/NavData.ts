@@ -1,4 +1,4 @@
-import { AppPath } from '@/types/Next';
+import { AppPath, RoutesEnumKey } from '@/types/Next';
 import { I18nVocabTarget } from './i18n';
 
 type NavDataRouteTitle = string;
@@ -18,4 +18,4 @@ export interface NavDataEntity extends AtomicNavDataEntity {
 export interface NavbarDropdownElement extends Required<NavDataEntity> {}
 export type NavDataEntities = NavDataEntity[];
 
-export type DropdownsConfig<T extends string> = Partial<Record<T, NavDataEntities>>;
+export type DropdownsConfig<T extends RoutesEnumKey> = Partial<Record<T, NavDataEntities>>;

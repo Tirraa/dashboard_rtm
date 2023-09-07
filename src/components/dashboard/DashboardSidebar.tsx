@@ -4,10 +4,10 @@ import DashboardSidebarDynamicRenderingConfig from '@/config/DashboardSidebar/dy
 import dashboardRoutes, { dashboardRoutesTitles } from '@/config/DashboardSidebar/routesImpl';
 import dashboardRoutesSidebarComponents from '@/config/DashboardSidebar/utils/IconsMapping';
 import { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMapping';
-import { sidebarErrorVocab } from '@/errors/vocab/sidebar';
+import { sidebarErrorVocabAccessor } from '@/errors/vocab/sidebar';
 import { I18nProviderClient, getClientSideI18n } from '@/i18n/client';
 import { computeHTMLElementHeight, computeHTMLElementWidth } from '@/lib/html';
-import { NextCtx } from '@/lib/next';
+import { NextCtx } from '@/lib/misc/executionCtx';
 import Link from 'next/link';
 import { FunctionComponent, ReactElement, useEffect, useRef, useState } from 'react';
 import NavbarConfig from '../_config/_styles/Navbar';
@@ -55,17 +55,17 @@ function DashboardSidebarImpl() {
         NavbarConfig.NAVBAR_ID !== null ? (document.querySelector(`#${NavbarConfig.NAVBAR_ID}`) as HTMLElement) : null;
 
       if (!sidebarFirstIconInstance) {
-        console.error(sidebarErrorVocab('UNABLE_TO_RETRIEVE_ANY_SIDEBAR_ICON'));
+        console.error(sidebarErrorVocabAccessor('UNABLE_TO_RETRIEVE_ANY_SIDEBAR_ICON'));
         return;
       }
 
       if (!mainBoxInstance) {
-        console.error(sidebarErrorVocab('UNABLE_TO_RETRIEVE_MAIN_ELEMENT'));
+        console.error(sidebarErrorVocabAccessor('UNABLE_TO_RETRIEVE_MAIN_ELEMENT'));
         return;
       }
 
-      if (!navbarInstance && navbarInstance !== null) {
-        console.error(sidebarErrorVocab('UNABLE_TO_RETRIEVE_THE_NAVBAR_ELEMENT'));
+      if (NavbarConfig.NAVBAR_ID !== null && !navbarInstance) {
+        console.error(sidebarErrorVocabAccessor('UNABLE_TO_RETRIEVE_THE_NAVBAR_ELEMENT'));
         return;
       }
 

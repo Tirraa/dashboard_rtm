@@ -1,21 +1,11 @@
 'use client';
 
 import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
-/* eslint-disable max-len */
 
 // A Next.js Top Loading Bar component made using nprogress, works with Next.js 13.
 // https://github.com/TheSGJ/nextjs-toploader
 // https://www.npmjs.com/package/nextjs-toploader
 // Copyright (c) 2023 Shri Ganesh Jha
-
-/**
- *
- * NextTopLoader
- *
- */
-
-/* eslint-disable prefer-const */
-/* eslint-disable quotes */
 
 import nProgress from 'nprogress';
 import * as PropTypes from 'prop-types';
@@ -64,8 +54,7 @@ export type NextTopLoaderProps = {
   /**
    * Defines a shadow for the TopLoader.
    * @default "0 0 10px ${color},0 0 5px ${color}"
-   *
-   * @ you can disable it by setting it to `false`
+   * ... Disable it by setting it to `false`
    */
   shadow?: string | false;
 };
@@ -146,7 +135,6 @@ const NextTopLoader = ({
               [].forEach.call(npgclass, function (el: Element) {
                 el.classList.remove('nprogress-busy');
               });
-              // eslint-disable-next-line prefer-rest-params
               return pushState.apply(history, arguments as any);
             };
           })();
