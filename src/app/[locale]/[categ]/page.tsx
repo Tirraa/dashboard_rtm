@@ -66,7 +66,6 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
     for (const [subCategory, posts] of Object.entries(postsCollectionsSnippets)) {
       if (posts.length === 0) continue;
       // https://github.com/QuiiBz/next-international/issues/154
-      // {ToDo} https://github.com/Tirraa/dashboard_rtm/issues/11
       // @ts-ignore
       const curSubCategTitle = scopedT(`${category}.${subCategory}`);
       const href = buildPathFromParts(category, subCategory);

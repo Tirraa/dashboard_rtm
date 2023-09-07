@@ -21,9 +21,6 @@ export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageP
 
   if (subCategoryShouldTriggerNotFound(postsCollection, { category, subCategory })) notFound();
   if (postsCollection.length === 0) return <BlogPostsNotFound {...{ lng }} />;
-  // https://github.com/QuiiBz/next-international/issues/154
-  // {ToDo} https://github.com/Tirraa/dashboard_rtm/issues/11
-  // @ts-ignore
   const title = scopedT(`${category}.${subCategory}`);
 
   const paginatedElements = postsCollection.map((post, index) => <BlogPostPeview key={index} {...{ post, lng }} />);
