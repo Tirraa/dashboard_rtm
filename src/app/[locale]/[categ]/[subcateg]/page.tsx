@@ -9,6 +9,7 @@ import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogStaticParams } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { LanguageFlag } from '@/types/i18n';
+import { setStaticParamsLocale } from 'next-international/server';
 
 export async function generateStaticParams() {
   function generateBlogStaticParams(): Partial<BlogStaticParams>[] {
@@ -48,5 +49,7 @@ export async function generateStaticParams() {
 }
 
 export default function Page({ params }: BlogSubCategoryPageProps) {
+  const lng = params[i18nTaxonomy.LANG_FLAG];
+  setStaticParamsLocale(lng);
   return <SubCategoryRelatedBlogPosts {...{ params }} />;
 }

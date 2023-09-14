@@ -14,6 +14,7 @@ import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogCategory, BlogPostPageProps, BlogStaticParams, BlogSubCategoryFromUnknownCategory } from '@/types/Blog';
 import { LanguageFlag } from '@/types/i18n';
+import { setStaticParamsLocale } from 'next-international/server';
 import { notFound } from 'next/navigation';
 
 export function generateMetadata({ params }: BlogPostPageProps) {
@@ -74,5 +75,8 @@ export async function generateStaticParams() {
 }
 
 export default function Page({ params }: BlogPostPageProps) {
+  const lng = params[i18nTaxonomy.LANG_FLAG];
+  setStaticParamsLocale(lng);
+
   return <BlogPost {...{ params }} />;
 }

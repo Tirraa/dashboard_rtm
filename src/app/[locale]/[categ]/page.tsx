@@ -15,6 +15,7 @@ import { BlogCategory, BlogCategoryPageProps, BlogStaticParams, BlogSubCategoryF
 import PostBase from '@/types/BlogPostAbstractions';
 import { LanguageFlag } from '@/types/i18n';
 import { compareDesc } from 'date-fns';
+import { setStaticParamsLocale } from 'next-international/server';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
@@ -114,9 +115,11 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
 }
 
 export default async function Page({ params }: BlogCategoryPageProps) {
+  const lng = params[i18nTaxonomy.LANG_FLAG];
+  setStaticParamsLocale(lng);
   const category: BlogCategory = params[BlogTaxonomy.CATEGORY];
   const scopedT = await getScopedI18n(i18ns.blogCategories);
-  const lng = params[i18nTaxonomy.LANG_FLAG];
+
   let gettedOnTheFlyPosts: PostBase[] = [];
   try {
     gettedOnTheFlyPosts = BlogConfig.BLOG_CATEGORIES_ALL_POSTS_TYPES_ASSOC[category]();
