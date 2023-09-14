@@ -23,3 +23,4 @@ export type VocabType = MakeVocabType<VocabBase>;
 
 type LanguageFlagKey = keyof typeof ELanguageFlag;
 export type LanguageFlag = LanguageFlagKey;
+export type LocalesGetterConfigObjDiscreteType = Record<LanguageFlag, () => Promise<any>>;
