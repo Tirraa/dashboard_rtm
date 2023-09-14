@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "postinstall": "npm --prefix ./packages/static-analyzer install",
     "prebuild": "npm --prefix ./packages/static-analyzer start -- --posts-folder ./posts --blog-config-file ./src/config/blog.ts",
     "build": "next build",
     "postbuild": "next-sitemap",
+    "dev": "next dev",
     "start": "next start",
     "lint": "next lint"
   },
