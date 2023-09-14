@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "yarn --cwd ./packages/static-analyzer start --posts-folder ./posts --blog-config-file ./src/config/blog.ts",
+    "prebuild": "npm --prefix ./packages/static-analyzer start -- --posts-folder ./posts --blog-config-file ./src/config/blog.ts",
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
