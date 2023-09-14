@@ -1,7 +1,7 @@
 import { getEnumFirstKey } from '@/lib/misc/getEnumKeys';
 import { LanguageFlag } from '@/types/i18n';
 
-export type VocabBase = typeof import('../i18n/locales/fr').default;
+export type VocabBase = typeof import('@/i18n/locales/fr').default;
 export enum ELanguageFlag {
   fr,
   en

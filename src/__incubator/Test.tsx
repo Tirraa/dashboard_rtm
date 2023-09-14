@@ -1,25 +1,25 @@
-'use client';
+// 'use client';
 
-import { fInter } from '@/fonts';
-import { fCls } from '@/lib/next';
-import { JSONData } from '@/types/Api';
-import { FunctionComponent, useEffect, useState } from 'react';
+// import { fInter } from '@/fonts';
+// import { fCls } from '@/lib/next';
+// import { JSONData } from '@/types/Api';
+// import { FunctionComponent, useEffect, useState } from 'react';
 
-interface TestProps {}
+// interface TestProps {}
 
-export const Test: FunctionComponent<TestProps> = () => {
-  const defaultTestDataValue = { title: 'dummy placeholder' };
-  const [testData, setTestData] = useState<JSONData>(defaultTestDataValue);
+// export const Test: FunctionComponent<TestProps> = () => {
+//   const defaultTestDataValue = { title: 'dummy placeholder' };
+//   const [testData, setTestData] = useState<JSONData>(defaultTestDataValue);
 
-  useEffect(() => {
-    async function getData() {
-      const data = await (await fetch('https://jsonplaceholder.typicode.com/todos/1')).json();
-      setTestData(data);
-    }
-    getData();
-  }, []);
+//   useEffect(() => {
+//     async function getData() {
+//       const data = await (await fetch('https://jsonplaceholder.typicode.com/todos/1')).json();
+//       setTestData(data);
+//     }
+//     getData();
+//   }, []);
 
-  return <p {...fCls(fInter)}>{testData.title as string}</p>;
-};
+//   return <p {...fCls(fInter)}>{testData.title as string}</p>;
+// };
 
-export default Test;
+// export default Test;

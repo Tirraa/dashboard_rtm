@@ -13,31 +13,30 @@
   "dependencies": {
     "@heroicons/react": "^2.0.18",
     "@material-tailwind/react": "^2.1.0",
-    "@types/node": "20.5.0",
-    "@types/nprogress": "^0.2.0",
-    "@types/react": "18.2.20",
-    "@types/react-dom": "18.2.7",
-    "accept-language": "^3.0.18",
-    "autoprefixer": "10.4.15",
     "contentlayer": "^0.3.4",
     "date-fns": "^2.30.0",
-    "eslint": "8.47.0",
-    "eslint-config-next": "13.4.16",
     "next": "^13.4.19",
     "next-contentlayer": "^0.3.4",
     "next-international": "1.0.0-rc.1",
-    "next-sitemap": "^4.2.2",
     "nprogress": "^0.2.0",
-    "postcss": "8.4.28",
     "react": "18.2.0",
     "react-cookie": "^6.1.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.10.1",
     "react-paginate": "^8.2.0",
-    "tailwindcss": "3.3.3",
-    "typescript": "5.1.6"
+    "tailwindcss": "3.3.3"
   },
   "devDependencies": {
-    "static-analyzer": "file:./packages/static-analyzer/"
+    "@types/node": "20.5.0",
+    "@types/nprogress": "^0.2.0",
+    "@types/react": "18.2.20",
+    "@types/react-dom": "18.2.7",
+    "autoprefixer": "10.4.15",
+    "eslint": "8.47.0",
+    "eslint-config-next": "13.4.16",
+    "next-sitemap": "^4.2.2",
+    "postcss": "8.4.28",
+    "static-analyzer": "file:./packages/static-analyzer/",
+    "typescript": "5.1.6"
   }
 }

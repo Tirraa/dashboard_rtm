@@ -2,7 +2,7 @@ import { defineDocumentType, makeSource } from 'contentlayer/source-files';
 
 const contentDirPath = 'posts';
 
-export const PhantomPost = defineDocumentType(() => ({
+const PhantomPost = defineDocumentType(() => ({
   name: 'PhantomPost',
   filePathPattern: '',
   fields: {
@@ -14,7 +14,7 @@ export const PhantomPost = defineDocumentType(() => ({
   }
 }));
 
-export const PatchPost = defineDocumentType(() => ({
+const PatchPost = defineDocumentType(() => ({
   name: 'PatchPost',
   filePathPattern: '**/patch-notes/**/*.md',
   fields: {

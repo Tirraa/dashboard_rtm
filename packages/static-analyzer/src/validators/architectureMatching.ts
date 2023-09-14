@@ -1,6 +1,5 @@
-import { CategoriesMetadatas, DeclaredCategoriesMetadatas } from '../types/metadatas';
-
 import { ERRORS_SUFFIXES } from '../config/vocab';
+import { CategoriesMetadatas, DeclaredCategoriesMetadatas } from '../types/metadatas';
 
 const { FAILED_TO_PASS: ERROR_PREFIX } = ERRORS_SUFFIXES;
 const LIST_ELEMENT_PREFIX = '\n - ';
@@ -22,15 +21,15 @@ function checkSubCategories(sysData: CategoriesMetadatas, userDeclaredData: Decl
 
   for (const category of sysCategories) {
     let foundUnknownSubCategoryForSomeCategory = false;
-    let notTheFirstDefectFound = false;
+    let latestCategoryDefectFound = '';
     if (!userDeclaredCategories.includes(category)) continue;
     const currentSubcategories = userDeclaredData[category];
     for (const subcategory of currentSubcategories) {
       if (!sysData[category].includes(subcategory)) {
-        if (notTheFirstDefectFound) feedback += '\n';
+        if (latestCategoryDefectFound && latestCategoryDefectFound !== category) feedback += '\n';
         feedback += `Unknown subcategory: '${subcategory}' for the category: '${category}'.` + '\n';
         foundUnknownSubCategoryForSomeCategory = true;
-        notTheFirstDefectFound = true;
+        latestCategoryDefectFound = category;
       }
     }
     if (foundUnknownSubCategoryForSomeCategory) {

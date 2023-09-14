@@ -17,7 +17,7 @@ function I18nCookieHotFixPhantom() {
   return <></>;
 }
 
-const HotFixPhantomComponent: FunctionComponent<HotFixPhantomComponentProps> = () => {
+export const HotFixPhantomComponent: FunctionComponent<HotFixPhantomComponentProps> = () => {
   return (
     <CookiesProvider defaultSetOptions={{ path: '/' }}>
       <I18nCookieHotFixPhantom />

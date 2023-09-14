@@ -4,10 +4,9 @@ import { BLOG_ARCHITECTURE_TYPE_NEEDLE } from '../config/config';
 import { ERRORS_SUFFIXES } from '../config/vocab';
 import TFlagsAssoc from '../types/flags';
 import { CategoriesMetadatas, DeclaredCategoriesMetadatas } from '../types/metadatas';
-import isValidCategoryOrSubcategory from '../validators/categoriesConvention';
+import isValidCategoryOrSubcategory, { NAMING_CONSTRAINTS_MSG } from '../validators/categoriesConvention';
 
 const { METADATAS_BUILDERS: ERROR_SUFFIX } = ERRORS_SUFFIXES;
-const NAMING_CONSTRAINTS_MSG = 'Only dashes, underscores and alphanumerical characters are allowed! You also MUST use at least one letter or digit.';
 
 /**
  * @throws {Error}
