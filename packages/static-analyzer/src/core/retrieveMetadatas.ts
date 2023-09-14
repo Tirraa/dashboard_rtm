@@ -7,6 +7,7 @@ import { CategoriesMetadatas, DeclaredCategoriesMetadatas } from '../types/metad
 import isValidCategoryOrSubcategory, { NAMING_CONSTRAINTS_MSG } from '../validators/categoriesConvention';
 
 const { METADATAS_BUILDERS: ERROR_SUFFIX } = ERRORS_SUFFIXES;
+const CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TRAIL = '\n' + NAMING_CONSTRAINTS_MSG + '\n' + ERROR_SUFFIX + '\n';
 
 /**
  * @throws {Error}
@@ -26,12 +27,12 @@ function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): Categorie
       if (subCategories.length <= 0) continue;
 
       if (!isValidCategoryOrSubcategory(category)) {
-        throw new Error(`Unauthorized category folder name ('${category}').` + ' ' + NAMING_CONSTRAINTS_MSG + ' ' + ERROR_SUFFIX);
+        throw new Error(`Unauthorized category folder name ('${category}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TRAIL);
       }
 
       for (const subCategory of subCategories) {
         if (!isValidCategoryOrSubcategory(subCategory)) {
-          throw new Error(`Unauthorized subcategory folder name ('${subCategory}').` + ' ' + NAMING_CONSTRAINTS_MSG + ' ' + ERROR_SUFFIX);
+          throw new Error(`Unauthorized subcategory folder name ('${subCategory}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TRAIL);
         }
       }
       metadatas[category] = subCategories;
@@ -54,16 +55,20 @@ function buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitectureInner
       const subCategories = subCategsSum.split('|');
       if (declaredCategoriesMetadatas[category] !== undefined) {
         throw new Error(
-          `Attempt to use the same category key ('${category}') with trailing spaces detected. This is strictly forbidden!` + ' ' + ERROR_SUFFIX
+          `Attempt to use the same category key ('${category}') with trailing spaces abuses detected. This is strictly forbidden!` +
+            ' ' +
+            ERROR_SUFFIX +
+            '\n'
         );
       }
+
       if (!isValidCategoryOrSubcategory(category)) {
-        throw new Error(`Unauthorized category key ('${category}').` + ' ' + NAMING_CONSTRAINTS_MSG + ' ' + ERROR_SUFFIX);
+        throw new Error(`Unauthorized category key ('${category}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TRAIL);
       }
 
       for (const subCategory of subCategories) {
         if (!isValidCategoryOrSubcategory(subCategory)) {
-          throw new Error(`Unauthorized subcategory key ('${subCategory}').` + ' ' + NAMING_CONSTRAINTS_MSG + ' ' + ERROR_SUFFIX);
+          throw new Error(`Unauthorized subcategory key ('${subCategory}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TRAIL);
         }
       }
       declaredCategoriesMetadatas[category] = subCategories;
@@ -106,7 +111,7 @@ function extractBlogArchitecture(blogConfigFilePath: string): string | null {
  */
 function buildCategoriesMetadatasFromBlogConfigFile(blogConfigFilePath: string): DeclaredCategoriesMetadatas {
   const blogArchitecture = extractBlogArchitecture(blogConfigFilePath);
-  if (!blogArchitecture) throw new Error("Couldn't extract the 'BlogArchitecture' content!" + ' ' + ERROR_SUFFIX);
+  if (!blogArchitecture) throw new Error("Couldn't extract the 'BlogArchitecture' content!" + ' ' + ERROR_SUFFIX + '\n');
   return buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitecture);
 }
 

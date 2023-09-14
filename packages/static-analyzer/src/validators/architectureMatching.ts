@@ -16,12 +16,12 @@ function checkCategories(sysCategories: string[], userDeclaredCategories: string
 
 function checkSubCategories(sysData: CategoriesMetadatas, userDeclaredData: DeclaredCategoriesMetadatas): string {
   let feedback = '';
+  let latestCategoryDefectFound = '';
   const sysCategories = Object.keys(sysData);
   const userDeclaredCategories = Object.keys(userDeclaredData);
 
   for (const category of sysCategories) {
     let foundUnknownSubCategoryForSomeCategory = false;
-    let latestCategoryDefectFound = '';
     if (!userDeclaredCategories.includes(category)) continue;
     const currentSubcategories = userDeclaredData[category];
     for (const subcategory of currentSubcategories) {
