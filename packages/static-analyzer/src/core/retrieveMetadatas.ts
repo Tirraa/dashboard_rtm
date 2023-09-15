@@ -46,13 +46,15 @@ function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): Categorie
  * @throws {Error}
  */
 function buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitectureInner: string): DeclaredCategoriesMetadatas {
-  const assertions = blogArchitectureInner.replace(/'|\s|\n/g, '').split(';');
+  const removeQuotesEnvelope = (token: string) => (token.charAt(0) === "'" || token.charAt(0) === '"' ? token.slice(1, -1) : token);
+  const instructions = blogArchitectureInner.replace(/\s|\n/g, '').split(';');
   const declaredCategoriesMetadatas: DeclaredCategoriesMetadatas = {};
 
-  for (const assertion of assertions) {
-    const [category, subCategsSum] = assertion.split(':');
-    if (category && subCategsSum) {
-      const subCategories = subCategsSum.split('|');
+  for (const instruction of instructions) {
+    const [categ, subCategsSum] = instruction.split(':');
+    if (categ && subCategsSum) {
+      const category = removeQuotesEnvelope(categ);
+      const subCategories = subCategsSum.split('|').map(removeQuotesEnvelope);
       if (declaredCategoriesMetadatas[category] !== undefined) {
         throw new Error(
           `Attempt to use the same category key ('${category}') with trailing spaces abuses detected. This is strictly forbidden!` +
