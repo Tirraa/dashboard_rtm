@@ -10,6 +10,6 @@ const EXECUTION_CONTEXT_WARNINGS_VOCAB: TExecutionContextWarningsVocab = {
     "Unable to infer whether the execution context is a development execution context or not. 'PROD' will be initialized to True."
 } as const;
 
-export const executionContextWarningVocabAccessor = (key: keyof TExecutionContextWarningsVocab): WarningMessage =>
+export const executionContextWarningsVocabAccessor = (key: keyof TExecutionContextWarningsVocab): WarningMessage =>
   PREFIX + ' ' + EXECUTION_CONTEXT_WARNINGS_VOCAB[key];
-export default executionContextWarningVocabAccessor;
+export default executionContextWarningsVocabAccessor;

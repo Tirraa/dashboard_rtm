@@ -14,5 +14,5 @@ const SIDEBAR_ERRORS_VOCAB: TSidebarErrorsVocab = {
   UNABLE_TO_RETRIEVE_THE_NAVBAR_ELEMENT: "Unable to retrieve the navbar element! If you don't have any navbar, set the NAVBAR_ID value to `null`."
 } as const;
 
-export const sidebarErrorVocabAccessor = (key: keyof TSidebarErrorsVocab): ErrorMessage => PREFIX + ' ' + SIDEBAR_ERRORS_VOCAB[key] + ' ' + SUFFIX;
-export default sidebarErrorVocabAccessor;
+export const sidebarErrorsVocabAccessor = (key: keyof TSidebarErrorsVocab): ErrorMessage => PREFIX + ' ' + SIDEBAR_ERRORS_VOCAB[key] + ' ' + SUFFIX;
+export default sidebarErrorsVocabAccessor;
