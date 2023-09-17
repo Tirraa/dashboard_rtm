@@ -46,5 +46,6 @@ export const gsub = (str: string, needle: string, replaceWith: string): string =
 export const buildPathFromParts = (...args: string[]): AppPath => args.join('/');
 
 const capitalize = (str: string): string => str.charAt(0).toUpperCase() + str.substring(1);
-export const getFormattedDate = (lng: LanguageFlag, date: Date): string =>
-  capitalize(new Intl.DateTimeFormat(lng, { dateStyle: 'full', timeStyle: 'short' }).format(date).toString());
+
+export const getFormattedDate = (lng: LanguageFlag, date: Date, giveTime: boolean = false): string =>
+  capitalize(new Intl.DateTimeFormat(lng, { dateStyle: 'full', ...(giveTime ? { timeStyle: 'short' } : {}) }).format(date).toString());

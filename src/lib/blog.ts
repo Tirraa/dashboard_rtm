@@ -11,8 +11,9 @@ import {
 import PostBase from '@/types/BlogPostAbstractions';
 import { AppPath } from '@/types/Next';
 import { LanguageFlag } from '@/types/i18n';
+import { IsoDateTimeString } from 'contentlayer/core';
 import { getBlogPostLanguageFlag } from './i18n';
-import { buildPathFromParts, getLastPathPart, indexOfNthOccurrence } from './str';
+import { buildPathFromParts, getFormattedDate, getLastPathPart, indexOfNthOccurrence } from './str';
 
 const getBlogPostSubCategoryAndSlugStr = (post: PostBase): string => buildPathFromParts(getBlogPostSubCategory(post), getBlogPostSlug(post));
 
@@ -107,4 +108,12 @@ export function subCategoryShouldTriggerNotFound<C extends BlogCategory>(
 ): boolean {
   const isForcedPath = BlogConfig.FORCED_BLOG_SUBCATEGORIES_PATHS[category]?.includes(subCategory);
   return postsCollection.length === 0 && !isForcedPath;
+}
+
+export function getPostFormattedDate(lng: LanguageFlag, { date }: PostBase): string {
+  const postDateHasTime = (date: IsoDateTimeString) => date.substring(date.indexOf('T') + 1) !== '00:00:00.000Z';
+
+  const giveTime = postDateHasTime(date);
+  const formattedDate = getFormattedDate(lng, new Date(date), giveTime);
+  return formattedDate;
 }

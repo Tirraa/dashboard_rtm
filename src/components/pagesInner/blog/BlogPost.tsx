@@ -1,4 +1,4 @@
-import { getFormattedDate } from '@/lib/str';
+import { getPostFormattedDate } from '@/lib/blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { LanguageFlag } from '@/types/i18n';
 import { FunctionComponent } from 'react';
@@ -9,7 +9,7 @@ interface BlogPostInnerProps {
 }
 
 export const BlogPostInner: FunctionComponent<BlogPostInnerProps> = ({ post, lng }) => {
-  const formattedDate = getFormattedDate(lng, new Date(post.date));
+  const formattedDate = getPostFormattedDate(lng, post);
 
   return (
     <article className="mx-auto max-w-xl py-8">
