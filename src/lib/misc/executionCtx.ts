@@ -7,7 +7,7 @@ type TComputedNodeEnv = {
 };
 
 const [NODE_PROD_ENV_NEEDLE, NODE_DEV_ENV_NEEDLE, NODE_TEST_ENV_NEEDLE] = ['prod', 'dev', 'test'];
-const { NODE_ENV } = process.env;
+const NODE_ENV = process.env.NODE_ENV;
 
 let devCtx: boolean | undefined = NODE_ENV ? NODE_ENV.startsWith(NODE_DEV_ENV_NEEDLE) : undefined;
 let testCtx: boolean | undefined = NODE_ENV ? NODE_ENV.startsWith(NODE_TEST_ENV_NEEDLE) : undefined;

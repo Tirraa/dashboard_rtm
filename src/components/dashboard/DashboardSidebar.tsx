@@ -42,9 +42,9 @@ function sidebarBtnsGenerator(separatorWidth: number) {
 
 function DashboardSidebarImpl() {
   const sidebarInstanceRef = useRef<HTMLDivElement>(null);
-  const [dynamicWidth, setDynamicWidth] = useState<number>(-1);
+  const [dynamicWidth, setDynamicWidth] = useState<number>(0);
   const [dynamicPaddingBottom, setDynamicPaddingBottom] = useState<number>(0);
-  const [dynamicSeparatorWidth, setDynamicSeparatorWidth] = useState<number>(-1);
+  const [dynamicSeparatorWidth, setDynamicSeparatorWidth] = useState<number>(0);
   const [dynamicLeft, setDynamicLeft] = useState<string>('100vw');
 
   useEffect(
@@ -73,14 +73,14 @@ function DashboardSidebarImpl() {
       const computedIconWidth = computeHTMLElementWidth(sidebarFirstIconInstance as HTMLElement);
       const computedSeparatorWidth = computedIconWidth * ICON_SEPARATOR_WIDTH_FACTOR;
       const computedWidth = computedIconWidth * ICON_MARGIN_X_FACTOR;
-      if (mainBoxInstance) {
-        mainBoxInstance.classList.add('transition-[margin-left]');
-        mainBoxInstance.style.marginLeft = computedWidth + 'px';
-      }
       setDynamicSeparatorWidth(computedSeparatorWidth);
       setDynamicWidth(computedWidth);
       setDynamicLeft('0');
       setDynamicPaddingBottom(computedPaddingBottom);
+      if (mainBoxInstance) {
+        mainBoxInstance.classList.add('transition-[margin-left]');
+        mainBoxInstance.style.marginLeft = computedWidth + 'px';
+      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     ComputedNodeCtx.DEV

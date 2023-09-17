@@ -23,7 +23,7 @@ export const NavbarButton: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, 
   const classList = hrefMatchesPathname(href, currentPathname) ? ACTIVE : INACTIVE;
   const target = getLinkTarget(href);
 
-  return <Link {...{ ...classList, href, ...target }}>{title}</Link>;
+  return <Link {...{ ...classList, ...target, href }}>{title}</Link>;
 };
 
 export default NavbarButton;
