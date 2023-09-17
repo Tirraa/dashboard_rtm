@@ -7,7 +7,8 @@ import { LANGUAGES } from './i18n/settings';
 
 const I18nMiddleware = createI18nMiddleware({
   locales: LANGUAGES,
-  defaultLocale: DEFAULT_LANGUAGE
+  defaultLocale: DEFAULT_LANGUAGE,
+  urlMappingStrategy: 'rewriteDefault'
 });
 
 // * ... Work-around (1): used for getServerSidePathnameWorkaround
