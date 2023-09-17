@@ -2,6 +2,7 @@ import '@/app/globals.css';
 import NextTopLoader from '@/components/misc/NextTopLoader';
 import { setStaticParamsLocale } from 'next-international/server';
 
+import SplashScreen from '@/components/misc/SplashScreen';
 import SitewideNavbar from '@/components/navbar/SitewideNavbar';
 import { ProgressbarConfig } from '@/config/progressbar';
 import { getStaticParams } from '@/i18n/server';
@@ -27,6 +28,7 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
   return (
     <html lang={locale}>
       <body className="flex flex-col min-h-screen">
+        <SplashScreen />
         <SitewideNavbar {...{ i18nProps: { [i18nTaxonomy.LANG_FLAG]: locale } }} />
         <NextTopLoader {...{ ...ProgressbarConfig.PROPS }} />
         {children}
