@@ -1,6 +1,11 @@
 {
-  "name": "dashboard-rust",
+  "name": "rtm-dashboard",
   "version": "0.1.0",
+  "author": "gustaveWPM (github.com/gustaveWPM)",
+  "contributors": [
+    "Tirraa (github.com/Tirraa)"
+  ],
+  "license": "MIT",
   "private": true,
   "scripts": {
     "postinstall": "npm --prefix ./packages/static-analyzer install",
