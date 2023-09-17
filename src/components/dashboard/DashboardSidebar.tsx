@@ -7,7 +7,7 @@ import { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMappi
 import { sidebarErrorsVocabAccessor } from '@/errors/vocab/sidebar';
 import { I18nProviderClient, getClientSideI18n } from '@/i18n/client';
 import { computeHTMLElementHeight, computeHTMLElementWidth } from '@/lib/html';
-import { NextCtx } from '@/lib/misc/executionCtx';
+import ComputedNodeCtx from '@/lib/misc/executionCtx';
 import Link from 'next/link';
 import { FunctionComponent, ReactElement, useEffect, useRef, useState } from 'react';
 import NavbarConfig from '../_config/_styles/Navbar';
@@ -83,7 +83,7 @@ function DashboardSidebarImpl() {
       setDynamicPaddingBottom(computedPaddingBottom);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    NextCtx.DEV
+    ComputedNodeCtx.DEV
       ? [
           sidebarInstanceRef,
           DashboardSidebarDynamicRenderingConfig.SIDEBAR_ICON_SIZE_PX_VALUE,
