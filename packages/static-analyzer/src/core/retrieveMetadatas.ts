@@ -113,7 +113,7 @@ function extractBlogArchitecture(blogConfigFilePath: string): string | null {
  */
 function buildCategoriesMetadatasFromBlogConfigFile(blogConfigFilePath: string): DeclaredCategoriesMetadatas {
   const blogArchitecture = extractBlogArchitecture(blogConfigFilePath);
-  if (!blogArchitecture) throw new Error("Couldn't extract the 'BlogArchitecture' content!" + ' ' + ERROR_SUFFIX + '\n');
+  if (!blogArchitecture) throw new Error("Couldn't extract the content of the 'BlogArchitecture' type!" + ' ' + ERROR_SUFFIX + '\n');
   return buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitecture);
 }
 

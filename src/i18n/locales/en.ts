@@ -1,6 +1,6 @@
 import { VocabType } from '@/types/i18n';
 
-const enVocab: VocabType = {
+const vocab: VocabType = {
   navbar: {
     home: 'Homepage',
     dashboard: 'Dashboard',
@@ -37,4 +37,4 @@ const enVocab: VocabType = {
   }
 };
 
-export default enVocab;
+export default vocab;
