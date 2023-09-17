@@ -1,4 +1,4 @@
-import RtmButton from '@/components/misc/RtmButton';
+import RtmButton from '@/components/cta/RtmButton';
 import DiscordConfig from '@/config/discord';
 import { getServerSideI18n } from '@/i18n/server';
 import { CogIcon } from '@heroicons/react/20/solid';
