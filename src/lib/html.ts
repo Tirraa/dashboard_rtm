@@ -1,15 +1,15 @@
-export function computeHTMLElementHeight(HtmlElement: HTMLElement): number {
-  const { height } = HtmlElement.getBoundingClientRect();
-  const { paddingTop, paddingBottom, marginTop, marginBottom } = getComputedStyle(HtmlElement);
-  const heightDeltas = [paddingTop, paddingBottom, marginTop, marginBottom].map(parseFloat);
+export function computeHTMLElementHeight(htmlElement: HTMLElement): number {
+  const { height } = htmlElement.getBoundingClientRect();
+  const { marginTop, marginBottom } = getComputedStyle(htmlElement);
+  const heightDeltas = [marginTop, marginBottom].map(parseFloat);
   const computedHeight = height + heightDeltas.reduce((acc, value) => acc + value, 0);
   return computedHeight;
 }
 
-export function computeHTMLElementWidth(HtmlElement: HTMLElement): number {
-  const { width } = HtmlElement.getBoundingClientRect();
-  const { paddingRight, paddingLeft, marginRight, marginLeft } = getComputedStyle(HtmlElement);
-  const widthDeltas = [paddingRight, paddingLeft, marginRight, marginLeft].map(parseFloat);
+export function computeHTMLElementWidth(htmlElement: HTMLElement): number {
+  const { width } = htmlElement.getBoundingClientRect();
+  const { marginRight, marginLeft } = getComputedStyle(htmlElement);
+  const widthDeltas = [marginRight, marginLeft].map(parseFloat);
   const computedWidth = width + widthDeltas.reduce((acc, value) => acc + value, 0);
   return computedWidth;
 }

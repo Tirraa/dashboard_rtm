@@ -99,7 +99,7 @@ function DashboardSidebarImpl() {
       className="w-0 transition-[width] overflow-y-auto fixed h-screen border-r-[1px] bg-black flex flex-col"
       style={{ width: dynamicWidth, left: dynamicLeft, paddingBottom: dynamicPaddingBottom }}
     >
-      <div className="flex flex-col h-fit [&>*:first-child]:mt-5">{sidebarBtnsGenerator(dynamicSeparatorWidth)}</div>
+      <div className="flex flex-col h-fit [&>*:first-child]:mt-5 [&>*:last-child]:mb-5">{sidebarBtnsGenerator(dynamicSeparatorWidth)}</div>
     </aside>
   );
 }
