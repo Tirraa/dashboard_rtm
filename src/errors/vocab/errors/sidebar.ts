@@ -6,7 +6,7 @@ type TSidebarErrorsVocab = {
   UNABLE_TO_RETRIEVE_THE_NAVBAR_ELEMENT: ErrorMessage;
 };
 
-const PREFIX = 'Dashboard Sidebar Error:';
+const PREFIX = "Dashboard's sidebar error:";
 const SUFFIX = "The sidebar won't be displayed.";
 const SIDEBAR_ERRORS_VOCAB: TSidebarErrorsVocab = {
   UNABLE_TO_RETRIEVE_ANY_SIDEBAR_ICON: 'Unable to retrieve any sidebar icon!',

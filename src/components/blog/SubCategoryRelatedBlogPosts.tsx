@@ -1,3 +1,4 @@
+import PaginatedElements from '@/components/misc/PaginatedElements';
 import { i18ns } from '@/config/i18n';
 import { getScopedI18n } from '@/i18n/server';
 import { getAllPostsByCategoryAndSubCategoryAndLanguageFlagUnstrict, subCategoryShouldTriggerNotFound } from '@/lib/blog';
@@ -7,7 +8,6 @@ import { BlogSubCategoryPageProps } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
-import PaginatedElements from '../misc/PaginatedElements';
 import BlogPostPeview from './BlogPostPreview';
 import BlogPostsNotFound from './BlogPostsNotFound';
 

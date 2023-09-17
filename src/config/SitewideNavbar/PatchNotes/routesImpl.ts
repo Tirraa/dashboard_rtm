@@ -1,6 +1,6 @@
+import { i18ns } from '@/config/i18n';
 import RoutesBase from '@/config/routes';
 import { getSlashEnvelope } from '@/lib/str';
-import { i18ns } from '../../i18n';
 import { PatchNotesRoutes, PatchNotesRoutesTitles } from './utils/RoutesMapping';
 
 const BASE = getSlashEnvelope(RoutesBase.PATCH_NOTES);

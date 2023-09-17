@@ -1,16 +1,16 @@
 'use client';
 
+import NavbarConfig from '@/components/_config/_styles/Navbar';
 import DashboardSidebarDynamicRenderingConfig from '@/config/DashboardSidebar/dynamicRenderingConfig';
 import dashboardRoutes, { dashboardRoutesTitles } from '@/config/DashboardSidebar/routesImpl';
 import dashboardRoutesSidebarComponents from '@/config/DashboardSidebar/utils/IconsMapping';
 import { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMapping';
-import { sidebarErrorsVocabAccessor } from '@/errors/vocab/sidebar';
+import { sidebarErrorsVocabAccessor } from '@/errors/vocab/errors/sidebar';
 import { I18nProviderClient, getClientSideI18n } from '@/i18n/client';
 import { computeHTMLElementHeight, computeHTMLElementWidth } from '@/lib/html';
 import ComputedNodeCtx from '@/lib/misc/executionCtx';
 import Link from 'next/link';
 import { FunctionComponent, ReactElement, useEffect, useRef, useState } from 'react';
-import NavbarConfig from '../_config/_styles/Navbar';
 import SidebarBtnSeparator from './SidebarBtnsSeparator';
 
 interface DashboardSidebarProps {}

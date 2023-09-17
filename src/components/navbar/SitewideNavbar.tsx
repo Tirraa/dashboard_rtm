@@ -1,5 +1,6 @@
 'use client';
 
+import NavbarConfig from '@/components/_config/_styles/Navbar';
 import useCollapseNavbarOnResize from '@/components/_customHooks/_hotfixes/useCollapseNavbarOnResize';
 import NavbarElement from '@/components/_hoc/navbar/NavbarElement';
 import TextNodeWithStupidUppercaseEffect from '@/components/misc/TextNodeWithStupidUppercaseEffect';
@@ -14,7 +15,6 @@ import { Collapse, IconButton, Navbar, Typography } from '@material-tailwind/rea
 import Image from 'next/image';
 import Link from 'next/link';
 import { FunctionComponent, useEffect, useRef, useState } from 'react';
-import NavbarConfig from '../_config/_styles/Navbar';
 import NavbarButton from './NavbarButton';
 
 interface SitewideNavbarProps extends i18nComponentProps {}

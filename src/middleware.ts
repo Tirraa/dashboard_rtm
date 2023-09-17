@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { DEFAULT_LANGUAGE } from '@/config/i18n';
+import NextConfig from '@/config/next';
+import { LANGUAGES } from '@/i18n/settings';
 import { createI18nMiddleware } from 'next-international/middleware';
-import { DEFAULT_LANGUAGE } from './config/i18n';
-import NextConfig from './config/next';
-import { LANGUAGES } from './i18n/settings';
 
 const I18nMiddleware = createI18nMiddleware({
   locales: LANGUAGES,

@@ -1,6 +1,6 @@
 import DiscordConfig from '@/config/discord';
+import { i18ns } from '@/config/i18n';
 import { RoutesBase } from '@/config/routes';
-import { i18ns } from '../i18n';
 import { SitewideNavbarRoutes, SitewideNavbarRoutesTitles } from './utils/RoutesMapping';
 
 const BASE = RoutesBase.SITEWIDE;
