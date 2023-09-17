@@ -18,8 +18,5 @@ export interface LayoutBaseProps extends i18nPageProps {
   children: ReactNode;
 }
 
-export type RoutesEnumKey = string;
 export type AppPath = string;
 export type PathSegment = string;
-
-export default LayoutBaseProps;

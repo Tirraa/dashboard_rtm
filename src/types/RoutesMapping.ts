@@ -1,15 +1,16 @@
 import { ReactElement } from 'react';
-import { RoutesEnumKey } from './Next';
+import { AppPath } from './Next';
+import RoutesKeysUnion from './RoutesKeysUnion';
 import { I18nVocabTarget } from './i18n';
 
-export type RoutesDefinition<RoutesKeys extends RoutesEnumKey> = {
-  [_ in RoutesKeys]: string;
+export type RoutesDefinition<RoutesKeys extends RoutesKeysUnion> = {
+  [_ in RoutesKeys]: AppPath;
 };
 
-export type RoutesTitles<RoutesKeys extends RoutesEnumKey> = {
+export type RoutesTitles<RoutesKeys extends RoutesKeysUnion> = {
   [_ in RoutesKeys]: I18nVocabTarget;
 };
 
-export type RoutesReactElement<RoutesKeys extends RoutesEnumKey> = {
+export type RoutesReactElement<RoutesKeys extends RoutesKeysUnion> = {
   [_ in RoutesKeys]: ReactElement;
 };

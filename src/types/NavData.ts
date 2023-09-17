@@ -1,9 +1,6 @@
-import { AppPath, RoutesEnumKey } from '@/types/Next';
+import { AppPath } from '@/types/Next';
+import RoutesKeysUnion from './RoutesKeysUnion';
 import { I18nVocabTarget } from './i18n';
-
-type NavDataRouteTitle = string;
-
-export type NavDataRoutesTitles = Record<NavDataRouteTitle, I18nVocabTarget>;
 
 export interface AtomicNavDataEntity {
   i18nTitle: I18nVocabTarget;
@@ -18,4 +15,4 @@ export interface NavDataEntity extends AtomicNavDataEntity {
 export interface NavbarDropdownElement extends Required<NavDataEntity> {}
 export type NavDataEntities = NavDataEntity[];
 
-export type DropdownsConfig<T extends RoutesEnumKey> = Partial<Record<T, NavDataEntities>>;
+export type DropdownsConfig<K extends RoutesKeysUnion> = Partial<Record<K, NavDataEntities>>;

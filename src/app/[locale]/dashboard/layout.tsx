@@ -1,5 +1,5 @@
 import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
-import LayoutBaseProps from '@/types/Next';
+import { LayoutBaseProps } from '@/types/Next';
 import { Metadata } from 'next';
 
 interface DashboardLayoutProps extends LayoutBaseProps {}

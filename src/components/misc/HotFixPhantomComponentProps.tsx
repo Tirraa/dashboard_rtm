@@ -13,7 +13,7 @@ function I18nCookieHotFixPhantom() {
   const langFlag = getPathnameI18nFlag(pathname);
   const [cookies, setCookie] = useCookies([COOKIE_NAME]);
 
-  if (cookies[COOKIE_NAME] !== langFlag) setCookie(COOKIE_NAME, langFlag);
+  if (cookies[COOKIE_NAME] && cookies[COOKIE_NAME] !== langFlag) setCookie(COOKIE_NAME, langFlag);
   return <></>;
 }
 

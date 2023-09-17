@@ -1,7 +1,0 @@
-import { DashboardRoutes } from '@/config/DashboardSidebar/utils/RoutesMapping';
-import { PatchNotesRoutesKeys } from '@/config/SitewideNavbar/PatchNotes/utils/RoutesMapping';
-import { SitewideNavbarRoutes } from '@/config/SitewideNavbar/utils/RoutesMapping';
-
-export type RoutesTypesUnion = DashboardRoutes | SitewideNavbarRoutes | PatchNotesRoutesKeys;
-export type RoutesTypesUnionKey = keyof RoutesTypesUnion;
-export default RoutesTypesUnion;

@@ -7,7 +7,7 @@ import SitewideNavbar from '@/components/navbar/SitewideNavbar';
 import { ProgressbarConfig } from '@/config/progressbar';
 import { getStaticParams } from '@/i18n/server';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import LayoutBaseProps from '@/types/Next';
+import { LayoutBaseProps } from '@/types/Next';
 import { Metadata } from 'next';
 
 interface RootLayoutProps extends LayoutBaseProps {}
