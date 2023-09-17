@@ -4,6 +4,7 @@ import { AppPath, PathSegment } from '@/types/Next';
 import { LanguageFlag } from '@/types/i18n';
 import { getPathnameWithoutI18nFlag } from './i18n';
 
+type AppPathAsIs = AppPath;
 type DescriptionAsIs = string;
 type CroppedDescription = string;
 
@@ -34,7 +35,7 @@ export function getSlicedBlogPostDescription(description: string): DescriptionAs
   return slicedDescription;
 }
 
-export function getLastPathPart(path: AppPath): PathSegment {
+export function getLastPathPart(path: AppPath): AppPathAsIs | PathSegment {
   const lastIndex = path.lastIndexOf('/');
 
   if (lastIndex !== -1 && lastIndex !== path.length - 1) return path.substring(lastIndex + 1);
@@ -43,7 +44,7 @@ export function getLastPathPart(path: AppPath): PathSegment {
 
 export const gsub = (str: string, needle: string, replaceWith: string): string => str.split(needle).join(replaceWith);
 
-export const buildPathFromParts = (...args: string[]): AppPath => args.join('/');
+export const buildPathFromParts = (...args: PathSegment[]): AppPath => args.join('/');
 
 const capitalize = (str: string): string => str.charAt(0).toUpperCase() + str.substring(1);
 
