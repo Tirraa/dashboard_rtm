@@ -1,4 +1,4 @@
-import { ELanguageFlag, VocabBase } from '@/config/i18n';
+import { ELanguagesFlag, VocabBase } from '@/config/i18n';
 
 type KeySeparator = '.';
 type VocabObjKeyOrValue = string;
@@ -21,6 +21,6 @@ type MakeVocabType<T> = {
 export type I18nVocabTarget = VocabRecursiveKeys<VocabBase>;
 export type VocabType = MakeVocabType<VocabBase>;
 
-type LanguageFlagKey = keyof typeof ELanguageFlag;
+type LanguageFlagKey = keyof typeof ELanguagesFlag;
 export type LanguageFlag = LanguageFlagKey;
 export type LocalesGetterConfigObjDiscreteType = Record<LanguageFlag, () => Promise<any>>;

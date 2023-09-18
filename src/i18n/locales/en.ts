@@ -1,6 +1,6 @@
 import { VocabType } from '@/types/i18n';
 
-const vocab: VocabType = {
+export default {
   navbar: {
     home: 'Homepage',
     dashboard: 'Dashboard',
@@ -35,6 +35,4 @@ const vocab: VocabType = {
   ugly: {
     logo: 'logo'
   }
-};
-
-export default vocab;
+} satisfies VocabType;
