@@ -4,7 +4,7 @@ import NavbarConfig from '@/components/_config/_styles/Navbar';
 import useCollapseNavbarOnResize from '@/components/_customHooks/_hotfixes/useCollapseNavbarOnResize';
 import NavbarElement from '@/components/_hoc/navbar/NavbarElement';
 import TextNodeWithStupidUppercaseEffect from '@/components/misc/TextNodeWithStupidUppercaseEffect';
-import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropDownsConfig';
+import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsConfig';
 import SITEWIDE_NAVBAR_ROUTES, { SITEWIDE_NAVBAR_ROUTES_TITLES } from '@/config/SitewideNavbar/routesImpl';
 import RoutesBase from '@/config/routes';
 import { I18nProviderClient, getClientSideI18n } from '@/i18n/client';

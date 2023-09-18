@@ -5,6 +5,7 @@ import NavbarDropdownButtonStyle, {
   navbarDropdownComponentProps
 } from '@/components/_config/_styles/NavbarDropdownButtonStyle';
 import { getClientSideI18n } from '@/i18n/client';
+import { getLinkTarget } from '@/lib/react';
 import { hrefMatchesPathname } from '@/lib/str';
 import { EmbeddedEntities, NavbarDropdownElement } from '@/types/NavData';
 import { ClassName } from '@/types/React';
@@ -24,10 +25,11 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) => {
   const globalT = getClientSideI18n();
   return embeddedEntities.map(({ path: href, i18nTitle }) => {
     const title = globalT(i18nTitle);
+    const target = getLinkTarget(href);
 
     return (
       <MenuItem key={href + title} className="p-0">
-        <Link className={NAVBAR_DROPDOWN_INNER_BUTTONS_CLASSLIST} {...{ title, href }}>
+        <Link className={NAVBAR_DROPDOWN_INNER_BUTTONS_CLASSLIST} {...{ title, href, ...target }}>
           {title}
         </Link>
       </MenuItem>
