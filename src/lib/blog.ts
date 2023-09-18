@@ -56,7 +56,7 @@ export function getBlogCategoryFromPathname(pathname: AppPath): BlogCategory {
 
 export const getBlogPostSubCategory = (post: PostBase): BlogSubCategoryUnknownKey => getBlogPostSubCategoryFromPostObj(post);
 export const getBlogPostSlug = (post: PostBase): BlogSlug => getLastPathPart(post._raw.flattenedPath);
-export const getAllPostsByCategory = (categ: BlogCategory): PostBase[] => BlogConfig.BLOG_CATEGORIES_ALL_POSTS_TYPES_ASSOC[categ]();
+export const getAllPostsByCategory = (categ: BlogCategory): PostBase[] => BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[categ]();
 export const getAllPostsByCategoryAndSubCategoryUnstrict = ({ category, subCategory }: UnknownCategoryAndUnknownSubCategory): PostBase[] =>
   getAllPostsByCategory(category).filter((post) => getBlogPostSubCategory(post) === subCategory);
 
@@ -100,7 +100,7 @@ export const getPostStrict = <C extends BlogCategory>(
   langFlag: LanguageFlag
 ): undefined | PostBase => getPostUnstrict({ category, subCategory }, targettedSlug, langFlag);
 
-export const getAllCategories = (): BlogCategory[] => Object.keys(BlogConfig.BLOG_CATEGORIES_ALL_POSTS_TYPES_ASSOC) as BlogCategory[];
+export const getAllCategories = (): BlogCategory[] => Object.keys(BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC) as BlogCategory[];
 
 export function subCategoryShouldTriggerNotFound<C extends BlogCategory>(
   postsCollection: PostBase[],

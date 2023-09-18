@@ -4,7 +4,7 @@ import { allPatchPosts } from 'contentlayer/generated';
 type TBlogConfig = {
   DISPLAYED_BLOG_POST_PER_SUBCATEGORY_ON_BLOG_CATEGORY_PAGE_LIMIT: number;
   BLOG_POST_PREVIEW_DESCRIPTION_CHARACTERS_LIMIT: number;
-  BLOG_CATEGORIES_ALL_POSTS_TYPES_ASSOC: PostsCollectionAssoc<BlogCategory>;
+  BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC: PostsCollectionAssoc<BlogCategory>;
   FORCED_BLOG_SUBCATEGORIES_PATHS: ForcedBlogSubCategoriesPaths;
 };
 
@@ -16,7 +16,7 @@ export const BlogConfig: TBlogConfig = {
   DISPLAYED_BLOG_POST_PER_SUBCATEGORY_ON_BLOG_CATEGORY_PAGE_LIMIT: 2,
   BLOG_POST_PREVIEW_DESCRIPTION_CHARACTERS_LIMIT: 250,
 
-  BLOG_CATEGORIES_ALL_POSTS_TYPES_ASSOC: {
+  BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC: {
     'patch-notes': () => allPatchPosts
   },
 

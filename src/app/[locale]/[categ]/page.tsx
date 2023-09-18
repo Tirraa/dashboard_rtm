@@ -123,7 +123,7 @@ export default async function Page({ params }: BlogCategoryPageProps) {
 
   let gettedOnTheFlyPosts: PostBase[] = [];
   try {
-    gettedOnTheFlyPosts = BlogConfig.BLOG_CATEGORIES_ALL_POSTS_TYPES_ASSOC[category]();
+    gettedOnTheFlyPosts = BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[category]();
   } catch {
     notFound();
   }
