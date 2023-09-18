@@ -1,3 +1,4 @@
+import { getBlogSubCategoriesByCategory } from '@/cache/blog';
 import BlogConfig, { BlogArchitecture } from '@/config/blog';
 import { DEFAULT_LANGUAGE } from '@/config/i18n';
 import InvalidArgumentsError from '@/errors/exceptions/InvalidArgument';
@@ -5,6 +6,7 @@ import {
   BlogCategory,
   BlogCategoryAndSubcategoriesPair,
   BlogSlug,
+  BlogSubCategoryFromUnknownCategory,
   BlogSubCategoryUnknownKey,
   UnknownCategoryAndUnknownSubCategory
 } from '@/types/Blog';
@@ -116,4 +118,14 @@ export function getPostFormattedDate(lng: LanguageFlag, { date }: PostBase): str
   const giveTime = postDateHasTime(date);
   const formattedDate = getFormattedDate(lng, new Date(date), giveTime);
   return formattedDate;
+}
+
+export function isValidCategoryAndSubCategoryPair(category: BlogCategory, subCategory: BlogSubCategoryFromUnknownCategory): boolean {
+  try {
+    const subCategories = getBlogSubCategoriesByCategory(category);
+    if (!subCategories.includes(subCategory)) return false;
+    return true;
+  } catch {
+    return false;
+  }
 }
