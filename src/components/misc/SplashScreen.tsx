@@ -26,7 +26,7 @@ const SplashScreen: FunctionComponent<SplashScreenProps> = () => {
       if (splashScreen) {
         splashScreen.style.opacity = '0';
         splashScreen.addEventListener('transitionend', killSwitch);
-        if (splashScreenLogo) splashScreenLogo.style.width = '100vw';
+        if (splashScreenLogo) splashScreenLogo.style.scale = '1';
       }
     }, TRANSITION_DELAY_MS_VALUE);
     return () => clearTimeout(coroutine);
@@ -39,12 +39,12 @@ const SplashScreen: FunctionComponent<SplashScreenProps> = () => {
       <Image
         ref={splashScreenLogoRef}
         src="/assets/rtm-logo.svg"
-        height={0}
-        width={0}
+        height={50}
+        width={50}
         alt=""
-        style={{ width: '35vw', height: 'auto' }}
+        style={{ width: '100%', height: 'auto', scale: '.33' }}
         draggable={false}
-        className="transition-all duration-200"
+        className="fixed transition-all duration-200"
       />
     </div>
   ) : (
