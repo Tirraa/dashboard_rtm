@@ -54,8 +54,8 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
 
   function buildPostsCollectionsSnippets() {
     Object.entries(histogram).forEach(([subCategory, posts2]) => {
-      postsCollectionsSnippets[subCategory as BlogSubCategoryFromUnknownCategory] = posts2.map((post, index) => (
-        <BlogPostPeview key={index} {...{ post, lng }} />
+      postsCollectionsSnippets[subCategory as BlogSubCategoryFromUnknownCategory] = posts2.map((post) => (
+        <BlogPostPeview key={post._raw.flattenedPath} {...{ post, lng }} />
       ));
     });
   }
@@ -80,6 +80,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
       if (posts.length > limit) {
         showMoreLink = (
           <RtmButton
+            key={`${subCategory}-${curSubCategTitle}-show-more-btn`}
             label={globalT('vocab.see-more')}
             {...{ href, ripple: false, size: 'sm', textCls: 'text-sm', className: 'mb-5 normal-case flex items-center gap-2' }}
           />

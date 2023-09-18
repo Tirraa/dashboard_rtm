@@ -23,7 +23,7 @@ export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageP
   if (postsCollection.length === 0) return <BlogPostsNotFound {...{ lng }} />;
   const title = scopedT(`${category}.${subCategory}`);
 
-  const paginatedElements = postsCollection.map((post, index) => <BlogPostPeview key={index} {...{ post, lng }} />);
+  const paginatedElements = postsCollection.map((post) => <BlogPostPeview key={post._raw.flattenedPath} {...{ post, lng }} />);
   return (
     <div className="mx-auto max-w-xl py-8">
       <h1 className="text-center">{title}</h1>
