@@ -52,29 +52,29 @@ function buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitectureInner
 
   for (const instruction of instructions) {
     const [categ, subCategsSum] = instruction.split(':');
-    if (categ && subCategsSum) {
-      const category = removeQuotesEnvelope(categ);
-      const subCategories = subCategsSum.split('|').map(removeQuotesEnvelope);
-      if (declaredCategoriesMetadatas[category] !== undefined) {
-        throw new Error(
-          `Attempt to use the same category key ('${category}') with trailing spaces abuses detected. This is strictly forbidden!` +
-            ' ' +
-            ERROR_SUFFIX +
-            '\n'
-        );
-      }
+    if (!categ || !subCategsSum) continue;
 
-      if (!isValidCategoryOrSubcategory(category)) {
-        throw new Error(`Unauthorized category key ('${category}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TRAIL);
-      }
-
-      for (const subCategory of subCategories) {
-        if (!isValidCategoryOrSubcategory(subCategory)) {
-          throw new Error(`Unauthorized subcategory key ('${subCategory}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TRAIL);
-        }
-      }
-      declaredCategoriesMetadatas[category] = subCategories;
+    const category = removeQuotesEnvelope(categ);
+    const subCategories = subCategsSum.split('|').map(removeQuotesEnvelope);
+    if (declaredCategoriesMetadatas[category] !== undefined) {
+      throw new Error(
+        `Attempt to use the same category key ('${category}') with trailing spaces abuses detected. This is strictly forbidden!` +
+          ' ' +
+          ERROR_SUFFIX +
+          '\n'
+      );
     }
+
+    if (!isValidCategoryOrSubcategory(category)) {
+      throw new Error(`Unauthorized category key ('${category}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TRAIL);
+    }
+
+    for (const subCategory of subCategories) {
+      if (!isValidCategoryOrSubcategory(subCategory)) {
+        throw new Error(`Unauthorized subcategory key ('${subCategory}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TRAIL);
+      }
+    }
+    declaredCategoriesMetadatas[category] = subCategories;
   }
   return declaredCategoriesMetadatas;
 }
