@@ -5,5 +5,5 @@ type TProgressbarConfig = {
 };
 
 export const ProgressbarConfig: TProgressbarConfig = {
-  PROPS: { color: '#1e2529', showSpinner: false, height: 5 }
+  PROPS: { color: 'rgba(255, 255, 255, .15)', showSpinner: false, height: 5 }
 } as const;
