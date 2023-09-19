@@ -1,12 +1,12 @@
 import { BlogArchitecture } from '@/config/blog';
-import BlogTaxonomy, { TBlogTaxonomy } from '@/taxonomies/blog';
+import { TBlogTaxonomy } from '@/taxonomies/blog';
 import PostBase from './BlogPostAbstractions';
 import { RequiredFieldsOnly } from './CustomUtilitaryTypes';
 import { i18nParams } from './Next';
 
 export type BlogCategory = keyof BlogArchitecture;
 
-type BlogSubCategoriesMappedToBlogCategory = {
+export type BlogSubCategoriesMappedToBlogCategory = {
   [K in BlogCategory]: BlogArchitecture[K];
 };
 type BlogSubCategories<K extends BlogCategory> = BlogSubCategoriesMappedToBlogCategory[K];
@@ -18,14 +18,7 @@ export type BlogSlug = string;
 
 type BlogPostPagePropsParams = RequiredFieldsOnly<TBlogTaxonomy>;
 type BlogCategoryPagePropsParams = Pick<TBlogTaxonomy, 'categ'>;
-
-/* ... [UNSAFE] This exploit relays on the choice of the Next.js Generics validation on build-time: instead of only evaluate the specified scenarios (so, only the default value here), ALL the Generics combinations are checked on build-time. So it allows us to trigger verifications "For-free". This is clearly an abuse, provided As-Is, without-any-form-of-guarantee™️. ¯\_(ツ)_/¯
-
-tl;dr: Just write a valid `BlogCategory` value in the TSTypesValidationOnBuildMagic default value field, and enjoy Hack-in-the-matrix-typing™️ */
-type BlogSubCategoryPagePropsParams<TSTypesValidationOnBuildMagic extends BlogCategory = 'patch-notes'> = {
-  [BlogTaxonomy.CATEGORY]: TSTypesValidationOnBuildMagic;
-  [BlogTaxonomy.SUBCATEGORY]: BlogSubCategoriesMappedToBlogCategory[TSTypesValidationOnBuildMagic];
-};
+type BlogSubCategoryPagePropsParams = Pick<TBlogTaxonomy, 'categ' | 'subcateg'>;
 
 export interface BlogCategoryPageProps {
   params: BlogCategoryPagePropsParams & i18nParams;

@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "postinstall": "npm --prefix ./packages/static-analyzer install",
-    "prebuild": "npm --prefix ./packages/static-analyzer start -- --posts-folder ./posts --blog-config-file ./src/config/blog.ts",
+    "prebuild": "npm --prefix ./packages/static-analyzer start -- --posts-folder ./posts --blog-config-file ./src/config/blog.ts --default-i18n-locale ./src/i18n/locales/fr.ts",
     "build": "next build",
     "postbuild": "next-sitemap",
     "dev": "next dev",
