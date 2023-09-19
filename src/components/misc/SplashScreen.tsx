@@ -34,7 +34,7 @@ const SplashScreen: FunctionComponent<SplashScreenProps> = () => {
   return !animationDone ? (
     <div
       ref={splashScreenRef}
-      className="cursor-wait fixed z-50 inset-0 flex items-center justify-center w-full h-screen bg-gray-900 transition-all duration-300"
+      className="cursor-wait select-none fixed z-50 inset-0 flex items-center justify-center w-full h-screen bg-gray-900 transition-all duration-300"
     >
       <Image
         ref={splashScreenLogoRef}
@@ -44,7 +44,7 @@ const SplashScreen: FunctionComponent<SplashScreenProps> = () => {
         alt=""
         style={{ width: '100%', height: 'auto', scale: '.33' }}
         draggable={false}
-        className="fixed transition-all duration-200"
+        className="fixed select-none transition-all duration-200"
       />
     </div>
   ) : (
