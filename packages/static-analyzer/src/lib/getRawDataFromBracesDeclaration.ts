@@ -2,24 +2,25 @@ export function getRawDataFromBracesDeclaration(fileContent: string, startIndex:
   if (startIndex < 0) return null;
 
   let openBracesDepth = 0;
-  let endIndex = -1;
+  let rawDataEndIndex = -1;
+  let rawDataStartIndex = -1;
 
   for (let i = startIndex; fileContent[i]; i++) {
     if (fileContent[i] === '{') {
-      if (openBracesDepth === 0) startIndex = i + 1;
+      if (openBracesDepth === 0) rawDataStartIndex = i + 1;
       openBracesDepth += 1;
     } else if (fileContent[i] === '}') {
       openBracesDepth -= 1;
       if (openBracesDepth === 0) {
-        endIndex = i;
+        rawDataEndIndex = i;
         break;
       }
     }
   }
 
-  if (endIndex === -1) return null;
+  if (rawDataEndIndex === -1) return null;
 
-  const extractedContent = fileContent.substring(startIndex, endIndex);
+  const extractedContent = fileContent.substring(rawDataStartIndex, rawDataEndIndex);
   return extractedContent;
 }
 
