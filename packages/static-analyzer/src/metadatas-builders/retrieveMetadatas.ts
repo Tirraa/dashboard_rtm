@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { BLOG_ARCHITECTURE_TYPE_NEEDLE } from '../config/config';
+import { BLOG_ARCHITECTURE_TYPE_NEEDLE, BLOG_ARCHITECTURE_TYPE_STR } from '../config';
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
 import getRawDataFromBracesDeclaration from '../lib/getRawDataFromBracesDeclaration';
 import TFlagsAssoc from '../types/flags';
@@ -50,12 +50,15 @@ function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): Categorie
  */
 function buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitectureInner: string): DeclaredCategoriesMetadatas {
   const throwIfCommentsInBlogArchitectureInner = (blogArchitectureInner: string) => {
-    const needles: string[] = ['//', '/*'];
-    for (const needle of needles) {
-      const needleIdx = blogArchitectureInner.indexOf(needle);
-      if (needleIdx !== -1) {
+    const tokens: string[] = ['//', '/*'];
+    for (const token of tokens) {
+      const tokenIdx = blogArchitectureInner.indexOf(token);
+      if (tokenIdx !== -1) {
         throw new Error(
-          ERROR_HEAD + '\n' + `Attempt to use comments inside the 'BlogArchitecture' type definition detected. This is strictly forbidden!` + '\n'
+          ERROR_HEAD +
+            '\n' +
+            `Attempt to use a comment token inside the '${BLOG_ARCHITECTURE_TYPE_STR}' type definition detected. This is strictly forbidden!` +
+            '\n'
         );
       }
     }
@@ -105,7 +108,7 @@ function buildCategoriesMetadatasFromBlogConfigFile(blogConfigFilePath: string):
   const startIndex = blogConfigFileContent.indexOf(BLOG_ARCHITECTURE_TYPE_NEEDLE);
 
   const blogArchitecture = getRawDataFromBracesDeclaration(blogConfigFileContent, startIndex);
-  if (!blogArchitecture) throw new Error(ERROR_HEAD + '\n' + "Couldn't extract the content of the 'BlogArchitecture' type!" + '\n');
+  if (!blogArchitecture) throw new Error(ERROR_HEAD + '\n' + `Couldn't extract the content of the '${BLOG_ARCHITECTURE_TYPE_STR}' type!` + '\n');
   return buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitecture);
 }
 

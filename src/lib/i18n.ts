@@ -1,14 +1,11 @@
-import { DEFAULT_LANGUAGE } from '@/config/i18n';
+import { DEFAULT_LANGUAGE, LANGUAGES } from '@/config/i18n';
 import RoutesBase from '@/config/routes';
-import { LANGUAGES } from '@/i18n/settings';
 import PostBase from '@/types/BlogPostAbstractions';
-import { AppPath } from '@/types/Next';
+import { AppPath, AppPathAsIs } from '@/types/Next';
 import { LanguageFlag } from '@/types/i18n';
 import { gsub, indexOfNthOccurrence } from './str';
 
-type AppPathAsIs = AppPath;
-
-const isValidLanguageFlag = (key: string): boolean => LANGUAGES.includes(key);
+const isValidLanguageFlag = (key: string): boolean => (LANGUAGES as string[]).includes(key);
 
 function getBlogPostLanguageFlagFromStr(sourceFileDir: string): LanguageFlag {
   const firstSlashIndex = indexOfNthOccurrence(sourceFileDir, '/', 1);
@@ -32,17 +29,17 @@ function getBlogPostLanguageFlagFromPostObj(post: PostBase): LanguageFlag {
   return getBlogPostLanguageFlagFromStr(sourceFileDir);
 }
 
-function computePathnameI18nFlagUnstrict(pathname: AppPath, providedStartIndex?: number): string {
-  const compute = (pathname: AppPath, startIndex: number) => (startIndex === -1 ? pathname.substring(1) : pathname.substring(1, startIndex));
+function computePathnameI18nFlagUnstrict(pathname: AppPath, providedEndIndex?: number): string {
+  const compute = (pathname: AppPath, endIndex: number) => (endIndex === -1 ? pathname.substring(1) : pathname.substring(1, endIndex));
 
-  if (providedStartIndex !== undefined) return compute(pathname, providedStartIndex);
+  if (providedEndIndex !== undefined) return compute(pathname, providedEndIndex);
 
-  const startIndex = indexOfNthOccurrence(pathname, '/', 2);
-  return compute(pathname, startIndex);
+  const endIndex = indexOfNthOccurrence(pathname, '/', 2);
+  return compute(pathname, endIndex);
 }
 
-function computePathnameI18nFlagStrict(pathname: AppPath, providedStartIndex?: number): LanguageFlag {
-  const languageFlag = computePathnameI18nFlagUnstrict(pathname, providedStartIndex);
+function computePathnameI18nFlagStrict(pathname: AppPath, providedEndIndex?: number): LanguageFlag {
+  const languageFlag = computePathnameI18nFlagUnstrict(pathname, providedEndIndex);
   if (!isValidLanguageFlag(languageFlag)) return DEFAULT_LANGUAGE;
   return languageFlag as LanguageFlag;
 }

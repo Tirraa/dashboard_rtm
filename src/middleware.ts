@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { DEFAULT_LANGUAGE } from '@/config/i18n';
+import { DEFAULT_LANGUAGE, LANGUAGES } from '@/config/i18n';
 import NextConfig from '@/config/next';
-import { LANGUAGES } from '@/i18n/settings';
 import { createI18nMiddleware } from 'next-international/middleware';
 
 const I18nMiddleware = createI18nMiddleware({

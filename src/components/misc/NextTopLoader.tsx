@@ -108,7 +108,7 @@ const NextTopLoader = ({
 
     const npgclass = document.querySelector('html');
     function findClosestAnchor(element: HTMLElement | null): HTMLAnchorElement | null {
-      while (element && element.tagName.toLowerCase() !== 'a') {
+      while (element && element.tagName !== 'A') {
         element = element.parentElement;
       }
       return element as HTMLAnchorElement;
