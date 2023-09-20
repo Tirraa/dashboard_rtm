@@ -2,7 +2,7 @@ import SubCategoryRelatedBlogPosts from '@/components/blog/SubCategoryRelatedBlo
 import { BlogCategory, BlogSubCategoryPageProps } from '@/types/Blog';
 
 import { getBlogSubCategoriesByCategory } from '@/cache/blog';
-import { LANGUAGES } from '@/i18n/settings';
+import { LANGUAGES } from '@/config/i18n';
 import {
   getAllCategories,
   getAllPostsByCategoryAndSubCategoryAndLanguageFlagUnstrict,
@@ -13,7 +13,6 @@ import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogStaticParams } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
-import { LanguageFlag } from '@/types/i18n';
 import { setStaticParamsLocale } from 'next-international/server';
 import { notFound } from 'next/navigation';
 
@@ -29,10 +28,7 @@ export async function generateStaticParams() {
       curSubCategs.forEach((subCategory) => {
         LANGUAGES.forEach((language) => {
           const category = categ as BlogCategory;
-          const postsCollection: PostBase[] = getAllPostsByCategoryAndSubCategoryAndLanguageFlagUnstrict(
-            { category, subCategory },
-            language as LanguageFlag
-          );
+          const postsCollection: PostBase[] = getAllPostsByCategoryAndSubCategoryAndLanguageFlagUnstrict({ category, subCategory }, language);
 
           if (subCategoryShouldTriggerNotFound(postsCollection, { category, subCategory })) return;
 

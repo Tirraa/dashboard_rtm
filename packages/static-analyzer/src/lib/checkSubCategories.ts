@@ -1,4 +1,4 @@
-import { LIST_ELEMENT_PREFIX } from '../config/config';
+import { LIST_ELEMENT_PREFIX } from '../config';
 import { CategoriesMetadatas, Category, DeclaredCategoriesMetadatas, ErrorsDetectionFeedback } from '../types/metadatas';
 import getErrorLabelForDefects from './getErrorLabelForDefects';
 
@@ -35,10 +35,13 @@ export function checkSubCategories(
           '\n'
       );
 
-      feedback +=
+      feedback += getErrorLabelForDefects(
+        sysData[categoryWithDefect],
+        `Available subcategory for the '${categoryWithDefect}' category: ${sysData[categoryWithDefect]}` + '\n',
         `Available subcategories for the '${categoryWithDefect}' category: ${LIST_ELEMENT_PREFIX}${sysData[categoryWithDefect].join(
           LIST_ELEMENT_PREFIX
-        )}` + '\n';
+        )}` + '\n'
+      );
     }
   }
 

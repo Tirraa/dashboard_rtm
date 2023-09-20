@@ -1,5 +1,4 @@
-import { I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS, LIST_ELEMENT_PREFIX } from '../config/config';
-import { CRITICAL_ERRORS_STR } from '../config/vocab';
+import { BLOG_CATEGORIES_I18N_ROOT_KEY, CRITICAL_ERRORS_STR, I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS, LIST_ELEMENT_PREFIX } from '../config';
 import checkCategories from '../lib/checkCategories';
 import checkSubCategories from '../lib/checkSubCategories';
 import getErrorLabelForDefects from '../lib/getErrorLabelForDefects';
@@ -36,8 +35,9 @@ export function declaredI18nValidator(
     const missingKeys = missingFields[categoryWithMissingI18nReqFields];
     feedback += getErrorLabelForDefects(
       missingKeys,
-      `Missing required i18n field for the '${categoryWithMissingI18nReqFields}' category from 'blog-categories': ${missingKeys}` + '\n',
-      `Missing required i18n fields for the '${categoryWithMissingI18nReqFields}' category from 'blog-categories': ${LIST_ELEMENT_PREFIX}${missingKeys.join(
+      `Missing required i18n field for the '${categoryWithMissingI18nReqFields}' category from '${BLOG_CATEGORIES_I18N_ROOT_KEY}': ${missingKeys}` +
+        '\n',
+      `Missing required i18n fields for the '${categoryWithMissingI18nReqFields}' category from '${BLOG_CATEGORIES_I18N_ROOT_KEY}': ${LIST_ELEMENT_PREFIX}${missingKeys.join(
         LIST_ELEMENT_PREFIX
       )}` + '\n'
     );

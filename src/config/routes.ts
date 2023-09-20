@@ -1,12 +1,6 @@
 import { AppPath } from '@/types/Next';
 
-type TRoutesBase = {
-  SITEWIDE: AppPath;
-  DASHBOARD: AppPath;
-  PATCH_NOTES: AppPath;
-};
-
-export const RoutesBase: TRoutesBase = {
+export const RoutesBase: Record<string, AppPath> = {
   SITEWIDE: '/',
   DASHBOARD: '/dashboard',
   PATCH_NOTES: '/patch-notes'

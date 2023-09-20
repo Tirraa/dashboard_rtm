@@ -1,19 +1,25 @@
-import { LIST_ELEMENT_PREFIX } from '../config/config';
 import { Category, ErrorsDetectionFeedback } from '../types/metadatas';
+import getErrorLabelForDefects from './getErrorLabelForDefects';
 
 export function checkCategories(sysCategories: Category[], userDeclaredCategories: Category[]): '' | ErrorsDetectionFeedback {
   let feedback = '';
-  const missingDeclaredCategories = sysCategories.filter((item) => !userDeclaredCategories.includes(item));
+  const missingDeclaredCategories = sysCategories.filter((category) => !userDeclaredCategories.includes(category));
+  const unknownCategories: Category[] = [];
 
   for (const userDeclaredCategory of userDeclaredCategories) {
-    if (!sysCategories.includes(userDeclaredCategory)) feedback += `Invalid category key: '${userDeclaredCategory}'.` + '\n';
+    if (!sysCategories.includes(userDeclaredCategory)) unknownCategories.push(userDeclaredCategory);
   }
-  if (feedback) feedback += `Available keys: ${LIST_ELEMENT_PREFIX}${sysCategories.join(LIST_ELEMENT_PREFIX)}` + '\n';
+
+  if (unknownCategories.length > 0) {
+    feedback += getErrorLabelForDefects(unknownCategories, 'Unknown category key:', 'Unknown categories keys:', true);
+  }
+
+  if (feedback) feedback += getErrorLabelForDefects(sysCategories, 'Available key:', 'Available keys:', true);
 
   if (missingDeclaredCategories.length > 0) {
     if (feedback) feedback += '\n';
     feedback += 'Categories keys must be exhaustive!' + '\n';
-    feedback += `Missing keys: ${LIST_ELEMENT_PREFIX}${missingDeclaredCategories.join(LIST_ELEMENT_PREFIX)}` + '\n';
+    feedback += getErrorLabelForDefects(missingDeclaredCategories, 'Missing key:', 'Missing keys:', true);
   }
   return feedback;
 }

@@ -1,8 +1,14 @@
+import { LIST_ELEMENT_PREFIX } from '../config';
 import { ErrorsDetectionFeedback } from '../types/metadatas';
 
-export function getErrorLabelForDefects(defectsList: unknown[], eSingular: string, ePlural: string): ErrorsDetectionFeedback {
-  if (defectsList.length === 1) return eSingular;
-  return ePlural;
+export function getErrorLabelForDefects(
+  defectsList: unknown[],
+  eSingular: string,
+  ePlural: string,
+  autoFormatter: boolean = false
+): ErrorsDetectionFeedback {
+  if (defectsList.length === 1) return autoFormatter ? eSingular + ' ' + `${defectsList}` + '\n' : eSingular;
+  return autoFormatter ? ePlural + ' ' + `${LIST_ELEMENT_PREFIX}${defectsList.join(LIST_ELEMENT_PREFIX)}` + '\n' : ePlural;
 }
 
 export default getErrorLabelForDefects;

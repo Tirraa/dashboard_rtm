@@ -1,6 +1,6 @@
 import { getBlogSubCategoriesByCategory } from '@/cache/blog';
 import BlogPost from '@/components/blog/BlogPost';
-import { LANGUAGES } from '@/i18n/settings';
+import { LANGUAGES } from '@/config/i18n';
 import {
   getAllCategories,
   getAllPostsByCategoryAndSubCategoryUnstrict,
@@ -13,7 +13,6 @@ import getServerSidePathnameWorkaround from '@/lib/misc/getServerSidePathname';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogCategory, BlogPostPageProps, BlogStaticParams, BlogSubCategoryFromUnknownCategory } from '@/types/Blog';
-import { LanguageFlag } from '@/types/i18n';
 import { setStaticParamsLocale } from 'next-international/server';
 import { notFound } from 'next/navigation';
 
@@ -47,7 +46,7 @@ export async function generateStaticParams() {
           LANGUAGES.forEach((language) => {
             const slug = getBlogPostSlug(post);
 
-            const blogPostExists = getPostUnstrict({ category, subCategory }, slug, language as LanguageFlag);
+            const blogPostExists = getPostUnstrict({ category, subCategory }, slug, language);
             if (!blogPostExists) return;
 
             const staticParamsIndexKey = `${categ}-${subCategory}-${slug}-${language}`;

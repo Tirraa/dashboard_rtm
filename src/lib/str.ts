@@ -1,10 +1,9 @@
 import BlogConfig from '@/config/blog';
 import RoutesBase from '@/config/routes';
-import { AppPath, PathSegment } from '@/types/Next';
+import { AppPath, AppPathAsIs, PathSegment } from '@/types/Next';
 import { LanguageFlag } from '@/types/i18n';
 import { getPathnameWithoutI18nFlag } from './i18n';
 
-type AppPathAsIs = AppPath;
 type DescriptionAsIs = string;
 type CroppedDescription = string;
 

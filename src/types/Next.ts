@@ -20,3 +20,5 @@ export interface LayoutBaseProps extends i18nPageProps {
 
 export type AppPath = string;
 export type PathSegment = string;
+
+export type AppPathAsIs = AppPath;

@@ -1,4 +1,4 @@
-import { CRITICAL_ERRORS_STR } from '../config/vocab';
+import { CRITICAL_ERRORS_STR } from '../config';
 import checkCategories from '../lib/checkCategories';
 import checkSubCategories from '../lib/checkSubCategories';
 import prefixFeedback from '../lib/prefixFeedback';
