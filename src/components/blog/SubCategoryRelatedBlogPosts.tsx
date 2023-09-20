@@ -1,4 +1,5 @@
 import PaginatedElements from '@/components/misc/PaginatedElements';
+import BlogConfig from '@/config/blog';
 import { i18ns } from '@/config/i18n';
 import { getScopedI18n } from '@/i18n/server';
 import { getAllPostsByCategoryAndSubCategoryAndLanguageFlagUnstrict, subCategoryShouldTriggerNotFound } from '@/lib/blog';
@@ -29,7 +30,7 @@ export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageP
   return (
     <div className="mx-auto max-w-xl py-8">
       <h1 className="text-center">{title}</h1>
-      <PaginatedElements {...{ paginatedElements, elementsPerPage: 5 }} />
+      <PaginatedElements {...{ paginatedElements, elementsPerPage: BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT }} />
     </div>
   );
 };

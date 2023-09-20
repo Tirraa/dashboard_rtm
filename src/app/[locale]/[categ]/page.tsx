@@ -105,7 +105,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
     Object.fromEntries(entries) as Record<BlogSubCategoryFromUnknownCategory, PostBase[]>,
     Object.fromEntries(entries) as Record<BlogSubCategoryFromUnknownCategory, ReactNode[]>
   ];
-  const limit = BlogConfig.DISPLAYED_BLOG_POST_PER_SUBCATEGORY_ON_BLOG_CATEGORY_PAGE_LIMIT;
+  const limit = BlogConfig.DISPLAYED_BLOG_POSTS_PER_SUBCATEGORY_ON_BLOG_CATEGORY_PAGE_LIMIT;
 
   buildHistogram();
   buildPostsCollectionsSnippets();
