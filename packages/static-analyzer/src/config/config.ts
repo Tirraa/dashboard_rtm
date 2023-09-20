@@ -1,6 +1,6 @@
 import TFlagsAssoc from '../types/flags';
 
-export const ROOT_FOLDER_RELATIVE_PATH_FROM_STATIC_ANALYZER_CTX = '../../../';
+export const ROOT_FOLDER_RELATIVE_PATH_FROM_STATIC_ANALYZER_CTX: string = '../../../';
 
 export const FLAGS: TFlagsAssoc = {
   POSTS_FOLDER: '--posts-folder',
@@ -10,6 +10,6 @@ export const FLAGS: TFlagsAssoc = {
 
 export const BLOG_ARCHITECTURE_TYPE_NEEDLE: string = 'type BlogArchitecture =';
 export const I18N_BLOG_CATEGORIES_OBJ_NEEDLE: string = "'blog-categories':";
-export const I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS = ['_title'];
+export const I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = ['_title'];
 
-export const LIST_ELEMENT_PREFIX = '\n - ';
+export const LIST_ELEMENT_PREFIX: string = '\n - ';
