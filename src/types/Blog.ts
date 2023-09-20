@@ -6,10 +6,10 @@ import { i18nParams } from './Next';
 
 export type BlogCategory = keyof BlogArchitecture;
 
-export type BlogSubCategoriesMappedToBlogCategory = {
-  [K in BlogCategory]: BlogArchitecture[K];
+type BlogSubCategoriesMappedToBlogCategory = {
+  [C in BlogCategory]: BlogArchitecture[C];
 };
-type BlogSubCategories<K extends BlogCategory> = BlogSubCategoriesMappedToBlogCategory[K];
+type BlogSubCategories<C extends BlogCategory> = BlogSubCategoriesMappedToBlogCategory[C];
 
 export type BlogSubCategoryFromUnknownCategory = BlogSubCategories<BlogCategory>;
 export type BlogSubCategoryUnknownKey = BlogArchitecture[keyof BlogArchitecture];
@@ -38,7 +38,7 @@ export type PostsCollectionAssoc<T extends BlogCategory> = {
 };
 
 export type ForcedBlogSubCategoriesPaths = {
-  [K in BlogCategory]?: BlogSubCategories<K>[];
+  [C in BlogCategory]?: BlogSubCategories<C>[];
 };
 
 type BlogStaticParamsValue = string;

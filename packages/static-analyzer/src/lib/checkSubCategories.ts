@@ -61,8 +61,8 @@ export function checkSubCategories(
       const missingKeys = missingDeclaredSubCategories[categoryWithMissingDeclaredSubCategories];
       feedback += getErrorLabelForDefects(
         missingKeys,
-        `Missing key from sys for the '${categoryWithMissingDeclaredSubCategories}' category: ${missingKeys}` + '\n',
-        `Missing keys from sys for the '${categoryWithMissingDeclaredSubCategories}' category: ${LIST_ELEMENT_PREFIX}${missingKeys.join(
+        `Missing key for the '${categoryWithMissingDeclaredSubCategories}' category: ${missingKeys}` + '\n',
+        `Missing keys for the '${categoryWithMissingDeclaredSubCategories}' category: ${LIST_ELEMENT_PREFIX}${missingKeys.join(
           LIST_ELEMENT_PREFIX
         )}` + '\n'
       );

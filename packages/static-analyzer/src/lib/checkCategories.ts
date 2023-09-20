@@ -8,12 +8,12 @@ export function checkCategories(sysCategories: Category[], userDeclaredCategorie
   for (const userDeclaredCategory of userDeclaredCategories) {
     if (!sysCategories.includes(userDeclaredCategory)) feedback += `Invalid category key: '${userDeclaredCategory}'.` + '\n';
   }
-  if (feedback) feedback += `Available keys from sys: ${LIST_ELEMENT_PREFIX}${sysCategories.join(LIST_ELEMENT_PREFIX)}` + '\n';
+  if (feedback) feedback += `Available keys: ${LIST_ELEMENT_PREFIX}${sysCategories.join(LIST_ELEMENT_PREFIX)}` + '\n';
 
   if (missingDeclaredCategories.length > 0) {
     if (feedback) feedback += '\n';
     feedback += 'Categories keys must be exhaustive!' + '\n';
-    feedback += `Missing keys from sys: ${LIST_ELEMENT_PREFIX}${missingDeclaredCategories.join(LIST_ELEMENT_PREFIX)}` + '\n';
+    feedback += `Missing keys: ${LIST_ELEMENT_PREFIX}${missingDeclaredCategories.join(LIST_ELEMENT_PREFIX)}` + '\n';
   }
   return feedback;
 }
