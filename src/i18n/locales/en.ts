@@ -29,7 +29,8 @@ export default {
     'invite-the-bot': 'Invite the bot',
     'no-blog-post': 'Nobody here but us chickens!',
     '404': '404 - Page not found!',
-    'see-more': 'See more!'
+    'see-more': 'See more!',
+    loading: 'Loading...'
   },
 
   ugly: {

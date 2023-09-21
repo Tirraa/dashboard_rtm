@@ -17,13 +17,12 @@ const INACTIVE: ClassName = { className: NavbarButtonStyle.isNotActiveClassList 
 
 export const NavbarButton: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, path: href }) => {
   const globalT = getClientSideI18n();
-  const title = globalT(i18nTitle);
 
   const currentPathname = usePathname();
   const classList = hrefMatchesPathname(href, currentPathname) ? ACTIVE : INACTIVE;
   const target = getLinkTarget(href);
 
-  return <Link {...{ ...classList, ...target, href }}>{title}</Link>;
+  return <Link {...{ ...classList, ...target, href }}>{globalT(i18nTitle)}</Link>;
 };
 
 export default NavbarButton;

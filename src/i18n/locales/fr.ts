@@ -27,7 +27,8 @@ export default {
     'invite-the-bot': 'Inviter le bot',
     'no-blog-post': 'Rien à afficher ici !',
     '404': '404 - Page introuvable !',
-    'see-more': 'Voir plus !'
+    'see-more': 'Voir plus !',
+    loading: 'Chargement en cours...'
   },
 
   ugly: {
