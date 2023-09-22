@@ -15,10 +15,10 @@ export default function DashboardLayout({ params, children }: DashboardLayoutPro
   setStaticParamsLocale(lng);
 
   return (
-    <div className="flex flex-1">
+    <div className="flex flex-1 overflow-y-auto">
       <DashboardSidebarDesktop />
-      <main className="w-full h-full p-0" id="main-box-id">
-        {children}
+      <main className="flex flex-col w-full h-full p-0" id="main-box-id">
+        <div className="h-full w-full">{children}</div>
       </main>
     </div>
   );
