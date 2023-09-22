@@ -2,7 +2,6 @@
 
 import '@/app/globals.css';
 import NextTopLoader from '@/components/misc/NextTopLoader';
-
 import SplashScreen from '@/components/misc/SplashScreen';
 import SitewideNavbar from '@/components/navbar/SitewideNavbar';
 import { fallbackLocale } from '@/config/i18n';

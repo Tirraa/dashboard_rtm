@@ -2,7 +2,6 @@
 
 import NavbarConfig from '@/components/_config/_styles/Navbar';
 import NavbarElement from '@/components/_hoc/navbar/NavbarElement';
-import TextNodeWithStupidUppercaseEffect from '@/components/misc/TextNodeWithStupidUppercaseEffect';
 import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsConfig';
 import SITEWIDE_NAVBAR_ROUTES, { SITEWIDE_NAVBAR_ROUTES_TITLES } from '@/config/SitewideNavbar/routesImpl';
 import RoutesBase from '@/config/routes';
@@ -103,15 +102,13 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       id={NAVBAR_ID as string}
       color="blue"
       fullWidth={true}
-      className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4"
+      className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 overflow-hidden"
+      style={{ maxHeight: '82px' }}
     >
       <div className="flex items-center justify-between text-white">
         <Link href={RoutesBase.WEBSITE_ROOT}>
           <div className="flex">
             <Image src="/assets/rtm-logo.svg" height={LOGO_SIZE_PX_VALUE} width={LOGO_SIZE_PX_VALUE} alt={`${brand} (${logo})`} />
-            <Typography as="span" className="hidden lg:block ml-4 py-1.5 font-medium">
-              <TextNodeWithStupidUppercaseEffect str={brand} />
-            </Typography>
           </div>
         </Link>
         <div className="flex items-center gap-4">
