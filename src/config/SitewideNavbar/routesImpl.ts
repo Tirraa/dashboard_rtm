@@ -3,7 +3,7 @@ import { i18ns } from '@/config/i18n';
 import { RoutesBase } from '@/config/routes';
 import { SitewideNavbarRoutes, SitewideNavbarRoutesTitles } from './utils/RoutesMapping';
 
-const BASE = RoutesBase.SITEWIDE;
+const BASE = RoutesBase.WEBSITE_ROOT;
 
 export const SITEWIDE_NAVBAR_ROUTES: SitewideNavbarRoutes = {
   HOME_PAGE: BASE,

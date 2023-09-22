@@ -24,8 +24,8 @@ export function generateMetadata({ params }: BlogSubCategoryPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];
 
   const validCategory = isValidCategory(category);
-  const equivRoutes = RoutesBase.SITEWIDE + category === RoutesBase.BLOG + category;
-  if (!validCategory && !equivRoutes) redirect(RoutesBase.SITEWIDE + category);
+  const equivRoutes = RoutesBase.WEBSITE_ROOT + category === RoutesBase.BLOG + category;
+  if (!validCategory && !equivRoutes) redirect(RoutesBase.WEBSITE_ROOT + category);
 
   const subCategory = params[BlogTaxonomy.SUBCATEGORY];
   const validCombination = isValidCategoryAndSubCategoryPair(category, subCategory);

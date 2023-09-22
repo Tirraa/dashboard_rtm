@@ -32,7 +32,7 @@ export function generateMetadata({ params }: BlogPostPageProps) {
   } else if (!post && isValidCategory(category)) {
     redirectToBlogCategoryPage(category);
   } else if (!post) {
-    redirect(RoutesBase.SITEWIDE + category);
+    redirect(RoutesBase.WEBSITE_ROOT + category);
   }
 
   const { title, metadescription: description } = post as PostBase;

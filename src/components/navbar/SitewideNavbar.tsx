@@ -79,7 +79,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4"
     >
       <div className="flex items-center justify-between text-white">
-        <Link href={RoutesBase.SITEWIDE}>
+        <Link href={RoutesBase.WEBSITE_ROOT}>
           <div className="flex">
             <Image src="/assets/rtm-logo.svg" height={LOGO_SIZE_PX_VALUE} width={LOGO_SIZE_PX_VALUE} alt={`${brand} (${logo})`} />
             <Typography as="span" className="hidden lg:block ml-4 py-1.5 font-medium">

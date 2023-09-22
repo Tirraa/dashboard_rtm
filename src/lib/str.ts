@@ -9,7 +9,7 @@ type CroppedDescription = string;
 
 export const sanitizePathname = (pathname: AppPath): AppPath => {
   const MAX_SANITIZE_PATHNAME_ARG_LENGTH = Number(process.env.MAX_SANITIZE_PATHNAME_ARG_LENGTH);
-  const FALLBACK_ROUTE = RoutesBase.SITEWIDE;
+  const FALLBACK_ROUTE = RoutesBase.WEBSITE_ROOT;
   if (isNaN(MAX_SANITIZE_PATHNAME_ARG_LENGTH)) return FALLBACK_ROUTE;
   return pathname.length <= MAX_SANITIZE_PATHNAME_ARG_LENGTH ? pathname.replace(/[\/]+/g, '/') : FALLBACK_ROUTE;
 };
@@ -26,7 +26,7 @@ export function indexOfNthOccurrence(strHaystack: string, needle: string, n: num
   return index;
 }
 
-export function hrefMatchesPathname(href: AppPath, pathname: AppPath, root: AppPath = RoutesBase.SITEWIDE): boolean {
+export function hrefMatchesPathname(href: AppPath, pathname: AppPath, root: AppPath = RoutesBase.WEBSITE_ROOT): boolean {
   const pathnameWithouti18n = getPathnameWithoutI18nFlag(pathname);
   if (pathnameWithouti18n === href) return true;
   if (href !== root && pathnameWithouti18n.startsWith(getSlashEnvelope(href))) return true;

@@ -58,7 +58,7 @@ export function getPathnameWithoutI18nFlag(pathname: AppPath): AppPathAsIs | App
   const pathnameI18nFlag = computePathnameI18nFlagUnstrict(pathname, secondSlashIndex);
   if (!isValidLanguageFlag(pathnameI18nFlag)) return pathname;
 
-  const pathnameWithouti18n = secondSlashIndex === -1 ? RoutesBase.SITEWIDE : pathname.substring(secondSlashIndex);
+  const pathnameWithouti18n = secondSlashIndex === -1 ? RoutesBase.WEBSITE_ROOT : pathname.substring(secondSlashIndex);
   return pathnameWithouti18n;
 }
 

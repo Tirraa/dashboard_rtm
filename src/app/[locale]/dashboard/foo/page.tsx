@@ -5,7 +5,7 @@ export default function Page() {
   return (
     <>
       <h1>Hello there (Dashboard foo tab)</h1>
-      <Link href={RoutesBase.SITEWIDE}>Go back to the homepage</Link>
+      <Link href={RoutesBase.WEBSITE_ROOT}>Go back to the homepage</Link>
     </>
   );
 }

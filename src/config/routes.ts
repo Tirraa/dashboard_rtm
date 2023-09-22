@@ -1,7 +1,7 @@
 import { AppPath } from '@/types/Next';
 
 enum ERoutesBase {
-  SITEWIDE,
+  WEBSITE_ROOT,
   BLOG,
   PATCH_NOTES,
   DASHBOARD
@@ -11,12 +11,12 @@ type RoutesBaseKeys = keyof typeof ERoutesBase;
 type TRoutesBase = Record<RoutesBaseKeys, AppPath>;
 
 const Routes = {
-  SITEWIDE: '/',
+  WEBSITE_ROOT: '/',
   BLOG: '/'
 } satisfies Partial<TRoutesBase>;
 
 const BLOG_ROUTES_BASE = Routes.BLOG;
-const DASHBOARD_ROUTES_BASE = Routes.SITEWIDE;
+const DASHBOARD_ROUTES_BASE = Routes.WEBSITE_ROOT;
 
 const BlogRoutes = {
   PATCH_NOTES: BLOG_ROUTES_BASE + 'patch-notes'
