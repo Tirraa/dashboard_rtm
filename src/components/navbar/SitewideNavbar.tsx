@@ -103,7 +103,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       id={NAVBAR_ID as string}
       color="blue"
       fullWidth={true}
-      className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full overflow-hidden rounded-none py-2 px-4 lg:px-8 lg:py-4 lg:h-[5.125rem]"
+      className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full overflow-hidden rounded-none py-2 px-4 lg:px-8 lg:py-4 lg:h-[82px]"
     >
       <div className="flex items-center justify-between text-white">
         <Link href={RoutesBase.WEBSITE_ROOT}>
