@@ -1,7 +1,6 @@
 'use client';
 
 import NavbarConfig from '@/components/_config/_styles/Navbar';
-import useCollapseNavbarOnResize from '@/components/_customHooks/_hotfixes/useCollapseNavbarOnResize';
 import NavbarElement from '@/components/_hoc/navbar/NavbarElement';
 import TextNodeWithStupidUppercaseEffect from '@/components/misc/TextNodeWithStupidUppercaseEffect';
 import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsConfig';
@@ -9,6 +8,7 @@ import SITEWIDE_NAVBAR_ROUTES, { SITEWIDE_NAVBAR_ROUTES_TITLES } from '@/config/
 import RoutesBase from '@/config/routes';
 import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
 import getComputedNavData from '@/lib/misc/getComputedNavData';
+import { getRefCurrentPtr } from '@/lib/react';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { i18nComponentProps } from '@/types/Next';
 import { Collapse, IconButton, Navbar, Typography } from '@material-tailwind/react';
@@ -20,6 +20,8 @@ import NavbarButton from './NavbarButton';
 interface SitewideNavbarProps {}
 
 const { NAVBAR_ID, NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE, LOGO_SIZE_PX_VALUE } = NavbarConfig;
+
+let navbarMobileDropdownIsHidden = false;
 
 export function buildNavbarElements({ i18nProps }: i18nComponentProps) {
   const computedNavData = getComputedNavData(SITEWIDE_NAVBAR_ROUTES, SITEWIDE_NAVBAR_ROUTES_TITLES, SITEWIDE_NAVBAR_DROPDOWNS_CONFIG);
@@ -34,7 +36,32 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const [openNav, setOpenNav] = useState<boolean>(false);
   const globalT = getClientSideI18n();
 
-  useCollapseNavbarOnResize(NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE, mobileMenuInstanceRef, setOpenNav);
+  useEffect(
+    () => {
+      function handleResize() {
+        const mobileMenuInstance = getRefCurrentPtr(mobileMenuInstanceRef);
+        if (!mobileMenuInstance || !window) return;
+        if (window.innerWidth >= NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE) {
+          if (!navbarMobileDropdownIsHidden) {
+            mobileMenuInstance.classList.add('hidden');
+            navbarMobileDropdownIsHidden = true;
+          }
+        } else if (navbarMobileDropdownIsHidden) {
+          mobileMenuInstance.classList.remove('hidden');
+          navbarMobileDropdownIsHidden = false;
+        }
+      }
+
+      if (window) window.addEventListener('resize', handleResize);
+      handleResize();
+
+      return () => {
+        if (window) window.removeEventListener('resize', handleResize);
+      };
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   useEffect(() => {
     const navbarCollapseElement = document.getElementById(NAVBAR_ID as string);

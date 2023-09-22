@@ -19,6 +19,8 @@ const { MAIN_BOX_ID, ICON_CLASS: SIDEBAR_ICON_CLASS, ICON_SEPARATOR_WIDTH_FACTOR
 
 const { NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE, NAVBAR_ID } = NavbarConfig;
 
+let desktopSidebarIsHidden = true;
+
 function sidebarBtnsGenerator(separatorWidth: number) {
   const keys = Object.keys(dashboardRoutesSidebarComponents);
   const lastKey = keys[keys.length - 1];
@@ -42,7 +44,6 @@ function sidebarBtnsGenerator(separatorWidth: number) {
   });
 }
 
-let desktopSidebarIsHidden = true;
 export const DashboardSidebarDesktop: FunctionComponent<DashboardSidebarProps> = () => {
   const sidebarInstanceRef = useRef<HTMLDivElement>(null);
   const [dynamicWidth, setDynamicWidth] = useState<number>(0);
@@ -105,7 +106,8 @@ export const DashboardSidebarDesktop: FunctionComponent<DashboardSidebarProps> =
   useEffect(
     () => {
       function handleResize() {
-        if (window && window.innerWidth < NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE) {
+        if (!window) return;
+        if (window.innerWidth < NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE) {
           setDynamicWidth(0);
           injectMarginLeftInMainElement(0);
           desktopSidebarIsHidden = true;
