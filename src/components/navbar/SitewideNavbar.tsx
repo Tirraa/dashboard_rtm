@@ -6,7 +6,9 @@ import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsC
 import SITEWIDE_NAVBAR_ROUTES, { SITEWIDE_NAVBAR_ROUTES_TITLES } from '@/config/SitewideNavbar/routesImpl';
 import RoutesBase from '@/config/routes';
 import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
+import { pxValueToRemValue } from '@/lib/html';
 import getComputedNavData from '@/lib/misc/getComputedNavData';
+import { serverCtx } from '@/lib/next';
 import { getRefCurrentPtr } from '@/lib/react';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { i18nComponentProps } from '@/types/Next';
@@ -19,6 +21,8 @@ import NavbarButton from './NavbarButton';
 interface SitewideNavbarProps {}
 
 const { MAX_HEIGHT_PX_VALUE, NAVBAR_ID, NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE, LOGO_SIZE_PX_VALUE } = NavbarConfig;
+
+const MAX_HEIGHT_REM_VALUE = pxValueToRemValue(MAX_HEIGHT_PX_VALUE);
 
 let navbarMobileDropdownIsHidden = false;
 
@@ -39,7 +43,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
     () => {
       function handleResize() {
         const mobileMenuInstance = getRefCurrentPtr(mobileMenuInstanceRef);
-        if (!mobileMenuInstance || !window) return;
+        if (!mobileMenuInstance || serverCtx()) return;
         if (window.innerWidth >= NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE) {
           if (!navbarMobileDropdownIsHidden) {
             mobileMenuInstance.classList.add('hidden');
@@ -51,11 +55,11 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
         }
       }
 
-      if (window) window.addEventListener('resize', handleResize);
+      if (!serverCtx()) window.addEventListener('resize', handleResize);
       handleResize();
 
       return () => {
-        if (window) window.removeEventListener('resize', handleResize);
+        if (!serverCtx()) window.removeEventListener('resize', handleResize);
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -102,8 +106,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       id={NAVBAR_ID as string}
       color="blue"
       fullWidth={true}
-      className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 overflow-hidden"
-      style={{ maxHeight: MAX_HEIGHT_PX_VALUE + 'px' }}
+      className={`aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full overflow-hidden rounded-none py-2 px-4 lg:px-8 lg:py-4 lg:max-h-[${MAX_HEIGHT_REM_VALUE}rem]`}
     >
       <div className="flex items-center justify-between text-white">
         <Link href={RoutesBase.WEBSITE_ROOT}>

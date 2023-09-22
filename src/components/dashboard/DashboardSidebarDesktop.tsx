@@ -9,6 +9,7 @@ import { sidebarErrorsVocabAccessor } from '@/errors/vocab/errors/sidebar';
 import { getClientSideI18n } from '@/i18n/client';
 import { computeHTMLElementHeight, computeHTMLElementWidth } from '@/lib/html';
 import ComputedNodeCtx from '@/lib/misc/executionCtx';
+import { serverCtx } from '@/lib/next';
 import Link from 'next/link';
 import { FunctionComponent, ReactElement, useEffect, useRef, useState } from 'react';
 import SidebarBtnSeparator from './SidebarBtnsSeparator';
@@ -106,7 +107,7 @@ export const DashboardSidebarDesktop: FunctionComponent<DashboardSidebarProps> =
   useEffect(
     () => {
       function handleResize() {
-        if (!window) return;
+        if (serverCtx()) return;
         if (window.innerWidth < NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE) {
           setDynamicWidth(0);
           injectMarginLeftInMainElement(0);
@@ -130,7 +131,7 @@ export const DashboardSidebarDesktop: FunctionComponent<DashboardSidebarProps> =
   useEffect(
     () => {
       if (!ComputedNodeCtx.DEV) return;
-      if (window && window.innerWidth >= NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE) forceNewDynamicRender();
+      if (!serverCtx() && window.innerWidth >= NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE) forceNewDynamicRender();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     ComputedNodeCtx.DEV

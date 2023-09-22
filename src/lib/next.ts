@@ -9,3 +9,5 @@ export const fClStr = (f: NextFont): string => f.className;
 
 export const redirectToParentPath = (pathname: AppPath, unsafeCtx: boolean = false): void =>
   redirect(getAppPathParentPath(unsafeCtx ? sanitizePathname(pathname) : pathname));
+
+export const serverCtx = () => typeof window === 'undefined' || typeof document === 'undefined';
