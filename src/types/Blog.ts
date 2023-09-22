@@ -1,5 +1,5 @@
 import { BlogArchitecture } from '@/config/blog';
-import { TBlogTaxonomy } from '@/taxonomies/blog';
+import BlogTaxonomy, { TBlogTaxonomy } from '@/taxonomies/blog';
 import PostBase from './BlogPostAbstractions';
 import { RequiredFieldsOnly } from './CustomUtilitaryTypes';
 import { i18nParams } from './Next';
@@ -18,7 +18,11 @@ export type BlogSlug = string;
 
 type BlogPostPagePropsParams = RequiredFieldsOnly<TBlogTaxonomy>;
 type BlogCategoryPagePropsParams = Pick<TBlogTaxonomy, 'categ'>;
-type BlogSubCategoryPagePropsParams = Pick<TBlogTaxonomy, 'categ' | 'subcateg'>;
+
+type BlogSubCategoryPagePropsParams = {
+  [BlogTaxonomy.CATEGORY]: BlogCategory;
+  [BlogTaxonomy.SUBCATEGORY]: BlogSubCategoriesMappedToBlogCategory[BlogCategory];
+};
 
 export interface BlogCategoryPageProps {
   params: BlogCategoryPagePropsParams & i18nParams;

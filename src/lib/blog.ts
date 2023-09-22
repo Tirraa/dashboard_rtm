@@ -1,6 +1,7 @@
 import { getBlogSubCategoriesByCategory } from '@/cache/blog';
 import BlogConfig, { BlogArchitecture } from '@/config/blog';
 import { DEFAULT_LANGUAGE } from '@/config/i18n';
+import RoutesBase from '@/config/routes';
 import InvalidArgumentsError from '@/errors/exceptions/InvalidArgument';
 import {
   BlogCategory,
@@ -14,6 +15,7 @@ import PostBase from '@/types/BlogPostAbstractions';
 import { AppPath } from '@/types/Next';
 import { LanguageFlag } from '@/types/i18n';
 import { IsoDateTimeString } from 'contentlayer/core';
+import { redirect } from 'next/navigation';
 import { getBlogPostLanguageFlag } from './i18n';
 import { buildPathFromParts, getFormattedDate, getLastPathPart, indexOfNthOccurrence } from './str';
 
@@ -120,7 +122,14 @@ export function getPostFormattedDate(lng: LanguageFlag, { date }: PostBase): str
   return formattedDate;
 }
 
+export function isValidCategory(category: string): boolean {
+  const categories = getAllCategories();
+  if (!categories.includes(category as any)) return false;
+  return true;
+}
+
 export function isValidCategoryAndSubCategoryPair(category: BlogCategory, subCategory: BlogSubCategoryFromUnknownCategory): boolean {
+  if (!isValidCategory(category)) return false;
   try {
     const subCategories = getBlogSubCategoriesByCategory(category);
     if (!subCategories.includes(subCategory)) return false;
@@ -128,4 +137,12 @@ export function isValidCategoryAndSubCategoryPair(category: BlogCategory, subCat
   } catch {
     return false;
   }
+}
+
+export function redirectToBlogCategoryPage(category: BlogCategory): void {
+  redirect(buildPathFromParts(RoutesBase.BLOG, category));
+}
+
+export function redirectToBlogCategoryAndSubCategoryPairPageUnstrict(category: BlogCategory, subCategory: BlogSubCategoryFromUnknownCategory): void {
+  redirect(buildPathFromParts(RoutesBase.BLOG, category, subCategory));
 }

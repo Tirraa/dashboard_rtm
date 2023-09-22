@@ -1,4 +1,9 @@
 export default {
+  _infos: {
+    lng: 'fr',
+    label: 'Français'
+  },
+
   navbar: {
     home: 'Accueil',
     dashboard: 'Dashboard',

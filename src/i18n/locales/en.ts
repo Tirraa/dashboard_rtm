@@ -1,6 +1,11 @@
 import { VocabType } from '@/types/i18n';
 
 export default {
+  _infos: {
+    lng: 'en',
+    label: 'English'
+  },
+
   navbar: {
     home: 'Homepage',
     dashboard: 'Dashboard',

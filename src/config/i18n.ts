@@ -1,7 +1,8 @@
-import getEnumKeys, { getEnumFirstKey } from '@/lib/misc/getEnumKeys';
+import defaultLanguage from '@/i18n/locales/fr';
+import getEnumKeys from '@/lib/misc/getEnumKeys';
 import { LanguageFlag } from '@/types/i18n';
 
-export type VocabBase = typeof import('@/i18n/locales/fr').default;
+export type VocabBase = typeof defaultLanguage;
 export enum ELanguagesFlag {
   fr,
   en
@@ -13,5 +14,7 @@ export const i18ns = {
   blogCategories: 'blog-categories'
 } as const;
 
-export const DEFAULT_LANGUAGE: LanguageFlag = getEnumFirstKey(ELanguagesFlag) as LanguageFlag;
+export const DEFAULT_LANGUAGE = defaultLanguage._infos.lng;
 export const LANGUAGES: LanguageFlag[] = getEnumKeys(ELanguagesFlag) as LanguageFlag[];
+
+export { defaultLanguage as fallbackLocale };

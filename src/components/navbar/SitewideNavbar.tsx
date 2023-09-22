@@ -7,7 +7,7 @@ import TextNodeWithStupidUppercaseEffect from '@/components/misc/TextNodeWithStu
 import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsConfig';
 import SITEWIDE_NAVBAR_ROUTES, { SITEWIDE_NAVBAR_ROUTES_TITLES } from '@/config/SitewideNavbar/routesImpl';
 import RoutesBase from '@/config/routes';
-import { I18nProviderClient, getClientSideI18n } from '@/i18n/client';
+import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
 import getComputedNavData from '@/lib/misc/getComputedNavData';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { i18nComponentProps } from '@/types/Next';
@@ -17,7 +17,7 @@ import Link from 'next/link';
 import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import NavbarButton from './NavbarButton';
 
-interface SitewideNavbarProps extends i18nComponentProps {}
+interface SitewideNavbarProps {}
 
 const { NAVBAR_ID, FORCE_NAVBAR_MENU_TO_COLLAPSE_BREAKPOINT_PX_VALUE, LOGO_SIZE_PX_VALUE } = NavbarConfig;
 
@@ -29,7 +29,7 @@ export function buildNavbarElements({ i18nProps }: i18nComponentProps) {
   return navbarElements;
 }
 
-const SitewideNavbarImpl: FunctionComponent<SitewideNavbarProps> = ({ i18nProps }) => {
+export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const mobileMenuInstanceRef = useRef<HTMLDivElement>(null);
   const [openNav, setOpenNav] = useState<boolean>(false);
   const globalT = getClientSideI18n();
@@ -45,7 +45,7 @@ const SitewideNavbarImpl: FunctionComponent<SitewideNavbarProps> = ({ i18nProps 
     return () => document.removeEventListener('click', closeNavbarOnOutsideClick);
   }, [openNav]);
 
-  const navbarElements = buildNavbarElements({ i18nProps });
+  const navbarElements = buildNavbarElements({ i18nProps: { [i18nTaxonomy.LANG_FLAG]: useCurrentLocale() } });
   const desktopNavbarElements = navbarElements.map((elm, index) => (
     <Typography key={`navbar-btn-typography-${index}`} as="li" color="blue-gray" className="p-1 font-normal">
       {elm}
@@ -119,15 +119,6 @@ const SitewideNavbarImpl: FunctionComponent<SitewideNavbarProps> = ({ i18nProps 
         {mobileNavList}
       </Collapse>
     </Navbar>
-  );
-};
-
-export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = ({ i18nProps }) => {
-  const locale = i18nProps[i18nTaxonomy.LANG_FLAG];
-  return (
-    <I18nProviderClient>
-      <SitewideNavbarImpl {...{ i18nProps: { [i18nTaxonomy.LANG_FLAG]: locale } }} />
-    </I18nProviderClient>
   );
 };
 

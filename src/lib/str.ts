@@ -7,6 +7,13 @@ import { getPathnameWithoutI18nFlag } from './i18n';
 type DescriptionAsIs = string;
 type CroppedDescription = string;
 
+export const sanitizePathname = (pathname: AppPath): AppPath => {
+  const MAX_SANITIZE_PATHNAME_ARG_LENGTH = Number(process.env.MAX_SANITIZE_PATHNAME_ARG_LENGTH);
+  const FALLBACK_ROUTE = RoutesBase.SITEWIDE;
+  if (isNaN(MAX_SANITIZE_PATHNAME_ARG_LENGTH)) return FALLBACK_ROUTE;
+  return pathname.length <= MAX_SANITIZE_PATHNAME_ARG_LENGTH ? pathname.replace(/[\/]+/g, '/') : FALLBACK_ROUTE;
+};
+
 export const getSlashEnvelope = (str: string, slashSymbol: '/' | '\\' = '/'): string =>
   (str.charAt(0) !== slashSymbol ? slashSymbol : '') + str + (str.charAt(str.length - 1) !== slashSymbol ? slashSymbol : '');
 
@@ -44,8 +51,19 @@ export function getLastPathPart(path: AppPath): AppPathAsIs | PathSegment {
 export const gsub = (str: string, needle: string, replaceWith: string): string => str.split(needle).join(replaceWith);
 
 export const buildPathFromParts = (...args: PathSegment[]): AppPath => args.join('/');
+export const buildAbsolutePathFromParts = (...args: PathSegment[]): AppPath => {
+  let path = buildPathFromParts(...args);
+  if (path.charAt(0) !== '/') return '/' + path;
+  return path;
+};
 
 const capitalize = (str: string): string => str.charAt(0).toUpperCase() + str.substring(1);
 
 export const getFormattedDate = (lng: LanguageFlag, date: Date, giveTime: boolean = false): string =>
   capitalize(new Intl.DateTimeFormat(lng, { dateStyle: 'full', ...(giveTime ? { timeStyle: 'short' } : {}) }).format(date).toString());
+
+export function getAppPathParentPath(pathname: AppPath): AppPath {
+  const parts = pathname.split('/');
+  if (parts.length > 1) parts.pop();
+  return buildAbsolutePathFromParts(...parts);
+}

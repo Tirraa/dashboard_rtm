@@ -6,7 +6,7 @@ import dashboardRoutes, { dashboardRoutesTitles } from '@/config/DashboardSideba
 import dashboardRoutesSidebarComponents from '@/config/DashboardSidebar/utils/IconsMapping';
 import { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMapping';
 import { sidebarErrorsVocabAccessor } from '@/errors/vocab/errors/sidebar';
-import { I18nProviderClient, getClientSideI18n } from '@/i18n/client';
+import { getClientSideI18n } from '@/i18n/client';
 import { computeHTMLElementHeight, computeHTMLElementWidth } from '@/lib/html';
 import ComputedNodeCtx from '@/lib/misc/executionCtx';
 import Link from 'next/link';
@@ -40,7 +40,7 @@ function sidebarBtnsGenerator(separatorWidth: number) {
   });
 }
 
-function DashboardSidebarImpl() {
+export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => {
   const sidebarInstanceRef = useRef<HTMLDivElement>(null);
   const [dynamicWidth, setDynamicWidth] = useState<number>(0);
   const [dynamicPaddingBottom, setDynamicPaddingBottom] = useState<number>(0);
@@ -102,12 +102,6 @@ function DashboardSidebarImpl() {
       <div className="flex flex-col h-fit [&>*:first-child]:mt-5 [&>*:last-child]:mb-5">{sidebarBtnsGenerator(dynamicSeparatorWidth)}</div>
     </aside>
   );
-}
-
-export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => (
-  <I18nProviderClient>
-    <DashboardSidebarImpl />
-  </I18nProviderClient>
-);
+};
 
 export default DashboardSidebar;

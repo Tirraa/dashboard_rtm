@@ -1,6 +1,8 @@
+'use client';
+
 import RtmButton from '@/components/cta/RtmButton';
 import DiscordConfig from '@/config/discord';
-import { getServerSideI18n } from '@/i18n/server';
+import { getClientSideI18n } from '@/i18n/client';
 import { CogIcon } from '@heroicons/react/20/solid';
 import Image from 'next/image';
 import { CSSProperties, FunctionComponent } from 'react';
@@ -14,8 +16,8 @@ const style: CSSProperties = {
 const [width, height]: [number, number] = [226, 69];
 
 // {ToDo} use a formatter for the img alt
-export const HomepageInner: FunctionComponent<HomepageInnerProps> = async () => {
-  const globalT = await getServerSideI18n();
+export const HomepageInner: FunctionComponent<HomepageInnerProps> = () => {
+  const globalT = getClientSideI18n();
   const brand = globalT('vocab.brand');
   const logo = globalT('ugly.logo');
   const inviteTheBot = globalT('vocab.invite-the-bot');

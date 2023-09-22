@@ -1,6 +1,6 @@
 'use client';
 
-import { I18nProviderClient, getClientSideI18n } from '@/i18n/client';
+import { getClientSideI18n } from '@/i18n/client';
 import { getRefCurrentPtr } from '@/lib/react';
 import Image from 'next/image';
 import { FunctionComponent, useEffect, useRef, useState } from 'react';
@@ -9,7 +9,7 @@ const TRANSITION_DELAY_MS_VALUE = 250;
 
 interface SplashScreenProps {}
 
-const SplashScreenImpl: FunctionComponent<SplashScreenProps> = () => {
+export const SplashScreen: FunctionComponent<SplashScreenProps> = () => {
   const globalT = getClientSideI18n();
   const splashScreenRef = useRef<HTMLDivElement>(null);
   const splashScreenLogoRef = useRef<HTMLImageElement>(null);
@@ -54,11 +54,5 @@ const SplashScreenImpl: FunctionComponent<SplashScreenProps> = () => {
     <></>
   );
 };
-
-export const SplashScreen: FunctionComponent<SplashScreenProps> = () => (
-  <I18nProviderClient>
-    <SplashScreenImpl />
-  </I18nProviderClient>
-);
 
 export default SplashScreen;

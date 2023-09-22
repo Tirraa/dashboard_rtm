@@ -1,30 +1,41 @@
 import { getBlogSubCategoriesByCategory } from '@/cache/blog';
 import BlogPost from '@/components/blog/BlogPost';
 import { LANGUAGES } from '@/config/i18n';
+import RoutesBase from '@/config/routes';
 import {
   getAllCategories,
   getAllPostsByCategoryAndSubCategoryUnstrict,
-  getBlogCategoryFromPathname,
   getBlogPostSlug,
-  getPostUnstrict
+  getPostUnstrict,
+  isValidCategory,
+  isValidCategoryAndSubCategoryPair,
+  redirectToBlogCategoryAndSubCategoryPairPageUnstrict,
+  redirectToBlogCategoryPage
 } from '@/lib/blog';
-import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
-import getServerSidePathnameWorkaround from '@/lib/misc/getServerSidePathname';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogCategory, BlogPostPageProps, BlogStaticParams, BlogSubCategoryFromUnknownCategory } from '@/types/Blog';
+import PostBase from '@/types/BlogPostAbstractions';
 import { setStaticParamsLocale } from 'next-international/server';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 export function generateMetadata({ params }: BlogPostPageProps) {
-  const category = getBlogCategoryFromPathname(getPathnameWithoutI18nFlag(getServerSidePathnameWorkaround()));
+  const category = params[BlogTaxonomy.CATEGORY];
   const subCategory = params[BlogTaxonomy.SUBCATEGORY];
+  const validCombination = isValidCategoryAndSubCategoryPair(category, subCategory);
+
   const slug = params[BlogTaxonomy.SLUG];
   const lang = params[i18nTaxonomy.LANG_FLAG];
-  const post = getPostUnstrict({ category, subCategory }, slug, lang);
-  if (!post) notFound();
+  const post = validCombination ? getPostUnstrict({ category, subCategory }, slug, lang) : undefined;
+  if (!post && validCombination) {
+    redirectToBlogCategoryAndSubCategoryPairPageUnstrict(category, subCategory);
+  } else if (!post && isValidCategory(category)) {
+    redirectToBlogCategoryPage(category);
+  } else if (!post) {
+    redirect(RoutesBase.SITEWIDE + category);
+  }
 
-  const { title, metadescription: description } = post;
+  const { title, metadescription: description } = post as PostBase;
   return { title, description };
 }
 
@@ -76,6 +87,8 @@ export async function generateStaticParams() {
 export default function Page({ params }: BlogPostPageProps) {
   const lng = params[i18nTaxonomy.LANG_FLAG];
   setStaticParamsLocale(lng);
+
+  if (!isValidCategoryAndSubCategoryPair(params[BlogTaxonomy.CATEGORY], params[BlogTaxonomy.SUBCATEGORY])) notFound();
 
   return <BlogPost {...{ params }} />;
 }

@@ -3,10 +3,13 @@ import { BlogCategory, BlogSubCategoryPageProps } from '@/types/Blog';
 
 import { getBlogSubCategoriesByCategory } from '@/cache/blog';
 import { LANGUAGES } from '@/config/i18n';
+import RoutesBase from '@/config/routes';
 import {
   getAllCategories,
   getAllPostsByCategoryAndSubCategoryAndLanguageFlagUnstrict,
+  isValidCategory,
   isValidCategoryAndSubCategoryPair,
+  redirectToBlogCategoryPage,
   subCategoryShouldTriggerNotFound
 } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
@@ -14,7 +17,23 @@ import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogStaticParams } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { setStaticParamsLocale } from 'next-international/server';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
+
+// {ToDo} Work in progress (only a guard for now)
+export function generateMetadata({ params }: BlogSubCategoryPageProps) {
+  const category = params[BlogTaxonomy.CATEGORY];
+
+  const validCategory = isValidCategory(category);
+  const equivRoutes = RoutesBase.SITEWIDE + category === RoutesBase.BLOG + category;
+  if (!validCategory && !equivRoutes) redirect(RoutesBase.SITEWIDE + category);
+
+  const subCategory = params[BlogTaxonomy.SUBCATEGORY];
+  const validCombination = isValidCategoryAndSubCategoryPair(category, subCategory);
+  if (!validCombination) redirectToBlogCategoryPage(category);
+
+  const [title, description] = ['TODO', 'WIP'];
+  return { title, description };
+}
 
 export async function generateStaticParams() {
   function generateBlogStaticParams(): Partial<BlogStaticParams>[] {

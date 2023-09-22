@@ -1,5 +1,6 @@
 'use client';
 
+import { fallbackLocale } from '@/config/i18n';
 import { I18nProviderClient, getClientSideI18n } from '@/i18n/client';
 import { FunctionComponent } from 'react';
 
@@ -16,7 +17,7 @@ const NotFoundInnerImpl = () => {
 };
 
 export const NotFoundInner: FunctionComponent<NotFoundInnerProps> = () => (
-  <I18nProviderClient>
+  <I18nProviderClient {...fallbackLocale}>
     <NotFoundInnerImpl />
   </I18nProviderClient>
 );
