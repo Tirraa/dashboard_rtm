@@ -1,6 +1,3 @@
-import HtmlConfig from '@/config/html';
-import { serverCtx } from './next';
-
 export function computeHTMLElementHeight(htmlElement: HTMLElement): number {
   const { height } = htmlElement.getBoundingClientRect();
   const { marginTop, marginBottom } = getComputedStyle(htmlElement);
@@ -15,12 +12,4 @@ export function computeHTMLElementWidth(htmlElement: HTMLElement): number {
   const widthDeltas = [marginRight, marginLeft].map(parseFloat);
   const computedWidth = width + widthDeltas.reduce((acc, value) => acc + value, 0);
   return computedWidth;
-}
-
-export function pxValueToRemValue(pxValue: number): number {
-  if (serverCtx()) return pxValue / HtmlConfig.ROOT_FONT_SIZE_PX_VALUE_FALLBACK;
-  const htmlElement = document.documentElement;
-  const rootFontSize = window.getComputedStyle(htmlElement).fontSize;
-  const rootFontSizeValue = parseFloat(rootFontSize);
-  return pxValue / rootFontSizeValue;
 }

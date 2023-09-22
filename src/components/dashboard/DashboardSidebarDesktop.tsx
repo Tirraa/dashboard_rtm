@@ -117,11 +117,11 @@ export const DashboardSidebarDesktop: FunctionComponent<DashboardSidebarProps> =
           desktopSidebarIsHidden = false;
         }
       }
-      if (window) window.addEventListener('resize', handleResize);
+      if (!serverCtx()) window.addEventListener('resize', handleResize);
       handleResize();
 
       return () => {
-        if (window) window.removeEventListener('resize', handleResize);
+        if (!serverCtx()) window.removeEventListener('resize', handleResize);
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -130,7 +130,6 @@ export const DashboardSidebarDesktop: FunctionComponent<DashboardSidebarProps> =
 
   useEffect(
     () => {
-      if (!ComputedNodeCtx.DEV) return;
       if (!serverCtx() && window.innerWidth >= NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE) forceNewDynamicRender();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
