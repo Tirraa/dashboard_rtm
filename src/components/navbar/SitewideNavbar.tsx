@@ -19,7 +19,7 @@ import NavbarButton from './NavbarButton';
 
 interface SitewideNavbarProps {}
 
-const { NAVBAR_ID, FORCE_NAVBAR_MENU_TO_COLLAPSE_BREAKPOINT_PX_VALUE, LOGO_SIZE_PX_VALUE } = NavbarConfig;
+const { NAVBAR_ID, NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE, LOGO_SIZE_PX_VALUE } = NavbarConfig;
 
 export function buildNavbarElements({ i18nProps }: i18nComponentProps) {
   const computedNavData = getComputedNavData(SITEWIDE_NAVBAR_ROUTES, SITEWIDE_NAVBAR_ROUTES_TITLES, SITEWIDE_NAVBAR_DROPDOWNS_CONFIG);
@@ -34,7 +34,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const [openNav, setOpenNav] = useState<boolean>(false);
   const globalT = getClientSideI18n();
 
-  useCollapseNavbarOnResize(FORCE_NAVBAR_MENU_TO_COLLAPSE_BREAKPOINT_PX_VALUE, mobileMenuInstanceRef, setOpenNav);
+  useCollapseNavbarOnResize(NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE, mobileMenuInstanceRef, setOpenNav);
 
   useEffect(() => {
     const navbarCollapseElement = document.getElementById(NAVBAR_ID as string);

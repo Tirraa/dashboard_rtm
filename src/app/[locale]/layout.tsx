@@ -16,7 +16,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <I18nProviderClient {...fallbackLocale}>
       <html lang={useCurrentLocale()}>
-        <body className="flex flex-col min-h-screen">
+        <body className="flex flex-col h-screen w-full">
           <SplashScreen />
           <NextTopLoader {...{ ...ProgressbarConfig.PROPS }} />
           <SitewideNavbar />

@@ -1,4 +1,4 @@
-import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
+import DashboardSidebarDesktop from '@/components/dashboard/DashboardSidebarDesktop';
 import { getStaticParams } from '@/i18n/server';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { LayoutBaseProps } from '@/types/Next';
@@ -15,9 +15,9 @@ export default function DashboardLayout({ params, children }: DashboardLayoutPro
   setStaticParamsLocale(lng);
 
   return (
-    <div className="flex">
-      <DashboardSidebar />
-      <main className="flex flex-1 flex-col" id="main-box-id">
+    <div className="flex flex-1">
+      <DashboardSidebarDesktop />
+      <main className="w-full h-full p-0" id="main-box-id">
         {children}
       </main>
     </div>
