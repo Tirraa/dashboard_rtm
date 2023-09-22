@@ -36,7 +36,7 @@ export const SplashScreen: FunctionComponent<SplashScreenProps> = () => {
   return !animationDone ? (
     <div
       ref={splashScreenRef}
-      className="cursor-wait select-none fixed z-50 inset-0 flex items-center justify-center w-full h-screen bg-gray-900 transition-all duration-300"
+      className="select-none fixed z-50 inset-0 flex items-center justify-center w-full h-screen bg-gray-900 transition-all duration-300"
     >
       <span className="sr-only">{globalT('vocab.loading')}</span>
       <Image
