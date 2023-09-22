@@ -18,7 +18,7 @@ import NavbarButton from './NavbarButton';
 
 interface SitewideNavbarProps {}
 
-const { NAVBAR_ID, NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE, LOGO_SIZE_PX_VALUE } = NavbarConfig;
+const { MAX_HEIGHT_PX_VALUE, NAVBAR_ID, NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE, LOGO_SIZE_PX_VALUE } = NavbarConfig;
 
 let navbarMobileDropdownIsHidden = false;
 
@@ -103,7 +103,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       color="blue"
       fullWidth={true}
       className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 overflow-hidden"
-      style={{ maxHeight: '82px' }}
+      style={{ maxHeight: MAX_HEIGHT_PX_VALUE + 'px' }}
     >
       <div className="flex items-center justify-between text-white">
         <Link href={RoutesBase.WEBSITE_ROOT}>
