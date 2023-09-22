@@ -15,6 +15,7 @@ import SidebarBtnSeparator from './SidebarBtnsSeparator';
 
 interface DashboardSidebarProps {}
 
+// {ToDo} Improve dynamic padding-bottom computation of the sidebar, on resize
 const { MAIN_BOX_ID, ICON_CLASS: SIDEBAR_ICON_CLASS, ICON_SEPARATOR_WIDTH_FACTOR, ICON_MARGIN_X_FACTOR } = DashboardSidebarDynamicRenderingConfig;
 
 function sidebarBtnsGenerator(separatorWidth: number) {
@@ -96,10 +97,12 @@ export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => 
   return (
     <aside
       ref={sidebarInstanceRef}
-      className="w-0 transition-[width] overflow-y-auto fixed h-screen border-r-[1px] bg-black flex flex-col"
+      className="w-0 transition-[width] fixed h-screen border-r-[1px] bg-black flex flex-col"
       style={{ width: dynamicWidth, left: dynamicLeft, paddingBottom: dynamicPaddingBottom }}
     >
-      <div className="flex flex-col h-fit [&>*:first-child]:mt-5 [&>*:last-child]:mb-5">{sidebarBtnsGenerator(dynamicSeparatorWidth)}</div>
+      <div className="flex flex-col h-fit overflow-y-auto [&>*:first-child]:mt-5 [&>*:last-child]:mb-5">
+        {sidebarBtnsGenerator(dynamicSeparatorWidth)}
+      </div>
     </aside>
   );
 };
