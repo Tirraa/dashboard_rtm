@@ -17,7 +17,7 @@ import { LanguageFlag } from '@/types/i18n';
 import { IsoDateTimeString } from 'contentlayer/core';
 import { redirect } from 'next/navigation';
 import { getBlogPostLanguageFlag } from './i18n';
-import { buildPathFromParts, getFormattedDate, getLastPathPart, indexOfNthOccurrence } from './str';
+import { buildAbsolutePathFromParts, buildPathFromParts, getFormattedDate, getLastPathPart, indexOfNthOccurrence } from './str';
 
 const getBlogPostSubCategoryAndSlugStr = (post: PostBase): string => buildPathFromParts(getBlogPostSubCategory(post), getBlogPostSlug(post));
 
@@ -139,10 +139,7 @@ export function isValidCategoryAndSubCategoryPair(category: BlogCategory, subCat
   }
 }
 
-export function redirectToBlogCategoryPage(category: BlogCategory): void {
-  redirect(buildPathFromParts(RoutesBase.BLOG, category));
-}
+export const redirectToBlogCategoryPage = (category: BlogCategory): void => redirect(buildAbsolutePathFromParts(RoutesBase.BLOG, category));
 
-export function redirectToBlogCategoryAndSubCategoryPairPageUnstrict(category: BlogCategory, subCategory: BlogSubCategoryFromUnknownCategory): void {
-  redirect(buildPathFromParts(RoutesBase.BLOG, category, subCategory));
-}
+export const redirectToBlogCategoryAndSubCategoryPairPageUnstrict = (category: BlogCategory, subCategory: BlogSubCategoryFromUnknownCategory): void =>
+  redirect(buildAbsolutePathFromParts(RoutesBase.BLOG, category, subCategory));
