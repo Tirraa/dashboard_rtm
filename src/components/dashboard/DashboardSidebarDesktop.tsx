@@ -11,7 +11,7 @@ import { computeHTMLElementHeight, computeHTMLElementWidth } from '@/lib/html';
 import ComputedNodeCtx from '@/lib/misc/executionCtx';
 import { serverCtx } from '@/lib/next';
 import Link from 'next/link';
-import { FunctionComponent, ReactElement, useEffect, useRef, useState } from 'react';
+import { FunctionComponent, ReactElement, useEffect, useLayoutEffect, useState } from 'react';
 import SidebarBtnSeparator from './SidebarBtnsSeparator';
 
 interface DashboardSidebarProps {}
@@ -34,7 +34,7 @@ function sidebarBtnsGenerator(separatorWidth: number) {
     const title = globalT(i18nPath);
 
     return (
-      <div key={`sidebar-btn-component-${k}`} className="flex flex-col items-center m-2">
+      <div key={`${k}-sidebar-btn-component`} className="flex flex-col items-center m-2">
         <Link {...{ title, href }} className={SIDEBAR_ICON_CLASS}>
           <span className="sr-only">{title}</span>
           {btnComponent}
@@ -46,13 +46,12 @@ function sidebarBtnsGenerator(separatorWidth: number) {
 }
 
 export const DashboardSidebarDesktop: FunctionComponent<DashboardSidebarProps> = () => {
-  const sidebarInstanceRef = useRef<HTMLDivElement>(null);
   const [dynamicWidth, setDynamicWidth] = useState<number>(0);
   const [dynamicSeparatorWidth, setDynamicSeparatorWidth] = useState<number>(0);
   const [dynamicTop, setDynamicTop] = useState<string>('0');
 
   function computeAndSetDynamicallyTopValue() {
-    const navbarInstance: HTMLElement | null = NAVBAR_ID !== null ? (document.querySelector(`#${NAVBAR_ID}`) as HTMLElement) : null;
+    const navbarInstance: HTMLElement | null = NAVBAR_ID !== null ? document.getElementById(NAVBAR_ID) : null;
 
     if (NAVBAR_ID !== null && !navbarInstance) {
       console.error(sidebarErrorsVocabAccessor('UNABLE_TO_RETRIEVE_THE_NAVBAR_ELEMENT'));
@@ -83,7 +82,7 @@ export const DashboardSidebarDesktop: FunctionComponent<DashboardSidebarProps> =
   }
 
   function injectMarginLeftInMainElement(marginLeft: number = -1) {
-    const mainBoxInstance = document.querySelector(`#${MAIN_BOX_ID}`) as HTMLElement;
+    const mainBoxInstance = document.getElementById(MAIN_BOX_ID);
 
     if (!mainBoxInstance) {
       console.error(sidebarErrorsVocabAccessor('UNABLE_TO_RETRIEVE_MAIN_ELEMENT'));
@@ -95,7 +94,7 @@ export const DashboardSidebarDesktop: FunctionComponent<DashboardSidebarProps> =
       const [computedOnTheFlyMarginLeft] = computeWidthAndSeparatorWidthDynamically();
       computedMarginLeft = computedOnTheFlyMarginLeft;
     }
-    if (mainBoxInstance) mainBoxInstance.style.marginLeft = computedMarginLeft + 'px';
+    mainBoxInstance.style.marginLeft = computedMarginLeft + 'px';
   }
 
   function forceNewDynamicRender() {
@@ -108,15 +107,16 @@ export const DashboardSidebarDesktop: FunctionComponent<DashboardSidebarProps> =
     () => {
       function handleResize() {
         if (serverCtx()) return;
-        if (window.innerWidth < NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE) {
+        if (!desktopSidebarIsHidden && window.innerWidth < NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE) {
           setDynamicWidth(0);
           injectMarginLeftInMainElement(0);
           desktopSidebarIsHidden = true;
-        } else if (desktopSidebarIsHidden) {
+        } else if (desktopSidebarIsHidden && window.innerWidth >= NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE) {
           forceNewDynamicRender();
           desktopSidebarIsHidden = false;
         }
       }
+
       if (!serverCtx()) window.addEventListener('resize', handleResize);
       handleResize();
 
@@ -125,12 +125,15 @@ export const DashboardSidebarDesktop: FunctionComponent<DashboardSidebarProps> =
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [sidebarInstanceRef]
+    []
   );
 
-  useEffect(
+  useLayoutEffect(
     () => {
-      if (!serverCtx() && window.innerWidth >= NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE) forceNewDynamicRender();
+      if (!serverCtx() && window.innerWidth >= NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE) {
+        forceNewDynamicRender();
+        desktopSidebarIsHidden = false;
+      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     ComputedNodeCtx.DEV
@@ -143,11 +146,7 @@ export const DashboardSidebarDesktop: FunctionComponent<DashboardSidebarProps> =
   );
 
   return (
-    <aside
-      ref={sidebarInstanceRef}
-      className="fixed overflow-y-auto w-0 border-r-[1px] bg-black"
-      style={{ width: dynamicWidth, bottom: '0', left: '0', top: dynamicTop }}
-    >
+    <aside className="fixed overflow-y-auto w-0 border-r-[1px] bg-black" style={{ width: dynamicWidth, bottom: '0', left: '0', top: dynamicTop }}>
       <div className="flex flex-col [&>*:first-child]:mt-5 [&>*:last-child]:mb-5">{sidebarBtnsGenerator(dynamicSeparatorWidth)}</div>
     </aside>
   );

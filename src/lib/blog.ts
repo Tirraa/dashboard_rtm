@@ -1,7 +1,7 @@
 import { getBlogSubCategoriesByCategory } from '@/cache/blog';
 import BlogConfig, { BlogArchitecture } from '@/config/blog';
 import { DEFAULT_LANGUAGE } from '@/config/i18n';
-import RoutesBase from '@/config/routes';
+import ROUTES_ROOTS from '@/config/routes';
 import InvalidArgumentsError from '@/errors/exceptions/InvalidArgument';
 import {
   BlogCategory,
@@ -139,7 +139,7 @@ export function isValidCategoryAndSubCategoryPair(category: BlogCategory, subCat
   }
 }
 
-export const redirectToBlogCategoryPage = (category: BlogCategory): void => redirect(buildAbsolutePathFromParts(RoutesBase.BLOG, category));
+export const redirectToBlogCategoryPage = (category: BlogCategory): void => redirect(buildAbsolutePathFromParts(ROUTES_ROOTS.BLOG, category));
 
 export const redirectToBlogCategoryAndSubCategoryPairPageUnstrict = (category: BlogCategory, subCategory: BlogSubCategoryFromUnknownCategory): void =>
-  redirect(buildAbsolutePathFromParts(RoutesBase.BLOG, category, subCategory));
+  redirect(buildAbsolutePathFromParts(ROUTES_ROOTS.BLOG, category, subCategory));

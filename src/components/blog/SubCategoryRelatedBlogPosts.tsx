@@ -25,7 +25,9 @@ export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageP
   // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
   const title = scopedT(`${category}.${subCategory}`);
 
-  const paginatedElements = postsCollection.map((post) => <BlogPostPeview key={post._raw.flattenedPath} {...{ post, lng }} />);
+  const paginatedElements = postsCollection.map((post) => (
+    <BlogPostPeview key={`${post._raw.flattenedPath}-paginated-blog-post`} {...{ post, lng }} />
+  ));
   return (
     <div className="mx-auto max-w-xl py-8">
       <h1 className="text-center">{title}</h1>

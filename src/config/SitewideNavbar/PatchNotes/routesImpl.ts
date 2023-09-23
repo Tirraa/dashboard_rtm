@@ -1,9 +1,9 @@
 import { i18ns } from '@/config/i18n';
-import RoutesBase from '@/config/routes';
+import ROUTES_ROOTS from '@/config/routes';
 import { getSlashEnvelope } from '@/lib/str';
 import { PatchNotesRoutes, PatchNotesRoutesTitles } from './utils/RoutesMapping';
 
-const BASE = getSlashEnvelope(RoutesBase.PATCH_NOTES);
+const BASE = getSlashEnvelope(ROUTES_ROOTS.PATCH_NOTES);
 
 export const PATCH_NOTES_ROUTES: PatchNotesRoutes = {
   DASHBOARD_PATCH_NOTES_PAGE: BASE + 'dashboard',

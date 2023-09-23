@@ -1,5 +1,5 @@
 import SidebarButtonStyle from '@/components/_config/_styles/SidebarButtonStyle';
-import RoutesBase from '@/config/routes';
+import ROUTES_ROOTS from '@/config/routes';
 import { hrefMatchesPathname } from '@/lib/str';
 import { AppPath } from '@/types/Next';
 import { ClassName } from '@/types/React';
@@ -19,7 +19,7 @@ const ICON_PROPS = { ...sidebarIconProps };
 
 export const DashboardSidebarButton: FunctionComponent<DashboardSidebarButtonProps> = ({ __SidebarIcon, href }) => {
   const currentPathname = usePathname();
-  const classList = hrefMatchesPathname(href, currentPathname, RoutesBase.DASHBOARD) ? ACTIVE : INACTIVE;
+  const classList = hrefMatchesPathname(href, currentPathname, ROUTES_ROOTS.DASHBOARD) ? ACTIVE : INACTIVE;
 
   return (
     <div {...classList}>

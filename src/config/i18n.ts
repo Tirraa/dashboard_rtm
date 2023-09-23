@@ -15,7 +15,7 @@ export const i18ns = {
   auth: 'auth'
 } as const;
 
-export const DEFAULT_LANGUAGE = defaultLanguage._infos.lng;
+export const DEFAULT_LANGUAGE = defaultLanguage._infos.lng as LanguageFlag;
 export const LANGUAGES: LanguageFlag[] = getEnumKeys(ELanguagesFlag) as LanguageFlag[];
 
 export { defaultLanguage as fallbackLocale };

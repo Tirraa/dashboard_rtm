@@ -1,17 +1,22 @@
 import BlogConfig from '@/config/blog';
-import RoutesBase from '@/config/routes';
+import ROUTES_ROOTS from '@/config/routes';
 import { AppPath, AppPathAsIs, PathSegment } from '@/types/Next';
 import { LanguageFlag } from '@/types/i18n';
 import { getPathnameWithoutI18nFlag } from './i18n';
+import { serverCtx } from './next';
 
 type DescriptionAsIs = string;
 type CroppedDescription = string;
 
 export const sanitizePathname = (pathname: AppPath): AppPath => {
+  const doSanitize = (pathname: AppPath) => pathname.replace(/[\/]+/g, '/');
+
+  if (!serverCtx()) return doSanitize(pathname);
+
   const MAX_SANITIZE_PATHNAME_ARG_LENGTH = Number(process.env.MAX_SANITIZE_PATHNAME_ARG_LENGTH);
-  const FALLBACK_ROUTE = RoutesBase.WEBSITE_ROOT;
+  const FALLBACK_ROUTE = ROUTES_ROOTS.WEBSITE;
   if (isNaN(MAX_SANITIZE_PATHNAME_ARG_LENGTH)) return FALLBACK_ROUTE;
-  return pathname.length <= MAX_SANITIZE_PATHNAME_ARG_LENGTH ? pathname.replace(/[\/]+/g, '/') : FALLBACK_ROUTE;
+  return pathname.length <= MAX_SANITIZE_PATHNAME_ARG_LENGTH ? doSanitize(pathname) : FALLBACK_ROUTE;
 };
 
 export const getSlashEnvelope = (str: string, slashSymbol: '/' | '\\' = '/'): string =>
@@ -26,7 +31,7 @@ export function indexOfNthOccurrence(strHaystack: string, needle: string, n: num
   return index;
 }
 
-export function hrefMatchesPathname(href: AppPath, pathname: AppPath, root: AppPath = RoutesBase.WEBSITE_ROOT): boolean {
+export function hrefMatchesPathname(href: AppPath, pathname: AppPath, root: AppPath = ROUTES_ROOTS.WEBSITE): boolean {
   const pathnameWithouti18n = getPathnameWithoutI18nFlag(pathname);
   if (pathnameWithouti18n === href) return true;
   if (href !== root && pathnameWithouti18n.startsWith(getSlashEnvelope(href))) return true;

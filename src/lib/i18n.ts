@@ -1,5 +1,5 @@
 import { DEFAULT_LANGUAGE, LANGUAGES } from '@/config/i18n';
-import RoutesBase from '@/config/routes';
+import ROUTES_ROOTS from '@/config/routes';
 import PostBase from '@/types/BlogPostAbstractions';
 import { AppPath, AppPathAsIs } from '@/types/Next';
 import { LanguageFlag } from '@/types/i18n';
@@ -58,7 +58,7 @@ export function getPathnameWithoutI18nFlag(pathname: AppPath): AppPathAsIs | App
   const pathnameI18nFlag = computePathnameI18nFlagUnstrict(pathname, secondSlashIndex);
   if (!isValidLanguageFlag(pathnameI18nFlag)) return pathname;
 
-  const pathnameWithouti18n = secondSlashIndex === -1 ? RoutesBase.WEBSITE_ROOT : pathname.substring(secondSlashIndex);
+  const pathnameWithouti18n = secondSlashIndex === -1 ? ROUTES_ROOTS.WEBSITE : pathname.substring(secondSlashIndex);
   return pathnameWithouti18n;
 }
 

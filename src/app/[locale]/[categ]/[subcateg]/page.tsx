@@ -3,7 +3,7 @@ import { BlogCategory, BlogSubCategoryPageProps } from '@/types/Blog';
 
 import { getBlogSubCategoriesByCategory } from '@/cache/blog';
 import { LANGUAGES } from '@/config/i18n';
-import RoutesBase from '@/config/routes';
+import ROUTES_ROOTS from '@/config/routes';
 import {
   getAllCategories,
   getAllPostsByCategoryAndSubCategoryAndLanguageFlagUnstrict,
@@ -24,8 +24,8 @@ export function generateMetadata({ params }: BlogSubCategoryPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];
 
   const validCategory = isValidCategory(category);
-  const equivRoutes = RoutesBase.WEBSITE_ROOT + category === RoutesBase.BLOG + category;
-  if (!validCategory && !equivRoutes) redirect(RoutesBase.WEBSITE_ROOT + category);
+  const equivRoutes = ROUTES_ROOTS.WEBSITE + category === ROUTES_ROOTS.BLOG + category;
+  if (!validCategory && !equivRoutes) redirect(ROUTES_ROOTS.WEBSITE + category);
 
   const subCategory = params[BlogTaxonomy.SUBCATEGORY];
   const validCombination = isValidCategoryAndSubCategoryPair(category, subCategory);

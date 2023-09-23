@@ -1,7 +1,7 @@
 import { getBlogSubCategoriesByCategory } from '@/cache/blog';
 import BlogPost from '@/components/blog/BlogPost';
 import { LANGUAGES } from '@/config/i18n';
-import RoutesBase from '@/config/routes';
+import ROUTES_ROOTS from '@/config/routes';
 import {
   getAllCategories,
   getAllPostsByCategoryAndSubCategoryUnstrict,
@@ -32,7 +32,7 @@ export function generateMetadata({ params }: BlogPostPageProps) {
   } else if (!post && isValidCategory(category)) {
     redirectToBlogCategoryPage(category);
   } else if (!post) {
-    redirect(RoutesBase.WEBSITE_ROOT + category);
+    redirect(ROUTES_ROOTS.WEBSITE + category);
   }
 
   const { title, metadescription: description } = post as PostBase;

@@ -1,12 +1,12 @@
-import RoutesBase from '@/config/routes';
+import ROUTES_ROOTS from '@/config/routes';
 import { getSlashEnvelope } from '@/lib/str';
 import { i18ns } from '../i18n';
 import { DashboardRoutes, DashboardRoutesTitles } from './utils/RoutesMapping';
 
-const BASE = getSlashEnvelope(RoutesBase.DASHBOARD);
+const BASE = getSlashEnvelope(ROUTES_ROOTS.DASHBOARD);
 
 export const DASHBOARD_ROUTES: DashboardRoutes = {
-  BASE_PAGE: RoutesBase.DASHBOARD,
+  BASE_PAGE: ROUTES_ROOTS.DASHBOARD,
   FOO_PAGE: BASE + 'foo',
   BAR_PAGE: BASE + 'bar'
 };

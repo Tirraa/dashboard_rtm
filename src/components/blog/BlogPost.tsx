@@ -1,4 +1,4 @@
-import BlogPostInner from '@/components/pagesInner/blog/BlogPost';
+import BlogPostInner from '@/components/misc/blog/BlogPost';
 import { getPostUnstrict } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';

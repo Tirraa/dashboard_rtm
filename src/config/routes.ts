@@ -1,35 +1,35 @@
 import { AppPath } from '@/types/Next';
 
-enum ERoutesBase {
-  WEBSITE_ROOT,
+enum ERoutesRoots {
+  WEBSITE,
   BLOG,
   PATCH_NOTES,
   DASHBOARD
 }
-type RoutesBaseKeys = keyof typeof ERoutesBase;
+type RoutesRootsKeys = keyof typeof ERoutesRoots;
 
-type TRoutesBase = Record<RoutesBaseKeys, AppPath>;
+type TRoutesRoots = Record<RoutesRootsKeys, AppPath>;
 
-const Routes = {
-  WEBSITE_ROOT: '/',
+const ROUTES_ROOTS_BASE = {
+  WEBSITE: '/',
   BLOG: '/'
-} satisfies Partial<TRoutesBase>;
+} satisfies Partial<TRoutesRoots>;
 
-const BLOG_ROUTES_BASE = Routes.BLOG;
-const DASHBOARD_ROUTES_BASE = Routes.WEBSITE_ROOT;
+const blogRoutesBase = ROUTES_ROOTS_BASE.BLOG;
+const dashboardRoutesBase = ROUTES_ROOTS_BASE.WEBSITE;
 
-const BlogRoutes = {
-  PATCH_NOTES: BLOG_ROUTES_BASE + 'patch-notes'
-} satisfies Partial<TRoutesBase>;
+const BLOG_ROUTES_ROOTS = {
+  PATCH_NOTES: blogRoutesBase + 'patch-notes'
+} satisfies Partial<TRoutesRoots>;
 
-const DashboardRoutes = {
-  DASHBOARD: DASHBOARD_ROUTES_BASE + 'dashboard'
-} satisfies Partial<TRoutesBase>;
+const DASHBOARD_ROUTES_ROOTS = {
+  DASHBOARD: dashboardRoutesBase + 'dashboard'
+} satisfies Partial<TRoutesRoots>;
 
-export const RoutesBase = {
-  ...Routes,
-  ...BlogRoutes,
-  ...DashboardRoutes
-} satisfies TRoutesBase;
+export const ROUTES_ROOTS = {
+  ...ROUTES_ROOTS_BASE,
+  ...BLOG_ROUTES_ROOTS,
+  ...DASHBOARD_ROUTES_ROOTS
+} satisfies TRoutesRoots;
 
-export default RoutesBase;
+export default ROUTES_ROOTS;

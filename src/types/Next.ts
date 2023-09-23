@@ -1,4 +1,5 @@
 import i18nTaxonomy from '@/taxonomies/i18n';
+import NotFoundTaxonomy from '@/taxonomies/notfound';
 import { LanguageFlag } from '@/types/i18n';
 import { ReactNode } from 'react';
 
@@ -22,3 +23,7 @@ export type AppPath = string;
 export type PathSegment = string;
 
 export type AppPathAsIs = AppPath;
+
+export type NotFoundCatchallParams = {
+  params: { [NotFoundTaxonomy.NOT_FOUND]: unknown[] };
+};

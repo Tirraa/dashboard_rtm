@@ -1,14 +1,14 @@
 import DiscordConfig from '@/config/discord';
 import { i18ns } from '@/config/i18n';
-import { RoutesBase } from '@/config/routes';
+import ROUTES_ROOTS from '@/config/routes';
 import { SitewideNavbarRoutes, SitewideNavbarRoutesTitles } from './utils/RoutesMapping';
 
-const BASE = RoutesBase.WEBSITE_ROOT;
+const BASE = ROUTES_ROOTS.WEBSITE;
 
 export const SITEWIDE_NAVBAR_ROUTES: SitewideNavbarRoutes = {
   HOME_PAGE: BASE,
-  DASHBOARD_PAGE: RoutesBase.DASHBOARD,
-  PATCH_NOTES_PAGE: RoutesBase.PATCH_NOTES,
+  DASHBOARD_PAGE: ROUTES_ROOTS.DASHBOARD,
+  PATCH_NOTES_PAGE: ROUTES_ROOTS.PATCH_NOTES,
   SUPPORT_PAGE: DiscordConfig.SUPPORT_SERVER_INVITE_LINK
 };
 

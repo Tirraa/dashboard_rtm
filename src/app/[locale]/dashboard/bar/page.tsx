@@ -1,4 +1,4 @@
-import RoutesBase from '@/config/routes';
+import ROUTES_ROOTS from '@/config/routes';
 import Link from 'next/link';
 
 export default function Page() {
@@ -72,7 +72,7 @@ export default function Page() {
         END
         <br />
       </span>
-      <Link href={RoutesBase.WEBSITE_ROOT}>Go back to the homepage</Link>
+      <Link href={ROUTES_ROOTS.WEBSITE}>Go back to the homepage</Link>
     </>
   );
 }

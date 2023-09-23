@@ -28,7 +28,7 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) => {
     const target = getLinkTarget(href);
 
     return (
-      <MenuItem key={href + title} className="p-0">
+      <MenuItem key={`${href}-${title}-navbar-menu-item`} className="p-0">
         <Link className={NAVBAR_DROPDOWN_INNER_BUTTONS_CLASSLIST} {...{ title, href, ...target }}>
           {title}
         </Link>

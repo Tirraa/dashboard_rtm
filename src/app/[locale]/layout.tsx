@@ -8,11 +8,9 @@ import { fallbackLocale } from '@/config/i18n';
 import { ProgressbarConfig } from '@/config/progressbar';
 import SessionProvider from '@/contexts/SessionProvider';
 import { I18nProviderClient, useCurrentLocale } from '@/i18n/client';
-import { LayoutBaseProps } from '@/types/Next';
+import { LayoutMinimalProps } from '@/types/CustomUtilitaryTypes';
 
-interface RootLayoutProps extends LayoutBaseProps {}
-
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }: LayoutMinimalProps) {
   return (
     <I18nProviderClient {...fallbackLocale}>
       <html lang={useCurrentLocale()}>

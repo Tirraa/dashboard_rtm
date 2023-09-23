@@ -9,6 +9,8 @@ import { getServerSession } from 'next-auth/next';
 import { setStaticParamsLocale } from 'next-international/server';
 import { redirect } from 'next/navigation';
 
+const { MAIN_BOX_ID } = DashboardSidebarDynamicRenderingConfig;
+
 interface DashboardLayoutProps extends LayoutBaseProps {}
 
 export function generateStaticParams() {
@@ -24,7 +26,7 @@ export default async function DashboardLayout({ params, children }: DashboardLay
   return (
     <div className="flex flex-1 overflow-y-auto">
       <DashboardSidebarDesktop />
-      <main className="flex flex-col w-full h-full p-0" id={DashboardSidebarDynamicRenderingConfig.MAIN_BOX_ID}>
+      <main className="flex flex-col w-full h-full p-0 overflow-auto" id={MAIN_BOX_ID}>
         <div className="h-full w-full">{children}</div>
       </main>
     </div>

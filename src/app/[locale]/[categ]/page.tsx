@@ -54,7 +54,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
   function buildPostsCollectionsSnippets() {
     Object.entries(histogram).forEach(([subCategory, posts2]) => {
       postsCollectionsSnippets[subCategory as BlogSubCategoryFromUnknownCategory] = posts2.map((post) => (
-        <BlogPostPeview key={post._raw.flattenedPath} {...{ post, lng }} />
+        <BlogPostPeview key={`${post._raw.flattenedPath}-post-snippet`} {...{ post, lng }} />
       ));
     });
   }

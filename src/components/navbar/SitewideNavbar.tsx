@@ -5,7 +5,7 @@ import NavbarElement from '@/components/_hoc/navbar/NavbarElement';
 import { NAVBAR_EXTRAS_COMPONENTS_DESKTOP, NAVBAR_EXTRAS_COMPONENTS_MOBILE } from '@/config/SitewideNavbar/Extras/utils/ComponentsMapping';
 import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsConfig';
 import SITEWIDE_NAVBAR_ROUTES, { SITEWIDE_NAVBAR_ROUTES_TITLES } from '@/config/SitewideNavbar/routesImpl';
-import RoutesBase from '@/config/routes';
+import ROUTES_ROOTS from '@/config/routes';
 import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
 import getComputedNavData from '@/lib/misc/getComputedNavData';
 import { serverCtx } from '@/lib/next';
@@ -27,7 +27,7 @@ let navbarMobileDropdownIsHidden = false;
 const buildNavbarExtrasForDesktop = () => (
   <>
     {Object.values(NAVBAR_EXTRAS_COMPONENTS_DESKTOP).map((component, index) => (
-      <Fragment key={index}>{component}</Fragment>
+      <Fragment key={`${index}-navbar-extra-desktop`}>{component}</Fragment>
     ))}
   </>
 );
@@ -35,7 +35,7 @@ const buildNavbarExtrasForDesktop = () => (
 const buildNavbarExtrasForMobile = () => (
   <>
     {Object.values(NAVBAR_EXTRAS_COMPONENTS_MOBILE).map((component, index) => (
-      <Fragment key={index}>{component}</Fragment>
+      <Fragment key={`${index}-navbar-extra-mobile`}>{component}</Fragment>
     ))}
   </>
 );
@@ -43,13 +43,14 @@ const buildNavbarExtrasForMobile = () => (
 export function buildNavbarElements({ i18nProps }: i18nComponentProps) {
   const computedNavData = getComputedNavData(SITEWIDE_NAVBAR_ROUTES, SITEWIDE_NAVBAR_ROUTES_TITLES, SITEWIDE_NAVBAR_DROPDOWNS_CONFIG);
   const navbarElements = computedNavData.map(({ i18nTitle, path, embeddedEntities }) => (
-    <NavbarElement key={`navbar-btn-${i18nTitle}${path}`} {...{ i18nProps, i18nTitle, path, embeddedEntities }} />
+    <NavbarElement key={`${i18nTitle}-${path}-navbar-btn`} {...{ i18nProps, i18nTitle, path, embeddedEntities }} />
   ));
   return navbarElements;
 }
 
 export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const mobileMenuInstanceRef = useRef<HTMLDivElement>(null);
+  const navbarInstanceRef = useRef<HTMLDivElement>(null);
   const [openNav, setOpenNav] = useState<boolean>(false);
   const globalT = getClientSideI18n();
 
@@ -81,23 +82,23 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   );
 
   useEffect(() => {
-    const navbarCollapseElement = document.getElementById(NAVBAR_ID as string);
+    const navbarElement = getRefCurrentPtr(navbarInstanceRef);
     const closeNavbarOnOutsideClick = (e: Event): void =>
-      openNav && e.target instanceof Node && navbarCollapseElement && !navbarCollapseElement.contains(e.target) ? setOpenNav(false) : undefined;
+      openNav && e.target instanceof Node && navbarElement && !navbarElement.contains(e.target) ? setOpenNav(false) : undefined;
 
     document.addEventListener('click', closeNavbarOnOutsideClick);
     return () => document.removeEventListener('click', closeNavbarOnOutsideClick);
-  }, [openNav]);
+  }, [openNav, navbarInstanceRef]);
 
   const navbarElements = buildNavbarElements({ i18nProps: { [i18nTaxonomy.LANG_FLAG]: useCurrentLocale() } });
   const desktopNavbarElements = navbarElements.map((elm, index) => (
-    <Typography key={`navbar-btn-typography-${index}`} as="li" color="blue-gray" className="p-1 font-normal">
+    <Typography key={`${index}-navbar-btn-typography-desktop`} as="li" color="blue-gray" className="p-1 font-normal">
       {elm}
     </Typography>
   ));
 
   const mobileNavbarElements = navbarElements.map((elm, index) => (
-    <Typography key={`navbar-btn-typography-${index}`} as="li" color="blue-gray" className="p-1 font-normal">
+    <Typography key={`${index}-navbar-btn-typography-mobile`} as="li" color="blue-gray" className="p-1 font-normal">
       {elm.props.embeddedEntities ? <NavbarButton {...elm.props} /> : elm}
     </Typography>
   ));
@@ -120,12 +121,13 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   return (
     <Navbar
       id={NAVBAR_ID as string}
+      ref={navbarInstanceRef}
       color="blue"
       fullWidth={true}
       className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full overflow-hidden rounded-none py-2 px-4 lg:px-8 lg:py-4 lg:h-[82px]"
     >
       <div className="flex items-center justify-between text-white">
-        <Link href={RoutesBase.WEBSITE_ROOT}>
+        <Link href={ROUTES_ROOTS.WEBSITE}>
           <div className="flex">
             <Image src="/assets/rtm-logo.svg" height={LOGO_SIZE_PX_VALUE} width={LOGO_SIZE_PX_VALUE} alt={`${brand} (${logo})`} />
           </div>
