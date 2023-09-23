@@ -1,6 +1,7 @@
 import options from '@/app/api/auth/[...nextauth]/options';
 import DashboardSidebarDesktop from '@/components/dashboard/DashboardSidebarDesktop';
 import { AUTH_ROUTES } from '@/config/Auth/routesImpl';
+import DashboardSidebarDynamicRenderingConfig from '@/config/DashboardSidebar/dynamicRenderingConfig';
 import { getStaticParams } from '@/i18n/server';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { LayoutBaseProps } from '@/types/Next';
@@ -23,7 +24,7 @@ export default async function DashboardLayout({ params, children }: DashboardLay
   return (
     <div className="flex flex-1 overflow-y-auto">
       <DashboardSidebarDesktop />
-      <main className="flex flex-col w-full h-full p-0" id="main-box-id">
+      <main className="flex flex-col w-full h-full p-0" id={DashboardSidebarDynamicRenderingConfig.MAIN_BOX_ID}>
         <div className="h-full w-full">{children}</div>
       </main>
     </div>
