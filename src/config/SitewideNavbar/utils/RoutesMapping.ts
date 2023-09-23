@@ -4,8 +4,7 @@ enum ESitewideNavbarRoutes {
   HOME_PAGE,
   DASHBOARD_PAGE,
   PATCH_NOTES_PAGE,
-  SUPPORT_PAGE,
-  LOGIN_PAGE
+  SUPPORT_PAGE
 }
 
 export type SitewideNavbarRoutesKeys = keyof typeof ESitewideNavbarRoutes;

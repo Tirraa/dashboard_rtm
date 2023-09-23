@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export type PhantomLayoutProps = {
+export type LayoutMinimalProps = {
   children: ReactNode;
 };
 

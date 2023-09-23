@@ -11,8 +11,12 @@ export default {
     dashboard: 'Dashboard',
     'patch-notes': 'Patch notes',
     assistance: 'Assistance',
-    'discord-bot': 'Discord bot',
-    login: 'Login'
+    'discord-bot': 'Discord bot'
+  },
+
+  auth: {
+    login: 'Login',
+    logout: 'Logout'
   },
 
   dashboard: {

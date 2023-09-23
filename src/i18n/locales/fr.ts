@@ -9,8 +9,12 @@ export default {
     dashboard: 'Dashboard',
     'patch-notes': 'Patch notes',
     assistance: 'Support',
-    'discord-bot': 'Bot Discord',
-    login: 'Connexion'
+    'discord-bot': 'Bot Discord'
+  },
+
+  auth: {
+    login: 'Connexion',
+    logout: 'Déconnexion'
   },
 
   dashboard: {

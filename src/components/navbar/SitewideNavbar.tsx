@@ -2,6 +2,7 @@
 
 import NavbarConfig from '@/components/_config/_styles/Navbar';
 import NavbarElement from '@/components/_hoc/navbar/NavbarElement';
+import { NAVBAR_EXTRAS_COMPONENTS_DESKTOP, NAVBAR_EXTRAS_COMPONENTS_MOBILE } from '@/config/SitewideNavbar/Extras/utils/ComponentsMapping';
 import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsConfig';
 import SITEWIDE_NAVBAR_ROUTES, { SITEWIDE_NAVBAR_ROUTES_TITLES } from '@/config/SitewideNavbar/routesImpl';
 import RoutesBase from '@/config/routes';
@@ -14,7 +15,7 @@ import { i18nComponentProps } from '@/types/Next';
 import { Collapse, IconButton, Navbar, Typography } from '@material-tailwind/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FunctionComponent, useEffect, useRef, useState } from 'react';
+import { Fragment, FunctionComponent, useEffect, useRef, useState } from 'react';
 import NavbarButton from './NavbarButton';
 
 interface SitewideNavbarProps {}
@@ -22,6 +23,22 @@ interface SitewideNavbarProps {}
 const { NAVBAR_ID, NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE, LOGO_SIZE_PX_VALUE } = NavbarConfig;
 
 let navbarMobileDropdownIsHidden = false;
+
+const buildNavbarExtrasForDesktop = () => (
+  <>
+    {Object.values(NAVBAR_EXTRAS_COMPONENTS_DESKTOP).map((component, index) => (
+      <Fragment key={index}>{component}</Fragment>
+    ))}
+  </>
+);
+
+const buildNavbarExtrasForMobile = () => (
+  <>
+    {Object.values(NAVBAR_EXTRAS_COMPONENTS_MOBILE).map((component, index) => (
+      <Fragment key={index}>{component}</Fragment>
+    ))}
+  </>
+);
 
 export function buildNavbarElements({ i18nProps }: i18nComponentProps) {
   const computedNavData = getComputedNavData(SITEWIDE_NAVBAR_ROUTES, SITEWIDE_NAVBAR_ROUTES_TITLES, SITEWIDE_NAVBAR_DROPDOWNS_CONFIG);
@@ -85,13 +102,15 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
     </Typography>
   ));
 
-  const desktopNavbarLastElement = desktopNavbarElements.pop();
   const desktopNavList = (
     <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">{desktopNavbarElements}</ul>
   );
 
   const mobileNavList = (
-    <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">{mobileNavbarElements}</ul>
+    <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">
+      {mobileNavbarElements}
+      {buildNavbarExtrasForMobile()}
+    </ul>
   );
 
   const logo = globalT('ugly.logo');
@@ -137,7 +156,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
             )}
           </IconButton>
         </div>
-        <div className="hidden lg:block">{desktopNavbarLastElement}</div>
+        <div className="hidden lg:block">{buildNavbarExtrasForDesktop()}</div>
       </div>
       <Collapse ref={mobileMenuInstanceRef} className="flex justify-center text-center" open={openNav}>
         {mobileNavList}

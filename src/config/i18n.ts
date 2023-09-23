@@ -11,7 +11,8 @@ export enum ELanguagesFlag {
 export const i18ns = {
   navbar: 'navbar',
   dashboard: 'dashboard',
-  blogCategories: 'blog-categories'
+  blogCategories: 'blog-categories',
+  auth: 'auth'
 } as const;
 
 export const DEFAULT_LANGUAGE = defaultLanguage._infos.lng;

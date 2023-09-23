@@ -1,4 +1,4 @@
-import { RoutesDefinition, RoutesReactElement, RoutesTitles } from '@/types/RoutesMapping';
+import { RoutesDefinition, RoutesReactElements, RoutesTitles } from '@/types/RoutesMapping';
 
 enum EDashboardRoutes {
   BASE_PAGE,
@@ -9,4 +9,4 @@ enum EDashboardRoutes {
 export type DashboardRoutesKeys = keyof typeof EDashboardRoutes;
 export type DashboardRoutes = RoutesDefinition<DashboardRoutesKeys>;
 export type DashboardRoutesTitles = RoutesTitles<DashboardRoutesKeys>;
-export type DashboardRoutesSidebarReactElements = RoutesReactElement<DashboardRoutesKeys>;
+export type DashboardRoutesSidebarReactElements = RoutesReactElements<DashboardRoutesKeys>;

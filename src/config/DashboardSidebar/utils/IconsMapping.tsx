@@ -1,11 +1,9 @@
-'use client';
-
 import DashboardSidebarButton from '@/components/dashboard/DashboardSidebarButton';
 import { AppPath } from '@/types/Next';
 import { ComponentType } from 'react';
 import { IconBaseProps } from 'react-icons';
-import dashboardRoutes from '../routesImpl';
-import sidebarRoutesIcons from '../sidebarRoutesIcons';
+import DASHBOARD_ROUTES from '../routesImpl';
+import SIDEBAR_ROUTES_ICONS from '../sidebarRoutesIcons';
 import { DashboardRoutes, DashboardRoutesKeys, DashboardRoutesSidebarReactElements } from './RoutesMapping';
 
 export type DashboardRoutesIcons = {
@@ -17,13 +15,13 @@ const createSidebarComponent = (__SidebarIcon: ComponentType<IconBaseProps>, hre
 );
 
 const computedDashboardRoutesSidebarComponents: Partial<DashboardRoutesSidebarReactElements> = {};
-Object.entries(sidebarRoutesIcons).forEach(([k, icon]) => {
+Object.entries(SIDEBAR_ROUTES_ICONS).forEach(([k, icon]) => {
   const k2 = k as DashboardRoutesKeys;
-  const href = dashboardRoutes[k2];
+  const href = DASHBOARD_ROUTES[k2];
   computedDashboardRoutesSidebarComponents[k2] = createSidebarComponent(icon, href);
 });
 
-export const dashboardRoutesSidebarComponents: DashboardRoutesSidebarReactElements =
+export const DASHBOARD_ROUTES_SIDEBAR_COMPONENTS: DashboardRoutesSidebarReactElements =
   computedDashboardRoutesSidebarComponents as DashboardRoutesSidebarReactElements;
 
-export default dashboardRoutesSidebarComponents;
+export default DASHBOARD_ROUTES_SIDEBAR_COMPONENTS;
