@@ -12,7 +12,7 @@ import { LayoutMinimalProps } from '@/types/CustomUtilitaryTypes';
 
 export default function RootLayout({ children }: LayoutMinimalProps) {
   return (
-    <I18nProviderClient {...fallbackLocale}>
+    <I18nProviderClient fallbackLocale={fallbackLocale}>
       <html lang={useCurrentLocale()}>
         <body className="flex flex-col h-screen w-full p-0 m-0">
           <SplashScreen />
