@@ -1,7 +1,7 @@
 'use client';
 
 import RtmButton from '@/components/cta/RtmButton';
-import DiscordConfig from '@/config/discord';
+import DISCORD_CONFIG from '@/config/discord';
 import { getClientSideI18n } from '@/i18n/client';
 import { CogIcon } from '@heroicons/react/20/solid';
 import Image from 'next/image';
@@ -27,7 +27,7 @@ export const HomepageInner: FunctionComponent<HomepageInnerProps> = () => {
       <div className="flex flex-col items-center align-center justify-center">
         <Image src="/assets/rtm-txt-logo.svg" {...{ style, width, height }} alt={`${brand} (${logo})`} className="flex" loading="eager" />
         <h1 className="mt-2">{brand}</h1>
-        <RtmButton label={inviteTheBot} __IconComponent={<CogIcon className="h-7 w-7" />} href={DiscordConfig.BOT_INVITE_LINK} />
+        <RtmButton label={inviteTheBot} __IconComponent={<CogIcon className="h-7 w-7" />} href={DISCORD_CONFIG.BOT_INVITE_LINK} />
       </div>
     </div>
   );

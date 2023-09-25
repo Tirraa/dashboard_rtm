@@ -82,18 +82,19 @@ export const DashboardSidebarDesktop: FunctionComponent<DashboardSidebarProps> =
   }
 
   function injectMarginLeftInMainElement(marginLeft: number = -1) {
-    const mainBoxInstance = document.getElementById(MAIN_BOX_ID);
+    function getComputedMarginLeft(marginLeft: number) {
+      if (marginLeft !== -1) return marginLeft;
+      const [computedOnTheFlyMarginLeft] = computeWidthAndSeparatorWidthDynamically();
+      return computedOnTheFlyMarginLeft;
+    }
 
+    const mainBoxInstance = document.getElementById(MAIN_BOX_ID);
     if (!mainBoxInstance) {
       console.error(sidebarErrorsVocabAccessor('UNABLE_TO_RETRIEVE_MAIN_ELEMENT'));
       return;
     }
 
-    let computedMarginLeft = marginLeft;
-    if (computedMarginLeft === -1) {
-      const [computedOnTheFlyMarginLeft] = computeWidthAndSeparatorWidthDynamically();
-      computedMarginLeft = computedOnTheFlyMarginLeft;
-    }
+    const computedMarginLeft = getComputedMarginLeft(marginLeft);
     mainBoxInstance.style.marginLeft = computedMarginLeft + 'px';
   }
 

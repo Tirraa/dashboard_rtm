@@ -1,4 +1,4 @@
-import DiscordConfig from '@/config/discord';
+import DISCORD_CONFIG from '@/config/discord';
 import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { SitewideNavbarRoutes, SitewideNavbarRoutesTitles } from './utils/RoutesMapping';
@@ -9,7 +9,7 @@ export const SITEWIDE_NAVBAR_ROUTES: SitewideNavbarRoutes = {
   HOME_PAGE: BASE,
   DASHBOARD_PAGE: ROUTES_ROOTS.DASHBOARD,
   PATCH_NOTES_PAGE: ROUTES_ROOTS.PATCH_NOTES,
-  SUPPORT_PAGE: DiscordConfig.SUPPORT_SERVER_INVITE_LINK
+  SUPPORT_PAGE: DISCORD_CONFIG.SUPPORT_SERVER_INVITE_LINK
 };
 
 const navbar = i18ns.navbar;
