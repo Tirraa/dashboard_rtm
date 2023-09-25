@@ -2,7 +2,7 @@ import { Category, ErrorsDetectionFeedback } from '../types/metadatas';
 import getErrorLabelForDefects from './getErrorLabelForDefects';
 
 export function checkCategories(sysCategories: Category[], userDeclaredCategories: Category[]): '' | ErrorsDetectionFeedback {
-  let feedback = '';
+  let feedback: ErrorsDetectionFeedback = '';
   const missingDeclaredCategories = sysCategories.filter((category) => !userDeclaredCategories.includes(category));
   const unknownCategories: Category[] = [];
 

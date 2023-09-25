@@ -3,7 +3,7 @@ import { FLAGS } from '../config';
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
 import TFlagsAssoc, { MaybeIncorrectTFlagsAssoc } from '../types/flags';
 
-const { ARGUMENTS_PARSER: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
+const { IMPOSSIBLE_TO_START: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
 function getRetrievedValuesFromArgs(args: string[]): MaybeIncorrectTFlagsAssoc {
   const indexOfPostsFolder = args.indexOf(FLAGS.POSTS_FOLDER);

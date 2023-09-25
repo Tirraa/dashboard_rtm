@@ -7,7 +7,7 @@ export function checkSubCategories(
   userDeclaredData: DeclaredCategoriesMetadatas,
   oldFeedback: ErrorsDetectionFeedback
 ): '' | ErrorsDetectionFeedback {
-  let feedback = oldFeedback;
+  let feedback: ErrorsDetectionFeedback = oldFeedback;
   const sysCategories = Object.keys(sysData);
   const userDeclaredCategories = Object.keys(userDeclaredData);
   const missingDeclaredSubCategories: CategoriesMetadatas = {};

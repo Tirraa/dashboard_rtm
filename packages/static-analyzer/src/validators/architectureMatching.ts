@@ -13,7 +13,7 @@ export function declaredBlogArchitectureValidator(
 ): '' | ErrorsDetectionFeedback {
   const ERROR_PREFIX_TAIL = `(${blogConfigFilePath})`;
 
-  let feedback = '';
+  let feedback: ErrorsDetectionFeedback = '';
   feedback = checkCategories(Object.keys(sysData), Object.keys(userDeclaredData));
   feedback = checkSubCategories(sysData, userDeclaredData, feedback);
   feedback = prefixFeedback(feedback, ERROR_PREFIX + ' ' + ERROR_PREFIX_TAIL + '\n');

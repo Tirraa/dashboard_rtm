@@ -7,7 +7,7 @@ import TFlagsAssoc from '../types/flags';
 import { CategoriesMetadatas, DeclaredCategoriesMetadatas } from '../types/metadatas';
 import isValidCategoryOrSubcategory, { NAMING_CONSTRAINTS_MSG } from '../validators/categoriesConvention';
 
-const { METADATAS_BUILDERS: ERROR_HEAD } = CRITICAL_ERRORS_STR;
+const { INTERRUPTED: ERROR_HEAD } = CRITICAL_ERRORS_STR;
 const CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL = '\n' + NAMING_CONSTRAINTS_MSG + '\n';
 
 /**

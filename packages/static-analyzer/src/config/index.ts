@@ -6,9 +6,11 @@ export const FLAGS: TFlagsAssoc = {
   I18N_DEFAULT_LOCALE_FILE: '--default-i18n-locale'
 };
 
+export const LOCALES_INFOS_ROOT_KEY: string = '_infos';
 export const BLOG_CATEGORIES_I18N_ROOT_KEY: string = 'blog-categories';
 export const BLOG_ARCHITECTURE_TYPE_STR: string = 'BlogArchitecture';
 
+export const LOCALES_LNG_INFOS_KEY: string = 'lng';
 export const I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = ['_title'];
 export const LIST_ELEMENT_PREFIX: string = '\n - ';
 

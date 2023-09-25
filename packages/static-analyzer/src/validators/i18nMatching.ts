@@ -14,7 +14,7 @@ export function declaredI18nValidator(
   i18nConfigFilePath: string
 ): '' | ErrorsDetectionFeedback {
   const ERROR_PREFIX_TAIL = `(${i18nConfigFilePath})`;
-  let feedback = '';
+  let feedback: ErrorsDetectionFeedback = '';
 
   const i18nCategoriesKeys = Object.keys(i18nBlogCategoriesData);
   const i18nCategoriesMetadatas: CategoriesMetadatas = {};

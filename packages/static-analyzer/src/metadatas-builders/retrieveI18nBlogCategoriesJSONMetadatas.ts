@@ -5,7 +5,7 @@ import { objInnerToObj } from '../lib/etc';
 import getRawDataFromBracesDeclaration from '../lib/getRawDataFromBracesDeclaration';
 import { I18nJSONPart } from '../types/metadatas';
 
-const { METADATAS_BUILDERS: ERROR_SUFFIX } = CRITICAL_ERRORS_STR;
+const { INTERRUPTED: ERROR_SUFFIX } = CRITICAL_ERRORS_STR;
 
 /**
  * @throws {Error}
