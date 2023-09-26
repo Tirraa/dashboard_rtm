@@ -21,11 +21,10 @@ export const DashboardSidebarButton: FunctionComponent<DashboardSidebarButtonPro
   const currentPathname = usePathname();
   const classList = hrefMatchesPathname(href, currentPathname, ROUTES_ROOTS.DASHBOARD) ? ACTIVE : INACTIVE;
 
-  return (
-    <div {...classList}>
-      <__SidebarIcon {...ICON_PROPS} />
-    </div>
-  );
+  const pSize = SidebarButtonStyle.sidebarIconProps.size;
+  const size = typeof pSize === 'number' ? pSize * 2 : typeof pSize === 'string' ? parseFloat(pSize) : null;
+
+  return <__SidebarIcon {...ICON_PROPS} {...classList} style={size !== null ? { width: size + 'px', height: 'auto' } : {}} />;
 };
 
 export default DashboardSidebarButton;

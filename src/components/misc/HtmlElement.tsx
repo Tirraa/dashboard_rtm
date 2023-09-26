@@ -18,7 +18,7 @@ const HtmlElement: FunctionComponent<HtmlElementProps> = ({ children }) => (
       <NextTopLoader {...{ ...PROGRESSBAR_CONFIG }} />
       <SessionProvider>
         <SitewideNavbar />
-        <div className="flex flex-1">{children}</div>
+        {children}
       </SessionProvider>
     </body>
   </html>
