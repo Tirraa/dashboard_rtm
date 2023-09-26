@@ -5,7 +5,8 @@ import { LanguageFlag } from '@/types/i18n';
 export type VocabBase = typeof defaultLanguage;
 export enum ELanguagesFlag {
   fr,
-  en
+  en,
+  de
 }
 
 export const i18ns = {
