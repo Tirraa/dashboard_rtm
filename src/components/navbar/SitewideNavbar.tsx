@@ -20,7 +20,7 @@ import NavbarButton from './NavbarButton';
 
 interface SitewideNavbarProps {}
 
-const { NAVBAR_ID, NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE, LOGO_SIZE_PX_VALUE } = NavbarConfig;
+const { NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE, LOGO_SIZE_PX_VALUE } = NavbarConfig;
 
 let navbarMobileDropdownIsHidden = false;
 
@@ -120,11 +120,10 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   // {ToDo} use a formatter for the img alt
   return (
     <Navbar
-      id={NAVBAR_ID as string}
       ref={navbarInstanceRef}
       color="blue"
       fullWidth={true}
-      className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full overflow-hidden rounded-none py-2 px-4 lg:px-8 lg:py-4 lg:h-[82px]"
+      className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4"
     >
       <div className="flex items-center justify-between text-white">
         <Link href={ROUTES_ROOTS.WEBSITE}>

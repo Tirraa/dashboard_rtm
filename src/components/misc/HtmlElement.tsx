@@ -13,7 +13,7 @@ interface HtmlElementProps extends LayoutMinimalProps {}
 
 const HtmlElement: FunctionComponent<HtmlElementProps> = ({ children }) => (
   <html lang={useCurrentLocale()}>
-    <body className="flex flex-col h-screen w-full p-0 m-0">
+    <body className="flex flex-col min-h-screen w-full p-0 m-0">
       <SplashScreen />
       <NextTopLoader {...{ ...PROGRESSBAR_CONFIG }} />
       <SessionProvider>
