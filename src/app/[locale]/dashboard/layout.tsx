@@ -26,7 +26,7 @@ export default async function DashboardLayout({ params, children }: DashboardLay
   return (
     <>
       <DashboardSidebarDesktop />
-      <div className="flex flex-col w-full h-full p-0 overflow-auto" id={DASHBOARD_LAYOUT_MAIN_WRAPPER_ID}>
+      <div className="flex flex-1 p-0 overflow-auto" id={DASHBOARD_LAYOUT_MAIN_WRAPPER_ID}>
         <main className="h-full w-full">{children}</main>
       </div>
     </>
