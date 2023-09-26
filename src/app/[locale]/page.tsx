@@ -13,7 +13,7 @@ export default function Page({ params }: i18nPageProps) {
   setStaticParamsLocale(lng);
 
   return (
-    <main className="flex flex-1 flex-col align-center justify-center text-center p-0">
+    <main className="m-auto text-center">
       <HomepageInner />
     </main>
   );

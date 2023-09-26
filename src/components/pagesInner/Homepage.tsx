@@ -23,12 +23,10 @@ export const HomepageInner: FunctionComponent<HomepageInnerProps> = () => {
   const inviteTheBot = globalT('vocab.invite-the-bot');
 
   return (
-    <div className="m-auto">
-      <div className="flex flex-col items-center align-center justify-center">
-        <Image src="/assets/rtm-txt-logo.svg" {...{ style, width, height }} alt={`${brand} (${logo})`} className="flex" loading="eager" />
-        <h1 className="mt-2">{brand}</h1>
-        <RtmButton label={inviteTheBot} __IconComponent={<CogIcon className="h-7 w-7" />} href={DISCORD_CONFIG.BOT_INVITE_LINK} />
-      </div>
+    <div className="flex flex-col items-center align-center justify-center">
+      <Image src="/assets/rtm-txt-logo.svg" {...{ style, width, height }} alt={`${brand} (${logo})`} className="flex" loading="eager" />
+      <h1 className="mt-2">{brand}</h1>
+      <RtmButton label={inviteTheBot} __IconComponent={<CogIcon className="h-7 w-7" />} href={DISCORD_CONFIG.BOT_INVITE_LINK} />
     </div>
   );
 };
