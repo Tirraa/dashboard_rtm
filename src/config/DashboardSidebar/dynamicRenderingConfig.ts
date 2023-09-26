@@ -1,5 +1,5 @@
 type TDashboardSidebarDynamicRenderingConfig = {
-  MAIN_BOX_ID: string;
+  DASHBOARD_LAYOUT_MAIN_WRAPPER_ID: string;
   ICON_CLASS: string;
   ICON_SEPARATOR_CLASS: string;
   ICON_SEPARATOR_WIDTH_FACTOR: number;
@@ -8,7 +8,7 @@ type TDashboardSidebarDynamicRenderingConfig = {
 };
 
 export const DashboardSidebarDynamicRenderingConfig: TDashboardSidebarDynamicRenderingConfig = {
-  MAIN_BOX_ID: 'main-box-id',
+  DASHBOARD_LAYOUT_MAIN_WRAPPER_ID: 'main-box-id',
   ICON_CLASS: 'sidebar-icon',
   ICON_SEPARATOR_CLASS: 'sidebar-icon-separator',
   ICON_SEPARATOR_WIDTH_FACTOR: 0.8,

@@ -7,7 +7,7 @@ interface SidebarBtnSeparatorProps {
 
 const DEFAULT_STYLE_VALUE = {};
 
-const STYLING_CLASSLIST = 'relative top-2 m-auto';
+const STYLING_CLASSLIST = 'm-auto my-2';
 
 const { ICON_SEPARATOR_CLASS } = DashboardSidebarDynamicRenderingConfig;
 export const SidebarBtnSeparator: FunctionComponent<SidebarBtnSeparatorProps> = ({ style: styleValue }) => (

@@ -1,7 +1,7 @@
 import DashboardSidebarDynamicRenderingConfig from '@/config/DashboardSidebar/dynamicRenderingConfig';
 import IButtonStyleReactIcon from './_types/IButtonStyleReactIcon';
 
-const COMMONS = 'max-w-full transition-all text-white flex w-fit p-3 rounded-lg inline-block';
+const COMMONS = 'flex max-w-full text-white w-fit p-3 rounded-lg';
 
 export const SidebarButtonStyle: IButtonStyleReactIcon = {
   isActiveClassList: COMMONS + ' ' + 'bg-purple-800',

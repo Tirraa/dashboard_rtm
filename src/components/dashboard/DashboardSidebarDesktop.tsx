@@ -11,18 +11,23 @@ import { computeHTMLElementHeight, computeHTMLElementWidth } from '@/lib/html';
 import ComputedNodeCtx from '@/lib/misc/executionCtx';
 import { serverCtx } from '@/lib/next';
 import Link from 'next/link';
-import { FunctionComponent, ReactElement, useEffect, useLayoutEffect, useState } from 'react';
+import { FunctionComponent, ReactElement, ReactNode, useEffect, useLayoutEffect, useState } from 'react';
 import SidebarBtnSeparator from './SidebarBtnsSeparator';
 
 interface DashboardSidebarProps {}
 
-const { MAIN_BOX_ID, ICON_CLASS: SIDEBAR_ICON_CLASS, ICON_SEPARATOR_WIDTH_FACTOR, ICON_MARGIN_X_FACTOR } = DashboardSidebarDynamicRenderingConfig;
+const {
+  DASHBOARD_LAYOUT_MAIN_WRAPPER_ID,
+  ICON_CLASS: SIDEBAR_ICON_CLASS,
+  ICON_SEPARATOR_WIDTH_FACTOR,
+  ICON_MARGIN_X_FACTOR
+} = DashboardSidebarDynamicRenderingConfig;
 
 const { NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE, NAVBAR_ID } = NavbarConfig;
 
 let desktopSidebarIsHidden = true;
 
-function sidebarBtnsGenerator(separatorWidth: number) {
+function generateSidebarBtns(separatorWidth: number): ReactNode[] {
   const keys = Object.keys(DASHBOARD_ROUTES_SIDEBAR_COMPONENTS);
   const lastKey = keys[keys.length - 1];
   const sidebarBtnsSeparator = <SidebarBtnSeparator style={{ width: separatorWidth }} />;
@@ -34,7 +39,7 @@ function sidebarBtnsGenerator(separatorWidth: number) {
     const title = globalT(i18nPath);
 
     return (
-      <div key={`${k}-sidebar-btn-component`} className="flex flex-col items-center m-2">
+      <div key={`${k}-sidebar-btn-component`} className="flex flex-col items-center">
         <Link {...{ title, href }} className={SIDEBAR_ICON_CLASS}>
           <span className="sr-only">{title}</span>
           {btnComponent}
@@ -88,7 +93,7 @@ export const DashboardSidebarDesktop: FunctionComponent<DashboardSidebarProps> =
       return computedOnTheFlyMarginLeft;
     }
 
-    const mainBoxInstance = document.getElementById(MAIN_BOX_ID);
+    const mainBoxInstance = document.getElementById(DASHBOARD_LAYOUT_MAIN_WRAPPER_ID);
     if (!mainBoxInstance) {
       console.error(sidebarErrorsVocabAccessor('UNABLE_TO_RETRIEVE_MAIN_ELEMENT'));
       return;
@@ -148,7 +153,7 @@ export const DashboardSidebarDesktop: FunctionComponent<DashboardSidebarProps> =
 
   return (
     <aside className="fixed overflow-y-auto w-0 border-r-[1px] bg-black" style={{ width: dynamicWidth, bottom: '0', left: '0', top: dynamicTop }}>
-      <div className="flex flex-col [&>*:first-child]:mt-5 [&>*:last-child]:mb-5">{sidebarBtnsGenerator(dynamicSeparatorWidth)}</div>
+      <div className="flex flex-col my-5">{generateSidebarBtns(dynamicSeparatorWidth)}</div>
     </aside>
   );
 };
