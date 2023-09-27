@@ -7,7 +7,7 @@ import NavbarButton from './NavbarButton';
 
 interface NavbarLoginButtonProps {}
 
-const NavbarLoginButton: FunctionComponent<NavbarLoginButtonProps> = () => {
+export const NavbarLoginButton: FunctionComponent<NavbarLoginButtonProps> = () => {
   const { data: session } = useSession();
 
   if (session) return <NavbarButton i18nTitle={'auth.logout'} onClick={() => signOut()} />;
