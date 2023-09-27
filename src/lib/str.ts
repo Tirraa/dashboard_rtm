@@ -7,6 +7,16 @@ import { getPathnameWithoutI18nFlag } from './i18n';
 type DescriptionAsIs = string;
 type CroppedDescription = string;
 
+function deleteTrailingSlashes(str: string): string {
+  let endIndex = str.length;
+
+  while (endIndex > 0 && str.charAt(endIndex - 1) === '/') endIndex -= 1;
+  if (endIndex === str.length) return str;
+
+  const stringWithoutTrailingSlashes = str.substring(0, endIndex);
+  return stringWithoutTrailingSlashes;
+}
+
 const surroundString = (str: string, envelope: string): string =>
   (!str.startsWith(envelope) ? envelope : '') + str + (!str.endsWith(envelope) ? envelope : '');
 
@@ -45,7 +55,7 @@ export function getLastPathPart(path: AppPath): AppPathAsIs | PathSegment {
 
 export const gsub = (str: string, needle: string, replaceWith: string): string => str.split(needle).join(replaceWith);
 
-export const buildPathFromParts = (...args: PathSegment[]): AppPath => args.join('/');
+export const buildPathFromParts = (...args: PathSegment[]): AppPath => args.map(deleteTrailingSlashes).join('/');
 
 export const buildAbsolutePathFromParts = (...args: PathSegment[]): AppPath => {
   const path = buildPathFromParts(...args);
