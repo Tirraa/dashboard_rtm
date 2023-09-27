@@ -7,8 +7,10 @@ import { getPathnameWithoutI18nFlag } from './i18n';
 type DescriptionAsIs = string;
 type CroppedDescription = string;
 
-export const getSlashEnvelope = (str: string, slashSymbol: '/' | '\\' = '/'): string =>
-  (str.charAt(0) !== slashSymbol ? slashSymbol : '') + str + (str.charAt(str.length - 1) !== slashSymbol ? slashSymbol : '');
+const surroundString = (str: string, envelope: string): string =>
+  (!str.startsWith(envelope) ? envelope : '') + str + (!str.endsWith(envelope) ? envelope : '');
+
+export const getSlashEnvelope = (str: string): string => surroundString(str, '/');
 
 export function indexOfNthOccurrence(strHaystack: string, needle: string, n: number): -1 | number {
   let index = -1;

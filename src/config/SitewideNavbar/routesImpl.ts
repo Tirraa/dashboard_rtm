@@ -1,9 +1,10 @@
 import DISCORD_CONFIG from '@/config/discord';
 import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
+import { getSlashEnvelope } from '@/lib/str';
 import { SitewideNavbarRoutes, SitewideNavbarRoutesTitles } from './utils/RoutesMapping';
 
-const BASE = ROUTES_ROOTS.WEBSITE;
+const BASE = getSlashEnvelope(ROUTES_ROOTS.WEBSITE);
 
 export const SITEWIDE_NAVBAR_ROUTES: SitewideNavbarRoutes = {
   HOME_PAGE: BASE,

@@ -3,7 +3,7 @@ import ROUTES_ROOTS from '@/config/routes';
 import PostBase from '@/types/BlogPostAbstractions';
 import { AppPath, AppPathAsIs } from '@/types/Next';
 import { LanguageFlag } from '@/types/i18n';
-import { gsub, indexOfNthOccurrence } from './str';
+import { indexOfNthOccurrence } from './str';
 
 const isValidLanguageFlag = (key: string): boolean => (LANGUAGES as string[]).includes(key);
 
@@ -47,7 +47,8 @@ function computePathnameI18nFlagStrict(pathname: AppPath, providedEndIndex?: num
 export function getBlogPostPathWithoutI18nPart(post: PostBase): AppPath {
   const langFlag = getBlogPostLanguageFlagFromPostObj(post);
   if (langFlag === DEFAULT_LANGUAGE) return post.url;
-  return gsub(post.url, `/${langFlag}/`, '/');
+  const blogPostPathWithoutI18nPart = post.url.replace(`/${langFlag}/`, '/');
+  return blogPostPathWithoutI18nPart;
 }
 
 export const getBlogPostLanguageFlag = (post: PostBase): LanguageFlag => getBlogPostLanguageFlagFromPostObj(post);
