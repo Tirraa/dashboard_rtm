@@ -78,14 +78,19 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
     []
   );
 
-  useEffect(() => {
-    const navbarElement = getRefCurrentPtr(navbarInstanceRef);
-    const closeNavbarOnOutsideClick = (e: Event): void =>
-      openNav && e.target instanceof Node && navbarElement && !navbarElement.contains(e.target) ? setOpenNav(false) : undefined;
+  useEffect(
+    () => {
+      const navbarElement = getRefCurrentPtr(navbarInstanceRef);
+      const closeNavbarOnOutsideClick = (e: Event): void => {
+        if (navbarElement && openNav && e.target instanceof Node && !navbarElement.contains(e.target)) setOpenNav(false);
+      };
 
-    document.addEventListener('click', closeNavbarOnOutsideClick);
-    return () => document.removeEventListener('click', closeNavbarOnOutsideClick);
-  }, [openNav, navbarInstanceRef]);
+      document.addEventListener('click', closeNavbarOnOutsideClick);
+      return () => document.removeEventListener('click', closeNavbarOnOutsideClick);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [openNav]
+  );
 
   const navbarElements = buildNavbarElements({ i18nProps: { [i18nTaxonomy.LANG_FLAG]: useCurrentLocale() } });
   const desktopNavbarElements = navbarElements.map((elm, index) => (
