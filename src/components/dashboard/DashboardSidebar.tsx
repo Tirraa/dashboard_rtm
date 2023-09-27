@@ -22,7 +22,7 @@ function sidebarBtnsGenerator(): ReactNode[] {
 
     return (
       <li key={`${k}-sidebar-btn-component`}>
-        <Link {...{ title, href }} className="flex flex-col max-w-full text-white w-fit rounded-lg">
+        <Link {...{ title, href }} className="flex flex-col max-w-full w-fit rounded-lg">
           <span className="sr-only">{title}</span>
           {btnComponent}
         </Link>
