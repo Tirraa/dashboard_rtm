@@ -5,7 +5,7 @@ import DASHBOARD_ROUTES_SIDEBAR_COMPONENTS from '@/config/DashboardSidebar/utils
 import { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMapping';
 import { getClientSideI18n } from '@/i18n/client';
 import Link from 'next/link';
-import { FunctionComponent, ReactElement, ReactNode, useLayoutEffect } from 'react';
+import { FunctionComponent, ReactElement, ReactNode } from 'react';
 
 interface DashboardSidebarProps {}
 
@@ -33,17 +33,6 @@ function sidebarBtnsGenerator(): ReactNode[] {
 }
 
 export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => {
-  useLayoutEffect(
-    () => {
-      const effectClasses = ['h-screen', 'overflow-hidden'];
-
-      document.body.classList.add(...effectClasses);
-      return () => document.body.classList.remove(...effectClasses);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
-
   return (
     <aside className="bg-black w-fit border-r-[1px] hidden lg:flex">
       <nav className="p-4 overflow-y-auto">

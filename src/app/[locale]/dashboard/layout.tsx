@@ -1,5 +1,5 @@
 import options from '@/app/api/auth/[...nextauth]/options';
-import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
+import DashboardLayoutClient from '@/components/dashboard/DashboardLayoutClient';
 import { AUTH_ROUTES } from '@/config/Auth/routesImpl';
 import { getStaticParams } from '@/i18n/server';
 import i18nTaxonomy from '@/taxonomies/i18n';
@@ -20,10 +20,5 @@ export default async function DashboardLayout({ params, children }: DashboardLay
   const session = await getServerSession(options);
   if (!session) redirect(AUTH_ROUTES.LOGIN);
 
-  return (
-    <div className="flex flex-1 overflow-y-auto flex-col lg:flex-row">
-      <DashboardSidebar />
-      <main className="flex-1 p-4 overflow-y-auto">{children}</main>
-    </div>
-  );
+  return <DashboardLayoutClient {...{ children }} />;
 }
