@@ -61,7 +61,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
 
   const isEmptySnippets = () => Object.values(postsCollectionsSnippets).every((posts2) => posts2.length === 0);
 
-  function generateContent(): ReactNode[] {
+  function contentGenerator(): ReactNode[] {
     const result: ReactNode[] = [];
     for (const [subCategory, posts] of Object.entries(postsCollectionsSnippets)) {
       if (posts.length === 0) continue;
@@ -109,7 +109,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
   buildPostsCollectionsSnippets();
   if (isEmptySnippets()) return <BlogPostsNotFound {...{ lng }} />;
 
-  const result: ReactNode[] = generateContent();
+  const result: ReactNode[] = contentGenerator();
   return result;
 }
 

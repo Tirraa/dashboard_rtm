@@ -3,21 +3,9 @@ import ROUTES_ROOTS from '@/config/routes';
 import { AppPath, AppPathAsIs, PathSegment } from '@/types/Next';
 import { LanguageFlag } from '@/types/i18n';
 import { getPathnameWithoutI18nFlag } from './i18n';
-import { serverCtx } from './next';
 
 type DescriptionAsIs = string;
 type CroppedDescription = string;
-
-export const sanitizePathname = (pathname: AppPath): AppPath => {
-  const doSanitize = (pathname: AppPath) => pathname.replace(/[\/]+/g, '/');
-
-  if (!serverCtx()) return doSanitize(pathname);
-
-  const MAX_SANITIZE_PATHNAME_ARG_LENGTH = Number(process.env.MAX_SANITIZE_PATHNAME_ARG_LENGTH);
-  const FALLBACK_ROUTE = ROUTES_ROOTS.WEBSITE;
-  if (isNaN(MAX_SANITIZE_PATHNAME_ARG_LENGTH)) return FALLBACK_ROUTE;
-  return pathname.length <= MAX_SANITIZE_PATHNAME_ARG_LENGTH ? doSanitize(pathname) : FALLBACK_ROUTE;
-};
 
 export const getSlashEnvelope = (str: string, slashSymbol: '/' | '\\' = '/'): string =>
   (str.charAt(0) !== slashSymbol ? slashSymbol : '') + str + (str.charAt(str.length - 1) !== slashSymbol ? slashSymbol : '');
@@ -55,11 +43,10 @@ export function getLastPathPart(path: AppPath): AppPathAsIs | PathSegment {
 
 export const gsub = (str: string, needle: string, replaceWith: string): string => str.split(needle).join(replaceWith);
 
-export const buildPathFromParts = (...args: PathSegment[]): AppPath =>
-  args.map((arg) => (arg.endsWith('/') ? sanitizePathname(arg).slice(0, -1) : arg)).join('/');
+export const buildPathFromParts = (...args: PathSegment[]): AppPath => args.join('/');
 
 export const buildAbsolutePathFromParts = (...args: PathSegment[]): AppPath => {
-  let path = buildPathFromParts(...args);
+  const path = buildPathFromParts(...args);
   if (path.charAt(0) !== '/') return '/' + path;
   return path;
 };
