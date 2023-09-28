@@ -52,7 +52,7 @@ export async function generateStaticParams() {
 
     blogCategories.forEach((categ) => {
       const category = categ as BlogCategory;
-      const curSubCategs = getBlogSubCategoriesByCategory(categ);
+      const curSubCategs = getBlogSubCategoriesByCategory(category);
 
       curSubCategs.forEach((subCateg) => {
         const subCategory = subCateg as BlogSubCategoryFromUnknownCategory;

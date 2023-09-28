@@ -7,20 +7,27 @@ namespace BlogCache {
 }
 
 function buildSubCategoriesSet(category: BlogCategory): Set<BlogSubCategoryFromUnknownCategory> {
-  const subCategoriesSet = new Set<BlogSubCategoryFromUnknownCategory>();
-  const relatedPosts = BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[category]();
+  try {
+    const subCategoriesSet = new Set<BlogSubCategoryFromUnknownCategory>();
+    const relatedPosts = BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[category]();
 
-  relatedPosts.forEach((post) => subCategoriesSet.add(getBlogPostSubCategory(post)));
-  return subCategoriesSet;
+    relatedPosts.forEach((post) => subCategoriesSet.add(getBlogPostSubCategory(post)));
+    return subCategoriesSet;
+  } catch {
+    const emptySet = new Set<BlogSubCategoryFromUnknownCategory>();
+    return emptySet;
+  }
 }
 
-function subCategoriesByCategoryAccessor(category: BlogCategory, fresh: boolean) {
-  if (fresh || BlogCache.subCategoriesCollection[category] === undefined) {
-    const subCategsSet = buildSubCategoriesSet(category);
-    BlogCache.subCategoriesCollection[category] = Array.from(subCategsSet);
-  }
+function populateSubCategoriesCollectionCache(category: BlogCategory) {
+  const subCategsSet = buildSubCategoriesSet(category);
+  BlogCache.subCategoriesCollection[category] = Array.from(subCategsSet);
+}
+
+function subCategoriesByCategoryAccessor(category: BlogCategory) {
+  if (BlogCache.subCategoriesCollection[category] === undefined) populateSubCategoriesCollectionCache(category);
   return BlogCache.subCategoriesCollection[category] as BlogSubCategoryFromUnknownCategory[];
 }
 
-export const getBlogSubCategoriesByCategory = (category: BlogCategory, fresh: boolean = true): BlogSubCategoryFromUnknownCategory[] =>
-  subCategoriesByCategoryAccessor(category, fresh);
+export const getBlogSubCategoriesByCategory = (category: BlogCategory): BlogSubCategoryFromUnknownCategory[] =>
+  subCategoriesByCategoryAccessor(category);

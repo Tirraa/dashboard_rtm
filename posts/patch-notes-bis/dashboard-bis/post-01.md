@@ -1,0 +1,10 @@
+---
+title: Note relative au Dashboard (bis)
+metadescription: Meta description de note de Dashboard (bis)
+description: Description de note de Dashboard pour les snippets de posts (bis)
+date: 2021-12-24 21:00
+---
+
+Test de note relative au Dashboard  
+Salut tout le monde !  
+(bis)

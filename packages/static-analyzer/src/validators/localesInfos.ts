@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import path from 'path';
 import { LOCALES_INFOS_ROOT_KEY, LOCALES_LNG_INFOS_KEY } from '../config';
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
-import prefixFeedback from '../lib/prefixFeedback';
+import { prefixFeedback } from '../lib/feedbacksMerge';
 import retrieveLocaleFileInfosMetadatas from '../metadatas-builders/retrieveLocaleFileInfosMetadatas';
 import { ErrorsDetectionFeedback } from '../types/metadatas';
 
@@ -21,7 +21,8 @@ function localeFileInfosValidator(localeFilePath: string): '' | ErrorsDetectionF
     feedback +=
       `The '${LOCALES_LNG_INFOS_KEY}' field value should match the locale filename! (${localeFilePath})` +
       '\n' +
-      `Expected value: '${expectedLocaleCode}', given value: '${localeCode}'`;
+      `Expected value: '${expectedLocaleCode}', given value: '${localeCode}'` +
+      '\n';
   }
 
   return feedback;

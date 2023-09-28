@@ -1,5 +1,5 @@
 import { BlogCategory, ForcedBlogSubCategoriesPaths, PostsCollectionAssoc } from '@/types/Blog';
-import { allPatchPosts } from 'contentlayer/generated';
+import { allPatchPostBis, allPatchPosts } from 'contentlayer/generated';
 
 type TBlogConfig = {
   DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT: number;
@@ -11,6 +11,7 @@ type TBlogConfig = {
 
 export type BlogArchitecture = {
   'patch-notes': 'dashboard' | 'discord-bot';
+  'patch-notes-bis': 'dashboard-bis' | 'discord-bot-bis';
 };
 
 export const BlogConfig: TBlogConfig = {
@@ -19,7 +20,8 @@ export const BlogConfig: TBlogConfig = {
   BLOG_POST_PREVIEW_DESCRIPTION_CHARACTERS_LIMIT: 250,
 
   BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC: {
-    'patch-notes': () => allPatchPosts
+    'patch-notes': () => allPatchPosts,
+    'patch-notes-bis': () => allPatchPostBis
   },
 
   FORCED_BLOG_SUBCATEGORIES_PATHS: {

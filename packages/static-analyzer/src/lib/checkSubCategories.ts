@@ -2,12 +2,8 @@ import { LIST_ELEMENT_PREFIX } from '../config';
 import { CategoriesMetadatas, Category, DeclaredCategoriesMetadatas, ErrorsDetectionFeedback } from '../types/metadatas';
 import getErrorLabelForDefects from './getErrorLabelForDefects';
 
-export function checkSubCategories(
-  sysData: CategoriesMetadatas,
-  userDeclaredData: DeclaredCategoriesMetadatas,
-  oldFeedback: ErrorsDetectionFeedback
-): '' | ErrorsDetectionFeedback {
-  let feedback: ErrorsDetectionFeedback = oldFeedback;
+export function checkSubCategories(sysData: CategoriesMetadatas, userDeclaredData: DeclaredCategoriesMetadatas): '' | ErrorsDetectionFeedback {
+  let feedback: ErrorsDetectionFeedback = '';
   const sysCategories = Object.keys(sysData);
   const userDeclaredCategories = Object.keys(userDeclaredData);
   const missingDeclaredSubCategories: CategoriesMetadatas = {};
@@ -15,6 +11,7 @@ export function checkSubCategories(
 
   for (const category of sysCategories) {
     if (!userDeclaredCategories.includes(category)) continue;
+
     const currentSubcategories = userDeclaredData[category];
     for (const subCategory of currentSubcategories) {
       if (!sysData[category].includes(subCategory)) {
@@ -24,9 +21,9 @@ export function checkSubCategories(
     }
   }
 
-  const categoriesWithDefect = Object.keys(unknownSubCategories);
-  if (categoriesWithDefect.length > 0) {
-    for (const categoryWithDefect of categoriesWithDefect) {
+  const categoriesWithDefects = Object.keys(unknownSubCategories);
+  if (categoriesWithDefects.length > 0) {
+    for (const categoryWithDefect of categoriesWithDefects) {
       const unknownSubcategories = unknownSubCategories[categoryWithDefect];
       feedback += getErrorLabelForDefects(
         unknownSubcategories,

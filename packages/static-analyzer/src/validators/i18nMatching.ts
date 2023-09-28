@@ -7,8 +7,8 @@ import {
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
 import checkCategories from '../lib/checkCategories';
 import checkSubCategories from '../lib/checkSubCategories';
+import { mergeFeedbacks, prefixFeedback } from '../lib/feedbacksMerge';
 import getErrorLabelForDefects from '../lib/getErrorLabelForDefects';
-import prefixFeedback from '../lib/prefixFeedback';
 import { CategoriesMetadatas, Category, ErrorsDetectionFeedback, I18nJSONPart, SubCategory, UnknownI18nJSONObj } from '../types/metadatas';
 
 const { FAILED_TO_PASS: ERROR_PREFIX, INTERRUPTED: INTERRUPTION_SUFFIX } = CRITICAL_ERRORS_STR;
@@ -59,6 +59,8 @@ export function declaredI18nValidator(
     for (const currentExpectedSubcategory of sysSubCategs) {
       const currentCategoryI18nData = i18nBlogCategoriesData[currentCategory] as UnknownI18nJSONObj;
       if (!currentCategoryI18nData) continue;
+      if (!currentCategoryI18nData[currentExpectedSubcategory]) continue;
+
       const currentSubcategoryI18nMetadatas = Object.keys(currentCategoryI18nData[currentExpectedSubcategory] as UnknownI18nJSONObj);
 
       for (const requiredSubCategoryField of requiredSubCategoryFields) {
@@ -90,7 +92,9 @@ export function declaredI18nValidator(
     i18nCategoriesMetadatas[k] = i18nCategoriesMetadatas[k].filter((v) => !requiredExtraFields.includes(v));
   });
   feedback += checkCategories(Object.keys(sysData), i18nCategoriesKeys);
-  feedback = checkSubCategories(sysData, i18nCategoriesMetadatas, feedback);
+
+  const checkSubCategoriesFeedback = checkSubCategories(sysData, i18nCategoriesMetadatas);
+  feedback = mergeFeedbacks(feedback, checkSubCategoriesFeedback);
   feedback = prefixFeedback(feedback, ERROR_PREFIX + ' ' + ERROR_PREFIX_TAIL + '\n');
   return feedback;
 }

@@ -34,6 +34,20 @@ export default {
         title: 'Dashboard',
         'meta-description': 'Patch-notes -> Dashboard - Metadescription'
       }
+    },
+
+    'patch-notes-bis': {
+      _title: 'Patch Notes (bis)',
+      '_meta-description': 'Metadescription Patch Notes (bis)',
+
+      'discord-bot-bis': {
+        title: 'Bot Discord (bis)',
+        'meta-description': 'Metadescription Patch-notes -> Bot Discord (bis)'
+      },
+      'dashboard-bis': {
+        title: 'Dashboard (bis)',
+        'meta-description': 'Metadescription Patch-notes -> Dashboard (bis)'
+      }
     }
   },
 

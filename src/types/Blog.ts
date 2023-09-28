@@ -6,13 +6,7 @@ import { i18nParams } from './Next';
 
 export type BlogCategory = keyof BlogArchitecture;
 
-type BlogSubCategoriesMappedToBlogCategory = {
-  [C in BlogCategory]: BlogArchitecture[C];
-};
-type BlogSubCategories<C extends BlogCategory> = BlogSubCategoriesMappedToBlogCategory[C];
-
-export type BlogSubCategoryFromUnknownCategory = BlogSubCategories<BlogCategory>;
-export type BlogSubCategoryUnknownKey = BlogArchitecture[keyof BlogArchitecture];
+export type BlogSubCategoryFromUnknownCategory = BlogArchitecture[BlogCategory];
 
 export type UnknownBlogSlug = string;
 
@@ -21,7 +15,7 @@ type BlogCategoryPagePropsParams = Pick<TBlogTaxonomy, 'categ'>;
 
 type BlogSubCategoryPagePropsParams = {
   [BlogTaxonomy.CATEGORY]: BlogCategory;
-  [BlogTaxonomy.SUBCATEGORY]: BlogSubCategoriesMappedToBlogCategory[BlogCategory];
+  [BlogTaxonomy.SUBCATEGORY]: BlogSubCategoryFromUnknownCategory;
 };
 
 export interface BlogCategoryPageProps {
@@ -41,10 +35,6 @@ export type PostsCollectionAssoc<T extends BlogCategory> = {
   [_ in T]: AllPostsGetter;
 };
 
-export type ForcedBlogSubCategoriesPaths = {
-  [C in BlogCategory]?: BlogSubCategories<C>[];
-};
-
 type BlogStaticParamsValue = string;
 export type BlogStaticParams = {
   [_ in keyof TBlogTaxonomy]: BlogStaticParamsValue;
@@ -53,6 +43,16 @@ export type BlogStaticParams = {
 export type UnknownCategoryAndUnknownSubCategory = {
   category: BlogCategory;
   subCategory: BlogSubCategoryFromUnknownCategory;
+};
+
+type BlogSubCategoryMappedToBlogCategory = {
+  [C in BlogCategory]: BlogArchitecture[C];
+};
+
+type BlogSubCategories<C extends BlogCategory> = BlogSubCategoryMappedToBlogCategory[C];
+
+export type ForcedBlogSubCategoriesPaths = {
+  [C in BlogCategory]?: BlogSubCategories<C>[];
 };
 
 export type BlogCategoryAndSubcategoriesPair<C extends BlogCategory> = {

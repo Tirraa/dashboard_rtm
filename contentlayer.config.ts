@@ -28,4 +28,18 @@ const PatchPost = defineDocumentType(() => ({
   }
 }));
 
-export default makeSource({ contentDirPath, documentTypes: [PhantomPost, PatchPost] });
+const PatchPostBis = defineDocumentType(() => ({
+  name: 'PatchPostBis',
+  filePathPattern: '**/patch-notes-bis/**/*.md',
+  fields: {
+    title: { type: 'string', required: true },
+    metadescription: { type: 'string', required: true },
+    description: { type: 'string', required: false },
+    date: { type: 'date', required: true }
+  },
+  computedFields: {
+    url: { type: 'string', resolve: (post) => `/${post._raw.flattenedPath}` }
+  }
+}));
+
+export default makeSource({ contentDirPath, documentTypes: [PhantomPost, PatchPost, PatchPostBis] });
