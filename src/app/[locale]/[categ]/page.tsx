@@ -48,7 +48,7 @@ export async function generateStaticParams() {
   return staticParams;
 }
 
-async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: LanguageFlag) {
+async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: LanguageFlag): Promise<ReactNode[] | JSX.Element> {
   function buildHistogram() {
     for (const post of posts) {
       const curSubCateg = getBlogPostSubCategory(post);

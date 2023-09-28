@@ -12,6 +12,7 @@ module.exports = {
     const defaultLanguageNeedle = '/' + DEFAULT_LANGUAGE;
     const defaultLanguageEnvelopeNeedle = defaultLanguageNeedle + '/';
     const defaultLanguageNeedleLen = defaultLanguageNeedle.length;
+
     if (path.startsWith(defaultLanguageEnvelopeNeedle)) {
       path = path.substring(defaultLanguageNeedleLen);
     } else if (path === defaultLanguageNeedle) {
