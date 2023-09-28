@@ -8,7 +8,7 @@ module.exports = {
   exclude: ['/favicon.ico', '/icon.svg', '/apple-icon.png', '/dashboard/*'],
   changefreq: 'monthly',
 
-  transform: async (config, path) => {
+  transform: (config, path) => {
     const DEFAULT_LANGUAGE_NEEDLE = '/' + DEFAULT_LANGUAGE;
     if (path.startsWith(DEFAULT_LANGUAGE_NEEDLE)) path = path.substring(DEFAULT_LANGUAGE_NEEDLE.length);
 
