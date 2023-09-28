@@ -9,14 +9,19 @@ module.exports = {
   changefreq: 'monthly',
 
   transform: (config, path) => {
-    const DEFAULT_LANGUAGE_NEEDLE = '/' + DEFAULT_LANGUAGE;
-    if (path.startsWith(DEFAULT_LANGUAGE_NEEDLE)) path = path.substring(DEFAULT_LANGUAGE_NEEDLE.length);
+    const defaultLanguageNeedle = '/' + DEFAULT_LANGUAGE;
+    const defaultLanguageEnvelopeNeedle = defaultLanguageNeedle + '/';
+    const defaultLanguageNeedleLen = defaultLanguageNeedle.length;
+    if (path.startsWith(defaultLanguageEnvelopeNeedle)) {
+      path = path.substring(defaultLanguageNeedleLen);
+    } else if (path === defaultLanguageNeedle) {
+      path = '/';
+    }
 
     return {
       loc: path,
       changefreq: config.changefreq,
-      priority: config.priority,
-      exclude: config.exclude
+      priority: config.priority
     };
   }
 };
