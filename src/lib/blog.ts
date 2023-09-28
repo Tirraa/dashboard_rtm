@@ -6,9 +6,9 @@ import InvalidArgumentsError from '@/errors/exceptions/InvalidArgument';
 import {
   BlogCategory,
   BlogCategoryAndSubcategoriesPair,
-  BlogSlug,
   BlogSubCategoryFromUnknownCategory,
   BlogSubCategoryUnknownKey,
+  UnknownBlogSlug,
   UnknownCategoryAndUnknownSubCategory
 } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
@@ -59,7 +59,7 @@ export function getBlogCategoryFromPathname(pathname: AppPath): BlogCategory {
 }
 
 export const getBlogPostSubCategory = (post: PostBase): BlogSubCategoryUnknownKey => getBlogPostSubCategoryFromPostObj(post);
-export const getBlogPostSlug = (post: PostBase): BlogSlug => getLastPathPart(post._raw.flattenedPath);
+export const getBlogPostSlug = (post: PostBase): UnknownBlogSlug => getLastPathPart(post._raw.flattenedPath);
 export const getAllPostsByCategory = (categ: BlogCategory): PostBase[] => BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[categ]();
 export const getAllPostsByCategoryAndSubCategoryUnstrict = ({ category, subCategory }: UnknownCategoryAndUnknownSubCategory): PostBase[] =>
   getAllPostsByCategory(category).filter((post) => getBlogPostSubCategory(post) === subCategory);
@@ -75,7 +75,7 @@ export const filterPostsByLanguage = (posts: PostBase[], subCategory: BlogSubCat
 
 export function getPostUnstrict(
   { category, subCategory }: UnknownCategoryAndUnknownSubCategory,
-  targettedSlug: BlogSlug,
+  targettedSlug: UnknownBlogSlug,
   langFlag: LanguageFlag
 ): undefined | PostBase {
   const postsCollection: PostBase[] = getAllPostsByCategoryAndSubCategoryUnstrict({ category, subCategory });
@@ -100,7 +100,7 @@ export const getAllPostsByCategoryAndSubCategoryAndLanguageFlagStrict = <C exten
 export const getPostStrict = <C extends BlogCategory>(
   category: C,
   subCategory: BlogArchitecture[C],
-  targettedSlug: BlogSlug,
+  targettedSlug: UnknownBlogSlug,
   langFlag: LanguageFlag
 ): undefined | PostBase => getPostUnstrict({ category, subCategory }, targettedSlug, langFlag);
 

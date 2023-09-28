@@ -14,7 +14,7 @@ type BlogSubCategories<C extends BlogCategory> = BlogSubCategoriesMappedToBlogCa
 export type BlogSubCategoryFromUnknownCategory = BlogSubCategories<BlogCategory>;
 export type BlogSubCategoryUnknownKey = BlogArchitecture[keyof BlogArchitecture];
 
-export type BlogSlug = string;
+export type UnknownBlogSlug = string;
 
 type BlogPostPagePropsParams = RequiredFieldsOnly<TBlogTaxonomy>;
 type BlogCategoryPagePropsParams = Pick<TBlogTaxonomy, 'categ'>;

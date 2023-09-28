@@ -21,7 +21,6 @@ import PostBase from '@/types/BlogPostAbstractions';
 import { setStaticParamsLocale } from 'next-international/server';
 import { notFound, redirect } from 'next/navigation';
 
-// {ToDo} Work in progress (only a guard for now)
 export async function generateMetadata({ params }: BlogSubCategoryPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];
 
