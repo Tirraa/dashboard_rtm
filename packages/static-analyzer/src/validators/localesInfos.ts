@@ -3,15 +3,15 @@ import path from 'path';
 import { LOCALES_INFOS_ROOT_KEY, LOCALES_LNG_INFOS_KEY } from '../config';
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
 import prefixFeedback from '../lib/prefixFeedback';
-import retrieveLocaleFileMetadatas from '../metadatas-builders/retrieveLocaleFileInfos';
+import retrieveLocaleFileInfosMetadatas from '../metadatas-builders/retrieveLocaleFileInfosMetadatas';
 import { ErrorsDetectionFeedback } from '../types/metadatas';
 
 const localesExtension = '.ts';
 const { INTERRUPTED: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
-function localeFileValidator(localeFilePath: string): '' | ErrorsDetectionFeedback {
+function localeFileInfosValidator(localeFilePath: string): '' | ErrorsDetectionFeedback {
   let feedback: ErrorsDetectionFeedback = '';
-  const localeMetadatas = retrieveLocaleFileMetadatas(localeFilePath);
+  const localeMetadatas = retrieveLocaleFileInfosMetadatas(localeFilePath);
   const expectedLocaleCode = path.basename(localeFilePath, localesExtension);
   const localeCode = localeMetadatas[LOCALES_LNG_INFOS_KEY];
 
@@ -30,14 +30,14 @@ function localeFileValidator(localeFilePath: string): '' | ErrorsDetectionFeedba
 /**
  * @throws {Error}
  */
-export function localesValidator(localesFolder: string): '' | ErrorsDetectionFeedback {
+export function localesInfosValidator(localesFolder: string): '' | ErrorsDetectionFeedback {
   let feedback: ErrorsDetectionFeedback = '';
   const files: string[] = fs.readdirSync(localesFolder).filter((file) => path.extname(file) === '.ts');
 
   const fullFilesPaths = files.map((filename) => [localesFolder, filename].join('/'));
   for (const file of fullFilesPaths) {
     try {
-      feedback += localeFileValidator(file);
+      feedback += localeFileInfosValidator(file);
     } catch (error) {
       throw error;
     }
@@ -47,4 +47,4 @@ export function localesValidator(localesFolder: string): '' | ErrorsDetectionFee
   return feedback;
 }
 
-export default localesValidator;
+export default localesInfosValidator;

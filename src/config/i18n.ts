@@ -27,5 +27,5 @@ export const i18ns = {
   ugly: 'ugly'
 } as const;
 
-export const DEFAULT_LANGUAGE = DEFAULT_LANGUAGE_OBJ._infos.lng as LanguageFlag;
+export const DEFAULT_LANGUAGE: LanguageFlag = DEFAULT_LANGUAGE_OBJ._infos.lng;
 export const LANGUAGES: LanguageFlag[] = getEnumKeys(ELanguagesFlag) as LanguageFlag[];

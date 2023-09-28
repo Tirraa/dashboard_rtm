@@ -9,15 +9,19 @@ function getRetrievedValuesFromArgs(args: string[]): MaybeIncorrectTFlagsAssoc {
   const indexOfPostsFolder = args.indexOf(FLAGS.POSTS_FOLDER);
   const indexOfBlogConfigFile = args.indexOf(FLAGS.BLOG_CONFIG_FILE);
   const indexOfDefaultI18nLocaleFile = args.indexOf(FLAGS.I18N_DEFAULT_LOCALE_FILE);
+  const indexOfSkipLocalesInfos = args.indexOf(FLAGS.SKIP_LOCALES_INFOS);
 
   const postsFolderArgIdx = indexOfPostsFolder !== -1 ? indexOfPostsFolder + 1 : -1;
   const blogConfigFileArgIdx = indexOfBlogConfigFile !== -1 ? indexOfBlogConfigFile + 1 : -1;
   const defaultI18nLocaleFileArgIdx = indexOfDefaultI18nLocaleFile !== -1 ? indexOfDefaultI18nLocaleFile + 1 : -1;
 
+  const SKIP_LOCALES_INFOS = indexOfSkipLocalesInfos === -1 ? '' : 'Look at my horse, my horse is amazing';
+
   const retrievedValuesFromArgs: MaybeIncorrectTFlagsAssoc = {
     POSTS_FOLDER: postsFolderArgIdx !== -1 ? args[postsFolderArgIdx] : undefined,
     BLOG_CONFIG_FILE: blogConfigFileArgIdx !== -1 ? args[blogConfigFileArgIdx] : undefined,
-    I18N_DEFAULT_LOCALE_FILE: defaultI18nLocaleFileArgIdx !== -1 ? args[defaultI18nLocaleFileArgIdx] : undefined
+    I18N_DEFAULT_LOCALE_FILE: defaultI18nLocaleFileArgIdx !== -1 ? args[defaultI18nLocaleFileArgIdx] : undefined,
+    SKIP_LOCALES_INFOS
   };
   return retrievedValuesFromArgs;
 }

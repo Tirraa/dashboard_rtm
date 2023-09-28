@@ -6,7 +6,7 @@ import retrieveMetadatas from './metadatas-builders/retrieveMetadatas';
 import declaredBlogArchitectureValidator from './validators/architectureMatching';
 import validateArgumentsThenReturnRetrievedValuesFromArgs from './validators/arguments';
 import declaredI18nValidator from './validators/i18nMatching';
-import localesValidator from './validators/locales';
+import localesInfosValidator from './validators/localesInfos';
 
 const moveToCallerDirectory = () => process.chdir(path.join(__dirname, ROOT_FOLDER_RELATIVE_PATH_FROM_STATIC_ANALYZER_CTX));
 
@@ -24,9 +24,11 @@ function processStaticAnalysis() {
     const blogArchitectureValidatorFeedback = declaredBlogArchitectureValidator(metadatasFromSys, declaredMetadatas, BLOG_CONFIG_FILE);
     if (blogArchitectureValidatorFeedback) throw new Error(blogArchitectureValidatorFeedback);
 
-    const localesFolder = path.dirname(I18N_DEFAULT_LOCALE_FILE);
-    const localesValidatorFeedback = localesValidator(localesFolder);
-    if (localesValidatorFeedback) throw new Error(localesValidatorFeedback);
+    if (!retrievedValuesFromArgs.SKIP_LOCALES_INFOS) {
+      const localesFolder = path.dirname(I18N_DEFAULT_LOCALE_FILE);
+      const localesValidatorFeedback = localesInfosValidator(localesFolder);
+      if (localesValidatorFeedback) throw new Error(localesValidatorFeedback);
+    }
 
     const i18nValidatorFeedback = declaredI18nValidator(metadatasFromSys, i18nBlogCategoriesJSON, I18N_DEFAULT_LOCALE_FILE);
     if (i18nValidatorFeedback) throw new Error(i18nValidatorFeedback);

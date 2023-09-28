@@ -3,7 +3,8 @@ import TFlagsAssoc from '../types/flags';
 export const FLAGS: TFlagsAssoc = {
   POSTS_FOLDER: '--posts-folder',
   BLOG_CONFIG_FILE: '--blog-config-file',
-  I18N_DEFAULT_LOCALE_FILE: '--default-i18n-locale'
+  I18N_DEFAULT_LOCALE_FILE: '--default-i18n-locale',
+  SKIP_LOCALES_INFOS: '--skip-locales-infos'
 };
 
 export const LOCALES_INFOS_ROOT_KEY: string = '_infos';
