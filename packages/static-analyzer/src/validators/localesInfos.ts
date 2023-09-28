@@ -19,7 +19,7 @@ function localeFileInfosValidator(localeFilePath: string): '' | ErrorsDetectionF
     feedback += `The '${LOCALES_LNG_INFOS_KEY}' field value is empty or missing in ${LOCALES_INFOS_ROOT_KEY}! (${localeFilePath})` + '\n';
   } else if (expectedLocaleCode !== localeCode) {
     feedback +=
-      `The '${LOCALES_LNG_INFOS_KEY}' field value should match the locale filename! (${localeFilePath})` +
+      `The '${LOCALES_INFOS_ROOT_KEY}.${LOCALES_LNG_INFOS_KEY}' field value should match the locale filename! (${localeFilePath})` +
       '\n' +
       `Expected value: '${expectedLocaleCode}', given value: '${localeCode}'` +
       '\n';
