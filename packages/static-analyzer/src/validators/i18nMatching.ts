@@ -72,21 +72,21 @@ export function declaredI18nValidator(
         }
       }
     }
-
-    Object.keys(missingSubCategoryFields).forEach((categoryWithDefects) => {
-      Object.keys(missingSubCategoryFields[categoryWithDefects]).forEach((subCategoryWithDefects) => {
-        const missingSubCategoryKeys = missingSubCategoryFields[categoryWithDefects][subCategoryWithDefects];
-        feedback += getErrorLabelForDefects(
-          missingSubCategoryKeys,
-          `Missing required i18n field for the '${subCategoryWithDefects}' subcategory from '${BLOG_CATEGORIES_I18N_ROOT_KEY}.${categoryWithDefects}': ${missingSubCategoryKeys}` +
-            '\n',
-          `Missing required i18n fields for the '${subCategoryWithDefects}' subcategory from '${BLOG_CATEGORIES_I18N_ROOT_KEY}.${categoryWithDefects}': ${LIST_ELEMENT_PREFIX}${missingSubCategoryKeys.join(
-            LIST_ELEMENT_PREFIX
-          )}` + '\n'
-        );
-      });
-    });
   }
+
+  Object.keys(missingSubCategoryFields).forEach((categoryWithDefects) => {
+    Object.keys(missingSubCategoryFields[categoryWithDefects]).forEach((subCategoryWithDefects) => {
+      const missingSubCategoryKeys = missingSubCategoryFields[categoryWithDefects][subCategoryWithDefects];
+      feedback += getErrorLabelForDefects(
+        missingSubCategoryKeys,
+        `Missing required i18n field for the '${subCategoryWithDefects}' subcategory from '${BLOG_CATEGORIES_I18N_ROOT_KEY}.${categoryWithDefects}': ${missingSubCategoryKeys}` +
+          '\n',
+        `Missing required i18n fields for the '${subCategoryWithDefects}' subcategory from '${BLOG_CATEGORIES_I18N_ROOT_KEY}.${categoryWithDefects}': ${LIST_ELEMENT_PREFIX}${missingSubCategoryKeys.join(
+          LIST_ELEMENT_PREFIX
+        )}` + '\n'
+      );
+    });
+  });
 
   Object.keys(i18nCategoriesMetadatas).forEach((k) => {
     i18nCategoriesMetadatas[k] = i18nCategoriesMetadatas[k].filter((v) => !requiredExtraFields.includes(v));
