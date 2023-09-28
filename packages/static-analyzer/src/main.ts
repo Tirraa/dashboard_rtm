@@ -1,6 +1,7 @@
 import path from 'path';
 import { ROOT_FOLDER_RELATIVE_PATH_FROM_STATIC_ANALYZER_CTX } from './config';
 import { STATIC_ANALYSIS_DONE } from './config/vocab';
+import { foldFeedbacks } from './lib/feedbacksMerge';
 import retrieveI18nBlogCategoriesJSONMetadatas from './metadatas-builders/retrieveI18nBlogCategoriesJSONMetadatas';
 import retrieveMetadatas from './metadatas-builders/retrieveMetadatas';
 import declaredBlogArchitectureValidator from './validators/architectureMatching';
@@ -22,16 +23,17 @@ function processStaticAnalysis() {
     const i18nBlogCategoriesJSON = retrieveI18nBlogCategoriesJSONMetadatas(I18N_DEFAULT_LOCALE_FILE);
 
     const blogArchitectureValidatorFeedback = declaredBlogArchitectureValidator(metadatasFromSys, declaredMetadatas, BLOG_CONFIG_FILE);
-    if (blogArchitectureValidatorFeedback) throw new Error(blogArchitectureValidatorFeedback);
 
+    let localesValidatorFeedback = '';
     if (!retrievedValuesFromArgs.SKIP_LOCALES_INFOS) {
       const localesFolder = path.dirname(I18N_DEFAULT_LOCALE_FILE);
-      const localesValidatorFeedback = localesInfosValidator(localesFolder);
-      if (localesValidatorFeedback) throw new Error(localesValidatorFeedback);
+      localesValidatorFeedback = localesInfosValidator(localesFolder);
     }
 
     const i18nValidatorFeedback = declaredI18nValidator(metadatasFromSys, i18nBlogCategoriesJSON, I18N_DEFAULT_LOCALE_FILE);
-    if (i18nValidatorFeedback) throw new Error(i18nValidatorFeedback);
+
+    const feedbacks = foldFeedbacks(blogArchitectureValidatorFeedback, localesValidatorFeedback, i18nValidatorFeedback);
+    if (feedbacks) throw new Error(feedbacks);
 
     console.log(STATIC_ANALYSIS_DONE);
   } catch (error) {

@@ -9,7 +9,15 @@ import checkCategories from '../lib/checkCategories';
 import checkSubCategories from '../lib/checkSubCategories';
 import { mergeFeedbacks, prefixFeedback } from '../lib/feedbacksMerge';
 import getErrorLabelForDefects from '../lib/getErrorLabelForDefects';
-import { CategoriesMetadatas, Category, ErrorsDetectionFeedback, I18nJSONPart, SubCategory, UnknownI18nJSONObj } from '../types/metadatas';
+import {
+  CategoriesMetadatas,
+  Category,
+  ErrorsDetectionFeedback,
+  I18nJSONPart,
+  MaybeEmptyErrorsDetectionFeedback,
+  SubCategory,
+  UnknownI18nJSONObj
+} from '../types/metadatas';
 
 const { FAILED_TO_PASS: ERROR_PREFIX, INTERRUPTED: INTERRUPTION_SUFFIX } = CRITICAL_ERRORS_STR;
 
@@ -17,7 +25,7 @@ export function declaredI18nValidator(
   sysData: CategoriesMetadatas,
   i18nBlogCategoriesData: I18nJSONPart,
   i18nConfigFilePath: string
-): '' | ErrorsDetectionFeedback {
+): MaybeEmptyErrorsDetectionFeedback {
   const ERROR_PREFIX_TAIL = `(${i18nConfigFilePath})`;
   let feedback: ErrorsDetectionFeedback = '';
 

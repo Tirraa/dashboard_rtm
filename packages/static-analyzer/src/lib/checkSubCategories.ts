@@ -1,8 +1,14 @@
 import { LIST_ELEMENT_PREFIX } from '../config';
-import { CategoriesMetadatas, Category, DeclaredCategoriesMetadatas, ErrorsDetectionFeedback } from '../types/metadatas';
+import {
+  CategoriesMetadatas,
+  Category,
+  DeclaredCategoriesMetadatas,
+  ErrorsDetectionFeedback,
+  MaybeEmptyErrorsDetectionFeedback
+} from '../types/metadatas';
 import getErrorLabelForDefects from './getErrorLabelForDefects';
 
-export function checkSubCategories(sysData: CategoriesMetadatas, userDeclaredData: DeclaredCategoriesMetadatas): '' | ErrorsDetectionFeedback {
+export function checkSubCategories(sysData: CategoriesMetadatas, userDeclaredData: DeclaredCategoriesMetadatas): MaybeEmptyErrorsDetectionFeedback {
   let feedback: ErrorsDetectionFeedback = '';
   const sysCategories = Object.keys(sysData);
   const userDeclaredCategories = Object.keys(userDeclaredData);

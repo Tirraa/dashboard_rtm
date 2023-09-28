@@ -10,3 +10,4 @@ type UnknownI18nJSONProp = string | UnknownI18nJSONObj;
 export type I18nJSONPart = Record<string, UnknownI18nJSONProp>;
 
 export type ErrorsDetectionFeedback = string;
+export type MaybeEmptyErrorsDetectionFeedback = '' | ErrorsDetectionFeedback;

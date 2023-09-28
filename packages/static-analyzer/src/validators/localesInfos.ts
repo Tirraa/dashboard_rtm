@@ -1,16 +1,17 @@
 import * as fs from 'fs';
 import path from 'path';
-import { LOCALES_INFOS_ROOT_KEY, LOCALES_LNG_INFOS_KEY } from '../config';
+import { LIST_ELEMENT_PREFIX, LOCALES_INFOS_ROOT_KEY, LOCALES_LNG_INFOS_KEY } from '../config';
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
 import { prefixFeedback } from '../lib/feedbacksMerge';
 import retrieveLocaleFileInfosMetadatas from '../metadatas-builders/retrieveLocaleFileInfosMetadatas';
-import { ErrorsDetectionFeedback } from '../types/metadatas';
+import { ErrorsDetectionFeedback, MaybeEmptyErrorsDetectionFeedback } from '../types/metadatas';
 
 const localesExtension = '.ts';
-const { INTERRUPTED: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
+const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
-function localeFileInfosValidator(localeFilePath: string): '' | ErrorsDetectionFeedback {
+function localeFileInfosValidator(localeFilePath: string): MaybeEmptyErrorsDetectionFeedback {
   let feedback: ErrorsDetectionFeedback = '';
+
   const localeMetadatas = retrieveLocaleFileInfosMetadatas(localeFilePath);
   const expectedLocaleCode = path.basename(localeFilePath, localesExtension);
   const localeCode = localeMetadatas[LOCALES_LNG_INFOS_KEY];
@@ -21,8 +22,7 @@ function localeFileInfosValidator(localeFilePath: string): '' | ErrorsDetectionF
     feedback +=
       `The '${LOCALES_INFOS_ROOT_KEY}.${LOCALES_LNG_INFOS_KEY}' field value should match the locale filename! (${localeFilePath})` +
       '\n' +
-      `Expected value: '${expectedLocaleCode}', given value: '${localeCode}'` +
-      '\n';
+      `Expected value: '${expectedLocaleCode}', given value: '${localeCode}'`;
   }
 
   return feedback;
@@ -31,20 +31,39 @@ function localeFileInfosValidator(localeFilePath: string): '' | ErrorsDetectionF
 /**
  * @throws {Error}
  */
-export function localesInfosValidator(localesFolder: string): '' | ErrorsDetectionFeedback {
+export function localesInfosValidator(localesFolder: string): MaybeEmptyErrorsDetectionFeedback {
+  const ERROR_PREFIX_TAIL = `(locales files)`;
   let feedback: ErrorsDetectionFeedback = '';
-  const files: string[] = fs.readdirSync(localesFolder).filter((file) => path.extname(file) === '.ts');
 
+  const files: string[] = fs.readdirSync(localesFolder).filter((file) => path.extname(file) === '.ts');
   const fullFilesPaths = files.map((filename) => [localesFolder, filename].join('/'));
-  for (const file of fullFilesPaths) {
+  const localeFileInfosValidatorFeedbacks = [];
+
+  for (const currentFile of fullFilesPaths) {
     try {
-      feedback += localeFileInfosValidator(file);
+      const currentFeedback = localeFileInfosValidator(currentFile);
+      if (currentFeedback) localeFileInfosValidatorFeedbacks.push(currentFeedback);
     } catch (error) {
       throw error;
     }
   }
 
-  feedback = prefixFeedback(feedback, ERROR_PREFIX + '\n');
+  if (localeFileInfosValidatorFeedbacks.length > 0) {
+    if (localeFileInfosValidatorFeedbacks.length > 1) {
+      feedback +=
+        `${LIST_ELEMENT_PREFIX}${localeFileInfosValidatorFeedbacks
+          .map((localeFileInfosValidatorFeedback) =>
+            localeFileInfosValidatorFeedback.replaceAll(
+              '\n',
+              '\n' + ' '.repeat(LIST_ELEMENT_PREFIX.length - LIST_ELEMENT_PREFIX.split('\n').length + 1)
+            )
+          )
+          .join(LIST_ELEMENT_PREFIX)}` + '\n';
+    } else {
+      feedback += '\n' + localeFileInfosValidatorFeedbacks[0] + '\n';
+    }
+  }
+  feedback = prefixFeedback(feedback, ERROR_PREFIX + ' ' + ERROR_PREFIX_TAIL);
   return feedback;
 }
 
