@@ -7,7 +7,7 @@ import { LANGUAGES, i18ns } from '@/config/i18n';
 import { getScopedI18n, getServerSideI18n } from '@/i18n/server';
 import { getAllCategories, getBlogPostSubCategory } from '@/lib/blog';
 import { getBlogPostLanguageFlag } from '@/lib/i18n';
-import { buildPathFromParts } from '@/lib/str';
+import { buildPathFromParts, getPageTitle } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogCategory, BlogCategoryPageProps, BlogStaticParams, BlogSubCategoryFromUnknownCategory } from '@/types/Blog';
@@ -18,6 +18,14 @@ import { setStaticParamsLocale } from 'next-international/server';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
+
+export async function generateMetadata({ params }: BlogCategoryPageProps) {
+  const globalT = await getServerSideI18n();
+
+  const title = getPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.blogCategories}.${params[BlogTaxonomy.CATEGORY]}._title`));
+  const description = globalT(`${i18ns.blogCategories}.${params[BlogTaxonomy.CATEGORY]}._meta-description`);
+  return { title, description };
+}
 
 export async function generateStaticParams() {
   function generateBlogStaticParams(): Partial<BlogStaticParams>[] {
@@ -66,7 +74,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
     for (const [subCategory, posts] of Object.entries(postsCollectionsSnippets)) {
       if (posts.length === 0) continue;
       // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
-      const curSubCategTitle = scopedT(`${category}.${subCategory}`);
+      const curSubCategTitle = globalT(`${i18ns.blogCategories}.${category}.${subCategory}.title`);
       const href = buildPathFromParts(category, subCategory);
       const title = (
         <h2 key={`${subCategory}-${curSubCategTitle}-h2`}>
@@ -79,7 +87,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
         showMoreLink = (
           <RtmButton
             key={`${subCategory}-${curSubCategTitle}-show-more-btn`}
-            label={globalT('vocab.see-more')}
+            label={globalT(`${i18ns.vocab}.see-more`)}
             {...{ href, ripple: false, size: 'sm', textCls: 'text-sm', className: 'mb-5 normal-case flex items-center gap-2' }}
           />
         );
@@ -96,7 +104,6 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
   if (posts.length === 0) return <BlogPostsNotFound {...{ lng }} />;
 
   const globalT = await getServerSideI18n();
-  const scopedT = await getScopedI18n(i18ns.blogCategories);
   const subCategs: BlogSubCategoryFromUnknownCategory[] = getBlogSubCategoriesByCategory(category);
   const entries = subCategs.map((subCateg) => [subCateg, []]);
   const [histogram, postsCollectionsSnippets] = [
@@ -128,11 +135,10 @@ export default async function Page({ params }: BlogCategoryPageProps) {
 
   const posts = gettedOnTheFlyPosts.sort((post1, post2) => compareDesc(new Date(post1.date), new Date(post2.date)));
   const generatedContent = await postsGenerator(posts, category, lng);
-  const title = scopedT(`${category}._title`);
 
   return (
     <div className="mx-auto max-w-xl py-8">
-      <h1 className="text-center">{title}</h1>
+      <h1 className="text-center">{scopedT(`${category}._title`)}</h1>
       {generatedContent}
     </div>
   );

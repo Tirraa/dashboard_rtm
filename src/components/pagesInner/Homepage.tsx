@@ -2,6 +2,7 @@
 
 import RtmButton from '@/components/cta/RtmButton';
 import DISCORD_CONFIG from '@/config/discord';
+import { i18ns } from '@/config/i18n';
 import { getClientSideI18n } from '@/i18n/client';
 import { CogIcon } from '@heroicons/react/20/solid';
 import Image from 'next/image';
@@ -18,9 +19,9 @@ const [width, height]: [number, number] = [226, 69];
 // {ToDo} use a formatter for the img alt
 export const HomepageInner: FunctionComponent<HomepageInnerProps> = () => {
   const globalT = getClientSideI18n();
-  const brand = globalT('vocab.brand');
-  const logo = globalT('ugly.logo');
-  const inviteTheBot = globalT('vocab.invite-the-bot');
+  const brand = globalT(`${i18ns.vocab}.brand`);
+  const logo = globalT(`${i18ns.ugly}.logo`);
+  const inviteTheBot = globalT(`${i18ns.vocab}.invite-the-bot`);
 
   return (
     <div className="flex flex-col items-center align-center justify-center">

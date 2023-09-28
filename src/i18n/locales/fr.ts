@@ -5,11 +5,7 @@ export default {
   },
 
   navbar: {
-    home: 'Accueil',
-    dashboard: 'Dashboard',
-    'patch-notes': 'Patch notes',
-    assistance: 'Support',
-    'discord-bot': 'Bot Discord'
+    assistance: 'Support'
   },
 
   auth: {
@@ -26,18 +22,34 @@ export default {
   'blog-categories': {
     'patch-notes': {
       _title: 'Patch Notes',
-      'discord-bot': 'Bot Discord',
-      dashboard: 'Dashboard'
+      '_meta-description': 'Metadescription Patch Notes',
+
+      'discord-bot': {
+        title: 'Bot Discord',
+        'meta-description': 'Metadescription Patch-notes -> Bot Discord'
+      },
+      dashboard: {
+        title: 'Dashboard',
+        'meta-description': 'Metadescription Patch-notes -> Dashboard'
+      }
     }
   },
 
   vocab: {
     brand: 'Rust Team Management',
+    'brand-short': 'RTM',
     'invite-the-bot': 'Inviter le bot',
     'no-blog-post': 'Rien à afficher ici !',
     '404': '404 - Page introuvable !',
     'see-more': 'Voir plus !',
     loading: 'Chargement en cours...'
+  },
+
+  'manual-SEO': {
+    homepage: {
+      title: 'Accueil',
+      'meta-description': "Metadescription Page d'accueil"
+    }
   },
 
   ugly: {

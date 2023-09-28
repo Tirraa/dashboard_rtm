@@ -73,3 +73,9 @@ export function getAppPathParentPath(pathname: AppPath): AppPath {
   if (parts.length > 1) parts.pop();
   return buildAbsolutePathFromParts(...parts);
 }
+
+export function getPageTitle(productTitle: string, pageTitle: string, isHomepage: boolean = false): string {
+  const sep = ' | ';
+  if (isHomepage) return productTitle + sep + pageTitle;
+  return pageTitle + sep + productTitle;
+}

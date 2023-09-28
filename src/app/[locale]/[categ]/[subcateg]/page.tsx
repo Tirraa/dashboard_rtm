@@ -2,8 +2,9 @@ import SubCategoryRelatedBlogPosts from '@/components/blog/SubCategoryRelatedBlo
 import { BlogCategory, BlogSubCategoryPageProps } from '@/types/Blog';
 
 import { getBlogSubCategoriesByCategory } from '@/cache/blog';
-import { LANGUAGES } from '@/config/i18n';
+import { LANGUAGES, i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
+import { getServerSideI18n } from '@/i18n/server';
 import {
   getAllCategories,
   getAllPostsByCategoryAndSubCategoryAndLanguageFlagUnstrict,
@@ -12,6 +13,7 @@ import {
   redirectToBlogCategoryPage,
   subCategoryShouldTriggerNotFound
 } from '@/lib/blog';
+import { getPageTitle } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogStaticParams } from '@/types/Blog';
@@ -20,7 +22,7 @@ import { setStaticParamsLocale } from 'next-international/server';
 import { notFound, redirect } from 'next/navigation';
 
 // {ToDo} Work in progress (only a guard for now)
-export function generateMetadata({ params }: BlogSubCategoryPageProps) {
+export async function generateMetadata({ params }: BlogSubCategoryPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];
 
   const validCategory = isValidCategory(category);
@@ -31,7 +33,12 @@ export function generateMetadata({ params }: BlogSubCategoryPageProps) {
   const validCombination = isValidCategoryAndSubCategoryPair(category, subCategory);
   if (!validCombination) redirectToBlogCategoryPage(category);
 
-  const [title, description] = ['TODO', 'WIP'];
+  const globalT = await getServerSideI18n();
+  const title = getPageTitle(
+    globalT(`${i18ns.vocab}.brand-short`),
+    globalT(`${i18ns.blogCategories}.${params[BlogTaxonomy.CATEGORY]}.${params[BlogTaxonomy.SUBCATEGORY]}.title`)
+  );
+  const description = globalT(`${i18ns.blogCategories}.${params[BlogTaxonomy.CATEGORY]}.${params[BlogTaxonomy.SUBCATEGORY]}.meta-description`);
   return { title, description };
 }
 

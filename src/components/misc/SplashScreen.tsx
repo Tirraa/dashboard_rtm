@@ -1,5 +1,6 @@
 'use client';
 
+import { i18ns } from '@/config/i18n';
 import { getClientSideI18n } from '@/i18n/client';
 import { getRefCurrentPtr } from '@/lib/react';
 import Image from 'next/image';
@@ -39,7 +40,7 @@ export const SplashScreen: FunctionComponent<SplashScreenProps> = () => {
       ref={splashScreenRef}
       className="cursor-wait select-none fixed z-50 inset-0 flex items-center justify-center w-full h-screen bg-gray-900 transition-all duration-300"
     >
-      <span className="sr-only">{globalT('vocab.loading')}</span>
+      <span className="sr-only">{globalT(`${i18ns.vocab}.loading`)}</span>
       <Image
         ref={splashScreenLogoRef}
         src="/assets/rtm-logo.svg"

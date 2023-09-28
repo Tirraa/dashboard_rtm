@@ -14,10 +14,12 @@ export const SITEWIDE_NAVBAR_ROUTES: SitewideNavbarRoutes = {
 };
 
 const navbar = i18ns.navbar;
+const SEO = i18ns.manualSEO;
+const blogCategories = i18ns.blogCategories;
 export const SITEWIDE_NAVBAR_ROUTES_TITLES: SitewideNavbarRoutesTitles = {
-  HOME_PAGE: `${navbar}.home`,
-  DASHBOARD_PAGE: `${navbar}.dashboard`,
-  PATCH_NOTES_PAGE: `${navbar}.patch-notes`,
+  HOME_PAGE: `${SEO}.homepage.title`,
+  DASHBOARD_PAGE: `${blogCategories}.patch-notes.dashboard.title`,
+  PATCH_NOTES_PAGE: `${blogCategories}.patch-notes._title`,
   SUPPORT_PAGE: `${navbar}.assistance`
 };
 

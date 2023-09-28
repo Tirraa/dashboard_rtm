@@ -1,3 +1,4 @@
+import { i18ns } from '@/config/i18n';
 import { getServerSideI18n } from '@/i18n/server';
 import { FunctionComponent } from 'react';
 
@@ -5,7 +6,7 @@ interface BlogPostsNotFoundProps {}
 
 export const BlogPostsNotFound: FunctionComponent<BlogPostsNotFoundProps> = async () => {
   const globalT = await getServerSideI18n();
-  const txt = globalT('vocab.no-blog-post');
+  const txt = globalT(`${i18ns.vocab}.no-blog-post`);
   return <p>{txt}</p>;
 };
 

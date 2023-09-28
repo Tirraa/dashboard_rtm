@@ -10,10 +10,10 @@ export const PATCH_NOTES_ROUTES: PatchNotesRoutes = {
   DISCORD_BOT_PATCH_NOTES_PAGE: BASE + 'discord-bot'
 };
 
-const navbar = i18ns.navbar;
+const blogCategories = i18ns.blogCategories;
 export const PATCH_NOTES_ROUTES_TITLES: PatchNotesRoutesTitles = {
-  DASHBOARD_PATCH_NOTES_PAGE: `${navbar}.dashboard`,
-  DISCORD_BOT_PATCH_NOTES_PAGE: `${navbar}.discord-bot`
+  DASHBOARD_PATCH_NOTES_PAGE: `${blogCategories}.patch-notes.dashboard.title`,
+  DISCORD_BOT_PATCH_NOTES_PAGE: `${blogCategories}.patch-notes.discord-bot.title`
 };
 
 export default PATCH_NOTES_ROUTES;

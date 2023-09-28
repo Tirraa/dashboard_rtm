@@ -5,6 +5,7 @@ import NavbarElement from '@/components/_hoc/navbar/NavbarElement';
 import { NAVBAR_EXTRAS_COMPONENTS_DESKTOP, NAVBAR_EXTRAS_COMPONENTS_MOBILE } from '@/config/SitewideNavbar/Extras/utils/ComponentsMapping';
 import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsConfig';
 import SITEWIDE_NAVBAR_ROUTES, { SITEWIDE_NAVBAR_ROUTES_TITLES } from '@/config/SitewideNavbar/routesImpl';
+import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
 import getComputedNavData from '@/lib/misc/getComputedNavData';
@@ -116,8 +117,8 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
     </ul>
   );
 
-  const logo = globalT('ugly.logo');
-  const brand = globalT('vocab.brand');
+  const logo = globalT(`${i18ns.ugly}.logo`);
+  const brand = globalT(`${i18ns.vocab}.brand`);
 
   // {ToDo} use a formatter for the img alt
   return (

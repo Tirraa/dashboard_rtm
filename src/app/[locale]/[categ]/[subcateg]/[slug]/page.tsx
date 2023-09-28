@@ -1,7 +1,8 @@
 import { getBlogSubCategoriesByCategory } from '@/cache/blog';
 import BlogPost from '@/components/blog/BlogPost';
-import { LANGUAGES } from '@/config/i18n';
+import { LANGUAGES, i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
+import { getServerSideI18n } from '@/i18n/server';
 import {
   getAllCategories,
   getAllPostsByCategoryAndSubCategoryUnstrict,
@@ -12,6 +13,7 @@ import {
   redirectToBlogCategoryAndSubCategoryPairPageUnstrict,
   redirectToBlogCategoryPage
 } from '@/lib/blog';
+import { getPageTitle } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogCategory, BlogPostPageProps, BlogStaticParams, BlogSubCategoryFromUnknownCategory } from '@/types/Blog';
@@ -19,7 +21,7 @@ import PostBase from '@/types/BlogPostAbstractions';
 import { setStaticParamsLocale } from 'next-international/server';
 import { notFound, redirect } from 'next/navigation';
 
-export function generateMetadata({ params }: BlogPostPageProps) {
+export async function generateMetadata({ params }: BlogPostPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];
   const subCategory = params[BlogTaxonomy.SUBCATEGORY];
   const validCombination = isValidCategoryAndSubCategoryPair(category, subCategory);
@@ -35,7 +37,10 @@ export function generateMetadata({ params }: BlogPostPageProps) {
     redirect(ROUTES_ROOTS.WEBSITE + category);
   }
 
-  const { title, metadescription: description } = post as PostBase;
+  const globalT = await getServerSideI18n();
+  const currentPost = post as PostBase;
+  const title = getPageTitle(globalT(`${i18ns.vocab}.brand-short`), currentPost.title);
+  const { metadescription: description } = post as PostBase;
   return { title, description };
 }
 
