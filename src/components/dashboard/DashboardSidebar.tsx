@@ -34,7 +34,7 @@ function sidebarBtnsGenerator(): ReactNode[] {
 
 export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => {
   return (
-    <aside className="bg-black w-fit border-r-[1px] hidden lg:flex">
+    <aside className="bg-black w-fit hidden lg:flex">
       <nav className="p-4 overflow-y-auto">
         <ul>{sidebarBtnsGenerator()}</ul>
       </nav>

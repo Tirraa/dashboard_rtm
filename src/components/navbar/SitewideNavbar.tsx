@@ -107,7 +107,9 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   ));
 
   const desktopNavList = (
-    <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">{desktopNavbarElements}</ul>
+    <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2 rtm navbar-central-block">
+      {desktopNavbarElements}
+    </ul>
   );
 
   const mobileNavList = (
@@ -126,16 +128,16 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       ref={navbarInstanceRef}
       color="blue"
       fullWidth={true}
-      className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full overflow-hidden rounded-none py-2 px-4 lg:px-8 lg:py-4"
+      className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full overflow-hidden rounded-none py-2 px-4 lg:px-8 lg:py-4 rtm navbar"
     >
-      <div className="flex items-center justify-between text-white">
+      <div className="flex items-center justify-between text-white rtm navbar-body">
         <Link href={ROUTES_ROOTS.WEBSITE}>
           <div className="flex">
             <Image src="/assets/rtm-logo.svg" height={LOGO_SIZE_PX_VALUE} width={LOGO_SIZE_PX_VALUE} alt={`${brand} (${logo})`} />
           </div>
         </Link>
         <div className="flex items-center gap-4">
-          <div className="hidden lg:block">{desktopNavList}</div>
+          <nav className="hidden lg:block">{desktopNavList}</nav>
           <IconButton
             variant="text"
             className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"

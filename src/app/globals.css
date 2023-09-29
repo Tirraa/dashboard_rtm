@@ -25,6 +25,7 @@ main {
   padding: 1rem;
 }
 
-[dir='rtl'] #sitewide-navbar * {
+[dir='rtl'] .rtm.navbar .rtm.navbar-body,
+[dir='rtl'] .rtm.navbar .rtm.navbar-central-block {
   flex-direction: row-reverse;
 }
