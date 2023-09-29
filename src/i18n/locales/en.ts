@@ -16,9 +16,11 @@ export default {
   },
 
   dashboard: {
-    'base-page': 'Base page',
-    'foo-page': 'Foo page',
-    'bar-page': 'Bar page'
+    'pages-titles': {
+      main: 'Main',
+      foo: 'Foo',
+      bar: 'Bar'
+    }
   },
 
   'blog-categories': {

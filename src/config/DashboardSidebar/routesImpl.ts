@@ -6,16 +6,16 @@ import { DashboardRoutes, DashboardRoutesTitles } from './utils/RoutesMapping';
 const BASE = getSlashEnvelope(ROUTES_ROOTS.DASHBOARD);
 
 export const DASHBOARD_ROUTES: DashboardRoutes = {
-  BASE_PAGE: ROUTES_ROOTS.DASHBOARD,
+  MAIN_PAGE: ROUTES_ROOTS.DASHBOARD,
   FOO_PAGE: BASE + 'foo',
   BAR_PAGE: BASE + 'bar'
 };
 
 const dashboard = i18ns.dashboard;
 export const DASHBOARD_ROUTES_TITLES: DashboardRoutesTitles = {
-  BASE_PAGE: `${dashboard}.base-page`,
-  FOO_PAGE: `${dashboard}.foo-page`,
-  BAR_PAGE: `${dashboard}.bar-page`
+  MAIN_PAGE: `${dashboard}.pages-titles.main`,
+  FOO_PAGE: `${dashboard}.pages-titles.foo`,
+  BAR_PAGE: `${dashboard}.pages-titles.bar`
 };
 
 export default DASHBOARD_ROUTES;

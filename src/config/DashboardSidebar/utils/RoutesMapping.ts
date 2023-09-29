@@ -1,7 +1,7 @@
 import { RoutesDefinition, RoutesReactElements, RoutesTitles } from '@/types/RoutesMapping';
 
 enum EDashboardRoutes {
-  BASE_PAGE,
+  MAIN_PAGE,
   FOO_PAGE,
   BAR_PAGE
 }
