@@ -17,7 +17,7 @@ function localeFileInfosValidator(localeFilePath: string): MaybeEmptyErrorsDetec
   const localeCode = localeMetadatas[LOCALES_LNG_INFOS_KEY];
 
   if (!localeCode) {
-    feedback += `The '${LOCALES_LNG_INFOS_KEY}' field value is empty or missing in ${LOCALES_INFOS_ROOT_KEY}! (${localeFilePath})` + '\n';
+    feedback += `The '${LOCALES_LNG_INFOS_KEY}' field value is empty or missing in '${LOCALES_INFOS_ROOT_KEY}'! (${localeFilePath})`;
   } else if (expectedLocaleCode !== localeCode) {
     feedback +=
       `The '${LOCALES_INFOS_ROOT_KEY}.${LOCALES_LNG_INFOS_KEY}' field value should match the locale filename! (${localeFilePath})` +
@@ -32,7 +32,7 @@ function localeFileInfosValidator(localeFilePath: string): MaybeEmptyErrorsDetec
  * @throws {Error}
  */
 export function localesInfosValidator(localesFolder: string): MaybeEmptyErrorsDetectionFeedback {
-  const ERROR_PREFIX_TAIL = `(locales files)`;
+  const ERROR_PREFIX_TAIL = `(locales files infos)`;
   let feedback: ErrorsDetectionFeedback = '';
 
   const files: string[] = fs.readdirSync(localesFolder).filter((file) => path.extname(file) === '.ts');
