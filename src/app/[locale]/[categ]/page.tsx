@@ -10,9 +10,9 @@ import { setStaticParamsLocale } from 'next-international/server';
 
 export async function generateMetadata({ params }: BlogCategoryPageProps) {
   const globalT = await getServerSideI18n();
-
-  const title = getPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.blogCategories}.${params[BlogTaxonomy.CATEGORY]}._title`));
-  const description = globalT(`${i18ns.blogCategories}.${params[BlogTaxonomy.CATEGORY]}._meta-description`);
+  const category = params[BlogTaxonomy.CATEGORY];
+  const title = getPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.blogCategories}.${category}._title`));
+  const description = globalT(`${i18ns.blogCategories}.${category}._meta-description`);
   return { title, description };
 }
 
@@ -37,7 +37,7 @@ export async function generateStaticParams() {
   return staticParams;
 }
 
-export default async function Page({ params }: BlogCategoryPageProps) {
+export default function Page({ params }: BlogCategoryPageProps) {
   const lng = params[i18nTaxonomy.LANG_FLAG];
   setStaticParamsLocale(lng);
 
