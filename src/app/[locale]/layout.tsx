@@ -1,12 +1,12 @@
 import '@/app/globals.css';
 import HtmlElement from '@/components/misc/HtmlElement';
 import I18nProvider from '@/contexts/I18nProvider';
-import { LayoutMinimalProps } from '@/types/CustomUtilitaryTypes';
+import { LayoutBaseProps } from '@/types/Next';
 
-export default function RootLayout({ children }: LayoutMinimalProps) {
+export default function RootLayout({ children, params }: LayoutBaseProps) {
   return (
     <I18nProvider>
-      <HtmlElement {...{ children }} />
+      <HtmlElement {...{ children, params }} />
     </I18nProvider>
   );
 }
