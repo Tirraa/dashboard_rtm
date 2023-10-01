@@ -11,16 +11,15 @@ function getRetrievedValuesFromArgs(args: string[]): MaybeIncorrectTFlagsAssoc {
   const indexOfDefaultI18nLocaleFile = args.indexOf(FLAGS.I18N_DEFAULT_LOCALE_FILE);
   const indexOfSkipLocalesInfos = args.indexOf(FLAGS.SKIP_LOCALES_INFOS);
 
-  const postsFolderArgIdx = indexOfPostsFolder !== -1 ? indexOfPostsFolder + 1 : -1;
-  const blogConfigFileArgIdx = indexOfBlogConfigFile !== -1 ? indexOfBlogConfigFile + 1 : -1;
-  const defaultI18nLocaleFileArgIdx = indexOfDefaultI18nLocaleFile !== -1 ? indexOfDefaultI18nLocaleFile + 1 : -1;
-
+  const POSTS_FOLDER = indexOfPostsFolder !== -1 ? args[indexOfPostsFolder + 1] : undefined;
+  const BLOG_CONFIG_FILE = indexOfBlogConfigFile !== -1 ? args[indexOfBlogConfigFile + 1] : undefined;
+  const I18N_DEFAULT_LOCALE_FILE = indexOfDefaultI18nLocaleFile !== -1 ? args[indexOfDefaultI18nLocaleFile + 1] : undefined;
   const SKIP_LOCALES_INFOS = indexOfSkipLocalesInfos === -1 ? '' : 'Look at my horse, my horse is amazing';
 
   const retrievedValuesFromArgs: MaybeIncorrectTFlagsAssoc = {
-    POSTS_FOLDER: postsFolderArgIdx !== -1 ? args[postsFolderArgIdx] : undefined,
-    BLOG_CONFIG_FILE: blogConfigFileArgIdx !== -1 ? args[blogConfigFileArgIdx] : undefined,
-    I18N_DEFAULT_LOCALE_FILE: defaultI18nLocaleFileArgIdx !== -1 ? args[defaultI18nLocaleFileArgIdx] : undefined,
+    POSTS_FOLDER,
+    BLOG_CONFIG_FILE,
+    I18N_DEFAULT_LOCALE_FILE,
     SKIP_LOCALES_INFOS
   };
   return retrievedValuesFromArgs;

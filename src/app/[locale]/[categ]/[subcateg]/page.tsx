@@ -1,7 +1,5 @@
-import SubCategoryRelatedBlogPosts from '@/components/pages/blog/SubCategoryRelatedBlogPosts';
-import { BlogCategory, BlogSubCategoryPageProps } from '@/types/Blog';
-
 import { getBlogSubCategoriesByCategory } from '@/cache/blog';
+import SubCategoryRelatedBlogPosts from '@/components/pages/blog/SubCategoryRelatedBlogPosts';
 import { LANGUAGES, i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { getServerSideI18n } from '@/i18n/server';
@@ -16,7 +14,7 @@ import {
 import { getPageTitle } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogStaticParams } from '@/types/Blog';
+import { BlogCategory, BlogStaticParams, BlogSubCategoryPageProps } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { setStaticParamsLocale } from 'next-international/server';
 import { notFound, redirect } from 'next/navigation';
