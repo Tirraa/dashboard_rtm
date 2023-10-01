@@ -1,4 +1,4 @@
-import BlogPostsNotFound from '@/components/blog/BlogPostsNotFound';
+import BlogPostsNotFound from '@/components/shared/blog/BlogPostsNotFound';
 import { LanguageFlag } from '@/types/i18n';
 import { ReactNode } from 'react';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import RtmButton from '@/components/cta/RtmButton';
+import RtmButton from '@/components/shared/cta/RtmButton';
 import DISCORD_CONFIG from '@/config/discord';
 import { i18ns } from '@/config/i18n';
 import { getClientSideI18n } from '@/i18n/client';
@@ -8,7 +8,7 @@ import { CogIcon } from '@heroicons/react/20/solid';
 import Image from 'next/image';
 import { CSSProperties, FunctionComponent } from 'react';
 
-interface HomepageInnerProps {}
+interface HomepageProps {}
 
 // {ToDo} Please, design a real logo
 const style: CSSProperties = {
@@ -17,7 +17,7 @@ const style: CSSProperties = {
 const [width, height]: [number, number] = [226, 69];
 
 // {ToDo} use a formatter for the img alt
-export const HomepageInner: FunctionComponent<HomepageInnerProps> = () => {
+export const Homepage: FunctionComponent<HomepageProps> = () => {
   const globalT = getClientSideI18n();
   const brand = globalT(`${i18ns.vocab}.brand`);
   const logo = globalT(`${i18ns.ugly}.logo`);
@@ -32,4 +32,4 @@ export const HomepageInner: FunctionComponent<HomepageInnerProps> = () => {
   );
 };
 
-export default HomepageInner;
+export default Homepage;

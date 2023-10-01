@@ -4,9 +4,9 @@ import { i18ns } from '@/config/i18n';
 import { getClientSideI18n } from '@/i18n/client';
 import { FunctionComponent } from 'react';
 
-interface NotFoundInnerProps {}
+interface NotFoundProps {}
 
-export const NotFoundInner: FunctionComponent<NotFoundInnerProps> = () => {
+export const NotFound: FunctionComponent<NotFoundProps> = () => {
   const globalT = getClientSideI18n();
   return (
     <div className="flex flex-1 h-full items-center justify-center">
@@ -15,4 +15,4 @@ export const NotFoundInner: FunctionComponent<NotFoundInnerProps> = () => {
   );
 };
 
-export default NotFoundInner;
+export default NotFound;

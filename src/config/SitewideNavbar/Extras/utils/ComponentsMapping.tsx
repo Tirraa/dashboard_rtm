@@ -1,4 +1,4 @@
-import NavbarLoginButton from '@/components/navbar/NavbarLoginButton';
+import NavbarLoginButton from '@/components/layouts/navbar/NavbarLoginButton';
 import { NavbarExtrasRoutesReactElements } from './RoutesMapping';
 
 export const NAVBAR_EXTRAS_COMPONENTS_DESKTOP: NavbarExtrasRoutesReactElements = { LOGIN: <NavbarLoginButton /> };

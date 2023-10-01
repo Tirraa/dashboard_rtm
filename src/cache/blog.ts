@@ -8,8 +8,8 @@ namespace BlogCache {
 
 function buildSubCategoriesSet(category: BlogCategory): Set<BlogSubCategoryFromUnknownCategory> {
   try {
-    const subCategoriesSet = new Set<BlogSubCategoryFromUnknownCategory>();
     const relatedPosts = BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[category]();
+    const subCategoriesSet = new Set<BlogSubCategoryFromUnknownCategory>();
 
     relatedPosts.forEach((post) => subCategoriesSet.add(getBlogPostSubCategory(post)));
     return subCategoriesSet;

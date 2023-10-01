@@ -1,5 +1,3 @@
-import NotFoundInner from '@/components/pagesInner/Notfound';
+import NotFoundPage from 'src/app/[locale]/not-found';
 
-export default function NotFoundPage() {
-  return <NotFoundInner />;
-}
+export default NotFoundPage;

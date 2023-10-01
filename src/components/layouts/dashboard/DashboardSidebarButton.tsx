@@ -1,4 +1,4 @@
-import SidebarButtonStyle from '@/components/_config/_styles/SidebarButtonStyle';
+import SidebarButtonStyle from '@/components/config/styles/SidebarButtonStyle';
 import ROUTES_ROOTS from '@/config/routes';
 import { hrefMatchesPathname } from '@/lib/str';
 import { AppPath } from '@/types/Next';

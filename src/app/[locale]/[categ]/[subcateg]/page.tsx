@@ -1,4 +1,4 @@
-import SubCategoryRelatedBlogPosts from '@/components/blog/SubCategoryRelatedBlogPosts';
+import SubCategoryRelatedBlogPosts from '@/components/pages/blog/SubCategoryRelatedBlogPosts';
 import { BlogCategory, BlogSubCategoryPageProps } from '@/types/Blog';
 
 import { getBlogSubCategoriesByCategory } from '@/cache/blog';

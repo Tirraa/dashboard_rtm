@@ -1,5 +1,5 @@
-import options from '@/app/api/auth/[...nextauth]/options';
-import DashboardLayoutClient from '@/components/dashboard/DashboardLayoutClient';
+import authOptions from '@/config/Auth/authOptions';
+import DashboardLayoutClient from '@/components/layouts/dashboard/DashboardLayoutClient';
 import { AUTH_ROUTES } from '@/config/Auth/routesImpl';
 import { getStaticParams } from '@/i18n/server';
 import i18nTaxonomy from '@/taxonomies/i18n';
@@ -17,7 +17,7 @@ export function generateStaticParams() {
 export default async function DashboardLayout({ params, children }: DashboardLayoutProps) {
   const lng = params[i18nTaxonomy.LANG_FLAG];
   setStaticParamsLocale(lng);
-  const session = await getServerSession(options);
+  const session = await getServerSession(authOptions);
   if (!session) redirect(AUTH_ROUTES.LOGIN);
 
   return <DashboardLayoutClient {...{ children }} />;

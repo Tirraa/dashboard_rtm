@@ -1,7 +1,8 @@
 'use client';
 
-import NavbarConfig from '@/components/_config/_styles/Navbar';
 import NavbarElement from '@/components/_hoc/navbar/NavbarElement';
+import NavbarConfig from '@/components/config/styles/Navbar';
+import NavbarButton from '@/components/layouts/navbar/NavbarButton';
 import { NAVBAR_EXTRAS_COMPONENTS_DESKTOP, NAVBAR_EXTRAS_COMPONENTS_MOBILE } from '@/config/SitewideNavbar/Extras/utils/ComponentsMapping';
 import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsConfig';
 import SITEWIDE_NAVBAR_ROUTES, { SITEWIDE_NAVBAR_ROUTES_TITLES } from '@/config/SitewideNavbar/routesImpl';
@@ -16,7 +17,6 @@ import { Collapse, IconButton, Navbar, Typography } from '@material-tailwind/rea
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment, FunctionComponent, useEffect, useRef, useState } from 'react';
-import NavbarButton from './NavbarButton';
 
 interface SitewideNavbarProps {}
 

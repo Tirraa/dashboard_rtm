@@ -1,4 +1,4 @@
-import HomepageInner from '@/components/pagesInner/Homepage';
+import Homepage from '@/components/pages/Homepage';
 import { i18ns } from '@/config/i18n';
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
 import { getPageTitle } from '@/lib/str';
@@ -23,7 +23,7 @@ export default function Page({ params }: i18nPageProps) {
 
   return (
     <main className="m-auto text-center">
-      <HomepageInner />
+      <Homepage />
     </main>
   );
 }

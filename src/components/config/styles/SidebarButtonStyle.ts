@@ -1,4 +1,4 @@
-import IButtonStyleReactIcon from './_types/IButtonStyleReactIcon';
+import IButtonStyleReactIcon from './types/IButtonStyleReactIcon';
 
 const COMMONS = 'transition-colors duration-200 p-2.5 rounded-lg';
 

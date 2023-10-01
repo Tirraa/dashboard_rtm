@@ -1,9 +1,9 @@
 'use client';
 
+import useLockScreenScrollY from '@/components/hooks/useLockScreenScrollY';
+import DashboardSidebar from '@/components/layouts/dashboard/DashboardSidebar';
 import { LayoutMinimalProps } from '@/types/CustomUtilitaryTypes';
 import { FunctionComponent } from 'react';
-import useLockScreenScrollY from '../_hooks/useLockScreenScrollY';
-import DashboardSidebar from './DashboardSidebar';
 
 interface DashboardLayoutClientProps extends LayoutMinimalProps {}
 

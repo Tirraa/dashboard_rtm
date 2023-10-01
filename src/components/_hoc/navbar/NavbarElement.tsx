@@ -1,5 +1,5 @@
-import NavbarButton from '@/components/navbar/NavbarButton';
-import NavbarDropdown from '@/components/navbar/NavbarDropdown';
+import NavbarButton from '@/components/layouts/navbar/NavbarButton';
+import NavbarDropdown from '@/components/layouts/navbar/NavbarDropdown';
 import { NavDataEntity } from '@/types/NavData';
 import { i18nParams } from '@/types/Next';
 import { FunctionComponent } from 'react';

@@ -1,4 +1,4 @@
-import DashboardSidebarButton from '@/components/dashboard/DashboardSidebarButton';
+import DashboardSidebarButton from '@/components/layouts/dashboard/DashboardSidebarButton';
 import { AppPath } from '@/types/Next';
 import { ComponentType } from 'react';
 import { IconBaseProps } from 'react-icons';

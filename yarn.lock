@@ -3462,10 +3462,10 @@ next-contentlayer@^0.3.4:
     "@contentlayer/core" "0.3.4"
     "@contentlayer/utils" "0.3.4"
 
-next-international@rc:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/next-international/-/next-international-1.1.0.tgz#6aa35c0158ce8db1e7dbd6b68cf052f85f3ba532"
-  integrity sha512-jJn5sS++Ckaco+jVEH8Q0Q4wpi1qjQ8cYFMP0d4S91A4YuPGusyJ8mmP3tyunPGsgjvUHNlSLoihNqE1FvZRuw==
+next-international@1.1.0-rc.1:
+  version "1.1.0-rc.1"
+  resolved "https://registry.yarnpkg.com/next-international/-/next-international-1.1.0-rc.1.tgz#883c04ae04635c7353b1b59f769e8c6ea85a6c6c"
+  integrity sha512-3LkUoQkSgsITMtADQnxX2xIOUu5PfU54XFh3PWDck/Ia+QvIQXF2ePBZ8O2kB1Zuo08pqsnin6v3ZCRQs4pwIw==
   dependencies:
     client-only "^0.0.1"
     international-types "^0.8.0"

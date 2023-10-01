@@ -1,6 +1,6 @@
 'use client';
 
-import NavbarButtonStyle from '@/components/_config/_styles/NavbarButtonStyle';
+import NavbarButtonStyle from '@/components/config/styles/NavbarButtonStyle';
 import { getClientSideI18n } from '@/i18n/client';
 import { getLinkTarget } from '@/lib/react';
 import { hrefMatchesPathname } from '@/lib/str';

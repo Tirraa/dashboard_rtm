@@ -3,7 +3,7 @@
 import NavbarDropdownButtonStyle, {
   NAVBAR_DROPDOWN_INNER_BUTTONS_CLASSLIST,
   navbarDropdownComponentProps
-} from '@/components/_config/_styles/NavbarDropdownButtonStyle';
+} from '@/components/config/styles/NavbarDropdownButtonStyle';
 import { getClientSideI18n } from '@/i18n/client';
 import { getLinkTarget } from '@/lib/react';
 import { hrefMatchesPathname } from '@/lib/str';

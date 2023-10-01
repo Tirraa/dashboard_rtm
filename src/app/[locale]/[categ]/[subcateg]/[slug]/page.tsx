@@ -1,5 +1,5 @@
 import { getBlogSubCategoriesByCategory } from '@/cache/blog';
-import BlogPost from '@/components/blog/BlogPost';
+import BlogPost from '@/components/pages/blog/BlogPost';
 import { LANGUAGES, i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { getServerSideI18n } from '@/i18n/server';
@@ -19,7 +19,7 @@ import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogCategory, BlogPostPageProps, BlogStaticParams, BlogSubCategoryFromUnknownCategory } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { setStaticParamsLocale } from 'next-international/server';
-import { notFound, redirect } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 export async function generateMetadata({ params }: BlogPostPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];
@@ -92,8 +92,6 @@ export async function generateStaticParams() {
 export default function Page({ params }: BlogPostPageProps) {
   const lng = params[i18nTaxonomy.LANG_FLAG];
   setStaticParamsLocale(lng);
-
-  if (!isValidCategoryAndSubCategoryPair(params[BlogTaxonomy.CATEGORY], params[BlogTaxonomy.SUBCATEGORY])) notFound();
 
   return <BlogPost {...{ params }} />;
 }

@@ -1,4 +1,4 @@
-import PaginatedElements from '@/components/misc/PaginatedElements';
+import PaginatedElements from '@/components/shared/misc/PaginatedElements';
 import BlogConfig from '@/config/blog';
 import { i18ns } from '@/config/i18n';
 import { getScopedI18n } from '@/i18n/server';
@@ -9,8 +9,8 @@ import { BlogSubCategoryPageProps } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
-import BlogPostPeview from './BlogPostPreview';
-import BlogPostsNotFound from './BlogPostsNotFound';
+import BlogPostPeview from '../../shared/blog/BlogPostPreview';
+import BlogPostsNotFound from '../../shared/blog/BlogPostsNotFound';
 
 export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageProps> = async ({ params }) => {
   const category = params[BlogTaxonomy.CATEGORY];
@@ -28,6 +28,7 @@ export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageP
   const paginatedElements = postsCollection.map((post) => (
     <BlogPostPeview key={`${post._raw.flattenedPath}-paginated-blog-post`} {...{ post, lng }} />
   ));
+
   return (
     <div className="mx-auto max-w-xl py-8">
       <h1 className="text-center">{title}</h1>
