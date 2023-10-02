@@ -7,6 +7,7 @@ import { hrefMatchesPathname } from '@/lib/str';
 import { AtomicNavDataEntity } from '@/types/NavData';
 import { AppPath } from '@/types/Next';
 import { ClassName } from '@/types/React';
+import { Button } from '@material-tailwind/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FunctionComponent } from 'react';
@@ -21,16 +22,16 @@ type NavbarButtonProps = INavbarButtonProps & ({ onClick: Function } | { path: A
 const ACTIVE: ClassName = { className: NavbarButtonStyle.isActiveClassList };
 const INACTIVE: ClassName = { className: NavbarButtonStyle.isNotActiveClassList };
 
-export const NavbarButton: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, onClick, path: href }) => {
+export const NavbarButton: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, onClick: onClickFun, path: href }) => {
   const globalT = getClientSideI18n();
   const currentPathname = usePathname();
 
-  if (onClick) {
+  if (onClickFun) {
     const classList = INACTIVE;
     return (
-      <button {...{ ...classList }} onClick={() => onClick()}>
+      <Button {...{ ...classList }} onClick={() => onClickFun()}>
         {globalT(i18nTitle)}
-      </button>
+      </Button>
     );
   } else if (href) {
     const classList = hrefMatchesPathname(href, currentPathname) ? ACTIVE : INACTIVE;

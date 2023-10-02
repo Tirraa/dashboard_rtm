@@ -82,8 +82,14 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   useEffect(
     () => {
       const navbarElement = getRefCurrentPtr(navbarInstanceRef);
+
       const closeNavbarOnOutsideClick = (e: Event): void => {
-        if (navbarElement && openNav && e.target instanceof Node && !navbarElement.contains(e.target)) setOpenNav(false);
+        const targetElement = e.target instanceof HTMLElement ? e.target : null;
+        if (navbarElement && openNav && targetElement) {
+          const ignoreClick =
+            targetElement.tagName === 'BUTTON' || targetElement.closest('button') || targetElement.tagName === 'A' || targetElement.closest('a');
+          if (!navbarElement.contains(targetElement) && !ignoreClick) setOpenNav(false);
+        }
       };
 
       document.addEventListener('click', closeNavbarOnOutsideClick);
@@ -162,7 +168,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
             </IconButton>
           </div>
         </div>
-        <div className="hidden lg:flex lg:gap-2">{buildNavbarExtrasForDesktop()}</div>
+        <div className="hidden lg:flex lg:gap-4">{buildNavbarExtrasForDesktop()}</div>
       </div>
 
       <Collapse ref={mobileMenuInstanceRef} className="flex justify-center text-center" open={openNav}>
