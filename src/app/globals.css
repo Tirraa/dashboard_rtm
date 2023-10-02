@@ -29,3 +29,7 @@ main {
 [dir='rtl'] .rtm.navbar .rtm.navbar-central-block {
   flex-direction: row-reverse;
 }
+
+[dir='rtl'] .rtm.sidebar .rtm.sidebar-body {
+  flex-direction: row-reverse;
+}

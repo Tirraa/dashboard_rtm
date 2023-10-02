@@ -34,9 +34,9 @@ function sidebarBtnsGenerator(): ReactNode[] {
 
 export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => {
   return (
-    <aside className="bg-black w-full justify-center flex border-t-[1px] border-slate-800 lg:w-fit">
+    <aside className="rtm sidebar bg-black w-full justify-center flex border-t-[1px] border-slate-800 lg:w-fit">
       <nav className="py-4 lg:px-4 overflow-x-auto lg:overflow-y-auto">
-        <ul className="flex gap-2 [&>*:first-child]:pl-4 lg:[&>*:first-child]:pl-0 [&>*:last-child]:pr-4 lg:[&>*:last-child]:pr-0 lg:block">
+        <ul className="rtm sidebar-body flex gap-2 [&>*:first-child]:pl-4 lg:[&>*:first-child]:pl-0 [&>*:last-child]:pr-4 lg:[&>*:last-child]:pr-0 lg:block">
           {sidebarBtnsGenerator()}
         </ul>
       </nav>
