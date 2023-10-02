@@ -20,7 +20,7 @@ const HtmlElement: FunctionComponent<HtmlElementProps> = ({ children, params }) 
   const locale = params[i18nTaxonomy.LANG_FLAG];
   return (
     <html lang={locale}>
-      <body className="transition-colors flex flex-col min-h-screen w-full p-0 m-0 dark:bg-gradient-to-t dark:from-slate-700 dark:to-slate-700 dark:text-white">
+      <body className="transition-colors flex flex-col min-h-screen w-full p-0 m-0 bg-gradient-to-t from-slate-50 to-slate-50 text-black dark:bg-gradient-to-t dark:from-slate-700 dark:to-slate-700 dark:text-white">
         <I18nProvider {...{ locale }}>
           <SplashScreen />
           <NextTopLoader {...{ ...PROGRESSBAR_CONFIG }} />
