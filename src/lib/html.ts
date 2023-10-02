@@ -13,3 +13,7 @@ export function computeHTMLElementWidth(htmlElement: HTMLElement): number {
   const computedWidth = width + widthDeltas.reduce((acc, value) => acc + value, 0);
   return computedWidth;
 }
+
+export function resetScroll() {
+  window.scrollTo(0, 0);
+}
