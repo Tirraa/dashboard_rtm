@@ -17,7 +17,7 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({ p
   const [currentPage, setCurrentPage] = useState<number>(1);
   const pagesAmount = Math.ceil(paginatedElements.length / elementsPerPage);
 
-  if (pagesAmount <= 1) return <>{paginatedElements}</>;
+  if (pagesAmount <= 1) return paginatedElements;
 
   const startIndex = (currentPage - 1) * elementsPerPage;
   const endIndex = startIndex + elementsPerPage;

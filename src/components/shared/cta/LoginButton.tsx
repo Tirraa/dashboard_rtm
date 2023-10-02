@@ -1,11 +1,11 @@
 'use client';
 
-import { getLinkTarget } from '@/lib/react';
+import ROUTES_ROOTS from '@/config/routes';
 import { AppPath } from '@/types/Next';
 import { ClassName } from '@/types/React';
 import { Button } from '@material-tailwind/react';
 import { size, variant } from '@material-tailwind/react/types/components/button';
-import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 import { FunctionComponent, ReactElement } from 'react';
 
 interface InviteBotButtonProps {
@@ -28,10 +28,8 @@ const defClassList = (txtCls: string): ClassName => ({
   className: `mt-4 ${txtCls} normal-case flex items-center gap-2`
 });
 
-export const RtmButton: FunctionComponent<InviteBotButtonProps> = ({
+export const LoginButton: FunctionComponent<InviteBotButtonProps> = ({
   label,
-  __IconComponent,
-  href,
   title: titleValue,
   className: classNameValue,
   textCls: textClsValue,
@@ -47,18 +45,12 @@ export const RtmButton: FunctionComponent<InviteBotButtonProps> = ({
   const ripple = rippleValue !== undefined ? rippleValue : true;
 
   const btn = (
-    <Button {...{ ...className, ripple, title, variant, size }}>
-      <span className="flex items-center gap-2">
-        {__IconComponent}
-        {label}
-      </span>
+    <Button {...{ ...className, ripple, title, variant, size }} onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })}>
+      <span className="flex items-center gap-2">{label}</span>
     </Button>
   );
 
-  // {ToDo} fix Material Tailwind? This code is not W3C compliant.
-  // https://github.com/creativetimofficial/material-tailwind/issues/448
-  if (href) return <Link {...{ href, ...{ ...getLinkTarget(href) } }}>{btn}</Link>;
   return btn;
 };
 
-export default RtmButton;
+export default LoginButton;
