@@ -18,7 +18,7 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = ({ post, lng }) => 
   return (
     <article className="mx-auto max-w-xl py-8">
       <div className="mb-8 text-center">
-        <time dateTime={post.date} className="mb-1 text-xs text-gray-600">
+        <time dateTime={post.date} className="mb-1 text-xs text-gray-600 dark:text-gray-300">
           {formattedDate}
         </time>
         <h1>{post.title}</h1>

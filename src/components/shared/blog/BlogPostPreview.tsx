@@ -22,7 +22,7 @@ export const BlogPostPeview: FunctionComponent<BlogPostPeviewProps> = ({ post, l
           {post.title}
         </Link>
       </h2>
-      <time dateTime={post.date} className="mb-2 block text-xs text-gray-600">
+      <time dateTime={post.date} className="mb-2 block text-xs text-gray-600 dark:text-gray-300">
         {formattedDate}
       </time>
       <div className="text-sm [&>*]:mb-3 [&>*:last-child]:mb-0 break-words" dangerouslySetInnerHTML={{ __html: descriptionSnippet }} />

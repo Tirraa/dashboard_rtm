@@ -1,47 +1,29 @@
-import THEME_CONFIG from '@/config/themes';
+import THEME_CONFIG, { PHANTOM_VARIANT, ThemeVariant, VARIANTS_CLS } from '@/config/themes';
+import initializeTheme from './retrieveOrInferTheme';
 
-function memorizeInferedTheme(theme: string) {
-  window.localStorage.setItem(THEME_CONFIG.LOCAL_STORAGE_THEME_KEY, theme);
-}
+export const isValidVariantCls = (themeCls: string | null) => typeof themeCls === 'string' && VARIANTS_CLS.includes(themeCls as any);
 
-function flipTheme(choicedTheme: string, rejectedTheme: string) {
-  if (choicedTheme) document.documentElement.classList.add(choicedTheme);
-  if (rejectedTheme) document.documentElement.classList.remove(rejectedTheme);
-}
+export const getThemeFromLocalStorage = (): string | null => window.localStorage.getItem(THEME_CONFIG.LOCAL_STORAGE_THEME_KEY);
 
-function toggleDarkTheme() {
-  flipTheme(THEME_CONFIG.DARK_THEME, THEME_CONFIG.LIGHT_THEME);
-  memorizeInferedTheme(THEME_CONFIG.DARK_THEME);
-}
+export function selectTheme(themeCls: ThemeVariant): void {
+  const saveTheme = (themeCls: ThemeVariant) => window.localStorage.setItem(THEME_CONFIG.LOCAL_STORAGE_THEME_KEY, themeCls);
 
-function toggleLightTheme() {
-  flipTheme(THEME_CONFIG.LIGHT_THEME, THEME_CONFIG.DARK_THEME);
-  memorizeInferedTheme(THEME_CONFIG.LIGHT_THEME);
-}
-
-export function getThemeFromLocalStorage(): string | null {
-  const currentTheme = window.localStorage.getItem(THEME_CONFIG.LOCAL_STORAGE_THEME_KEY);
-  return currentTheme;
-}
-
-export function toggleTheme(key?: string): string | null {
-  function toggleThemeBasedOnLocalStorageFallback() {
-    const currentTheme = getThemeFromLocalStorage();
-    if (currentTheme !== null) {
-      if (currentTheme === THEME_CONFIG.LIGHT_THEME) toggleDarkTheme();
-      else if (currentTheme === THEME_CONFIG.DARK_THEME) toggleLightTheme();
+  function doSelectTheme(themeCls: ThemeVariant) {
+    if (!isValidVariantCls(themeCls)) {
+      initializeTheme();
+      return;
     }
+
+    for (const variantCls of VARIANTS_CLS) {
+      if (!variantCls) continue;
+      document.documentElement.classList.remove(variantCls);
+    }
+
+    if (themeCls && themeCls !== PHANTOM_VARIANT) document.documentElement.classList.add(themeCls);
+    saveTheme(themeCls);
   }
 
-  function processKey(key: string) {
-    if (key === THEME_CONFIG.LIGHT_THEME) toggleLightTheme();
-    else if (key === THEME_CONFIG.DARK_THEME) toggleDarkTheme();
-    else toggleThemeBasedOnLocalStorageFallback();
-  }
+  const process = (themeCls: ThemeVariant): void => doSelectTheme(themeCls);
 
-  if (key !== undefined) processKey(key);
-  else toggleThemeBasedOnLocalStorageFallback();
-
-  const newTheme = getThemeFromLocalStorage();
-  return newTheme;
+  process(themeCls);
 }

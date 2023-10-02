@@ -4,6 +4,7 @@ import RtmButton from '@/components/shared/cta/RtmButton';
 import DISCORD_CONFIG from '@/config/discord';
 import { i18ns } from '@/config/i18n';
 import { getClientSideI18n } from '@/i18n/client';
+import { selectTheme } from '@/themes/themeControl';
 import { CogIcon } from '@heroicons/react/20/solid';
 import Image from 'next/image';
 import { CSSProperties, FunctionComponent } from 'react';
@@ -28,6 +29,8 @@ export const Homepage: FunctionComponent<HomepageProps> = () => {
       <Image src="/assets/rtm-txt-logo.svg" {...{ style, width, height }} alt={`${brand} (${logo})`} className="flex" loading="eager" />
       <h1 className="mt-2">{brand}</h1>
       <RtmButton label={inviteTheBot} __IconComponent={<CogIcon className="h-7 w-7" />} href={DISCORD_CONFIG.BOT_INVITE_LINK} />
+      <button onClick={() => selectTheme('dark')}>DARK</button>
+      <button onClick={() => selectTheme('light')}>LIGHT</button>
     </div>
   );
 };

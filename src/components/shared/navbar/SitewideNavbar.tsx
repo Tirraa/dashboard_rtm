@@ -128,7 +128,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       ref={navbarInstanceRef}
       color="blue"
       fullWidth={true}
-      className="aiw bg-gray-800 sticky top-0 z-10 h-max max-w-full overflow-hidden rounded-none py-2 px-4 lg:px-8 lg:py-4 rtm navbar"
+      className="aiw bg-black sticky top-0 z-10 h-max max-w-full overflow-hidden rounded-none py-2 px-4 lg:px-8 lg:py-4 rtm navbar"
     >
       <div className="flex items-center justify-between text-white rtm navbar-body">
         <Link href={ROUTES_ROOTS.WEBSITE}>
