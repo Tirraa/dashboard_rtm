@@ -1,4 +1,4 @@
-import Main from '@/components/pages/dashboard/main';
+import DashboardMainPage from '@/components/pages/dashboard/main';
 import { i18ns } from '@/config/i18n';
 import { getServerSideI18n } from '@/i18n/server';
 import { getPageTitle } from '@/lib/str';
@@ -11,5 +11,5 @@ export async function generateMetadata() {
 }
 
 export default function Page() {
-  return <Main />;
+  return <DashboardMainPage />;
 }

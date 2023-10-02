@@ -2,9 +2,9 @@ import ROUTES_ROOTS from '@/config/routes';
 import Link from 'next/link';
 import { FunctionComponent } from 'react';
 
-interface FooProps {}
+interface DashboardFooPageProps {}
 
-export const Foo: FunctionComponent<FooProps> = () => {
+export const DashboardFooPage: FunctionComponent<DashboardFooPageProps> = () => {
   return (
     <>
       <h1>Hello there (Dashboard foo tab)</h1>
@@ -13,4 +13,4 @@ export const Foo: FunctionComponent<FooProps> = () => {
   );
 };
 
-export default Foo;
+export default DashboardFooPage;

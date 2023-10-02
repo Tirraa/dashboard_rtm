@@ -2,9 +2,9 @@ import ROUTES_ROOTS from '@/config/routes';
 import Link from 'next/link';
 import { FunctionComponent } from 'react';
 
-interface BarProps {}
+interface DashboardBarPageProps {}
 
-export const Bar: FunctionComponent<BarProps> = () => {
+export const DashboardBarPage: FunctionComponent<DashboardBarPageProps> = () => {
   return (
     <>
       <h1>Hello there (Dashboard bar tab)</h1>
@@ -81,4 +81,4 @@ export const Bar: FunctionComponent<BarProps> = () => {
   );
 };
 
-export default Bar;
+export default DashboardBarPage;

@@ -12,7 +12,8 @@ export default {
 
   auth: {
     login: 'Login',
-    logout: 'Logout'
+    logout: 'Logout',
+    signup: 'Sign up'
   },
 
   dashboard: {
@@ -67,6 +68,11 @@ export default {
     homepage: {
       title: 'Homepage',
       'meta-description': 'This is the homepage metadescription'
+    },
+
+    signup: {
+      title: 'Sign up',
+      'meta-description': 'Dashboard portal metadescription'
     }
   },
 

@@ -2,9 +2,9 @@ import ROUTES_ROOTS from '@/config/routes';
 import Link from 'next/link';
 import { FunctionComponent } from 'react';
 
-interface MainProps {}
+interface DashboardMainPageProps {}
 
-export const Main: FunctionComponent<MainProps> = () => {
+export const DashboardMainPage: FunctionComponent<DashboardMainPageProps> = () => {
   return (
     <>
       <h1>Hello there</h1>
@@ -13,4 +13,4 @@ export const Main: FunctionComponent<MainProps> = () => {
   );
 };
 
-export default Main;
+export default DashboardMainPage;

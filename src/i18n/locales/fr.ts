@@ -10,7 +10,8 @@ export default {
 
   auth: {
     login: 'Connexion',
-    logout: 'Déconnexion'
+    logout: 'Déconnexion',
+    signup: "S'inscrire"
   },
 
   dashboard: {
@@ -65,6 +66,11 @@ export default {
     homepage: {
       title: 'Accueil',
       'meta-description': "Metadescription Page d'accueil"
+    },
+
+    signup: {
+      title: 'Inscription',
+      'meta-description': 'Metadescription portail dashboard'
     }
   },
 

@@ -13,7 +13,7 @@ import NextTopLoader from './NextTopLoader';
 
 interface HtmlElementProps extends LayoutBaseProps {}
 
-const HtmlElement: FunctionComponent<HtmlElementProps> = ({ children, params }) => {
+const PagesHtmlElement: FunctionComponent<HtmlElementProps> = ({ children, params }) => {
   useEffect(() => initializeTheme(), []);
 
   const locale = params[i18nTaxonomy.LANG_FLAG];
@@ -33,4 +33,4 @@ const HtmlElement: FunctionComponent<HtmlElementProps> = ({ children, params }) 
   );
 };
 
-export default HtmlElement;
+export default PagesHtmlElement;
