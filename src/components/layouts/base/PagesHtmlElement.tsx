@@ -5,7 +5,7 @@ import SitewideNavbar from '@/components/shared/navbar/SitewideNavbar';
 import PROGRESSBAR_CONFIG from '@/config/progressbar';
 import I18nProvider from '@/contexts/I18nProvider';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import initializeTheme from '@/themes/retrieveOrInferTheme';
+import initializeTheme from '@/themes/initializeTheme';
 import { LayoutBaseProps } from '@/types/Next';
 import { SessionProvider } from 'next-auth/react';
 import { FunctionComponent, useEffect } from 'react';

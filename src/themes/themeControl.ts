@@ -1,5 +1,5 @@
 import THEME_CONFIG, { DEFAULT_VARIANT, ThemeVariant, VARIANTS_CLS } from '@/config/themes';
-import initializeTheme from './retrieveOrInferTheme';
+import initializeTheme from './initializeTheme';
 
 export const isValidVariantCls = (themeCls: string | null) => typeof themeCls === 'string' && VARIANTS_CLS.includes(themeCls as any);
 
