@@ -19,6 +19,6 @@ export const VARIANTS_CLS = Object.values(THEME_CONFIG.VARIANTS);
 
 export const DEFAULT_LIGHT_VARIANT: ThemeVariant = 'light';
 export const DEFAULT_DARK_VARIANT: ThemeVariant = 'dark';
-export const PHANTOM_VARIANT: ThemeVariant = DEFAULT_LIGHT_VARIANT;
+export const DEFAULT_VARIANT: ThemeVariant = DEFAULT_LIGHT_VARIANT;
 
 export default THEME_CONFIG;

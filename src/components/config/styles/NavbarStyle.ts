@@ -1,13 +1,13 @@
 import { getBreakpoint } from '@/lib/tailwind';
 
-type TNavbarConfig = {
+type TNavbarStyle = {
   NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE: number;
   LOGO_SIZE_PX_VALUE: number;
 };
 
-export const NavbarConfig: TNavbarConfig = {
+export const NAVBAR_STYLE: TNavbarStyle = {
   NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE: getBreakpoint('lg') || 960,
   LOGO_SIZE_PX_VALUE: 50
 } as const;
 
-export default NavbarConfig;
+export default NAVBAR_STYLE;

@@ -1,6 +1,10 @@
 import NavbarLoginButton from '@/components/layouts/navbar/NavbarLoginButton';
-import { NavbarExtrasRoutesReactElements } from './RoutesMapping';
+import NavbarThemeButton from '@/components/layouts/navbar/NavbarThemeButton';
+import { NavbarExtrasFeaturesReactElements } from './RoutesMapping';
 
-export const NAVBAR_EXTRAS_COMPONENTS_DESKTOP: NavbarExtrasRoutesReactElements = { LOGIN: <NavbarLoginButton /> };
+export const NAVBAR_EXTRAS_COMPONENTS_DESKTOP: NavbarExtrasFeaturesReactElements = { THEME: <NavbarThemeButton />, LOGIN: <NavbarLoginButton /> };
 
-export const NAVBAR_EXTRAS_COMPONENTS_MOBILE: NavbarExtrasRoutesReactElements = NAVBAR_EXTRAS_COMPONENTS_DESKTOP;
+export const NAVBAR_EXTRAS_COMPONENTS_MOBILE: NavbarExtrasFeaturesReactElements = {
+  THEME: <NavbarThemeButton isMobile={true} />,
+  LOGIN: <NavbarLoginButton isMobile={true} />
+};

@@ -1,7 +1,7 @@
 'use client';
 
 import NavbarElement from '@/components/_hoc/navbar/NavbarElement';
-import NavbarConfig from '@/components/config/styles/Navbar';
+import NAVBAR_STYLE from '@/components/config/styles/NavbarStyle';
 import NavbarButton from '@/components/layouts/navbar/NavbarButton';
 import { NAVBAR_EXTRAS_COMPONENTS_DESKTOP, NAVBAR_EXTRAS_COMPONENTS_MOBILE } from '@/config/SitewideNavbar/Extras/utils/ComponentsMapping';
 import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsConfig';
@@ -20,7 +20,7 @@ import { Fragment, FunctionComponent, useEffect, useRef, useState } from 'react'
 
 interface SitewideNavbarProps {}
 
-const { NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE, LOGO_SIZE_PX_VALUE } = NavbarConfig;
+const { NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE, LOGO_SIZE_PX_VALUE } = NAVBAR_STYLE;
 
 let navbarMobileDropdownIsHidden = false;
 
@@ -113,10 +113,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   );
 
   const mobileNavList = (
-    <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">
-      {mobileNavbarElements}
-      {buildNavbarExtrasForMobile()}
-    </ul>
+    <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2">{mobileNavbarElements}</ul>
   );
 
   const logo = globalT(`${i18ns.ugly}.logo`);
@@ -137,33 +134,37 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
           </div>
         </Link>
         <div className="flex items-center gap-4">
-          <nav className="hidden lg:block">{desktopNavList}</nav>
-          <IconButton
-            variant="text"
-            className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
-            ripple={true}
-            onClick={() => setOpenNav(!openNav)}
-          >
-            {openNav ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                className="h-6 w-6 scale-125"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 scale-125" fill="none" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-          </IconButton>
+          <nav className="hidden lg:flex">{desktopNavList}</nav>
+          <div className="flex gap-4 lg:hidden">
+            {buildNavbarExtrasForMobile()}
+            <IconButton
+              variant="text"
+              className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent"
+              ripple={true}
+              onClick={() => setOpenNav(!openNav)}
+            >
+              {openNav ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  className="h-6 w-6 scale-125"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 scale-125" fill="none" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </IconButton>
+          </div>
         </div>
-        <div className="hidden lg:block">{buildNavbarExtrasForDesktop()}</div>
+        <div className="hidden lg:flex lg:gap-2">{buildNavbarExtrasForDesktop()}</div>
       </div>
+
       <Collapse ref={mobileMenuInstanceRef} className="flex justify-center text-center" open={openNav}>
         {mobileNavList}
       </Collapse>

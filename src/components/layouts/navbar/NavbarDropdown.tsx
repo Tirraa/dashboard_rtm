@@ -1,8 +1,8 @@
 'use client';
 
 import NavbarDropdownButtonStyle, {
-  NAVBAR_DROPDOWN_INNER_BUTTONS_CLASSLIST,
-  navbarDropdownComponentProps
+  NAVBAR_DROPDOWN_COMPONENTS_PROPS,
+  NAVBAR_DROPDOWN_INNER_BUTTONS_CLASSLIST
 } from '@/components/config/styles/NavbarDropdownButtonStyle';
 import { getClientSideI18n } from '@/i18n/client';
 import { getLinkTarget } from '@/lib/react';
@@ -45,7 +45,7 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ i18nTitle
   const title = globalT(i18nTitle);
 
   return (
-    <Menu {...navbarDropdownComponentProps} handler={setOpenMenu} open={openMenu}>
+    <Menu {...NAVBAR_DROPDOWN_COMPONENTS_PROPS} handler={setOpenMenu} open={openMenu}>
       <MenuHandler>
         <div {...classList}>
           {title}

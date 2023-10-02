@@ -11,6 +11,6 @@ export type RoutesTitles<RoutesKeys extends RoutesKeysUnion> = {
   [_ in RoutesKeys]: I18nVocabTarget;
 };
 
-export type RoutesReactElements<RoutesKeys extends RoutesKeysUnion> = {
-  [_ in RoutesKeys]: ReactElement;
+export type WeaklyBindedReactElements<Keys extends string> = {
+  [_ in Keys]: ReactElement;
 };

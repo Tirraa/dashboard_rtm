@@ -1,10 +1,9 @@
-import { RoutesDefinition, RoutesReactElements, RoutesTitles } from '@/types/RoutesMapping';
+import { WeaklyBindedReactElements } from '@/types/RoutesMapping';
 
-enum ENavbarExtrasRoutes {
-  LOGIN
+enum ENavbarExtrasFeatures {
+  LOGIN,
+  THEME
 }
 
-export type NavbarExtrasRoutesKeys = keyof typeof ENavbarExtrasRoutes;
-export type NavbarExtrasRoutes = RoutesDefinition<NavbarExtrasRoutesKeys>;
-export type NavbarExtrasRoutesTitles = RoutesTitles<NavbarExtrasRoutesKeys>;
-export type NavbarExtrasRoutesReactElements = RoutesReactElements<NavbarExtrasRoutesKeys>;
+export type NavbarExtrasFeaturesKeys = keyof typeof ENavbarExtrasFeatures;
+export type NavbarExtrasFeaturesReactElements = WeaklyBindedReactElements<NavbarExtrasFeaturesKeys>;

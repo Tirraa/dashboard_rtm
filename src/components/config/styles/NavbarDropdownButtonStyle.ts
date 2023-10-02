@@ -6,15 +6,15 @@ const COMMONS = 'transition-colors duration-200 flex flex-1 justify-center round
 export const NavbarDropdownButtonStyle: IButtonStyleBase = {
   isActiveClassList: COMMONS + ' ' + 'bg-gray-900 text-white',
   isNotActiveClassList: COMMONS + ' ' + 'text-gray-300 hover:bg-gray-900 hover:text-white'
-};
+} as const;
 
-export const navbarDropdownComponentProps = {
+export const NAVBAR_DROPDOWN_COMPONENTS_PROPS = {
   animate: {
     mount: { y: 0 },
     unmount: { y: ANIMATION_START_Y_DELTA_PX_VALUE }
   },
   allowHover: true
-};
+} as const;
 
 export const NAVBAR_DROPDOWN_INNER_BUTTONS_CLASSLIST = 'flex items-center h-full px-4 py-2.5';
 

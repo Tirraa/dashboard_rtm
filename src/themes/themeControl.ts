@@ -1,4 +1,4 @@
-import THEME_CONFIG, { PHANTOM_VARIANT, ThemeVariant, VARIANTS_CLS } from '@/config/themes';
+import THEME_CONFIG, { DEFAULT_VARIANT, ThemeVariant, VARIANTS_CLS } from '@/config/themes';
 import initializeTheme from './retrieveOrInferTheme';
 
 export const isValidVariantCls = (themeCls: string | null) => typeof themeCls === 'string' && VARIANTS_CLS.includes(themeCls as any);
@@ -19,7 +19,7 @@ export function selectTheme(themeCls: ThemeVariant): void {
       document.documentElement.classList.remove(variantCls);
     }
 
-    if (themeCls && themeCls !== PHANTOM_VARIANT) document.documentElement.classList.add(themeCls);
+    if (themeCls && themeCls !== DEFAULT_VARIANT) document.documentElement.classList.add(themeCls);
     saveTheme(themeCls);
   }
 
