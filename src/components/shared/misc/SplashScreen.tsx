@@ -17,22 +17,28 @@ export const SplashScreen: FunctionComponent<SplashScreenProps> = () => {
   const [animationDone, setAnimationDone] = useState<boolean>(false);
 
   useEffect(() => {
-    const coroutine = setTimeout(() => {
-      const splashScreen = getRefCurrentPtr(splashScreenRef);
-      const splashScreenLogo = getRefCurrentPtr(splashScreenLogoRef);
+    let killswitchCoroutine: NodeJS.Timeout | null = null;
+    const splashScreen = getRefCurrentPtr(splashScreenRef);
+    const splashScreenLogo = getRefCurrentPtr(splashScreenLogoRef);
+    if (!splashScreen || !splashScreenLogo) return;
 
+    const effectCoroutine = setTimeout(() => {
       function killswitch() {
-        setAnimationDone(true);
-        splashScreen.removeEventListener('transitionend', killswitch);
+        killswitchCoroutine = setTimeout(() => {
+          setAnimationDone(true);
+          splashScreen.removeEventListener('transitionend', killswitch);
+        }, TRANSITION_DELAY_MS_VALUE);
       }
 
-      if (splashScreen && splashScreenLogo) {
-        splashScreen.style.opacity = '0';
-        splashScreen.addEventListener('transitionend', killswitch);
-        splashScreenLogo.style.scale = '1';
-      }
+      splashScreen.style.opacity = '0';
+      splashScreen.addEventListener('transitionend', killswitch);
+      splashScreenLogo.style.scale = '1';
     }, TRANSITION_DELAY_MS_VALUE);
-    return () => clearTimeout(coroutine);
+
+    return () => {
+      clearTimeout(effectCoroutine);
+      if (killswitchCoroutine) clearTimeout(killswitchCoroutine);
+    };
   }, [splashScreenRef, splashScreenLogoRef]);
 
   return !animationDone ? (
