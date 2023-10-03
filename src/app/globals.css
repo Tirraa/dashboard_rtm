@@ -41,3 +41,9 @@ main {
 [dir='rtl'] .rtm.sidebar .rtm.sidebar-body {
   flex-direction: row-reverse;
 }
+
+@media screen and (max-width: theme('screens.lg')) {
+  #nprogress {
+    display: none;
+  }
+}

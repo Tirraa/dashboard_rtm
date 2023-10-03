@@ -6,7 +6,7 @@ type TNavbarStyle = {
 };
 
 export const NAVBAR_STYLE: TNavbarStyle = {
-  NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE: getBreakpoint('lg') || 960,
+  NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE: getBreakpoint('lg') as number,
   LOGO_SIZE_PX_VALUE: 50
 } as const;
 

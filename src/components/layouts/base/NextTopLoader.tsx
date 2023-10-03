@@ -1,6 +1,7 @@
 'use client';
 
 import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
+import MobileDetect from 'mobile-detect';
 
 // A Next.js Top Loading Bar component made using nprogress, works with Next.js 13.
 // https://github.com/TheSGJ/nextjs-toploader
@@ -70,6 +71,8 @@ const NextTopLoader = ({
   speed,
   shadow
 }: NextTopLoaderProps) => {
+  const [mobileDetectInstance, setMobileDetectInstance] = React.useState<MobileDetect | undefined>(undefined);
+
   const defaultColor = '#29d';
   const defaultHeight = 3;
 
@@ -84,6 +87,8 @@ const NextTopLoader = ({
     </style>
   );
 
+  React.useEffect(() => setMobileDetectInstance(new MobileDetect(window.navigator.userAgent)), []);
+
   React.useEffect(() => {
     nProgress.configure({
       showSpinner: showSpinner ?? true,
@@ -93,6 +98,9 @@ const NextTopLoader = ({
       easing: easing ?? 'ease',
       speed: speed ?? 200
     });
+
+    const isMobileOrTablet = () =>
+      typeof mobileDetectInstance !== 'undefined' && (mobileDetectInstance.mobile() !== null || mobileDetectInstance.tablet() !== null);
 
     function isAnchorOfCurrentUrl(currentUrl: string, newUrl: string) {
       const currentUrlObj = new URL(currentUrl);
@@ -124,7 +132,8 @@ const NextTopLoader = ({
           const newUrl = (anchor as HTMLAnchorElement).href;
           const isExternalLink = (anchor as HTMLAnchorElement).target === '_blank';
           const isSamePage = isAnchorOfCurrentUrl(currentUrl, newUrl);
-          if (isSamePage || isExternalLink) return;
+
+          if (isSamePage || isExternalLink || isMobileOrTablet()) return;
 
           nProgress.start();
           (() => {
@@ -148,7 +157,7 @@ const NextTopLoader = ({
     document.addEventListener('click', handleClick);
 
     return () => document.removeEventListener('click', handleClick);
-  }, [crawl, crawlSpeed, easing, initialPosition, showSpinner, speed]);
+  }, [crawl, crawlSpeed, easing, initialPosition, showSpinner, speed, mobileDetectInstance]);
 
   return styles;
 };
