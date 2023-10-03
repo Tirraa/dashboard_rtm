@@ -1,4 +1,4 @@
-const siteUrl = 'https://example.com'; // {ToDo}
+const siteUrl = process.env.NEXTAUTH_URL;
 const DEFAULT_LANGUAGE = 'fr';
 
 /** @type {import('next-sitemap').IConfig} */
