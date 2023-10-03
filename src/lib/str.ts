@@ -53,8 +53,6 @@ export function getLastPathPart(path: AppPath): AppPathAsIs | PathSegment {
   return path;
 }
 
-export const gsub = (str: string, needle: string, replaceWith: string): string => str.split(needle).join(replaceWith);
-
 export const buildPathFromParts = (...args: PathSegment[]): AppPath => args.map(deleteTrailingSlashes).join('/');
 
 export const buildAbsolutePathFromParts = (...args: PathSegment[]): AppPath => {
