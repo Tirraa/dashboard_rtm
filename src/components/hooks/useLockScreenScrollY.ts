@@ -1,14 +1,12 @@
-import { resetScroll } from '@/lib/html';
 import { useLayoutEffect } from 'react';
 
-const EFFECT_CLASSES = ['w-screen', 'h-screen', 'overflow-hidden'];
+const EFFECT_CLASSES = ['h-100svh', 'overflow-y-hidden'];
 
-const useLockScreenScroll = () =>
+const useLockScreenScrollY = () =>
   useLayoutEffect(() => {
     document.body.classList.add(...EFFECT_CLASSES);
-    resetScroll();
 
     return () => document.body.classList.remove(...EFFECT_CLASSES);
   }, []);
 
-export default useLockScreenScroll;
+export default useLockScreenScrollY;

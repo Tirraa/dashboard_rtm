@@ -24,7 +24,7 @@ export const DashboardSidebarButton: FunctionComponent<DashboardSidebarButtonPro
   const pSize = SidebarButtonStyle.sidebarIconProps.size;
   const size = typeof pSize === 'number' ? pSize * 2 : typeof pSize === 'string' ? parseFloat(pSize) : null;
 
-  return <__SidebarIcon {...ICON_PROPS} {...classList} style={size !== null ? { width: size + 'px', height: 'auto' } : {}} />;
+  return <__SidebarIcon {...ICON_PROPS} {...classList} style={size !== null ? { width: size + 'px', height: size + 'px' } : {}} />;
 };
 
 export default DashboardSidebarButton;

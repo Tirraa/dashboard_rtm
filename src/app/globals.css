@@ -25,6 +25,14 @@ main {
   padding: 1rem;
 }
 
+.h-100svh {
+  height: 100svh;
+}
+
+.w-100svw {
+  width: 100svw;
+}
+
 [dir='rtl'] .rtm.navbar .rtm.navbar-body,
 [dir='rtl'] .rtm.navbar .rtm.navbar-central-block {
   flex-direction: row-reverse;

@@ -1,6 +1,7 @@
 'use client';
 
-import useLockScreenScroll from '@/components/hooks/useLockScreenScroll';
+import useLockScreenScrollY from '@/components/hooks/useLockScreenScrollY';
+import useResetScroll from '@/components/hooks/useResetScroll';
 import DashboardSidebar from '@/components/layouts/dashboard/DashboardSidebar';
 import { LayoutMinimalProps } from '@/types/CustomUtilitaryTypes';
 import { FunctionComponent } from 'react';
@@ -8,7 +9,8 @@ import { FunctionComponent } from 'react';
 interface DashboardLayoutClientProps extends LayoutMinimalProps {}
 
 const DashboardLayoutClient: FunctionComponent<DashboardLayoutClientProps> = ({ children }) => {
-  useLockScreenScroll();
+  useLockScreenScrollY();
+  useResetScroll();
 
   return (
     <div className="flex flex-1 overflow-y-auto flex-col lg:flex-row">
