@@ -26,8 +26,6 @@ export function resetScroll<T extends HTMLElement>(scrollableElementToResetRef?:
   }
 
   const refCurrentPtr = getRefCurrentPtr(scrollableElementToResetRef);
-  if (refCurrentPtr) {
-    refCurrentPtr.scrollTo(0, 0);
-    if (alsoResetWindowScroll) resetWindowScroll();
-  }
+  if (refCurrentPtr) refCurrentPtr.scrollTo(0, 0);
+  if (alsoResetWindowScroll) resetWindowScroll();
 }
