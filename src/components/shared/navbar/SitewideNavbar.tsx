@@ -3,10 +3,13 @@
 import NavbarElement from '@/components/_hoc/navbar/NavbarElement';
 import NAVBAR_STYLE from '@/components/config/styles/NavbarStyle';
 import NavbarButton from '@/components/layouts/navbar/NavbarButton';
+import DASHBOARD_SIDEBAR_CLASSES from '@/config/DashboardSidebar/classes';
 import { NAVBAR_EXTRAS_COMPONENTS_DESKTOP, NAVBAR_EXTRAS_COMPONENTS_MOBILE } from '@/config/SitewideNavbar/Extras/utils/ComponentsMapping';
+import SITEWIDE_NAVBAR_CLASSES from '@/config/SitewideNavbar/classes';
 import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsConfig';
 import SITEWIDE_NAVBAR_ROUTES, { SITEWIDE_NAVBAR_ROUTES_TITLES } from '@/config/SitewideNavbar/routesImpl';
 import { i18ns } from '@/config/i18n';
+import PRODUCT_CLASSES from '@/config/productClasses';
 import ROUTES_ROOTS from '@/config/routes';
 import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
 import getComputedNavData from '@/lib/misc/getComputedNavData';
@@ -21,6 +24,7 @@ import { Fragment, FunctionComponent, useEffect, useRef, useState } from 'react'
 interface SitewideNavbarProps {}
 
 const { NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE, LOGO_SIZE_PX_VALUE } = NAVBAR_STYLE;
+const { PRODUCT_PREFIX } = PRODUCT_CLASSES;
 
 let navbarMobileDropdownIsHidden = false;
 
@@ -83,13 +87,27 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
     () => {
       const navbarElement = getRefCurrentPtr(navbarInstanceRef);
 
+      function isDashboardSidebarOrDashboardSidebarBody(element: HTMLElement): boolean {
+        const dashboardSidebarExpectedClasses = [PRODUCT_PREFIX, DASHBOARD_SIDEBAR_CLASSES.DASHBOARD_SIDEBAR];
+        const dashboardSidebarBodyExpectedClasses = [PRODUCT_PREFIX, DASHBOARD_SIDEBAR_CLASSES.DASHBOARD_BODY];
+
+        const isDashboardSidebarBody = dashboardSidebarBodyExpectedClasses.every((cls) => element.classList.contains(cls));
+        const isDashboardSidebar = dashboardSidebarExpectedClasses.every((cls) => element.classList.contains(cls));
+        return isDashboardSidebarBody || isDashboardSidebar;
+      }
+
+      const ignoreClick = (element: HTMLElement): boolean =>
+        Boolean(
+          element.tagName === 'BUTTON' ||
+            element.closest('button') ||
+            element.tagName === 'A' ||
+            element.closest('a') ||
+            isDashboardSidebarOrDashboardSidebarBody(element)
+        );
+
       const closeNavbarOnOutsideClick = (e: Event): void => {
         const targetElement = e.target instanceof HTMLElement ? e.target : null;
-        if (navbarElement && openNav && targetElement) {
-          const ignoreClick =
-            targetElement.tagName === 'BUTTON' || targetElement.closest('button') || targetElement.tagName === 'A' || targetElement.closest('a');
-          if (!navbarElement.contains(targetElement) && !ignoreClick) setOpenNav(false);
-        }
+        if (openNav && navbarElement && targetElement && !navbarElement.contains(targetElement) && !ignoreClick(targetElement)) setOpenNav(false);
       };
 
       document.addEventListener('click', closeNavbarOnOutsideClick);
@@ -113,7 +131,9 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   ));
 
   const desktopNavList = (
-    <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2 rtm navbar-central-block">
+    <ul
+      className={`w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2 ${PRODUCT_PREFIX} ${SITEWIDE_NAVBAR_CLASSES.SITEWIDE_NAVBAR_CENTRAL_BLOCK}`}
+    >
       {desktopNavbarElements}
     </ul>
   );
@@ -131,9 +151,9 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       ref={navbarInstanceRef}
       color="blue"
       fullWidth={true}
-      className="aiw bg-black sticky top-0 z-10 h-max max-w-full overflow-hidden rounded-none py-2 px-4 lg:px-8 lg:py-4 rtm navbar"
+      className={`aiw bg-black sticky top-0 z-10 h-max max-w-full overflow-hidden rounded-none py-2 px-4 lg:px-8 lg:py-4 ${PRODUCT_PREFIX} navbar`}
     >
-      <div className="flex items-center justify-between text-white rtm navbar-body">
+      <div className={`flex items-center justify-between text-white ${PRODUCT_PREFIX} ${SITEWIDE_NAVBAR_CLASSES.SITEWIDE_NAVBAR_BODY}`}>
         <Link href={ROUTES_ROOTS.WEBSITE}>
           <div className="flex">
             <Image src="/assets/rtm-logo.svg" height={LOGO_SIZE_PX_VALUE} width={LOGO_SIZE_PX_VALUE} alt={`${brand} (${logo})`} />
