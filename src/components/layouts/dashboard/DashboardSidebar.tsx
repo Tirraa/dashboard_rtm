@@ -36,16 +36,7 @@ export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => 
   return (
     <aside className="rtm sidebar bg-black w-full justify-center flex border-t-[1px] border-slate-800 lg:w-fit">
       <nav className="py-4 lg:px-4 lg:overflow-y-auto">
-        <ul className="rtm sidebar-body flex flex-wrap justify-center gap-2 lg:block">
-          {sidebarBtnsGenerator()}
-          {sidebarBtnsGenerator()}
-          {sidebarBtnsGenerator()}
-          {sidebarBtnsGenerator()}
-          {sidebarBtnsGenerator()}
-          {sidebarBtnsGenerator()}
-          {sidebarBtnsGenerator()}
-          {sidebarBtnsGenerator()}
-        </ul>
+        <ul className="rtm sidebar-body flex flex-wrap justify-center gap-2 lg:block">{sidebarBtnsGenerator()}</ul>
       </nav>
     </aside>
   );
