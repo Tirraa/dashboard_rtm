@@ -18,10 +18,13 @@ export const DashboardSidebarCollapseButton: FunctionComponent<DashboardSidebarC
   const sitebarDropdownBtnClassList = !isCollapsed ? isNotActiveClassList : isActiveClassList;
 
   return (
-    <div onClick={() => setIsCollapsed(!isCollapsed)}>
+    <div
+      onClick={() => setIsCollapsed(!isCollapsed)}
+      className={'transition-opacity relative h-0 lg:w-0' + (isCollapsed ? ' ' + 'opacity-20 hover:opacity-100' : '')}
+    >
       <button className="hidden lg:block m-auto">
         {isCollapsed ? (
-          <ArrowSmallRightIcon width={20} height={20} className={sitebarDropdownBtnClassList} />
+          <ArrowSmallRightIcon width={20} height={20} className={sitebarDropdownBtnClassList + ' ' + 'rounded-l-none'} />
         ) : (
           <ArrowSmallLeftIcon width={20} height={20} className={sitebarDropdownBtnClassList} />
         )}
@@ -29,7 +32,7 @@ export const DashboardSidebarCollapseButton: FunctionComponent<DashboardSidebarC
 
       <button className="block lg:hidden m-auto">
         {isCollapsed ? (
-          <ArrowSmallDownIcon width={20} height={20} className={sitebarDropdownBtnClassList} />
+          <ArrowSmallDownIcon width={20} height={20} className={sitebarDropdownBtnClassList + ' ' + 'rounded-t-none'} />
         ) : (
           <ArrowSmallUpIcon width={20} height={20} className={sitebarDropdownBtnClassList} />
         )}
