@@ -11,7 +11,8 @@ export const config = {
 
 const I18nMiddlewareInstance = createI18nMiddleware({
   locales: LANGUAGES,
-  defaultLocale: DEFAULT_LANGUAGE
+  defaultLocale: DEFAULT_LANGUAGE,
+  urlMappingStrategy: 'rewrite'
 });
 
 function i18nMiddleware(request: NextRequest) {
