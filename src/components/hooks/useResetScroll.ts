@@ -1,9 +1,10 @@
 import { resetScroll } from '@/lib/html';
+import { HookDepsArrayPrimitives } from '@/types/React';
 import { RefObject, useEffect } from 'react';
 
 interface ResetScrollOptions {
   alsoResetWindowScroll?: boolean;
-  additionalDeps?: unknown[];
+  additionalDep?: HookDepsArrayPrimitives;
 }
 
 function useResetScroll<T extends HTMLElement>(scrollableElementToResetRef?: RefObject<T>, options?: ResetScrollOptions) {
@@ -11,7 +12,7 @@ function useResetScroll<T extends HTMLElement>(scrollableElementToResetRef?: Ref
     () => resetScroll(scrollableElementToResetRef, Boolean(options?.alsoResetWindowScroll)),
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [scrollableElementToResetRef?.current, options?.additionalDeps && [...options.additionalDeps]]
+    [options?.additionalDep]
   );
 }
 

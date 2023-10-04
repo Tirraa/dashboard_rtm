@@ -17,7 +17,7 @@ const DashboardLayoutClient: FunctionComponent<DashboardLayoutClientProps> = ({ 
 
   useResetScroll(mainElementRef, {
     alsoResetWindowScroll: true,
-    additionalDeps: [segment]
+    additionalDep: segment
   });
 
   return (
