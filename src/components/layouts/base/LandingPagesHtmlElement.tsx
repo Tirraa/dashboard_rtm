@@ -9,6 +9,7 @@ interface HtmlElementProps extends LayoutBaseProps {}
 
 const LandingPagesHtmlElement: FunctionComponent<HtmlElementProps> = ({ children, params }) => {
   const locale = params[i18nTaxonomy.LANG_FLAG];
+
   return (
     <html lang={locale}>
       <body className="flex flex-col min-h-screen w-full p-0 m-0 bg-gradient-to-t from-slate-50 to-slate-50 text-black bg-gradient-to-t from-slate-700 to-slate-700 dark:text-white">

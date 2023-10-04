@@ -2,7 +2,7 @@
 
 // import { fInter } from '@/fonts';
 // import { fCls } from '@/lib/next';
-// import { JSONData } from '@/types/Api';
+// import { JSONData } from '@/types/JSON';
 // import { FunctionComponent, useEffect, useState } from 'react';
 
 // interface TestProps {}

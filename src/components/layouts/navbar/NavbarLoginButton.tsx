@@ -1,7 +1,7 @@
 'use client';
 
-import { RESETTED_BUTTON_PROPS } from '@/components/config/styles/ButtonsStyles';
-import NAVBAR_ICON_STYLE from '@/components/config/styles/NavbarIconStyle';
+import { RESETTED_BUTTON_PROPS } from '@/components/config/styles/material-tailwind/ButtonsStyles';
+import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
 import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { useScopedI18n } from '@/i18n/client';

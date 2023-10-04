@@ -1,7 +1,7 @@
 'use client';
 
-import { RESETTED_BUTTON_PROPS } from '@/components/config/styles/ButtonsStyles';
-import NAVBAR_ICON_STYLE from '@/components/config/styles/NavbarIconStyle';
+import { RESETTED_BUTTON_PROPS } from '@/components/config/styles/material-tailwind/ButtonsStyles';
+import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
 import { DEFAULT_VARIANT, ThemeVariant } from '@/config/themes';
 import { getThemeFromLocalStorage, selectTheme } from '@/themes/themeControl';
 import { MoonIcon, SunIcon } from '@heroicons/react/20/solid';

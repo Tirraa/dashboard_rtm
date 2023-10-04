@@ -1,26 +1,33 @@
 import { ELanguagesFlag, VocabBase } from '@/config/i18n';
+import { MakeHomogeneousValuesObjType } from '@/types/CustomUtilitaryTypes';
+import { TypedLeafsJSONData } from '@/types/JSON';
+import { RemovePlural } from '@/types/international-types';
 
 type KeySeparator = '.';
-type VocabObjKeyOrValue = string;
-type VocabObjValue = string;
 
-type VocabRecursiveKeys<T, K extends VocabObjKeyOrValue = ''> = T extends object
+type AllowedVocabObjValuesTypes = string;
+
+type VocabObjKey = string;
+type VocabObjKeyDeepPath = string;
+type VocabObjValue = AllowedVocabObjValuesTypes;
+
+type UnknownVocabObj = {
+  [_: VocabObjKey]: UnknownVocabObj | VocabObjValue;
+};
+
+type VocabOrVocabLeaf = UnknownVocabObj | VocabObjValue;
+
+type MakeVocabTargets<VorVL extends VocabOrVocabLeaf, CurrentDeepPath extends VocabObjKeyDeepPath = ''> = VorVL extends UnknownVocabObj
   ? {
-      [P in keyof T]: P extends VocabObjKeyOrValue ? VocabRecursiveKeys<T[P], `${K}${K extends '' ? '' : KeySeparator}${P}`> : never;
-    }[keyof T]
-  : K;
+      [MaybeVKorVLK in keyof VorVL]: MaybeVKorVLK extends VocabObjKey
+        ? MakeVocabTargets<VorVL[MaybeVKorVLK], `${CurrentDeepPath}${CurrentDeepPath extends '' ? '' : KeySeparator}${RemovePlural<MaybeVKorVLK>}`>
+        : never;
+    }[keyof VorVL]
+  : CurrentDeepPath;
 
-type RecursiveVocabType<T = VocabObjKeyOrValue> = {
-  [_: VocabObjKeyOrValue]: T | RecursiveVocabType<T>;
-};
-
-type MakeVocabType<T> = {
-  [K in keyof T]: T[K] extends RecursiveVocabType ? MakeVocabType<T[K]> : VocabObjValue;
-};
-
-export type I18nVocabTarget = VocabRecursiveKeys<VocabBase>;
-export type VocabType = MakeVocabType<VocabBase>;
+export type VocabType = MakeHomogeneousValuesObjType<VocabBase, VocabObjValue>;
+export type I18nVocabTarget = MakeVocabTargets<VocabBase>;
 
 type LanguageFlagKey = keyof typeof ELanguagesFlag;
 export type LanguageFlag = LanguageFlagKey;
-export type LocalesGetterConfigObjTypeConstraint = Record<LanguageFlag, () => Promise<unknown>>;
+export type LocalesGetterConfigObjTypeConstraint = Record<LanguageFlag, () => Promise<TypedLeafsJSONData<VocabObjValue>>>;

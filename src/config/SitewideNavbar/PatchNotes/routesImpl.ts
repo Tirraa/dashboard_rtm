@@ -1,7 +1,7 @@
+import { PatchNotesRoutes, PatchNotesRoutesTitles } from '@/config/SitewideNavbar/PatchNotes/utils/RoutesMapping';
 import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { getSlashEnvelope } from '@/lib/str';
-import { PatchNotesRoutes, PatchNotesRoutesTitles } from './utils/RoutesMapping';
 
 const BASE = getSlashEnvelope(ROUTES_ROOTS.PATCH_NOTES);
 

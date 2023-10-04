@@ -1,5 +1,5 @@
+import { DashboardRoutesIcons } from '@/config/DashboardSidebar/utils/IconsMapping';
 import { RxActivityLog, RxDashboard, RxSketchLogo } from 'react-icons/rx';
-import { DashboardRoutesIcons } from './utils/IconsMapping';
 
 export const SIDEBAR_ROUTES_ICONS: DashboardRoutesIcons = {
   MAIN_PAGE: RxSketchLogo,

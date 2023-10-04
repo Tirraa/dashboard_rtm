@@ -1,9 +1,9 @@
 import DashboardSidebarButton from '@/components/layouts/dashboard/DashboardSidebarButton';
+import DASHBOARD_ROUTES from '@/config/DashboardSidebar/routesImpl';
+import SIDEBAR_ROUTES_ICONS from '@/config/DashboardSidebar/sidebarRoutesIcons';
 import { AppPath } from '@/types/Next';
 import { ComponentType } from 'react';
 import { IconBaseProps } from 'react-icons';
-import DASHBOARD_ROUTES from '../routesImpl';
-import SIDEBAR_ROUTES_ICONS from '../sidebarRoutesIcons';
 import { DashboardRoutes, DashboardRoutesKeys, DashboardRoutesSidebarReactElements } from './RoutesMapping';
 
 export type DashboardRoutesIcons = {

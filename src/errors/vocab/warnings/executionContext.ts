@@ -1,4 +1,4 @@
-import { WarningMessage } from '../_types';
+import { WarningMessage } from '@/errors/vocab/types';
 
 type TExecutionContextWarningsVocab = {
   UNABLE_TO_GET_NODE_ENV: WarningMessage;
@@ -17,4 +17,5 @@ const EXECUTION_CONTEXT_WARNINGS_VOCAB: TExecutionContextWarningsVocab = {
 
 export const executionContextWarningsVocabAccessor = (key: keyof TExecutionContextWarningsVocab): WarningMessage =>
   PREFIX + ' ' + EXECUTION_CONTEXT_WARNINGS_VOCAB[key];
+
 export default executionContextWarningsVocabAccessor;

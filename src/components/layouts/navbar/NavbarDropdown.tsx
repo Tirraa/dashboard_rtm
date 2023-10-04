@@ -1,14 +1,14 @@
 'use client';
 
-import NavbarDropdownButtonStyle, {
-  NAVBAR_DROPDOWN_COMPONENTS_PROPS,
-  NAVBAR_DROPDOWN_INNER_BUTTONS_CLASSLIST
-} from '@/components/config/styles/NavbarDropdownButtonStyle';
+import NavbarDropdownButtonIconStyle from '@/components/config/styles/navbar/NavbarDropdownButtonIconStyle';
+import NavbarHamburgerMenuButtonStyle, {
+  NAVBAR_HAMBURGER_MENU_BUTTON_COMPONENTS_PROPS,
+  NAVBAR_HAMBURGER_MENU_INNER_BUTTONS_CLASSLIST
+} from '@/components/config/styles/navbar/NavbarHamburgerMenuButtonStyle';
 import { getClientSideI18n } from '@/i18n/client';
 import { getLinkTarget } from '@/lib/react';
 import { hrefMatchesPathname } from '@/lib/str';
 import { EmbeddedEntities, NavbarDropdownElement } from '@/types/NavData';
-import { ClassName } from '@/types/React';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Menu, MenuHandler, MenuItem, MenuList } from '@material-tailwind/react';
 import Link from 'next/link';
@@ -17,9 +17,11 @@ import { FunctionComponent, useState } from 'react';
 
 interface NavbarButtonProps extends NavbarDropdownElement {}
 
-const { isActiveClassList, isNotActiveClassList } = NavbarDropdownButtonStyle;
-const ACTIVE: ClassName = { className: isActiveClassList };
-const INACTIVE: ClassName = { className: isNotActiveClassList };
+const { isActiveClassList: navbarHamburgerIsActiveClassList, isNotActiveClassList: navbarHamburgerIsNotActiveClassList } =
+  NavbarHamburgerMenuButtonStyle;
+
+const { isActiveClassList: navbarDropdownBtnIconIsActiveClassList, isNotActiveClassList: navbarDropdownBtnIconIsNotActiveClassList } =
+  NavbarDropdownButtonIconStyle;
 
 const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) => {
   const globalT = getClientSideI18n();
@@ -29,7 +31,7 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) => {
 
     return (
       <MenuItem key={`${href}-${title}-navbar-menu-item`} className="p-0 dark:bg-opacity-20 dark:text-gray-300 dark:hover:text-white">
-        <Link className={NAVBAR_DROPDOWN_INNER_BUTTONS_CLASSLIST} {...{ title, href, ...target }}>
+        <Link className={NAVBAR_HAMBURGER_MENU_INNER_BUTTONS_CLASSLIST} {...{ title, href, ...target }}>
           {title}
         </Link>
       </MenuItem>
@@ -40,16 +42,18 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) => {
 export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, path: href, embeddedEntities }) => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const currentPathname = usePathname();
-  const classList = hrefMatchesPathname(href, currentPathname) || openMenu ? ACTIVE : INACTIVE;
+  const navbarHamburgerClassName =
+    hrefMatchesPathname(href, currentPathname) || openMenu ? navbarHamburgerIsActiveClassList : navbarHamburgerIsNotActiveClassList;
+  const navbarDropdownBtnClassName = openMenu ? navbarDropdownBtnIconIsActiveClassList : navbarDropdownBtnIconIsNotActiveClassList;
   const globalT = getClientSideI18n();
   const title = globalT(i18nTitle);
 
   return (
-    <Menu {...NAVBAR_DROPDOWN_COMPONENTS_PROPS} handler={setOpenMenu} open={openMenu}>
+    <Menu {...NAVBAR_HAMBURGER_MENU_BUTTON_COMPONENTS_PROPS} handler={setOpenMenu} open={openMenu}>
       <MenuHandler>
-        <div {...classList}>
+        <div className={navbarHamburgerClassName}>
           {title}
-          <ChevronDownIcon className={`transition-all relative top-1 ml-1 h-5 w-5 ${openMenu ? 'rotate-180' : ''}`} aria-hidden="true" />
+          <ChevronDownIcon className={navbarDropdownBtnClassName} aria-hidden="true" />
         </div>
       </MenuHandler>
       <MenuList {...{ className: 'dark:bg-slate-950 dark:border-gray-500' }}>{menuItemsGenerator(embeddedEntities)}</MenuList>

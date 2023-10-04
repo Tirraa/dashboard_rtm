@@ -1,8 +1,8 @@
 import { DEFAULT_LANGUAGE, LANGUAGES } from '@/config/i18n';
+import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
 import { withAuth } from 'next-auth/middleware';
 import { createI18nMiddleware } from 'next-international/middleware';
 import { NextRequest, NextResponse } from 'next/server';
-import { getPathnameWithoutI18nFlag } from './lib/i18n';
 
 const PROTECTED_ROUTES = ['/dashboard'];
 export const config = {

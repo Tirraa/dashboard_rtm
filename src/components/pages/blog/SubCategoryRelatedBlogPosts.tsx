@@ -1,3 +1,5 @@
+import BlogPostPeview from '@/components/shared/blog/BlogPostPreview';
+import BlogPostsNotFound from '@/components/shared/blog/BlogPostsNotFound';
 import PaginatedElements from '@/components/shared/misc/PaginatedElements';
 import BlogConfig from '@/config/blog';
 import { i18ns } from '@/config/i18n';
@@ -9,8 +11,6 @@ import { BlogSubCategoryPageProps } from '@/types/Blog';
 import PostBase from '@/types/BlogPostAbstractions';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
-import BlogPostPeview from '../../shared/blog/BlogPostPreview';
-import BlogPostsNotFound from '../../shared/blog/BlogPostsNotFound';
 
 export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageProps> = async ({ params }) => {
   const category = params[BlogTaxonomy.CATEGORY];

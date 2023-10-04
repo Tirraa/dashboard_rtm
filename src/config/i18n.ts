@@ -1,8 +1,7 @@
-import fr from '@/i18n/locales/fr';
+import DEFAULT_LANGUAGE_OBJ from '@/i18n/locales/fr';
 import getEnumKeys from '@/lib/misc/getEnumKeys';
 import { LanguageFlag } from '@/types/i18n';
 
-const DEFAULT_LANGUAGE_OBJ = fr;
 export type VocabBase = typeof DEFAULT_LANGUAGE_OBJ;
 
 export enum ELanguagesFlag {

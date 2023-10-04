@@ -1,5 +1,3 @@
-import { TypedLeafsJSONData } from '@/types/Api';
-
 export default {
   _infos: {
     lng: 'fr',
@@ -79,4 +77,4 @@ export default {
   ugly: {
     logo: 'logo'
   }
-} as const satisfies TypedLeafsJSONData<string>;
+} as const;

@@ -1,7 +1,7 @@
 'use client';
 
 import NavbarElement from '@/components/_hoc/navbar/NavbarElement';
-import NAVBAR_STYLE from '@/components/config/styles/NavbarStyle';
+import NAVBAR_STYLE from '@/components/config/styles/navbar/NavbarStyle';
 import NavbarButton from '@/components/layouts/navbar/NavbarButton';
 import DASHBOARD_SIDEBAR_CLASSES from '@/config/DashboardSidebar/classes';
 import { NAVBAR_EXTRAS_COMPONENTS_DESKTOP, NAVBAR_EXTRAS_COMPONENTS_MOBILE } from '@/config/SitewideNavbar/Extras/utils/ComponentsMapping';
@@ -148,7 +148,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       ref={navbarInstanceRef}
       color="blue"
       fullWidth={true}
-      className={`aiw bg-black sticky top-0 z-10 h-max max-w-full overflow-hidden rounded-none py-2 px-4 lg:px-8 lg:py-4 ${PRODUCT_PREFIX} navbar`}
+      className="aiw bg-black sticky top-0 z-20 h-max max-w-full overflow-hidden rounded-none py-2 px-4 lg:px-8 lg:py-4"
     >
       <div className="flex items-center justify-between text-white rtl:flex-row-reverse">
         <Link href={ROUTES_ROOTS.WEBSITE}>
@@ -158,7 +158,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
         </Link>
         <div className="flex items-center gap-4">
           <nav className="hidden lg:flex">{desktopNavList}</nav>
-          <div className="flex gap-4 lg:hidden">
+          <div className="flex gap-4 lg:hidden rtl:flex-row-reverse">
             {buildNavbarExtrasForMobile()}
             <IconButton
               variant="text"
@@ -185,7 +185,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
             </IconButton>
           </div>
         </div>
-        <div className="hidden lg:flex lg:gap-4">{buildNavbarExtrasForDesktop()}</div>
+        <div className="hidden lg:flex lg:gap-4 rtl:flex-row-reverse">{buildNavbarExtrasForDesktop()}</div>
       </div>
 
       <Collapse ref={mobileMenuInstanceRef} className="flex justify-center text-center" open={openNav}>
