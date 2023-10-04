@@ -1,9 +1,7 @@
 import { MaybeEmptyErrorsDetectionFeedback } from '../types/metadatas';
 
-export function prefixFeedback(feedback: MaybeEmptyErrorsDetectionFeedback, prefix: string): MaybeEmptyErrorsDetectionFeedback {
-  const prefixedFeedback = feedback ? prefix + feedback : '';
-  return prefixedFeedback;
-}
+export const prefixFeedback = (feedback: MaybeEmptyErrorsDetectionFeedback, prefix: string): MaybeEmptyErrorsDetectionFeedback =>
+  feedback ? prefix + feedback : '';
 
 export function mergeFeedbacks(
   feedback1: MaybeEmptyErrorsDetectionFeedback,

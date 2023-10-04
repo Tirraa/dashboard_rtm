@@ -5,7 +5,6 @@ import NAVBAR_STYLE from '@/components/config/styles/NavbarStyle';
 import NavbarButton from '@/components/layouts/navbar/NavbarButton';
 import DASHBOARD_SIDEBAR_CLASSES from '@/config/DashboardSidebar/classes';
 import { NAVBAR_EXTRAS_COMPONENTS_DESKTOP, NAVBAR_EXTRAS_COMPONENTS_MOBILE } from '@/config/SitewideNavbar/Extras/utils/ComponentsMapping';
-import SITEWIDE_NAVBAR_CLASSES from '@/config/SitewideNavbar/classes';
 import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsConfig';
 import SITEWIDE_NAVBAR_ROUTES, { SITEWIDE_NAVBAR_ROUTES_TITLES } from '@/config/SitewideNavbar/routesImpl';
 import { i18ns } from '@/config/i18n';
@@ -88,8 +87,8 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       const navbarElement = getRefCurrentPtr(navbarInstanceRef);
 
       function isDashboardSidebarOrDashboardSidebarBody(element: HTMLElement): boolean {
-        const dashboardSidebarExpectedClasses = [PRODUCT_PREFIX, DASHBOARD_SIDEBAR_CLASSES.DASHBOARD_SIDEBAR];
-        const dashboardSidebarBodyExpectedClasses = [PRODUCT_PREFIX, DASHBOARD_SIDEBAR_CLASSES.DASHBOARD_BODY];
+        const dashboardSidebarExpectedClasses = [PRODUCT_PREFIX, DASHBOARD_SIDEBAR_CLASSES.SIDEBAR];
+        const dashboardSidebarBodyExpectedClasses = [PRODUCT_PREFIX, DASHBOARD_SIDEBAR_CLASSES.SIDEBAR_BODY];
 
         const isDashboardSidebarBody = dashboardSidebarBodyExpectedClasses.every((cls) => element.classList.contains(cls));
         const isDashboardSidebar = dashboardSidebarExpectedClasses.every((cls) => element.classList.contains(cls));
@@ -131,9 +130,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   ));
 
   const desktopNavList = (
-    <ul
-      className={`w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2 ${PRODUCT_PREFIX} ${SITEWIDE_NAVBAR_CLASSES.SITEWIDE_NAVBAR_CENTRAL_BLOCK}`}
-    >
+    <ul className="w-full mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-2 rtl:flex-row-reverse">
       {desktopNavbarElements}
     </ul>
   );
@@ -153,7 +150,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       fullWidth={true}
       className={`aiw bg-black sticky top-0 z-10 h-max max-w-full overflow-hidden rounded-none py-2 px-4 lg:px-8 lg:py-4 ${PRODUCT_PREFIX} navbar`}
     >
-      <div className={`flex items-center justify-between text-white ${PRODUCT_PREFIX} ${SITEWIDE_NAVBAR_CLASSES.SITEWIDE_NAVBAR_BODY}`}>
+      <div className="flex items-center justify-between text-white rtl:flex-row-reverse">
         <Link href={ROUTES_ROOTS.WEBSITE}>
           <div className="flex">
             <Image src="/assets/rtm-logo.svg" height={LOGO_SIZE_PX_VALUE} width={LOGO_SIZE_PX_VALUE} alt={`${brand} (${logo})`} />
