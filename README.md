@@ -1,6 +1,6 @@
 # RTM Dashboard
 
-### RTFM
+### RT(F)M
 
 [/doc](/doc/)
 
