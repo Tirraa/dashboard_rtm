@@ -46,7 +46,7 @@ export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => 
     <>
       {!isCollapsed ? (
         <aside
-          className={`${PRODUCT_PREFIX} ${SIDEBAR_CLS} bg-black w-full justify-center flex border-t-[1px] border-slate-800 lg:w-fit rtl:flex-row-reverse`}
+          className={`${PRODUCT_PREFIX} ${SIDEBAR_CLS} bg-black w-full justify-center flex border-t-[1px] border-slate-800 lg:w-fit rtl:flex-row-reverse z-10`}
         >
           <nav className="py-4 lg:px-4 lg:overflow-y-auto">
             <ul className={`${PRODUCT_PREFIX} ${SIDEBAR_BODY_CLS} flex flex-wrap justify-center gap-2 lg:block rtl:flex-row-reverse`}>
