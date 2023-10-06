@@ -19,11 +19,11 @@ type VocabOrVocabLeaf = UnknownVocabObj | VocabObjValue;
 
 type MakeVocabTargets<VorVL extends VocabOrVocabLeaf, CurrentDeepPath extends VocabObjKeyDeepPath = ''> = VorVL extends UnknownVocabObj
   ? {
-      [MaybeVKorVLK in keyof VorVL]: MaybeVKorVLK extends VocabObjKey
-        ? MakeVocabTargets<VorVL[MaybeVKorVLK], `${CurrentDeepPath}${CurrentDeepPath extends '' ? '' : KeySeparator}${RemovePlural<MaybeVKorVLK>}`>
+      [VKorVL in keyof VorVL]: VKorVL extends VocabObjKey
+        ? MakeVocabTargets<VorVL[VKorVL], `${CurrentDeepPath}${CurrentDeepPath extends '' ? '' : KeySeparator}${VKorVL}`>
         : never;
     }[keyof VorVL]
-  : CurrentDeepPath;
+  : RemovePlural<CurrentDeepPath>;
 
 export type VocabType = MakeHomogeneousValuesObjType<VocabBase, VocabObjValue>;
 export type I18nVocabTarget = MakeVocabTargets<VocabBase>;
