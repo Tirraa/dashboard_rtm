@@ -13,7 +13,7 @@ export const BLOG_ARCHITECTURE_TYPE_STR: string = 'BlogArchitecture';
 
 export const LOCALES_LNG_INFOS_KEY: string = 'lng';
 export const I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = ['_title', '_meta-description'];
-export const I18N_SUBCATEGORIES_REQUIRED_FIELDS: string[] = ['title', 'meta-description'];
+export const I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = ['title', 'meta-description'];
 export const LIST_ELEMENT_PREFIX: string = '\n - ';
 
 export const BLOG_ARCHITECTURE_TYPE_NEEDLE: string = `type ${BLOG_ARCHITECTURE_TYPE_STR} =`;

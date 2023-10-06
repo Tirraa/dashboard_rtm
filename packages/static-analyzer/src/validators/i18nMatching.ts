@@ -1,7 +1,7 @@
 import {
   BLOG_CATEGORIES_I18N_ROOT_KEY,
   I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS,
-  I18N_SUBCATEGORIES_REQUIRED_FIELDS,
+  I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS,
   LIST_ELEMENT_PREFIX
 } from '../config';
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
@@ -19,21 +19,11 @@ import {
   UnknownI18nJSONObj
 } from '../types/metadatas';
 
-const { FAILED_TO_PASS: ERROR_PREFIX, INTERRUPTED: INTERRUPTION_SUFFIX } = CRITICAL_ERRORS_STR;
+const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
-export function declaredI18nValidator(
-  sysData: CategoriesMetadatas,
-  i18nBlogCategoriesData: I18nJSONPart,
-  i18nConfigFilePath: string
-): MaybeEmptyErrorsDetectionFeedback {
-  const ERROR_PREFIX_TAIL = `(${i18nConfigFilePath})`;
-  let feedback: ErrorsDetectionFeedback = '';
-
+function checkCategoriesDataType(sysData: CategoriesMetadatas, i18nBlogCategoriesData: I18nJSONPart): MaybeEmptyErrorsDetectionFeedback {
+  let feedback = '';
   const i18nCategoriesKeys = Object.keys(i18nBlogCategoriesData);
-  const i18nCategoriesMetadatas: CategoriesMetadatas = {};
-  const requiredExtraFields = I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS;
-  const requiredSubCategoryFields = I18N_SUBCATEGORIES_REQUIRED_FIELDS;
-  const missingFields: Record<Category, string[]> = {};
 
   for (const currentCategory of i18nCategoriesKeys) {
     const sysSubCategs = sysData[currentCategory];
@@ -41,16 +31,38 @@ export function declaredI18nValidator(
 
     const currentCategoryI18nData = i18nBlogCategoriesData[currentCategory] as UnknownI18nJSONObj;
     if (typeof currentCategoryI18nData !== 'object') {
-      if (!feedback) feedback += '\n';
-      feedback += `Invalid data for the '${currentCategory}' category: "${currentCategoryI18nData}" is not an object!\n`;
+      feedback += `Invalid data for the '${currentCategory}' category: "${currentCategoryI18nData}" is NOT an object!\n`;
     }
   }
   if (feedback) feedback += '\n';
 
+  return feedback;
+}
+
+function populateI18nCategoriesMetadatas(
+  i18nCategoriesMetadatas: CategoriesMetadatas,
+  sysData: CategoriesMetadatas,
+  i18nBlogCategoriesData: I18nJSONPart,
+  i18nCategoriesKeys: string[]
+) {
   for (const i18nCategoryKey of i18nCategoriesKeys) {
     if (!sysData[i18nCategoryKey]) continue;
     i18nCategoriesMetadatas[i18nCategoryKey] = Object.keys(i18nBlogCategoriesData[i18nCategoryKey]);
     if (typeof i18nBlogCategoriesData[i18nCategoryKey] !== 'object') i18nCategoriesMetadatas[i18nCategoryKey] = [];
+  }
+}
+
+function checkCategoriesMissingRequiredI18nFields(
+  sysData: CategoriesMetadatas,
+  i18nCategoriesMetadatas: CategoriesMetadatas,
+  i18nCategoriesKeys: string[],
+  requiredExtraFields: string[]
+): MaybeEmptyErrorsDetectionFeedback {
+  let feedback = '';
+
+  const missingFields: Record<Category, string[]> = {};
+  for (const i18nCategoryKey of i18nCategoriesKeys) {
+    if (!sysData[i18nCategoryKey]) continue;
 
     for (const requiredExtraField of requiredExtraFields) {
       if (!i18nCategoriesMetadatas[i18nCategoryKey].includes(requiredExtraField)) {
@@ -71,6 +83,17 @@ export function declaredI18nValidator(
       )}` + '\n'
     );
   });
+
+  return feedback;
+}
+
+function checkSubcategoriesMissingRequiredI18nFields(
+  sysData: CategoriesMetadatas,
+  i18nBlogCategoriesData: I18nJSONPart,
+  i18nCategoriesKeys: string[],
+  requiredSubCategoryFields: string[]
+): MaybeEmptyErrorsDetectionFeedback {
+  let feedback = '';
 
   const missingSubCategoryFields: Record<Category, Record<SubCategory, string[]>> = {};
   for (const currentCategory of i18nCategoriesKeys) {
@@ -111,14 +134,41 @@ export function declaredI18nValidator(
     });
   });
 
+  return feedback;
+}
+
+function removeFieldsFromCategoriesMetadatasObj(i18nCategoriesMetadatas: CategoriesMetadatas, ignoredFields: string[]) {
   Object.keys(i18nCategoriesMetadatas).forEach((k) => {
-    i18nCategoriesMetadatas[k] = i18nCategoriesMetadatas[k].filter((v) => !requiredExtraFields.includes(v));
+    i18nCategoriesMetadatas[k] = i18nCategoriesMetadatas[k].filter((v) => !ignoredFields.includes(v));
   });
+}
+
+export function declaredI18nValidator(
+  sysData: CategoriesMetadatas,
+  i18nBlogCategoriesData: I18nJSONPart,
+  i18nConfigFilePath: string
+): MaybeEmptyErrorsDetectionFeedback {
+  const ERROR_PREFIX_TAIL = `(${i18nConfigFilePath})`;
+  let feedback: ErrorsDetectionFeedback = '';
+
+  const i18nCategoriesKeys = Object.keys(i18nBlogCategoriesData);
+  const i18nCategoriesMetadatas: CategoriesMetadatas = {};
+  const requiredExtraFieldsForCategories = I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS;
+  const requiredExtraFieldsForSubcategories = I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS;
+
+  populateI18nCategoriesMetadatas(i18nCategoriesMetadatas, sysData, i18nBlogCategoriesData, i18nCategoriesKeys);
+
+  feedback += checkCategoriesDataType(sysData, i18nBlogCategoriesData);
+  feedback += checkCategoriesMissingRequiredI18nFields(sysData, i18nCategoriesMetadatas, i18nCategoriesKeys, requiredExtraFieldsForCategories);
+  feedback += checkSubcategoriesMissingRequiredI18nFields(sysData, i18nBlogCategoriesData, i18nCategoriesKeys, requiredExtraFieldsForSubcategories);
+
+  removeFieldsFromCategoriesMetadatasObj(i18nCategoriesMetadatas, requiredExtraFieldsForCategories);
   feedback += checkCategories(Object.keys(sysData), i18nCategoriesKeys);
 
   const checkSubCategoriesFeedback = checkSubCategories(sysData, i18nCategoriesMetadatas);
   feedback = mergeFeedbacks(feedback, checkSubCategoriesFeedback);
   feedback = prefixFeedback(feedback, ERROR_PREFIX + ' ' + ERROR_PREFIX_TAIL + '\n');
+
   return feedback;
 }
 
