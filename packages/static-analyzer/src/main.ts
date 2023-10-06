@@ -1,6 +1,9 @@
 import path from 'path';
 import { ROOT_FOLDER_RELATIVE_PATH_FROM_STATIC_ANALYZER_CTX } from './config';
 import { STATIC_ANALYSIS_DONE } from './config/vocab';
+import ArgumentsValidatorError from './errors/exceptions/ArgumentsValidatorError';
+import BuilderError from './errors/exceptions/BuilderError';
+import FeedbackError from './errors/exceptions/FeedbackError';
 import { foldFeedbacks } from './lib/feedbacksMerge';
 import retrieveI18nBlogCategoriesJSONMetadatas from './metadatas-builders/retrieveI18nBlogCategoriesJSONMetadatas';
 import retrieveMetadatas from './metadatas-builders/retrieveMetadatas';
@@ -9,10 +12,12 @@ import validateArgumentsThenReturnRetrievedValuesFromArgs from './validators/arg
 import declaredI18nValidator from './validators/i18nMatching';
 import localesInfosValidator from './validators/localesInfos';
 
+const HANDLED_ERRORS_TYPES = [FeedbackError, BuilderError, ArgumentsValidatorError];
+
 const moveToCallerDirectory = () => process.chdir(path.join(__dirname, ROOT_FOLDER_RELATIVE_PATH_FROM_STATIC_ANALYZER_CTX));
 
 /**
- * @throws {Error}
+ * @throws {FeedbackError}
  */
 function processStaticAnalysis() {
   moveToCallerDirectory();
@@ -33,11 +38,28 @@ function processStaticAnalysis() {
     const i18nValidatorFeedback = declaredI18nValidator(metadatasFromSys, i18nBlogCategoriesJSON, I18N_DEFAULT_LOCALE_FILE);
 
     const feedbacks = foldFeedbacks(blogArchitectureValidatorFeedback, localesValidatorFeedback, i18nValidatorFeedback);
-    if (feedbacks) throw new Error(feedbacks);
+    if (feedbacks) throw new FeedbackError(feedbacks);
 
     console.log(STATIC_ANALYSIS_DONE);
   } catch (error) {
-    console.error((error as Error).message);
+    const isErrorHandled = HANDLED_ERRORS_TYPES.some((errorType) => error instanceof errorType);
+
+    if (isErrorHandled) {
+      const msg = (error as Error).message + (!(error instanceof FeedbackError) ? '\n' : '');
+      console.error(msg);
+    } else {
+      console.error(
+        'Unhandled error!' +
+          '\n' +
+          error +
+          '\n\n' +
+          'RTFM: https://github.com/Tirraa/dashboard_rtm/tree/main/doc' +
+          '\n' +
+          'Bugtracker: https://github.com/Tirraa/dashboard_rtm/issues' +
+          '\n'
+      );
+    }
+
     process.exit(1);
   }
 }

@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import path from 'path';
 import { LIST_ELEMENT_PREFIX, LOCALES_INFOS_ROOT_KEY, LOCALES_LNG_INFOS_KEY } from '../config';
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
+import BuilderError from '../errors/exceptions/BuilderError';
 import { prefixFeedback } from '../lib/feedbacksMerge';
 import retrieveLocaleFileInfosMetadatas from '../metadatas-builders/retrieveLocaleFileInfosMetadatas';
 import { ErrorsDetectionFeedback, MaybeEmptyErrorsDetectionFeedback } from '../types/metadatas';
@@ -29,7 +30,7 @@ function localeFileInfosValidator(localeFilePath: string): MaybeEmptyErrorsDetec
 }
 
 /**
- * @throws {Error}
+ * @throws {BuilderError}
  */
 export function localesInfosValidator(localesFolder: string): MaybeEmptyErrorsDetectionFeedback {
   const ERROR_PREFIX_TAIL = `(locales files infos)`;

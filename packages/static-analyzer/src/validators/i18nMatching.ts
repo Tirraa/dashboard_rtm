@@ -35,9 +35,22 @@ export function declaredI18nValidator(
   const requiredSubCategoryFields = I18N_SUBCATEGORIES_REQUIRED_FIELDS;
   const missingFields: Record<Category, string[]> = {};
 
+  for (const currentCategory of i18nCategoriesKeys) {
+    const sysSubCategs = sysData[currentCategory];
+    if (!sysSubCategs) continue;
+
+    const currentCategoryI18nData = i18nBlogCategoriesData[currentCategory] as UnknownI18nJSONObj;
+    if (typeof currentCategoryI18nData !== 'object') {
+      if (!feedback) feedback += '\n';
+      feedback += `Invalid data for the '${currentCategory}' category: "${currentCategoryI18nData}" is not an object!\n`;
+    }
+  }
+  if (feedback) feedback += '\n';
+
   for (const i18nCategoryKey of i18nCategoriesKeys) {
     if (!sysData[i18nCategoryKey]) continue;
     i18nCategoriesMetadatas[i18nCategoryKey] = Object.keys(i18nBlogCategoriesData[i18nCategoryKey]);
+    if (typeof i18nBlogCategoriesData[i18nCategoryKey] !== 'object') i18nCategoriesMetadatas[i18nCategoryKey] = [];
 
     for (const requiredExtraField of requiredExtraFields) {
       if (!i18nCategoriesMetadatas[i18nCategoryKey].includes(requiredExtraField)) {
@@ -66,6 +79,8 @@ export function declaredI18nValidator(
 
     for (const currentExpectedSubcategory of sysSubCategs) {
       const currentCategoryI18nData = i18nBlogCategoriesData[currentCategory] as UnknownI18nJSONObj;
+      if (typeof currentCategoryI18nData !== 'object') break;
+
       if (!currentCategoryI18nData) continue;
       if (!currentCategoryI18nData[currentExpectedSubcategory]) continue;
 

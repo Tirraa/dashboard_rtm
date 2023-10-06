@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import { FLAGS } from '../config';
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
+import ArgumentsValidatorError from '../errors/exceptions/ArgumentsValidatorError';
 import TFlagsAssoc, { MaybeIncorrectTFlagsAssoc } from '../types/flags';
 
 const { IMPOSSIBLE_TO_START: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
@@ -26,36 +27,36 @@ function getRetrievedValuesFromArgs(args: string[]): MaybeIncorrectTFlagsAssoc {
 }
 
 /**
- * @throws {Error}
+ * @throws {ArgumentsValidatorError}
  */
 function checkIfArgumentsSeemLegit({ ...args }: MaybeIncorrectTFlagsAssoc) {
   if (Object.values(args).some((arg) => arg === undefined || arg.startsWith('-'))) {
-    throw new Error(ERROR_PREFIX + '\n' + 'Wrong arguments.' + '\n');
+    throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + 'Wrong arguments.' + '\n');
   }
 }
 
 /**
- * @throws {Error}
+ * @throws {ArgumentsValidatorError}
  */
 function checkIfFilesExist({ BLOG_CONFIG_FILE, I18N_DEFAULT_LOCALE_FILE, POSTS_FOLDER }: TFlagsAssoc) {
   const blogConfigFileExists = fs.existsSync(BLOG_CONFIG_FILE);
   if (!blogConfigFileExists) {
-    throw new Error(ERROR_PREFIX + '\n' + "Can't open the blog config file!" + '\n');
+    throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + "Can't open the blog config file!" + '\n');
   }
 
   const i18nDefaultLocaleFileExists = fs.existsSync(I18N_DEFAULT_LOCALE_FILE);
   if (!i18nDefaultLocaleFileExists) {
-    throw new Error(ERROR_PREFIX + '\n' + "Can't open the default locale i18n file!" + '\n');
+    throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + "Can't open the default locale i18n file!" + '\n');
   }
 
   const postsFolderExists = fs.existsSync(POSTS_FOLDER);
   if (!postsFolderExists) {
-    throw new Error(ERROR_PREFIX + '\n' + "Can't open the posts folder!" + '\n');
+    throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + "Can't open the posts folder!" + '\n');
   }
 
   const postsFolderIsDirectory = fs.statSync(POSTS_FOLDER).isDirectory();
   if (!postsFolderIsDirectory) {
-    throw new Error(ERROR_PREFIX + '\n' + 'The posts folder you indicated is NOT a directory!' + '\n');
+    throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + 'The posts folder you indicated is NOT a directory!' + '\n');
   }
 }
 

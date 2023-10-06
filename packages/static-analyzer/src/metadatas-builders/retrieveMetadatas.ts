@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { BLOG_ARCHITECTURE_TYPE_NEEDLE, BLOG_ARCHITECTURE_TYPE_STR } from '../config';
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
+import BuilderError from '../errors/exceptions/BuilderError';
 import getRawDataFromBracesDeclaration from '../lib/getRawDataFromBracesDeclaration';
 import TFlagsAssoc from '../types/flags';
 import { CategoriesMetadatas, DeclaredCategoriesMetadatas } from '../types/metadatas';
@@ -11,7 +12,7 @@ const { INTERRUPTED: ERROR_HEAD } = CRITICAL_ERRORS_STR;
 const CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL = '\n' + NAMING_CONSTRAINTS_MSG + '\n';
 
 /**
- * @throws {Error}
+ * @throws {BuilderError}
  */
 function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): CategoriesMetadatas {
   const metadatas: CategoriesMetadatas = {};
@@ -28,12 +29,14 @@ function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): Categorie
       if (subCategories.length <= 0) continue;
 
       if (!isValidCategoryOrSubcategory(category)) {
-        throw new Error(ERROR_HEAD + '\n' + `Unauthorized category folder name ('${category}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL);
+        throw new BuilderError(
+          ERROR_HEAD + '\n' + `Unauthorized category folder name ('${category}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL
+        );
       }
 
       for (const subCategory of subCategories) {
         if (!isValidCategoryOrSubcategory(subCategory)) {
-          throw new Error(
+          throw new BuilderError(
             ERROR_HEAD + '\n' + `Unauthorized subcategory folder name ('${subCategory}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL
           );
         }
@@ -46,7 +49,7 @@ function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): Categorie
 }
 
 /**
- * @throws {Error}
+ * @throws {BuilderError}
  */
 function buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitectureInner: string): DeclaredCategoriesMetadatas {
   const throwIfCommentsInBlogArchitectureInner = (blogArchitectureInner: string) => {
@@ -54,7 +57,7 @@ function buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitectureInner
     for (const token of tokens) {
       const tokenIdx = blogArchitectureInner.indexOf(token);
       if (tokenIdx !== -1) {
-        throw new Error(
+        throw new BuilderError(
           ERROR_HEAD +
             '\n' +
             `Attempt to use a comment token inside the '${BLOG_ARCHITECTURE_TYPE_STR}' type definition detected. This is strictly forbidden!` +
@@ -78,7 +81,7 @@ function buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitectureInner
     const category = removeQuotesEnvelope(categ);
     const subCategories = subCategsSum.split('|').map(removeQuotesEnvelope);
     if (declaredCategoriesMetadatas[category] !== undefined) {
-      throw new Error(
+      throw new BuilderError(
         ERROR_HEAD +
           '\n' +
           `Attempt to use the same category key ('${category}') with trailing spaces abuses detected. This is strictly forbidden!` +
@@ -87,12 +90,14 @@ function buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitectureInner
     }
 
     if (!isValidCategoryOrSubcategory(category)) {
-      throw new Error(ERROR_HEAD + '\n' + `Unauthorized category key ('${category}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL);
+      throw new BuilderError(ERROR_HEAD + '\n' + `Unauthorized category key ('${category}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL);
     }
 
     for (const subCategory of subCategories) {
       if (!isValidCategoryOrSubcategory(subCategory)) {
-        throw new Error(ERROR_HEAD + '\n' + `Unauthorized subcategory key ('${subCategory}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL);
+        throw new BuilderError(
+          ERROR_HEAD + '\n' + `Unauthorized subcategory key ('${subCategory}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL
+        );
       }
     }
     declaredCategoriesMetadatas[category] = subCategories;
@@ -101,14 +106,15 @@ function buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitectureInner
 }
 
 /**
- * @throws {Error}
+ * @throws {BuilderError}
  */
 function buildCategoriesMetadatasFromBlogConfigFile(blogConfigFilePath: string): DeclaredCategoriesMetadatas {
   const blogConfigFileContent = fs.readFileSync(blogConfigFilePath, 'utf8');
   const startIndex = blogConfigFileContent.indexOf(BLOG_ARCHITECTURE_TYPE_NEEDLE);
 
   const blogArchitecture = getRawDataFromBracesDeclaration(blogConfigFileContent, startIndex);
-  if (!blogArchitecture) throw new Error(ERROR_HEAD + '\n' + `Couldn't extract the content of the '${BLOG_ARCHITECTURE_TYPE_STR}' type!` + '\n');
+  if (!blogArchitecture)
+    throw new BuilderError(ERROR_HEAD + '\n' + `Couldn't extract the content of the '${BLOG_ARCHITECTURE_TYPE_STR}' type!` + '\n');
   return buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitecture);
 }
 
