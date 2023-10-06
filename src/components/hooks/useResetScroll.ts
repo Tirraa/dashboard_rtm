@@ -7,12 +7,11 @@ interface ResetScrollOptions {
   additionalDep?: HookDepsArrayPrimitives;
 }
 
-function useResetScroll<T extends HTMLElement>(scrollableElementToResetRef?: RefObject<T>, options?: ResetScrollOptions) {
+function useResetScroll<T extends HTMLElement>(scrollableElementToResetRef?: RefObject<T>, {alsoResetWindowScroll, additionalDep}: ResetScrollOptions = {}) {
   useLayoutEffect(
-    () => resetScroll(scrollableElementToResetRef, Boolean(options?.alsoResetWindowScroll)),
+    () => resetScroll(scrollableElementToResetRef, Boolean(alsoResetWindowScroll)),
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [options?.additionalDep]
+    [scrollableElementToResetRef, alsoResetWindowScroll, additionalDep]
   );
 }
 

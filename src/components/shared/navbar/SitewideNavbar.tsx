@@ -25,8 +25,6 @@ interface SitewideNavbarProps {}
 const { NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE, LOGO_SIZE_PX_VALUE } = NAVBAR_STYLE;
 const { PRODUCT_PREFIX } = PRODUCT_CLASSES;
 
-let navbarMobileDropdownIsHidden = false;
-
 const buildNavbarExtrasForDesktop = () => (
   <>
     {Object.values(NAVBAR_EXTRAS_COMPONENTS_DESKTOP).map((component, index) => (
@@ -57,30 +55,31 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const [openNav, setOpenNav] = useState<boolean>(false);
   const globalT = getClientSideI18n();
 
-  useEffect(
-    () => {
-      function handleResize() {
-        const mobileMenuInstance = getRefCurrentPtr(mobileMenuInstanceRef);
-        if (!mobileMenuInstance) return;
-        if (window.innerWidth >= NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE) {
-          if (!navbarMobileDropdownIsHidden) {
-            mobileMenuInstance.classList.add('hidden');
-            navbarMobileDropdownIsHidden = true;
-          }
-        } else if (navbarMobileDropdownIsHidden) {
-          mobileMenuInstance.classList.remove('hidden');
-          navbarMobileDropdownIsHidden = false;
+  const navbarMobileDropdownIsHidden = useRef<boolean>(false);
+
+  useEffect(() => {
+    const EFFECT_CLASSES = ['hidden'];
+
+    function handleResize() {
+      const mobileMenuInstance = getRefCurrentPtr(mobileMenuInstanceRef);
+      if (!mobileMenuInstance) return;
+
+      if (window.innerWidth >= NAVBAR_DESKTOP_BREAKPOINT_PX_VALUE) {
+        if (!navbarMobileDropdownIsHidden.current) {
+          mobileMenuInstance.classList.add(...EFFECT_CLASSES);
+          navbarMobileDropdownIsHidden.current = true;
         }
+      } else if (navbarMobileDropdownIsHidden.current) {
+        mobileMenuInstance.classList.remove(...EFFECT_CLASSES);
+        navbarMobileDropdownIsHidden.current = false;
       }
+    }
 
-      window.addEventListener('resize', handleResize);
-      handleResize();
+    window.addEventListener('resize', handleResize);
+    handleResize();
 
-      return () => window.removeEventListener('resize', handleResize);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(
     () => {
@@ -112,7 +111,6 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       document.addEventListener('click', closeNavbarOnOutsideClick);
       return () => document.removeEventListener('click', closeNavbarOnOutsideClick);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [openNav]
   );
 
