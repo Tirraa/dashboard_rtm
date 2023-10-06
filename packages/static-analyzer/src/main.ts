@@ -1,6 +1,6 @@
 import path from 'path';
 import { ROOT_FOLDER_RELATIVE_PATH_FROM_STATIC_ANALYZER_CTX } from './config';
-import { STATIC_ANALYSIS_DONE } from './config/vocab';
+import { BUGTRACKER_URL, DOC_URL, STATIC_ANALYSIS_DONE } from './config/vocab';
 import ArgumentsValidatorError from './errors/exceptions/ArgumentsValidatorError';
 import BuilderError from './errors/exceptions/BuilderError';
 import FeedbackError from './errors/exceptions/FeedbackError';
@@ -48,16 +48,7 @@ function processStaticAnalysis() {
       const msg = (error as Error).message + (!(error instanceof FeedbackError) ? '\n' : '');
       console.error(msg);
     } else {
-      console.error(
-        'Unhandled error!' +
-          '\n' +
-          error +
-          '\n\n' +
-          'RTFM: https://github.com/Tirraa/dashboard_rtm/tree/main/doc' +
-          '\n' +
-          'Bugtracker: https://github.com/Tirraa/dashboard_rtm/issues' +
-          '\n'
-      );
+      console.error('Unhandled error!' + '\n' + error + '\n\n' + `RTFM: ${DOC_URL}` + '\n' + `Bugtracker: ${BUGTRACKER_URL}` + '\n');
     }
 
     process.exit(1);

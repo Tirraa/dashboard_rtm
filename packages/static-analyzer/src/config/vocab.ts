@@ -5,3 +5,6 @@ export const CRITICAL_ERRORS_STR = {
 } as const;
 
 export const STATIC_ANALYSIS_DONE: string = '... Static analysis done.';
+
+export const DOC_URL: string = 'https://github.com/Tirraa/dashboard_rtm/tree/main/doc';
+export const BUGTRACKER_URL: string = 'https://github.com/Tirraa/dashboard_rtm/issues';
