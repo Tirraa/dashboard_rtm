@@ -6,12 +6,17 @@ import DASHBOARD_ROUTES_SIDEBAR_COMPONENTS from '@/config/DashboardSidebar/utils
 import { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMapping';
 import PRODUCT_CLASSES from '@/config/productClasses';
 import { getClientSideI18n } from '@/i18n/client';
+import { computeHTMLElementHeight, computeHTMLElementWidth } from '@/lib/html';
+import { getRefCurrentPtr } from '@/lib/react';
+import { getBreakpoint } from '@/lib/tailwind';
+import { useMediaQuery } from '@react-hook/media-query';
 import Link from 'next/link';
-import { FunctionComponent, ReactElement, ReactNode, useState } from 'react';
+import { FunctionComponent, ReactElement, ReactNode, useEffect, useRef, useState } from 'react';
 import DashboardSidebarCollapseButton from './DashboardSidebarCollapseButton';
 
 interface DashboardSidebarProps {}
 
+const { PRODUCT_PREFIX } = PRODUCT_CLASSES;
 const { SIDEBAR: SIDEBAR_CLS, SIDEBAR_BODY: SIDEBAR_BODY_CLS } = DASHBOARD_SIDEBAR_CLASSES;
 
 function sidebarBtnsGenerator(): ReactNode[] {
@@ -37,26 +42,60 @@ function sidebarBtnsGenerator(): ReactNode[] {
   });
 }
 
-// {ToDo} Animate this (remove `<></>`)
 export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => {
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
-  const { PRODUCT_PREFIX } = PRODUCT_CLASSES;
+  const wasCollapsed = useRef<boolean>(false);
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(wasCollapsed.current);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
+
+  useEffect(() => {
+    const sidebar = getRefCurrentPtr(sidebarRef);
+    if (!sidebar) return;
+
+    const EFFECT_CLASSES = ['transition-all', 'duration-300'];
+
+    function applyUncollapsedStyles() {
+      sidebar.style.marginLeft = '0';
+      sidebar.style.marginTop = '0';
+      wasCollapsed.current = false;
+    }
+
+    function applyCollapsedStyles() {
+      if (isLargeScreen) {
+        sidebar.style.marginTop = '0';
+        sidebar.style.marginLeft = '-' + computeHTMLElementWidth(sidebar) + 'px';
+      } else {
+        sidebar.style.marginLeft = '0';
+        sidebar.style.marginTop = '-' + computeHTMLElementHeight(sidebar) + 'px';
+      }
+      wasCollapsed.current = true;
+    }
+
+    if (!isCollapsed) {
+      if (!wasCollapsed.current) sidebar.classList.remove(...EFFECT_CLASSES);
+      else sidebar.classList.add(...EFFECT_CLASSES);
+
+      applyUncollapsedStyles();
+      return;
+    }
+
+    if (wasCollapsed.current) sidebar.classList.remove(...EFFECT_CLASSES);
+    else sidebar.classList.add(...EFFECT_CLASSES);
+    applyCollapsedStyles();
+  }, [isCollapsed, sidebarRef, isLargeScreen]);
 
   return (
     <>
-      {!isCollapsed ? (
-        <aside
-          className={`${PRODUCT_PREFIX} ${SIDEBAR_CLS} bg-black w-full justify-center flex border-t-[1px] border-slate-800 lg:w-fit rtl:flex-row-reverse z-10`}
-        >
-          <nav className="py-4 lg:px-4 lg:overflow-y-auto">
-            <ul className={`${PRODUCT_PREFIX} ${SIDEBAR_BODY_CLS} flex flex-wrap justify-center gap-2 lg:block rtl:flex-row-reverse`}>
-              {sidebarBtnsGenerator()}
-            </ul>
-          </nav>
-        </aside>
-      ) : (
-        <></>
-      )}
+      <aside
+        ref={sidebarRef}
+        className={`${PRODUCT_PREFIX} ${SIDEBAR_CLS} bg-black justify-center grid border-t-[1px] border-slate-800 rtl:flex-row-reverse z-20 w-full lg:w-fit`}
+      >
+        <nav className="py-4 lg:px-4 lg:overflow-y-auto">
+          <ul className={`${PRODUCT_PREFIX} ${SIDEBAR_BODY_CLS} flex flex-wrap justify-center gap-2 lg:block rtl:flex-row-reverse`}>
+            {sidebarBtnsGenerator()}
+          </ul>
+        </nav>
+      </aside>
       <DashboardSidebarCollapseButton {...{ isCollapsed, setIsCollapsed }} />
     </>
   );
