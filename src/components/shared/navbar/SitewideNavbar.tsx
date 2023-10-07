@@ -81,38 +81,35 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(
-    () => {
-      const navbarElement = getRefCurrentPtr(navbarInstanceRef);
+  useEffect(() => {
+    const navbarElement = getRefCurrentPtr(navbarInstanceRef);
 
-      function isDashboardSidebarOrDashboardSidebarBody(element: HTMLElement): boolean {
-        const dashboardSidebarExpectedClasses = [PRODUCT_PREFIX, DASHBOARD_SIDEBAR_CLASSES.SIDEBAR];
-        const dashboardSidebarBodyExpectedClasses = [PRODUCT_PREFIX, DASHBOARD_SIDEBAR_CLASSES.SIDEBAR_BODY];
+    function isDashboardSidebarOrDashboardSidebarBody(element: HTMLElement): boolean {
+      const dashboardSidebarExpectedClasses = [PRODUCT_PREFIX, DASHBOARD_SIDEBAR_CLASSES.SIDEBAR];
+      const dashboardSidebarBodyExpectedClasses = [PRODUCT_PREFIX, DASHBOARD_SIDEBAR_CLASSES.SIDEBAR_BODY];
 
-        const isDashboardSidebarBody = dashboardSidebarBodyExpectedClasses.every((cls) => element.classList.contains(cls));
-        const isDashboardSidebar = dashboardSidebarExpectedClasses.every((cls) => element.classList.contains(cls));
-        return isDashboardSidebarBody || isDashboardSidebar;
-      }
+      const isDashboardSidebarBody = dashboardSidebarBodyExpectedClasses.every((cls) => element.classList.contains(cls));
+      const isDashboardSidebar = dashboardSidebarExpectedClasses.every((cls) => element.classList.contains(cls));
+      return isDashboardSidebarBody || isDashboardSidebar;
+    }
 
-      const ignoreClick = (element: HTMLElement): boolean =>
-        Boolean(
-          element.tagName === 'BUTTON' ||
-            element.closest('button') ||
-            element.tagName === 'A' ||
-            element.closest('a') ||
-            isDashboardSidebarOrDashboardSidebarBody(element)
-        );
+    const ignoreClick = (element: HTMLElement): boolean =>
+      Boolean(
+        element.tagName === 'BUTTON' ||
+          element.closest('button') ||
+          element.tagName === 'A' ||
+          element.closest('a') ||
+          isDashboardSidebarOrDashboardSidebarBody(element)
+      );
 
-      const closeNavbarOnOutsideClick = (e: Event): void => {
-        const targetElement = e.target instanceof HTMLElement ? e.target : null;
-        if (openNav && navbarElement && targetElement && !navbarElement.contains(targetElement) && !ignoreClick(targetElement)) setOpenNav(false);
-      };
+    const closeNavbarOnOutsideClick = (e: Event): void => {
+      const targetElement = e.target instanceof HTMLElement ? e.target : null;
+      if (openNav && navbarElement && targetElement && !navbarElement.contains(targetElement) && !ignoreClick(targetElement)) setOpenNav(false);
+    };
 
-      document.addEventListener('click', closeNavbarOnOutsideClick);
-      return () => document.removeEventListener('click', closeNavbarOnOutsideClick);
-    },
-    [openNav]
-  );
+    document.addEventListener('click', closeNavbarOnOutsideClick);
+    return () => document.removeEventListener('click', closeNavbarOnOutsideClick);
+  }, [openNav]);
 
   const navbarElements = buildNavbarElements({ i18nProps: { [i18nTaxonomy.LANG_FLAG]: useCurrentLocale() } });
   const desktopNavbarElements = navbarElements.map((elm, index) => (
@@ -146,7 +143,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       ref={navbarInstanceRef}
       color="blue"
       fullWidth={true}
-      className="aiw bg-black sticky top-0 z-20 h-max max-w-full overflow-hidden rounded-none py-2 px-4 lg:px-8 lg:py-4"
+      className="aiw bg-black sticky top-0 z-30 h-max max-w-full overflow-hidden rounded-none py-2 px-4 lg:px-8 lg:py-4"
     >
       <div className="flex items-center justify-between text-white rtl:flex-row-reverse">
         <Link href={ROUTES_ROOTS.WEBSITE}>

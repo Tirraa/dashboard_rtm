@@ -23,7 +23,7 @@ const DashboardLayoutClient: FunctionComponent<DashboardLayoutClientProps> = ({ 
   return (
     <div className="flex flex-1 overflow-y-auto flex-col lg:flex-row">
       <DashboardSidebar />
-      <main ref={mainElementRef} className="flex-1 px-4 lg:px-8 lg:py-4 overflow-y-auto">
+      <main ref={mainElementRef} className="flex-1 py-7 px-4 lg:px-8 lg:py-4 overflow-y-auto">
         {children}
       </main>
     </div>
