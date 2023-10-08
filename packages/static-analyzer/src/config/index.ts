@@ -5,7 +5,7 @@ export const FLAGS: TFlagsAssoc = {
   BLOG_CONFIG_FILE: '--blog-config-file',
   I18N_DEFAULT_LOCALE_FILE: '--default-i18n-locale',
   SKIP_LOCALES_INFOS: '--skip-locales-infos'
-};
+} as const;
 
 export const LOCALES_INFOS_ROOT_KEY: string = '_infos';
 export const BLOG_CATEGORIES_I18N_ROOT_KEY: string = 'blog-categories';

@@ -22,7 +22,7 @@ function getRetrievedValuesFromArgs(args: string[]): MaybeIncorrectTFlagsAssoc {
     BLOG_CONFIG_FILE,
     I18N_DEFAULT_LOCALE_FILE,
     SKIP_LOCALES_INFOS
-  };
+  } as const;
   return retrievedValuesFromArgs;
 }
 

@@ -1,5 +1,6 @@
 'use client';
 
+import Loader from '@/components/shared/misc/Loader';
 import { I18nProviderClient } from '@/i18n/client';
 import { LayoutMinimalProps } from '@/types/CustomUtilitaryTypes';
 import { FunctionComponent } from 'react';
@@ -9,7 +10,9 @@ interface I18nProviderProps extends LayoutMinimalProps {
 }
 
 export const I18nProvider: FunctionComponent<I18nProviderProps> = ({ children, locale }) => (
-  <I18nProviderClient {...{ locale }}>{children}</I18nProviderClient>
+  <I18nProviderClient {...{ locale }} fallback={<Loader />}>
+    {children}
+  </I18nProviderClient>
 );
 
 export default I18nProvider;

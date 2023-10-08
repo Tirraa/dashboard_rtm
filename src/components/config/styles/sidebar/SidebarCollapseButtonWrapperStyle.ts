@@ -5,6 +5,6 @@ const COMMONS = 'z-10 transition-opacity delay-300 duration-1000 relative h-0 fl
 export const SidebarCollapseButtonWrapperStyle: IButtonStyleBase = {
   isActiveClassList: COMMONS + ' ' + 'opacity-100',
   isNotActiveClassList: COMMONS + ' ' + 'opacity-20 hover:opacity-100 hover:delay-0 hover:duration-300'
-};
+} as const;
 
 export default SidebarCollapseButtonWrapperStyle;

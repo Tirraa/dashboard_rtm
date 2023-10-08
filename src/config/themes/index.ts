@@ -14,6 +14,8 @@ export const THEME_CONFIG = {
 } as const satisfies ThemeConfig;
 
 export type ThemeVariant = (typeof THEME_CONFIG.VARIANTS)[keyof typeof THEME_CONFIG.VARIANTS];
+export type MaybeThemeVariant = ThemeVariant | null;
+export type MaybeValidThemeVariant = string | null;
 
 export const VARIANTS_CLS = Object.values(THEME_CONFIG.VARIANTS);
 

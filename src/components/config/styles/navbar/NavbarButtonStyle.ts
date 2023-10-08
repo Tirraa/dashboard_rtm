@@ -5,6 +5,6 @@ const COMMONS = 'transition-colors duration-200 flex flex-1 justify-center round
 export const NavbarButtonStyle: IButtonStyleBase = {
   isActiveClassList: COMMONS + ' ' + 'bg-slate-800 text-white',
   isNotActiveClassList: COMMONS + ' ' + 'text-gray-300 hover:bg-slate-900 hover:text-white'
-};
+} as const;
 
 export default NavbarButtonStyle;

@@ -5,7 +5,7 @@ const COMMONS = 'transition-transform	duration-700 m-auto w-full h-full p-1 text
 export const SidebarCollapseButtonIconStyle: IButtonStyleBase = {
   isActiveClassList: COMMONS,
   isNotActiveClassList: COMMONS + ' ' + '-rotate-180 lg:rtl:rotate-180'
-};
+} as const;
 
 export const SIZE_PX_VALUE = 20;
 
