@@ -17,10 +17,6 @@ export const i18ns = {
   ugly: 'ugly'
 } as const;
 
-export type NextInternationalMagic = {
-  default: VocabBase;
-};
-
 export type VocabBase = typeof DEFAULT_LANGUAGE_OBJ;
 export const DEFAULT_LANGUAGE: LanguageFlag = DEFAULT_LANGUAGE_OBJ._infos.lng;
 export const LANGUAGES: LanguageFlag[] = getEnumKeys(ELanguagesFlag) as LanguageFlag[];

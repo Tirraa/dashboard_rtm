@@ -1,4 +1,4 @@
-import { ELanguagesFlag, NextInternationalMagic, VocabBase } from '@/config/i18n';
+import { ELanguagesFlag, VocabBase } from '@/config/i18n';
 import { MakeHomogeneousValuesObjType } from '@/types/CustomUtilitaryTypes';
 import { TypedLeafsJSONData } from '@/types/JSON';
 import { RemovePlural } from '@/types/international-types';
@@ -30,6 +30,10 @@ export type I18nVocabTarget = MakeVocabTargets<VocabBase>;
 
 type LanguageFlagKey = keyof typeof ELanguagesFlag;
 export type LanguageFlag = LanguageFlagKey;
+
+type NextInternationalMagic = {
+  default: VocabBase;
+};
 
 export type LocalesObj = Record<LanguageFlag, () => Promise<NextInternationalMagic>>;
 export type LocalesGetterConfigObjTypeConstraint = Record<LanguageFlag, () => Promise<TypedLeafsJSONData<VocabObjValue>>>;
