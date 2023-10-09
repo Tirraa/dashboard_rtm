@@ -1,5 +1,11 @@
 import { DEFAULT_DARK_VARIANT, DEFAULT_LIGHT_VARIANT, ThemeVariant } from '@/config/themes';
-import { getThemeFromLocalStorageUnstrict, isValidVariantCls, selectTheme } from './themeControl';
+import {
+  getOldSavedThemeFromLazinessMemory,
+  getThemeFromLocalStorageUnstrict,
+  isValidVariantCls,
+  resetLazinessMemory,
+  selectTheme
+} from '@/themes/themeControl';
 
 export function initializeTheme() {
   const NAVIGATOR_SETTINGS_DARK_THEME_NEEDLE = '(prefers-color-scheme: dark)';
@@ -14,6 +20,14 @@ export function initializeTheme() {
   else rescue();
 }
 
-export const resetTheme = () => initializeTheme();
+export const resetTheme = () => {
+  const memoizedTheme = getOldSavedThemeFromLazinessMemory();
+  resetLazinessMemory();
+  if (isValidVariantCls(memoizedTheme)) {
+    selectTheme(memoizedTheme as ThemeVariant);
+    return;
+  }
+  initializeTheme();
+};
 
 export default initializeTheme;

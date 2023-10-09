@@ -1,6 +1,17 @@
 import THEME_CONFIG, { DEFAULT_VARIANT, MaybeThemeVariant, MaybeValidThemeVariant, ThemeVariant, VARIANTS_CLS } from '@/config/themes';
 import { resetTheme } from '@/themes/initializeTheme';
 
+interface SelectThemeOptions {
+  dontDispatchEvent?: boolean;
+}
+
+namespace memos {
+  export const oldSavedTheme: { current: MaybeValidThemeVariant } = { current: '' };
+}
+
+export const resetLazinessMemory = () => (memos.oldSavedTheme.current = '');
+export const getOldSavedThemeFromLazinessMemory = () => memos.oldSavedTheme.current;
+
 export const isValidVariantCls = (themeCls: MaybeValidThemeVariant) => typeof themeCls === 'string' && VARIANTS_CLS.includes(themeCls as any);
 
 export const getThemeFromLocalStorageUnstrict = (): MaybeValidThemeVariant => window.localStorage.getItem(THEME_CONFIG.LOCAL_STORAGE_THEME_KEY);
@@ -14,10 +25,12 @@ export function getThemeFromLocalStorageStrict(): MaybeThemeVariant {
   return getThemeFromLocalStorageUnstrict() as MaybeThemeVariant;
 }
 
-export function selectTheme(themeCls: ThemeVariant): void {
+export function selectTheme(themeCls: ThemeVariant, { dontDispatchEvent }: SelectThemeOptions = { dontDispatchEvent: false }): void {
   const saveTheme = (themeCls: ThemeVariant) => {
+    if (memos.oldSavedTheme.current === themeCls) return;
     window.localStorage.setItem(THEME_CONFIG.LOCAL_STORAGE_THEME_KEY, themeCls);
-    window.dispatchEvent(new Event('storage'));
+    if (!dontDispatchEvent) window.dispatchEvent(new Event('storage'));
+    memos.oldSavedTheme.current = themeCls;
   };
 
   function doSelectTheme(themeCls: ThemeVariant) {

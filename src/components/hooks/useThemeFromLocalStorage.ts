@@ -1,5 +1,5 @@
-import { DEFAULT_VARIANT, MaybeThemeVariant } from '@/config/themes';
-import { getThemeFromLocalStorageStrict, getThemeFromLocalStorageUnstrict } from '@/themes/themeControl';
+import { DEFAULT_VARIANT, MaybeThemeVariant, ThemeVariant } from '@/config/themes';
+import { getThemeFromLocalStorageStrict, getThemeFromLocalStorageUnstrict, selectTheme } from '@/themes/themeControl';
 import { useLayoutEffect, useState } from 'react';
 
 const intializeUseLocalStorageThemeForClientSide = (setCurrentTheme: Function) => setCurrentTheme(getThemeFromLocalStorageUnstrict());
@@ -9,7 +9,10 @@ const useLocalStorageTheme = (): MaybeThemeVariant => {
 
   useLayoutEffect(() => {
     intializeUseLocalStorageThemeForClientSide(setCurrentTheme);
-    const handleStorageChange = () => setCurrentTheme(getThemeFromLocalStorageStrict());
+    const handleStorageChange = () => {
+      selectTheme(getThemeFromLocalStorageStrict() as ThemeVariant, { dontDispatchEvent: true });
+      setCurrentTheme(getThemeFromLocalStorageStrict());
+    };
 
     window.addEventListener('storage', handleStorageChange);
     return () => window.removeEventListener('storage', handleStorageChange);
