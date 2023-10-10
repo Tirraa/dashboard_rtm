@@ -67,3 +67,9 @@ export function getPathnameI18nFlag(pathname: AppPath): LanguageFlag {
   const pathnameI18nFlag = computePathnameI18nFlagStrict(pathname);
   return pathnameI18nFlag;
 }
+
+export function getPathnameMaybeI18nFlag(pathname: AppPath): '' | LanguageFlag {
+  const languageFlag = computePathnameI18nFlagUnstrict(pathname);
+  if (!isValidLanguageFlag(languageFlag)) return '';
+  return languageFlag as LanguageFlag;
+}

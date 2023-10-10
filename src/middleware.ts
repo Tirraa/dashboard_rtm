@@ -1,39 +1,19 @@
-import { DEFAULT_LANGUAGE, LANGUAGES } from '@/config/i18n';
-import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
+import { mainMiddlewaresChain, withAuthMiddlewaresChain } from '@/middlewareChain';
 import { withAuth } from 'next-auth/middleware';
-import { createI18nMiddleware } from 'next-international/middleware';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
+import { getMaybeI18nFlagFromRequest } from './lib/next';
+import { getSlashEnvelope } from './lib/str';
 
-const PROTECTED_ROUTES = ['/dashboard'];
-export const config = {
-  matcher: ['/((?!api|static|_next|.*\\..*).*)']
+export const authMiddleware = (request: NextRequest) => {
+  const maybeI18nFlag = getMaybeI18nFlagFromRequest(request);
+  const i18nPrefix = maybeI18nFlag ? getSlashEnvelope(maybeI18nFlag) : '/';
+
+  return withAuth(mainMiddlewaresChain, {
+    pages: { signIn: i18nPrefix + 'sign-up' }
+  });
 };
 
-const I18nMiddlewareInstance = createI18nMiddleware({
-  locales: LANGUAGES,
-  defaultLocale: DEFAULT_LANGUAGE,
-  urlMappingStrategy: 'rewrite'
-});
+export const appProtectedPaths = ['/dashboard'];
+export const config = { matcher: ['/((?!api|static|_next|.*\\..*).*)'] };
 
-function i18nMiddleware(request: NextRequest) {
-  const i18nResponse: NextResponse = I18nMiddlewareInstance(request);
-  return i18nResponse;
-}
-
-const authMiddleware = withAuth(
-  function onSuccess(req) {
-    return i18nMiddleware(req);
-  },
-  {
-    pages: {
-      signIn: '/sign-up'
-    }
-  }
-);
-
-export default function middleware(req: NextRequest) {
-  const currentRoute = getPathnameWithoutI18nFlag(req.nextUrl.pathname);
-  const isProtectedRoute = PROTECTED_ROUTES.find((r) => currentRoute.startsWith(r));
-
-  return isProtectedRoute ? (authMiddleware as any)(req) : i18nMiddleware(req);
-}
+export default withAuthMiddlewaresChain;

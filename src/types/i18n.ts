@@ -35,5 +35,11 @@ type NextInternationalMagic = {
   default: VocabBase;
 };
 
+export type I18nMiddlewareConfig = {
+  locales: LanguageFlag[];
+  defaultLocale: LanguageFlag;
+  urlMappingStrategy: 'rewriteDefault' | 'redirect';
+};
+
 export type LocalesObj = Record<LanguageFlag, () => Promise<NextInternationalMagic>>;
 export type LocalesGetterConfigObjTypeConstraint = Record<LanguageFlag, () => Promise<TypedLeafsJSONData<VocabObjValue>>>;

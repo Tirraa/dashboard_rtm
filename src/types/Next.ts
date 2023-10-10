@@ -1,6 +1,7 @@
 import i18nTaxonomy from '@/taxonomies/i18n';
 import NotFoundTaxonomy from '@/taxonomies/notfound';
 import { LanguageFlag } from '@/types/i18n';
+import { NextMiddleware } from 'next/server';
 import { ReactNode } from 'react';
 
 export type i18nParams = {
@@ -27,3 +28,5 @@ export type AppPathAsIs = AppPath;
 export type NotFoundCatchallParams = {
   params: { [NotFoundTaxonomy.NOT_FOUND]: unknown[] };
 };
+
+export type MiddlewareFactory = (middleware: NextMiddleware) => NextMiddleware;
