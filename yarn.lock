@@ -429,7 +429,7 @@
     jsbi "^4.3.0"
     tslib "^2.4.1"
 
-"@material-tailwind/react@^2.1.0":
+"@material-tailwind/react@^2.1.2":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@material-tailwind/react/-/react-2.1.2.tgz#4148a399d3cf12a68aad18865ada659066fab090"
   integrity sha512-/R5aurer27jB4eFyw4YBgLHBRE5XZxWCLPuI8rz2VMaDdaTxgrFBBH0ZUW5YFJLE+71t+Bm9HY5KUtU3mZldMg==

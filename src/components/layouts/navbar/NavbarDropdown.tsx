@@ -1,10 +1,10 @@
 'use client';
 
 import NavbarDropdownButtonIconStyle from '@/components/config/styles/navbar/NavbarDropdownButtonIconStyle';
-import NavbarHamburgerMenuButtonStyle, {
-  NAVBAR_HAMBURGER_MENU_BUTTON_COMPONENTS_PROPS,
-  NAVBAR_HAMBURGER_MENU_INNER_BUTTONS_CLASSLIST
-} from '@/components/config/styles/navbar/NavbarHamburgerMenuButtonStyle';
+import NavbarDropdownMenuButtonStyle, {
+  NAVBAR_DROPDOWN_MENU_BUTTON_COMPONENTS_PROPS,
+  NAVBAR_DROPDOWN_MENU_INNER_BUTTONS_CLASSLIST
+} from '@/components/config/styles/navbar/NavbarDropdownMenuButtonStyle';
 import { getClientSideI18n } from '@/i18n/client';
 import { getLinkTarget } from '@/lib/react';
 import { hrefMatchesPathname } from '@/lib/str';
@@ -17,8 +17,8 @@ import { FunctionComponent, useState } from 'react';
 
 interface NavbarButtonProps extends NavbarDropdownElement {}
 
-const { isActiveClassList: navbarHamburgerIsActiveClassList, isNotActiveClassList: navbarHamburgerIsNotActiveClassList } =
-  NavbarHamburgerMenuButtonStyle;
+const { isActiveClassList: navbarDropdownIsActiveClassList, isNotActiveClassList: navbarDropdownIsNotActiveClassList } =
+  NavbarDropdownMenuButtonStyle;
 
 const { isActiveClassList: navbarDropdownBtnIconIsActiveClassList, isNotActiveClassList: navbarDropdownBtnIconIsNotActiveClassList } =
   NavbarDropdownButtonIconStyle;
@@ -31,7 +31,7 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) => {
 
     return (
       <MenuItem key={`${href}-${title}-navbar-menu-item`} className="p-0 dark:bg-opacity-20 dark:text-gray-300 dark:hover:text-white">
-        <Link className={NAVBAR_HAMBURGER_MENU_INNER_BUTTONS_CLASSLIST} {...{ title, href, ...target }}>
+        <Link className={NAVBAR_DROPDOWN_MENU_INNER_BUTTONS_CLASSLIST} {...{ title, href, ...target }}>
           {title}
         </Link>
       </MenuItem>
@@ -42,16 +42,16 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) => {
 export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, path: href, embeddedEntities }) => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const currentPathname = usePathname();
-  const navbarHamburgerClassName =
-    hrefMatchesPathname(href, currentPathname) || openMenu ? navbarHamburgerIsActiveClassList : navbarHamburgerIsNotActiveClassList;
+  const navbarDropdownClassName =
+    hrefMatchesPathname(href, currentPathname) || openMenu ? navbarDropdownIsActiveClassList : navbarDropdownIsNotActiveClassList;
   const navbarDropdownBtnClassName = openMenu ? navbarDropdownBtnIconIsActiveClassList : navbarDropdownBtnIconIsNotActiveClassList;
   const globalT = getClientSideI18n();
   const title = globalT(i18nTitle);
 
   return (
-    <Menu {...NAVBAR_HAMBURGER_MENU_BUTTON_COMPONENTS_PROPS} handler={setOpenMenu} open={openMenu}>
+    <Menu {...NAVBAR_DROPDOWN_MENU_BUTTON_COMPONENTS_PROPS} handler={setOpenMenu} open={openMenu}>
       <MenuHandler>
-        <div className={navbarHamburgerClassName}>
+        <div tabIndex={0} className={navbarDropdownClassName}>
           {title}
           <ChevronDownIcon className={navbarDropdownBtnClassName} aria-hidden="true" />
         </div>
