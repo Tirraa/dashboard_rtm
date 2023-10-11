@@ -1,6 +1,6 @@
 import { getMaybeI18nFlagFromRequest } from '@/lib/next';
 import { getSlashEnvelope } from '@/lib/str';
-import { mainMiddlewaresChain, withAuthMiddlewaresChain } from '@/middlewareChain';
+import { mainMiddlewaresChain, withAuthMiddlewaresChain } from '@/middlewaresChain';
 import { withAuth } from 'next-auth/middleware';
 import { NextRequest } from 'next/server';
 

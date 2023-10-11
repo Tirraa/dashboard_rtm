@@ -1,4 +1,4 @@
-import executionContextWarningsVocabAccessor from '@/errors/vocab/warnings/executionContext';
+import executionContextWarningsVocabGetter from '@/errors/vocab/warnings/executionContext';
 
 type TComputedNodeEnv = {
   PROD: boolean;
@@ -15,7 +15,7 @@ let prodCtx: boolean | undefined = NODE_ENV ? NODE_ENV.startsWith(NODE_PROD_ENV_
 let forcedToProd: boolean = !!prodCtx || false;
 
 if (NODE_ENV === undefined) {
-  console.warn(executionContextWarningsVocabAccessor('UNABLE_TO_GET_NODE_ENV'));
+  console.warn(executionContextWarningsVocabGetter('UNABLE_TO_GET_NODE_ENV'));
   forcedToProd = true;
 }
 
@@ -25,18 +25,18 @@ if (forcedToProd) {
 }
 
 if (devCtx === undefined) {
-  console.warn(executionContextWarningsVocabAccessor('UNABLE_TO_INFER_DEV_CTX'));
+  console.warn(executionContextWarningsVocabGetter('UNABLE_TO_INFER_DEV_CTX'));
   forcedToProd = true;
   devCtx = false;
 }
 
 if (testCtx === undefined) {
-  console.warn(executionContextWarningsVocabAccessor('UNABLE_TO_INFER_TEST_CTX'));
+  console.warn(executionContextWarningsVocabGetter('UNABLE_TO_INFER_TEST_CTX'));
   testCtx = false;
 }
 
 if ([devCtx, testCtx, prodCtx, forcedToProd].every((v) => !!v === false)) {
-  console.warn(executionContextWarningsVocabAccessor('FAILED_TO_INFER_CTX'));
+  console.warn(executionContextWarningsVocabGetter('FAILED_TO_INFER_CTX'));
   forcedToProd = true;
 }
 

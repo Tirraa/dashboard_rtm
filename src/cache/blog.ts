@@ -24,10 +24,10 @@ function populateSubCategoriesCollectionCache(category: BlogCategory) {
   BlogCache.subCategoriesCollection[category] = Array.from(subCategsSet);
 }
 
-function subCategoriesByCategoryAccessor(category: BlogCategory) {
+function subCategoriesByCategoryGetter(category: BlogCategory) {
   if (BlogCache.subCategoriesCollection[category] === undefined) populateSubCategoriesCollectionCache(category);
   return BlogCache.subCategoriesCollection[category] as BlogSubCategoryFromUnknownCategory[];
 }
 
 export const getBlogSubCategoriesByCategory = (category: BlogCategory): BlogSubCategoryFromUnknownCategory[] =>
-  subCategoriesByCategoryAccessor(category);
+  subCategoriesByCategoryGetter(category);

@@ -15,7 +15,7 @@ const EXECUTION_CONTEXT_WARNINGS_VOCAB: TExecutionContextWarningsVocab = {
   FAILED_TO_INFER_CTX: "Failed to infer the execution context. 'PROD' will be initialized to True."
 } as const;
 
-export const executionContextWarningsVocabAccessor = (key: keyof TExecutionContextWarningsVocab): WarningMessage =>
+export const executionContextWarningsVocabGetter = (key: keyof TExecutionContextWarningsVocab): WarningMessage =>
   PREFIX + ' ' + EXECUTION_CONTEXT_WARNINGS_VOCAB[key];
 
-export default executionContextWarningsVocabAccessor;
+export default executionContextWarningsVocabGetter;
