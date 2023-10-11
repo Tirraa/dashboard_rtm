@@ -1,8 +1,8 @@
+import { getMaybeI18nFlagFromRequest } from '@/lib/next';
+import { getSlashEnvelope } from '@/lib/str';
 import { mainMiddlewaresChain, withAuthMiddlewaresChain } from '@/middlewareChain';
 import { withAuth } from 'next-auth/middleware';
 import { NextRequest } from 'next/server';
-import { getMaybeI18nFlagFromRequest } from './lib/next';
-import { getSlashEnvelope } from './lib/str';
 
 export const authMiddleware = (request: NextRequest) => {
   const maybeI18nFlag = getMaybeI18nFlagFromRequest(request);
