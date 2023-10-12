@@ -1,42 +1,44 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files';
-import { DocumentConfigType, PHANTOM_POST_CONFIG } from './types/contentlayerConfig';
+import { DocumentConfigType, DocumentsComputedFields, DocumentsFields, FilePathPattern } from 'types/contentlayerConfig';
+import { DocumentsComputedFieldsSumType, PHANTOM_POST_CONFIG } from './types/contentlayerProductConfig';
 
 const contentDirPath = 'posts';
-
 const PhantomPost = defineDocumentType(() => PHANTOM_POST_CONFIG);
+
+const fields = {
+  title: { type: 'string', required: true },
+  metadescription: { type: 'string', required: true },
+  description: { type: 'string', required: false },
+  date: { type: 'date', required: true }
+} as const satisfies DocumentsFields;
+
+const computedFields = {
+  url: { type: 'string', resolve: (post: any) => `/${post._raw.flattenedPath}` }
+} as const satisfies DocumentsComputedFields;
+
+const FILE_PATH_PATTERNS: Record<string, FilePathPattern> = {
+  PatchPost: '**/patch-notes/**/*.md',
+  PatchPostBis: '**/patch-notes-bis/**/*.md'
+} as const;
 
 const PatchPost = defineDocumentType(
   () =>
     ({
       name: 'PatchPost',
-      filePathPattern: '**/patch-notes/**/*.md',
-      fields: {
-        title: { type: 'string', required: true },
-        metadescription: { type: 'string', required: true },
-        description: { type: 'string', required: false },
-        date: { type: 'date', required: true }
-      },
-      computedFields: {
-        url: { type: 'string', resolve: (post) => `/${post._raw.flattenedPath}` }
-      }
-    } satisfies DocumentConfigType<'url'>)
+      filePathPattern: FILE_PATH_PATTERNS.PatchPost,
+      fields,
+      computedFields
+    }) satisfies DocumentConfigType<DocumentsComputedFieldsSumType>
 );
 
 const PatchPostBis = defineDocumentType(
   () =>
     ({
       name: 'PatchPostBis',
-      filePathPattern: '**/patch-notes-bis/**/*.md',
-      fields: {
-        title: { type: 'string', required: true },
-        metadescription: { type: 'string', required: true },
-        description: { type: 'string', required: false },
-        date: { type: 'date', required: true }
-      },
-      computedFields: {
-        url: { type: 'string', resolve: (post) => `/${post._raw.flattenedPath}` }
-      }
-    } satisfies DocumentConfigType<'url'>)
+      filePathPattern: FILE_PATH_PATTERNS.PatchPostBis,
+      fields,
+      computedFields
+    }) satisfies DocumentConfigType<DocumentsComputedFieldsSumType>
 );
 
 export default makeSource({ contentDirPath, documentTypes: [PhantomPost, PatchPost, PatchPostBis] });

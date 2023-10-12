@@ -1,6 +1,7 @@
-const siteUrl = process.env.NEXTAUTH_URL;
 const DEFAULT_LANGUAGE = 'fr';
 const EXCLUDED_ROUTES_PREFIXES = ['/favicon.ico', '/icon.svg', '/apple-icon.png', '/dashboard/'];
+
+const siteUrl = process.env.NEXTAUTH_URL;
 
 const getPathWithoutI18nPart = (path) => path.substring(path.indexOf('/', path.indexOf('/') + 1));
 

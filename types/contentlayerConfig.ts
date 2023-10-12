@@ -1,30 +1,33 @@
-export type BaseFields = {
-  title: { type: 'string'; required: true };
-  metadescription: { type: 'string'; required: true };
-  description: { type: 'string'; required: false };
-  date: { type: 'date'; required: true };
-  url: { type: 'string'; required: true };
+import { BaseFields, DocumentsComputedFieldsSumType } from './contentlayerProductConfig';
+
+// * ... https://github.com/microsoft/TypeScript/issues/56080
+export type DocumentConfigType<ComputedFields extends keyof BaseFields = never> = {} & ComputedFields extends never
+  ? DocumentConfigTypeContentLayerMetadatas & { fields: BaseFields }
+  : DocumentConfigTypeContentLayerMetadatas & {
+      fields: Omit<BaseFields, ComputedFields>;
+      computedFields: ComputedFieldsMappedToPartialBaseFieldsSumType<ComputedFields>;
+    };
+
+export type ComputedFields = {
+  [K in keyof BaseFields]: ComputedField<K>;
 };
 
-export type DocumentConfigType<ComputedFields extends keyof BaseFields | never = never> = {
-  name: string;
-  filePathPattern: string;
-  fields: Omit<BaseFields, ComputedFields>;
-  computedFields?: ComputedFields extends never
-    ? never
-    : {
-        [K in ComputedFields]?: Omit<BaseFields[K], 'required'> & { resolve: (...args: any[]) => unknown };
-      };
+export type DocumentsBaseFieldsKeysCollection<T extends keyof BaseFields> = T;
+
+export type DocumentsFields = Omit<BaseFields, DocumentsComputedFieldsSumType>;
+export type DocumentsComputedFields = Pick<ComputedFields, DocumentsComputedFieldsSumType>;
+
+export type FilePathPattern = string;
+
+type TypeName = string;
+
+type DocumentConfigTypeContentLayerMetadatas = {
+  name: TypeName;
+  filePathPattern: FilePathPattern;
 };
 
-export const PHANTOM_POST_CONFIG: DocumentConfigType = {
-  name: 'PhantomPost',
-  filePathPattern: '',
-  fields: {
-    title: { type: 'string', required: true },
-    description: { type: 'string', required: false },
-    metadescription: { type: 'string', required: true },
-    date: { type: 'date', required: true },
-    url: { type: 'string', required: true }
-  }
-} as const;
+type ComputedField<K extends keyof BaseFields> = Omit<BaseFields[K], 'required'> & { resolve: (...args: any[]) => unknown };
+
+type ComputedFieldsMappedToPartialBaseFieldsSumType<K extends keyof BaseFields> = {
+  [_ in K]: ComputedField<K>;
+};

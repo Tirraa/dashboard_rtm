@@ -1,8 +1,12 @@
 import { LIST_ELEMENT_PREFIX } from '../config';
+import { CRITICAL_ERRORS_STR } from '../config/vocab';
+import { prefixFeedback } from '../lib/feedbacksMerge';
 import getErrorLabelForDefects from '../lib/getErrorLabelForDefects';
 import traverseFolder from '../lib/traverseFolder';
 import { Filename, MaybeEmptyErrorsDetectionFeedback, Path } from '../types/metadatas';
 import isValidTaxonomy, { NAMING_CONSTRAINTS_MSG } from './taxonomyConvention';
+
+const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
 export function sysBlogSlugsValidator(postsFolder: string): MaybeEmptyErrorsDetectionFeedback {
   let feedback = '';
@@ -23,14 +27,15 @@ export function sysBlogSlugsValidator(postsFolder: string): MaybeEmptyErrorsDete
 
     feedback += getErrorLabelForDefects(
       filenamesWithDefects,
-      `Incorrect filename in '${folderWithDefect}': ${filenamesWithDefects}` + '\n' + NAMING_CONSTRAINTS_MSG + '\n',
-      `Incorrect filenames in '${folderWithDefect}': ${LIST_ELEMENT_PREFIX}${filenamesWithDefects.join(LIST_ELEMENT_PREFIX)}` +
+      `Incorrect filename in the '${folderWithDefect}' folder: ${filenamesWithDefects}` + '\n' + NAMING_CONSTRAINTS_MSG + '\n',
+      `Incorrect filenames in the '${folderWithDefect}' folder: ${LIST_ELEMENT_PREFIX}${filenamesWithDefects.join(LIST_ELEMENT_PREFIX)}` +
         '\n' +
         NAMING_CONSTRAINTS_MSG +
         '\n'
     );
   });
 
+  feedback = prefixFeedback(feedback, ERROR_PREFIX + '\n');
   return feedback;
 }
 

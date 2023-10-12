@@ -14,7 +14,7 @@ const createSidebarComponent = (__SidebarIcon: ComponentType<IconBaseProps>, hre
   <DashboardSidebarButton {...{ __SidebarIcon, href }} />
 );
 
-const computedDashboardRoutesSidebarComponents: Partial<DashboardRoutesSidebarReactElements> = {};
+const computedDashboardRoutesSidebarComponents = {} as DashboardRoutesSidebarReactElements;
 Object.entries(SIDEBAR_ROUTES_ICONS).forEach(([k, icon]) => {
   const k2 = k as DashboardRoutesKeys;
   const href = DASHBOARD_ROUTES[k2];

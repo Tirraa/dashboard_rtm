@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
 export async function generateStaticParams() {
   function generateBlogStaticParams(): BlogStaticParams[] {
     const indexedParams = new Set<string>();
-    const blogStaticParams: Partial<BlogStaticParams>[] = [];
+    const blogStaticParams: BlogStaticParams[] = [];
     const blogCategories = getAllCategories();
 
     blogCategories.forEach((categ) => {

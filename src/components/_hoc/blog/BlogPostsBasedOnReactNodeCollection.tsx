@@ -1,8 +1,0 @@
-import BlogPostsNotFound from '@/components/shared/blog/BlogPostsNotFound';
-import { LanguageFlag } from '@/types/i18n';
-import { ReactNode } from 'react';
-
-export const BlogPostsBasedOnReactNodeCollection = (generatedPosts: ReactNode[], lng: LanguageFlag) =>
-  generatedPosts.some((item) => item !== null) ? generatedPosts : <BlogPostsNotFound {...{ lng }} />;
-
-export default BlogPostsBasedOnReactNodeCollection;
