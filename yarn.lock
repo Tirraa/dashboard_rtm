@@ -2546,10 +2546,10 @@ internal-slot@^1.0.5:
     has "^1.0.3"
     side-channel "^1.0.4"
 
-international-types@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/international-types/-/international-types-0.8.0.tgz#a3d027ad59d8de9b53fa8c448f8fe9b1bc558097"
-  integrity sha512-cJwagIBzMG0FTK81TABeSBU0eReIXWmvW18m/URn8ZA+GLoWIcdL43kfjArwHVmZJ1n+IFchsBj8tQLYUqmwnA==
+international-types@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/international-types/-/international-types-0.8.1.tgz#c0e593d9911c1a23f64bbd6eb1abb2941fe2353f"
+  integrity sha512-tajBCAHo4I0LIFlmQ9ZWfjMWVyRffzuvfbXCd6ssFt5u1Zw15DN0UBpVTItXdNa1ls+cpQt3Yw8+TxsfGF8JcA==
 
 is-alphabetical@^2.0.0:
   version "2.0.1"
@@ -3512,13 +3512,13 @@ next-contentlayer@^0.3.4:
     "@contentlayer/core" "0.3.4"
     "@contentlayer/utils" "0.3.4"
 
-next-international@1.1.2-rc.2:
-  version "1.1.2-rc.2"
-  resolved "https://registry.yarnpkg.com/next-international/-/next-international-1.1.2-rc.2.tgz#7ac091d58047408fea2134e656f6f47d88193f25"
-  integrity sha512-BSzqNVsRMruD8rYl9gP3ivGMDpeQwwkuRyInRsEPlsG1hYadfSHlHNyoSCQ1EJSvnAuOPrCTJCU1f4AvN+3Mcg==
+next-international@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/next-international/-/next-international-1.1.2.tgz#e9ecafa0bc3f74784f2a5b0925089657781a89ad"
+  integrity sha512-WLWNmKet7Ln7QDzwBrQNOX27R3RPCP+2XhqL9pSo3aKyO/f/N1zX9k7srM1YnPzACUIWUKptYB0teqTaPiIq/g==
   dependencies:
     client-only "^0.0.1"
-    international-types "^0.8.0"
+    international-types "^0.8.1"
     server-only "^0.0.1"
 
 next-sitemap@^4.2.3:
