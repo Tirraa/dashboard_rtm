@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import { readFileSync } from 'fs';
 import { BLOG_CATEGORIES_I18N_ROOT_KEY, I18N_BLOG_CATEGORIES_OBJ_NEEDLE } from '../config';
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
 import BuilderError from '../errors/exceptions/BuilderError';
@@ -13,7 +13,7 @@ const { INTERRUPTED: ERROR_SUFFIX } = CRITICAL_ERRORS_STR;
  */
 function buildBlogCategoriesMetadatasFromI18nConfigFile(i18nConfigFilePath: string): I18nJSONPart {
   const error = new BuilderError(`Couldn't extract the content of the '${BLOG_CATEGORIES_I18N_ROOT_KEY}' i18n section!` + ' ' + ERROR_SUFFIX + '\n');
-  const i18nConfigFileContent = fs.readFileSync(i18nConfigFilePath, 'utf8');
+  const i18nConfigFileContent = readFileSync(i18nConfigFilePath, 'utf8');
   const startIndex = i18nConfigFileContent.indexOf(I18N_BLOG_CATEGORIES_OBJ_NEEDLE);
 
   const i18nBlogCategoriesInner = getRawDataFromBracesDeclaration(i18nConfigFileContent, startIndex);

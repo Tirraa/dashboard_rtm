@@ -11,3 +11,12 @@ export type I18nJSONPart = Record<string, UnknownI18nJSONProp>;
 
 export type ErrorsDetectionFeedback = string;
 export type MaybeEmptyErrorsDetectionFeedback = '' | ErrorsDetectionFeedback;
+
+export type File = {
+  fileDirectory: string;
+  filename: string;
+};
+
+export type Path = string;
+export type Filename = string;
+export type i18nField = string;

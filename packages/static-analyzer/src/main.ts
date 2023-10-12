@@ -11,6 +11,7 @@ import declaredBlogArchitectureValidator from './validators/architectureMatching
 import validateArgumentsThenReturnRetrievedValuesFromArgs from './validators/arguments';
 import declaredI18nValidator from './validators/i18nMatching';
 import localesInfosValidator from './validators/localesInfos';
+import sysBlogSlugsValidator from './validators/sysBlogSlugs';
 
 const HANDLED_ERRORS_TYPES = [FeedbackError, BuilderError, ArgumentsValidatorError];
 
@@ -23,11 +24,13 @@ function processStaticAnalysis() {
   moveToCallerDirectory();
   try {
     const retrievedValuesFromArgs = validateArgumentsThenReturnRetrievedValuesFromArgs();
-    const { I18N_DEFAULT_LOCALE_FILE, BLOG_CONFIG_FILE } = retrievedValuesFromArgs;
+    const { POSTS_FOLDER, I18N_DEFAULT_LOCALE_FILE, BLOG_CONFIG_FILE } = retrievedValuesFromArgs;
     const [metadatasFromSys, declaredMetadatas] = retrieveMetadatas(retrievedValuesFromArgs);
     const i18nBlogCategoriesJSON = retrieveI18nBlogCategoriesJSONMetadatas(I18N_DEFAULT_LOCALE_FILE);
 
     const blogArchitectureValidatorFeedback = declaredBlogArchitectureValidator(metadatasFromSys, declaredMetadatas, BLOG_CONFIG_FILE);
+
+    const sysBlogSlugsValidatorFeedback = sysBlogSlugsValidator(POSTS_FOLDER);
 
     let localesValidatorFeedback = '';
     if (!retrievedValuesFromArgs.SKIP_LOCALES_INFOS) {
@@ -37,7 +40,12 @@ function processStaticAnalysis() {
 
     const i18nValidatorFeedback = declaredI18nValidator(metadatasFromSys, i18nBlogCategoriesJSON, I18N_DEFAULT_LOCALE_FILE);
 
-    const feedbacks = foldFeedbacks(blogArchitectureValidatorFeedback, localesValidatorFeedback, i18nValidatorFeedback);
+    const feedbacks = foldFeedbacks(
+      blogArchitectureValidatorFeedback,
+      sysBlogSlugsValidatorFeedback,
+      localesValidatorFeedback,
+      i18nValidatorFeedback
+    );
     if (feedbacks) throw new FeedbackError(feedbacks);
 
     console.log(STATIC_ANALYSIS_DONE);

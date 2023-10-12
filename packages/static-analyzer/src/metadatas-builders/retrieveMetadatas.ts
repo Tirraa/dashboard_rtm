@@ -1,12 +1,12 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import { readdirSync, readFileSync } from 'fs';
+import { join } from 'path';
 import { BLOG_ARCHITECTURE_TYPE_NEEDLE, BLOG_ARCHITECTURE_TYPE_STR } from '../config';
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
 import BuilderError from '../errors/exceptions/BuilderError';
 import getRawDataFromBracesDeclaration from '../lib/getRawDataFromBracesDeclaration';
 import TFlagsAssoc from '../types/flags';
 import { CategoriesMetadatas, DeclaredCategoriesMetadatas } from '../types/metadatas';
-import isValidCategoryOrSubcategory, { NAMING_CONSTRAINTS_MSG } from '../validators/categoriesConvention';
+import isValidTaxonomy, { NAMING_CONSTRAINTS_MSG } from '../validators/taxonomyConvention';
 
 const { INTERRUPTED: ERROR_HEAD } = CRITICAL_ERRORS_STR;
 const CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL = '\n' + NAMING_CONSTRAINTS_MSG + '\n';
@@ -17,25 +17,24 @@ const CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL = '\n' + NAMING_CONSTRAINT
 function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): CategoriesMetadatas {
   const metadatas: CategoriesMetadatas = {};
 
-  const categories = fs.readdirSync(postsFolder, { withFileTypes: true });
+  const categories = readdirSync(postsFolder, { withFileTypes: true });
   for (const categ of categories) {
     if (categ.isDirectory()) {
       const category = categ.name;
-      const subCategories = fs
-        .readdirSync(path.join(postsFolder, category), { withFileTypes: true })
+      const subCategories = readdirSync(join(postsFolder, category), { withFileTypes: true })
         .filter((subCategory) => subCategory.isDirectory())
         .map((subCategory) => subCategory.name);
 
       if (subCategories.length <= 0) continue;
 
-      if (!isValidCategoryOrSubcategory(category)) {
+      if (!isValidTaxonomy(category)) {
         throw new BuilderError(
           ERROR_HEAD + '\n' + `Unauthorized category folder name ('${category}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL
         );
       }
 
       for (const subCategory of subCategories) {
-        if (!isValidCategoryOrSubcategory(subCategory)) {
+        if (!isValidTaxonomy(subCategory)) {
           throw new BuilderError(
             ERROR_HEAD + '\n' + `Unauthorized subcategory folder name ('${subCategory}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL
           );
@@ -89,12 +88,12 @@ function buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitectureInner
       );
     }
 
-    if (!isValidCategoryOrSubcategory(category)) {
+    if (!isValidTaxonomy(category)) {
       throw new BuilderError(ERROR_HEAD + '\n' + `Unauthorized category key ('${category}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL);
     }
 
     for (const subCategory of subCategories) {
-      if (!isValidCategoryOrSubcategory(subCategory)) {
+      if (!isValidTaxonomy(subCategory)) {
         throw new BuilderError(
           ERROR_HEAD + '\n' + `Unauthorized subcategory key ('${subCategory}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL
         );
@@ -109,7 +108,7 @@ function buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitectureInner
  * @throws {BuilderError}
  */
 function buildCategoriesMetadatasFromBlogConfigFile(blogConfigFilePath: string): DeclaredCategoriesMetadatas {
-  const blogConfigFileContent = fs.readFileSync(blogConfigFilePath, 'utf8');
+  const blogConfigFileContent = readFileSync(blogConfigFilePath, 'utf8');
   const startIndex = blogConfigFileContent.indexOf(BLOG_ARCHITECTURE_TYPE_NEEDLE);
 
   const blogArchitecture = getRawDataFromBracesDeclaration(blogConfigFileContent, startIndex);

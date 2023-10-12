@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import { readdirSync } from 'fs';
 import path from 'path';
 import { LIST_ELEMENT_PREFIX, LOCALES_INFOS_ROOT_KEY, LOCALES_LNG_INFOS_KEY } from '../config';
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
@@ -36,7 +36,7 @@ export function localesInfosValidator(localesFolder: string): MaybeEmptyErrorsDe
   const ERROR_PREFIX_TAIL = `(locales files infos)`;
   let feedback: ErrorsDetectionFeedback = '';
 
-  const files: string[] = fs.readdirSync(localesFolder).filter((file) => path.extname(file) === '.ts');
+  const files: string[] = readdirSync(localesFolder).filter((file) => path.extname(file) === '.ts');
   const fullFilesPaths = files.map((filename) => [localesFolder, filename].join('/'));
   const localeFileInfosValidatorFeedbacks = [];
 
