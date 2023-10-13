@@ -1,6 +1,7 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files';
 import { DocumentConfigType, DocumentsComputedFields, DocumentsFields, FilePathPattern } from 'types/contentlayerConfig';
 import { DocumentsComputedFieldsSumType, PHANTOM_POST_CONFIG } from './types/contentlayerProductConfig';
+import { validateContentLayerConfig } from './validators/contentLayer';
 
 const contentDirPath = 'posts';
 const PhantomPost = defineDocumentType(() => PHANTOM_POST_CONFIG);
@@ -41,4 +42,7 @@ const PatchPostBis = defineDocumentType(
     }) satisfies DocumentConfigType<DocumentsComputedFieldsSumType>
 );
 
-export default makeSource({ contentDirPath, documentTypes: [PhantomPost, PatchPost, PatchPostBis] });
+const documentTypes = [PhantomPost, PatchPost, PatchPostBis];
+validateContentLayerConfig(documentTypes);
+
+export default makeSource({ contentDirPath, documentTypes });
