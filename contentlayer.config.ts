@@ -4,7 +4,6 @@ import { DocumentsComputedFieldsSumType, PHANTOM_POST_CONFIG } from './types/con
 import { validateContentLayerConfig } from './validators/contentLayer';
 
 const contentDirPath = 'posts';
-const PhantomPost = defineDocumentType(() => PHANTOM_POST_CONFIG);
 
 const fields = {
   title: { type: 'string', required: true },
@@ -21,6 +20,8 @@ const FILE_PATH_PATTERNS: Record<string, FilePathPattern> = {
   PatchPost: '**/patch-notes/**/*.md',
   PatchPostBis: '**/patch-notes-bis/**/*.md'
 } as const;
+
+const PhantomPost = defineDocumentType(() => PHANTOM_POST_CONFIG);
 
 const PatchPost = defineDocumentType(
   () =>
@@ -43,6 +44,6 @@ const PatchPostBis = defineDocumentType(
 );
 
 const documentTypes = [PhantomPost, PatchPost, PatchPostBis];
-validateContentLayerConfig(documentTypes);
 
+validateContentLayerConfig(documentTypes);
 export default makeSource({ contentDirPath, documentTypes });
