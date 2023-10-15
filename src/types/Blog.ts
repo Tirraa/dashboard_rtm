@@ -1,8 +1,11 @@
 import { BlogArchitecture } from '@/config/blog';
 import BlogTaxonomy, { TBlogTaxonomy } from '@/taxonomies/blog';
-import PostBase from './BlogPostAbstractions';
+import { PostSchema } from 'contentlayer/generated';
 import { RequiredFieldsOnly } from './CustomUtilitaryTypes';
 import { i18nParams } from './Next';
+
+type ContentLayerPhantomType = 'type';
+export type PostBase = Omit<PostSchema, ContentLayerPhantomType>;
 
 export type BlogCategory = keyof BlogArchitecture;
 

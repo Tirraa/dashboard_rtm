@@ -1,6 +1,6 @@
 import { DEFAULT_LANGUAGE, LANGUAGES } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
-import PostBase from '@/types/BlogPostAbstractions';
+import { PostBase } from '@/types/Blog';
 import { AppPath, AppPathAsIs } from '@/types/Next';
 import { LanguageFlag } from '@/types/i18n';
 import { indexOfNthOccurrence } from './str';
@@ -24,7 +24,7 @@ function getBlogPostLanguageFlagFromStr(sourceFileDir: string): LanguageFlag {
   return DEFAULT_LANGUAGE;
 }
 
-function getBlogPostLanguageFlagFromPostObj(post: PostBase): LanguageFlag {
+export function getBlogPostLanguageFlagFromPostObj(post: PostBase): LanguageFlag {
   const { sourceFileDir } = post._raw;
   return getBlogPostLanguageFlagFromStr(sourceFileDir);
 }
@@ -43,15 +43,6 @@ function computePathnameI18nFlagStrict(pathname: AppPath, providedEndIndex?: num
   if (!isValidLanguageFlag(languageFlag)) return DEFAULT_LANGUAGE;
   return languageFlag as LanguageFlag;
 }
-
-export function getBlogPostPathWithoutI18nPart(post: PostBase): AppPath {
-  const langFlag = getBlogPostLanguageFlagFromPostObj(post);
-  if (langFlag === DEFAULT_LANGUAGE) return post.url;
-  const blogPostPathWithoutI18nPart = post.url.replace(`/${langFlag}/`, '/');
-  return blogPostPathWithoutI18nPart;
-}
-
-export const getBlogPostLanguageFlag = (post: PostBase): LanguageFlag => getBlogPostLanguageFlagFromPostObj(post);
 
 export function getPathnameWithoutI18nFlag(pathname: AppPath): AppPathAsIs | AppPath {
   const secondSlashIndex = indexOfNthOccurrence(pathname, '/', 2);

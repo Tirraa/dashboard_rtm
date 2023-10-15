@@ -24,9 +24,9 @@ function processStaticAnalysis() {
   moveToCallerDirectory();
   try {
     const retrievedValuesFromArgs = validateArgumentsThenReturnRetrievedValuesFromArgs();
-    const { POSTS_FOLDER, I18N_SKELETON_LOCALE_FILEPATH, BLOG_CONFIG_FILEPATH } = retrievedValuesFromArgs;
+    const { POSTS_FOLDER, I18N_LOCALES_SCHEMA_FILEPATH, BLOG_CONFIG_FILEPATH } = retrievedValuesFromArgs;
     const [metadatasFromSys, declaredMetadatas] = retrieveMetadatas(retrievedValuesFromArgs);
-    const i18nBlogCategoriesJSON = retrieveI18nBlogCategoriesJSONMetadatas(I18N_SKELETON_LOCALE_FILEPATH);
+    const i18nBlogCategoriesJSON = retrieveI18nBlogCategoriesJSONMetadatas(I18N_LOCALES_SCHEMA_FILEPATH);
 
     const blogArchitectureValidatorFeedback = declaredBlogArchitectureValidator(metadatasFromSys, declaredMetadatas, BLOG_CONFIG_FILEPATH);
 
@@ -34,11 +34,11 @@ function processStaticAnalysis() {
 
     let localesValidatorFeedback = '';
     if (!retrievedValuesFromArgs.SKIP_LOCALES_INFOS) {
-      const localesFolder = path.dirname(I18N_SKELETON_LOCALE_FILEPATH);
-      localesValidatorFeedback = localesInfosValidator(localesFolder, I18N_SKELETON_LOCALE_FILEPATH);
+      const localesFolder = path.dirname(I18N_LOCALES_SCHEMA_FILEPATH);
+      localesValidatorFeedback = localesInfosValidator(localesFolder, I18N_LOCALES_SCHEMA_FILEPATH);
     }
 
-    const i18nValidatorFeedback = declaredI18nValidator(metadatasFromSys, i18nBlogCategoriesJSON, I18N_SKELETON_LOCALE_FILEPATH);
+    const i18nValidatorFeedback = declaredI18nValidator(metadatasFromSys, i18nBlogCategoriesJSON, I18N_LOCALES_SCHEMA_FILEPATH);
 
     const feedbacks = foldFeedbacks(
       blogArchitectureValidatorFeedback,

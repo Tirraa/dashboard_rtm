@@ -1,5 +1,5 @@
 import { ELanguagesFlag } from '@/config/i18n';
-import SKELETON_LANGUAGE_OBJ, { SHARED } from '@/i18n/locales/skeleton';
+import VOCAB_SCHEMA, { SHARED_VOCAB_SCHEMA } from '@/i18n/locales/schema';
 import { MakeHomogeneousValuesObjType } from '@/types/CustomUtilitaryTypes';
 import { TypedLeafsJSONData } from '@/types/JSON';
 import { RemovePlural } from '@/types/international-types';
@@ -26,10 +26,10 @@ type MakeVocabTargets<VorVL extends VocabOrVocabLeaf, CurrentDeepPath extends Vo
     }[keyof VorVL]
   : RemovePlural<CurrentDeepPath>;
 
-type SharedVocabBase = typeof SHARED;
+type SharedVocabBase = typeof SHARED_VOCAB_SCHEMA;
 export type SharedVocabType = MakeHomogeneousValuesObjType<SharedVocabBase, VocabObjValue>;
 
-type VocabBase = typeof SKELETON_LANGUAGE_OBJ;
+type VocabBase = typeof VOCAB_SCHEMA;
 export type VocabType = MakeHomogeneousValuesObjType<VocabBase, VocabObjValue>;
 export type I18nVocabTarget = MakeVocabTargets<VocabBase>;
 
@@ -37,7 +37,7 @@ type LanguageFlagKey = keyof typeof ELanguagesFlag;
 export type LanguageFlag = LanguageFlagKey;
 
 type NextInternationalMagic = {
-  default: VocabBase;
+  default: VocabType;
 };
 
 export type I18nMiddlewareConfig = {
@@ -46,5 +46,9 @@ export type I18nMiddlewareConfig = {
   urlMappingStrategy: 'rewriteDefault' | 'redirect';
 };
 
-export type LocalesObj = Record<LanguageFlag, () => Promise<NextInternationalMagic>>;
+type LocalesObjKey = LanguageFlag;
+type NextInternationalLazyLoadFn = () => Promise<NextInternationalMagic>;
+
+export type LocalesObjEntity = [LocalesObjKey, NextInternationalLazyLoadFn];
+export type LocalesObj = Record<LocalesObjKey, NextInternationalLazyLoadFn>;
 export type LocalesGetterConfigObjTypeConstraint = Record<LanguageFlag, () => Promise<TypedLeafsJSONData<VocabObjValue>>>;

@@ -8,12 +8,14 @@ type DescriptionAsIs = string;
 type CroppedDescription = string;
 
 function deleteTrailingSlashes(str: string): string {
-  let endIndex = str.length;
+  const maxEndIndex = str.length - 1;
+  let endIndex = maxEndIndex;
 
-  while (endIndex > 0 && str.charAt(endIndex - 1) === '/') endIndex -= 1;
-  if (endIndex === str.length) return str;
+  while (endIndex >= 0 && str.charAt(endIndex) === '/') endIndex -= 1;
+  if (endIndex === maxEndIndex) return str;
+  if (endIndex === -1) return '';
 
-  const stringWithoutTrailingSlashes = str.substring(0, endIndex);
+  const stringWithoutTrailingSlashes = str.substring(0, endIndex + 1);
   return stringWithoutTrailingSlashes;
 }
 

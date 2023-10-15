@@ -7,8 +7,7 @@ import { getScopedI18n } from '@/i18n/server';
 import { getAllPostsByCategoryAndSubCategoryAndLanguageFlagUnstrict, subCategoryShouldTriggerNotFound } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogSubCategoryPageProps } from '@/types/Blog';
-import PostBase from '@/types/BlogPostAbstractions';
+import { BlogSubCategoryPageProps, PostBase } from '@/types/Blog';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
 

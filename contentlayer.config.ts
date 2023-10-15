@@ -1,6 +1,6 @@
-import { defineDocumentType, makeSource } from 'contentlayer/source-files';
-import { DocumentConfigType, DocumentsComputedFields, DocumentsFields, FilePathPattern } from 'types/contentlayerConfig';
-import { DocumentsComputedFieldsSumType, PHANTOM_POST_CONFIG } from './types/contentlayerProductConfig';
+import { DocumentType, defineDocumentType, makeSource } from 'contentlayer/source-files';
+import { AtomicDocumentConfig, DocumentsComputedFields, DocumentsFields, DocumentsTypesMetadatas } from 'types/contentlayerConfig';
+import { POST_SCHEMA_CONFIG } from './types/contentlayerConfigTweakers';
 import { validateContentLayerConfig } from './validators/contentLayer';
 
 const contentDirPath = 'posts';
@@ -16,34 +16,25 @@ const computedFields = {
   url: { type: 'string', resolve: (post: any) => `/${post._raw.flattenedPath}` }
 } as const satisfies DocumentsComputedFields;
 
-const FILE_PATH_PATTERNS: Record<string, FilePathPattern> = {
-  PatchPost: '**/patch-notes/**/*.md',
-  PatchPostBis: '**/patch-notes-bis/**/*.md'
+const documentsTypesMetadatas: DocumentsTypesMetadatas = {
+  PatchPost: {
+    name: 'PatchPost',
+    filePathPattern: '**/patch-notes/**/*.md'
+  },
+  PatchPostBis: {
+    name: 'PatchPostBis',
+    filePathPattern: '**/patch-notes-bis/**/*.md'
+  }
 } as const;
 
-const PhantomPost = defineDocumentType(() => PHANTOM_POST_CONFIG);
-
-const PatchPost = defineDocumentType(
-  () =>
-    ({
-      name: 'PatchPost',
-      filePathPattern: FILE_PATH_PATTERNS.PatchPost,
-      fields,
-      computedFields
-    } satisfies DocumentConfigType<DocumentsComputedFieldsSumType>)
+const documentTypes: DocumentType<string>[] = Object.values(documentsTypesMetadatas).reduce(
+  (acc, documentTypeMetadatas) => {
+    const { name, filePathPattern } = documentTypeMetadatas;
+    acc.push(defineDocumentType(() => ({ name, filePathPattern, fields, computedFields } as const satisfies AtomicDocumentConfig)));
+    return acc;
+  },
+  [defineDocumentType(() => POST_SCHEMA_CONFIG)]
 );
-
-const PatchPostBis = defineDocumentType(
-  () =>
-    ({
-      name: 'PatchPostBis',
-      filePathPattern: FILE_PATH_PATTERNS.PatchPostBis,
-      fields,
-      computedFields
-    } satisfies DocumentConfigType<DocumentsComputedFieldsSumType>)
-);
-
-const documentTypes = [PhantomPost, PatchPost, PatchPostBis];
 
 validateContentLayerConfig(documentTypes);
 export default makeSource({ contentDirPath, documentTypes });

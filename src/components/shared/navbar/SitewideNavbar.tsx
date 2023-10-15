@@ -15,6 +15,7 @@ import getComputedNavData from '@/lib/misc/getComputedNavData';
 import { getRefCurrentPtr } from '@/lib/react';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { i18nComponentProps } from '@/types/Next';
+import { LanguageFlag } from '@/types/i18n';
 import { Collapse, IconButton, Navbar, Typography } from '@material-tailwind/react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -111,7 +112,8 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
     return () => document.removeEventListener('click', closeNavbarOnOutsideClick);
   }, [openNav]);
 
-  const navbarElements = buildNavbarElements({ i18nProps: { [i18nTaxonomy.LANG_FLAG]: useCurrentLocale() } });
+  const currentLocale: LanguageFlag = useCurrentLocale();
+  const navbarElements = buildNavbarElements({ i18nProps: { [i18nTaxonomy.LANG_FLAG]: currentLocale } });
   const desktopNavbarElements = navbarElements.map((elm, index) => (
     <Typography key={`${index}-navbar-btn-typography-desktop`} as="li" color="blue-gray" className="p-1 font-normal">
       {elm}

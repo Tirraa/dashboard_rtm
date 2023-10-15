@@ -148,9 +148,9 @@ function removeFieldsFromCategoriesMetadatasObj(i18nCategoriesMetadatas: Categor
 export function declaredI18nValidator(
   sysData: CategoriesMetadatas,
   i18nBlogCategoriesData: I18nJSONPart,
-  i18nConfigFilePath: Path
+  i18nSchemaFilePath: Path
 ): MaybeEmptyErrorsDetectionFeedback {
-  const ERROR_PREFIX_TAIL = `(${i18nConfigFilePath})`;
+  const ERROR_PREFIX_TAIL = `(${i18nSchemaFilePath})`;
   let feedback: ErrorsDetectionFeedback = '';
 
   const i18nCategoriesKeys = Object.keys(i18nBlogCategoriesData);

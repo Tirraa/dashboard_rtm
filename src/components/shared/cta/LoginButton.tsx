@@ -37,12 +37,12 @@ export const LoginButton: FunctionComponent<InviteBotButtonProps> = ({
   size: sizeValue,
   ripple: rippleValue
 }) => {
-  const textCls = textClsValue || DEFAULT_TEXT_CLS;
+  const textCls = textClsValue ?? DEFAULT_TEXT_CLS;
   const className: ClassName = classNameValue ? { className: classNameValue + ' ' + textCls } : defClassList(textCls);
-  const variant = variantValue || DEFAULT_VARIANT;
-  const size = sizeValue || DEFAULT_SIZE;
-  const title = titleValue || label;
-  const ripple = rippleValue !== undefined ? rippleValue : true;
+  const variant = variantValue ?? DEFAULT_VARIANT;
+  const size = sizeValue ?? DEFAULT_SIZE;
+  const title = titleValue ?? label;
+  const ripple = Boolean(rippleValue);
 
   const btn = (
     <Button {...{ ...className, ripple, title, variant, size }} onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })}>

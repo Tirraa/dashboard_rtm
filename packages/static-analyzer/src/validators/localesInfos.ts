@@ -32,12 +32,12 @@ function localeFileInfosValidator(localeFilePath: string): MaybeEmptyErrorsDetec
 /**
  * @throws {BuilderError}
  */
-export function localesInfosValidator(localesFolder: string, i18nConfigFilePath: Path): MaybeEmptyErrorsDetectionFeedback {
+export function localesInfosValidator(localesFolder: string, i18nSchemaFilePath: Path): MaybeEmptyErrorsDetectionFeedback {
   const ERROR_PREFIX_TAIL = `(locales files infos)`;
   let feedback: ErrorsDetectionFeedback = '';
 
   const files: string[] = readdirSync(localesFolder).filter(
-    (file) => path.extname(file) === '.ts' && path.basename(file) !== path.basename(i18nConfigFilePath)
+    (file) => path.extname(file) === '.ts' && path.basename(file) !== path.basename(i18nSchemaFilePath)
   );
   const fullFilesPaths = files.map((filename) => [localesFolder, filename].join('/'));
   const localeFileInfosValidatorFeedbacks = [];

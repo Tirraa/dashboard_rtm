@@ -4,6 +4,10 @@ import { LanguageFlag } from '@/types/i18n';
 import { NextMiddleware } from 'next/server';
 import { ReactNode } from 'react';
 
+export type LayoutMinimalProps = {
+  children: ReactNode;
+};
+
 export type i18nParams = {
   [i18nTaxonomy.LANG_FLAG]: LanguageFlag;
 };

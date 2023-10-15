@@ -1,6 +1,9 @@
 import { RefObject } from 'react';
 import { getRefCurrentPtr } from './react';
 
+export const scrollToTop = (elm?: HTMLElement) => (elm ? elm.scrollTo(0, 0) : window.scrollTo(0, 0));
+export const resetWindowScroll = () => scrollToTop();
+
 export function computeHTMLElementHeight(htmlElement: HTMLElement): number {
   const { height } = htmlElement.getBoundingClientRect();
   const { marginTop, marginBottom } = getComputedStyle(htmlElement);
@@ -17,8 +20,6 @@ export function computeHTMLElementWidth(htmlElement: HTMLElement): number {
   return computedWidth;
 }
 
-const resetWindowScroll = () => window.scrollTo(0, 0);
-
 export function resetScroll<T extends HTMLElement>(scrollableElementToResetRef?: RefObject<T>, alsoResetWindowScroll?: boolean) {
   if (!scrollableElementToResetRef) {
     resetWindowScroll();
@@ -26,6 +27,6 @@ export function resetScroll<T extends HTMLElement>(scrollableElementToResetRef?:
   }
 
   const refCurrentPtr = getRefCurrentPtr(scrollableElementToResetRef);
-  if (refCurrentPtr) refCurrentPtr.scrollTo(0, 0);
+  if (refCurrentPtr) scrollToTop(refCurrentPtr);
   if (alsoResetWindowScroll) resetWindowScroll();
 }

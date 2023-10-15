@@ -3,7 +3,7 @@ import TFlagsAssoc from '../types/flags';
 export const FLAGS: TFlagsAssoc = {
   POSTS_FOLDER: '--posts-folder',
   BLOG_CONFIG_FILEPATH: '--blog-config-file',
-  I18N_SKELETON_LOCALE_FILEPATH: '--i18n-skeleton-locale',
+  I18N_LOCALES_SCHEMA_FILEPATH: '--i18n-locales-schema',
   SKIP_LOCALES_INFOS: '--skip-locales-infos'
 } as const;
 

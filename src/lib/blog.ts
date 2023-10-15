@@ -7,16 +7,18 @@ import {
   BlogCategory,
   BlogCategoryAndSubcategoriesPair,
   BlogSubCategoryFromUnknownCategory,
+  PostBase,
   UnknownBlogSlug,
   UnknownCategoryAndUnknownSubCategory
 } from '@/types/Blog';
-import PostBase from '@/types/BlogPostAbstractions';
 import { AppPath } from '@/types/Next';
 import { LanguageFlag } from '@/types/i18n';
 import { IsoDateTimeString } from 'contentlayer/core';
 import { redirect } from 'next/navigation';
-import { getBlogPostLanguageFlag } from './i18n';
+import { getBlogPostLanguageFlagFromPostObj } from './i18n';
 import { buildAbsolutePathFromParts, buildPathFromParts, getFormattedDate, getLastPathPart, indexOfNthOccurrence } from './str';
+
+export const getBlogPostLanguageFlag = (post: PostBase): LanguageFlag => getBlogPostLanguageFlagFromPostObj(post);
 
 const getBlogPostSubCategoryAndSlugStr = (post: PostBase): string => buildPathFromParts(getBlogPostSubCategory(post), getBlogPostSlug(post));
 
@@ -139,3 +141,10 @@ export const redirectToBlogCategoryPage = (category: BlogCategory): void => redi
 
 export const redirectToBlogCategoryAndSubCategoryPairPageUnstrict = (category: BlogCategory, subCategory: BlogSubCategoryFromUnknownCategory): void =>
   redirect(buildAbsolutePathFromParts(ROUTES_ROOTS.BLOG, category, subCategory));
+
+export function getBlogPostPathWithoutI18nPart(post: PostBase): AppPath {
+  const langFlag = getBlogPostLanguageFlagFromPostObj(post);
+  if (langFlag === DEFAULT_LANGUAGE) return post.url;
+  const blogPostPathWithoutI18nPart = post.url.replace(`/${langFlag}/`, '/');
+  return blogPostPathWithoutI18nPart;
+}

@@ -1,8 +1,7 @@
 import { getPostFormattedDate, getPostUnstrict, isValidCategoryAndSubCategoryPair } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogPostPageProps } from '@/types/Blog';
-import PostBase from '@/types/BlogPostAbstractions';
+import { BlogPostPageProps, PostBase } from '@/types/Blog';
 import { LanguageFlag } from '@/types/i18n';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';

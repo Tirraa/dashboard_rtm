@@ -1,23 +1,6 @@
 import { TypedLeafsJSONData } from '@/types/JSON';
 
-const _ = '';
-
-export const SHARED = {
-  'pages-titles': {
-    homepage: _,
-    'sign-up': _,
-
-    'patch-notes': _,
-    'discord-bot': _,
-    dashboard: _,
-
-    'patch-notes-bis': _,
-    'discord-bot-bis': _,
-    'dashboard-bis': _
-  }
-} as const;
-
-export default {
+const STATICLY_CHECKED_DATA = {
   'blog-categories': {
     'patch-notes': {
       _title: '__SCANNED_ON_BUILD_FIELD__',
@@ -32,7 +15,6 @@ export default {
         'meta-description': '__SCANNED_ON_BUILD_FIELD__'
       }
     },
-
     'patch-notes-bis': {
       _title: '__SCANNED_ON_BUILD_FIELD__',
       '_meta-description': '__SCANNED_ON_BUILD_FIELD__',
@@ -46,9 +28,30 @@ export default {
         'meta-description': '__SCANNED_ON_BUILD_FIELD__'
       }
     }
-  },
+  }
+} as const satisfies TypedLeafsJSONData<Scanned>;
 
-  'pages-titles': { ...SHARED['pages-titles'] },
+const _: NotScanned = '';
+
+export const SHARED_VOCAB_SCHEMA = {
+  'pages-titles': {
+    homepage: _,
+    'sign-up': _,
+
+    'patch-notes': _,
+    'discord-bot': _,
+    dashboard: _,
+
+    'patch-notes-bis': _,
+    'discord-bot-bis': _,
+    'dashboard-bis': _
+  }
+} as const satisfies TypedLeafsJSONData<NotScanned>;
+
+export default {
+  'blog-categories': STATICLY_CHECKED_DATA['blog-categories'],
+
+  'pages-titles': { ...SHARED_VOCAB_SCHEMA['pages-titles'] },
 
   _infos: {
     lng: _,
@@ -98,4 +101,8 @@ export default {
   ugly: {
     logo: _
   }
-} as const satisfies TypedLeafsJSONData<'' | '__SCANNED_ON_BUILD_FIELD__'>;
+} as const satisfies TypedLeafsJSONData<MaybeScanned>;
+
+type NotScanned = '';
+type Scanned = '__SCANNED_ON_BUILD_FIELD__';
+type MaybeScanned = NotScanned | Scanned;

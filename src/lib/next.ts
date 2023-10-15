@@ -8,10 +8,10 @@ export const fCls = (f: NextFont): ClassName => ({ className: f.className });
 export const fClStr = (f: NextFont): string => f.className;
 
 export function stackMiddlewares(functions: MiddlewareFactory[] = [], index = 0): NextMiddleware {
-  const current = functions[index];
-  if (current) {
-    const next = stackMiddlewares(functions, index + 1);
-    return current(next);
+  const currentMiddleware = functions[index];
+  if (currentMiddleware) {
+    const nextMiddleware = stackMiddlewares(functions, index + 1);
+    return currentMiddleware(nextMiddleware);
   }
   return () => NextResponse.next();
 }

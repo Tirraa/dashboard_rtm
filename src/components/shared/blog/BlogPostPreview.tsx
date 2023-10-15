@@ -1,7 +1,6 @@
-import { getPostFormattedDate } from '@/lib/blog';
-import { getBlogPostPathWithoutI18nPart } from '@/lib/i18n';
+import { getBlogPostPathWithoutI18nPart, getPostFormattedDate } from '@/lib/blog';
 import { getSlicedBlogPostDescription } from '@/lib/str';
-import PostBase from '@/types/BlogPostAbstractions';
+import { PostBase } from '@/types/Blog';
 import { LanguageFlag } from '@/types/i18n';
 import Link from 'next/link';
 import { FunctionComponent } from 'react';

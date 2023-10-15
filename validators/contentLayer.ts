@@ -1,12 +1,12 @@
 import { DocumentType } from 'contentlayer/source-files';
 import ContentLayerDuplicateTypesError from './errors/ContentLayerDuplicateTypesError';
 
-const getDocumentTypeName = (documentType: DocumentType<any>) => documentType.def().name;
+const getDocumentTypeName = (documentType: DocumentType<string>) => documentType.def().name;
 
 /**
  * @throws {ContentLayerDuplicateTypesError}
  */
-export function validateContentLayerConfig(documentTypes: DocumentType<any>[]) {
+export function validateContentLayerConfig(documentTypes: DocumentType<string>[]) {
   const documentTypesMemory: unknown[] = [];
   const duplicatesSet = new Set<unknown>();
 

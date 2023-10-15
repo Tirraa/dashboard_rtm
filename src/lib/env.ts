@@ -12,7 +12,7 @@ const NODE_ENV = process.env.NODE_ENV;
 let devCtx: boolean | undefined = NODE_ENV ? NODE_ENV.startsWith(NODE_DEV_ENV_NEEDLE) : undefined;
 let testCtx: boolean | undefined = NODE_ENV ? NODE_ENV.startsWith(NODE_TEST_ENV_NEEDLE) : undefined;
 let prodCtx: boolean | undefined = NODE_ENV ? NODE_ENV.startsWith(NODE_PROD_ENV_NEEDLE) : undefined;
-let forcedToProd: boolean = !!prodCtx || false;
+let forcedToProd: boolean = Boolean(prodCtx);
 
 if (NODE_ENV === undefined) {
   console.warn(executionContextWarningsVocabGetter('UNABLE_TO_GET_NODE_ENV'));
@@ -35,7 +35,7 @@ if (testCtx === undefined) {
   testCtx = false;
 }
 
-if ([devCtx, testCtx, prodCtx, forcedToProd].every((v) => !!v === false)) {
+if ([devCtx, testCtx, prodCtx, forcedToProd].every((v) => Boolean(v) === false)) {
   console.warn(executionContextWarningsVocabGetter('FAILED_TO_INFER_CTX'));
   forcedToProd = true;
 }

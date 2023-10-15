@@ -3,7 +3,7 @@
 import useLockScreenScrollY from '@/components/hooks/useLockScreenScrollY';
 import useResetScroll from '@/components/hooks/useResetScroll';
 import DashboardSidebar from '@/components/layouts/dashboard/DashboardSidebar';
-import { LayoutMinimalProps } from '@/types/CustomUtilitaryTypes';
+import { LayoutMinimalProps } from '@/types/Next';
 import { useSelectedLayoutSegment } from 'next/navigation';
 import { FunctionComponent, useRef } from 'react';
 
