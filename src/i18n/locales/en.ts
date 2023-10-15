@@ -1,16 +1,23 @@
 import { SharedVocabType, VocabType } from '@/types/i18n';
 
 const SHARED: SharedVocabType = {
-  'patch-notes': 'Patch Notes',
-  'discord-bot': 'Discord Bot',
-  dashboard: 'Dashboard',
+  'pages-titles': {
+    homepage: 'Homepage',
+    'sign-up': 'Sign up',
 
-  'patch-notes-bis': 'Patch Notes (bis)',
-  'discord-bot-bis': 'Discord Bot (bis)',
-  'dashboard-bis': 'Dashboard (bis)'
+    'patch-notes': 'Patch Notes',
+    'discord-bot': 'Discord Bot',
+    dashboard: 'Dashboard',
+
+    'patch-notes-bis': 'Patch Notes (bis)',
+    'discord-bot-bis': 'Discord Bot (bis)',
+    'dashboard-bis': 'Dashboard (bis)'
+  }
 };
 
 export default {
+  'pages-titles': { ...SHARED['pages-titles'] },
+
   _infos: {
     lng: 'en',
     label: 'English'
@@ -23,7 +30,7 @@ export default {
   auth: {
     login: 'Login',
     logout: 'Logout',
-    signup: 'Sign up'
+    signup: SHARED['pages-titles']['sign-up']
   },
 
   dashboard: {
@@ -36,36 +43,35 @@ export default {
 
   'blog-categories': {
     'patch-notes': {
-      _title: SHARED['patch-notes'],
+      _title: SHARED['pages-titles']['patch-notes'],
       '_meta-description': 'Patch Notes Metadescription',
 
       'discord-bot': {
-        title: SHARED['discord-bot'],
+        title: SHARED['pages-titles']['discord-bot'],
         'meta-description': 'Patch-notes -> Discord Bot - Metadescription'
       },
       dashboard: {
-        title: SHARED['dashboard'],
+        title: SHARED['pages-titles']['dashboard'],
         'meta-description': 'Patch-notes -> Dashboard - Metadescription'
       }
     },
 
     'patch-notes-bis': {
-      _title: SHARED['patch-notes-bis'],
+      _title: SHARED['pages-titles']['patch-notes-bis'],
       '_meta-description': 'Metadescription Patch Notes (bis)',
 
       'discord-bot-bis': {
-        title: SHARED['discord-bot-bis'],
+        title: SHARED['pages-titles']['discord-bot-bis'],
         'meta-description': 'Metadescription Patch-notes -> Bot Discord (bis)'
       },
       'dashboard-bis': {
-        title: SHARED['dashboard-bis'],
+        title: SHARED['pages-titles']['dashboard-bis'],
         'meta-description': 'Metadescription Patch-notes -> Dashboard (bis)'
       }
     }
   },
 
   vocab: {
-    ...SHARED,
     brand: 'Rust Team Management',
     'brand-short': 'RTM',
     'invite-the-bot': 'Invite the bot',
@@ -77,12 +83,12 @@ export default {
 
   'manual-SEO': {
     homepage: {
-      title: 'Homepage',
+      title: SHARED['pages-titles']['homepage'],
       'meta-description': 'This is the homepage metadescription'
     },
 
     signup: {
-      title: 'Sign up',
+      title: SHARED['pages-titles']['sign-up'],
       'meta-description': 'Dashboard portal metadescription'
     }
   },

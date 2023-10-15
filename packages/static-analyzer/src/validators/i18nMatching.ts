@@ -15,6 +15,7 @@ import {
   ErrorsDetectionFeedback,
   I18nJSONPart,
   MaybeEmptyErrorsDetectionFeedback,
+  Path,
   SubCategory,
   UnknownI18nJSONObj,
   i18nField
@@ -147,7 +148,7 @@ function removeFieldsFromCategoriesMetadatasObj(i18nCategoriesMetadatas: Categor
 export function declaredI18nValidator(
   sysData: CategoriesMetadatas,
   i18nBlogCategoriesData: I18nJSONPart,
-  i18nConfigFilePath: i18nField
+  i18nConfigFilePath: Path
 ): MaybeEmptyErrorsDetectionFeedback {
   const ERROR_PREFIX_TAIL = `(${i18nConfigFilePath})`;
   let feedback: ErrorsDetectionFeedback = '';

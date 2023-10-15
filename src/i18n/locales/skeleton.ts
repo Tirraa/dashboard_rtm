@@ -1,91 +1,101 @@
-export const SHARED = {
-  'patch-notes': '',
-  'discord-bot': '',
-  dashboard: '',
+import { TypedLeafsJSONData } from '@/types/JSON';
 
-  'patch-notes-bis': '',
-  'discord-bot-bis': '',
-  'dashboard-bis': ''
+const _ = '';
+
+export const SHARED = {
+  'pages-titles': {
+    homepage: _,
+    'sign-up': _,
+
+    'patch-notes': _,
+    'discord-bot': _,
+    dashboard: _,
+
+    'patch-notes-bis': _,
+    'discord-bot-bis': _,
+    'dashboard-bis': _
+  }
 } as const;
 
 export default {
-  _infos: {
-    lng: 'skeleton',
-    label: ''
-  },
-
-  navbar: {
-    assistance: ''
-  },
-
-  auth: {
-    login: '',
-    logout: '',
-    signup: ''
-  },
-
-  dashboard: {
-    'pages-titles': {
-      main: '',
-      foo: '',
-      bar: ''
-    }
-  },
-
   'blog-categories': {
     'patch-notes': {
-      _title: '',
-      '_meta-description': '',
+      _title: '__SCANNED_ON_BUILD_FIELD__',
+      '_meta-description': '__SCANNED_ON_BUILD_FIELD__',
 
       'discord-bot': {
-        title: '',
-        'meta-description': ''
+        title: '__SCANNED_ON_BUILD_FIELD__',
+        'meta-description': '__SCANNED_ON_BUILD_FIELD__'
       },
       dashboard: {
-        title: '',
-        'meta-description': ''
+        title: '__SCANNED_ON_BUILD_FIELD__',
+        'meta-description': '__SCANNED_ON_BUILD_FIELD__'
       }
     },
 
     'patch-notes-bis': {
-      _title: '',
-      '_meta-description': '',
+      _title: '__SCANNED_ON_BUILD_FIELD__',
+      '_meta-description': '__SCANNED_ON_BUILD_FIELD__',
 
       'discord-bot-bis': {
-        title: '',
-        'meta-description': ''
+        title: '__SCANNED_ON_BUILD_FIELD__',
+        'meta-description': '__SCANNED_ON_BUILD_FIELD__'
       },
       'dashboard-bis': {
-        title: '',
-        'meta-description': ''
+        title: '__SCANNED_ON_BUILD_FIELD__',
+        'meta-description': '__SCANNED_ON_BUILD_FIELD__'
       }
     }
   },
 
+  'pages-titles': { ...SHARED['pages-titles'] },
+
+  _infos: {
+    lng: _,
+    label: _
+  },
+
+  navbar: {
+    assistance: _
+  },
+
+  auth: {
+    login: _,
+    logout: _,
+    signup: _
+  },
+
+  dashboard: {
+    'pages-titles': {
+      main: _,
+      foo: _,
+      bar: _
+    }
+  },
+
   vocab: {
-    ...SHARED,
-    brand: '',
-    'brand-short': '',
-    'invite-the-bot': '',
-    'no-blog-post': '',
-    '404': '',
-    'see-more': '',
-    loading: ''
+    brand: _,
+    'brand-short': _,
+    'invite-the-bot': _,
+    'no-blog-post': _,
+    '404': _,
+    'see-more': _,
+    loading: _
   },
 
   'manual-SEO': {
     homepage: {
-      title: '',
-      'meta-description': ''
+      title: _,
+      'meta-description': _
     },
 
     signup: {
-      title: '',
-      'meta-description': ''
+      title: _,
+      'meta-description': _
     }
   },
 
   ugly: {
-    logo: ''
+    logo: _
   }
-} as const;
+} as const satisfies TypedLeafsJSONData<'' | '__SCANNED_ON_BUILD_FIELD__'>;

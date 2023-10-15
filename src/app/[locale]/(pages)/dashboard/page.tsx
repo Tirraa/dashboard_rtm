@@ -6,7 +6,7 @@ import { getPageTitle } from '@/lib/str';
 export async function generateMetadata() {
   const globalT = await getServerSideI18n();
 
-  const title = getPageTitle(globalT(`${i18ns.blogCategories}.patch-notes.dashboard.title`), globalT(`${i18ns.dashboard}.pages-titles.main`));
+  const title = getPageTitle(globalT(`${i18ns.pagesTitles}.dashboard`), globalT(`${i18ns.dashboard}.pages-titles.main`));
   return { title, description: '' };
 }
 

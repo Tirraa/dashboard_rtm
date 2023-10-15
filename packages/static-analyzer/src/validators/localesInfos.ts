@@ -5,7 +5,7 @@ import { CRITICAL_ERRORS_STR } from '../config/vocab';
 import BuilderError from '../errors/exceptions/BuilderError';
 import { prefixFeedback } from '../lib/feedbacksMerge';
 import retrieveLocaleFileInfosMetadatas from '../metadatas-builders/retrieveLocaleFileInfosMetadatas';
-import { ErrorsDetectionFeedback, MaybeEmptyErrorsDetectionFeedback } from '../types/metadatas';
+import { ErrorsDetectionFeedback, MaybeEmptyErrorsDetectionFeedback, Path } from '../types/metadatas';
 
 const localesExtension = '.ts';
 const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
@@ -32,11 +32,13 @@ function localeFileInfosValidator(localeFilePath: string): MaybeEmptyErrorsDetec
 /**
  * @throws {BuilderError}
  */
-export function localesInfosValidator(localesFolder: string): MaybeEmptyErrorsDetectionFeedback {
+export function localesInfosValidator(localesFolder: string, i18nConfigFilePath: Path): MaybeEmptyErrorsDetectionFeedback {
   const ERROR_PREFIX_TAIL = `(locales files infos)`;
   let feedback: ErrorsDetectionFeedback = '';
 
-  const files: string[] = readdirSync(localesFolder).filter((file) => path.extname(file) === '.ts');
+  const files: string[] = readdirSync(localesFolder).filter(
+    (file) => path.extname(file) === '.ts' && path.basename(file) !== path.basename(i18nConfigFilePath)
+  );
   const fullFilesPaths = files.map((filename) => [localesFolder, filename].join('/'));
   const localeFileInfosValidatorFeedbacks = [];
 

@@ -8,19 +8,19 @@ const { IMPOSSIBLE_TO_START: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
 function getRetrievedValuesFromArgs(args: string[]): MaybeIncorrectTFlagsAssoc {
   const indexOfPostsFolder = args.indexOf(FLAGS.POSTS_FOLDER);
-  const indexOfBlogConfigFile = args.indexOf(FLAGS.BLOG_CONFIG_FILE);
-  const indexOfDefaultI18nLocaleFile = args.indexOf(FLAGS.I18N_DEFAULT_LOCALE_FILE);
+  const indexOfBlogConfigFile = args.indexOf(FLAGS.BLOG_CONFIG_FILEPATH);
+  const indexOfDefaultI18nLocaleFile = args.indexOf(FLAGS.I18N_SKELETON_LOCALE_FILEPATH);
   const indexOfSkipLocalesInfos = args.indexOf(FLAGS.SKIP_LOCALES_INFOS);
 
   const POSTS_FOLDER = indexOfPostsFolder !== -1 ? args[indexOfPostsFolder + 1] : undefined;
-  const BLOG_CONFIG_FILE = indexOfBlogConfigFile !== -1 ? args[indexOfBlogConfigFile + 1] : undefined;
-  const I18N_DEFAULT_LOCALE_FILE = indexOfDefaultI18nLocaleFile !== -1 ? args[indexOfDefaultI18nLocaleFile + 1] : undefined;
+  const BLOG_CONFIG_FILEPATH = indexOfBlogConfigFile !== -1 ? args[indexOfBlogConfigFile + 1] : undefined;
+  const I18N_SKELETON_LOCALE_FILEPATH = indexOfDefaultI18nLocaleFile !== -1 ? args[indexOfDefaultI18nLocaleFile + 1] : undefined;
   const SKIP_LOCALES_INFOS = indexOfSkipLocalesInfos === -1 ? '' : 'Look at my horse, my horse is amazing';
 
   const retrievedValuesFromArgs: MaybeIncorrectTFlagsAssoc = {
     POSTS_FOLDER,
-    BLOG_CONFIG_FILE,
-    I18N_DEFAULT_LOCALE_FILE,
+    BLOG_CONFIG_FILEPATH,
+    I18N_SKELETON_LOCALE_FILEPATH,
     SKIP_LOCALES_INFOS
   } as const;
   return retrievedValuesFromArgs;
@@ -38,15 +38,15 @@ function checkIfArgumentsSeemLegit({ ...args }: MaybeIncorrectTFlagsAssoc) {
 /**
  * @throws {ArgumentsValidatorError}
  */
-function checkIfFilesExist({ BLOG_CONFIG_FILE, I18N_DEFAULT_LOCALE_FILE, POSTS_FOLDER }: TFlagsAssoc) {
-  const blogConfigFileExists = existsSync(BLOG_CONFIG_FILE);
+function checkIfFilesExist({ BLOG_CONFIG_FILEPATH, I18N_SKELETON_LOCALE_FILEPATH, POSTS_FOLDER }: TFlagsAssoc) {
+  const blogConfigFileExists = existsSync(BLOG_CONFIG_FILEPATH);
   if (!blogConfigFileExists) {
     throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + "Can't open the blog config file!" + '\n');
   }
 
-  const i18nDefaultLocaleFileExists = existsSync(I18N_DEFAULT_LOCALE_FILE);
+  const i18nDefaultLocaleFileExists = existsSync(I18N_SKELETON_LOCALE_FILEPATH);
   if (!i18nDefaultLocaleFileExists) {
-    throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + "Can't open the default locale i18n file!" + '\n');
+    throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + "Can't open the i18n skeleton locale file!" + '\n');
   }
 
   const postsFolderExists = existsSync(POSTS_FOLDER);

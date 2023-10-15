@@ -11,7 +11,7 @@ import { redirect } from 'next/navigation';
 
 export async function generateMetadata() {
   const globalT = await getServerSideI18n();
-  const title = getPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.manualSEO}.signup.title`), true);
+  const title = getPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.pagesTitles}.sign-up`), true);
   const description = globalT(`${i18ns.manualSEO}.signup.meta-description`);
   return { title, description };
 }

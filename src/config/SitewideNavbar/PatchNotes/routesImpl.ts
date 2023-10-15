@@ -8,12 +8,12 @@ const BASE = getSlashEnvelope(ROUTES_ROOTS.PATCH_NOTES);
 export const PATCH_NOTES_ROUTES: PatchNotesRoutes = {
   DASHBOARD_PATCH_NOTES_PAGE: BASE + 'dashboard',
   DISCORD_BOT_PATCH_NOTES_PAGE: BASE + 'discord-bot'
-};
+} as const;
 
-const blogCategories = i18ns.blogCategories;
+const pagesTitles = i18ns.pagesTitles;
 export const PATCH_NOTES_ROUTES_TITLES: PatchNotesRoutesTitles = {
-  DASHBOARD_PATCH_NOTES_PAGE: `${blogCategories}.patch-notes.dashboard.title`,
-  DISCORD_BOT_PATCH_NOTES_PAGE: `${blogCategories}.patch-notes.discord-bot.title`
-};
+  DASHBOARD_PATCH_NOTES_PAGE: `${pagesTitles}.dashboard`,
+  DISCORD_BOT_PATCH_NOTES_PAGE: `${pagesTitles}.discord-bot`
+} as const;
 
 export default PATCH_NOTES_ROUTES;

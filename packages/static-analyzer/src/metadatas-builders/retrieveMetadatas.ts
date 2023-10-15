@@ -117,9 +117,9 @@ function buildCategoriesMetadatasFromBlogConfigFile(blogConfigFilePath: string):
   return buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitecture);
 }
 
-export function retrieveMetadatas({ POSTS_FOLDER, BLOG_CONFIG_FILE }: TFlagsAssoc): [CategoriesMetadatas, DeclaredCategoriesMetadatas] {
+export function retrieveMetadatas({ POSTS_FOLDER, BLOG_CONFIG_FILEPATH }: TFlagsAssoc): [CategoriesMetadatas, DeclaredCategoriesMetadatas] {
   const blogArchitectureSysMetadata = buildCategoriesMetadatasFromPostsFolder(POSTS_FOLDER);
-  const blogArchitectureDeclaredMetadata = buildCategoriesMetadatasFromBlogConfigFile(BLOG_CONFIG_FILE);
+  const blogArchitectureDeclaredMetadata = buildCategoriesMetadatasFromBlogConfigFile(BLOG_CONFIG_FILEPATH);
 
   return [blogArchitectureSysMetadata, blogArchitectureDeclaredMetadata];
 }

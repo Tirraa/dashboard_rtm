@@ -2,8 +2,8 @@ type ValueOfTFlagsAssoc = string;
 
 export type TFlagsAssoc = {
   POSTS_FOLDER: ValueOfTFlagsAssoc;
-  BLOG_CONFIG_FILE: ValueOfTFlagsAssoc;
-  I18N_DEFAULT_LOCALE_FILE: ValueOfTFlagsAssoc;
+  BLOG_CONFIG_FILEPATH: ValueOfTFlagsAssoc;
+  I18N_SKELETON_LOCALE_FILEPATH: ValueOfTFlagsAssoc;
   SKIP_LOCALES_INFOS: ValueOfTFlagsAssoc;
 };
 

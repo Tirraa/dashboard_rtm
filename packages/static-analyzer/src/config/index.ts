@@ -2,8 +2,8 @@ import TFlagsAssoc from '../types/flags';
 
 export const FLAGS: TFlagsAssoc = {
   POSTS_FOLDER: '--posts-folder',
-  BLOG_CONFIG_FILE: '--blog-config-file',
-  I18N_DEFAULT_LOCALE_FILE: '--skeleton-i18n-locale',
+  BLOG_CONFIG_FILEPATH: '--blog-config-file',
+  I18N_SKELETON_LOCALE_FILEPATH: '--i18n-skeleton-locale',
   SKIP_LOCALES_INFOS: '--skip-locales-infos'
 } as const;
 
