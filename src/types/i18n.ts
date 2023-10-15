@@ -1,4 +1,5 @@
-import { ELanguagesFlag, VocabBase } from '@/config/i18n';
+import { ELanguagesFlag } from '@/config/i18n';
+import SKELETON_LANGUAGE_OBJ, { SHARED } from '@/i18n/locales/skeleton';
 import { MakeHomogeneousValuesObjType } from '@/types/CustomUtilitaryTypes';
 import { TypedLeafsJSONData } from '@/types/JSON';
 import { RemovePlural } from '@/types/international-types';
@@ -25,6 +26,10 @@ type MakeVocabTargets<VorVL extends VocabOrVocabLeaf, CurrentDeepPath extends Vo
     }[keyof VorVL]
   : RemovePlural<CurrentDeepPath>;
 
+type SharedVocabBase = typeof SHARED;
+export type SharedVocabType = MakeHomogeneousValuesObjType<SharedVocabBase, VocabObjValue>;
+
+type VocabBase = typeof SKELETON_LANGUAGE_OBJ;
 export type VocabType = MakeHomogeneousValuesObjType<VocabBase, VocabObjValue>;
 export type I18nVocabTarget = MakeVocabTargets<VocabBase>;
 

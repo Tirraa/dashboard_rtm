@@ -1,3 +1,13 @@
+export const SHARED = {
+  'patch-notes': '',
+  'discord-bot': '',
+  dashboard: '',
+
+  'patch-notes-bis': '',
+  'discord-bot-bis': '',
+  'dashboard-bis': ''
+} as const;
+
 export default {
   _infos: {
     lng: 'skeleton',
@@ -53,6 +63,7 @@ export default {
   },
 
   vocab: {
+    ...SHARED,
     brand: '',
     'brand-short': '',
     'invite-the-bot': '',
