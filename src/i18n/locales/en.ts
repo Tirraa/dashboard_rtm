@@ -79,4 +79,4 @@ export default {
   ugly: {
     logo: 'logo'
   }
-} satisfies VocabType;
+} as const satisfies VocabType;

@@ -1,3 +1,5 @@
+import { VocabType } from '@/types/i18n';
+
 export default {
   _infos: {
     lng: 'fr',
@@ -77,4 +79,4 @@ export default {
   ugly: {
     logo: 'logo'
   }
-} as const;
+} as const satisfies VocabType;
