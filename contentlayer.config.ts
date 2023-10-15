@@ -30,7 +30,7 @@ const PatchPost = defineDocumentType(
       filePathPattern: FILE_PATH_PATTERNS.PatchPost,
       fields,
       computedFields
-    }) satisfies DocumentConfigType<DocumentsComputedFieldsSumType>
+    } satisfies DocumentConfigType<DocumentsComputedFieldsSumType>)
 );
 
 const PatchPostBis = defineDocumentType(
@@ -40,7 +40,7 @@ const PatchPostBis = defineDocumentType(
       filePathPattern: FILE_PATH_PATTERNS.PatchPostBis,
       fields,
       computedFields
-    }) satisfies DocumentConfigType<DocumentsComputedFieldsSumType>
+    } satisfies DocumentConfigType<DocumentsComputedFieldsSumType>)
 );
 
 const documentTypes = [PhantomPost, PatchPost, PatchPostBis];
