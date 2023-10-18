@@ -18,7 +18,9 @@ export function stackMiddlewares(functions: MiddlewareFactory[] = [], index = 0)
 
 export const getMaybeI18nFlagFromRequest = (request: NextRequest) => getPathnameMaybeI18nFlag(request.nextUrl.pathname);
 
-export const getPathParts = (pathname: AppPath) =>
-  getPathnameWithoutI18nFlag(pathname)
-    .split('/')
-    .filter((notEmptyPartFilterWorkaround) => notEmptyPartFilterWorkaround);
+export function getPathParts(pathname: AppPath) {
+  let pathnameWithoutI18nFlag = getPathnameWithoutI18nFlag(pathname);
+  if (pathnameWithoutI18nFlag.charAt(0) === '/') pathnameWithoutI18nFlag = pathnameWithoutI18nFlag.substring(1);
+
+  return pathnameWithoutI18nFlag.split('/');
+}
