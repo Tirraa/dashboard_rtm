@@ -56,7 +56,7 @@ export const RtmButton: FunctionComponent<InviteBotButtonProps> = ({
   );
 
   // {ToDo} fix Material Tailwind? This code is not W3C compliant.
-  // https://github.com/creativetimofficial/material-tailwind/issues/448
+  // * ... https://github.com/creativetimofficial/material-tailwind/issues/448
   if (href) return <Link {...{ href, ...{ ...getLinkTarget(href) } }}>{btn}</Link>;
   return btn;
 };
