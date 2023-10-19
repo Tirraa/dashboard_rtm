@@ -25,7 +25,8 @@ export const BlogConfig: TBlogConfig = {
   },
 
   FORCED_BLOG_SUBCATEGORIES_PATHS: {
-    'patch-notes': ['dashboard', 'discord-bot']
+    'patch-notes': ['dashboard', 'discord-bot'],
+    'patch-notes-bis': ['dashboard-bis', 'discord-bot-bis']
   }
 };
 

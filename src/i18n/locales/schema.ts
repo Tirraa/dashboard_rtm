@@ -50,11 +50,10 @@ export const SHARED_VOCAB_SCHEMA = {
 
 export default {
   'blog-categories': STATICLY_CHECKED_DATA['blog-categories'],
-
   'pages-titles': { ...SHARED_VOCAB_SCHEMA['pages-titles'] },
 
   _infos: {
-    lng: _,
+    lng: '__SCANNED_ON_BUILD_FIELD__',
     label: _
   },
 

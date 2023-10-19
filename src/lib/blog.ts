@@ -61,7 +61,13 @@ export function getBlogCategoryFromPathname(pathname: AppPath): BlogCategory {
 
 export const getBlogPostSubCategory = (post: PostBase): BlogSubCategoryFromUnknownCategory => getBlogPostSubCategoryFromPostObj(post);
 export const getBlogPostSlug = (post: PostBase): UnknownBlogSlug => getLastPathPart(post._raw.flattenedPath);
+
+/**
+ * @throws {TypeError}
+ * May throw a TypeError: "x[y] is not a function" at runtime, in a type unsafe context
+ */
 export const getAllPostsByCategory = (categ: BlogCategory): PostBase[] => BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[categ]();
+
 export const getAllPostsByCategoryAndSubCategoryUnstrict = ({ category, subCategory }: UnknownCategoryAndUnknownSubCategory): PostBase[] =>
   getAllPostsByCategory(category).filter((post) => getBlogPostSubCategory(post) === subCategory);
 
