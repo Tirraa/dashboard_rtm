@@ -1,19 +1,15 @@
-import { getBlogPostPathWithoutI18nPart, getPostFormattedDate } from '@/lib/blog';
+import { getBlogPostPathWithoutI18nPart } from '@/lib/blog';
 import { getSlicedBlogPostDescription } from '@/lib/str';
-import { PostBase } from '@/types/Blog';
-import { LanguageFlag } from '@/types/i18n';
+import { BlogPostProps } from '@/types/Blog';
 import Link from 'next/link';
 import { FunctionComponent } from 'react';
+import BlogPostDate from './BlogPostDate';
 
-interface BlogPostPeviewProps {
-  post: PostBase;
-  lng: LanguageFlag;
-}
+interface BlogPostPeviewProps extends BlogPostProps {}
 
 export const BlogPostPeview: FunctionComponent<BlogPostPeviewProps> = ({ post, lng }) => {
   const descriptionSnippet = post.description ? getSlicedBlogPostDescription(post.description) : getSlicedBlogPostDescription(post.metadescription);
 
-  const formattedDate = getPostFormattedDate(lng, post);
   return (
     <div className="mb-8">
       <h2 className="mb-1">
@@ -21,9 +17,7 @@ export const BlogPostPeview: FunctionComponent<BlogPostPeviewProps> = ({ post, l
           {post.title}
         </Link>
       </h2>
-      <time dateTime={post.date} className="mb-2 block text-xs text-gray-600 dark:text-gray-300">
-        {formattedDate}
-      </time>
+      <BlogPostDate {...{ post, lng }} />
       <div className="text-sm [&>*]:mb-3 [&>*:last-child]:mb-0 break-words" dangerouslySetInnerHTML={{ __html: descriptionSnippet }} />
     </div>
   );

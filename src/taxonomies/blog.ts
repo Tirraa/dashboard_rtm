@@ -12,7 +12,7 @@ export type TBlogTaxonomy = {
   [BlogTaxonomy.CATEGORY]: BlogCategory;
   [BlogTaxonomy.SUBCATEGORY]: BlogSubCategoryFromUnknownCategory;
   [BlogTaxonomy.SLUG]: UnknownBlogSlug;
-  [i18nTaxonomy.LANG_FLAG]?: LanguageFlag;
+  [i18nTaxonomy.LANG_FLAG]: LanguageFlag;
 };
 
 export default BlogTaxonomy;

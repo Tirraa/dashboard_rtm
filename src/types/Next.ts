@@ -8,9 +8,9 @@ export type LayoutMinimalProps = {
   children: ReactNode;
 };
 
-export type i18nParams = {
+export interface i18nParams {
   [i18nTaxonomy.LANG_FLAG]: LanguageFlag;
-};
+}
 
 export interface i18nPageProps {
   params: i18nParams;

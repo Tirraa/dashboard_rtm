@@ -3,6 +3,7 @@ import BlogTaxonomy, { TBlogTaxonomy } from '@/taxonomies/blog';
 import { PostSchema } from 'contentlayer/generated';
 import { RequiredFieldsOnly } from './CustomUtilitaryTypes';
 import { i18nParams } from './Next';
+import { LanguageFlag } from './i18n';
 
 type ContentLayerPhantomType = 'type';
 export type PostBase = Omit<PostSchema, ContentLayerPhantomType>;
@@ -31,6 +32,11 @@ export interface BlogSubCategoryPageProps {
 
 export interface BlogPostPageProps {
   params: BlogPostPagePropsParams & i18nParams;
+}
+
+export interface BlogPostProps {
+  post: PostBase;
+  lng: LanguageFlag;
 }
 
 type AllPostsGetter = () => PostBase[];

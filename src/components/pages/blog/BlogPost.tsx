@@ -1,28 +1,21 @@
-import { getPostFormattedDate, getPostUnstrict, isValidCategoryAndSubCategoryPair } from '@/lib/blog';
+import BlogPostDate from '@/components/shared/blog/BlogPostDate';
+import { getPostUnstrict, isValidCategoryAndSubCategoryPair } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogPostPageProps, PostBase } from '@/types/Blog';
-import { LanguageFlag } from '@/types/i18n';
+import { BlogPostPageProps, BlogPostProps } from '@/types/Blog';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
 
-interface BlogPostInnerProps {
-  post: PostBase;
-  lng: LanguageFlag;
-}
+interface BlogPostInnerProps extends BlogPostProps {}
 
 const BlogPostInner: FunctionComponent<BlogPostInnerProps> = ({ post, lng }) => {
-  const formattedDate = getPostFormattedDate(lng, post);
-
   return (
     <article className="mx-auto max-w-xl py-8">
       <div className="mb-8 text-center">
-        <time dateTime={post.date} className="mb-1 text-xs text-gray-600 dark:text-gray-300">
-          {formattedDate}
-        </time>
+        <BlogPostDate {...{ post, lng }} />
         <h1>{post.title}</h1>
       </div>
-      <div className="[&>*]:mb-3 [&>*:last-child]:mb-0 word-break" dangerouslySetInnerHTML={{ __html: post.body.html }} />
+      <div className="max-w-full [&>*]:break-words" dangerouslySetInnerHTML={{ __html: post.body.html }} />
     </article>
   );
 };
