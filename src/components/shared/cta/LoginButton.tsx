@@ -1,24 +1,14 @@
 'use client';
 
+import ButtonProps from '@/config/buttons';
 import ROUTES_ROOTS from '@/config/routes';
-import { AppPath } from '@/types/Next';
 import { ClassName } from '@/types/React';
 import { Button } from '@material-tailwind/react';
 import { size, variant } from '@material-tailwind/react/types/components/button';
 import { signIn } from 'next-auth/react';
-import { FunctionComponent, ReactElement } from 'react';
+import { FunctionComponent } from 'react';
 
-interface InviteBotButtonProps {
-  label: string;
-  __IconComponent?: ReactElement;
-  href?: AppPath;
-  title?: string;
-  textCls?: string;
-  className?: string;
-  variant?: variant;
-  size?: size;
-  ripple?: boolean;
-}
+interface LoginButtonProps extends ButtonProps {}
 
 const DEFAULT_TEXT_CLS = 'text-xl';
 const DEFAULT_VARIANT: variant = 'gradient';
@@ -28,7 +18,7 @@ const defClassList = (txtCls: string): ClassName => ({
   className: `mt-4 ${txtCls} normal-case flex items-center gap-2`
 });
 
-export const LoginButton: FunctionComponent<InviteBotButtonProps> = ({
+export const LoginButton: FunctionComponent<LoginButtonProps> = ({
   label,
   title: titleValue,
   className: classNameValue,

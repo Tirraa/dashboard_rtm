@@ -150,7 +150,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       <div className="flex items-center justify-between text-white rtl:flex-row-reverse">
         <Link href={ROUTES_ROOTS.WEBSITE}>
           <div className="flex">
-            <Image src="/assets/rtm-logo.svg" height={LOGO_SIZE_PX_VALUE} width={LOGO_SIZE_PX_VALUE} alt={`${brand} (${logo})`} />
+            <Image src="/assets/rtm-logo.svg" height={LOGO_SIZE_PX_VALUE} width={LOGO_SIZE_PX_VALUE} alt={`${brand} (${logo})`} priority={true} />
           </div>
         </Link>
         <div className="flex items-center gap-4">

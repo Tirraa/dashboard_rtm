@@ -1,24 +1,14 @@
 'use client';
 
+import ButtonProps from '@/config/buttons';
 import { getLinkTarget } from '@/lib/react';
-import { AppPath } from '@/types/Next';
 import { ClassName } from '@/types/React';
 import { Button } from '@material-tailwind/react';
 import { size, variant } from '@material-tailwind/react/types/components/button';
 import Link from 'next/link';
-import { FunctionComponent, ReactElement } from 'react';
+import { FunctionComponent } from 'react';
 
-interface InviteBotButtonProps {
-  label: string;
-  __IconComponent?: ReactElement;
-  href?: AppPath;
-  title?: string;
-  textCls?: string;
-  className?: string;
-  variant?: variant;
-  size?: size;
-  ripple?: boolean;
-}
+interface InviteBotButtonProps extends ButtonProps {}
 
 const DEFAULT_TEXT_CLS = 'text-xl';
 const DEFAULT_VARIANT: variant = 'gradient';
