@@ -2,10 +2,11 @@
 
 import { RESETTED_BUTTON_PROPS } from '@/components/config/styles/material-tailwind/ButtonsStyles';
 import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
+import UserImage from '@/components/shared/misc/UserImage';
 import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { useScopedI18n } from '@/i18n/client';
-import { ArrowRightOnRectangleIcon, KeyIcon } from '@heroicons/react/20/solid';
+import { KeyIcon, XMarkIcon } from '@heroicons/react/20/solid';
 import { Button } from '@material-tailwind/react';
 import { Session } from 'next-auth';
 import { signIn, signOut, useSession } from 'next-auth/react';
@@ -28,7 +29,8 @@ const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> =
   if (session) {
     return (
       <Button {...RESETTED_BUTTON_PROPS} onClick={() => signOut()}>
-        <ArrowRightOnRectangleIcon width={MOBILE_SIZE_PX_VALUE} height={MOBILE_SIZE_PX_VALUE} />
+        <UserImage user={session?.user} width={MOBILE_SIZE_PX_VALUE} height={MOBILE_SIZE_PX_VALUE} className="rounded-full absolute brightness-75" />
+        <XMarkIcon width={MOBILE_SIZE_PX_VALUE} height={MOBILE_SIZE_PX_VALUE} className="relative shadow-xl scale-125" />
         <span className="sr-only">{scopedT('logout')}</span>
       </Button>
     );
@@ -47,7 +49,15 @@ export const NavbarLoginButton: FunctionComponent<NavbarLoginButtonProps> = ({ i
 
   if (isMobile) return <NavbarLoginButtonMobile {...{ session }} />;
 
-  if (session) return <NavbarButton i18nTitle={`${i18ns.auth}.logout`} onClick={() => signOut()} />;
+  if (session)
+    return (
+      <NavbarButton
+        i18nTitle={`${i18ns.auth}.logout`}
+        onClick={() => signOut()}
+        __Icon={() => <UserImage user={session?.user} width={MOBILE_SIZE_PX_VALUE} height={MOBILE_SIZE_PX_VALUE} className="rounded-full" />}
+      />
+    );
+
   return <NavbarButton i18nTitle={`${i18ns.auth}.login`} onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} />;
 };
 
