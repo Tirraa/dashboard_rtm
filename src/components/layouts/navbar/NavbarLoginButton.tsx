@@ -54,7 +54,7 @@ export const NavbarLoginButton: FunctionComponent<NavbarLoginButtonProps> = ({ i
       <NavbarButton
         i18nTitle={`${i18ns.auth}.logout`}
         onClick={() => signOut()}
-        icon={() => <UserImage user={session?.user} width={MOBILE_SIZE_PX_VALUE} height={MOBILE_SIZE_PX_VALUE} className="rounded-full" />}
+        icon={<UserImage user={session?.user} width={MOBILE_SIZE_PX_VALUE} height={MOBILE_SIZE_PX_VALUE} className="rounded-full" />}
       />
     );
 

@@ -1,8 +1,8 @@
 'use client';
 
 import NAVBAR_STYLE from '@/components/config/styles/navbar/NavbarStyle';
-import NavbarElement from '@/components/hoc/navbar/NavbarElement';
 import NavbarButton from '@/components/layouts/navbar/NavbarButton';
+import NavbarElement from '@/components/layouts/navbar/NavbarElement';
 import DASHBOARD_SIDEBAR_CLASSES from '@/config/DashboardSidebar/classes';
 import { NAVBAR_EXTRAS_COMPONENTS_DESKTOP, NAVBAR_EXTRAS_COMPONENTS_MOBILE } from '@/config/SitewideNavbar/Extras/utils/ComponentsMapping';
 import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsConfig';

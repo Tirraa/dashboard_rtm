@@ -1,6 +1,12 @@
-import { BaseFields, DocumentsComputedFieldsKey, DocumentsTypesKey } from './contentlayerConfigTweakers';
+import { FieldDefType } from 'contentlayer/core';
+import { BaseFields, DOCUMENTS_COMPUTED_FIELDS, DocumentsComputedFieldsKey, DocumentsTypesKey } from './contentlayerConfigTweakers';
 
-type ComputedField<K extends keyof BaseFields> = Omit<BaseFields[K], 'required'> & { resolve: (...args: any[]) => unknown };
+type ComputedFieldsKey = keyof typeof DOCUMENTS_COMPUTED_FIELDS;
+export type ComputedFieldsAsFieldsRecord = {
+  [Key in ComputedFieldsKey]: Key extends keyof BaseFields ? BaseFields[Key] : never;
+};
+
+type ComputedField<K extends keyof BaseFields> = Pick<BaseFields[K], 'type'> & { resolve: (...args: any[]) => unknown };
 
 type ComputedFieldsMappedToPartialBaseFieldsSumType<K extends keyof BaseFields> = {
   [_ in K]: ComputedField<K>;
@@ -35,3 +41,8 @@ export type MakeDocumentsTypesSumType<T extends string> = T;
 export type DocumentsFields = Omit<BaseFields, DocumentsComputedFieldsKey>;
 export type DocumentsComputedFields = Pick<ComputedFields, DocumentsComputedFieldsKey>;
 export type AtomicDocumentConfig = DocumentsConfigType<DocumentsComputedFieldsKey>;
+
+type MakeRequiredField<T extends boolean> = { required: T };
+export type MakeTypeField<T extends FieldDefType> = { type: T };
+export type RequiredField = MakeRequiredField<true>;
+export type OptionalField = MakeRequiredField<false>;
