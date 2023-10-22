@@ -1,7 +1,7 @@
 'use client';
 
 import { i18ns } from '@/config/i18n';
-import { getClientSideI18n, useChangeLocale } from '@/i18n/client';
+import { getClientSideI18n } from '@/i18n/client';
 import Image from 'next/image';
 import { CSSProperties, FunctionComponent } from 'react';
 import InviteTheBotButton from '../shared/cta/InviteTheBotButton';
@@ -19,15 +19,12 @@ export const Homepage: FunctionComponent<HomepageProps> = () => {
   const globalT = getClientSideI18n();
   const brand = globalT(`${i18ns.vocab}.brand`);
   const logo = globalT(`${i18ns.ugly}.logo`);
-  const changeLocale = useChangeLocale();
 
   return (
     <div className="flex flex-col items-center align-center justify-center">
       <Image src="/assets/rtm-txt-logo.svg" {...{ style, width, height }} alt={`${brand} (${logo})`} className="flex" priority={true} />
       <h1 className="mt-2">{brand}</h1>
       <InviteTheBotButton />
-      <button onClick={() => changeLocale('en')}>EN</button>
-      <button onClick={() => changeLocale('fr')}>FR</button>
     </div>
   );
 };
