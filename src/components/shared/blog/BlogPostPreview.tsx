@@ -11,7 +11,7 @@ export const BlogPostPeview: FunctionComponent<BlogPostPeviewProps> = ({ post, l
   const descriptionSnippet = post.description ? getSlicedBlogPostDescription(post.description) : getSlicedBlogPostDescription(post.metadescription);
 
   return (
-    <article className="transition-colors transition-transform border duration-300 border-neutral-200 dark:border-slate-500 border-2 rounded overflow-hidden shadow-2xl hover:scale-105 hover:delay-0 hover:duration-100">
+    <article className="transition-colors transition-transform border duration-300 border-neutral-200 dark:border-slate-500 border-2 rounded overflow-hidden shadow-xl hover:scale-105 hover:delay-0 hover:duration-100">
       <Link href={getBlogPostPathWithoutI18nPart(post)} className="p-4 flex flex-col w-full h-full">
         <h3>{post.title}</h3>
         <BlogPostDate {...{ post, lng }} />

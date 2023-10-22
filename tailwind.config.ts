@@ -1,9 +1,10 @@
-import type { Config } from 'tailwindcss';
-
-import colors from 'tailwindcss/colors';
-import type { DefaultColors } from 'tailwindcss/types/generated/colors';
+'use client';
 
 import withMT from '@material-tailwind/react/utils/withMT';
+import { nextui } from '@nextui-org/react';
+import type { Config } from 'tailwindcss';
+import colors from 'tailwindcss/colors';
+import type { DefaultColors } from 'tailwindcss/types/generated/colors';
 
 type Colors = { [_ in keyof DefaultColors]: string | Record<string, string> };
 
@@ -15,7 +16,11 @@ const sanitizedDefaultColors = Object.keys(colors).reduce((acc, k) => {
 }, {} as Colors);
 
 const config = withMT({
-  content: ['./src/components/**/*.{js,ts,jsx,tsx,mdx}', './src/app/**/*.{js,ts,jsx,tsx,mdx}'],
+  content: [
+    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}'
+  ],
   theme: {
     extend: {
       colors: {
@@ -23,8 +28,8 @@ const config = withMT({
       }
     }
   },
-
-  plugins: []
+  darkMode: 'class',
+  plugins: [nextui()]
 } satisfies Config) as Config;
 
 export default config;

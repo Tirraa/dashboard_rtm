@@ -1,8 +1,11 @@
 'use client';
 
+import MAIN_NEXT_UI_CLS from '@/components/config/styles/next-ui/providerStyle';
 import useLockScreenScrollY from '@/components/hooks/useLockScreenScrollY';
 import useResetScroll from '@/components/hooks/useResetScroll';
 import DashboardSidebar from '@/components/layouts/dashboard/DashboardSidebar';
+import ELEMENTS_ID from '@/config/ids';
+import { cn } from '@/lib/tailwind';
 import { LayoutMinimalProps } from '@/types/Next';
 import { useSelectedLayoutSegment } from 'next/navigation';
 import { FunctionComponent, useRef } from 'react';
@@ -23,7 +26,7 @@ const DashboardLayoutClient: FunctionComponent<DashboardLayoutClientProps> = ({ 
   return (
     <div className="flex flex-1 overflow-y-auto flex-col lg:flex-row">
       <DashboardSidebar />
-      <main ref={mainElementRef} className="flex-1 py-7 px-4 lg:px-8 lg:py-4 overflow-y-auto">
+      <main ref={mainElementRef} className={cn('flex-1 py-7 px-4 lg:px-8 lg:py-4 overflow-y-auto', MAIN_NEXT_UI_CLS)} id={ELEMENTS_ID.ROOT}>
         {children}
       </main>
     </div>
