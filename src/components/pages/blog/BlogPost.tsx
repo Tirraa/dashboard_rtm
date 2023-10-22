@@ -11,7 +11,7 @@ interface BlogPostInnerProps extends BlogPostProps {}
 
 const BlogPostInner: FunctionComponent<BlogPostInnerProps> = ({ post, lng }) => {
   return (
-    <article className="mx-auto max-w-xl py-8">
+    <section className="mx-auto max-w-xl py-8">
       <div className="mb-8 text-center">
         <BlogPostDate {...{ post, lng }} />
         <h1>{post.title}</h1>
@@ -19,7 +19,7 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = ({ post, lng }) => 
       <div className="max-w-full [&>*]:break-words">
         <MDX code={post.body.code} />
       </div>
-    </article>
+    </section>
   );
 };
 
