@@ -19,7 +19,7 @@ const PagesHtmlElement: FunctionComponent<HtmlElementProps> = ({ children, param
   const locale = params[i18nTaxonomy.LANG_FLAG];
   return (
     <html lang={locale} className={DEFAULT_DARK_VARIANT}>
-      <body className="transition-colors delay-300 duration-1000 flex flex-col min-h-screen w-full p-0 m-0 bg-slate-50 text-black dark:bg-slate-700 dark:text-white">
+      <body className="transition-all delay-300 duration-1000 flex flex-col min-h-screen w-full p-0 m-0 bg-slate-50 text-black dark:bg-slate-700 dark:text-white">
         <I18nProvider {...{ locale }}>
           <NextTopLoader {...PROGRESSBAR_CONFIG} />
           <SessionProvider>

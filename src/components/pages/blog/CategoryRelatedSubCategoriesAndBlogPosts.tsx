@@ -15,6 +15,7 @@ import { compareDesc } from 'date-fns';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { FunctionComponent, ReactNode } from 'react';
+import slugify from 'slugify';
 
 interface CategoryRelatedSubCategoriesAndBlogPostsProps extends BlogCategoryPageProps {}
 
@@ -47,26 +48,39 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
       const curSubCategTitle = globalT(`${i18ns.blogCategories}.${category}.${subCategory}.title`);
       const href = buildPathFromParts(category, subCategory);
       const title = (
-        <h2 key={`${subCategory}-${curSubCategTitle}-h2`}>
-          <Link {...{ href }}>{curSubCategTitle}</Link>
-        </h2>
+        <Link
+          {...{ href }}
+          className="transition-all flex w-fit h-fit leading-none	decoration-primary-500 border-transparent	border-b-[2px] hover:border-b-[2px] delay-75 hover:delay-0 hover:border-inherit hover:indent-1 hover:pr-2 mb-4"
+        >
+          <h2 className="mb-1">{curSubCategTitle}</h2>
+        </Link>
       );
 
       let showMoreLink = null;
       if (posts.length > limit) {
         showMoreLink = (
-          <RtmButton
-            key={`${subCategory}-${curSubCategTitle}-show-more-btn`}
-            label={globalT(`${i18ns.vocab}.see-more`)}
-            {...{ href, ripple: false, size: 'sm', textCls: 'text-sm', className: 'mb-5 normal-case flex items-center gap-2' }}
-          />
+          <div className="flex w-full justify-center">
+            <RtmButton
+              label={globalT(`${i18ns.vocab}.see-more`)}
+              {...{ href, ripple: false, size: 'sm', textCls: 'text-sm', className: 'mb-5 normal-case flex items-center gap-2' }}
+            />
+          </div>
         );
         posts.pop();
       }
 
-      result.push(title);
-      result.push(posts);
-      result.push(showMoreLink);
+      const section = (
+        <section
+          key={`${subCategory}-${curSubCategTitle}-section`}
+          id={slugify(curSubCategTitle.toLowerCase())}
+          className="[&>article:not(:last-of-type)]:mb-6"
+        >
+          {title}
+          {posts}
+          {showMoreLink}
+        </section>
+      );
+      result.push(section);
     }
     return result;
   }

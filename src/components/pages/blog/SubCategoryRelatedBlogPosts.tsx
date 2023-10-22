@@ -10,6 +10,7 @@ import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogSubCategoryPageProps, PostBase } from '@/types/Blog';
 import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
+import slugify from 'slugify';
 
 export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageProps> = async ({ params }) => {
   const category = params[BlogTaxonomy.CATEGORY];
@@ -22,17 +23,17 @@ export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageP
   if (subCategoryShouldTriggerNotFound(postsCollection, { category, subCategory })) notFound();
   if (postsCollection.length === 0) return <BlogPostsNotFound {...{ lng }} />;
   // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
-  const title = scopedT(`${category}.${subCategory}.title`);
+  const [title, curSubCategTitle] = [scopedT(`${category}.${subCategory}.title`), scopedT(`${category}.${subCategory}.title`)];
 
   const paginatedElements = postsCollection.map((post) => (
     <BlogPostPeview key={`${post._raw.flattenedPath}-paginated-blog-post`} {...{ post, lng }} />
   ));
 
   return (
-    <div className="mx-auto max-w-xl py-8">
-      <h1 className="text-center">{title}</h1>
+    <section className="mx-auto max-w-xl py-8 [&>article:not(:last-of-type)]:mb-6" id={slugify(curSubCategTitle.toLowerCase())}>
+      <h1 className="text-left mb-2">{title}</h1>
       <PaginatedElements {...{ paginatedElements, elementsPerPage: BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT }} />
-    </div>
+    </section>
   );
 };
 

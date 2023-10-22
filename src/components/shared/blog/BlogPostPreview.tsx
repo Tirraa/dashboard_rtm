@@ -11,15 +11,13 @@ export const BlogPostPeview: FunctionComponent<BlogPostPeviewProps> = ({ post, l
   const descriptionSnippet = post.description ? getSlicedBlogPostDescription(post.description) : getSlicedBlogPostDescription(post.metadescription);
 
   return (
-    <div className="mb-8">
-      <h2 className="mb-1">
-        <Link href={getBlogPostPathWithoutI18nPart(post)} className="text-blue-700 hover:text-blue-900 dark:text-blue-400">
-          {post.title}
-        </Link>
-      </h2>
-      <BlogPostDate {...{ post, lng }} />
-      <div className="text-sm [&>*]:mb-3 [&>*:last-child]:mb-0 break-words">{descriptionSnippet}</div>
-    </div>
+    <article className="transition-colors transition-transform border duration-300 border-neutral-200 dark:border-slate-500 border-2 rounded overflow-hidden shadow-2xl hover:scale-105 hover:delay-0 hover:duration-100">
+      <Link href={getBlogPostPathWithoutI18nPart(post)} className="p-4 flex flex-col w-full h-full">
+        <h3>{post.title}</h3>
+        <BlogPostDate {...{ post, lng }} />
+        <div className="text-sm [&>*]:mb-3 [&>*:last-child]:mb-0 break-words">{descriptionSnippet}</div>
+      </Link>
+    </article>
   );
 };
 

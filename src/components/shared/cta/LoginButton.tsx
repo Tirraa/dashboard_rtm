@@ -2,6 +2,7 @@
 
 import ButtonProps from '@/config/buttons';
 import ROUTES_ROOTS from '@/config/routes';
+import { cn } from '@/lib/tailwind';
 import { ClassName } from '@/types/React';
 import { Button } from '@material-tailwind/react';
 import { size, variant } from '@material-tailwind/react/types/components/button';
@@ -28,7 +29,7 @@ export const LoginButton: FunctionComponent<LoginButtonProps> = ({
   ripple: rippleValue
 }) => {
   const textCls = textClsValue ?? DEFAULT_TEXT_CLS;
-  const className: ClassName = classNameValue ? { className: classNameValue + ' ' + textCls } : defClassList(textCls);
+  const className: ClassName = classNameValue ? { className: cn(classNameValue, textCls) } : defClassList(textCls);
   const variant = variantValue ?? DEFAULT_VARIANT;
   const size = sizeValue ?? DEFAULT_SIZE;
   const title = titleValue ?? label;

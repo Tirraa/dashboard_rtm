@@ -2,6 +2,7 @@
 
 import SidebarCollapseButtonIconStyle, { SIZE_PX_VALUE } from '@/components/config/styles/sidebar/SidebarCollapseButtonIconStyle';
 import SidebarCollapseButtonWrapperStyle from '@/components/config/styles/sidebar/SidebarCollapseButtonWrapperStyle';
+import { cn } from '@/lib/tailwind';
 import { ArrowSmallDownIcon, ArrowSmallRightIcon } from '@heroicons/react/20/solid';
 import { FunctionComponent } from 'react';
 
@@ -23,11 +24,11 @@ export const DashboardSidebarCollapseButton: FunctionComponent<DashboardSidebarC
 
   return (
     <div onClick={() => setIsCollapsed(!isCollapsed)} className={sidebarCollapseBtnWrapperClassList}>
-      <button className={sidebarCollapseBtnClassList + ' ' + 'hidden lg:inline'}>
+      <button className={cn(sidebarCollapseBtnClassList, 'hidden lg:inline')}>
         <ArrowSmallRightIcon width={SIZE_PX_VALUE} height={SIZE_PX_VALUE} className={sidebarCollapseBtnIconClassList} />
       </button>
 
-      <button className={sidebarCollapseBtnClassList + ' ' + 'lg:hidden'}>
+      <button className={cn(sidebarCollapseBtnClassList, 'lg:hidden')}>
         <ArrowSmallDownIcon width={SIZE_PX_VALUE} height={SIZE_PX_VALUE} className={sidebarCollapseBtnIconClassList} />
       </button>
     </div>

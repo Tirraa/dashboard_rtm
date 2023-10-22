@@ -2,6 +2,7 @@
 
 import ButtonProps from '@/config/buttons';
 import { getLinkTarget } from '@/lib/react';
+import { cn } from '@/lib/tailwind';
 import { ClassName } from '@/types/React';
 import { Button } from '@material-tailwind/react';
 import { size, variant } from '@material-tailwind/react/types/components/button';
@@ -30,7 +31,7 @@ export const RtmButton: FunctionComponent<InviteBotButtonProps> = ({
   ripple: rippleValue
 }) => {
   const textCls = textClsValue ?? DEFAULT_TEXT_CLS;
-  const className: ClassName = classNameValue ? { className: classNameValue + ' ' + textCls + ' ' + href ? 'mt-4' : '' } : defClassList(textCls);
+  const className: ClassName = classNameValue ? { className: cn(classNameValue, textCls, { 'mt-4': !href }) } : defClassList(textCls);
   const variant = variantValue ?? DEFAULT_VARIANT;
   const size = sizeValue ?? DEFAULT_SIZE;
   const title = titleValue ?? label;

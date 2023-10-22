@@ -4,6 +4,7 @@ import NavbarButtonStyle from '@/components/config/styles/navbar/NavbarButtonSty
 import { getClientSideI18n } from '@/i18n/client';
 import { getLinkTarget } from '@/lib/react';
 import { hrefMatchesPathname } from '@/lib/str';
+import { cn } from '@/lib/tailwind';
 import { AtomicNavDataEntity } from '@/types/NavData';
 import { AppPath } from '@/types/Next';
 import { Button } from '@material-tailwind/react';
@@ -28,7 +29,7 @@ const ButtonAsIs: FunctionComponent<Pick<NavbarButtonProps, 'i18nTitle' | 'onCli
 
   if (onClickFun) {
     return icon ? (
-      <Button className={isNotActiveClassList + ' ' + 'items-center gap-2'} onClick={() => onClickFun()}>
+      <Button className={cn(isNotActiveClassList, 'items-center gap-2')} onClick={() => onClickFun()}>
         {icon}
         {globalT(i18nTitle)}
       </Button>
@@ -57,7 +58,7 @@ const ButtonAsLink: FunctionComponent<Pick<AtomicNavDataEntity, 'i18nTitle' | 'p
 
   if (icon) {
     return (
-      <Link {...{ href, ...target }} className={className + ' ' + 'flex items-center'}>
+      <Link {...{ href, ...target }} className={cn(className, 'flex items-center')}>
         {icon}
         {globalT(i18nTitle)}
       </Link>
