@@ -50,7 +50,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
       const title = (
         <Link
           {...{ href }}
-          className="transition-all flex w-fit h-fit leading-none	decoration-primary-500 border-transparent	border-b-[2px] hover:border-b-[2px] delay-75 hover:delay-0 hover:border-inherit hover:indent-1 hover:pr-2 mb-4"
+          className="transition-all flex w-fit h-fit leading-none	decoration-primary-500 border-transparent	border-b-[2px] hover:border-b-[2px] hover:border-inherit hover:indent-1 hover:pr-2 mb-4"
         >
           <h2 className="mb-1">{curSubCategTitle}</h2>
         </Link>
