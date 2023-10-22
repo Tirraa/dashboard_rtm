@@ -1,4 +1,5 @@
 import BlogPostDate from '@/components/shared/blog/BlogPostDate';
+import MDX from '@/components/shared/blog/MdxComponent';
 import { getPostUnstrict, isValidCategoryAndSubCategoryPair } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
@@ -15,7 +16,9 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = ({ post, lng }) => 
         <BlogPostDate {...{ post, lng }} />
         <h1>{post.title}</h1>
       </div>
-      <div className="max-w-full [&>*]:break-words" dangerouslySetInnerHTML={{ __html: post.body.html }} />
+      <div className="max-w-full [&>*]:break-words">
+        <MDX code={post.body.code} />
+      </div>
     </article>
   );
 };

@@ -1,7 +1,7 @@
 import { getBlogSubCategoriesByCategory } from '@/cache/blog';
 import BlogPostPeview from '@/components/shared/blog/BlogPostPreview';
 import BlogPostsNotFound from '@/components/shared/blog/BlogPostsNotFound';
-import RtmButton from '@/components/shared/cta/RtmButton';
+import RtmButton from '@/components/shared/misc/RtmButton';
 import BlogConfig from '@/config/blog';
 import { i18ns } from '@/config/i18n';
 import { getScopedI18n, getServerSideI18n } from '@/i18n/server';

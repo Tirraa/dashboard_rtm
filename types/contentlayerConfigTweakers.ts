@@ -1,3 +1,4 @@
+import { DocumentContentType } from 'contentlayer/source-files';
 import {
   ComputedFieldsAsFieldsRecord,
   DocumentsComputedFields,
@@ -18,6 +19,9 @@ export type BaseFields = {
   url: MakeTypeField<'string'> & RequiredField;
 };
 
+export const DOCUMENTS_CONTENT_TYPE: DocumentContentType = 'mdx';
+export const DOCUMENTS_CONTENT_EXTENSION = 'mdx';
+
 export const DOCUMENTS_FIELDS = {
   title: { type: 'string', required: true },
   metadescription: { type: 'string', required: true },
@@ -36,6 +40,7 @@ const DOCUMENTS_COMPUTED_FIELDS_AS_FIELDS = {
 export const POST_SCHEMA_CONFIG: DocumentsConfigType = {
   name: 'PostSchema',
   filePathPattern: '',
+  contentType: DOCUMENTS_CONTENT_TYPE,
   fields: {
     ...DOCUMENTS_FIELDS,
     ...DOCUMENTS_COMPUTED_FIELDS_AS_FIELDS

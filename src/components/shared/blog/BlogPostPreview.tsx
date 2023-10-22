@@ -18,7 +18,7 @@ export const BlogPostPeview: FunctionComponent<BlogPostPeviewProps> = ({ post, l
         </Link>
       </h2>
       <BlogPostDate {...{ post, lng }} />
-      <div className="text-sm [&>*]:mb-3 [&>*:last-child]:mb-0 break-words" dangerouslySetInnerHTML={{ __html: descriptionSnippet }} />
+      <div className="text-sm [&>*]:mb-3 [&>*:last-child]:mb-0 break-words">{descriptionSnippet}</div>
     </div>
   );
 };

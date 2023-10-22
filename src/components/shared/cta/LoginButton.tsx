@@ -15,7 +15,7 @@ const DEFAULT_VARIANT: variant = 'gradient';
 const DEFAULT_SIZE: size = 'lg';
 
 const defClassList = (txtCls: string): ClassName => ({
-  className: `mt-4 ${txtCls} normal-case flex items-center gap-2`
+  className: `${txtCls} normal-case flex items-center gap-2`
 });
 
 export const LoginButton: FunctionComponent<LoginButtonProps> = ({

@@ -1,4 +1,5 @@
 import { FieldDefType } from 'contentlayer/core';
+import { DocumentContentType } from 'contentlayer/source-files';
 import { BaseFields, DOCUMENTS_COMPUTED_FIELDS, DocumentsComputedFieldsKey, DocumentsTypesKey } from './contentlayerConfigTweakers';
 
 type ComputedFieldsKey = keyof typeof DOCUMENTS_COMPUTED_FIELDS;
@@ -19,6 +20,7 @@ export type TypeName = DocumentsTypesKey | PostSchemaKey;
 type DocumentsConfigTypeContentLayerMetadatas<T extends TypeName = TypeName> = {
   name: T;
   filePathPattern: FilePathPattern;
+  contentType: DocumentContentType;
 };
 
 export type DocumentsTypesMetadatas = Record<DocumentsTypesKey, DocumentsConfigTypeContentLayerMetadatas<DocumentsTypesKey>>;

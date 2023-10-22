@@ -1,3 +1,5 @@
+import { ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 import config from 'tailwind.config';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
@@ -12,3 +14,5 @@ export function getBreakpoint(key: string): number | undefined {
   if (isNaN(computedValue)) return undefined;
   return computedValue;
 }
+
+export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));

@@ -1,9 +1,0 @@
----
-title: Note relative au Dashboard
-metadescription: Meta description de note de Dashboard
-description: Description de note de Dashboard pour les snippets de posts
-date: 2021-12-24 21:00
----
-
-Test de note relative au Dashboard  
-Salut tout le monde !
