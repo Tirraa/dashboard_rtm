@@ -29,7 +29,18 @@ const config = withMT({
     }
   },
   darkMode: 'class',
-  plugins: [nextui()]
+  plugins: [
+    nextui({
+      themes: {
+        dark: {
+          extend: 'dark',
+          colors: {
+            background: '#334155'
+          }
+        }
+      }
+    })
+  ]
 } satisfies Config) as Config;
 
 export default config;

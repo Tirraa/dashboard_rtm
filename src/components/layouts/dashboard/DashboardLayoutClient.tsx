@@ -4,7 +4,7 @@ import MAIN_NEXT_UI_CLS from '@/components/config/styles/next-ui/providerStyle';
 import useLockScreenScrollY from '@/components/hooks/useLockScreenScrollY';
 import useResetScroll from '@/components/hooks/useResetScroll';
 import DashboardSidebar from '@/components/layouts/dashboard/DashboardSidebar';
-import ELEMENTS_ID from '@/config/ids';
+import ELEMENTS_ID from '@/config/elementsId';
 import { cn } from '@/lib/tailwind';
 import { LayoutMinimalProps } from '@/types/Next';
 import { useSelectedLayoutSegment } from 'next/navigation';

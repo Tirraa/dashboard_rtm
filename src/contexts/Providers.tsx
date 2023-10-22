@@ -8,11 +8,11 @@ import UIProvider from './UIProvider';
 interface ProvidersProps extends I18nProviderProps {}
 
 export const Providers: FunctionComponent<ProvidersProps> = ({ children, locale }) => (
-  <SessionProvider>
-    <UIProvider>
-      <I18nProvider {...{ locale }}>{children}</I18nProvider>
-    </UIProvider>
-  </SessionProvider>
+  <UIProvider>
+    <I18nProvider {...{ locale }}>
+      <SessionProvider>{children}</SessionProvider>
+    </I18nProvider>
+  </UIProvider>
 );
 
 export default Providers;

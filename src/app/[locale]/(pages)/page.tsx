@@ -1,7 +1,7 @@
 import MAIN_NEXT_UI_CLS from '@/components/config/styles/next-ui/providerStyle';
 import Homepage from '@/components/pages/Homepage';
+import ELEMENTS_ID from '@/config/elementsId';
 import { i18ns } from '@/config/i18n';
-import ELEMENTS_ID from '@/config/ids';
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
 import { getPageTitle } from '@/lib/str';
 import { cn } from '@/lib/tailwind';

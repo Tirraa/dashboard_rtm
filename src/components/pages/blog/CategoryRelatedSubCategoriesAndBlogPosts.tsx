@@ -42,7 +42,12 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
 
   function contentGenerator(): ReactNode[] {
     const result: ReactNode[] = [];
+    let isLast = false;
+    const max = Object.entries(postsCollectionsSnippets).length;
+    let counter = 0;
     for (const [subCategory, posts] of Object.entries(postsCollectionsSnippets)) {
+      counter += 1;
+      isLast = counter === max;
       if (posts.length === 0) continue;
       // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
       const curSubCategTitle = globalT(`${i18ns.blogCategories}.${category}.${subCategory}.title`);
@@ -52,7 +57,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
           {...{ href }}
           className="transition-all flex w-fit h-fit leading-none	decoration-primary-500 border-transparent	border-b-[2px] hover:border-b-[2px] hover:border-inherit hover:indent-1 hover:pr-2 mb-4"
         >
-          <h2 className="mb-1">{curSubCategTitle}</h2>
+          <h2 className="mt-2 mb-1">{curSubCategTitle}</h2>
         </Link>
       );
 
@@ -69,6 +74,8 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
         posts.pop();
       }
 
+      const sep = <hr key={`${subCategory}-${curSubCategTitle}-sep`} className="my-5 m-auto w-36 opacity-50 color-inherit" />;
+
       const section = (
         <section
           key={`${subCategory}-${curSubCategTitle}-section`}
@@ -80,7 +87,9 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
           {showMoreLink}
         </section>
       );
+
       result.push(section);
+      if (!isLast && !showMoreLink) result.push(sep);
     }
     return result;
   }

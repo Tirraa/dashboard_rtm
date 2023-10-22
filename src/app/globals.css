@@ -6,6 +6,10 @@
   height: 100svh;
 }
 
+.bg-inherit {
+  background-color: inherit;
+}
+
 main {
   padding: 1rem;
 }

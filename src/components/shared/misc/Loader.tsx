@@ -1,7 +1,8 @@
 'use client';
 
 import LOADER_CONFIG from '@/components/config/styles/loader/colors';
-import useLocalStorageTheme from '@/components/hooks/useThemeFromLocalStorage';
+import { ThemeVariant } from '@/config/themes';
+import { useTheme } from 'next-themes';
 import { CSSProperties, FunctionComponent } from 'react';
 import { BeatLoader } from 'react-spinners';
 
@@ -12,8 +13,8 @@ interface LoaderProps {
 const { COLORS, DEFAULT_COLOR } = LOADER_CONFIG;
 
 const Loader: FunctionComponent<LoaderProps> = ({ override: cssOverride } = {}) => {
-  const currentTheme = useLocalStorageTheme();
-  const color = currentTheme ? COLORS[currentTheme] : DEFAULT_COLOR;
+  const { theme } = useTheme();
+  const color = theme ? COLORS[theme as ThemeVariant] : DEFAULT_COLOR;
 
   return (
     <div className="cursor-wait select-none z-50 fixed inset-0 flex items-center justify-center w-full h-screen">
