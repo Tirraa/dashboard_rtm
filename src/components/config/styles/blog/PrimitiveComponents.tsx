@@ -1,3 +1,4 @@
+import CopyToClipboard from '@/components/shared/blog/CopyToClipboard';
 import { cn } from '@/lib/tailwind';
 import { HTMLAttributes, ImgHTMLAttributes } from 'react';
 
@@ -35,7 +36,11 @@ export const PrimitiveComponents: Record<string, (...args: any[]) => JSX.Element
   td: ({ className, ...props }) => (
     <td className={cn('border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right', className)} {...props} />
   ),
-  pre: ({ className, ...props }) => <pre className={cn('mb-4 mt-6 overflow-x-auto rounded-lg py-4 px-4', className)} {...props} />,
+  pre: ({ className, ...props }) => (
+    <CopyToClipboard>
+      <pre className={cn('mb-4 mt-6 overflow-x-auto rounded-lg py-4 px-4', className)} {...props} />
+    </CopyToClipboard>
+  ),
   code: ({ className, ...props }) => <code className={cn('bg-inherit', className)} {...props} />
 };
 

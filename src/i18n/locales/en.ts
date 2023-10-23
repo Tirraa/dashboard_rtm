@@ -78,7 +78,8 @@ export default {
     'no-blog-post': 'Nobody here but us chickens!',
     '404': '404 - Page not found!',
     'see-more': 'See more!',
-    loading: 'Loading...'
+    loading: 'Loading...',
+    'copy-to-clipboard': 'Copy to clipboard'
   },
 
   'manual-SEO': {

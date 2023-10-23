@@ -21,7 +21,7 @@ export const Homepage: FunctionComponent<HomepageProps> = () => {
   const logo = globalT(`${i18ns.ugly}.logo`);
 
   return (
-    <div className="flex flex-col items-center align-center justify-center">
+    <div className="flex flex-col text-center items-center align-center justify-center">
       <Image src="/assets/rtm-txt-logo.svg" {...{ style, width, height }} alt={`${brand} (${logo})`} className="flex" priority={true} />
       <h1 className="mt-2">{brand}</h1>
       <InviteTheBotButton />

@@ -147,8 +147,8 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       fullWidth={true}
       className="aiw bg-black sticky top-0 z-30 h-max max-w-full overflow-hidden rounded-none py-2 px-4 lg:px-8 lg:py-4"
     >
-      <div className="flex items-center justify-between text-white rtl:flex-row-reverse">
-        <Link href={ROUTES_ROOTS.WEBSITE}>
+      <div className="flex items-center justify-between text-white lg:px-4 rtl:flex-row-reverse">
+        <Link href={ROUTES_ROOTS.WEBSITE} className="transition-[filter] hover:brightness-75">
           <div className="flex">
             <Image src="/assets/rtm-logo.svg" height={LOGO_SIZE_PX_VALUE} width={LOGO_SIZE_PX_VALUE} alt={`${brand} (${logo})`} priority={true} />
           </div>

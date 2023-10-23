@@ -78,7 +78,8 @@ export default {
     'no-blog-post': 'Rien à afficher ici !',
     '404': '404 - Page introuvable !',
     'see-more': 'Voir plus !',
-    loading: 'Chargement en cours...'
+    loading: 'Chargement en cours...',
+    'copy-to-clipboard': 'Copier dans le presse-papiers'
   },
 
   'manual-SEO': {

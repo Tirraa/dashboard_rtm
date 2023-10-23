@@ -82,7 +82,8 @@ export default {
     'no-blog-post': _,
     '404': _,
     'see-more': _,
-    loading: _
+    loading: _,
+    'copy-to-clipboard': _
   },
 
   'manual-SEO': {
