@@ -8,7 +8,7 @@ import PRODUCT_CLASSES from '@/config/productClasses';
 import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
 import { computeHTMLElementHeight, computeHTMLElementWidth, getDirection } from '@/lib/html';
 import { getRefCurrentPtr } from '@/lib/react';
-import { getBreakpoint } from '@/lib/tailwind';
+import { cn, getBreakpoint } from '@/lib/tailwind';
 import { useMediaQuery } from '@react-hook/media-query';
 import Link from 'next/link';
 import { FunctionComponent, ReactElement, ReactNode, useEffect, useRef, useState } from 'react';
@@ -97,10 +97,14 @@ export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => 
     <>
       <aside
         ref={sidebarRef}
-        className={`${PRODUCT_PREFIX} ${SIDEBAR_CLS} bg-black justify-center grid border-t-[1px] border-slate-800 rtl:flex-row-reverse z-20 w-full lg:w-fit`}
+        className={cn(
+          PRODUCT_PREFIX,
+          SIDEBAR_CLS,
+          'bg-black justify-center border-slate-800 rtl:flex-row-reverse z-20 w-full border-t-[1px] lg:w-fit'
+        )}
       >
-        <nav className="py-4 lg:px-4 lg:overflow-y-auto">
-          <ul className={`${PRODUCT_PREFIX} ${SIDEBAR_BODY_CLS} flex flex-wrap justify-center gap-2 lg:block rtl:flex-row-reverse`}>
+        <nav className="py-4 lg:px-[22px] lg:overflow-y-auto">
+          <ul className={cn(PRODUCT_PREFIX, SIDEBAR_BODY_CLS, 'flex flex-wrap justify-center gap-2 lg:block rtl:flex-row-reverse')}>
             {sidebarBtnsGenerator()}
           </ul>
         </nav>

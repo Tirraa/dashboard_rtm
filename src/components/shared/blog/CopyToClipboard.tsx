@@ -2,11 +2,11 @@
 
 import { i18ns } from '@/config/i18n';
 import { getClientSideI18n } from '@/i18n/client';
-import { LayoutMinimalProps } from '@/types/Next';
-import { cn } from '@nextui-org/react';
+import { cn } from '@/lib/tailwind';
+import { LayoutMinimalProps as WithChildren } from '@/types/Next';
 import { FunctionComponent, useRef, useState } from 'react';
 
-interface CopyToClipboardProps extends LayoutMinimalProps {}
+interface CopyToClipboardProps extends WithChildren {}
 
 export const CopyToClipboard: FunctionComponent<CopyToClipboardProps> = ({ children }) => {
   const textInput = useRef<HTMLDivElement>(null);

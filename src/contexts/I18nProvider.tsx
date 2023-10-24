@@ -2,10 +2,10 @@
 
 import Loader from '@/components/shared/misc/Loader';
 import { I18nProviderClient } from '@/i18n/client';
-import { LayoutMinimalProps } from '@/types/Next';
+import { LayoutMinimalProps as WithChildren } from '@/types/Next';
 import { FunctionComponent } from 'react';
 
-export interface I18nProviderProps extends LayoutMinimalProps {
+export interface I18nProviderProps extends WithChildren {
   locale: string;
 }
 

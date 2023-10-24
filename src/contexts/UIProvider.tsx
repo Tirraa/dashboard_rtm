@@ -1,10 +1,10 @@
 import { DEFAULT_DARK_VARIANT } from '@/config/themes';
-import { LayoutMinimalProps } from '@/types/Next';
+import { LayoutMinimalProps as WithChildren } from '@/types/Next';
 import { NextUIProvider } from '@nextui-org/react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { FunctionComponent } from 'react';
 
-interface UIProviderProps extends LayoutMinimalProps {}
+interface UIProviderProps extends WithChildren {}
 
 const UIProvider: FunctionComponent<UIProviderProps> = ({ children }) => (
   <NextUIProvider className="flex flex-col min-h-screen">

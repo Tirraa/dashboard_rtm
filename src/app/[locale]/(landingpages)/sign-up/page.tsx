@@ -1,4 +1,4 @@
-import LoginButton from '@/components/shared/cta/LoginButton';
+import SignupButton from '@/components/shared/cta/SignupButton';
 import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
@@ -27,6 +27,5 @@ export default async function Page({ params }: i18nPageProps) {
   const session = await getServerSession();
   if (session) redirect(ROUTES_ROOTS.DASHBOARD);
 
-  const globalT = await getServerSideI18n();
-  return <LoginButton label={globalT(`${i18ns.auth}.signup`)} className="w-fit" />;
+  return <SignupButton />;
 }

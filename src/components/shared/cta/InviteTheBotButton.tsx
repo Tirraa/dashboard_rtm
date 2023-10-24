@@ -1,6 +1,6 @@
 'use client';
 
-import RtmButton from '@/components/shared/misc/RtmButton';
+import ButtonHoC from '@/components/shared/hoc/ButtonHoC';
 import DISCORD_CONFIG from '@/config/discord';
 import { i18ns } from '@/config/i18n';
 import { getClientSideI18n } from '@/i18n/client';
@@ -13,11 +13,9 @@ const InviteTheBotButton: FunctionComponent<InviteTheBotButtonProps> = () => {
   const globalT = getClientSideI18n();
 
   return (
-    <RtmButton
-      label={globalT(`${i18ns.vocab}.invite-the-bot`)}
-      __IconComponent={<CogIcon className="h-7 w-7" />}
-      href={DISCORD_CONFIG.BOT_INVITE_LINK}
-    />
+    <ButtonHoC href={DISCORD_CONFIG.BOT_INVITE_LINK} startContent={<CogIcon className="h-7 w-7" />} size="lg" disableRipple>
+      {globalT(`${i18ns.vocab}.invite-the-bot`)}
+    </ButtonHoC>
   );
 };
 

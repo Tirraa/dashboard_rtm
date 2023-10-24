@@ -7,7 +7,7 @@ import { hrefMatchesPathname } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
 import { AtomicNavDataEntity } from '@/types/NavData';
 import { AppPath } from '@/types/Next';
-import { Button } from '@material-tailwind/react';
+import { Button } from '@nextui-org/button';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FunctionComponent, ReactNode } from 'react';
@@ -29,24 +29,24 @@ const ButtonAsIs: FunctionComponent<Pick<NavbarButtonProps, 'i18nTitle' | 'onCli
 
   if (onClickFun) {
     return icon ? (
-      <Button className={cn(isNotActiveClassList, 'items-center gap-2')} onClick={() => onClickFun()}>
+      <Button className={cn(isNotActiveClassList, 'bg-slate-900 items-center gap-2')} onClick={() => onClickFun()}>
         {icon}
         {globalT(i18nTitle)}
       </Button>
     ) : (
-      <Button className={isNotActiveClassList} onClick={() => onClickFun()}>
+      <Button className={cn(isNotActiveClassList, 'bg-slate-900')} onClick={() => onClickFun()}>
         {globalT(i18nTitle)}
       </Button>
     );
   }
 
   return icon ? (
-    <Button className={isNotActiveClassList}>
+    <Button className={cn(isNotActiveClassList, 'bg-slate-900')}>
       {icon}
       {globalT(i18nTitle)}
     </Button>
   ) : (
-    <Button className={isNotActiveClassList}>{globalT(i18nTitle)}</Button>
+    <Button className={cn(isNotActiveClassList, 'bg-slate-900')}>{globalT(i18nTitle)}</Button>
   );
 };
 

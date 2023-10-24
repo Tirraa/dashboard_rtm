@@ -1,16 +1,18 @@
 import { getBlogSubCategoriesByCategory } from '@/cache/blog';
+import BUTTON_CONFIG from '@/components/config/styles/buttons';
 import BlogPostPeview from '@/components/shared/blog/BlogPostPreview';
 import BlogPostsNotFound from '@/components/shared/blog/BlogPostsNotFound';
-import RtmButton from '@/components/shared/misc/RtmButton';
 import BlogConfig from '@/config/blog';
 import { i18ns } from '@/config/i18n';
 import { getScopedI18n, getServerSideI18n } from '@/i18n/server';
 import { getBlogPostLanguageFlag, getBlogPostSubCategory } from '@/lib/blog';
 import { buildPathFromParts } from '@/lib/str';
+import { cn } from '@/lib/tailwind';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogCategory, BlogCategoryPageProps, BlogSubCategoryFromUnknownCategory, PostBase } from '@/types/Blog';
 import { LanguageFlag } from '@/types/i18n';
+import { Button } from '@nextui-org/button';
 import { compareDesc } from 'date-fns';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -65,10 +67,9 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
       if (posts.length > limit) {
         showMoreLink = (
           <div className="flex w-full justify-center">
-            <RtmButton
-              label={globalT(`${i18ns.vocab}.see-more`)}
-              {...{ href, ripple: false, size: 'sm', textCls: 'text-sm', className: 'mb-5 normal-case flex items-center gap-2' }}
-            />
+            <Button as={Link} size="md" className={cn(BUTTON_CONFIG.CLASSNAME, 'mt-4')} {...{ href }} disableRipple>
+              {globalT(`${i18ns.vocab}.see-more`)}
+            </Button>
           </div>
         );
         posts.pop();

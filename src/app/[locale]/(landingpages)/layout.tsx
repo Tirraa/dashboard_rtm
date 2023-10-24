@@ -1,4 +1,3 @@
-import '@/app/globals.css';
 import LandingPagesHtmlElement from '@/components/layouts/base/LandingPagesHtmlElement';
 import { LayoutBaseProps } from '@/types/Next';
 

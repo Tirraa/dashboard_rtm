@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/lib/tailwind';
 import { ClassName } from '@/types/React';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { FunctionComponent, ReactNode, useState } from 'react';
@@ -48,9 +49,9 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({ p
         pageCount={pagesAmount}
         renderOnZeroPageCount={null}
         containerClassName="flex items-center justify-center mt-8 mb-4 select-none"
-        previousLinkClassName={`flex items-center justify-center rounded-md ${currentPage <= 1 ? 'opacity-50 cursor-default' : ''}`}
-        nextLinkClassName={`flex items-center justify-center rounded-md ${currentPage >= pagesAmount ? 'opacity-50 cursor-default' : ''}`}
-        pageLinkClassName={'flex items-center justify-center border border-solid border-blue-500 hover:bg-blue-500 p-2 rounded-md'}
+        previousLinkClassName={cn('flex items-center justify-center rounded-md', { 'opacity-50 cursor-default': currentPage <= 1 })}
+        nextLinkClassName={cn('flex items-center justify-center rounded-md', { 'opacity-50 cursor-default': currentPage >= pagesAmount })}
+        pageLinkClassName="flex items-center justify-center border border-solid border-blue-500 hover:bg-blue-500 p-2 rounded-md"
         activeClassName="bg-gray-600 rounded-md text-white"
       />
     </>

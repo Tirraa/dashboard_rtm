@@ -1,13 +1,12 @@
 'use client';
 
-import { RESETTED_BUTTON_PROPS } from '@/components/config/styles/material-tailwind/ButtonsStyles';
 import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
+import ButtonHoC from '@/components/shared/hoc/ButtonHoC';
 import UserImage from '@/components/shared/misc/UserImage';
 import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { useScopedI18n } from '@/i18n/client';
 import { KeyIcon, SignalSlashIcon } from '@heroicons/react/20/solid';
-import { Button } from '@material-tailwind/react';
 import { Session } from 'next-auth';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { FunctionComponent } from 'react';
@@ -28,19 +27,19 @@ const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> =
 
   if (session) {
     return (
-      <Button {...RESETTED_BUTTON_PROPS} onClick={() => signOut()}>
+      <ButtonHoC className="p-0 min-w-0 bg-transparent" onClick={() => signOut()}>
         <UserImage user={session?.user} width={MOBILE_SIZE_PX_VALUE} height={MOBILE_SIZE_PX_VALUE} className="rounded-full absolute brightness-75" />
         <SignalSlashIcon width={MOBILE_SIZE_PX_VALUE} height={MOBILE_SIZE_PX_VALUE} className="relative shadow-xl" />
         <span className="sr-only">{scopedT('logout')}</span>
-      </Button>
+      </ButtonHoC>
     );
   }
 
   return (
-    <Button {...RESETTED_BUTTON_PROPS} onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })}>
+    <ButtonHoC className="p-0 min-w-0 bg-transparent" onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })}>
       <KeyIcon width={MOBILE_SIZE_PX_VALUE} height={MOBILE_SIZE_PX_VALUE} />
       <span className="sr-only">{scopedT('login')}</span>
-    </Button>
+    </ButtonHoC>
   );
 };
 

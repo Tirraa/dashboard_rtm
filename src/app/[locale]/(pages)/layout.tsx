@@ -1,4 +1,3 @@
-import '@/app/globals.css';
 import PagesHtmlElement from '@/components/layouts/base/PagesHtmlElement';
 import { LayoutBaseProps } from '@/types/Next';
 
