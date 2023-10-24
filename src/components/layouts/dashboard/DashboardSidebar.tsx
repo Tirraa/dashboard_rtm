@@ -5,8 +5,8 @@ import DASHBOARD_ROUTES, { DASHBOARD_ROUTES_TITLES } from '@/config/DashboardSid
 import DASHBOARD_ROUTES_SIDEBAR_COMPONENTS from '@/config/DashboardSidebar/utils/IconsMapping';
 import { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMapping';
 import PRODUCT_CLASSES from '@/config/productClasses';
-import { getClientSideI18n } from '@/i18n/client';
-import { computeHTMLElementHeight, computeHTMLElementWidth } from '@/lib/html';
+import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
+import { computeHTMLElementHeight, computeHTMLElementWidth, getDirection } from '@/lib/html';
 import { getRefCurrentPtr } from '@/lib/react';
 import { getBreakpoint } from '@/lib/tailwind';
 import { useMediaQuery } from '@react-hook/media-query';
@@ -47,6 +47,7 @@ export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => 
   const [isCollapsed, setIsCollapsed] = useState<boolean>(wasCollapsed.current);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
+  const currentLocale = useCurrentLocale();
 
   useEffect(() => {
     const sidebar = getRefCurrentPtr(sidebarRef);
@@ -56,14 +57,22 @@ export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => 
 
     function applyUncollapsedStyles() {
       sidebar.style.marginLeft = '0';
+      sidebar.style.marginRight = '0';
       sidebar.style.marginTop = '0';
       wasCollapsed.current = false;
     }
 
     function applyCollapsedStyles() {
+      const direction = getDirection();
       if (isLargeScreen) {
         sidebar.style.marginTop = '0';
-        sidebar.style.marginLeft = '-' + computeHTMLElementWidth(sidebar) + 'px';
+        if (direction === 'rtl') {
+          sidebar.style.marginRight = '-' + computeHTMLElementWidth(sidebar) + 'px';
+          sidebar.style.marginLeft = '0';
+        } else {
+          sidebar.style.marginLeft = '-' + computeHTMLElementWidth(sidebar) + 'px';
+          sidebar.style.marginRight = '0';
+        }
       } else {
         sidebar.style.marginLeft = '0';
         sidebar.style.marginTop = '-' + computeHTMLElementHeight(sidebar) + 'px';
@@ -82,7 +91,7 @@ export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => 
     if (wasCollapsed.current) sidebar.classList.remove(...EFFECT_CLASSES);
     else sidebar.classList.add(...EFFECT_CLASSES);
     applyCollapsedStyles();
-  }, [isCollapsed, sidebarRef, isLargeScreen]);
+  }, [isCollapsed, sidebarRef, isLargeScreen, currentLocale]);
 
   return (
     <>

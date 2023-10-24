@@ -3,6 +3,7 @@ import { getRefCurrentPtr } from './react';
 
 export const scrollToTop = (elm?: HTMLElement) => (elm ? elm.scrollTo(0, 0) : window.scrollTo(0, 0));
 export const resetWindowScroll = () => scrollToTop();
+export const getDirection = () => window.getComputedStyle(document.documentElement).direction as 'rtl' | 'ltr';
 
 export function computeHTMLElementHeight(htmlElement: HTMLElement): number {
   const { height } = htmlElement.getBoundingClientRect();
