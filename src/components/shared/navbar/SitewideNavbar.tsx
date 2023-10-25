@@ -16,18 +16,18 @@ import { LanguageFlag } from '@/types/i18n';
 import { Link } from '@nextui-org/link';
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from '@nextui-org/navbar';
 import Image from 'next/image';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, ReactNode } from 'react';
 
 interface SitewideNavbarProps {}
 
 const { LOGO_SIZE_PX_VALUE } = NAVBAR_STYLE;
 
-const buildNavbarExtrasForDesktop = () =>
+const buildNavbarExtrasForDesktop = (): ReactNode[] =>
   Object.values(NAVBAR_EXTRAS_COMPONENTS_DESKTOP).map((component, index) => (
     <NavbarItem key={`${index}-navbar-extra-desktop`}>{component}</NavbarItem>
   ));
 
-const buildNavbarExtrasForMobile = () =>
+const buildNavbarExtrasForMobile = (): ReactNode[] =>
   Object.values(NAVBAR_EXTRAS_COMPONENTS_MOBILE).map((component, index) => <NavbarItem key={`${index}-navbar-extra-mobile`}>{component}</NavbarItem>);
 
 function buildNavbarElements({ i18nProps }: i18nComponentProps) {
@@ -60,23 +60,27 @@ const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   return (
     <Navbar height={'82px'} maxWidth="full" classNames={{ base: 'bg-black', wrapper: 'px-5' }} disableAnimation>
       <NavbarContent className="lg:hidden pr-3" justify="center">
-        <NavbarBrand>
-          <Link href={ROUTES_ROOTS.WEBSITE} className="transition-[filter] hover:brightness-75">
-            <div className="flex">
-              <Image src="/assets/rtm-logo.svg" height={LOGO_SIZE_PX_VALUE} width={LOGO_SIZE_PX_VALUE} alt={`${brand} (${logo})`} priority={true} />
-            </div>
-          </Link>
-        </NavbarBrand>
+        <li>
+          <NavbarBrand>
+            <Link href={ROUTES_ROOTS.WEBSITE} className="transition-[filter] hover:brightness-75">
+              <div className="flex">
+                <Image src="/assets/rtm-logo.svg" height={LOGO_SIZE_PX_VALUE} width={LOGO_SIZE_PX_VALUE} alt={`${brand} (${logo})`} priority={true} />
+              </div>
+            </Link>
+          </NavbarBrand>
+        </li>
       </NavbarContent>
 
       <NavbarContent className="hidden lg:flex gap-4" justify="start">
-        <NavbarBrand>
-          <Link href={ROUTES_ROOTS.WEBSITE} className="transition-[filter] hover:brightness-75">
-            <div className="flex">
-              <Image src="/assets/rtm-logo.svg" height={LOGO_SIZE_PX_VALUE} width={LOGO_SIZE_PX_VALUE} alt={`${brand} (${logo})`} priority={true} />
-            </div>
-          </Link>
-        </NavbarBrand>
+        <li>
+          <NavbarBrand>
+            <Link href={ROUTES_ROOTS.WEBSITE} className="transition-[filter] hover:brightness-75">
+              <div className="flex">
+                <Image src="/assets/rtm-logo.svg" height={LOGO_SIZE_PX_VALUE} width={LOGO_SIZE_PX_VALUE} alt={`${brand} (${logo})`} priority={true} />
+              </div>
+            </Link>
+          </NavbarBrand>
+        </li>
       </NavbarContent>
 
       <NavbarContent className="hidden lg:flex gap-4" justify="center">
@@ -89,7 +93,9 @@ const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
 
       <NavbarContent className="flex lg:hidden" justify="end">
         {buildNavbarExtrasForMobile()}
-        <NavbarMenuToggle className="text-white" />
+        <li className="h-unit-10">
+          <NavbarMenuToggle className="text-white" />
+        </li>
       </NavbarContent>
 
       <NavbarMenu className="pt-4">{mobileNavbarElements}</NavbarMenu>

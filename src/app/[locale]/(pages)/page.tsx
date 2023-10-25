@@ -1,6 +1,5 @@
 import MAIN_NEXT_UI_CLS from '@/components/config/styles/next-ui';
 import Homepage from '@/components/pages/Homepage';
-import ELEMENTS_ID from '@/config/elementsId';
 import { i18ns } from '@/config/i18n';
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
 import { getPageTitle } from '@/lib/str';
@@ -25,7 +24,7 @@ export default function Page({ params }: i18nPageProps) {
   setStaticParamsLocale(lng);
 
   return (
-    <main className={cn('flex flex-1 justify-center items-center', MAIN_NEXT_UI_CLS)} id={ELEMENTS_ID.ROOT}>
+    <main className={cn('flex flex-col flex-1 justify-center', MAIN_NEXT_UI_CLS)}>
       <Homepage />
     </main>
   );

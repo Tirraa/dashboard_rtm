@@ -14,6 +14,7 @@ interface PaginatedElementsProps {
 const NEXT_AND_PREV_ICONS_CLASSLIST: ClassName = { className: 'w-10 h-10 flex items-centers justify-center bg-gray-500 rounded-md' };
 
 // {ToDo} Some sr-only elements/aria-labels for accessibility concerns would be welcome!
+// {ToDo} Get rid of ReactPaginate and use NextUI instead of it
 export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({ paginatedElements, elementsPerPage }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const pagesAmount = Math.ceil(paginatedElements.length / elementsPerPage);

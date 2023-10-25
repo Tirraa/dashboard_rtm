@@ -1,10 +1,8 @@
 'use client';
 
-import DASHBOARD_SIDEBAR_CLASSES from '@/config/DashboardSidebar/classes';
 import DASHBOARD_ROUTES, { DASHBOARD_ROUTES_TITLES } from '@/config/DashboardSidebar/routesImpl';
 import DASHBOARD_ROUTES_SIDEBAR_COMPONENTS from '@/config/DashboardSidebar/utils/IconsMapping';
 import { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMapping';
-import PRODUCT_CLASSES from '@/config/productClasses';
 import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
 import { computeHTMLElementHeight, computeHTMLElementWidth, getDirection } from '@/lib/html';
 import { getRefCurrentPtr } from '@/lib/react';
@@ -15,9 +13,6 @@ import { FunctionComponent, ReactElement, ReactNode, useEffect, useRef, useState
 import DashboardSidebarCollapseButton from './DashboardSidebarCollapseButton';
 
 interface DashboardSidebarProps {}
-
-const { PRODUCT_PREFIX } = PRODUCT_CLASSES;
-const { SIDEBAR: SIDEBAR_CLS, SIDEBAR_BODY: SIDEBAR_BODY_CLS } = DASHBOARD_SIDEBAR_CLASSES;
 
 function sidebarBtnsGenerator(): ReactNode[] {
   const keys = Object.keys(DASHBOARD_ROUTES_SIDEBAR_COMPONENTS);
@@ -95,18 +90,9 @@ export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => 
 
   return (
     <>
-      <aside
-        ref={sidebarRef}
-        className={cn(
-          PRODUCT_PREFIX,
-          SIDEBAR_CLS,
-          'bg-black justify-center border-slate-800 rtl:flex-row-reverse z-20 w-full border-t-[1px] lg:w-fit'
-        )}
-      >
+      <aside ref={sidebarRef} className={cn('bg-black justify-center border-slate-800 rtl:flex-row-reverse z-20 w-full border-t-[1px] lg:w-fit')}>
         <nav className="py-4 lg:px-[22px] lg:overflow-y-auto">
-          <ul className={cn(PRODUCT_PREFIX, SIDEBAR_BODY_CLS, 'flex flex-wrap justify-center gap-2 lg:block rtl:flex-row-reverse')}>
-            {sidebarBtnsGenerator()}
-          </ul>
+          <ul className={cn('flex flex-wrap justify-center gap-2 lg:block rtl:flex-row-reverse')}>{sidebarBtnsGenerator()}</ul>
         </nav>
       </aside>
       <DashboardSidebarCollapseButton {...{ isCollapsed, setIsCollapsed }} />

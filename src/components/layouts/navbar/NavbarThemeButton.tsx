@@ -2,9 +2,9 @@
 
 import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
 import { DEFAULT_DARK_VARIANT, DEFAULT_VARIANT } from '@/config/themes';
+import { cn } from '@/lib/tailwind';
 import { MoonIcon, SunIcon } from '@heroicons/react/20/solid';
 import { Button } from '@nextui-org/button';
-import { cn } from '@nextui-org/react';
 import { useTheme } from 'next-themes';
 import { FunctionComponent, useEffect, useState } from 'react';
 
@@ -17,13 +17,13 @@ const { DESKTOP_SIZE_PX_VALUE, MOBILE_SIZE_PX_VALUE } = NAVBAR_ICON_STYLE;
 // {ToDo} i18nVocab for the 'Switch to ...' (using a formatter)
 export const NavbarThemeButton: FunctionComponent<NavbarLoginButtonProps> = ({ isMobile }) => {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    setIsMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  if (!isMounted) return null;
 
   const SIZE = isMobile ? MOBILE_SIZE_PX_VALUE : DESKTOP_SIZE_PX_VALUE;
   const nextuiRelatedClasses = cn('min-w-unit-0', isMobile ? 'w-unit-7' : 'w-unit-5');

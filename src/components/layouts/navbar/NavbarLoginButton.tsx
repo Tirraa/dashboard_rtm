@@ -50,13 +50,11 @@ export const NavbarLoginButton: FunctionComponent<NavbarLoginButtonProps> = ({ i
 
   if (session)
     return (
-      <div>
-        <NavbarButton
-          i18nTitle={`${i18ns.auth}.logout`}
-          onClick={() => signOut()}
-          icon={<UserImage user={session?.user} width={MOBILE_SIZE_PX_VALUE} height={MOBILE_SIZE_PX_VALUE} className="rounded-full rounded-bl-lg" />}
-        />
-      </div>
+      <NavbarButton
+        i18nTitle={`${i18ns.auth}.logout`}
+        onClick={() => signOut()}
+        icon={<UserImage user={session?.user} width={MOBILE_SIZE_PX_VALUE} height={MOBILE_SIZE_PX_VALUE} className="rounded-full rounded-bl-lg" />}
+      />
     );
 
   return <NavbarButton i18nTitle={`${i18ns.auth}.login`} onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} />;
