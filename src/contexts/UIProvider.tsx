@@ -7,7 +7,7 @@ import { FunctionComponent } from 'react';
 interface UIProviderProps extends WithChildren {}
 
 const UIProvider: FunctionComponent<UIProviderProps> = ({ children }) => (
-  <NextUIProvider className="flex flex-col min-h-screen">
+  <NextUIProvider className="flex flex-col min-h-screen" id="nextui-provider">
     <NextThemesProvider attribute="class" defaultTheme={DEFAULT_DARK_VARIANT}>
       {children}
     </NextThemesProvider>

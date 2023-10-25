@@ -1,6 +1,6 @@
 'use client';
 
-import { MAIN_NEXT_UI_CLS } from '@/components/config/styles/next-ui/providerStyle';
+import { MAIN_NEXT_UI_CLS } from '@/components/config/styles/next-ui';
 import ELEMENTS_ID from '@/config/elementsId';
 import Providers from '@/contexts/Providers';
 import { cn } from '@/lib/tailwind';
@@ -15,7 +15,7 @@ const LandingPagesHtmlElement: FunctionComponent<HtmlElementProps> = ({ children
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className="flex flex-col min-h-screen w-full p-0 m-0">
+      <body className="flex flex-col min-h-screen">
         <Providers {...{ locale }}>
           <main className={cn('flex flex-1 justify-center items-center', MAIN_NEXT_UI_CLS)} id={ELEMENTS_ID.ROOT}>
             {children}

@@ -1,4 +1,4 @@
-import MAIN_NEXT_UI_CLS from '@/components/config/styles/next-ui/providerStyle';
+import MAIN_NEXT_UI_CLS from '@/components/config/styles/next-ui';
 import Breadcrumbs from '@/components/shared/misc/Breadcrumbs';
 import ELEMENTS_ID from '@/config/elementsId';
 import { cn } from '@/lib/tailwind';

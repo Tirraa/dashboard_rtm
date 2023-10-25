@@ -12,9 +12,10 @@ interface HtmlElementProps extends LayoutBaseProps {}
 
 const PagesHtmlElement: FunctionComponent<HtmlElementProps> = ({ children, params }) => {
   const locale = params[i18nTaxonomy.LANG_FLAG];
+
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className="flex flex-col min-h-screen w-full p-0 m-0">
+      <body className="flex flex-col min-h-screen">
         <Providers {...{ locale }}>
           <NextTopLoader {...PROGRESSBAR_CONFIG} />
           <SitewideNavbar />
