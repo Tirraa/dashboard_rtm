@@ -45,6 +45,10 @@ export default {
       main: 'Page principale',
       foo: 'Foo',
       bar: 'Bar'
+    },
+    'sr-only': {
+      'hide-sidebar': 'Masquer la barre latérale',
+      'show-sidebar': 'Afficher la barre latérale'
     }
   },
 

@@ -79,6 +79,10 @@ export default {
       main: _,
       foo: _,
       bar: _
+    },
+    'sr-only': {
+      'hide-sidebar': _,
+      'show-sidebar': _
     }
   },
 

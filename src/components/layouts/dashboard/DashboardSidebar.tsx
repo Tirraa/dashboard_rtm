@@ -90,9 +90,11 @@ export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => 
 
   return (
     <>
-      <aside ref={sidebarRef} className={cn('bg-black justify-center border-slate-800 rtl:flex-row-reverse z-20 w-full border-t-[1px] lg:w-fit')}>
+      <aside ref={sidebarRef} className={cn('bg-black justify-center border-slate-800 z-20 w-full border-t-[1px] lg:w-fit')}>
         <nav className="py-4 lg:px-[22px] lg:overflow-y-auto">
-          <ul className={cn('flex flex-wrap justify-center gap-2 lg:block rtl:flex-row-reverse')}>{sidebarBtnsGenerator()}</ul>
+          <ul className={cn('flex flex-wrap justify-center gap-2 lg:block')} role="menu">
+            {sidebarBtnsGenerator()}
+          </ul>
         </nav>
       </aside>
       <DashboardSidebarCollapseButton {...{ isCollapsed, setIsCollapsed }} />
