@@ -3,6 +3,7 @@
 import NAVBAR_STYLE from '@/components/config/styles/navbar/NavbarStyle';
 import NavbarButton from '@/components/layouts/navbar/NavbarButton';
 import NavbarElement from '@/components/layouts/navbar/NavbarElement';
+import NavbarToggle from '@/components/layouts/navbar/NavbarToggle';
 import { NAVBAR_EXTRAS_COMPONENTS_DESKTOP, NAVBAR_EXTRAS_COMPONENTS_MOBILE } from '@/config/SitewideNavbar/Extras/utils/ComponentsMapping';
 import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsConfig';
 import SITEWIDE_NAVBAR_ROUTES, { SITEWIDE_NAVBAR_ROUTES_TITLES } from '@/config/SitewideNavbar/routesImpl';
@@ -14,7 +15,7 @@ import i18nTaxonomy from '@/taxonomies/i18n';
 import { i18nComponentProps } from '@/types/Next';
 import { LanguageFlag } from '@/types/i18n';
 import { Link } from '@nextui-org/link';
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from '@nextui-org/navbar';
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem } from '@nextui-org/navbar';
 import Image from 'next/image';
 import { FunctionComponent, ReactNode } from 'react';
 
@@ -45,15 +46,15 @@ const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const currentLocale: LanguageFlag = useCurrentLocale();
 
   const navbarElements = buildNavbarElements({ i18nProps: { [i18nTaxonomy.LANG_FLAG]: currentLocale } });
-  const desktopNavbarElements = navbarElements.map((elm, index) => (
+  const desktopNavbarElements = navbarElements.map((item, index) => (
     <NavbarItem key={`${index}-navbar-btn-typography-desktop`} className="p-1 font-normal">
-      {elm}
+      {item}
     </NavbarItem>
   ));
 
-  const mobileNavbarElements = navbarElements.map((elm, index) => (
+  const mobileNavbarElements = navbarElements.map((item, index) => (
     <NavbarMenuItem key={`${index}-navbar-btn-typography-mobile`} className="p-1 font-normal">
-      {elm.props.embeddedEntities ? <NavbarButton {...elm.props} /> : elm}
+      {item.props.embeddedEntities ? <NavbarButton {...item.props} /> : item}
     </NavbarMenuItem>
   ));
 
@@ -94,7 +95,7 @@ const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       <NavbarContent className="flex lg:hidden" justify="end">
         {buildNavbarExtrasForMobile()}
         <li className="h-unit-10">
-          <NavbarMenuToggle className="text-white" />
+          <NavbarToggle items={mobileNavbarElements} />
         </li>
       </NavbarContent>
 

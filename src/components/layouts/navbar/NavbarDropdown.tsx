@@ -41,10 +41,7 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) => {
 
 export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, path: href, embeddedEntities }) => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
-
-  const handleOpenChange = (opened: boolean) => {
-    setIsOpened(opened);
-  };
+  const handleOpenChange = (opened: boolean) => setIsOpened(opened);
 
   const currentPathname = usePathname();
   const navbarDropdownClassName =
@@ -56,10 +53,10 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ i18nTitle
   return (
     <Dropdown onOpenChange={handleOpenChange} className="py-1 px-1 border dark:border-black dark:bg-slate-950">
       <DropdownTrigger>
-        <div tabIndex={0} className={navbarDropdownClassName}>
+        <button className={navbarDropdownClassName}>
           {title}
           <ChevronDownIcon className={navbarDropdownBtnClassName} aria-hidden="true" />
-        </div>
+        </button>
       </DropdownTrigger>
       <DropdownMenu className="dark:bg-slate-950">{menuItemsGenerator(embeddedEntities)}</DropdownMenu>
     </Dropdown>

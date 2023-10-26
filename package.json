@@ -26,7 +26,7 @@
     "date-fns": "^2.30.0",
     "framer-motion": "^10.16.4",
     "mobile-detect": "^1.4.5",
-    "next": "13.5.3",
+    "next": "^13.5.3",
     "next-auth": "^4.24.3",
     "next-contentlayer": "^0.3.4",
     "next-international": "1.1.3",

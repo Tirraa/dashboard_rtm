@@ -1,7 +1,7 @@
 import { RefObject } from 'react';
 import { getRefCurrentPtr } from './react';
 
-export const scrollToTop = (elm?: HTMLElement) => (elm ? elm.scrollTo(0, 0) : window.scrollTo(0, 0));
+export const scrollToTop = (item?: HTMLElement) => (item ? item.scrollTo(0, 0) : window.scrollTo(0, 0));
 export const resetWindowScroll = () => scrollToTop();
 export const getDirection = () => window.getComputedStyle(document.documentElement).direction as 'rtl' | 'ltr';
 
