@@ -30,7 +30,11 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) => {
     const target = getLinkTarget(href);
 
     return (
-      <DropdownItem key={`${href}-${title}-navbar-menu-item`} className="p-0 dark:bg-opacity-20 dark:text-gray-300 dark:hover:text-white">
+      <DropdownItem
+        key={`${href}-${title}-navbar-menu-item`}
+        className="p-0 dark:bg-opacity-20 dark:text-gray-300 dark:hover:text-white"
+        textValue={title}
+      >
         <Link className={NAVBAR_DROPDOWN_MENU_INNER_BUTTONS_CLASSLIST} {...{ title, href, ...target }}>
           {title}
         </Link>
@@ -58,7 +62,9 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ i18nTitle
           <ChevronDownIcon className={navbarDropdownBtnClassName} aria-hidden="true" />
         </button>
       </DropdownTrigger>
-      <DropdownMenu className="dark:bg-slate-950">{menuItemsGenerator(embeddedEntities)}</DropdownMenu>
+      <DropdownMenu className="dark:bg-slate-950" aria-label={title}>
+        {menuItemsGenerator(embeddedEntities)}
+      </DropdownMenu>
     </Dropdown>
   );
 };

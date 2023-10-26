@@ -13,6 +13,7 @@ import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
 import getComputedNavData from '@/lib/misc/getComputedNavData';
 import { cn } from '@/lib/tailwind';
 import i18nTaxonomy from '@/taxonomies/i18n';
+import { NavbarItems } from '@/types/NavData';
 import { i18nComponentProps } from '@/types/Next';
 import { LanguageFlag } from '@/types/i18n';
 import { Link } from '@nextui-org/link';
@@ -30,11 +31,12 @@ const buildNavbarExtrasForDesktop = (): ReactNode[] =>
 const buildNavbarExtrasForMobile = (): ReactNode[] =>
   Object.values(NAVBAR_EXTRAS_COMPONENTS_MOBILE).map((component, index) => <li key={`${index}-navbar-extra-mobile`}>{component}</li>);
 
-function buildNavbarItems({ i18nProps }: i18nComponentProps) {
+function buildNavbarItems({ i18nProps }: i18nComponentProps): NavbarItems {
   const computedNavData = getComputedNavData(SITEWIDE_NAVBAR_ROUTES, SITEWIDE_NAVBAR_ROUTES_TITLES, SITEWIDE_NAVBAR_DROPDOWNS_CONFIG);
-  const navbarItems = computedNavData.map(({ i18nTitle, path, embeddedEntities }) => (
-    <NavbarElement key={`${i18nTitle}-${path}-navbar-btn`} {...{ i18nProps, i18nTitle, path, embeddedEntities }} />
-  ));
+  const navbarItems = computedNavData.map(({ i18nTitle, path, embeddedEntities }) => ({
+    i18nTitle,
+    component: <NavbarElement key={`${i18nTitle}-${path}-navbar-btn`} {...{ i18nProps, i18nTitle, path, embeddedEntities }} />
+  }));
   return navbarItems;
 }
 
@@ -48,13 +50,17 @@ const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const navbarItems = buildNavbarItems({ i18nProps: { [i18nTaxonomy.LANG_FLAG]: currentLocale } });
   const desktopNavbarItems = navbarItems.map((item, index) => (
     <li key={`${index}-navbar-btn-typography-desktop`} className={navbarItemClassName}>
-      {item}
+      {item.component}
     </li>
   ));
 
-  const mobileNavbarItems = navbarItems.map((item, index) => {
-    const ItemAsComponent: ComponentType<TItemAsComponent> = () => (item.props.embeddedEntities ? <NavbarButton {...item.props} /> : item);
-    return <ItemAsComponent key={`${index}-navbar-btn-typography-mobile`} className={navbarItemClassName} />;
+  const mobileNavbarItems: NavbarItems = navbarItems.map((item, index) => {
+    const ItemAsComponent: ComponentType<TItemAsComponent> = () =>
+      item.component.props.embeddedEntities ? <NavbarButton {...item.component.props} /> : item.component;
+    return {
+      i18nTitle: item.i18nTitle,
+      component: <ItemAsComponent key={`${index}-navbar-btn-typography-mobile`} className={navbarItemClassName} />
+    };
   });
 
   const navbarExtrasClassNameBase = 'gap-4 h-full flex-row flex-nowrap items-center';

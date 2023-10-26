@@ -5,11 +5,11 @@ const SHARED: SharedVocabType = {
     homepage: "Page d'accueil",
     'sign-up': 'Inscription',
 
-    'patch-notes': 'Patch Notes',
+    'patch-notes': 'Notes de patch',
     'discord-bot': 'Bot Discord',
     dashboard: 'Dashboard',
 
-    'patch-notes-bis': 'Patch Notes (bis)',
+    'patch-notes-bis': 'Notes de patch (bis)',
     'discord-bot-bis': 'Bot Discord (bis)',
     'dashboard-bis': 'Dashboard (bis)'
   }
@@ -26,8 +26,9 @@ export default {
   navbar: {
     assistance: 'Support',
     'sr-only': {
-      'open-menu': 'Ouvrir le menu de la barre de navigation',
-      'close-menu': 'Fermer le menu de la barre de navigation'
+      'hamburger-menu': 'Sections du site',
+      'open-hamburger-menu': 'Ouvrir le menu de la barre de navigation (sections du site)',
+      'close-hamburger-menu': 'Fermer le menu de la barre de navigation (sections du site)'
     }
   },
 
@@ -48,7 +49,7 @@ export default {
   'blog-categories': {
     'patch-notes': {
       _title: SHARED['pages-titles']['patch-notes'],
-      '_meta-description': 'Metadescription Patch Notes',
+      '_meta-description': 'Metadescription Notes de patch',
 
       'discord-bot': {
         title: SHARED['pages-titles']['discord-bot'],
@@ -62,7 +63,7 @@ export default {
 
     'patch-notes-bis': {
       _title: SHARED['pages-titles']['patch-notes-bis'],
-      '_meta-description': 'Metadescription Patch Notes (bis)',
+      '_meta-description': 'Metadescription Notes de patch (bis)',
 
       'discord-bot-bis': {
         title: SHARED['pages-titles']['discord-bot-bis'],

@@ -26,8 +26,9 @@ export default {
   navbar: {
     assistance: 'Assistance',
     'sr-only': {
-      'open-menu': 'Open the navbar menu',
-      'close-menu': 'Close the navbar menu'
+      'hamburger-menu': 'Website sections',
+      'open-hamburger-menu': 'Open the navbar menu (website sections)',
+      'close-hamburger-menu': 'Close the navbar menu (website sections)'
     }
   },
 

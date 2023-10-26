@@ -15,4 +15,7 @@ export interface NavDataEntity extends AtomicNavDataEntity {
 export interface NavbarDropdownElement extends Required<NavDataEntity> {}
 export type NavDataEntities = NavDataEntity[];
 
+export type NavbarItem = { component: JSX.Element; i18nTitle: I18nVocabTarget };
+export type NavbarItems = NavbarItem[];
+
 export type DropdownsConfig<K extends RoutesKeysUnion> = Partial<Record<K, NavDataEntities>>;

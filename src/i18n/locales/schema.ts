@@ -60,8 +60,9 @@ export default {
   navbar: {
     assistance: _,
     'sr-only': {
-      'open-menu': _,
-      'close-menu': _
+      'hamburger-menu': _,
+      'open-hamburger-menu': _,
+      'close-hamburger-menu': _
     }
   },
 
