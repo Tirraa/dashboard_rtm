@@ -17,9 +17,10 @@ import { i18nComponentProps } from '@/types/Next';
 import { LanguageFlag } from '@/types/i18n';
 import { Link } from '@nextui-org/link';
 import Image from 'next/image';
-import { FunctionComponent, ReactNode } from 'react';
+import { ComponentType, FunctionComponent, ReactNode } from 'react';
 
 interface SitewideNavbarProps {}
+type TItemAsComponent = unknown & { className: string };
 
 const { LOGO_SIZE_PX_VALUE } = NAVBAR_STYLE;
 
@@ -29,12 +30,12 @@ const buildNavbarExtrasForDesktop = (): ReactNode[] =>
 const buildNavbarExtrasForMobile = (): ReactNode[] =>
   Object.values(NAVBAR_EXTRAS_COMPONENTS_MOBILE).map((component, index) => <li key={`${index}-navbar-extra-mobile`}>{component}</li>);
 
-function buildNavbarElements({ i18nProps }: i18nComponentProps) {
+function buildNavbarItems({ i18nProps }: i18nComponentProps) {
   const computedNavData = getComputedNavData(SITEWIDE_NAVBAR_ROUTES, SITEWIDE_NAVBAR_ROUTES_TITLES, SITEWIDE_NAVBAR_DROPDOWNS_CONFIG);
-  const navbarElements = computedNavData.map(({ i18nTitle, path, embeddedEntities }) => (
+  const navbarItems = computedNavData.map(({ i18nTitle, path, embeddedEntities }) => (
     <NavbarElement key={`${i18nTitle}-${path}-navbar-btn`} {...{ i18nProps, i18nTitle, path, embeddedEntities }} />
   ));
-  return navbarElements;
+  return navbarItems;
 }
 
 const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
@@ -43,18 +44,18 @@ const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const brand = globalT(`${i18ns.vocab}.brand`);
   const currentLocale: LanguageFlag = useCurrentLocale();
 
-  const navbarElements = buildNavbarElements({ i18nProps: { [i18nTaxonomy.LANG_FLAG]: currentLocale } });
-  const desktopNavbarElements = navbarElements.map((item, index) => (
-    <li key={`${index}-navbar-btn-typography-desktop`} className="p-1 font-normal">
+  const navbarItemClassName = 'p-1 font-normal';
+  const navbarItems = buildNavbarItems({ i18nProps: { [i18nTaxonomy.LANG_FLAG]: currentLocale } });
+  const desktopNavbarItems = navbarItems.map((item, index) => (
+    <li key={`${index}-navbar-btn-typography-desktop`} className={navbarItemClassName}>
       {item}
     </li>
   ));
 
-  const mobileNavbarElements = navbarElements.map((item, index) => (
-    <li key={`${index}-navbar-btn-typography-mobile`} className="p-1 font-normal">
-      {item.props.embeddedEntities ? <NavbarButton {...item.props} /> : item}
-    </li>
-  ));
+  const mobileNavbarItems = navbarItems.map((item, index) => {
+    const ItemAsComponent: ComponentType<TItemAsComponent> = () => (item.props.embeddedEntities ? <NavbarButton {...item.props} /> : item);
+    return <ItemAsComponent key={`${index}-navbar-btn-typography-mobile`} className={navbarItemClassName} />;
+  });
 
   const navbarExtrasClassNameBase = 'gap-4 h-full flex-row flex-nowrap items-center';
   const navbarBrand = (
@@ -68,14 +69,14 @@ const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
       <header className="z-30 flex gap-4 w-full flex-row relative flex-nowrap items-center justify-between h-[82px] max-w-full px-5">
         {navbarBrand}
 
-        <ul className="hidden lg:flex gap-4 justify-center">{desktopNavbarElements}</ul>
+        <ul className="hidden lg:flex gap-4 justify-center">{desktopNavbarItems}</ul>
 
         <ul className={cn('hidden lg:flex justify-end', navbarExtrasClassNameBase)}>{buildNavbarExtrasForDesktop()}</ul>
 
         <ul className={cn('flex lg:hidden justify-end', navbarExtrasClassNameBase)}>
           {buildNavbarExtrasForMobile()}
           <li className="h-unit-10">
-            <NavbarToggle items={mobileNavbarElements} />
+            <NavbarToggle items={mobileNavbarItems} />
           </li>
         </ul>
       </header>
