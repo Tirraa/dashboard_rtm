@@ -62,7 +62,9 @@ export default {
     'sr-only': {
       'hamburger-menu': _,
       'open-hamburger-menu': _,
-      'close-hamburger-menu': _
+      'close-hamburger-menu': _,
+      'switch-to-light-mode': _,
+      'switch-to-dark-mode': _
     }
   },
 

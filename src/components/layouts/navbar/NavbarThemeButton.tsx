@@ -2,6 +2,7 @@
 
 import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
 import { DEFAULT_DARK_VARIANT, DEFAULT_VARIANT } from '@/config/themes';
+import { useScopedI18n } from '@/i18n/client';
 import { cn } from '@/lib/tailwind';
 import { MoonIcon, SunIcon } from '@heroicons/react/20/solid';
 import { Button } from '@nextui-org/button';
@@ -14,14 +15,12 @@ interface NavbarLoginButtonProps {
 
 const { DESKTOP_SIZE_PX_VALUE, MOBILE_SIZE_PX_VALUE } = NAVBAR_ICON_STYLE;
 
-// {ToDo} i18nVocab for the 'Switch to ...' (using a formatter)
 export const NavbarThemeButton: FunctionComponent<NavbarLoginButtonProps> = ({ isMobile }) => {
   const { theme, setTheme } = useTheme();
   const [isMounted, setIsMounted] = useState(false);
+  const scopedT = useScopedI18n('navbar.sr-only');
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  useEffect(() => setIsMounted(true), []);
 
   if (!isMounted) return null;
 
@@ -33,14 +32,14 @@ export const NavbarThemeButton: FunctionComponent<NavbarLoginButtonProps> = ({ i
     return (
       <Button className={cn(classNameBase, nextuiRelatedClasses)} onClick={() => setTheme(DEFAULT_VARIANT)} isIconOnly disableRipple>
         <SunIcon width={SIZE} height={SIZE} />
-        <span className="sr-only">{`Switch to ${DEFAULT_VARIANT} theme`}</span>
+        <span className="sr-only">{scopedT('switch-to-light-mode')}</span>
       </Button>
     );
 
   return (
     <Button className={cn(classNameBase, nextuiRelatedClasses)} onClick={() => setTheme(DEFAULT_DARK_VARIANT)} isIconOnly disableRipple>
       <MoonIcon width={SIZE} height={SIZE} />
-      <span className="sr-only">{`Switch to ${DEFAULT_DARK_VARIANT} theme (default)`}</span>
+      <span className="sr-only">{scopedT('switch-to-dark-mode')}</span>
     </Button>
   );
 };

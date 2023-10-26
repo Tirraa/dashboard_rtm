@@ -43,12 +43,20 @@ const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) => {
     togglerInstance.dataset.open = isMenuOpen ? 'true' : 'false';
   }, [togglerRef, isMenuOpen]);
 
+  // * ... {ToDo} https://github.com/nextui-org/nextui/discussions/1811
   useEffect(() => {
     if (isLargeScreen) setIsMenuOpen(false);
   }, [isLargeScreen]);
 
   return (
-    <Dropdown onOpenChange={handleOpenChange} className="py-1 px-1 border dark:border-black dark:bg-slate-950">
+    <Dropdown
+      showArrow={true}
+      backdrop="blur"
+      closeOnSelect={false}
+      onOpenChange={handleOpenChange}
+      className="py-1 px-1 border dark:border-black dark:bg-slate-950"
+      classNames={{ arrow: 'dark:bg-slate-800' }}
+    >
       <DropdownTrigger aria-label={!isMenuOpen ? scopedT('open-hamburger-menu') : scopedT('close-hamburger-menu')}>
         <button
           ref={togglerRef}

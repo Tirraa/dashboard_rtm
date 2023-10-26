@@ -28,7 +28,9 @@ export default {
     'sr-only': {
       'hamburger-menu': 'Sections du site',
       'open-hamburger-menu': 'Ouvrir le menu de la barre de navigation (sections du site)',
-      'close-hamburger-menu': 'Fermer le menu de la barre de navigation (sections du site)'
+      'close-hamburger-menu': 'Fermer le menu de la barre de navigation (sections du site)',
+      'switch-to-light-mode': 'Passer sur le thème clair',
+      'switch-to-dark-mode': 'Passer sur le thème sombre'
     }
   },
 
