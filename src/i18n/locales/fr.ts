@@ -1,4 +1,5 @@
 import { SharedVocabType, VocabType } from '@/types/i18n';
+import { labelsImpl as labels } from './schema';
 
 const SHARED: SharedVocabType = {
   'pages-titles': {
@@ -12,16 +13,15 @@ const SHARED: SharedVocabType = {
     'patch-notes-bis': 'Notes de patch (bis)',
     'discord-bot-bis': 'Bot Discord (bis)',
     'dashboard-bis': 'Dashboard (bis)'
-  }
+  },
+  labels
 };
 
 export default {
   'pages-titles': { ...SHARED['pages-titles'] },
 
-  _infos: {
-    lng: 'fr',
-    label: 'Français'
-  },
+  _infos: { lng: 'fr' },
+  _globals: { labels },
 
   navbar: {
     assistance: 'Support',

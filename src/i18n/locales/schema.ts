@@ -1,4 +1,5 @@
 import { TypedLeafsJSONData } from '@/types/JSON';
+import { LanguageFlag } from '@/types/i18n';
 
 const STATICLY_CHECKED_DATA = {
   'blog-categories': {
@@ -33,6 +34,11 @@ const STATICLY_CHECKED_DATA = {
 
 const _: NotScanned = '';
 
+const labels: LanguageLabelsSchema = {
+  en: _,
+  fr: _
+};
+
 export const SHARED_VOCAB_SCHEMA = {
   'pages-titles': {
     homepage: _,
@@ -45,7 +51,8 @@ export const SHARED_VOCAB_SCHEMA = {
     'patch-notes-bis': _,
     'discord-bot-bis': _,
     'dashboard-bis': _
-  }
+  },
+  labels
 } as const satisfies TypedLeafsJSONData<NotScanned>;
 
 export default {
@@ -53,8 +60,11 @@ export default {
   'pages-titles': { ...SHARED_VOCAB_SCHEMA['pages-titles'] },
 
   _infos: {
-    lng: '__SCANNED_ON_BUILD_FIELD__',
-    label: _
+    lng: '__SCANNED_ON_BUILD_FIELD__'
+  },
+
+  _globals: {
+    labels: { ...SHARED_VOCAB_SCHEMA['labels'] }
   },
 
   navbar: {
@@ -114,6 +124,13 @@ export default {
   }
 } as const satisfies TypedLeafsJSONData<MaybeScanned>;
 
+export const labelsImpl: LanguageLabelsImpl = {
+  en: 'English',
+  fr: 'Français'
+} as const;
+
 type NotScanned = '';
 type Scanned = '__SCANNED_ON_BUILD_FIELD__';
 type MaybeScanned = NotScanned | Scanned;
+type LanguageLabelsSchema = Record<LanguageFlag, NotScanned>;
+type LanguageLabelsImpl = Record<LanguageFlag, string>;
