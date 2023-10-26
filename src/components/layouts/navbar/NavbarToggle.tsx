@@ -1,5 +1,6 @@
 'use client';
 
+import { useScopedI18n } from '@/i18n/client';
 import { getRefCurrentPtr } from '@/lib/react';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { FunctionComponent, ReactNode, useEffect, useRef, useState } from 'react';
@@ -22,6 +23,7 @@ const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const handleOpenChange = (opened: boolean) => setIsMenuOpen(opened);
   const togglerRef = useRef<HTMLButtonElement>(null);
+  const scopedT = useScopedI18n('navbar');
 
   useEffect(() => {
     const togglerInstance = getRefCurrentPtr(togglerRef);
@@ -32,20 +34,10 @@ const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) => {
 
   return (
     <Dropdown onOpenChange={handleOpenChange} className="py-1 px-1 border dark:border-black dark:bg-slate-950">
-      <DropdownTrigger>
+      <DropdownTrigger aria-label={!isMenuOpen ? scopedT('sr-only.open-menu') : scopedT('sr-only.close-menu')}>
         <button
           ref={togglerRef}
-          className="w-full h-full flex flex-col items-center justify-center text-white transition-opacity outline-none
-
-          before:content-[''] before:block before:h-px before:w-6 before:bg-current before:transition-transform before:duration-150 before:-translate-y-1 before:rotate-0 
-
-          after:content-[''] after:block after:h-px after:w-6 after:bg-current after:transition-transform after:duration-150 after:translate-y-1 after:rotate-0
-
-          data-[open=true]:before:translate-y-px
-          data-[open=true]:after:translate-y-0
-          data-[open=true]:before:rotate-45
-          data-[open=true]:after:-rotate-45
-          data-[pressed=true]:opacity-70"
+          className="w-full h-full flex flex-col items-center justify-center text-white transition-opacity outline-none before:content-[''] before:block before:h-px before:w-6 before:bg-current before:transition-transform before:duration-150 before:-translate-y-1 before:rotate-0 after:content-[''] after:block after:h-px after:w-6 after:bg-current after:transition-transform after:duration-150 after:translate-y-1 after:rotate-0 data-[open=true]:before:translate-y-px data-[open=true]:after:translate-y-0 data-[open=true]:before:rotate-45 data-[open=true]:after:-rotate-45 data-[pressed=true]:opacity-70"
         />
       </DropdownTrigger>
 

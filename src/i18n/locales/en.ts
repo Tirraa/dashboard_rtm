@@ -24,7 +24,11 @@ export default {
   },
 
   navbar: {
-    assistance: 'Assistance'
+    assistance: 'Assistance',
+    'sr-only': {
+      'open-menu': 'Open the navbar menu',
+      'close-menu': 'Close the navbar menu'
+    }
   },
 
   auth: {

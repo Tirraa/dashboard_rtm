@@ -58,7 +58,11 @@ export default {
   },
 
   navbar: {
-    assistance: _
+    assistance: _,
+    'sr-only': {
+      'open-menu': _,
+      'close-menu': _
+    }
   },
 
   auth: {
