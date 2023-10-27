@@ -49,6 +49,8 @@ export type I18nMiddlewareConfig = {
 type LocalesObjKey = LanguageFlag;
 type NextInternationalLazyLoadFn = () => Promise<NextInternationalMagic>;
 
+export type LanguageLabels = Record<LanguageFlag, string>;
+
 export type LocalesObjEntity = [LocalesObjKey, NextInternationalLazyLoadFn];
 export type LocalesObj = Record<LocalesObjKey, NextInternationalLazyLoadFn>;
 export type LocalesGetterConfigObjTypeConstraint = Record<LanguageFlag, () => Promise<TypedLeafsJSONData<VocabObjValue>>>;

@@ -7,8 +7,8 @@ import { FlexJustify } from '@/types/HTML';
 import { Pagination } from '@nextui-org/pagination';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FunctionComponent, ReactNode } from 'react';
-import PaginatedElementsBodyWrapper, { PaginatedElementsBodyWrapperProps } from './PaginatedElementsBodyWrapper';
 import { computePagesAmount } from './hoc/MaybePaginatedElements';
+import PaginatedElementsBodyWrapper, { PaginatedElementsBodyWrapperProps } from './hoc/PaginatedElementsBodyWrapper';
 
 export interface PaginatedElementsProps extends PaginatedElementsBodyWrapperProps {
   paginatedElements: ReactNode[];

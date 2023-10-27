@@ -1,6 +1,6 @@
+import PaginatedElements, { PaginatedElementsProps } from '@/components/shared/ui/PaginatedElements';
+import PaginatedElementsBodyWrapper from '@/components/shared/ui/hoc/PaginatedElementsBodyWrapper';
 import { FunctionComponent } from 'react';
-import PaginatedElements, { PaginatedElementsProps } from '../PaginatedElements';
-import PaginatedElementsBodyWrapper from '../PaginatedElementsBodyWrapper';
 
 interface MaybePaginatedElementsProps extends PaginatedElementsProps {}
 

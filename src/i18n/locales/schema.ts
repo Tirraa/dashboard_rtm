@@ -1,5 +1,5 @@
 import { TypedLeafsJSONData } from '@/types/JSON';
-import { LanguageFlag } from '@/types/i18n';
+import { LanguageLabels } from '@/types/i18n';
 
 const STATICLY_CHECKED_DATA = {
   'blog-categories': {
@@ -34,10 +34,10 @@ const STATICLY_CHECKED_DATA = {
 
 const _: NotScanned = '';
 
-const localesLabels: LanguageLabelsSchema = {
+const localesLabels = {
   en: _,
   fr: _
-};
+} as const satisfies LanguageLabels;
 
 export const SHARED_VOCAB_SCHEMA = {
   'pages-titles': {
@@ -129,13 +129,6 @@ export default {
   }
 } as const satisfies TypedLeafsJSONData<MaybeScanned>;
 
-export const localesLabelsValues: LanguageLabelsImpl = {
-  en: 'English',
-  fr: 'Français'
-} as const;
-
 type NotScanned = '';
 type Scanned = '__SCANNED_ON_BUILD_FIELD__';
 type MaybeScanned = NotScanned | Scanned;
-type LanguageLabelsSchema = Record<LanguageFlag, NotScanned>;
-type LanguageLabelsImpl = Record<LanguageFlag, string>;

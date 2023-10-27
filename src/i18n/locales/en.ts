@@ -1,6 +1,6 @@
+import localesLabels from '@/i18n/localesLabels';
 import { capitalize } from '@/lib/str';
 import { SharedVocabType, VocabType } from '@/types/i18n';
-import { localesLabelsValues as localesLabels } from './schema';
 
 const SHARED: SharedVocabType = {
   'pages-titles': {
