@@ -1,21 +1,25 @@
 'use client';
 
-import { cn } from '@/lib/tailwind';
-import { ClassName } from '@/types/React';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import { FlexJustify } from '@/types/HTML';
+import { Pagination } from '@nextui-org/pagination';
 import { FunctionComponent, ReactNode, useState } from 'react';
-import ReactPaginate from 'react-paginate';
 
 interface PaginatedElementsProps {
   paginatedElements: ReactNode[];
   elementsPerPage: number;
+  paginationButtonsPosition?: 'top' | 'bottom';
+  paginationButtonsJustify?: FlexJustify;
 }
 
-const NEXT_AND_PREV_ICONS_CLASSLIST: ClassName = { className: 'w-10 h-10 flex items-centers justify-center bg-gray-500 rounded-md' };
-
 // {ToDo} Some sr-only elements/aria-labels for accessibility concerns would be welcome!
-// {ToDo} Get rid of ReactPaginate and use NextUI instead of it
-export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({ paginatedElements, elementsPerPage }) => {
+export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
+  paginatedElements,
+  elementsPerPage,
+  paginationButtonsPosition: position,
+  paginationButtonsJustify: justify
+}) => {
+  const ypos = position ?? 'bottom';
+  const xpos = justify ?? 'start';
   const [currentPage, setCurrentPage] = useState<number>(1);
   const pagesAmount = Math.ceil(paginatedElements.length / elementsPerPage);
 
@@ -25,36 +29,21 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({ p
   const endIndex = startIndex + elementsPerPage;
   const currentElements = paginatedElements.slice(startIndex, endIndex);
 
-  function handlePageClick(event: { selected: number }) {
-    const targetPage = event.selected + 1;
-    setCurrentPage(targetPage);
+  const handlePageClick = (page: number) => setCurrentPage(page);
+
+  if (ypos === 'bottom') {
+    return (
+      <>
+        <div>{currentElements}</div>
+        <Pagination showControls total={pagesAmount} initialPage={1} onChange={handlePageClick} className={`flex justify-${xpos} mt-4`} />
+      </>
+    );
   }
 
   return (
     <>
-      {currentElements}
-      <ReactPaginate
-        breakLabel="..."
-        previousLabel={
-          <span {...NEXT_AND_PREV_ICONS_CLASSLIST}>
-            <ChevronLeftIcon />
-          </span>
-        }
-        nextLabel={
-          <span {...NEXT_AND_PREV_ICONS_CLASSLIST}>
-            <ChevronRightIcon />
-          </span>
-        }
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={3}
-        pageCount={pagesAmount}
-        renderOnZeroPageCount={null}
-        containerClassName="flex items-center justify-center mt-8 mb-4 select-none"
-        previousLinkClassName={cn('flex items-center justify-center rounded-md', { 'opacity-50 cursor-default': currentPage <= 1 })}
-        nextLinkClassName={cn('flex items-center justify-center rounded-md', { 'opacity-50 cursor-default': currentPage >= pagesAmount })}
-        pageLinkClassName="flex items-center justify-center border border-solid border-blue-500 hover:bg-blue-500 p-2 rounded-md"
-        activeClassName="bg-gray-600 rounded-md text-white"
-      />
+      <Pagination showControls total={pagesAmount} initialPage={1} onChange={handlePageClick} className={`flex justify-${xpos} mb-4`} />
+      <div>{currentElements}</div>
     </>
   );
 };
