@@ -7,9 +7,10 @@ import { FlexJustify } from '@/types/HTML';
 import { Pagination } from '@nextui-org/pagination';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FunctionComponent, ReactNode } from 'react';
+import PaginatedElementsBodyWrapper, { PaginatedElementsBodyWrapperProps } from './PaginatedElementsBodyWrapper';
 import { computePagesAmount } from './hoc/MaybePaginatedElements';
 
-export interface PaginatedElementsProps {
+export interface PaginatedElementsProps extends PaginatedElementsBodyWrapperProps {
   paginatedElements: ReactNode[];
   elementsPerPage: number;
   paginationButtonsPosition?: 'top' | 'bottom';
@@ -29,7 +30,8 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   elementsPerPage,
   paginationButtonsPosition: position,
   paginationButtonsJustify: justify,
-  pagesAmount: forcedPagesAmount
+  pagesAmount: forcedPagesAmount,
+  paginatedElementsBodyWrapperProps
 }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -44,7 +46,7 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   const currentElements = paginatedElements.slice(startIndex, endIndex);
 
   const ypos = position ?? 'bottom';
-  const xpos = justify ?? 'start';
+  const xpos = justify ?? 'normal';
   const posClassName = ypos === 'bottom' ? 'mt-4' : 'mb-4';
 
   const [handlePageClick, setAriaLabels] = [
@@ -64,15 +66,19 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
     />
   );
 
+  const currentElementsNode = (
+    <PaginatedElementsBodyWrapper {...{ paginatedElementsBodyWrapperProps }}>{currentElements}</PaginatedElementsBodyWrapper>
+  );
+
   return ypos === 'bottom' ? (
     <>
-      {currentElements}
+      {currentElementsNode}
       {paginationNode}
     </>
   ) : (
     <>
       {paginationNode}
-      {currentElements}
+      {currentElementsNode}
     </>
   );
 };

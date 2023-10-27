@@ -1,1 +1,3 @@
-export type FlexJustify = 'start' | 'center' | 'end';
+export type FlexJustify = 'normal' | 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly' | 'stretch';
+export type FlexDirection = 'col' | 'row' | 'col-reverse' | 'row-reverse';
+export type FlexWrap = 'wrap' | 'wrap-reverse' | 'nowrap';

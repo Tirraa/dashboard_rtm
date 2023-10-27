@@ -30,11 +30,12 @@ export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageP
   ));
 
   return (
-    <section className="mx-auto max-w-xl py-8 [&>article:not(:last-of-type)]:mb-6" id={slugify(curSubCategTitle.toLowerCase())}>
+    <section className="mx-auto max-w-xl py-8" id={slugify(curSubCategTitle.toLowerCase())}>
       <h1 className="text-left mb-2">{title}</h1>
       <MaybePaginatedElements
         {...{ paginatedElements, elementsPerPage: BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT }}
         paginationButtonsPosition="top"
+        paginatedElementsBodyWrapperProps={{ className: '[&>article:not(:last-of-type)]:mb-6' }}
       />
     </section>
   );

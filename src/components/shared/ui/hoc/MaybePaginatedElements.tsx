@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
 import PaginatedElements, { PaginatedElementsProps } from '../PaginatedElements';
+import PaginatedElementsBodyWrapper from '../PaginatedElementsBodyWrapper';
 
 interface MaybePaginatedElementsProps extends PaginatedElementsProps {}
 
@@ -10,12 +11,25 @@ export const MaybePaginatedElements: FunctionComponent<MaybePaginatedElementsPro
   paginatedElements,
   elementsPerPage,
   paginationButtonsPosition,
-  paginationButtonsJustify
+  paginationButtonsJustify,
+  paginatedElementsBodyWrapperProps
 }) => {
   const pagesAmount = computePagesAmount(paginatedElements.length, elementsPerPage);
-  if (paginationIsNotRequired(pagesAmount)) return paginatedElements;
 
-  return <PaginatedElements {...{ paginatedElements, elementsPerPage, paginationButtonsPosition, paginationButtonsJustify, pagesAmount }} />;
+  return paginationIsNotRequired(pagesAmount) ? (
+    <PaginatedElementsBodyWrapper {...{ paginatedElementsBodyWrapperProps }}>{paginatedElements}</PaginatedElementsBodyWrapper>
+  ) : (
+    <PaginatedElements
+      {...{
+        paginatedElements,
+        elementsPerPage,
+        paginationButtonsPosition,
+        paginationButtonsJustify,
+        pagesAmount,
+        paginatedElementsBodyWrapperProps
+      }}
+    />
+  );
 };
 
 export default MaybePaginatedElements;
