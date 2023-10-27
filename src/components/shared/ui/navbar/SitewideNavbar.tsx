@@ -16,8 +16,8 @@ import i18nTaxonomy from '@/taxonomies/i18n';
 import { NavbarItems } from '@/types/NavData';
 import { i18nComponentProps } from '@/types/Next';
 import { LanguageFlag } from '@/types/i18n';
-import { Link } from '@nextui-org/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ComponentType, FunctionComponent, ReactNode } from 'react';
 
 interface SitewideNavbarProps {}
