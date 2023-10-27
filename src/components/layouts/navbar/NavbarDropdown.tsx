@@ -25,6 +25,7 @@ const { isActiveClassList: navbarDropdownBtnIconIsActiveClassList, isNotActiveCl
 
 const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) => {
   const globalT = getClientSideI18n();
+
   return embeddedEntities.map(({ path: href, i18nTitle }) => {
     const title = globalT(i18nTitle);
     const target = getLinkTarget(href);
