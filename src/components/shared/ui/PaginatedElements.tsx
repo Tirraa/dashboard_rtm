@@ -1,17 +1,20 @@
 'use client';
 
+import { i18ns } from '@/config/i18n';
 import { useScopedI18n } from '@/i18n/client';
 import { cn } from '@/lib/tailwind';
 import { FlexJustify } from '@/types/HTML';
 import { Pagination } from '@nextui-org/pagination';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FunctionComponent, ReactNode } from 'react';
+import { computePagesAmount } from './hoc/MaybePaginatedElements';
 
-interface PaginatedElementsProps {
+export interface PaginatedElementsProps {
   paginatedElements: ReactNode[];
   elementsPerPage: number;
   paginationButtonsPosition?: 'top' | 'bottom';
   paginationButtonsJustify?: FlexJustify;
+  pagesAmount?: number;
 }
 
 function initializeCurrentPage(pageFromUrl: number, maxPage: number) {
@@ -21,27 +24,25 @@ function initializeCurrentPage(pageFromUrl: number, maxPage: number) {
   return pageFromUrl;
 }
 
-const paginationIsNotRequired = (pagesAmount: number) => pagesAmount <= 1;
-
 export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   paginatedElements,
   elementsPerPage,
   paginationButtonsPosition: position,
-  paginationButtonsJustify: justify
+  paginationButtonsJustify: justify,
+  pagesAmount: forcedPagesAmount
 }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const scopedT = useScopedI18n('vocab');
+  const scopedT = useScopedI18n(i18ns.vocab);
 
-  const pagesAmount = Math.ceil(paginatedElements.length / elementsPerPage);
-  if (paginationIsNotRequired(pagesAmount)) return paginatedElements;
-
+  const pagesAmount = forcedPagesAmount ?? computePagesAmount(paginatedElements.length, elementsPerPage);
   const unsafePageFromUrl = searchParams.get('page');
   const pageFromUrl = initializeCurrentPage(Number(unsafePageFromUrl), pagesAmount);
 
   const startIndex = (pageFromUrl - 1) * elementsPerPage;
   const endIndex = startIndex + elementsPerPage;
   const currentElements = paginatedElements.slice(startIndex, endIndex);
+
   const ypos = position ?? 'bottom';
   const xpos = justify ?? 'start';
   const posClassName = ypos === 'bottom' ? 'mt-4' : 'mb-4';

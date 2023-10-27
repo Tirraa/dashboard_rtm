@@ -1,4 +1,4 @@
-import SignupButton from '@/components/shared/cta/SignupButton';
+import SignupButton from '@/components/shared/ui/cta/SignupButton';
 import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';

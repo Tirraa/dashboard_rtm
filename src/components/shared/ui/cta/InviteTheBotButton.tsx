@@ -1,6 +1,6 @@
 'use client';
 
-import ButtonHoC from '@/components/shared/hoc/ButtonHoC';
+import ButtonHoC from '@/components/shared/ui/hoc/ButtonHoC';
 import DISCORD_CONFIG from '@/config/discord';
 import { i18ns } from '@/config/i18n';
 import { getClientSideI18n } from '@/i18n/client';

@@ -1,6 +1,7 @@
 'use client';
 
 import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
+import { i18ns } from '@/config/i18n';
 import { DEFAULT_DARK_VARIANT, DEFAULT_VARIANT } from '@/config/themes';
 import { useScopedI18n } from '@/i18n/client';
 import { cn } from '@/lib/tailwind';
@@ -18,7 +19,7 @@ const { DESKTOP_SIZE_PX_VALUE, MOBILE_SIZE_PX_VALUE } = NAVBAR_ICON_STYLE;
 export const NavbarThemeButton: FunctionComponent<NavbarLoginButtonProps> = ({ isMobile }) => {
   const { theme, setTheme } = useTheme();
   const [isMounted, setIsMounted] = useState(false);
-  const scopedT = useScopedI18n('navbar.sr-only');
+  const scopedT = useScopedI18n(`${i18ns.navbar}.sr-only`);
 
   useEffect(() => setIsMounted(true), []);
 

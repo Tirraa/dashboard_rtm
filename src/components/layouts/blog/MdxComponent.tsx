@@ -1,8 +1,8 @@
 import PrimitiveComponents from '@/components/config/styles/blog/PrimitiveComponents';
+import InviteTheBotButton from '@/components/shared/ui/cta/InviteTheBotButton';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import Image from 'next/image';
 import { FunctionComponent, ReactNode } from 'react';
-import InviteTheBotButton from '../cta/InviteTheBotButton';
 
 const components: Record<string, (...args: any[]) => JSX.Element | ReactNode> = {
   ...PrimitiveComponents,

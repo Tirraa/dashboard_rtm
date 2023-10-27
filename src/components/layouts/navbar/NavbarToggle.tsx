@@ -1,5 +1,6 @@
 'use client';
 
+import { i18ns } from '@/config/i18n';
 import { getClientSideI18n, useScopedI18n } from '@/i18n/client';
 import { getRefCurrentPtr } from '@/lib/react';
 import { getBreakpoint } from '@/lib/tailwind';
@@ -33,7 +34,7 @@ const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) => {
   const handleOpenChange = (opened: boolean) => setIsMenuOpen(opened);
 
   const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
-  const scopedT = useScopedI18n('navbar.sr-only');
+  const scopedT = useScopedI18n(`${i18ns.navbar}.sr-only`);
 
   const togglerRef = useRef<HTMLButtonElement>(null);
 

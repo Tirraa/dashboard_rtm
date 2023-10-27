@@ -4,7 +4,7 @@ import { i18ns } from '@/config/i18n';
 import { getClientSideI18n } from '@/i18n/client';
 import Image from 'next/image';
 import { CSSProperties, FunctionComponent } from 'react';
-import InviteTheBotButton from '../shared/cta/InviteTheBotButton';
+import InviteTheBotButton from '../shared/ui/cta/InviteTheBotButton';
 
 interface HomepageProps {}
 

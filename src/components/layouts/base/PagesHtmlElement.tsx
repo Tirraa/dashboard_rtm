@@ -2,7 +2,7 @@
 
 import BODY_CLS from '@/components/config/styles/body';
 import { HTML_STYLE } from '@/components/config/styles/html';
-import SitewideNavbar from '@/components/shared/navbar/SitewideNavbar';
+import SitewideNavbar from '@/components/shared/ui/navbar/SitewideNavbar';
 import PROGRESSBAR_CONFIG from '@/config/progressbar';
 import { DEFAULT_VARIANT } from '@/config/themes';
 import Providers from '@/contexts/Providers';
