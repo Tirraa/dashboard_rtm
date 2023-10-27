@@ -90,6 +90,8 @@ export default {
     '404': '404 - Page not found!',
     'see-more': 'See more!',
     loading: 'Loading...',
+    prev: 'Previous',
+    next: 'Next',
     'copy-to-clipboard': 'Copy to clipboard'
   },
 

@@ -1,8 +1,11 @@
 'use client';
 
+import { useScopedI18n } from '@/i18n/client';
+import { cn } from '@/lib/tailwind';
 import { FlexJustify } from '@/types/HTML';
 import { Pagination } from '@nextui-org/pagination';
-import { FunctionComponent, ReactNode, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { FunctionComponent, ReactNode } from 'react';
 
 interface PaginatedElementsProps {
   paginatedElements: ReactNode[];
@@ -11,39 +14,64 @@ interface PaginatedElementsProps {
   paginationButtonsJustify?: FlexJustify;
 }
 
-// {ToDo} Some sr-only elements/aria-labels for accessibility concerns would be welcome!
+function initializeCurrentPage(pageFromUrl: number, maxPage: number) {
+  if (isNaN(pageFromUrl)) return 1;
+  if (pageFromUrl < 1) return 1;
+  if (pageFromUrl > maxPage) return maxPage;
+  return pageFromUrl;
+}
+
+const paginationIsNotRequired = (pagesAmount: number) => pagesAmount <= 1;
+
 export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   paginatedElements,
   elementsPerPage,
   paginationButtonsPosition: position,
   paginationButtonsJustify: justify
 }) => {
-  const ypos = position ?? 'bottom';
-  const xpos = justify ?? 'start';
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const scopedT = useScopedI18n('vocab');
+
   const pagesAmount = Math.ceil(paginatedElements.length / elementsPerPage);
+  if (paginationIsNotRequired(pagesAmount)) return paginatedElements;
 
-  if (pagesAmount <= 1) return paginatedElements;
+  const unsafePageFromUrl = searchParams.get('page');
+  const pageFromUrl = initializeCurrentPage(Number(unsafePageFromUrl), pagesAmount);
 
-  const startIndex = (currentPage - 1) * elementsPerPage;
+  const startIndex = (pageFromUrl - 1) * elementsPerPage;
   const endIndex = startIndex + elementsPerPage;
   const currentElements = paginatedElements.slice(startIndex, endIndex);
+  const ypos = position ?? 'bottom';
+  const xpos = justify ?? 'start';
+  const posClassName = ypos === 'bottom' ? 'mt-4' : 'mb-4';
 
-  const handlePageClick = (page: number) => setCurrentPage(page);
+  const [handlePageClick, setAriaLabels] = [
+    (n: number) => router.push(`?page=${n}`, { scroll: false }),
+    (s?: string) => (s === 'next' || s === 'prev' ? scopedT(s) : s ?? '')
+  ];
 
-  if (ypos === 'bottom') {
-    return (
-      <>
-        <div>{currentElements}</div>
-        <Pagination showControls total={pagesAmount} initialPage={1} onChange={handlePageClick} className={`flex justify-${xpos} mt-4`} />
-      </>
-    );
-  }
+  const paginationNode = (
+    <Pagination
+      onChange={handlePageClick}
+      getItemAriaLabel={setAriaLabels}
+      total={pagesAmount}
+      page={pageFromUrl}
+      className={cn(`flex justify-${xpos}`, posClassName)}
+      showControls
+      disableAnimation
+    />
+  );
 
-  return (
+  return ypos === 'bottom' ? (
     <>
-      <Pagination showControls total={pagesAmount} initialPage={1} onChange={handlePageClick} className={`flex justify-${xpos} mb-4`} />
-      <div>{currentElements}</div>
+      {currentElements}
+      {paginationNode}
+    </>
+  ) : (
+    <>
+      {paginationNode}
+      {currentElements}
     </>
   );
 };

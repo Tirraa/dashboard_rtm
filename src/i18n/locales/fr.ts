@@ -90,6 +90,8 @@ export default {
     '404': '404 - Page introuvable !',
     'see-more': 'Voir plus !',
     loading: 'Chargement en cours...',
+    prev: 'Précédent',
+    next: 'Suivant',
     'copy-to-clipboard': 'Copier dans le presse-papiers'
   },
 

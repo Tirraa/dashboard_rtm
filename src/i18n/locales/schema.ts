@@ -104,6 +104,8 @@ export default {
     '404': _,
     'see-more': _,
     loading: _,
+    prev: _,
+    next: _,
     'copy-to-clipboard': _
   },
 
