@@ -1,5 +1,6 @@
+import { capitalize } from '@/lib/str';
 import { SharedVocabType, VocabType } from '@/types/i18n';
-import { labelsImpl as labels } from './schema';
+import { localesLabelsValues as localesLabels } from './schema';
 
 const SHARED: SharedVocabType = {
   'pages-titles': {
@@ -14,14 +15,18 @@ const SHARED: SharedVocabType = {
     'discord-bot-bis': 'Bot Discord (bis)',
     'dashboard-bis': 'Dashboard (bis)'
   },
-  labels
+  vocab: {
+    brand: 'Rust Team Management',
+    logo: 'logo'
+  },
+  localesLabels
 };
 
 export default {
   'pages-titles': { ...SHARED['pages-titles'] },
 
   _infos: { lng: 'fr' },
-  _globals: { labels },
+  _globals: { localesLabels },
 
   navbar: {
     assistance: 'Support',
@@ -62,7 +67,7 @@ export default {
         'meta-description': 'Metadescription Patch-notes -> Bot Discord'
       },
       dashboard: {
-        title: SHARED['pages-titles']['dashboard'],
+        title: SHARED['pages-titles'].dashboard,
         'meta-description': 'Metadescription Patch-notes -> Dashboard'
       }
     },
@@ -83,7 +88,7 @@ export default {
   },
 
   vocab: {
-    brand: 'Rust Team Management',
+    ...SHARED.vocab,
     'brand-short': 'RTM',
     'invite-the-bot': 'Inviter le bot',
     'no-blog-post': 'Rien à afficher ici !',
@@ -92,7 +97,10 @@ export default {
     loading: 'Chargement en cours...',
     prev: 'Précédent',
     next: 'Suivant',
-    'copy-to-clipboard': 'Copier dans le presse-papiers'
+    'copy-to-clipboard': 'Copier dans le presse-papiers',
+    'sr-only': {
+      'brand-logo': `${capitalize(SHARED.vocab.logo)} de ${SHARED.vocab.brand})`
+    }
   },
 
   'manual-SEO': {
@@ -105,9 +113,5 @@ export default {
       title: SHARED['pages-titles']['sign-up'],
       'meta-description': 'Metadescription portail dashboard'
     }
-  },
-
-  ugly: {
-    logo: 'logo'
   }
 } as const satisfies VocabType;

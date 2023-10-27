@@ -1,5 +1,6 @@
+import { capitalize } from '@/lib/str';
 import { SharedVocabType, VocabType } from '@/types/i18n';
-import { labelsImpl as labels } from './schema';
+import { localesLabelsValues as localesLabels } from './schema';
 
 const SHARED: SharedVocabType = {
   'pages-titles': {
@@ -14,14 +15,18 @@ const SHARED: SharedVocabType = {
     'discord-bot-bis': 'Discord Bot (bis)',
     'dashboard-bis': 'Dashboard (bis)'
   },
-  labels
+  vocab: {
+    brand: 'Rust Team Management',
+    logo: 'logo'
+  },
+  localesLabels
 };
 
 export default {
   'pages-titles': { ...SHARED['pages-titles'] },
 
   _infos: { lng: 'en' },
-  _globals: { labels },
+  _globals: { localesLabels },
 
   navbar: {
     assistance: 'Assistance',
@@ -62,7 +67,7 @@ export default {
         'meta-description': 'Patch-notes -> Discord Bot - Metadescription'
       },
       dashboard: {
-        title: SHARED['pages-titles']['dashboard'],
+        title: SHARED['pages-titles'].dashboard,
         'meta-description': 'Patch-notes -> Dashboard - Metadescription'
       }
     },
@@ -83,7 +88,7 @@ export default {
   },
 
   vocab: {
-    brand: 'Rust Team Management',
+    ...SHARED.vocab,
     'brand-short': 'RTM',
     'invite-the-bot': 'Invite the bot',
     'no-blog-post': 'Nobody here but us chickens!',
@@ -92,7 +97,10 @@ export default {
     loading: 'Loading...',
     prev: 'Previous',
     next: 'Next',
-    'copy-to-clipboard': 'Copy to clipboard'
+    'copy-to-clipboard': 'Copy to clipboard',
+    'sr-only': {
+      'brand-logo': `${capitalize(SHARED.vocab.brand)}'s ${SHARED.vocab.logo}`
+    }
   },
 
   'manual-SEO': {
@@ -105,9 +113,5 @@ export default {
       title: SHARED['pages-titles']['sign-up'],
       'meta-description': 'Dashboard portal metadescription'
     }
-  },
-
-  ugly: {
-    logo: 'logo'
   }
 } as const satisfies VocabType;

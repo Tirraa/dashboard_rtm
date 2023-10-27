@@ -42,8 +42,7 @@ function buildNavbarItems({ i18nProps }: i18nComponentProps): NavbarItems {
 
 const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const globalT = getClientSideI18n();
-  const logo = globalT(`${i18ns.ugly}.logo`);
-  const brand = globalT(`${i18ns.vocab}.brand`);
+  const logoAlt = globalT(`${i18ns.vocab}.sr-only.brand-logo`);
   const currentLocale: LanguageFlag = useCurrentLocale();
 
   const navbarItemClassName = 'p-1 font-normal';
@@ -66,7 +65,7 @@ const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const navbarExtrasClassNameBase = 'gap-4 h-full flex-row flex-nowrap items-center';
   const navbarBrand = (
     <Link href={ROUTES_ROOTS.WEBSITE} className="transition-[filter] hover:brightness-75">
-      <Image src="/assets/rtm-logo.svg" height={LOGO_SIZE_PX_VALUE} width={LOGO_SIZE_PX_VALUE} alt={`${brand} (${logo})`} priority={true} />
+      <Image src="/assets/rtm-logo.svg" height={LOGO_SIZE_PX_VALUE} width={LOGO_SIZE_PX_VALUE} alt={logoAlt} priority={true} />
     </Link>
   );
 

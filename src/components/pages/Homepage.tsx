@@ -1,7 +1,7 @@
 'use client';
 
 import { i18ns } from '@/config/i18n';
-import { getClientSideI18n } from '@/i18n/client';
+import { useScopedI18n } from '@/i18n/client';
 import Image from 'next/image';
 import { CSSProperties, FunctionComponent } from 'react';
 import InviteTheBotButton from '../shared/ui/cta/InviteTheBotButton';
@@ -14,15 +14,14 @@ const style: CSSProperties = {
 };
 const [width, height]: [number, number] = [226, 69];
 
-// {ToDo} use a formatter for the img alt
 export const Homepage: FunctionComponent<HomepageProps> = () => {
-  const globalT = getClientSideI18n();
-  const brand = globalT(`${i18ns.vocab}.brand`);
-  const logo = globalT(`${i18ns.ugly}.logo`);
+  const scopedT = useScopedI18n(i18ns.vocab);
+  const logoAlt = scopedT('sr-only.brand-logo');
+  const brand = scopedT('brand');
 
   return (
     <div className="text-center">
-      <Image src="/assets/rtm-txt-logo.svg" {...{ style, width, height }} alt={`${brand} (${logo})`} className="m-auto" priority={true} />
+      <Image src="/assets/rtm-txt-logo.svg" {...{ style, width, height }} alt={logoAlt} className="m-auto" priority={true} />
       <h1 className="mt-2">{brand}</h1>
       <InviteTheBotButton />
     </div>

@@ -15,7 +15,6 @@ export const i18ns = {
   manualSEO: 'manual-SEO',
   navbar: 'navbar',
   pagesTitles: 'pages-titles',
-  ugly: 'ugly',
   vocab: 'vocab'
 } as const satisfies Record<string, keyof VocabType>;
 

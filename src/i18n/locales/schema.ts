@@ -34,7 +34,7 @@ const STATICLY_CHECKED_DATA = {
 
 const _: NotScanned = '';
 
-const labels: LanguageLabelsSchema = {
+const localesLabels: LanguageLabelsSchema = {
   en: _,
   fr: _
 };
@@ -52,7 +52,11 @@ export const SHARED_VOCAB_SCHEMA = {
     'discord-bot-bis': _,
     'dashboard-bis': _
   },
-  labels
+  vocab: {
+    logo: _,
+    brand: _
+  },
+  localesLabels
 } as const satisfies TypedLeafsJSONData<NotScanned>;
 
 export default {
@@ -64,7 +68,7 @@ export default {
   },
 
   _globals: {
-    labels: { ...SHARED_VOCAB_SCHEMA['labels'] }
+    localesLabels: { ...SHARED_VOCAB_SCHEMA.localesLabels }
   },
 
   navbar: {
@@ -106,7 +110,10 @@ export default {
     loading: _,
     prev: _,
     next: _,
-    'copy-to-clipboard': _
+    'copy-to-clipboard': _,
+    'sr-only': {
+      'brand-logo': _
+    }
   },
 
   'manual-SEO': {
@@ -119,14 +126,10 @@ export default {
       title: _,
       'meta-description': _
     }
-  },
-
-  ugly: {
-    logo: _
   }
 } as const satisfies TypedLeafsJSONData<MaybeScanned>;
 
-export const labelsImpl: LanguageLabelsImpl = {
+export const localesLabelsValues: LanguageLabelsImpl = {
   en: 'English',
   fr: 'Français'
 } as const;
