@@ -1,1 +1,2 @@
-export type TailwindScreensBreakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+import config from 'tailwind.config';
+export type TailwindScreensBreakpoint = keyof typeof config.theme.screens;

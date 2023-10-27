@@ -22,12 +22,8 @@ const config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}'
   ],
   theme: {
-    screens: defaultTheme.screens,
-    extend: {
-      colors: {
-        ...sanitizedDefaultColors
-      }
-    }
+    screens: { ...defaultTheme.screens },
+    extend: { colors: { ...sanitizedDefaultColors } }
   },
   darkMode: 'class',
   plugins: [
@@ -35,9 +31,7 @@ const config = {
       themes: {
         dark: {
           extend: 'dark',
-          colors: {
-            background: '#334155'
-          }
+          colors: { background: '#334155' }
         }
       }
     })
