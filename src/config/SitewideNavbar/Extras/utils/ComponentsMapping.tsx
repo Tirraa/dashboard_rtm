@@ -5,6 +5,6 @@ import { NavbarExtrasFeaturesReactElements } from './RoutesMapping';
 export const NAVBAR_EXTRAS_COMPONENTS_DESKTOP: NavbarExtrasFeaturesReactElements = { THEME: <NavbarThemeButton />, LOGIN: <NavbarLoginButton /> };
 
 export const NAVBAR_EXTRAS_COMPONENTS_MOBILE: NavbarExtrasFeaturesReactElements = {
-  THEME: <NavbarThemeButton isMobile={true} />,
-  LOGIN: <NavbarLoginButton isMobile={true} />
+  THEME: <NavbarThemeButton isMobile />,
+  LOGIN: <NavbarLoginButton isMobile />
 };

@@ -8,7 +8,6 @@ import InviteTheBotButton from '../shared/ui/cta/InviteTheBotButton';
 
 interface HomepageProps {}
 
-// {ToDo} Please, design a real logo
 const style: CSSProperties = {
   filter: 'invert(42%) sepia(7%) saturate(5518%) hue-rotate(189deg) brightness(92%) contrast(91%)'
 };
@@ -21,7 +20,7 @@ export const Homepage: FunctionComponent<HomepageProps> = () => {
 
   return (
     <div className="text-center">
-      <Image src="/assets/rtm-txt-logo.svg" {...{ style, width, height }} alt={logoAlt} className="m-auto" priority={true} />
+      <Image src="/assets/rtm-txt-logo.svg" {...{ style, width, height }} alt={logoAlt} className="m-auto" priority />
       <h1 className="mt-2">{brand}</h1>
       <InviteTheBotButton />
     </div>

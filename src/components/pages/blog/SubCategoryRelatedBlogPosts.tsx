@@ -1,4 +1,4 @@
-import BlogPostPeview from '@/components/shared/ui/blog/BlogPostPreview';
+import BlogPostPreview from '@/components/shared/ui/blog/BlogPostPreview';
 import BlogPostsNotFound from '@/components/shared/ui/blog/BlogPostsNotFound';
 import MaybePaginatedElements from '@/components/shared/ui/hoc/MaybePaginatedElements';
 import BlogConfig from '@/config/blog';
@@ -26,7 +26,7 @@ export const SubCategoryRelatedBlogPosts: FunctionComponent<BlogSubCategoryPageP
   const [title, curSubCategTitle] = [scopedT(`${category}.${subCategory}.title`), scopedT(`${category}.${subCategory}.title`)];
 
   const paginatedElements = postsCollection.map((post) => (
-    <BlogPostPeview key={`${post._raw.flattenedPath}-paginated-blog-post`} {...{ post, lng }} />
+    <BlogPostPreview key={`${post._raw.flattenedPath}-paginated-blog-post`} {...{ post, lng }} />
   ));
 
   return (

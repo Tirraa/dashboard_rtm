@@ -1,6 +1,6 @@
 import { getBlogSubCategoriesByCategory } from '@/cache/blog';
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
-import BlogPostPeview from '@/components/shared/ui/blog/BlogPostPreview';
+import BlogPostPreview from '@/components/shared/ui/blog/BlogPostPreview';
 import BlogPostsNotFound from '@/components/shared/ui/blog/BlogPostsNotFound';
 import BlogConfig from '@/config/blog';
 import { i18ns } from '@/config/i18n';
@@ -35,7 +35,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
   function buildPostsCollectionsSnippets() {
     Object.entries(histogram).forEach(([subCategory, posts2]) => {
       postsCollectionsSnippets[subCategory as BlogSubCategoryFromUnknownCategory] = posts2.map((post) => (
-        <BlogPostPeview key={`${post._raw.flattenedPath}-post-snippet`} {...{ post, lng }} />
+        <BlogPostPreview key={`${post._raw.flattenedPath}-post-snippet`} {...{ post, lng }} isNotOnBlogSubCategoryPage />
       ));
     });
   }
