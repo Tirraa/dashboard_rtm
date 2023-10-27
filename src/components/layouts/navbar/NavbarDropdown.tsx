@@ -7,13 +7,15 @@ import NavbarDropdownMenuButtonStyle, {
 import { getClientSideI18n } from '@/i18n/client';
 import { getLinkTarget } from '@/lib/react';
 import { hrefMatchesPathname } from '@/lib/str';
+import { getBreakpoint } from '@/lib/tailwind';
 import { EmbeddedEntities, NavbarDropdownElement } from '@/types/NavData';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
+import { useMediaQuery } from '@react-hook/media-query';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 
 interface NavbarButtonProps extends NavbarDropdownElement {}
 
@@ -47,16 +49,25 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) => {
 export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, path: href, embeddedEntities }) => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const handleOpenChange = (opened: boolean) => setIsOpened(opened);
+  const globalT = getClientSideI18n();
+  const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
+
+  useEffect(() => {
+    if (!isLargeScreen) setIsOpened(false);
+  }, [isLargeScreen]);
 
   const currentPathname = usePathname();
   const navbarDropdownClassName =
     hrefMatchesPathname(href, currentPathname) || isOpened ? navbarDropdownIsActiveClassList : navbarDropdownIsNotActiveClassList;
   const navbarDropdownBtnClassName = isOpened ? navbarDropdownBtnIconIsActiveClassList : navbarDropdownBtnIconIsNotActiveClassList;
-  const globalT = getClientSideI18n();
   const title = globalT(i18nTitle);
 
   return (
-    <Dropdown onOpenChange={handleOpenChange} className="py-1 px-1 border dark:border-black dark:bg-slate-950">
+    <Dropdown
+      onOpenChange={handleOpenChange}
+      className="py-1 px-1 border dark:border-black dark:bg-slate-950"
+      key={`reset-dropdown-via-breakpoint-state-${isLargeScreen}`}
+    >
       <DropdownTrigger>
         <button className={navbarDropdownClassName}>
           {title}

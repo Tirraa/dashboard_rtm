@@ -30,8 +30,8 @@ const menuItemsGenerator = (items: NavbarItems) => {
 };
 
 const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const handleOpenChange = (opened: boolean) => setIsMenuOpen(opened);
+  const [isOpened, setIsOpened] = useState<boolean>(false);
+  const handleOpenChange = (opened: boolean) => setIsOpened(opened);
 
   const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
   const scopedT = useScopedI18n(`${i18ns.navbar}.sr-only`);
@@ -41,25 +41,23 @@ const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) => {
   useEffect(() => {
     const togglerInstance = getRefCurrentPtr(togglerRef);
     if (!togglerInstance) return;
-    togglerInstance.dataset.open = isMenuOpen ? 'true' : 'false';
-  }, [togglerRef, isMenuOpen]);
+    togglerInstance.dataset.open = isOpened ? 'true' : 'false';
+  }, [togglerRef, isOpened]);
 
-  // * ... {ToDo} https://github.com/nextui-org/nextui/discussions/1811
-  // * ... (If no answer is provided in ~2 weeks, get rid of NextUI and switch to shadcn-ui u_u)
   useEffect(() => {
-    if (isLargeScreen) setIsMenuOpen(false);
+    if (isLargeScreen) setIsOpened(false);
   }, [isLargeScreen]);
 
   return (
     <Dropdown
       showArrow={true}
-      backdrop="blur"
       closeOnSelect={false}
       onOpenChange={handleOpenChange}
       className="py-1 px-1 border dark:border-black dark:bg-slate-950"
       classNames={{ arrow: 'dark:bg-slate-800' }}
+      key={`reset-dropdown-via-breakpoint-state-${isLargeScreen}`}
     >
-      <DropdownTrigger aria-label={!isMenuOpen ? scopedT('open-hamburger-menu') : scopedT('close-hamburger-menu')}>
+      <DropdownTrigger aria-label={!isOpened ? scopedT('open-hamburger-menu') : scopedT('close-hamburger-menu')}>
         <button
           ref={togglerRef}
           className="w-full h-full flex flex-col items-center justify-center text-white transition-opacity outline-none before:content-[''] before:block before:h-px before:w-6 before:bg-current before:transition-transform before:duration-150 before:-translate-y-1 before:rotate-0 after:content-[''] after:block after:h-px after:w-6 after:bg-current after:transition-transform after:duration-150 after:translate-y-1 after:rotate-0 data-[open=true]:before:translate-y-px data-[open=true]:after:translate-y-0 data-[open=true]:before:rotate-45 data-[open=true]:after:-rotate-45 data-[pressed=true]:opacity-70"
