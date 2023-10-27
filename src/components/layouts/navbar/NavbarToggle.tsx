@@ -44,6 +44,7 @@ const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) => {
   }, [togglerRef, isMenuOpen]);
 
   // * ... {ToDo} https://github.com/nextui-org/nextui/discussions/1811
+  // * ... (If no answer is provided in ~2 weeks, get rid of NextUI and switch to shadcn-ui u_u)
   useEffect(() => {
     if (isLargeScreen) setIsMenuOpen(false);
   }, [isLargeScreen]);
