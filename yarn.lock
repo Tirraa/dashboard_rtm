@@ -4375,11 +4375,6 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==
 
-iso-639-1-dir@^3.0.5:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/iso-639-1-dir/-/iso-639-1-dir-3.0.5.tgz#1c6b72c1d401c171a5cc1a7d276b12a3cc66ba5b"
-  integrity sha512-48R1O3hszSPq9vylU0bnNdm2nczx9wBnLS+0zEK7Od5bticI/w3XrE5RBlG8wISmPyf8RAt7CETIDaIg2n2M+A==
-
 iterator.prototype@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/iterator.prototype/-/iterator.prototype-1.1.2.tgz#5e29c8924f01916cb9335f1ff80619dcff22b0c0"

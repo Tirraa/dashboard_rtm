@@ -29,7 +29,7 @@ const menuItemsGenerator = (items: NavbarItems) => {
   });
 };
 
-const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) => {
+export const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const handleOpenChange = (opened: boolean) => setIsOpened(opened);
 

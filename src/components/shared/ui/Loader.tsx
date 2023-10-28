@@ -12,7 +12,7 @@ interface LoaderProps {
 
 const { COLORS, DEFAULT_COLOR } = LOADER_CONFIG;
 
-const Loader: FunctionComponent<LoaderProps> = ({ override: cssOverride } = {}) => {
+export const Loader: FunctionComponent<LoaderProps> = ({ override: cssOverride } = {}) => {
   const { theme } = useTheme();
   const color = theme ? COLORS[theme as ThemeVariant] : DEFAULT_COLOR;
 

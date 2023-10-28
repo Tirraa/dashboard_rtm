@@ -7,7 +7,7 @@ import { FunctionComponent } from 'react';
 
 interface ButtonProps extends NextUIButtonProps {}
 
-const ButtonHoC: FunctionComponent<ButtonProps> = ({
+export const ButtonHoC: FunctionComponent<ButtonProps> = ({
   children,
   className: classNameValue,
   href: maybeHref,

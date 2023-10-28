@@ -48,7 +48,7 @@ function buildNavbarItems({ i18nProps }: i18nComponentProps): NavbarItems {
   return navbarItems;
 }
 
-const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
+export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const globalT = getClientSideI18n();
   const logoAlt = globalT(`${i18ns.vocab}.sr-only.brand-logo`);
   const currentLocale: LanguageFlag = useCurrentLocale();

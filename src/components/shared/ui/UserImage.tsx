@@ -9,7 +9,7 @@ interface UserImageProps {
   className?: string;
 }
 
-const UserImage: FunctionComponent<UserImageProps> = ({ user, width, height, className: classNameValue }) => {
+export const UserImage: FunctionComponent<UserImageProps> = ({ user, width, height, className: classNameValue }) => {
   const className = classNameValue ?? '';
   return user?.image ? <Image {...{ className }} src={user?.image} {...{ width, height }} alt={user?.name ?? ''} priority /> : null;
 };

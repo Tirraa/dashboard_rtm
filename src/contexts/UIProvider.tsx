@@ -11,7 +11,7 @@ interface UIProviderProps extends WithChildren {}
 const className = UI_PROVIDER_CLS;
 const id = ELEMENTS_ID.NEXTUI_PROVIDER;
 
-const UIProvider: FunctionComponent<UIProviderProps> = ({ children }) => (
+export const UIProvider: FunctionComponent<UIProviderProps> = ({ children }) => (
   <NextUIProvider {...{ className, id }}>
     <NextThemesProvider attribute="class" defaultTheme={DEFAULT_VARIANT}>
       {children}

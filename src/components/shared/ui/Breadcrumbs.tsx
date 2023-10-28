@@ -52,7 +52,7 @@ function breadcrumbsElementsGenerator(pathParts: string[], displayHomepageElemen
   return nodes;
 }
 
-const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = ({ displayHomepageElement: displayHomepageElementValue }) => {
+export const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = ({ displayHomepageElement: displayHomepageElementValue }) => {
   const pathname = usePathname();
   const pathParts = getPathParts(pathname);
   const displayHomepageElement = Boolean(displayHomepageElementValue);
