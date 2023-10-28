@@ -1,5 +1,4 @@
 import { TypedLeafsJSONData } from '@/types/JSON';
-import { LanguageLabels } from '@/types/i18n';
 
 const STATICLY_CHECKED_DATA = {
   'blog-categories': {
@@ -34,11 +33,6 @@ const STATICLY_CHECKED_DATA = {
 
 const _: NotScanned = '';
 
-const localesLabels = {
-  en: _,
-  fr: _
-} as const satisfies LanguageLabels;
-
 export const SHARED_VOCAB_SCHEMA = {
   'pages-titles': {
     homepage: _,
@@ -55,8 +49,7 @@ export const SHARED_VOCAB_SCHEMA = {
   vocab: {
     logo: _,
     brand: _
-  },
-  localesLabels
+  }
 } as const satisfies TypedLeafsJSONData<NotScanned>;
 
 export default {
@@ -67,13 +60,10 @@ export default {
     lng: '__SCANNED_ON_BUILD_FIELD__'
   },
 
-  _globals: {
-    localesLabels: { ...SHARED_VOCAB_SCHEMA.localesLabels }
-  },
-
   navbar: {
     assistance: _,
     'sr-only': {
+      'language-switcher-menu': _,
       'hamburger-menu': _,
       'open-hamburger-menu': _,
       'close-hamburger-menu': _,

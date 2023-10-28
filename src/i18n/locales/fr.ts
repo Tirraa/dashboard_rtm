@@ -1,4 +1,3 @@
-import localesLabels from '@/i18n/localesLabels';
 import { capitalize } from '@/lib/str';
 import { SharedVocabType, VocabType } from '@/types/i18n';
 
@@ -18,19 +17,18 @@ const SHARED: SharedVocabType = {
   vocab: {
     brand: 'Rust Team Management',
     logo: 'logo'
-  },
-  localesLabels
+  }
 };
 
 export default {
   'pages-titles': { ...SHARED['pages-titles'] },
 
   _infos: { lng: 'fr' },
-  _globals: { localesLabels },
 
   navbar: {
     assistance: 'Support',
     'sr-only': {
+      'language-switcher-menu': 'Choix de la langue',
       'hamburger-menu': 'Sections du site',
       'open-hamburger-menu': 'Ouvrir le menu de la barre de navigation (sections du site)',
       'close-hamburger-menu': 'Fermer le menu de la barre de navigation (sections du site)',

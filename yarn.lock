@@ -4102,6 +4102,11 @@ international-types@^0.8.1:
   resolved "https://registry.yarnpkg.com/international-types/-/international-types-0.8.1.tgz#c0e593d9911c1a23f64bbd6eb1abb2941fe2353f"
   integrity sha512-tajBCAHo4I0LIFlmQ9ZWfjMWVyRffzuvfbXCd6ssFt5u1Zw15DN0UBpVTItXdNa1ls+cpQt3Yw8+TxsfGF8JcA==
 
+intl-locale-textinfo-polyfill@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/intl-locale-textinfo-polyfill/-/intl-locale-textinfo-polyfill-2.0.1.tgz#3d79aedc29dc9ecedb2d7de14447571cf96adad4"
+  integrity sha512-Oug3RXOp7IjWFQJM4XgwRHorXCjuuaXmZbmjEA0TawOQgBX+RrFocqFxTZkO0wNXqoRZf5GSoF1t0yZUfF5Q3w==
+
 intl-messageformat@^10.1.0:
   version "10.5.4"
   resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-10.5.4.tgz#7b212b083f1b354d7e282518e78057e025134af9"
@@ -4369,6 +4374,11 @@ isexe@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==
+
+iso-639-1-dir@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/iso-639-1-dir/-/iso-639-1-dir-3.0.5.tgz#1c6b72c1d401c171a5cc1a7d276b12a3cc66ba5b"
+  integrity sha512-48R1O3hszSPq9vylU0bnNdm2nczx9wBnLS+0zEK7Od5bticI/w3XrE5RBlG8wISmPyf8RAt7CETIDaIg2n2M+A==
 
 iterator.prototype@^1.1.2:
   version "1.1.2"

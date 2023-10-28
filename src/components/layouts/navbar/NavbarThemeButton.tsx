@@ -5,16 +5,15 @@ import { i18ns } from '@/config/i18n';
 import { DEFAULT_DARK_VARIANT, DEFAULT_VARIANT } from '@/config/themes';
 import { useScopedI18n } from '@/i18n/client';
 import { cn } from '@/lib/tailwind';
+import { WithIsMobile } from '@/types/Next';
 import { MoonIcon, SunIcon } from '@heroicons/react/20/solid';
 import { Button } from '@nextui-org/button';
 import { useTheme } from 'next-themes';
 import { FunctionComponent, useEffect, useState } from 'react';
 
-interface NavbarLoginButtonProps {
-  isMobile?: boolean;
-}
+interface NavbarLoginButtonProps extends WithIsMobile {}
 
-const { DESKTOP_SIZE_PX_VALUE, MOBILE_SIZE_PX_VALUE } = NAVBAR_ICON_STYLE;
+const { SIZE_PX_VALUE: SIZE } = NAVBAR_ICON_STYLE;
 
 export const NavbarThemeButton: FunctionComponent<NavbarLoginButtonProps> = ({ isMobile }) => {
   const { theme, setTheme } = useTheme();
@@ -25,9 +24,8 @@ export const NavbarThemeButton: FunctionComponent<NavbarLoginButtonProps> = ({ i
 
   if (!isMounted) return null;
 
-  const SIZE = isMobile ? MOBILE_SIZE_PX_VALUE : DESKTOP_SIZE_PX_VALUE;
   const nextuiRelatedClasses = cn('min-w-unit-0', isMobile ? 'w-unit-7' : 'w-unit-5');
-  const classNameBase = 'bg-transparent text-white';
+  const classNameBase = 'h-full bg-transparent text-white';
 
   if (theme !== DEFAULT_VARIANT)
     return (

@@ -55,6 +55,7 @@ const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) => {
       className="py-1 px-1 border dark:border-black dark:bg-slate-950"
       classNames={{ arrow: 'dark:bg-slate-800' }}
       key={`reset-dropdown-via-breakpoint-state-${isLargeScreen}`}
+      backdrop="opaque"
       showArrow
     >
       <DropdownTrigger aria-label={!isOpened ? scopedT('open-hamburger-menu') : scopedT('close-hamburger-menu')}>

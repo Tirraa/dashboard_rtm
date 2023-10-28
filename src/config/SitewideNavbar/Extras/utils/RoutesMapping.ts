@@ -2,7 +2,8 @@ import { WeaklyBindedReactElements } from '@/types/RoutesMapping';
 
 enum ENavbarExtrasFeatures {
   LOGIN,
-  THEME
+  THEME,
+  LANGUAGE
 }
 
 export type NavbarExtrasFeaturesKeys = keyof typeof ENavbarExtrasFeatures;

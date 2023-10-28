@@ -26,10 +26,18 @@ type TItemAsComponent = unknown & { className: string };
 const { LOGO_SIZE_PX_VALUE } = NAVBAR_STYLE;
 
 const buildNavbarExtrasForDesktop = (): ReactNode[] =>
-  Object.values(NAVBAR_EXTRAS_COMPONENTS_DESKTOP).map((component, index) => <li key={`${index}-navbar-extra-desktop`}>{component}</li>);
+  Object.values(NAVBAR_EXTRAS_COMPONENTS_DESKTOP).map((component, index) => (
+    <li className="flex w-fit h-fit" key={`${index}-navbar-extra-desktop`}>
+      {component}
+    </li>
+  ));
 
 const buildNavbarExtrasForMobile = (): ReactNode[] =>
-  Object.values(NAVBAR_EXTRAS_COMPONENTS_MOBILE).map((component, index) => <li key={`${index}-navbar-extra-mobile`}>{component}</li>);
+  Object.values(NAVBAR_EXTRAS_COMPONENTS_MOBILE).map((component, index) => (
+    <li className="h-full flex items-center" key={`${index}-navbar-extra-mobile`}>
+      {component}
+    </li>
+  ));
 
 function buildNavbarItems({ i18nProps }: i18nComponentProps): NavbarItems {
   const computedNavData = getComputedNavData(SITEWIDE_NAVBAR_ROUTES, SITEWIDE_NAVBAR_ROUTES_TITLES, SITEWIDE_NAVBAR_DROPDOWNS_CONFIG);

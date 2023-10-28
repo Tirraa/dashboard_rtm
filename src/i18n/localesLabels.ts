@@ -5,4 +5,9 @@ export const localesLabels: LanguageLabels = {
   fr: 'Français'
 } as const;
 
+export const localesEmojis: LanguageLabels = {
+  en: '🇬🇧',
+  fr: '🇫🇷'
+} as const;
+
 export default localesLabels;

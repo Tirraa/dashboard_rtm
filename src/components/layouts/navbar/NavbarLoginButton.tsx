@@ -6,6 +6,7 @@ import ButtonHoC from '@/components/shared/ui/hoc/ButtonHoC';
 import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { useScopedI18n } from '@/i18n/client';
+import { WithIsMobile } from '@/types/Next';
 import { KeyIcon, SignalSlashIcon } from '@heroicons/react/20/solid';
 import { Session } from 'next-auth';
 import { signIn, signOut, useSession } from 'next-auth/react';
@@ -16,11 +17,9 @@ interface NavbarLoginButtonMobileProps {
   session: Session | null;
 }
 
-interface NavbarLoginButtonProps {
-  isMobile?: boolean;
-}
+interface NavbarLoginButtonProps extends WithIsMobile {}
 
-const { MOBILE_SIZE_PX_VALUE } = NAVBAR_ICON_STYLE;
+const { SIZE_PX_VALUE: SIZE } = NAVBAR_ICON_STYLE;
 
 const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> = ({ session }) => {
   const scopedT = useScopedI18n(i18ns.auth);
@@ -28,8 +27,8 @@ const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> =
   if (session) {
     return (
       <ButtonHoC className="p-0 min-w-0 bg-transparent" onClick={() => signOut()}>
-        <UserImage user={session?.user} width={MOBILE_SIZE_PX_VALUE} height={MOBILE_SIZE_PX_VALUE} className="rounded-full absolute brightness-75" />
-        <SignalSlashIcon width={MOBILE_SIZE_PX_VALUE} height={MOBILE_SIZE_PX_VALUE} className="relative shadow-xl" />
+        <UserImage user={session?.user} width={SIZE} height={SIZE} className="rounded-full absolute brightness-75" />
+        <SignalSlashIcon width={SIZE} height={SIZE} className="relative shadow-xl" />
         <span className="sr-only">{scopedT('logout')}</span>
       </ButtonHoC>
     );
@@ -37,7 +36,7 @@ const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> =
 
   return (
     <ButtonHoC className="p-0 min-w-0 bg-transparent" onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })}>
-      <KeyIcon width={MOBILE_SIZE_PX_VALUE} height={MOBILE_SIZE_PX_VALUE} />
+      <KeyIcon width={SIZE} height={SIZE} />
       <span className="sr-only">{scopedT('login')}</span>
     </ButtonHoC>
   );
@@ -53,7 +52,7 @@ export const NavbarLoginButton: FunctionComponent<NavbarLoginButtonProps> = ({ i
       <NavbarButton
         i18nTitle={`${i18ns.auth}.logout`}
         onClick={() => signOut()}
-        icon={<UserImage user={session?.user} width={MOBILE_SIZE_PX_VALUE} height={MOBILE_SIZE_PX_VALUE} className="rounded-full rounded-bl-lg" />}
+        icon={<UserImage user={session?.user} width={SIZE} height={SIZE} className="rounded-full rounded-bl-lg" />}
       />
     );
 

@@ -24,6 +24,10 @@ export interface LayoutBaseProps extends i18nPageProps {
   children: ReactNode;
 }
 
+export interface WithIsMobile {
+  isMobile?: boolean;
+}
+
 export type AppPath = string;
 export type PathSegment = string;
 
