@@ -99,13 +99,13 @@ export default {
     next: 'Suivant',
     'copy-to-clipboard': 'Copier dans le presse-papiers',
     'sr-only': {
-      'brand-logo': `${capitalize(SHARED.vocab.logo)} de ${SHARED.vocab.brand})`
+      'brand-logo': `${capitalize(SHARED.vocab.logo)} de ${SHARED.vocab.brand}`
     }
   },
 
   'manual-SEO': {
     homepage: {
-      title: SHARED['pages-titles']['homepage'],
+      title: SHARED['pages-titles'].homepage,
       'meta-description': "Metadescription Page d'accueil"
     },
 

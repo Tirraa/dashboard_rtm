@@ -105,7 +105,7 @@ export default {
 
   'manual-SEO': {
     homepage: {
-      title: SHARED['pages-titles']['homepage'],
+      title: SHARED['pages-titles'].homepage,
       'meta-description': 'This is the homepage metadescription'
     },
 
