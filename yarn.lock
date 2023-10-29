@@ -4102,10 +4102,10 @@ international-types@^0.8.1:
   resolved "https://registry.yarnpkg.com/international-types/-/international-types-0.8.1.tgz#c0e593d9911c1a23f64bbd6eb1abb2941fe2353f"
   integrity sha512-tajBCAHo4I0LIFlmQ9ZWfjMWVyRffzuvfbXCd6ssFt5u1Zw15DN0UBpVTItXdNa1ls+cpQt3Yw8+TxsfGF8JcA==
 
-intl-locale-textinfo-polyfill@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/intl-locale-textinfo-polyfill/-/intl-locale-textinfo-polyfill-2.0.1.tgz#3d79aedc29dc9ecedb2d7de14447571cf96adad4"
-  integrity sha512-Oug3RXOp7IjWFQJM4XgwRHorXCjuuaXmZbmjEA0TawOQgBX+RrFocqFxTZkO0wNXqoRZf5GSoF1t0yZUfF5Q3w==
+intl-locale-textinfo-polyfill@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/intl-locale-textinfo-polyfill/-/intl-locale-textinfo-polyfill-2.1.1.tgz#1a0f1f239068545f549e2906c13bbcccaf89e2c1"
+  integrity sha512-k2J6ejhL75v94reBfX2gYF6yQ5uqtt+jBRQy5f7QSBl3GEI7gMrQ7mAq1GF8txxUsSQZMx7Sa5VekImh+SZtLA==
 
 intl-messageformat@^10.1.0:
   version "10.5.4"
