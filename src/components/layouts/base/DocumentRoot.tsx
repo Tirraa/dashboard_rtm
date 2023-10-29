@@ -6,6 +6,7 @@ import { DEFAULT_VARIANT } from '@/config/themes';
 import Providers from '@/contexts/Providers';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { LayoutBaseProps } from '@/types/Next';
+import Locale from 'intl-locale-textinfo-polyfill';
 import { FunctionComponent } from 'react';
 import NextTopLoader from './NextTopLoader';
 
@@ -16,7 +17,7 @@ interface DocumentRootProps extends LayoutBaseProps {
 
 export const DocumentRoot: FunctionComponent<DocumentRootProps> = ({ children, params, withNavbar, disableTopLoader }) => {
   const locale = params[i18nTaxonomy.LANG_FLAG];
-  const { direction: dir } = new Intl.Locale(locale).textInfo;
+  const { direction: dir } = new Locale(locale).textInfo;
 
   return (
     <html lang={locale} className={DEFAULT_VARIANT} style={HTML_STYLE} {...{ dir }} suppressHydrationWarning>
