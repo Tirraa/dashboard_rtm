@@ -1,5 +1,3 @@
-'use client';
-
 import { nextui } from '@nextui-org/react';
 import type { Config } from 'tailwindcss';
 import colors from 'tailwindcss/colors';
@@ -16,16 +14,12 @@ const sanitizedDefaultColors = Object.keys(colors).reduce((acc, k) => {
 }, {} as Colors);
 
 const config = {
-  content: [
-    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}'
-  ],
+  darkMode: ['class'],
+  content: ['./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}', './src/**/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     screens: { ...defaultTheme.screens },
     extend: { colors: { ...sanitizedDefaultColors } }
   },
-  darkMode: 'class',
   plugins: [
     nextui({
       themes: {
