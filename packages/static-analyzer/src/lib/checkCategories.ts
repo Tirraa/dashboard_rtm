@@ -11,14 +11,14 @@ export function checkCategories(sysCategories: Category[], userDeclaredCategorie
   }
 
   if (unknownCategories.length > 0) {
-    feedback += getErrorLabelForDefects(unknownCategories, 'Unknown category key:', 'Unknown categories keys:', true);
+    feedback += getErrorLabelForDefects(unknownCategories, 'Unknown blog category key:', 'Unknown blog categories keys:', true);
   }
 
   if (feedback) feedback += getErrorLabelForDefects(sysCategories, 'Available key:', 'Available keys:', true);
 
   if (missingDeclaredCategories.length > 0) {
     if (feedback) feedback += '\n';
-    feedback += 'Categories keys must be exhaustive!' + '\n';
+    feedback += 'Blog categories keys must be exhaustive!' + '\n';
     feedback += getErrorLabelForDefects(missingDeclaredCategories, 'Missing key:', 'Missing keys:', true);
   }
   return feedback;

@@ -1,8 +1,8 @@
-import { CRITICAL_ERRORS_STR } from '../config/vocab';
+import { CRITICAL_ERRORS_STR, UPDATE_THE_BLOG_ARCHITECTURE_TYPE } from '../config/vocab';
 import checkCategories from '../lib/checkCategories';
 import checkSubCategories from '../lib/checkSubCategories';
 import { mergeFeedbacks, prefixFeedback } from '../lib/feedbacksMerge';
-import { CategoriesMetadatas, DeclaredCategoriesMetadatas, ErrorsDetectionFeedback, MaybeEmptyErrorsDetectionFeedback } from '../types/metadatas';
+import { CategoriesMetadatas, DeclaredCategoriesMetadatas, MaybeEmptyErrorsDetectionFeedback } from '../types/metadatas';
 
 const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
@@ -13,11 +13,13 @@ export function declaredBlogArchitectureValidator(
 ): MaybeEmptyErrorsDetectionFeedback {
   const ERROR_PREFIX_TAIL = `(${blogConfigFilePath})`;
 
-  let feedback: ErrorsDetectionFeedback = '';
-  feedback = checkCategories(Object.keys(sysData), Object.keys(userDeclaredData));
-  const checkSubCategoriesFeedback = checkSubCategories(sysData, userDeclaredData);
-  feedback = mergeFeedbacks(feedback, checkSubCategoriesFeedback);
-  feedback = prefixFeedback(feedback, ERROR_PREFIX + ' ' + ERROR_PREFIX_TAIL + '\n');
+  let checkCategoriesFeedback: MaybeEmptyErrorsDetectionFeedback = checkCategories(Object.keys(sysData), Object.keys(userDeclaredData));
+  if (checkCategoriesFeedback) checkCategoriesFeedback += UPDATE_THE_BLOG_ARCHITECTURE_TYPE + '\n';
+
+  let checkSubCategoriesFeedback: MaybeEmptyErrorsDetectionFeedback = checkSubCategories(sysData, userDeclaredData);
+  if (checkSubCategoriesFeedback) checkSubCategoriesFeedback += UPDATE_THE_BLOG_ARCHITECTURE_TYPE + '\n';
+
+  const feedback = prefixFeedback(mergeFeedbacks(checkCategoriesFeedback, checkSubCategoriesFeedback), ERROR_PREFIX + ' ' + ERROR_PREFIX_TAIL + '\n');
   return feedback;
 }
 

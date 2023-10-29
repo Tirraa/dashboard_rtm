@@ -4,15 +4,14 @@ import {
   I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS,
   LIST_ELEMENT_PREFIX
 } from '../config';
-import { CRITICAL_ERRORS_STR } from '../config/vocab';
+import { CRITICAL_ERRORS_STR, UPDATE_THE_BLOG_CATEGORIES_OBJECT } from '../config/vocab';
 import checkCategories from '../lib/checkCategories';
 import checkSubCategories from '../lib/checkSubCategories';
-import { mergeFeedbacks, prefixFeedback } from '../lib/feedbacksMerge';
+import { foldFeedbacks, prefixFeedback } from '../lib/feedbacksMerge';
 import getErrorLabelForDefects from '../lib/getErrorLabelForDefects';
 import {
   CategoriesMetadatas,
   Category,
-  ErrorsDetectionFeedback,
   I18nJSONPart,
   MaybeEmptyErrorsDetectionFeedback,
   Path,
@@ -33,7 +32,7 @@ function checkCategoriesDataType(sysData: CategoriesMetadatas, i18nBlogCategorie
 
     const currentCategoryI18nData = i18nBlogCategoriesData[currentCategory] as UnknownI18nJSONObj;
     if (typeof currentCategoryI18nData !== 'object') {
-      feedback += `Invalid data for the '${currentCategory}' category: "${currentCategoryI18nData}" is NOT an object!\n`;
+      feedback += `Invalid data for the '${currentCategory}' category: "${currentCategoryI18nData}" is NOT an object!`;
     }
   }
   if (feedback) feedback += '\n';
@@ -151,7 +150,6 @@ export function declaredI18nValidator(
   i18nSchemaFilePath: Path
 ): MaybeEmptyErrorsDetectionFeedback {
   const ERROR_PREFIX_TAIL = `(${i18nSchemaFilePath})`;
-  let feedback: ErrorsDetectionFeedback = '';
 
   const i18nCategoriesKeys = Object.keys(i18nBlogCategoriesData);
   const i18nCategoriesMetadatas: CategoriesMetadatas = {};
@@ -160,16 +158,37 @@ export function declaredI18nValidator(
 
   populateI18nCategoriesMetadatas(i18nCategoriesMetadatas, sysData, i18nBlogCategoriesData, i18nCategoriesKeys);
 
-  feedback += checkCategoriesDataType(sysData, i18nBlogCategoriesData);
-  feedback += checkCategoriesMissingRequiredI18nFields(sysData, i18nCategoriesMetadatas, i18nCategoriesKeys, requiredExtraFieldsForCategories);
-  feedback += checkSubcategoriesMissingRequiredI18nFields(sysData, i18nBlogCategoriesData, i18nCategoriesKeys, requiredExtraFieldsForSubcategories);
+  const checkCategoriesDataTypeFeedback = checkCategoriesDataType(sysData, i18nBlogCategoriesData);
+  const checkCategoriesMissingRequiredI18nFieldsFeedback = checkCategoriesMissingRequiredI18nFields(
+    sysData,
+    i18nCategoriesMetadatas,
+    i18nCategoriesKeys,
+    requiredExtraFieldsForCategories
+  );
+  const checkSubcategoriesMissingRequiredI18nFieldsFeedback = checkSubcategoriesMissingRequiredI18nFields(
+    sysData,
+    i18nBlogCategoriesData,
+    i18nCategoriesKeys,
+    requiredExtraFieldsForSubcategories
+  );
 
   removeFieldsFromCategoriesMetadatasObj(i18nCategoriesMetadatas, requiredExtraFieldsForCategories);
-  feedback += checkCategories(Object.keys(sysData), i18nCategoriesKeys);
+  let checkCategoriesFeedback: MaybeEmptyErrorsDetectionFeedback = checkCategories(Object.keys(sysData), i18nCategoriesKeys);
+  if (checkCategoriesFeedback) checkCategoriesFeedback += UPDATE_THE_BLOG_CATEGORIES_OBJECT + '\n';
 
-  const checkSubCategoriesFeedback = checkSubCategories(sysData, i18nCategoriesMetadatas);
-  feedback = mergeFeedbacks(feedback, checkSubCategoriesFeedback);
-  feedback = prefixFeedback(feedback, ERROR_PREFIX + ' ' + ERROR_PREFIX_TAIL + '\n');
+  let checkSubCategoriesFeedback: MaybeEmptyErrorsDetectionFeedback = checkSubCategories(sysData, i18nCategoriesMetadatas);
+  if (checkSubCategoriesFeedback) checkSubCategoriesFeedback += UPDATE_THE_BLOG_CATEGORIES_OBJECT + '\n';
+
+  const feedback = prefixFeedback(
+    foldFeedbacks(
+      checkCategoriesDataTypeFeedback,
+      checkCategoriesMissingRequiredI18nFieldsFeedback,
+      checkSubcategoriesMissingRequiredI18nFieldsFeedback,
+      checkCategoriesFeedback,
+      checkSubCategoriesFeedback
+    ),
+    ERROR_PREFIX + ' ' + ERROR_PREFIX_TAIL + '\n'
+  );
 
   return feedback;
 }

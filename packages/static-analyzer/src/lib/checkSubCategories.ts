@@ -33,9 +33,10 @@ export function checkSubCategories(sysData: CategoriesMetadatas, userDeclaredDat
       const unknownSubcategories = unknownSubCategories[categoryWithDefect];
       feedback += getErrorLabelForDefects(
         unknownSubcategories,
-        `Unknown subcategory for the '${categoryWithDefect}' category: ${unknownSubcategories}` + '\n',
-        `Unknown subcategories for the '${categoryWithDefect}' category: ${LIST_ELEMENT_PREFIX}${unknownSubcategories.join(LIST_ELEMENT_PREFIX)}` +
-          '\n'
+        `Unknown blog subcategory for the '${categoryWithDefect}' category: ${unknownSubcategories}` + '\n',
+        `Unknown blog subcategories for the '${categoryWithDefect}' category: ${LIST_ELEMENT_PREFIX}${unknownSubcategories.join(
+          LIST_ELEMENT_PREFIX
+        )}` + '\n'
       );
 
       feedback += getErrorLabelForDefects(
@@ -62,7 +63,7 @@ export function checkSubCategories(sysData: CategoriesMetadatas, userDeclaredDat
   const categoriesWithMissingDeclaredSubCategories = Object.keys(missingDeclaredSubCategories);
   if (categoriesWithMissingDeclaredSubCategories.length > 0) {
     if (feedback) feedback += '\n';
-    feedback += 'Subcategories keys must be exhaustive!' + '\n';
+    feedback += 'Blog subcategories keys must be exhaustive!' + '\n';
     for (const categoryWithMissingDeclaredSubCategories of categoriesWithMissingDeclaredSubCategories) {
       const missingKeys = missingDeclaredSubCategories[categoryWithMissingDeclaredSubCategories];
       feedback += getErrorLabelForDefects(
