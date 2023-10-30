@@ -51,7 +51,7 @@ export type BlogStaticParams = {
 
 export type UnknownCategoryAndUnknownSubcategory = {
   category: BlogCategory;
-  subCategory: BlogSubcategoryFromUnknownCategory;
+  subcategory: BlogSubcategoryFromUnknownCategory;
 };
 
 type BlogSubcategoryMappedToBlogCategory = {
@@ -66,5 +66,5 @@ export type ForcedBlogSubcategoriesPaths = {
 
 export type BlogCategoryAndSubcategoriesPair<C extends BlogCategory> = {
   category: C;
-  subCategory: BlogSubcategories<C>;
+  subcategory: BlogSubcategories<C>;
 };

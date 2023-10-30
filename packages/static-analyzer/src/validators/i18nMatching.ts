@@ -122,13 +122,13 @@ function checkSubcategoriesMissingRequiredI18nFields(
   }
 
   Object.keys(missingSubcategoryFields).forEach((categoryWithDefects) => {
-    Object.keys(missingSubcategoryFields[categoryWithDefects]).forEach((subCategoryWithDefects) => {
-      const missingSubcategoryKeys = missingSubcategoryFields[categoryWithDefects][subCategoryWithDefects];
+    Object.keys(missingSubcategoryFields[categoryWithDefects]).forEach((subcategoryWithDefects) => {
+      const missingSubcategoryKeys = missingSubcategoryFields[categoryWithDefects][subcategoryWithDefects];
       feedback += getErrorLabelForDefects(
         missingSubcategoryKeys,
-        `Missing required i18n field for the '${subCategoryWithDefects}' subcategory from '${BLOG_CATEGORIES_I18N_ROOT_KEY}.${categoryWithDefects}': ${missingSubcategoryKeys}` +
+        `Missing required i18n field for the '${subcategoryWithDefects}' subcategory from '${BLOG_CATEGORIES_I18N_ROOT_KEY}.${categoryWithDefects}': ${missingSubcategoryKeys}` +
           '\n',
-        `Missing required i18n fields for the '${subCategoryWithDefects}' subcategory from '${BLOG_CATEGORIES_I18N_ROOT_KEY}.${categoryWithDefects}': ${LIST_ELEMENT_PREFIX}${missingSubcategoryKeys.join(
+        `Missing required i18n fields for the '${subcategoryWithDefects}' subcategory from '${BLOG_CATEGORIES_I18N_ROOT_KEY}.${categoryWithDefects}': ${LIST_ELEMENT_PREFIX}${missingSubcategoryKeys.join(
           LIST_ELEMENT_PREFIX
         )}` + '\n'
       );

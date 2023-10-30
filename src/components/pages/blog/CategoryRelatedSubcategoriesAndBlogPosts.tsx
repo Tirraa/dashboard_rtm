@@ -33,8 +33,8 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
   }
 
   function buildPostsCollectionsSnippets() {
-    Object.entries(histogram).forEach(([subCategory, posts2]) => {
-      postsCollectionsSnippets[subCategory as BlogSubcategoryFromUnknownCategory] = posts2.map((post) => (
+    Object.entries(histogram).forEach(([subcategory, posts2]) => {
+      postsCollectionsSnippets[subcategory as BlogSubcategoryFromUnknownCategory] = posts2.map((post) => (
         <BlogPostPreview key={`${post._raw.flattenedPath}-post-snippet`} {...{ post, lng }} isNotOnBlogSubcategoryPage />
       ));
     });
@@ -47,13 +47,13 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
     let isLast = false;
     const max = Object.entries(postsCollectionsSnippets).length;
     let counter = 0;
-    for (const [subCategory, posts] of Object.entries(postsCollectionsSnippets)) {
+    for (const [subcategory, posts] of Object.entries(postsCollectionsSnippets)) {
       counter += 1;
       isLast = counter === max;
       if (posts.length === 0) continue;
       // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
-      const curSubcategTitle = globalT(`${i18ns.blogCategories}.${category}.${subCategory}.title`);
-      const href = buildPathFromParts(category, subCategory);
+      const curSubcategTitle = globalT(`${i18ns.blogCategories}.${category}.${subcategory}.title`);
+      const href = buildPathFromParts(category, subcategory);
       const title = (
         <Link
           {...{ href }}
@@ -75,11 +75,11 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
         posts.pop();
       }
 
-      const sep = <hr key={`${subCategory}-${curSubcategTitle}-sep`} className="my-5 m-auto w-36 opacity-50 color-inherit" />;
+      const sep = <hr key={`${subcategory}-${curSubcategTitle}-sep`} className="my-5 m-auto w-36 opacity-50 color-inherit" />;
 
       const section = (
         <section
-          key={`${subCategory}-${curSubcategTitle}-section`}
+          key={`${subcategory}-${curSubcategTitle}-section`}
           id={slugify(curSubcategTitle.toLowerCase())}
           className="[&>article:not(:last-of-type)]:mb-6"
         >
@@ -98,8 +98,8 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
   if (posts.length === 0) return <BlogPostsNotFound {...{ lng }} />;
 
   const globalT = await getServerSideI18n();
-  const subCategs: BlogSubcategoryFromUnknownCategory[] = getBlogSubcategoriesByCategory(category);
-  const entries = subCategs.map((subCateg) => [subCateg, []]);
+  const subcategs: BlogSubcategoryFromUnknownCategory[] = getBlogSubcategoriesByCategory(category);
+  const entries = subcategs.map((subcateg) => [subcateg, []]);
   const [histogram, postsCollectionsSnippets] = [
     Object.fromEntries(entries) as Record<BlogSubcategoryFromUnknownCategory, PostBase[]>,
     Object.fromEntries(entries) as Record<BlogSubcategoryFromUnknownCategory, ReactNode[]>

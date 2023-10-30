@@ -23,11 +23,11 @@ function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): Categorie
   for (const categ of categories) {
     if (categ.isDirectory()) {
       const category = categ.name;
-      const subCategories = readdirSync(join(postsFolder, category), { withFileTypes: true })
-        .filter((subCategory) => subCategory.isDirectory())
-        .map((subCategory) => subCategory.name);
+      const subcategories = readdirSync(join(postsFolder, category), { withFileTypes: true })
+        .filter((subcategory) => subcategory.isDirectory())
+        .map((subcategory) => subcategory.name);
 
-      if (subCategories.length <= 0) continue;
+      if (subcategories.length <= 0) continue;
 
       if (!isValidTaxonomy(category)) {
         throw new BuilderError(
@@ -35,14 +35,14 @@ function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): Categorie
         );
       }
 
-      for (const subCategory of subCategories) {
-        if (!isValidTaxonomy(subCategory)) {
+      for (const subcategory of subcategories) {
+        if (!isValidTaxonomy(subcategory)) {
           throw new BuilderError(
-            ERROR_HEAD + '\n' + `Unauthorized subcategory folder name ('${subCategory}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL
+            ERROR_HEAD + '\n' + `Unauthorized subcategory folder name ('${subcategory}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL
           );
         }
       }
-      metadatas[category] = subCategories;
+      metadatas[category] = subcategories;
     }
   }
 
@@ -92,11 +92,11 @@ function buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitectureInner
   const declaredCategoriesMetadatas: DeclaredCategoriesMetadatas = {};
 
   for (const instruction of instructions) {
-    const [categ, subCategsSum] = instruction.split(':');
-    if (!categ || !subCategsSum) continue;
+    const [categ, subcategsSum] = instruction.split(':');
+    if (!categ || !subcategsSum) continue;
 
     const category = removeQuotesEnvelope(categ);
-    const subCategories = stripUselessSpacesFromSumType(subCategsSum)
+    const subcategories = stripUselessSpacesFromSumType(subcategsSum)
       .split('|')
       .map((token) => removeQuotesEnvelope(token));
 
@@ -104,14 +104,14 @@ function buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitectureInner
       throw new BuilderError(ERROR_HEAD + '\n' + `Unauthorized category key: '${category}'.` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL);
     }
 
-    for (const subCategory of subCategories) {
-      if (!isValidTaxonomy(subCategory)) {
+    for (const subcategory of subcategories) {
+      if (!isValidTaxonomy(subcategory)) {
         throw new BuilderError(
-          ERROR_HEAD + ' ' + ERROR_SCOPE + '\n' + `Unauthorized subcategory key: '${subCategory}'.` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL
+          ERROR_HEAD + ' ' + ERROR_SCOPE + '\n' + `Unauthorized subcategory key: '${subcategory}'.` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL
         );
       }
     }
-    declaredCategoriesMetadatas[category] = subCategories;
+    declaredCategoriesMetadatas[category] = subcategories;
   }
   return declaredCategoriesMetadatas;
 }

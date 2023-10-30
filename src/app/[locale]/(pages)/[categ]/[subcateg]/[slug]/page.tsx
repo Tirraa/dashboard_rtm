@@ -22,14 +22,14 @@ import { redirect } from 'next/navigation';
 
 export async function generateMetadata({ params }: BlogPostPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];
-  const subCategory = params[BlogTaxonomy.SUBCATEGORY];
-  const validCombination = isValidCategoryAndSubcategoryPair(category, subCategory);
+  const subcategory = params[BlogTaxonomy.SUBCATEGORY];
+  const validCombination = isValidCategoryAndSubcategoryPair(category, subcategory);
 
   const slug = params[BlogTaxonomy.SLUG];
   const lang = params[i18nTaxonomy.LANG_FLAG];
-  const post = validCombination ? getPostUnstrict({ category, subCategory }, slug, lang) : undefined;
+  const post = validCombination ? getPostUnstrict({ category, subcategory }, slug, lang) : undefined;
   if (!post && validCombination) {
-    redirectToBlogCategoryAndSubcategoryPairPageUnstrict(category, subCategory);
+    redirectToBlogCategoryAndSubcategoryPairPageUnstrict(category, subcategory);
   } else if (!post && isValidCategory(category)) {
     redirectToBlogCategoryPage(category);
   } else if (!post) {
@@ -53,25 +53,25 @@ export async function generateStaticParams() {
       const category = categ as BlogCategory;
       const curSubcategs = getBlogSubcategoriesByCategory(category);
 
-      curSubcategs.forEach((subCateg) => {
-        const subCategory = subCateg as BlogSubcategoryFromUnknownCategory;
-        const relatedPosts = getAllPostsByCategoryAndSubcategoryUnstrict({ category, subCategory });
+      curSubcategs.forEach((subcateg) => {
+        const subcategory = subcateg as BlogSubcategoryFromUnknownCategory;
+        const relatedPosts = getAllPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
 
         relatedPosts.forEach((post) => {
           LANGUAGES.forEach((language) => {
             const slug = getBlogPostSlug(post);
 
-            const blogPostExists = getPostUnstrict({ category, subCategory }, slug, language);
+            const blogPostExists = getPostUnstrict({ category, subcategory }, slug, language);
             if (!blogPostExists) return;
 
-            const staticParamsIndexKey = `${categ}-${subCategory}-${slug}-${language}`;
+            const staticParamsIndexKey = `${categ}-${subcategory}-${slug}-${language}`;
             if (indexedParams.has(staticParamsIndexKey)) return;
 
             indexedParams.add(staticParamsIndexKey);
             const entity: BlogStaticParams = {
               [i18nTaxonomy.LANG_FLAG]: language,
               [BlogTaxonomy.CATEGORY]: category,
-              [BlogTaxonomy.SUBCATEGORY]: subCategory,
+              [BlogTaxonomy.SUBCATEGORY]: subcategory,
               [BlogTaxonomy.SLUG]: slug
             };
             blogStaticParams.push(entity);

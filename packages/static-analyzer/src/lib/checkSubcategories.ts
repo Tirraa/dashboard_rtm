@@ -19,10 +19,10 @@ export function checkSubcategories(sysData: CategoriesMetadatas, userDeclaredDat
     if (!userDeclaredCategories.includes(category)) continue;
 
     const currentSubcategories = userDeclaredData[category];
-    for (const subCategory of currentSubcategories) {
-      if (!sysData[category].includes(subCategory)) {
+    for (const subcategory of currentSubcategories) {
+      if (!sysData[category].includes(subcategory)) {
         if (!unknownSubcategories[category]) unknownSubcategories[category] = [];
-        unknownSubcategories[category].push(subCategory);
+        unknownSubcategories[category].push(subcategory);
       }
     }
   }
@@ -52,10 +52,10 @@ export function checkSubcategories(sysData: CategoriesMetadatas, userDeclaredDat
   for (const category of userDeclaredCategories) {
     if (!sysCategories.includes(category)) continue;
     const currentSubcategories = sysData[category];
-    for (const subCategory of currentSubcategories) {
-      if (!userDeclaredData[category].includes(subCategory)) {
+    for (const subcategory of currentSubcategories) {
+      if (!userDeclaredData[category].includes(subcategory)) {
         if (!missingDeclaredSubcategories[category]) missingDeclaredSubcategories[category] = [];
-        missingDeclaredSubcategories[category].push(subCategory);
+        missingDeclaredSubcategories[category].push(subcategory);
       }
     }
   }

@@ -3,16 +3,16 @@ import { getBlogPostSubcategory } from '@/lib/blog';
 import { BlogCategory, BlogSubcategoryFromUnknownCategory } from '@/types/Blog';
 
 namespace BlogCache {
-  export const subCategoriesCollection = {} as Record<BlogCategory, BlogSubcategoryFromUnknownCategory[]>;
+  export const subcategoriesCollection = {} as Record<BlogCategory, BlogSubcategoryFromUnknownCategory[]>;
 }
 
 function buildSubcategoriesSet(category: BlogCategory): Set<BlogSubcategoryFromUnknownCategory> {
   try {
     const relatedPosts = BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[category]();
-    const subCategoriesSet = new Set<BlogSubcategoryFromUnknownCategory>();
+    const subcategoriesSet = new Set<BlogSubcategoryFromUnknownCategory>();
 
-    relatedPosts.forEach((post) => subCategoriesSet.add(getBlogPostSubcategory(post)));
-    return subCategoriesSet;
+    relatedPosts.forEach((post) => subcategoriesSet.add(getBlogPostSubcategory(post)));
+    return subcategoriesSet;
   } catch {
     const emptySet = new Set<BlogSubcategoryFromUnknownCategory>();
     return emptySet;
@@ -20,14 +20,14 @@ function buildSubcategoriesSet(category: BlogCategory): Set<BlogSubcategoryFromU
 }
 
 function populateSubcategoriesCollectionCache(category: BlogCategory) {
-  const subCategsSet = buildSubcategoriesSet(category);
-  BlogCache.subCategoriesCollection[category] = Array.from(subCategsSet);
+  const subcategsSet = buildSubcategoriesSet(category);
+  BlogCache.subcategoriesCollection[category] = Array.from(subcategsSet);
 }
 
-function subCategoriesByCategoryGetter(category: BlogCategory) {
-  if (BlogCache.subCategoriesCollection[category] === undefined) populateSubcategoriesCollectionCache(category);
-  return BlogCache.subCategoriesCollection[category];
+function subcategoriesByCategoryGetter(category: BlogCategory) {
+  if (BlogCache.subcategoriesCollection[category] === undefined) populateSubcategoriesCollectionCache(category);
+  return BlogCache.subcategoriesCollection[category];
 }
 
 export const getBlogSubcategoriesByCategory = (category: BlogCategory): BlogSubcategoryFromUnknownCategory[] =>
-  subCategoriesByCategoryGetter(category);
+  subcategoriesByCategoryGetter(category);

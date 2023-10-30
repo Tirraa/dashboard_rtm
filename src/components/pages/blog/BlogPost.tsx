@@ -25,14 +25,14 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = ({ post, lng }) => 
 
 export const BlogPost: FunctionComponent<BlogPostPageProps> = ({ params }) => {
   const category = params[BlogTaxonomy.CATEGORY];
-  const subCategory = params[BlogTaxonomy.SUBCATEGORY];
+  const subcategory = params[BlogTaxonomy.SUBCATEGORY];
 
-  if (!isValidCategoryAndSubcategoryPair(category, subCategory)) notFound();
+  if (!isValidCategoryAndSubcategoryPair(category, subcategory)) notFound();
 
   const slug = params[BlogTaxonomy.SLUG];
   const lng = params[i18nTaxonomy.LANG_FLAG];
 
-  const post = getPostUnstrict({ category, subCategory }, slug, lng);
+  const post = getPostUnstrict({ category, subcategory }, slug, lng);
   if (!post) notFound();
 
   return <BlogPostInner {...{ post, lng }} />;

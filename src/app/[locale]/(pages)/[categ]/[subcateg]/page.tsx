@@ -9,7 +9,7 @@ import {
   isValidCategory,
   isValidCategoryAndSubcategoryPair,
   redirectToBlogCategoryPage,
-  subCategoryShouldTriggerNotFound
+  subcategoryShouldTriggerNotFound
 } from '@/lib/blog';
 import { getPageTitle } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
@@ -25,15 +25,15 @@ export async function generateMetadata({ params }: BlogSubcategoryPageProps) {
   const equivRoutes = ROUTES_ROOTS.WEBSITE + category === ROUTES_ROOTS.BLOG + category;
   if (!validCategory && !equivRoutes) redirect(ROUTES_ROOTS.WEBSITE + category);
 
-  const subCategory = params[BlogTaxonomy.SUBCATEGORY];
-  const validCombination = isValidCategoryAndSubcategoryPair(category, subCategory);
+  const subcategory = params[BlogTaxonomy.SUBCATEGORY];
+  const validCombination = isValidCategoryAndSubcategoryPair(category, subcategory);
   if (!validCombination) redirectToBlogCategoryPage(category);
 
   const globalT = await getServerSideI18n();
   // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
-  const title = getPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.blogCategories}.${category}.${subCategory}.title`));
+  const title = getPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.blogCategories}.${category}.${subcategory}.title`));
   // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
-  const description = globalT(`${i18ns.blogCategories}.${category}.${subCategory}.meta-description`);
+  const description = globalT(`${i18ns.blogCategories}.${category}.${subcategory}.meta-description`);
   return { title, description };
 }
 
@@ -47,17 +47,17 @@ export async function generateStaticParams() {
       const category = categ as BlogCategory;
       const curSubcategs = getBlogSubcategoriesByCategory(category);
 
-      curSubcategs.forEach((subCategory) => {
+      curSubcategs.forEach((subcategory) => {
         LANGUAGES.forEach((language) => {
-          const postsCollection: PostBase[] = getAllPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subCategory }, language);
+          const postsCollection: PostBase[] = getAllPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, language);
 
-          if (subCategoryShouldTriggerNotFound(postsCollection, { category, subCategory })) return;
+          if (subcategoryShouldTriggerNotFound(postsCollection, { category, subcategory })) return;
 
-          const staticParamsIndexKey = `${categ}-${subCategory}-${language}`;
+          const staticParamsIndexKey = `${categ}-${subcategory}-${language}`;
           if (indexedParams.has(staticParamsIndexKey)) return;
 
           indexedParams.add(staticParamsIndexKey);
-          const entity = { [BlogTaxonomy.CATEGORY]: categ, [BlogTaxonomy.SUBCATEGORY]: subCategory, [i18nTaxonomy.LANG_FLAG]: language };
+          const entity = { [BlogTaxonomy.CATEGORY]: categ, [BlogTaxonomy.SUBCATEGORY]: subcategory, [i18nTaxonomy.LANG_FLAG]: language };
           blogStaticParams.push(entity);
         });
       });
