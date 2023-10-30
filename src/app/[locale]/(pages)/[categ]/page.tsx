@@ -1,7 +1,7 @@
 import CategoryRelatedSubcategoriesAndBlogPosts from '@/components/pages/blog/CategoryRelatedSubcategoriesAndBlogPosts';
 import { LANGUAGES, i18ns } from '@/config/i18n';
 import { getServerSideI18n } from '@/i18n/server';
-import { getAllCategories } from '@/lib/blog';
+import { getAllBlogCategories } from '@/lib/blog';
 import { getPageTitle } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: BlogCategoryPageProps) {
 export async function generateStaticParams() {
   function generateBlogStaticParams(): Partial<BlogStaticParams>[] {
     const blogStaticParams: Partial<BlogStaticParams>[] = [];
-    const blogCategories = getAllCategories();
+    const blogCategories = getAllBlogCategories();
 
     blogCategories.forEach((categ) => {
       const category = categ as BlogCategory;

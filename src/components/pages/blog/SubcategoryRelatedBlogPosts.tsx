@@ -4,7 +4,7 @@ import MaybePaginatedElements from '@/components/shared/ui/hoc/MaybePaginatedEle
 import BlogConfig from '@/config/blog';
 import { i18ns } from '@/config/i18n';
 import { getScopedI18n } from '@/i18n/server';
-import { getAllPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict, subcategoryShouldTriggerNotFound } from '@/lib/blog';
+import { blogSubcategoryShouldTriggerNotFound, getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogSubcategoryPageProps, PostBase } from '@/types/Blog';
@@ -18,9 +18,9 @@ export const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageP
   const lng = params[i18nTaxonomy.LANG_FLAG];
   const scopedT = await getScopedI18n(i18ns.blogCategories);
 
-  const postsCollection: PostBase[] = getAllPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, lng);
+  const postsCollection: PostBase[] = getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, lng);
 
-  if (subcategoryShouldTriggerNotFound(postsCollection, { category, subcategory })) notFound();
+  if (blogSubcategoryShouldTriggerNotFound(postsCollection, { category, subcategory })) notFound();
   if (postsCollection.length === 0) return <BlogPostsNotFound {...{ lng }} />;
   // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
   const [title, curSubcategTitle] = [scopedT(`${category}.${subcategory}.title`), scopedT(`${category}.${subcategory}.title`)];

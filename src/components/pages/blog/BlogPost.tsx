@@ -1,6 +1,6 @@
 import MDX from '@/components/layouts/blog/MdxComponent';
 import BlogPostDate from '@/components/shared/ui/blog/BlogPostDate';
-import { getPostUnstrict, isValidCategoryAndSubcategoryPair } from '@/lib/blog';
+import { getBlogPostUnstrict, isValidBlogCategoryAndSubcategoryPair } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogPostPageProps, BlogPostProps } from '@/types/Blog';
@@ -9,30 +9,28 @@ import { FunctionComponent } from 'react';
 
 interface BlogPostInnerProps extends BlogPostProps {}
 
-const BlogPostInner: FunctionComponent<BlogPostInnerProps> = ({ post, lng }) => {
-  return (
-    <section className="mx-auto max-w-xl py-8">
-      <div className="mb-8 text-center">
-        <BlogPostDate {...{ post, lng }} />
-        <h1>{post.title}</h1>
-      </div>
-      <div className="max-w-full [&>*]:break-words">
-        <MDX code={post.body.code} />
-      </div>
-    </section>
-  );
-};
+const BlogPostInner: FunctionComponent<BlogPostInnerProps> = ({ post, lng }) => (
+  <section className="mx-auto max-w-xl py-8">
+    <div className="mb-8 text-center">
+      <BlogPostDate {...{ post, lng }} />
+      <h1>{post.title}</h1>
+    </div>
+    <div className="max-w-full [&>*]:break-words">
+      <MDX code={post.body.code} />
+    </div>
+  </section>
+);
 
 export const BlogPost: FunctionComponent<BlogPostPageProps> = ({ params }) => {
   const category = params[BlogTaxonomy.CATEGORY];
   const subcategory = params[BlogTaxonomy.SUBCATEGORY];
 
-  if (!isValidCategoryAndSubcategoryPair(category, subcategory)) notFound();
+  if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory)) notFound();
 
   const slug = params[BlogTaxonomy.SLUG];
   const lng = params[i18nTaxonomy.LANG_FLAG];
 
-  const post = getPostUnstrict({ category, subcategory }, slug, lng);
+  const post = getBlogPostUnstrict({ category, subcategory }, slug, lng);
   if (!post) notFound();
 
   return <BlogPostInner {...{ post, lng }} />;

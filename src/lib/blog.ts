@@ -66,26 +66,23 @@ export const getBlogPostSlug = (post: PostBase): UnknownBlogSlug => getLastPathP
  * @throws {TypeError}
  * May throw a TypeError: "x[y] is not a function" at runtime, in a type unsafe context
  */
-export const getAllPostsByCategory = (categ: BlogCategory): PostBase[] => BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[categ]();
+export const getAllBlogPostsByCategory = (categ: BlogCategory): PostBase[] => BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[categ]();
 
-export const getAllPostsByCategoryAndSubcategoryUnstrict = ({ category, subcategory }: UnknownCategoryAndUnknownSubcategory): PostBase[] =>
-  getAllPostsByCategory(category).filter((post) => getBlogPostSubcategory(post) === subcategory);
+export const getAllBlogPostsByCategoryAndSubcategoryUnstrict = ({ category, subcategory }: UnknownCategoryAndUnknownSubcategory): PostBase[] =>
+  getAllBlogPostsByCategory(category).filter((post) => getBlogPostSubcategory(post) === subcategory);
 
-export const getAllPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict = (
+export const getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict = (
   { category, subcategory }: UnknownCategoryAndUnknownSubcategory,
   language: LanguageFlag
 ): PostBase[] =>
-  getAllPostsByCategory(category).filter((post) => getBlogPostSubcategory(post) === subcategory && getBlogPostLanguageFlag(post) === language);
+  getAllBlogPostsByCategory(category).filter((post) => getBlogPostSubcategory(post) === subcategory && getBlogPostLanguageFlag(post) === language);
 
-export const filterPostsByLanguage = (posts: PostBase[], subcategory: BlogSubcategoryFromUnknownCategory, language: LanguageFlag): PostBase[] =>
-  posts.filter((post) => getBlogPostSubcategory(post) === subcategory && getBlogPostLanguageFlag(post) === language);
-
-export function getPostUnstrict(
+export function getBlogPostUnstrict(
   { category, subcategory }: UnknownCategoryAndUnknownSubcategory,
   targettedSlug: UnknownBlogSlug,
   langFlag: LanguageFlag
 ): undefined | PostBase {
-  const postsCollection: PostBase[] = getAllPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
+  const postsCollection: PostBase[] = getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
 
   if (langFlag === DEFAULT_LANGUAGE) {
     return postsCollection.find((post) => getBlogPostSubcategoryAndSlugStr(post) === buildPathFromParts(subcategory, targettedSlug));
@@ -95,25 +92,25 @@ export function getPostUnstrict(
   );
 }
 
-export const getAllPostsByCategoryAndSubcategoryStrict = <C extends BlogCategory>(category: C, subcategory: BlogArchitecture[C]): PostBase[] =>
-  getAllPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
+export const getAllBlogPostsByCategoryAndSubcategoryStrict = <C extends BlogCategory>(category: C, subcategory: BlogArchitecture[C]): PostBase[] =>
+  getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
 
-export const getAllPostsByCategoryAndSubcategoryAndLanguageFlagStrict = <C extends BlogCategory>(
+export const getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict = <C extends BlogCategory>(
   category: C,
   subcategory: BlogArchitecture[C],
   language: LanguageFlag
-): PostBase[] => getAllPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, language);
+): PostBase[] => getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, language);
 
-export const getPostStrict = <C extends BlogCategory>(
+export const getBlogPostStrict = <C extends BlogCategory>(
   category: C,
   subcategory: BlogArchitecture[C],
   targettedSlug: UnknownBlogSlug,
   langFlag: LanguageFlag
-): undefined | PostBase => getPostUnstrict({ category, subcategory }, targettedSlug, langFlag);
+): undefined | PostBase => getBlogPostUnstrict({ category, subcategory }, targettedSlug, langFlag);
 
-export const getAllCategories = (): BlogCategory[] => Object.keys(BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC) as BlogCategory[];
+export const getAllBlogCategories = (): BlogCategory[] => Object.keys(BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC) as BlogCategory[];
 
-export function subcategoryShouldTriggerNotFound<C extends BlogCategory>(
+export function blogSubcategoryShouldTriggerNotFound<C extends BlogCategory>(
   postsCollection: PostBase[],
   { category, subcategory }: BlogCategoryAndSubcategoriesPair<C>
 ): boolean {
@@ -121,7 +118,7 @@ export function subcategoryShouldTriggerNotFound<C extends BlogCategory>(
   return postsCollection.length === 0 && !isForcedPath;
 }
 
-export function getPostFormattedDate(lng: LanguageFlag, { date }: PostBase): string {
+export function getBlogPostFormattedDate(lng: LanguageFlag, { date }: PostBase): string {
   const postDateHasTime = (date: IsoDateTimeString) => date.substring(date.indexOf('T') + 1) !== '00:00:00.000Z';
 
   const giveTime = postDateHasTime(date);
@@ -129,14 +126,14 @@ export function getPostFormattedDate(lng: LanguageFlag, { date }: PostBase): str
   return formattedDate;
 }
 
-export function isValidCategory(category: string): boolean {
-  const categories = getAllCategories();
+export function isValidBlogCategory(category: string): boolean {
+  const categories = getAllBlogCategories();
   if (!categories.includes(category as any)) return false;
   return true;
 }
 
-export function isValidCategoryAndSubcategoryPair(category: BlogCategory, subcategory: BlogSubcategoryFromUnknownCategory): boolean {
-  if (!isValidCategory(category)) return false;
+export function isValidBlogCategoryAndSubcategoryPair(category: BlogCategory, subcategory: BlogSubcategoryFromUnknownCategory): boolean {
+  if (!isValidBlogCategory(category)) return false;
 
   const subcategories = getBlogSubcategoriesByCategory(category);
   if (!subcategories.includes(subcategory)) return false;

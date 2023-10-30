@@ -6,7 +6,7 @@ import rehypeExternalLinks from 'rehype-external-links';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
-import { AtomicDocumentConfig, DocumentsTypesMetadatas } from 'types/contentlayerConfig';
+import { AtomicContentLayerDocumentConfig, DocumentsTypesMetadatas } from 'types/contentlayerConfig';
 import CodeSnippetTheme from './config/blog/code-snippet-theme.json';
 import { addClassname } from './src/lib/astElements';
 import {
@@ -23,20 +23,20 @@ const contentDirPath = 'posts';
 const documentsTypesMetadatas: DocumentsTypesMetadatas = {
   PatchPost: {
     name: 'PatchPost',
-    filePathPattern: `patch-notes/**/*.${EXT}`,
-    contentType
+    filePathPattern: `patch-notes/**/*.${EXT}`
   },
   PatchPostBis: {
     name: 'PatchPostBis',
-    filePathPattern: `patch-notes-bis/**/*.${EXT}`,
-    contentType
+    filePathPattern: `patch-notes-bis/**/*.${EXT}`
   }
 } as const;
 
 const documentTypes: DocumentType<string>[] = Object.values(documentsTypesMetadatas).reduce(
   (acc, documentTypeMetadatas) => {
-    const { name, filePathPattern, contentType } = documentTypeMetadatas;
-    acc.push(defineDocumentType(() => ({ name, filePathPattern, contentType, fields, computedFields } as const satisfies AtomicDocumentConfig)));
+    const { name, filePathPattern } = documentTypeMetadatas;
+    acc.push(
+      defineDocumentType(() => ({ name, filePathPattern, contentType, fields, computedFields } as const satisfies AtomicContentLayerDocumentConfig))
+    );
     return acc;
   },
   [defineDocumentType(() => POST_SCHEMA_CONFIG)]

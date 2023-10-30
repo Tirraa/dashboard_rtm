@@ -4,12 +4,12 @@ import { LANGUAGES, i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { getServerSideI18n } from '@/i18n/server';
 import {
-  getAllCategories,
-  getAllPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict,
-  isValidCategory,
-  isValidCategoryAndSubcategoryPair,
-  redirectToBlogCategoryPage,
-  subcategoryShouldTriggerNotFound
+  blogSubcategoryShouldTriggerNotFound,
+  getAllBlogCategories,
+  getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict,
+  isValidBlogCategory,
+  isValidBlogCategoryAndSubcategoryPair,
+  redirectToBlogCategoryPage
 } from '@/lib/blog';
 import { getPageTitle } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
@@ -21,12 +21,12 @@ import { redirect } from 'next/navigation';
 export async function generateMetadata({ params }: BlogSubcategoryPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];
 
-  const validCategory = isValidCategory(category);
+  const validCategory = isValidBlogCategory(category);
   const equivRoutes = ROUTES_ROOTS.WEBSITE + category === ROUTES_ROOTS.BLOG + category;
   if (!validCategory && !equivRoutes) redirect(ROUTES_ROOTS.WEBSITE + category);
 
   const subcategory = params[BlogTaxonomy.SUBCATEGORY];
-  const validCombination = isValidCategoryAndSubcategoryPair(category, subcategory);
+  const validCombination = isValidBlogCategoryAndSubcategoryPair(category, subcategory);
   if (!validCombination) redirectToBlogCategoryPage(category);
 
   const globalT = await getServerSideI18n();
@@ -41,7 +41,7 @@ export async function generateStaticParams() {
   function generateBlogStaticParams(): Partial<BlogStaticParams>[] {
     const indexedParams = new Set<string>();
     const blogStaticParams: Partial<BlogStaticParams>[] = [];
-    const blogCategories = getAllCategories();
+    const blogCategories = getAllBlogCategories();
 
     blogCategories.forEach((categ) => {
       const category = categ as BlogCategory;
@@ -49,9 +49,9 @@ export async function generateStaticParams() {
 
       curSubcategs.forEach((subcategory) => {
         LANGUAGES.forEach((language) => {
-          const postsCollection: PostBase[] = getAllPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, language);
+          const postsCollection: PostBase[] = getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, language);
 
-          if (subcategoryShouldTriggerNotFound(postsCollection, { category, subcategory })) return;
+          if (blogSubcategoryShouldTriggerNotFound(postsCollection, { category, subcategory })) return;
 
           const staticParamsIndexKey = `${categ}-${subcategory}-${language}`;
           if (indexedParams.has(staticParamsIndexKey)) return;

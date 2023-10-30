@@ -1,8 +1,8 @@
 import { DocumentContentType } from 'contentlayer/source-files';
 import {
   ComputedFieldsAsFieldsRecord,
+  ContentLayerDocumentsConfigType,
   DocumentsComputedFields,
-  DocumentsConfigType,
   DocumentsFields,
   MakeDocumentsBaseFieldsSumType,
   MakeDocumentsTypesSumType,
@@ -37,10 +37,10 @@ const DOCUMENTS_COMPUTED_FIELDS_AS_FIELDS = {
   url: { type: 'string', required: true }
 } as const satisfies ComputedFieldsAsFieldsRecord;
 
-export const POST_SCHEMA_CONFIG: DocumentsConfigType = {
+export const POST_SCHEMA_CONFIG: ContentLayerDocumentsConfigType = {
   name: 'PostSchema',
   filePathPattern: '',
-  contentType: DOCUMENTS_CONTENT_TYPE,
+  contentType: DOCUMENTS_CONTENT_EXTENSION,
   fields: {
     ...DOCUMENTS_FIELDS,
     ...DOCUMENTS_COMPUTED_FIELDS_AS_FIELDS

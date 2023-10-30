@@ -4,12 +4,12 @@ import { LANGUAGES, i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { getServerSideI18n } from '@/i18n/server';
 import {
-  getAllCategories,
-  getAllPostsByCategoryAndSubcategoryUnstrict,
+  getAllBlogCategories,
+  getAllBlogPostsByCategoryAndSubcategoryUnstrict,
   getBlogPostSlug,
-  getPostUnstrict,
-  isValidCategory,
-  isValidCategoryAndSubcategoryPair,
+  getBlogPostUnstrict,
+  isValidBlogCategory,
+  isValidBlogCategoryAndSubcategoryPair,
   redirectToBlogCategoryAndSubcategoryPairPageUnstrict,
   redirectToBlogCategoryPage
 } from '@/lib/blog';
@@ -23,14 +23,14 @@ import { redirect } from 'next/navigation';
 export async function generateMetadata({ params }: BlogPostPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];
   const subcategory = params[BlogTaxonomy.SUBCATEGORY];
-  const validCombination = isValidCategoryAndSubcategoryPair(category, subcategory);
+  const validCombination = isValidBlogCategoryAndSubcategoryPair(category, subcategory);
 
   const slug = params[BlogTaxonomy.SLUG];
   const lang = params[i18nTaxonomy.LANG_FLAG];
-  const post = validCombination ? getPostUnstrict({ category, subcategory }, slug, lang) : undefined;
+  const post = validCombination ? getBlogPostUnstrict({ category, subcategory }, slug, lang) : undefined;
   if (!post && validCombination) {
     redirectToBlogCategoryAndSubcategoryPairPageUnstrict(category, subcategory);
-  } else if (!post && isValidCategory(category)) {
+  } else if (!post && isValidBlogCategory(category)) {
     redirectToBlogCategoryPage(category);
   } else if (!post) {
     redirect(ROUTES_ROOTS.WEBSITE + category);
@@ -47,7 +47,7 @@ export async function generateStaticParams() {
   function generateBlogStaticParams(): BlogStaticParams[] {
     const indexedParams = new Set<string>();
     const blogStaticParams: BlogStaticParams[] = [];
-    const blogCategories = getAllCategories();
+    const blogCategories = getAllBlogCategories();
 
     blogCategories.forEach((categ) => {
       const category = categ as BlogCategory;
@@ -55,13 +55,13 @@ export async function generateStaticParams() {
 
       curSubcategs.forEach((subcateg) => {
         const subcategory = subcateg as BlogSubcategoryFromUnknownCategory;
-        const relatedPosts = getAllPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
+        const relatedPosts = getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
 
         relatedPosts.forEach((post) => {
           LANGUAGES.forEach((language) => {
             const slug = getBlogPostSlug(post);
 
-            const blogPostExists = getPostUnstrict({ category, subcategory }, slug, language);
+            const blogPostExists = getBlogPostUnstrict({ category, subcategory }, slug, language);
             if (!blogPostExists) return;
 
             const staticParamsIndexKey = `${categ}-${subcategory}-${slug}-${language}`;

@@ -2,6 +2,8 @@ import { FieldDefType } from 'contentlayer/core';
 import { DocumentContentType } from 'contentlayer/source-files';
 import { BaseFields, DOCUMENTS_COMPUTED_FIELDS, DocumentsComputedFieldsKey, DocumentsTypesKey } from './contentlayerConfigTweakers';
 
+type ContentLayerContentType = { contentType: DocumentContentType };
+
 type ComputedFieldsKey = keyof typeof DOCUMENTS_COMPUTED_FIELDS;
 export type ComputedFieldsAsFieldsRecord = {
   [Key in ComputedFieldsKey]: Key extends keyof BaseFields ? BaseFields[Key] : never;
@@ -20,7 +22,6 @@ export type TypeName = DocumentsTypesKey | PostSchemaKey;
 type DocumentsConfigTypeContentLayerMetadatas<T extends TypeName = TypeName> = {
   name: T;
   filePathPattern: FilePathPattern;
-  contentType: DocumentContentType;
 };
 
 export type DocumentsTypesMetadatas = Record<DocumentsTypesKey, DocumentsConfigTypeContentLayerMetadatas<DocumentsTypesKey>>;
@@ -43,6 +44,9 @@ export type MakeDocumentsTypesSumType<T extends string> = T;
 export type DocumentsFields = Omit<BaseFields, DocumentsComputedFieldsKey>;
 export type DocumentsComputedFields = Pick<ComputedFields, DocumentsComputedFieldsKey>;
 export type AtomicDocumentConfig = DocumentsConfigType<DocumentsComputedFieldsKey>;
+export type AtomicContentLayerDocumentConfig = AtomicDocumentConfig & ContentLayerContentType;
+export type ContentLayerDocumentsConfigType<ComputedFields extends keyof BaseFields = never> = DocumentsConfigType<ComputedFields> &
+  ContentLayerContentType;
 
 type MakeRequiredField<T extends boolean> = { required: T };
 export type MakeTypeField<T extends FieldDefType> = { type: T };
