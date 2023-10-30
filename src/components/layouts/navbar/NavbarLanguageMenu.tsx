@@ -28,7 +28,7 @@ export const NavbarLanguageMenu: FunctionComponent<NavbarLanguageMenuProps> = ({
   const classNameBase = 'h-full bg-transparent text-white';
 
   return (
-    <Dropdown className="min-w-[135px]">
+    <Dropdown className={cn('min-w-[135px]', { 'relative bottom-5': isMobile })}>
       <DropdownTrigger>
         <button className={cn(classNameBase, nextuiRelatedClasses)}>{localesEmojis[currentLocale]}</button>
       </DropdownTrigger>
