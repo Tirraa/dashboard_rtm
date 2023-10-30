@@ -8,12 +8,12 @@ import {
 } from '../types/metadatas';
 import getErrorLabelForDefects from './getErrorLabelForDefects';
 
-export function checkSubCategories(sysData: CategoriesMetadatas, userDeclaredData: DeclaredCategoriesMetadatas): MaybeEmptyErrorsDetectionFeedback {
+export function checkSubcategories(sysData: CategoriesMetadatas, userDeclaredData: DeclaredCategoriesMetadatas): MaybeEmptyErrorsDetectionFeedback {
   let feedback: ErrorsDetectionFeedback = '';
   const sysCategories = Object.keys(sysData);
   const userDeclaredCategories = Object.keys(userDeclaredData);
-  const missingDeclaredSubCategories: CategoriesMetadatas = {};
-  const unknownSubCategories: Record<Category, string[]> = {};
+  const missingDeclaredSubcategories: CategoriesMetadatas = {};
+  const unknownSubcategories: Record<Category, string[]> = {};
 
   for (const category of sysCategories) {
     if (!userDeclaredCategories.includes(category)) continue;
@@ -21,20 +21,20 @@ export function checkSubCategories(sysData: CategoriesMetadatas, userDeclaredDat
     const currentSubcategories = userDeclaredData[category];
     for (const subCategory of currentSubcategories) {
       if (!sysData[category].includes(subCategory)) {
-        if (!unknownSubCategories[category]) unknownSubCategories[category] = [];
-        unknownSubCategories[category].push(subCategory);
+        if (!unknownSubcategories[category]) unknownSubcategories[category] = [];
+        unknownSubcategories[category].push(subCategory);
       }
     }
   }
 
-  const categoriesWithDefects = Object.keys(unknownSubCategories);
+  const categoriesWithDefects = Object.keys(unknownSubcategories);
   if (categoriesWithDefects.length > 0) {
     for (const categoryWithDefect of categoriesWithDefects) {
-      const unknownSubcategories = unknownSubCategories[categoryWithDefect];
+      const currentUnknownSubcategories = unknownSubcategories[categoryWithDefect];
       feedback += getErrorLabelForDefects(
-        unknownSubcategories,
+        currentUnknownSubcategories,
         `Unknown blog subcategory for the '${categoryWithDefect}' category: ${unknownSubcategories}` + '\n',
-        `Unknown blog subcategories for the '${categoryWithDefect}' category: ${LIST_ELEMENT_PREFIX}${unknownSubcategories.join(
+        `Unknown blog subcategories for the '${categoryWithDefect}' category: ${LIST_ELEMENT_PREFIX}${currentUnknownSubcategories.join(
           LIST_ELEMENT_PREFIX
         )}` + '\n'
       );
@@ -54,22 +54,22 @@ export function checkSubCategories(sysData: CategoriesMetadatas, userDeclaredDat
     const currentSubcategories = sysData[category];
     for (const subCategory of currentSubcategories) {
       if (!userDeclaredData[category].includes(subCategory)) {
-        if (!missingDeclaredSubCategories[category]) missingDeclaredSubCategories[category] = [];
-        missingDeclaredSubCategories[category].push(subCategory);
+        if (!missingDeclaredSubcategories[category]) missingDeclaredSubcategories[category] = [];
+        missingDeclaredSubcategories[category].push(subCategory);
       }
     }
   }
 
-  const categoriesWithMissingDeclaredSubCategories = Object.keys(missingDeclaredSubCategories);
-  if (categoriesWithMissingDeclaredSubCategories.length > 0) {
+  const categoriesWithMissingDeclaredSubcategories = Object.keys(missingDeclaredSubcategories);
+  if (categoriesWithMissingDeclaredSubcategories.length > 0) {
     if (feedback) feedback += '\n';
     feedback += 'Blog subcategories keys must be exhaustive!' + '\n';
-    for (const categoryWithMissingDeclaredSubCategories of categoriesWithMissingDeclaredSubCategories) {
-      const missingKeys = missingDeclaredSubCategories[categoryWithMissingDeclaredSubCategories];
+    for (const categoryWithMissingDeclaredSubcategories of categoriesWithMissingDeclaredSubcategories) {
+      const missingKeys = missingDeclaredSubcategories[categoryWithMissingDeclaredSubcategories];
       feedback += getErrorLabelForDefects(
         missingKeys,
-        `Missing key for the '${categoryWithMissingDeclaredSubCategories}' category: ${missingKeys}` + '\n',
-        `Missing keys for the '${categoryWithMissingDeclaredSubCategories}' category: ${LIST_ELEMENT_PREFIX}${missingKeys.join(
+        `Missing key for the '${categoryWithMissingDeclaredSubcategories}' category: ${missingKeys}` + '\n',
+        `Missing keys for the '${categoryWithMissingDeclaredSubcategories}' category: ${LIST_ELEMENT_PREFIX}${missingKeys.join(
           LIST_ELEMENT_PREFIX
         )}` + '\n'
       );
@@ -79,4 +79,4 @@ export function checkSubCategories(sysData: CategoriesMetadatas, userDeclaredDat
   return feedback;
 }
 
-export default checkSubCategories;
+export default checkSubcategories;

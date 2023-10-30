@@ -1,6 +1,6 @@
 import { CRITICAL_ERRORS_STR, UPDATE_THE_BLOG_ARCHITECTURE_TYPE } from '../config/vocab';
 import checkCategories from '../lib/checkCategories';
-import checkSubCategories from '../lib/checkSubCategories';
+import checkSubcategories from '../lib/checkSubcategories';
 import { mergeFeedbacks, prefixFeedback } from '../lib/feedbacksMerge';
 import { CategoriesMetadatas, DeclaredCategoriesMetadatas, MaybeEmptyErrorsDetectionFeedback } from '../types/metadatas';
 
@@ -16,10 +16,10 @@ export function declaredBlogArchitectureValidator(
   let checkCategoriesFeedback: MaybeEmptyErrorsDetectionFeedback = checkCategories(Object.keys(sysData), Object.keys(userDeclaredData));
   if (checkCategoriesFeedback) checkCategoriesFeedback += UPDATE_THE_BLOG_ARCHITECTURE_TYPE + '\n';
 
-  let checkSubCategoriesFeedback: MaybeEmptyErrorsDetectionFeedback = checkSubCategories(sysData, userDeclaredData);
-  if (checkSubCategoriesFeedback) checkSubCategoriesFeedback += UPDATE_THE_BLOG_ARCHITECTURE_TYPE + '\n';
+  let checkSubcategoriesFeedback: MaybeEmptyErrorsDetectionFeedback = checkSubcategories(sysData, userDeclaredData);
+  if (checkSubcategoriesFeedback) checkSubcategoriesFeedback += UPDATE_THE_BLOG_ARCHITECTURE_TYPE + '\n';
 
-  const feedback = prefixFeedback(mergeFeedbacks(checkCategoriesFeedback, checkSubCategoriesFeedback), ERROR_PREFIX + ' ' + ERROR_PREFIX_TAIL + '\n');
+  const feedback = prefixFeedback(mergeFeedbacks(checkCategoriesFeedback, checkSubcategoriesFeedback), ERROR_PREFIX + ' ' + ERROR_PREFIX_TAIL + '\n');
   return feedback;
 }
 

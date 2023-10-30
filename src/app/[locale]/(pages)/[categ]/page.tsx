@@ -1,4 +1,4 @@
-import CategoryRelatedSubCategoriesAndBlogPosts from '@/components/pages/blog/CategoryRelatedSubCategoriesAndBlogPosts';
+import CategoryRelatedSubcategoriesAndBlogPosts from '@/components/pages/blog/CategoryRelatedSubcategoriesAndBlogPosts';
 import { LANGUAGES, i18ns } from '@/config/i18n';
 import { getServerSideI18n } from '@/i18n/server';
 import { getAllCategories } from '@/lib/blog';
@@ -41,5 +41,5 @@ export default function Page({ params }: BlogCategoryPageProps) {
   const lng = params[i18nTaxonomy.LANG_FLAG];
   setStaticParamsLocale(lng);
 
-  return <CategoryRelatedSubCategoriesAndBlogPosts {...{ params }} />;
+  return <CategoryRelatedSubcategoriesAndBlogPosts {...{ params }} />;
 }

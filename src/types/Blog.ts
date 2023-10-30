@@ -10,24 +10,24 @@ export type PostBase = Omit<PostSchema, ContentLayerPhantomType>;
 
 export type BlogCategory = keyof BlogArchitecture;
 
-export type BlogSubCategoryFromUnknownCategory = BlogArchitecture[BlogCategory];
+export type BlogSubcategoryFromUnknownCategory = BlogArchitecture[BlogCategory];
 
 export type UnknownBlogSlug = string;
 
 type BlogPostPagePropsParams = RequiredFieldsOnly<TBlogTaxonomy>;
 type BlogCategoryPagePropsParams = Pick<TBlogTaxonomy, 'categ'>;
 
-type BlogSubCategoryPagePropsParams = {
+type BlogSubcategoryPagePropsParams = {
   [BlogTaxonomy.CATEGORY]: BlogCategory;
-  [BlogTaxonomy.SUBCATEGORY]: BlogSubCategoryFromUnknownCategory;
+  [BlogTaxonomy.SUBCATEGORY]: BlogSubcategoryFromUnknownCategory;
 };
 
 export interface BlogCategoryPageProps {
   params: BlogCategoryPagePropsParams & i18nParams;
 }
 
-export interface BlogSubCategoryPageProps {
-  params: BlogSubCategoryPagePropsParams & i18nParams;
+export interface BlogSubcategoryPageProps {
+  params: BlogSubcategoryPagePropsParams & i18nParams;
 }
 
 export interface BlogPostPageProps {
@@ -49,22 +49,22 @@ export type BlogStaticParams = {
   [_ in keyof TBlogTaxonomy]: BlogStaticParamsValue;
 };
 
-export type UnknownCategoryAndUnknownSubCategory = {
+export type UnknownCategoryAndUnknownSubcategory = {
   category: BlogCategory;
-  subCategory: BlogSubCategoryFromUnknownCategory;
+  subCategory: BlogSubcategoryFromUnknownCategory;
 };
 
-type BlogSubCategoryMappedToBlogCategory = {
+type BlogSubcategoryMappedToBlogCategory = {
   [C in BlogCategory]: BlogArchitecture[C];
 };
 
-type BlogSubCategories<C extends BlogCategory> = BlogSubCategoryMappedToBlogCategory[C];
+type BlogSubcategories<C extends BlogCategory> = BlogSubcategoryMappedToBlogCategory[C];
 
-export type ForcedBlogSubCategoriesPaths = {
-  [C in BlogCategory]?: BlogSubCategories<C>[];
+export type ForcedBlogSubcategoriesPaths = {
+  [C in BlogCategory]?: BlogSubcategories<C>[];
 };
 
 export type BlogCategoryAndSubcategoriesPair<C extends BlogCategory> = {
   category: C;
-  subCategory: BlogSubCategories<C>;
+  subCategory: BlogSubcategories<C>;
 };

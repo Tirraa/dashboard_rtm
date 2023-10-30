@@ -1,4 +1,4 @@
-import { BlogCategory, ForcedBlogSubCategoriesPaths, PostsCollectionAssoc } from '@/types/Blog';
+import { BlogCategory, ForcedBlogSubcategoriesPaths, PostsCollectionAssoc } from '@/types/Blog';
 import { allPatchPostBis, allPatchPosts } from 'contentlayer/generated';
 
 type TBlogConfig = {
@@ -6,7 +6,7 @@ type TBlogConfig = {
   DISPLAYED_BLOG_POSTS_PER_SUBCATEGORY_ON_BLOG_CATEGORY_PAGE_LIMIT: number;
   BLOG_POST_PREVIEW_DESCRIPTION_CHARACTERS_LIMIT: number;
   BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC: PostsCollectionAssoc<BlogCategory>;
-  FORCED_BLOG_SUBCATEGORIES_PATHS: ForcedBlogSubCategoriesPaths;
+  FORCED_BLOG_SUBCATEGORIES_PATHS: ForcedBlogSubcategoriesPaths;
 };
 
 export type BlogArchitecture = {

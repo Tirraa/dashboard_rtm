@@ -1,24 +1,24 @@
-import { getBlogSubCategoriesByCategory } from '@/cache/blog';
-import SubCategoryRelatedBlogPosts from '@/components/pages/blog/SubCategoryRelatedBlogPosts';
+import { getBlogSubcategoriesByCategory } from '@/cache/blog';
+import SubcategoryRelatedBlogPosts from '@/components/pages/blog/SubcategoryRelatedBlogPosts';
 import { LANGUAGES, i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { getServerSideI18n } from '@/i18n/server';
 import {
   getAllCategories,
-  getAllPostsByCategoryAndSubCategoryAndLanguageFlagUnstrict,
+  getAllPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict,
   isValidCategory,
-  isValidCategoryAndSubCategoryPair,
+  isValidCategoryAndSubcategoryPair,
   redirectToBlogCategoryPage,
   subCategoryShouldTriggerNotFound
 } from '@/lib/blog';
 import { getPageTitle } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogCategory, BlogStaticParams, BlogSubCategoryPageProps, PostBase } from '@/types/Blog';
+import { BlogCategory, BlogStaticParams, BlogSubcategoryPageProps, PostBase } from '@/types/Blog';
 import { setStaticParamsLocale } from 'next-international/server';
 import { redirect } from 'next/navigation';
 
-export async function generateMetadata({ params }: BlogSubCategoryPageProps) {
+export async function generateMetadata({ params }: BlogSubcategoryPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];
 
   const validCategory = isValidCategory(category);
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: BlogSubCategoryPageProps) {
   if (!validCategory && !equivRoutes) redirect(ROUTES_ROOTS.WEBSITE + category);
 
   const subCategory = params[BlogTaxonomy.SUBCATEGORY];
-  const validCombination = isValidCategoryAndSubCategoryPair(category, subCategory);
+  const validCombination = isValidCategoryAndSubcategoryPair(category, subCategory);
   if (!validCombination) redirectToBlogCategoryPage(category);
 
   const globalT = await getServerSideI18n();
@@ -45,11 +45,11 @@ export async function generateStaticParams() {
 
     blogCategories.forEach((categ) => {
       const category = categ as BlogCategory;
-      const curSubCategs = getBlogSubCategoriesByCategory(category);
+      const curSubcategs = getBlogSubcategoriesByCategory(category);
 
-      curSubCategs.forEach((subCategory) => {
+      curSubcategs.forEach((subCategory) => {
         LANGUAGES.forEach((language) => {
-          const postsCollection: PostBase[] = getAllPostsByCategoryAndSubCategoryAndLanguageFlagUnstrict({ category, subCategory }, language);
+          const postsCollection: PostBase[] = getAllPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subCategory }, language);
 
           if (subCategoryShouldTriggerNotFound(postsCollection, { category, subCategory })) return;
 
@@ -71,9 +71,9 @@ export async function generateStaticParams() {
   return staticParams;
 }
 
-export default function Page({ params }: BlogSubCategoryPageProps) {
+export default function Page({ params }: BlogSubcategoryPageProps) {
   const lng = params[i18nTaxonomy.LANG_FLAG];
   setStaticParamsLocale(lng);
 
-  return <SubCategoryRelatedBlogPosts {...{ params }} />;
+  return <SubcategoryRelatedBlogPosts {...{ params }} />;
 }

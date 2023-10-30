@@ -1,9 +1,9 @@
 export type UnknownI18nJSONObj = Record<string, unknown>;
-export type SubCategory = string;
+export type Subcategory = string;
 export type Category = string;
 
-type SubCategories = SubCategory[];
-export type CategoriesMetadatas = Record<Category, SubCategories>;
+type Subcategories = Subcategory[];
+export type CategoriesMetadatas = Record<Category, Subcategories>;
 export type DeclaredCategoriesMetadatas = CategoriesMetadatas;
 
 type UnknownI18nJSONProp = string | UnknownI18nJSONObj;

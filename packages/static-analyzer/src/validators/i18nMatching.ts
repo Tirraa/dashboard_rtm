@@ -6,7 +6,7 @@ import {
 } from '../config';
 import { CRITICAL_ERRORS_STR, UPDATE_THE_BLOG_CATEGORIES_OBJECT } from '../config/vocab';
 import checkCategories from '../lib/checkCategories';
-import checkSubCategories from '../lib/checkSubCategories';
+import checkSubcategories from '../lib/checkSubcategories';
 import { foldFeedbacks, prefixFeedback } from '../lib/feedbacksMerge';
 import getErrorLabelForDefects from '../lib/getErrorLabelForDefects';
 import {
@@ -15,7 +15,7 @@ import {
   I18nJSONPart,
   MaybeEmptyErrorsDetectionFeedback,
   Path,
-  SubCategory,
+  Subcategory,
   UnknownI18nJSONObj,
   i18nField
 } from '../types/metadatas';
@@ -27,8 +27,8 @@ function checkCategoriesDataType(sysData: CategoriesMetadatas, i18nBlogCategorie
   const i18nCategoriesKeys = Object.keys(i18nBlogCategoriesData);
 
   for (const currentCategory of i18nCategoriesKeys) {
-    const sysSubCategs = sysData[currentCategory];
-    if (!sysSubCategs) continue;
+    const sysSubcategs = sysData[currentCategory];
+    if (!sysSubcategs) continue;
 
     const currentCategoryI18nData = i18nBlogCategoriesData[currentCategory] as UnknownI18nJSONObj;
     if (typeof currentCategoryI18nData !== 'object') {
@@ -92,16 +92,16 @@ function checkSubcategoriesMissingRequiredI18nFields(
   sysData: CategoriesMetadatas,
   i18nBlogCategoriesData: I18nJSONPart,
   i18nCategoriesKeys: i18nField[],
-  requiredSubCategoryFields: i18nField[]
+  requiredSubcategoryFields: i18nField[]
 ): MaybeEmptyErrorsDetectionFeedback {
   let feedback = '';
 
-  const missingSubCategoryFields: Record<Category, Record<SubCategory, i18nField[]>> = {};
+  const missingSubcategoryFields: Record<Category, Record<Subcategory, i18nField[]>> = {};
   for (const currentCategory of i18nCategoriesKeys) {
-    const sysSubCategs = sysData[currentCategory];
-    if (!sysSubCategs) continue;
+    const sysSubcategs = sysData[currentCategory];
+    if (!sysSubcategs) continue;
 
-    for (const currentExpectedSubcategory of sysSubCategs) {
+    for (const currentExpectedSubcategory of sysSubcategs) {
       const currentCategoryI18nData = i18nBlogCategoriesData[currentCategory] as UnknownI18nJSONObj;
       if (typeof currentCategoryI18nData !== 'object') break;
 
@@ -110,25 +110,25 @@ function checkSubcategoriesMissingRequiredI18nFields(
 
       const currentSubcategoryI18nMetadatas = Object.keys(currentCategoryI18nData[currentExpectedSubcategory] as UnknownI18nJSONObj);
 
-      for (const requiredSubCategoryField of requiredSubCategoryFields) {
-        if (!currentSubcategoryI18nMetadatas.includes(requiredSubCategoryField)) {
-          if (!missingSubCategoryFields[currentCategory]) missingSubCategoryFields[currentCategory] = {};
-          if (!missingSubCategoryFields[currentCategory][currentExpectedSubcategory])
-            missingSubCategoryFields[currentCategory][currentExpectedSubcategory] = [];
-          missingSubCategoryFields[currentCategory][currentExpectedSubcategory].push(requiredSubCategoryField);
+      for (const requiredSubcategoryField of requiredSubcategoryFields) {
+        if (!currentSubcategoryI18nMetadatas.includes(requiredSubcategoryField)) {
+          if (!missingSubcategoryFields[currentCategory]) missingSubcategoryFields[currentCategory] = {};
+          if (!missingSubcategoryFields[currentCategory][currentExpectedSubcategory])
+            missingSubcategoryFields[currentCategory][currentExpectedSubcategory] = [];
+          missingSubcategoryFields[currentCategory][currentExpectedSubcategory].push(requiredSubcategoryField);
         }
       }
     }
   }
 
-  Object.keys(missingSubCategoryFields).forEach((categoryWithDefects) => {
-    Object.keys(missingSubCategoryFields[categoryWithDefects]).forEach((subCategoryWithDefects) => {
-      const missingSubCategoryKeys = missingSubCategoryFields[categoryWithDefects][subCategoryWithDefects];
+  Object.keys(missingSubcategoryFields).forEach((categoryWithDefects) => {
+    Object.keys(missingSubcategoryFields[categoryWithDefects]).forEach((subCategoryWithDefects) => {
+      const missingSubcategoryKeys = missingSubcategoryFields[categoryWithDefects][subCategoryWithDefects];
       feedback += getErrorLabelForDefects(
-        missingSubCategoryKeys,
-        `Missing required i18n field for the '${subCategoryWithDefects}' subcategory from '${BLOG_CATEGORIES_I18N_ROOT_KEY}.${categoryWithDefects}': ${missingSubCategoryKeys}` +
+        missingSubcategoryKeys,
+        `Missing required i18n field for the '${subCategoryWithDefects}' subcategory from '${BLOG_CATEGORIES_I18N_ROOT_KEY}.${categoryWithDefects}': ${missingSubcategoryKeys}` +
           '\n',
-        `Missing required i18n fields for the '${subCategoryWithDefects}' subcategory from '${BLOG_CATEGORIES_I18N_ROOT_KEY}.${categoryWithDefects}': ${LIST_ELEMENT_PREFIX}${missingSubCategoryKeys.join(
+        `Missing required i18n fields for the '${subCategoryWithDefects}' subcategory from '${BLOG_CATEGORIES_I18N_ROOT_KEY}.${categoryWithDefects}': ${LIST_ELEMENT_PREFIX}${missingSubcategoryKeys.join(
           LIST_ELEMENT_PREFIX
         )}` + '\n'
       );
@@ -176,8 +176,8 @@ export function declaredI18nValidator(
   let checkCategoriesFeedback: MaybeEmptyErrorsDetectionFeedback = checkCategories(Object.keys(sysData), i18nCategoriesKeys);
   if (checkCategoriesFeedback) checkCategoriesFeedback += UPDATE_THE_BLOG_CATEGORIES_OBJECT + '\n';
 
-  let checkSubCategoriesFeedback: MaybeEmptyErrorsDetectionFeedback = checkSubCategories(sysData, i18nCategoriesMetadatas);
-  if (checkSubCategoriesFeedback) checkSubCategoriesFeedback += UPDATE_THE_BLOG_CATEGORIES_OBJECT + '\n';
+  let checkSubcategoriesFeedback: MaybeEmptyErrorsDetectionFeedback = checkSubcategories(sysData, i18nCategoriesMetadatas);
+  if (checkSubcategoriesFeedback) checkSubcategoriesFeedback += UPDATE_THE_BLOG_CATEGORIES_OBJECT + '\n';
 
   const feedback = prefixFeedback(
     foldFeedbacks(
@@ -185,7 +185,7 @@ export function declaredI18nValidator(
       checkCategoriesMissingRequiredI18nFieldsFeedback,
       checkSubcategoriesMissingRequiredI18nFieldsFeedback,
       checkCategoriesFeedback,
-      checkSubCategoriesFeedback
+      checkSubcategoriesFeedback
     ),
     ERROR_PREFIX + ' ' + ERROR_PREFIX_TAIL + '\n'
   );

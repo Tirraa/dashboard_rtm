@@ -1,6 +1,6 @@
 import MDX from '@/components/layouts/blog/MdxComponent';
 import BlogPostDate from '@/components/shared/ui/blog/BlogPostDate';
-import { getPostUnstrict, isValidCategoryAndSubCategoryPair } from '@/lib/blog';
+import { getPostUnstrict, isValidCategoryAndSubcategoryPair } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import { BlogPostPageProps, BlogPostProps } from '@/types/Blog';
@@ -27,7 +27,7 @@ export const BlogPost: FunctionComponent<BlogPostPageProps> = ({ params }) => {
   const category = params[BlogTaxonomy.CATEGORY];
   const subCategory = params[BlogTaxonomy.SUBCATEGORY];
 
-  if (!isValidCategoryAndSubCategoryPair(category, subCategory)) notFound();
+  if (!isValidCategoryAndSubcategoryPair(category, subCategory)) notFound();
 
   const slug = params[BlogTaxonomy.SLUG];
   const lng = params[i18nTaxonomy.LANG_FLAG];
