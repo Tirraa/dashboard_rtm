@@ -35,7 +35,7 @@ const documentTypes: DocumentType<string>[] = Object.values(documentsTypesMetada
   (acc, documentTypeMetadatas) => {
     const { name, filePathPattern } = documentTypeMetadatas;
     acc.push(
-      defineDocumentType(() => ({ name, filePathPattern, contentType, fields, computedFields } as const satisfies AtomicContentLayerDocumentConfig))
+      defineDocumentType(() => ({ name, filePathPattern, contentType, fields, computedFields }) as const satisfies AtomicContentLayerDocumentConfig)
     );
     return acc;
   },
