@@ -26,8 +26,8 @@ const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> =
 
   if (session) {
     return (
-      <ButtonHoC className="p-0 min-w-0 bg-transparent" onClick={() => signOut()}>
-        <UserImage user={session?.user} width={SIZE} height={SIZE} className="rounded-full absolute brightness-75" />
+      <ButtonHoC className="min-w-0 bg-transparent p-0" onClick={() => signOut()}>
+        <UserImage user={session?.user} width={SIZE} height={SIZE} className="absolute rounded-full brightness-75" />
         <SignalSlashIcon width={SIZE} height={SIZE} className="relative shadow-xl" />
         <span className="sr-only">{scopedT('logout')}</span>
       </ButtonHoC>
@@ -35,7 +35,7 @@ const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> =
   }
 
   return (
-    <ButtonHoC className="p-0 min-w-0 bg-transparent" onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })}>
+    <ButtonHoC className="min-w-0 bg-transparent p-0" onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })}>
       <KeyIcon width={SIZE} height={SIZE} />
       <span className="sr-only">{scopedT('login')}</span>
     </ButtonHoC>

@@ -65,7 +65,7 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ i18nTitle
   return (
     <Dropdown
       onOpenChange={handleOpenChange}
-      className="py-1 px-1 border dark:border-black dark:bg-slate-950"
+      className="border px-1 py-1 dark:border-black dark:bg-slate-950"
       key={`reset-dropdown-via-breakpoint-state-${isLargeScreen}`}
     >
       <DropdownTrigger>

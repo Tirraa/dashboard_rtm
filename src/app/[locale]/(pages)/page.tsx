@@ -24,7 +24,7 @@ export default function Page({ params }: i18nPageProps) {
   setStaticParamsLocale(lng);
 
   return (
-    <main className={cn('flex flex-col flex-1 justify-center', MAIN_NEXT_UI_CLS)}>
+    <main className={cn('flex flex-1 flex-col justify-center', MAIN_NEXT_UI_CLS)}>
       <Homepage />
     </main>
   );

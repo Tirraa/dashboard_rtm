@@ -17,7 +17,7 @@ export const Loader: FunctionComponent<LoaderProps> = ({ override: cssOverride }
   const color = theme ? COLORS[theme as ThemeVariant] : DEFAULT_COLOR;
 
   return (
-    <div className="cursor-wait select-none z-50 fixed inset-0 flex items-center justify-center w-full h-screen">
+    <div className="fixed inset-0 z-50 flex h-screen w-full cursor-wait select-none items-center justify-center">
       <BeatLoader {...{ color, cssOverride }} margin={4.5} speedMultiplier={1.35} loading={true} aria-label="..." className="animate-pulse" />
     </div>
   );

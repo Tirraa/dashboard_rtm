@@ -57,9 +57,9 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
       const title = (
         <Link
           {...{ href }}
-          className="transition-all flex w-fit h-fit leading-none	decoration-primary-500 border-transparent	border-b-[2px] hover:border-b-[2px] hover:border-inherit hover:indent-1 hover:pr-2 mb-4"
+          className="mb-4 flex h-fit w-fit border-b-[2px]	border-transparent leading-none	decoration-primary-500 transition-all hover:border-b-[2px] hover:border-inherit hover:pr-2 hover:indent-1"
         >
-          <h2 className="mt-2 mb-1">{curSubcategTitle}</h2>
+          <h2 className="mb-1 mt-2">{curSubcategTitle}</h2>
         </Link>
       );
 
@@ -75,7 +75,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
         posts.pop();
       }
 
-      const sep = <hr key={`${subcategory}-${curSubcategTitle}-sep`} className="my-5 m-auto w-36 opacity-50 color-inherit" />;
+      const sep = <hr key={`${subcategory}-${curSubcategTitle}-sep`} className="color-inherit m-auto my-5 w-36 opacity-50" />;
 
       const section = (
         <section

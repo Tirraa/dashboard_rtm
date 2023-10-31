@@ -23,9 +23,9 @@ export const DashboardLayoutClient: FunctionComponent<DashboardLayoutClientProps
   });
 
   return (
-    <div className="flex flex-1 overflow-y-hidden flex-col lg:flex-row">
+    <div className="flex flex-1 flex-col overflow-y-hidden lg:flex-row">
       <DashboardSidebar />
-      <main ref={mainElementRef} className={cn('flex-1 py-7 px-4 lg:px-8 lg:py-4 overflow-y-auto', MAIN_NEXT_UI_CLS)}>
+      <main ref={mainElementRef} className={cn('flex-1 overflow-y-auto px-4 py-7 lg:px-8 lg:py-4', MAIN_NEXT_UI_CLS)}>
         {children}
       </main>
     </div>

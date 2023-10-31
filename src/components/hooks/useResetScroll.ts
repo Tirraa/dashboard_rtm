@@ -7,7 +7,10 @@ interface ResetScrollOptions {
   additionalDep?: HookDepsArrayPrimitives;
 }
 
-function useResetScroll<T extends HTMLElement>(scrollableElementToResetRef?: RefObject<T>, {alsoResetWindowScroll, additionalDep}: ResetScrollOptions = {}) {
+function useResetScroll<T extends HTMLElement>(
+  scrollableElementToResetRef?: RefObject<T>,
+  { alsoResetWindowScroll, additionalDep }: ResetScrollOptions = {}
+) {
   useLayoutEffect(
     () => resetScroll(scrollableElementToResetRef, Boolean(alsoResetWindowScroll)),
 

@@ -52,7 +52,7 @@ export const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) =>
     <Dropdown
       closeOnSelect={false}
       onOpenChange={handleOpenChange}
-      className="py-1 px-1 border dark:border-black dark:bg-slate-950"
+      className="border px-1 py-1 dark:border-black dark:bg-slate-950"
       classNames={{ arrow: 'dark:bg-slate-800' }}
       key={`reset-dropdown-via-breakpoint-state-${isLargeScreen}`}
       backdrop="opaque"
@@ -61,7 +61,7 @@ export const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) =>
       <DropdownTrigger aria-label={!isOpened ? scopedT('open-hamburger-menu') : scopedT('close-hamburger-menu')}>
         <button
           ref={togglerRef}
-          className="w-full h-full flex flex-col items-center justify-center text-white transition-opacity outline-none before:content-[''] before:block before:h-px before:w-6 before:bg-current before:transition-transform before:duration-150 before:-translate-y-1 before:rotate-0 after:content-[''] after:block after:h-px after:w-6 after:bg-current after:transition-transform after:duration-150 after:translate-y-1 after:rotate-0 data-[open=true]:before:translate-y-px data-[open=true]:after:translate-y-0 data-[open=true]:before:rotate-45 data-[open=true]:after:-rotate-45 data-[pressed=true]:opacity-70"
+          className="flex h-full w-full flex-col items-center justify-center text-white outline-none transition-opacity before:block before:h-px before:w-6 before:-translate-y-1 before:rotate-0 before:bg-current before:transition-transform before:duration-150 before:content-[''] after:block after:h-px after:w-6 after:translate-y-1 after:rotate-0 after:bg-current after:transition-transform after:duration-150 after:content-[''] data-[pressed=true]:opacity-70 data-[open=true]:before:translate-y-px data-[open=true]:before:rotate-45 data-[open=true]:after:translate-y-0 data-[open=true]:after:-rotate-45"
         />
       </DropdownTrigger>
 

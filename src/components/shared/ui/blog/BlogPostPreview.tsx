@@ -13,11 +13,11 @@ export const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = ({ post,
   const descriptionSnippet = post.description ? getSlicedBlogPostDescription(post.description) : getSlicedBlogPostDescription(post.metadescription);
 
   return (
-    <article className="transition-colors transition-transform border duration-300 border-neutral-200 dark:border-slate-500 border-2 rounded overflow-hidden shadow-xl hover:scale-105 hover:delay-0 hover:duration-100">
-      <Link href={getBlogPostPathWithoutI18nPart(post)} className="p-4 flex flex-col w-full h-full">
+    <article className="overflow-hidden rounded border border-2 border-neutral-200 shadow-xl transition-colors transition-transform duration-300 hover:scale-105 hover:delay-0 hover:duration-100 dark:border-slate-500">
+      <Link href={getBlogPostPathWithoutI18nPart(post)} className="flex h-full w-full flex-col p-4">
         {isNotOnBlogSubcategoryPage ? <h3>{post.title}</h3> : <h2 className="is-h3">{post.title}</h2>}
         <BlogPostDate {...{ post, lng }} />
-        <div className="text-sm [&>*]:mb-3 [&>*:last-child]:mb-0 break-words">{descriptionSnippet}</div>
+        <div className="break-words text-sm [&>*:last-child]:mb-0 [&>*]:mb-3">{descriptionSnippet}</div>
       </Link>
     </article>
   );

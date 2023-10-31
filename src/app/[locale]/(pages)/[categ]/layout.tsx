@@ -5,7 +5,7 @@ import { LayoutMinimalProps } from '@/types/Next';
 
 export default function BlogLayout({ children }: LayoutMinimalProps) {
   return (
-    <main className={cn('flex-1 w-full', MAIN_NEXT_UI_CLS)}>
+    <main className={cn('w-full flex-1', MAIN_NEXT_UI_CLS)}>
       <Breadcrumbs />
       {children}
     </main>

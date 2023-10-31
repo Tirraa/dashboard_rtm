@@ -27,14 +27,14 @@ const { LOGO_SIZE_PX_VALUE } = NAVBAR_STYLE;
 
 const buildNavbarExtrasForDesktop = (): ReactNode[] =>
   Object.values(NAVBAR_EXTRAS_COMPONENTS_DESKTOP).map((component, index) => (
-    <li className="flex w-fit h-fit" key={`${index}-navbar-extra-desktop`}>
+    <li className="flex h-fit w-fit" key={`${index}-navbar-extra-desktop`}>
       {component}
     </li>
   ));
 
 const buildNavbarExtrasForMobile = (): ReactNode[] =>
   Object.values(NAVBAR_EXTRAS_COMPONENTS_MOBILE).map((component, index) => (
-    <li className="h-full flex items-center" key={`${index}-navbar-extra-mobile`}>
+    <li className="flex h-full items-center" key={`${index}-navbar-extra-mobile`}>
       {component}
     </li>
   ));
@@ -78,15 +78,15 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   );
 
   return (
-    <nav className="flex z-30 w-full h-auto items-center justify-center sticky top-0 inset-x-0 backdrop-blur-lg backdrop-saturate-150 bg-black">
-      <header className="z-30 flex gap-4 w-full flex-row relative flex-nowrap items-center justify-between h-[82px] max-w-full px-5">
+    <nav className="sticky inset-x-0 top-0 z-30 flex h-auto w-full items-center justify-center bg-black backdrop-blur-lg backdrop-saturate-150">
+      <header className="relative z-30 flex h-[82px] w-full max-w-full flex-row flex-nowrap items-center justify-between gap-4 px-5">
         {navbarBrand}
 
-        <ul className="hidden lg:flex gap-4 justify-center">{desktopNavbarItems}</ul>
+        <ul className="hidden justify-center gap-4 lg:flex">{desktopNavbarItems}</ul>
 
-        <ul className={cn('hidden lg:flex justify-end', navbarExtrasClassNameBase)}>{buildNavbarExtrasForDesktop()}</ul>
+        <ul className={cn('hidden justify-end lg:flex', navbarExtrasClassNameBase)}>{buildNavbarExtrasForDesktop()}</ul>
 
-        <ul className={cn('flex lg:hidden justify-end', navbarExtrasClassNameBase)}>
+        <ul className={cn('flex justify-end lg:hidden', navbarExtrasClassNameBase)}>
           {buildNavbarExtrasForMobile()}
           <li className="h-unit-10">
             <NavbarToggle items={mobileNavbarItems} />

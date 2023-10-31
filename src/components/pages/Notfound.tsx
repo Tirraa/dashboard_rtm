@@ -9,7 +9,7 @@ interface NotFoundProps {}
 export const NotFound: FunctionComponent<NotFoundProps> = () => {
   const globalT = getClientSideI18n();
   return (
-    <div className="flex flex-1 h-full items-center justify-center">
+    <div className="flex h-full flex-1 items-center justify-center">
       <h1 className="m-auto">{globalT(`${i18ns.vocab}.404`)}</h1>
     </div>
   );

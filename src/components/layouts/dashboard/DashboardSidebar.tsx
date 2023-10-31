@@ -17,7 +17,7 @@ interface DashboardSidebarProps {}
 function sidebarBtnsGenerator(): ReactNode[] {
   const keys = Object.keys(DASHBOARD_ROUTES_SIDEBAR_COMPONENTS);
   const lastKey = keys[keys.length - 1];
-  const sidebarBtnsSeparator = <hr className="hidden lg:block m-auto my-2 w-5/6" />;
+  const sidebarBtnsSeparator = <hr className="m-auto my-2 hidden w-5/6 lg:block" />;
 
   const globalT = getClientSideI18n();
   return keys.map((k): ReactElement => {
@@ -27,7 +27,7 @@ function sidebarBtnsGenerator(): ReactNode[] {
 
     return (
       <li key={`${k}-sidebar-btn-component`}>
-        <Link {...{ title, href }} className="flex flex-col max-w-full w-fit rounded-lg">
+        <Link {...{ title, href }} className="flex w-fit max-w-full flex-col rounded-lg">
           <span className="sr-only">{title}</span>
           {btnComponent}
         </Link>
@@ -90,8 +90,8 @@ export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => 
 
   return (
     <>
-      <aside ref={sidebarRef} className={cn('bg-black justify-center border-slate-800 z-20 w-full border-t-[1px] lg:w-fit')}>
-        <nav className="py-4 lg:px-[22px] lg:overflow-y-auto">
+      <aside ref={sidebarRef} className={cn('z-20 w-full justify-center border-t-[1px] border-slate-800 bg-black lg:w-fit')}>
+        <nav className="py-4 lg:overflow-y-auto lg:px-[22px]">
           <ul className={cn('flex flex-wrap justify-center gap-2 lg:block')} role="menu">
             {sidebarBtnsGenerator()}
           </ul>

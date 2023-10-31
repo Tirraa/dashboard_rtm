@@ -29,7 +29,7 @@ const ButtonAsIs: FunctionComponent<Pick<NavbarButtonProps, 'i18nTitle' | 'onCli
 
   if (onClickFun) {
     return icon ? (
-      <Button className={cn(isNotActiveClassList, 'bg-slate-900 items-center gap-2')} onClick={() => onClickFun()}>
+      <Button className={cn(isNotActiveClassList, 'items-center gap-2 bg-slate-900')} onClick={() => onClickFun()}>
         {icon}
         {globalT(i18nTitle)}
       </Button>

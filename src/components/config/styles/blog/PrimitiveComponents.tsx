@@ -3,21 +3,21 @@ import { cn } from '@/lib/tailwind';
 import { HTMLAttributes, ImgHTMLAttributes } from 'react';
 
 export const PrimitiveComponents: Record<string, (...args: any[]) => JSX.Element> = {
-  h1: ({ className, ...props }) => <h1 className={cn('flex mt-2 scroll-m-20 text-4xl font-bold tracking-tight', className)} {...props} />,
+  h1: ({ className, ...props }) => <h1 className={cn('mt-2 flex scroll-m-20 text-4xl font-bold tracking-tight', className)} {...props} />,
   h2: ({ className, ...props }) => (
-    <h2 className={cn('flex mt-10 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0', className)} {...props} />
+    <h2 className={cn('mt-10 flex scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0', className)} {...props} />
   ),
-  h3: ({ className, ...props }) => <h3 className={cn('flex mt-8 scroll-m-20 text-2xl font-semibold tracking-tight', className)} {...props} />,
-  h4: ({ className, ...props }) => <h4 className={cn('flex mt-8 scroll-m-20 text-xl font-semibold tracking-tight', className)} {...props} />,
-  h5: ({ className, ...props }) => <h5 className={cn('flex mt-8 scroll-m-20 text-lg font-semibold tracking-tight', className)} {...props} />,
-  h6: ({ className, ...props }) => <h6 className={cn('flex mt-8 scroll-m-20 text-base font-semibold tracking-tight', className)} {...props} />,
+  h3: ({ className, ...props }) => <h3 className={cn('mt-8 flex scroll-m-20 text-2xl font-semibold tracking-tight', className)} {...props} />,
+  h4: ({ className, ...props }) => <h4 className={cn('mt-8 flex scroll-m-20 text-xl font-semibold tracking-tight', className)} {...props} />,
+  h5: ({ className, ...props }) => <h5 className={cn('mt-8 flex scroll-m-20 text-lg font-semibold tracking-tight', className)} {...props} />,
+  h6: ({ className, ...props }) => <h6 className={cn('mt-8 flex scroll-m-20 text-base font-semibold tracking-tight', className)} {...props} />,
   a: ({ className, ...props }) => <a className={cn('font-medium underline underline-offset-4', className)} {...props} />,
   p: ({ className, ...props }) => <p className={cn('leading-7 [&:not(:first-child)]:mt-6', className)} {...props} />,
   ul: ({ className, ...props }) => <ul className={cn('my-6 ml-6 list-disc', className)} {...props} />,
   ol: ({ className, ...props }) => <ol className={cn('my-6 ml-6 list-decimal', className)} {...props} />,
   li: ({ className, ...props }) => <li className={cn('mt-2', className)} {...props} />,
   blockquote: ({ className, ...props }) => (
-    <blockquote className={cn('mt-6 border-l-2 pl-6 italic [&>*]:text-muted-foreground', className)} {...props} />
+    <blockquote className={cn('[&>*]:text-muted-foreground mt-6 border-l-2 pl-6 italic', className)} {...props} />
   ),
   img: ({ className, alt, ...props }: ImgHTMLAttributes<HTMLImageElement>) => (
     // eslint-disable-next-line @next/next/no-img-element
@@ -29,7 +29,7 @@ export const PrimitiveComponents: Record<string, (...args: any[]) => JSX.Element
       <table className={cn('w-full', className)} {...props} />
     </div>
   ),
-  tr: ({ className, ...props }: HTMLAttributes<HTMLTableRowElement>) => <tr className={cn('m-0 border-t p-0 even:bg-muted', className)} {...props} />,
+  tr: ({ className, ...props }: HTMLAttributes<HTMLTableRowElement>) => <tr className={cn('even:bg-muted m-0 border-t p-0', className)} {...props} />,
   th: ({ className, ...props }) => (
     <th className={cn('border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right', className)} {...props} />
   ),
@@ -38,7 +38,7 @@ export const PrimitiveComponents: Record<string, (...args: any[]) => JSX.Element
   ),
   pre: ({ className, ...props }) => (
     <CopyToClipboard>
-      <pre className={cn('mb-4 mt-6 overflow-x-auto rounded-lg py-4 px-4', className)} {...props} />
+      <pre className={cn('mb-4 mt-6 overflow-x-auto rounded-lg px-4 py-4', className)} {...props} />
     </CopyToClipboard>
   ),
   code: ({ className, ...props }) => <code className={cn('bg-inherit', className)} {...props} />
