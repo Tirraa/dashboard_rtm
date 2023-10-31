@@ -49,7 +49,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
     let counter = 0;
     for (const [subcategory, posts] of Object.entries(postsCollectionsSnippets)) {
       counter += 1;
-      isLast = counter === max;
+      isLast = counter >= max;
       if (posts.length === 0) continue;
       // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
       const curSubcategTitle = globalT(`${i18ns.blogCategories}.${category}.${subcategory}.title`);
