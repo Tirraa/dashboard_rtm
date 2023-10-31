@@ -19,6 +19,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
+    "arg": "^5.0.2",
     "strip-comments": "^2.0.1"
   }
 }

@@ -1,11 +1,10 @@
 import { readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
-import { BLOG_ARCHITECTURE_TYPE_NEEDLE, BLOG_ARCHITECTURE_TYPE_STR } from '../config';
+import { BLOG_ARCHITECTURE_TYPE_NEEDLE, BLOG_ARCHITECTURE_TYPE_STR, FLAGS } from '../config';
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
 import BuilderError from '../errors/exceptions/BuilderError';
 import { removeComments } from '../lib/etc';
 import getRawDataFromBracesDeclaration from '../lib/getRawDataFromBracesDeclaration';
-import TFlagsAssoc from '../types/flags';
 import { CategoriesMetadatas, DeclaredCategoriesMetadatas } from '../types/metadatas';
 import { StringDelimiter } from '../types/parser';
 import isValidTaxonomy, { NAMING_CONSTRAINTS_MSG } from '../validators/taxonomyConvention';
@@ -129,7 +128,8 @@ function buildCategoriesMetadatasFromBlogConfigFile(blogConfigFilePath: string):
   return buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitecture, blogConfigFilePath);
 }
 
-export function retrieveMetadatas({ POSTS_FOLDER, BLOG_CONFIG_FILEPATH }: TFlagsAssoc): [CategoriesMetadatas, DeclaredCategoriesMetadatas] {
+export function retrieveMetadatas({ ...args }): [CategoriesMetadatas, DeclaredCategoriesMetadatas] {
+  const { [FLAGS.POSTS_FOLDER]: POSTS_FOLDER, [FLAGS.BLOG_CONFIG_FILEPATH]: BLOG_CONFIG_FILEPATH } = args;
   const blogArchitectureSysMetadata = buildCategoriesMetadatasFromPostsFolder(POSTS_FOLDER);
   const blogArchitectureDeclaredMetadata = buildCategoriesMetadatasFromBlogConfigFile(BLOG_CONFIG_FILEPATH);
 

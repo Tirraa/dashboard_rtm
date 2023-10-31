@@ -1,10 +1,10 @@
-import TFlagsAssoc from '../types/flags';
-
-export const FLAGS: TFlagsAssoc = {
+export const FLAGS = {
   POSTS_FOLDER: '--posts-folder',
   BLOG_CONFIG_FILEPATH: '--blog-config-file',
   I18N_LOCALES_SCHEMA_FILEPATH: '--i18n-locales-schema',
-  SKIP_LOCALES_INFOS: '--skip-locales-infos'
+  SKIP_LOCALES_INFOS: '--skip-locales-infos',
+  NO_BLOG: '--no-blog',
+  NO_I18N: '--no-i18n'
 } as const;
 
 export const LOCALES_INFOS_ROOT_KEY: string = '_infos';
