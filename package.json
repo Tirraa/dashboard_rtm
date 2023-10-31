@@ -15,7 +15,8 @@
     "dev": "next dev",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/ --log-level warn",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
@@ -58,6 +59,7 @@
     "autoprefixer": "10.4.15",
     "eslint": "8.47.0",
     "eslint-config-next": "^13.5.3",
+    "husky": "^8.0.3",
     "next-sitemap": "^4.2.3",
     "postcss": "^8.4.31",
     "prettier": "^3.0.3",
