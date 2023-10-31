@@ -1,5 +1,3 @@
-'use client';
-
 import NotFoundCatchall from '@/components/phantoms/NotFoundCatchall';
 import { NotFoundCatchallParams } from '@/types/Next';
 
