@@ -1,7 +1,7 @@
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
-import BlogPostPreview from '@/components/shared/ui/blog/BlogPostPreview';
-import BlogPostsNotFound from '@/components/shared/ui/blog/BlogPostsNotFound';
+import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
+import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
 import BlogConfig from '@/config/blog';
 import { i18ns } from '@/config/i18n';
 import { getScopedI18n, getServerSideI18n } from '@/i18n/server';

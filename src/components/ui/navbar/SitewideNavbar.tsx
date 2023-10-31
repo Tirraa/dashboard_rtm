@@ -3,7 +3,7 @@
 import NAVBAR_STYLE from '@/components/config/styles/navbar/NavbarStyle';
 import NavbarButton from '@/components/layouts/navbar/NavbarButton';
 import NavbarToggle from '@/components/layouts/navbar/NavbarToggle';
-import NavbarElement from '@/components/shared/ui/hoc/NavbarElement';
+import NavbarElement from '@/components/ui/hoc/NavbarElement';
 import { NAVBAR_EXTRAS_COMPONENTS_DESKTOP, NAVBAR_EXTRAS_COMPONENTS_MOBILE } from '@/config/SitewideNavbar/Extras/utils/ComponentsMapping';
 import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsConfig';
 import SITEWIDE_NAVBAR_ROUTES, { SITEWIDE_NAVBAR_ROUTES_TITLES } from '@/config/SitewideNavbar/routesImpl';

@@ -1,6 +1,6 @@
-import BlogPostPreview from '@/components/shared/ui/blog/BlogPostPreview';
-import BlogPostsNotFound from '@/components/shared/ui/blog/BlogPostsNotFound';
-import MaybePaginatedElements from '@/components/shared/ui/hoc/MaybePaginatedElements';
+import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
+import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
+import MaybePaginatedElements from '@/components/ui/hoc/MaybePaginatedElements';
 import BlogConfig from '@/config/blog';
 import { i18ns } from '@/config/i18n';
 import { getScopedI18n } from '@/i18n/server';

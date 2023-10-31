@@ -1,4 +1,4 @@
-import CopyToClipboard from '@/components/shared/ui/blog/CopyToClipboard';
+import CopyToClipboard from '@/components/ui/blog/CopyToClipboard';
 import { cn } from '@/lib/tailwind';
 import { HTMLAttributes, ImgHTMLAttributes } from 'react';
 

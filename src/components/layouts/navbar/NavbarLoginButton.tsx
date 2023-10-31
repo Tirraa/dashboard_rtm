@@ -1,8 +1,8 @@
 'use client';
 
 import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
-import UserImage from '@/components/shared/ui/UserImage';
-import ButtonHoC from '@/components/shared/ui/hoc/ButtonHoC';
+import UserImage from '@/components/ui/UserImage';
+import ButtonHoC from '@/components/ui/hoc/ButtonHoC';
 import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { useScopedI18n } from '@/i18n/client';

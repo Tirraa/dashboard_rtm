@@ -1,5 +1,5 @@
 import MDX from '@/components/layouts/blog/MdxComponent';
-import BlogPostDate from '@/components/shared/ui/blog/BlogPostDate';
+import BlogPostDate from '@/components/ui/blog/BlogPostDate';
 import { getBlogPostUnstrict, isValidBlogCategoryAndSubcategoryPair } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';

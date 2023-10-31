@@ -1,5 +1,5 @@
 import PrimitiveComponents from '@/components/config/styles/blog/PrimitiveComponents';
-import InviteTheBotButton from '@/components/shared/ui/cta/InviteTheBotButton';
+import InviteTheBotButton from '@/components/ui/cta/InviteTheBotButton';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import Image from 'next/image';
 import { FunctionComponent, ReactNode } from 'react';

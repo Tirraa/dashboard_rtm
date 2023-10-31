@@ -1,6 +1,6 @@
 'use client';
 
-import Loader from '@/components/shared/ui/Loader';
+import Loader from '@/components/ui/Loader';
 import { I18nProviderClient } from '@/i18n/client';
 import { LayoutMinimalProps as WithChildren } from '@/types/Next';
 import { FunctionComponent } from 'react';
