@@ -1,4 +1,4 @@
-import { Element as hASTElement } from 'hast';
+import type { Element as hASTElement } from 'hast';
 
 export function addClassname(node: hASTElement, classNameToAppend: string) {
   if (Array.isArray(node.properties.className)) {

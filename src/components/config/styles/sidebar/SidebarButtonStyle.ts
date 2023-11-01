@@ -1,4 +1,4 @@
-import IButtonStyleReactIcon from '@/components/config/styles/types/IButtonStyleReactIcon';
+import type IButtonStyleReactIcon from '@/components/config/styles/types/IButtonStyleReactIcon';
 import { cn } from '@/lib/tailwind';
 
 const COMMONS = 'transition-colors duration-200 p-2.5 rounded-lg';

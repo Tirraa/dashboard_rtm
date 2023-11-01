@@ -1,4 +1,4 @@
-import { LanguageLabels } from '@/types/i18n';
+import type { LanguageLabels } from '@/types/i18n';
 
 export const localesLabels: LanguageLabels = {
   en: 'English',

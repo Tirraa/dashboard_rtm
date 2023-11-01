@@ -16,7 +16,7 @@ import {
 import { getPageTitle } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogCategory, BlogPostPageProps, BlogStaticParams, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
+import type { BlogCategory, BlogPostPageProps, BlogStaticParams, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
 import { setStaticParamsLocale } from 'next-international/server';
 import { redirect } from 'next/navigation';
 

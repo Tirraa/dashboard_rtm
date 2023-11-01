@@ -5,9 +5,10 @@ import useLockScreenScrollY from '@/components/hooks/useLockScreenScrollY';
 import useResetScroll from '@/components/hooks/useResetScroll';
 import DashboardSidebar from '@/components/layouts/dashboard/DashboardSidebar';
 import { cn } from '@/lib/tailwind';
-import { LayoutMinimalProps } from '@/types/Next';
+import type { LayoutMinimalProps } from '@/types/Next';
 import { useSelectedLayoutSegment } from 'next/navigation';
-import { FunctionComponent, useRef } from 'react';
+import type { FunctionComponent } from 'react';
+import { useRef } from 'react';
 
 interface DashboardLayoutClientProps extends LayoutMinimalProps {}
 

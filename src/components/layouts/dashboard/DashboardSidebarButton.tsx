@@ -1,10 +1,10 @@
 import SidebarButtonStyle from '@/components/config/styles/sidebar/SidebarButtonStyle';
 import ROUTES_ROOTS from '@/config/routes';
 import { hrefMatchesPathname } from '@/lib/str';
-import { AppPath } from '@/types/Next';
+import type { AppPath } from '@/types/Next';
 import { usePathname } from 'next/navigation';
-import { ComponentType, FunctionComponent } from 'react';
-import { IconBaseProps } from 'react-icons';
+import type { ComponentType, FunctionComponent } from 'react';
+import type { IconBaseProps } from 'react-icons';
 
 interface DashboardSidebarButtonProps {
   href: AppPath;

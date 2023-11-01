@@ -1,4 +1,4 @@
-import { RoutesDefinition, RoutesTitles } from '@/types/RoutesMapping';
+import type { RoutesDefinition, RoutesTitles } from '@/types/RoutesMapping';
 
 enum ESitewideNavbarRoutes {
   HOME_PAGE,

@@ -1,4 +1,4 @@
-import { WarningMessage } from '@/errors/vocab/types';
+import type { WarningMessage } from '@/errors/vocab/types';
 
 type TExecutionContextWarningsVocab = {
   UNABLE_TO_GET_NODE_ENV: WarningMessage;

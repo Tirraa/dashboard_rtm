@@ -5,11 +5,12 @@ import { i18ns } from '@/config/i18n';
 import { DEFAULT_DARK_VARIANT, DEFAULT_VARIANT } from '@/config/themes';
 import { useScopedI18n } from '@/i18n/client';
 import { cn } from '@/lib/tailwind';
-import { WithIsMobile } from '@/types/Next';
+import type { WithIsMobile } from '@/types/Next';
 import { MoonIcon, SunIcon } from '@heroicons/react/20/solid';
 import { Button } from '@nextui-org/button';
 import { useTheme } from 'next-themes';
-import { FunctionComponent, useEffect, useState } from 'react';
+import type { FunctionComponent } from 'react';
+import { useEffect, useState } from 'react';
 
 interface NavbarLoginButtonProps extends WithIsMobile {}
 

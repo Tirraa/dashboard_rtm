@@ -1,7 +1,7 @@
 import DashboardLayoutClient from '@/components/layouts/dashboard/DashboardLayoutClient';
 import { getStaticParams } from '@/i18n/server';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { LayoutBaseProps } from '@/types/Next';
+import type { LayoutBaseProps } from '@/types/Next';
 import { setStaticParamsLocale } from 'next-international/server';
 
 interface DashboardLayoutProps extends LayoutBaseProps {}

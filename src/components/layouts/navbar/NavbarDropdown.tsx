@@ -8,14 +8,15 @@ import { getClientSideI18n } from '@/i18n/client';
 import { getLinkTarget } from '@/lib/react';
 import { hrefMatchesPathname } from '@/lib/str';
 import { getBreakpoint } from '@/lib/tailwind';
-import { EmbeddedEntities, NavbarDropdownElement } from '@/types/NavData';
+import type { EmbeddedEntities, NavbarDropdownElement } from '@/types/NavData';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { useMediaQuery } from '@react-hook/media-query';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FunctionComponent, useEffect, useState } from 'react';
+import type { FunctionComponent } from 'react';
+import { useEffect, useState } from 'react';
 
 interface NavbarButtonProps extends NavbarDropdownElement {}
 

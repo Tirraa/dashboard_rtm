@@ -1,8 +1,8 @@
 import { DEFAULT_LANGUAGE, LANGUAGES } from '@/config/i18n';
-import { MiddlewareFactory } from '@/types/Next';
-import { I18nMiddlewareConfig } from '@/types/i18n';
+import type { MiddlewareFactory } from '@/types/Next';
+import type { I18nMiddlewareConfig } from '@/types/i18n';
 import { createI18nMiddleware } from 'next-international/middleware';
-import { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
+import type { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
 
 const I18N_MIDDLEWARE_CONFIG: I18nMiddlewareConfig = {
   locales: LANGUAGES,

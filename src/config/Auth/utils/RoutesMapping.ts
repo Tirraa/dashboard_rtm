@@ -1,4 +1,4 @@
-import { RoutesDefinition } from '@/types/RoutesMapping';
+import type { RoutesDefinition } from '@/types/RoutesMapping';
 
 enum EAuthRoutes {
   LOGIN

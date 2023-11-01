@@ -1,4 +1,4 @@
-import { ThemeVariant } from '@/config/themes';
+import type { ThemeVariant } from '@/config/themes';
 import { RGBAColor } from '@/lib/color';
 import Color from 'color';
 

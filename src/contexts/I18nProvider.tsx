@@ -2,8 +2,8 @@
 
 import Loader from '@/components/ui/Loader';
 import { I18nProviderClient } from '@/i18n/client';
-import { LayoutMinimalProps as WithChildren } from '@/types/Next';
-import { FunctionComponent } from 'react';
+import type { LayoutMinimalProps as WithChildren } from '@/types/Next';
+import type { FunctionComponent } from 'react';
 
 export interface I18nProviderProps extends WithChildren {
   locale: string;

@@ -1,9 +1,10 @@
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
-import BlogConfig, { BlogArchitecture } from '@/config/blog';
+import type { BlogArchitecture } from '@/config/blog';
+import BlogConfig from '@/config/blog';
 import { DEFAULT_LANGUAGE } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import InvalidArgumentsError from '@/errors/exceptions/InvalidArgument';
-import {
+import type {
   BlogCategory,
   BlogCategoryAndSubcategoriesPair,
   BlogSubcategoryFromUnknownCategory,
@@ -11,9 +12,9 @@ import {
   UnknownBlogSlug,
   UnknownCategoryAndUnknownSubcategory
 } from '@/types/Blog';
-import { AppPath } from '@/types/Next';
-import { LanguageFlag } from '@/types/i18n';
-import { IsoDateTimeString } from 'contentlayer/core';
+import type { AppPath } from '@/types/Next';
+import type { LanguageFlag } from '@/types/i18n';
+import type { IsoDateTimeString } from 'contentlayer/core';
 import { redirect } from 'next/navigation';
 import { getBlogPostLanguageFlagFromPostObj } from './i18n';
 import { buildAbsolutePathFromParts, buildPathFromParts, getFormattedDate, getLastPathPart, indexOfNthOccurrence } from './str';

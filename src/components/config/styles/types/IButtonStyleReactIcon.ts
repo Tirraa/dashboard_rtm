@@ -1,5 +1,5 @@
-import { IconBaseProps } from 'react-icons';
-import IButtonStyleBase from './IButtonStyleBase';
+import type { IconBaseProps } from 'react-icons';
+import type IButtonStyleBase from './IButtonStyleBase';
 
 export interface IButtonStyleReactIcon extends IButtonStyleBase {
   sidebarIconProps: IconBaseProps;

@@ -1,4 +1,4 @@
-import { SitewideNavbarRoutes, SitewideNavbarRoutesTitles } from '@/config/SitewideNavbar/utils/RoutesMapping';
+import type { SitewideNavbarRoutes, SitewideNavbarRoutesTitles } from '@/config/SitewideNavbar/utils/RoutesMapping';
 import DISCORD_CONFIG from '@/config/discord';
 import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';

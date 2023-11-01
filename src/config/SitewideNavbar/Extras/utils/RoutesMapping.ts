@@ -1,4 +1,4 @@
-import { WeaklyBindedReactElements } from '@/types/RoutesMapping';
+import type { WeaklyBindedReactElements } from '@/types/RoutesMapping';
 
 enum ENavbarExtrasFeatures {
   LOGIN,

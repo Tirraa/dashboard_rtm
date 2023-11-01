@@ -3,12 +3,13 @@
 import { i18ns } from '@/config/i18n';
 import { useScopedI18n } from '@/i18n/client';
 import { cn } from '@/lib/tailwind';
-import { FlexJustify } from '@/types/HTML';
+import type { FlexJustify } from '@/types/HTML';
 import { Pagination } from '@nextui-org/pagination';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { FunctionComponent, ReactNode } from 'react';
+import type { FunctionComponent, ReactNode } from 'react';
 import { computePagesAmount } from './hoc/MaybePaginatedElements';
-import PaginatedElementsBodyWrapper, { PaginatedElementsBodyWrapperProps } from './hoc/PaginatedElementsBodyWrapper';
+import type { PaginatedElementsBodyWrapperProps } from './hoc/PaginatedElementsBodyWrapper';
+import PaginatedElementsBodyWrapper from './hoc/PaginatedElementsBodyWrapper';
 
 export interface PaginatedElementsProps extends PaginatedElementsBodyWrapperProps {
   paginatedElements: ReactNode[];

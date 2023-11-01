@@ -1,9 +1,10 @@
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
 import { getLinkTarget } from '@/lib/react';
 import { cn } from '@/lib/tailwind';
-import { Button as NextUIButton, ButtonProps as NextUIButtonProps } from '@nextui-org/button';
+import type { ButtonProps as NextUIButtonProps } from '@nextui-org/button';
+import { Button as NextUIButton } from '@nextui-org/button';
 import { Link } from '@nextui-org/link';
-import { FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 
 interface ButtonProps extends NextUIButtonProps {}
 

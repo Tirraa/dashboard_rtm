@@ -1,7 +1,8 @@
-import { AppPath, MiddlewareFactory } from '@/types/Next';
-import { ClassName } from '@/types/React';
-import { NextFont } from 'next/dist/compiled/@next/font';
-import { NextMiddleware, NextRequest, NextResponse } from 'next/server';
+import type { AppPath, MiddlewareFactory } from '@/types/Next';
+import type { ClassName } from '@/types/React';
+import type { NextFont } from 'next/dist/compiled/@next/font';
+import type { NextMiddleware, NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getPathnameMaybeI18nFlag, getPathnameWithoutI18nFlag } from './i18n';
 
 export const fCls = (f: NextFont): ClassName => ({ className: f.className });

@@ -5,7 +5,7 @@ import DISCORD_CONFIG from '@/config/discord';
 import { i18ns } from '@/config/i18n';
 import { getClientSideI18n } from '@/i18n/client';
 import { CogIcon } from '@heroicons/react/20/solid';
-import { FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 
 interface InviteTheBotButtonProps {}
 

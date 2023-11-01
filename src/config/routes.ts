@@ -1,4 +1,4 @@
-import { AppPath } from '@/types/Next';
+import type { AppPath } from '@/types/Next';
 
 enum ERoutesRoots {
   WEBSITE,

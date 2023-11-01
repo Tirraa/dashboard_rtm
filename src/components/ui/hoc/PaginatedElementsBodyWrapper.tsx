@@ -1,7 +1,7 @@
 import { cn } from '@/lib/tailwind';
-import { FlexDirection, FlexJustify, FlexWrap } from '@/types/HTML';
-import { LayoutMinimalProps as WithChildren } from '@/types/Next';
-import { FunctionComponent } from 'react';
+import type { FlexDirection, FlexJustify, FlexWrap } from '@/types/HTML';
+import type { LayoutMinimalProps as WithChildren } from '@/types/Next';
+import type { FunctionComponent } from 'react';
 
 export interface PaginatedElementsBodyWrapperProps {
   paginatedElementsBodyWrapperProps?: {

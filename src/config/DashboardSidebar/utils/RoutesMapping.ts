@@ -1,4 +1,4 @@
-import { RoutesDefinition, RoutesTitles, WeaklyBindedReactElements } from '@/types/RoutesMapping';
+import type { RoutesDefinition, RoutesTitles, WeaklyBindedReactElements } from '@/types/RoutesMapping';
 
 enum EDashboardRoutes {
   MAIN_PAGE,

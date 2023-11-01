@@ -1,7 +1,7 @@
 import DocumentRoot from '@/components/layouts/base/DocumentRoot';
-import { LayoutBaseProps } from '@/types/Next';
+import type { LayoutBaseProps } from '@/types/Next';
 import 'intl-locale-textinfo-polyfill';
-import { FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 
 interface HtmlElementProps extends LayoutBaseProps {}
 

@@ -2,14 +2,15 @@
 
 import DASHBOARD_ROUTES, { DASHBOARD_ROUTES_TITLES } from '@/config/DashboardSidebar/routesImpl';
 import DASHBOARD_ROUTES_SIDEBAR_COMPONENTS from '@/config/DashboardSidebar/utils/IconsMapping';
-import { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMapping';
+import type { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMapping';
 import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
 import { computeHTMLElementHeight, computeHTMLElementWidth, getDirection } from '@/lib/html';
 import { getRefCurrentPtr } from '@/lib/react';
 import { cn, getBreakpoint } from '@/lib/tailwind';
 import { useMediaQuery } from '@react-hook/media-query';
 import Link from 'next/link';
-import { FunctionComponent, ReactElement, ReactNode, useEffect, useRef, useState } from 'react';
+import type { FunctionComponent, ReactElement, ReactNode } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import DashboardSidebarCollapseButton from './DashboardSidebarCollapseButton';
 
 interface DashboardSidebarProps {}
