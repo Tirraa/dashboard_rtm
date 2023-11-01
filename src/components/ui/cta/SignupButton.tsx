@@ -6,7 +6,7 @@ import ROUTES_ROOTS from '@/config/routes';
 import { getClientSideI18n } from '@/i18n/client';
 import { Button } from '@nextui-org/button';
 import { signIn } from 'next-auth/react';
-import { FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 
 interface SignUpButtonProps {}
 

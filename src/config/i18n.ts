@@ -1,6 +1,6 @@
 import DEFAULT_LANGUAGE_OBJ from '@/i18n/locales/fr';
 import { getEnumKeys } from '@/lib/typescript';
-import { LanguageFlag, VocabType } from '@/types/i18n';
+import type { LanguageFlag, VocabType } from '@/types/i18n';
 
 export enum ELanguagesFlag {
   fr,

@@ -1,8 +1,8 @@
 import { DEFAULT_LANGUAGE, LANGUAGES } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
-import { PostBase } from '@/types/Blog';
-import { AppPath, AppPathAsIs } from '@/types/Next';
-import { LanguageFlag } from '@/types/i18n';
+import type { PostBase } from '@/types/Blog';
+import type { AppPath, AppPathAsIs } from '@/types/Next';
+import type { LanguageFlag } from '@/types/i18n';
 import { indexOfNthOccurrence } from './str';
 
 const isValidLanguageFlag = (key: string): boolean => (LANGUAGES as string[]).includes(key);

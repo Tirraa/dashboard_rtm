@@ -1,6 +1,6 @@
 import { getBlogPostFormattedDate } from '@/lib/blog';
-import { BlogPostProps } from '@/types/Blog';
-import { FunctionComponent } from 'react';
+import type { BlogPostProps } from '@/types/Blog';
+import type { FunctionComponent } from 'react';
 
 interface BlogPostDateProps extends BlogPostProps {}
 

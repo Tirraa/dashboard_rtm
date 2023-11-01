@@ -1,4 +1,4 @@
-import { TypedLeafsJSONData } from '@/types/JSON';
+import type { TypedLeafsJSONData } from '@/types/JSON';
 
 const STATICLY_CHECKED_DATA = {
   'blog-categories': {

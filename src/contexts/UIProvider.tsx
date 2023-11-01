@@ -1,10 +1,10 @@
 import { UI_PROVIDER_CLS } from '@/components/config/styles/next-ui';
 import ELEMENTS_ID from '@/config/elementsId';
 import { DEFAULT_VARIANT } from '@/config/themes';
-import { LayoutMinimalProps as WithChildren } from '@/types/Next';
+import type { LayoutMinimalProps as WithChildren } from '@/types/Next';
 import { NextUIProvider } from '@nextui-org/react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
-import { FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 
 interface UIProviderProps extends WithChildren {}
 

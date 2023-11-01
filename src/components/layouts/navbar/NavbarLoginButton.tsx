@@ -6,11 +6,11 @@ import ButtonHoC from '@/components/ui/hoc/ButtonHoC';
 import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { useScopedI18n } from '@/i18n/client';
-import { WithIsMobile } from '@/types/Next';
+import type { WithIsMobile } from '@/types/Next';
 import { KeyIcon, SignalSlashIcon } from '@heroicons/react/20/solid';
-import { Session } from 'next-auth';
+import type { Session } from 'next-auth';
 import { signIn, signOut, useSession } from 'next-auth/react';
-import { FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 import NavbarButton from './NavbarButton';
 
 interface NavbarLoginButtonMobileProps {

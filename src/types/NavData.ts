@@ -1,6 +1,6 @@
-import { AppPath } from '@/types/Next';
-import RoutesKeysUnion from './RoutesKeysUnion';
-import { I18nVocabTarget } from './i18n';
+import type { AppPath } from '@/types/Next';
+import type RoutesKeysUnion from './RoutesKeysUnion';
+import type { I18nVocabTarget } from './i18n';
 
 export interface AtomicNavDataEntity {
   i18nTitle: I18nVocabTarget;

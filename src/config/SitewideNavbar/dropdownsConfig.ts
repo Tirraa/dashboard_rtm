@@ -1,7 +1,7 @@
 import PATCH_NOTES_ROUTES, { PATCH_NOTES_ROUTES_TITLES } from '@/config/SitewideNavbar/PatchNotes/routesImpl';
-import { PatchNotesRoutesKeys } from '@/config/SitewideNavbar/PatchNotes/utils/RoutesMapping';
-import { EmbeddedEntities } from '@/types/NavData';
-import { NavbarDropdownsConfig } from '@/types/WebsiteUtils';
+import type { PatchNotesRoutesKeys } from '@/config/SitewideNavbar/PatchNotes/utils/RoutesMapping';
+import type { EmbeddedEntities } from '@/types/NavData';
+import type { NavbarDropdownsConfig } from '@/types/WebsiteUtils';
 
 const PATCH_NOTES_PAGE: EmbeddedEntities = Object.keys(PATCH_NOTES_ROUTES).map((k) => {
   const k2 = k as PatchNotesRoutesKeys;

@@ -1,7 +1,7 @@
 import NotFoundTaxonomy from '@/taxonomies/notfound';
-import { NotFoundCatchallParams } from '@/types/Next';
+import type { NotFoundCatchallParams } from '@/types/Next';
 import { RedirectType, redirect, usePathname } from 'next/navigation';
-import { FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 
 interface NotFoundCatchallProps extends NotFoundCatchallParams {}
 

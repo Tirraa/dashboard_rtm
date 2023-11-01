@@ -1,8 +1,9 @@
 'use client';
 
 import { SessionProvider } from 'next-auth/react';
-import { FunctionComponent } from 'react';
-import I18nProvider, { I18nProviderProps } from './I18nProvider';
+import type { FunctionComponent } from 'react';
+import type { I18nProviderProps } from './I18nProvider';
+import I18nProvider from './I18nProvider';
 import UIProvider from './UIProvider';
 
 interface ProvidersProps extends I18nProviderProps {}

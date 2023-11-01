@@ -5,12 +5,12 @@ import { getClientSideI18n } from '@/i18n/client';
 import { getLinkTarget } from '@/lib/react';
 import { hrefMatchesPathname } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
-import { AtomicNavDataEntity } from '@/types/NavData';
-import { AppPath } from '@/types/Next';
+import type { AtomicNavDataEntity } from '@/types/NavData';
+import type { AppPath } from '@/types/Next';
 import { Button } from '@nextui-org/button';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FunctionComponent, ReactNode } from 'react';
+import type { FunctionComponent, ReactNode } from 'react';
 
 type OptionalIcon = { icon?: ReactNode };
 type OptionalPath = { path?: AppPath };

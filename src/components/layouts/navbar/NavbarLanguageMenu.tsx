@@ -4,10 +4,10 @@ import { LANGUAGES, i18ns } from '@/config/i18n';
 import { useChangeLocale, useCurrentLocale, useScopedI18n } from '@/i18n/client';
 import localesLabels, { localesEmojis } from '@/i18n/localesLabels';
 import { cn } from '@/lib/tailwind';
-import { WithIsMobile } from '@/types/Next';
-import { LanguageFlag } from '@/types/i18n';
+import type { WithIsMobile } from '@/types/Next';
+import type { LanguageFlag } from '@/types/i18n';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/dropdown';
-import { FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 
 interface NavbarLanguageMenuProps extends WithIsMobile {}
 

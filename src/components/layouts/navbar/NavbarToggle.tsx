@@ -4,10 +4,11 @@ import { i18ns } from '@/config/i18n';
 import { getClientSideI18n, useScopedI18n } from '@/i18n/client';
 import { getRefCurrentPtr } from '@/lib/react';
 import { getBreakpoint } from '@/lib/tailwind';
-import { NavbarItems } from '@/types/NavData';
+import type { NavbarItems } from '@/types/NavData';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { useMediaQuery } from '@react-hook/media-query';
-import { FunctionComponent, useEffect, useRef, useState } from 'react';
+import type { FunctionComponent } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface NavbarToggleProps {
   items: NavbarItems;

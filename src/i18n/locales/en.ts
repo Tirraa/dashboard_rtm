@@ -1,5 +1,5 @@
 import { capitalize } from '@/lib/str';
-import { SharedVocabType, VocabType } from '@/types/i18n';
+import type { SharedVocabType, VocabType } from '@/types/i18n';
 
 const SHARED: SharedVocabType = {
   'pages-titles': {

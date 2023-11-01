@@ -6,7 +6,7 @@ import { i18ns } from '@/config/i18n';
 import { useScopedI18n } from '@/i18n/client';
 import { cn } from '@/lib/tailwind';
 import { ArrowSmallDownIcon, ArrowSmallRightIcon } from '@heroicons/react/20/solid';
-import { FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 
 interface DashboardSidebarCollapseButtonProps {
   isCollapsed: boolean;

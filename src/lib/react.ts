@@ -1,5 +1,5 @@
-import { AppPath } from '@/types/Next';
-import { RefObject } from 'react';
+import type { AppPath } from '@/types/Next';
+import type { RefObject } from 'react';
 
 type LinkTargetAttr = { target: AppPath };
 

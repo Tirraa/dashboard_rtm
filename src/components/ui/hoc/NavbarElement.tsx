@@ -1,8 +1,8 @@
 import NavbarButton from '@/components/layouts/navbar/NavbarButton';
 import NavbarDropdown from '@/components/layouts/navbar/NavbarDropdown';
-import { NavDataEntity } from '@/types/NavData';
-import { i18nParams } from '@/types/Next';
-import { FunctionComponent } from 'react';
+import type { NavDataEntity } from '@/types/NavData';
+import type { i18nParams } from '@/types/Next';
+import type { FunctionComponent } from 'react';
 
 interface NavbarElementProps extends NavDataEntity {
   i18nProps: i18nParams;

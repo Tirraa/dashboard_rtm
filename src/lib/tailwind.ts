@@ -1,5 +1,6 @@
-import { TailwindScreensBreakpoint } from '@/types/Tailwind';
-import { ClassValue, clsx } from 'clsx';
+import type { TailwindScreensBreakpoint } from '@/types/Tailwind';
+import type { ClassValue } from 'clsx';
+import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import config from 'tailwind.config';
 

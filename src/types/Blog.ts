@@ -1,9 +1,10 @@
-import { BlogArchitecture } from '@/config/blog';
-import BlogTaxonomy, { TBlogTaxonomy } from '@/taxonomies/blog';
-import { PostSchema } from 'contentlayer/generated';
-import { RequiredFieldsOnly } from './CustomUtilitaryTypes';
-import { i18nParams } from './Next';
-import { LanguageFlag } from './i18n';
+import type { BlogArchitecture } from '@/config/blog';
+import type BlogTaxonomy from '@/taxonomies/blog';
+import type { TBlogTaxonomy } from '@/taxonomies/blog';
+import type { PostSchema } from 'contentlayer/generated';
+import type { RequiredFieldsOnly } from './CustomUtilitaryTypes';
+import type { i18nParams } from './Next';
+import type { LanguageFlag } from './i18n';
 
 type ContentLayerPhantomType = 'type';
 export type PostBase = Omit<PostSchema, ContentLayerPhantomType>;

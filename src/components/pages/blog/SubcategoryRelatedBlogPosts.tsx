@@ -7,9 +7,9 @@ import { getScopedI18n } from '@/i18n/server';
 import { blogSubcategoryShouldTriggerNotFound, getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogSubcategoryPageProps, PostBase } from '@/types/Blog';
+import type { BlogSubcategoryPageProps, PostBase } from '@/types/Blog';
 import { notFound } from 'next/navigation';
-import { FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 import slugify from 'slugify';
 
 export const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> = async ({ params }) => {

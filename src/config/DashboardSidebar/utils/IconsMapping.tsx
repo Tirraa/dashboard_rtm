@@ -1,10 +1,10 @@
 import DashboardSidebarButton from '@/components/layouts/dashboard/DashboardSidebarButton';
 import DASHBOARD_ROUTES from '@/config/DashboardSidebar/routesImpl';
 import SIDEBAR_ROUTES_ICONS from '@/config/DashboardSidebar/sidebarRoutesIcons';
-import { AppPath } from '@/types/Next';
-import { ComponentType } from 'react';
-import { IconBaseProps } from 'react-icons';
-import { DashboardRoutes, DashboardRoutesKeys, DashboardRoutesSidebarReactElements } from './RoutesMapping';
+import type { AppPath } from '@/types/Next';
+import type { ComponentType } from 'react';
+import type { IconBaseProps } from 'react-icons';
+import type { DashboardRoutes, DashboardRoutesKeys, DashboardRoutesSidebarReactElements } from './RoutesMapping';
 
 export type DashboardRoutesIcons = {
   [_ in keyof DashboardRoutes]: ComponentType<IconBaseProps>;

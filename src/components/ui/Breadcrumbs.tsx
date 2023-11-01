@@ -5,7 +5,7 @@ import { getPathParts } from '@/lib/next';
 import { buildAbsolutePathFromParts } from '@/lib/str';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FunctionComponent, ReactNode } from 'react';
+import type { FunctionComponent, ReactNode } from 'react';
 
 interface HomepagebreadcrumbsElementProps {}
 

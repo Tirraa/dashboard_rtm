@@ -1,4 +1,4 @@
-import { NextTopLoaderProps } from '@/components/layouts/base/NextTopLoader';
+import type { NextTopLoaderProps } from '@/components/layouts/base/NextTopLoader';
 
 export const PROGRESSBAR_CONFIG: NextTopLoaderProps = {
   color: 'rgba(255, 255, 255, .15)',

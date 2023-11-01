@@ -3,9 +3,9 @@ import BlogPostDate from '@/components/ui/blog/BlogPostDate';
 import { getBlogPostUnstrict, isValidBlogCategoryAndSubcategoryPair } from '@/lib/blog';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogPostPageProps, BlogPostProps } from '@/types/Blog';
+import type { BlogPostPageProps, BlogPostProps } from '@/types/Blog';
 import { notFound } from 'next/navigation';
-import { FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 
 interface BlogPostInnerProps extends BlogPostProps {}
 

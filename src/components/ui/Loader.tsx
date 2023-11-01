@@ -1,9 +1,9 @@
 'use client';
 
 import LOADER_CONFIG from '@/components/config/styles/loader/colors';
-import { ThemeVariant } from '@/config/themes';
+import type { ThemeVariant } from '@/config/themes';
 import { useTheme } from 'next-themes';
-import { CSSProperties, FunctionComponent } from 'react';
+import type { CSSProperties, FunctionComponent } from 'react';
 import { BeatLoader } from 'react-spinners';
 
 interface LoaderProps {

@@ -10,13 +10,13 @@ import { buildPathFromParts } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogCategory, BlogCategoryPageProps, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
-import { LanguageFlag } from '@/types/i18n';
+import type { BlogCategory, BlogCategoryPageProps, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
+import type { LanguageFlag } from '@/types/i18n';
 import { Button } from '@nextui-org/button';
 import { compareDesc } from 'date-fns';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { FunctionComponent, ReactNode } from 'react';
+import type { FunctionComponent, ReactNode } from 'react';
 import slugify from 'slugify';
 
 interface CategoryRelatedSubcategoriesAndBlogPostsProps extends BlogCategoryPageProps {}

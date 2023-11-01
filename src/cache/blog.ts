@@ -1,6 +1,6 @@
 import BlogConfig from '@/config/blog';
 import { getBlogPostSubcategory } from '@/lib/blog';
-import { BlogCategory, BlogSubcategoryFromUnknownCategory } from '@/types/Blog';
+import type { BlogCategory, BlogSubcategoryFromUnknownCategory } from '@/types/Blog';
 
 namespace BlogCache {
   export const subcategoriesCollection = {} as Record<BlogCategory, BlogSubcategoryFromUnknownCategory[]>;

@@ -1,6 +1,7 @@
 import { resetScroll } from '@/lib/html';
-import { HookDepsArrayPrimitives } from '@/types/React';
-import { RefObject, useLayoutEffect } from 'react';
+import type { HookDepsArrayPrimitives } from '@/types/React';
+import type { RefObject } from 'react';
+import { useLayoutEffect } from 'react';
 
 interface ResetScrollOptions {
   alsoResetWindowScroll?: boolean;

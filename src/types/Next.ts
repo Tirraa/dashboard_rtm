@@ -1,8 +1,8 @@
-import i18nTaxonomy from '@/taxonomies/i18n';
-import NotFoundTaxonomy from '@/taxonomies/notfound';
-import { LanguageFlag } from '@/types/i18n';
-import { NextMiddleware } from 'next/server';
-import { ReactNode } from 'react';
+import type i18nTaxonomy from '@/taxonomies/i18n';
+import type NotFoundTaxonomy from '@/taxonomies/notfound';
+import type { LanguageFlag } from '@/types/i18n';
+import type { NextMiddleware } from 'next/server';
+import type { ReactNode } from 'react';
 
 export type LayoutMinimalProps = {
   children: ReactNode;

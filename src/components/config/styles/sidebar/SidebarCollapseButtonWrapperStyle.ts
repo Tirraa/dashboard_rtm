@@ -1,4 +1,4 @@
-import IButtonStyleBase from '@/components/config/styles/types/IButtonStyleBase';
+import type IButtonStyleBase from '@/components/config/styles/types/IButtonStyleBase';
 import { cn } from '@/lib/tailwind';
 
 const COMMONS = 'z-10 transition-opacity delay-300 duration-1000 relative h-0 flex lg:w-0 lg:block';

@@ -5,7 +5,7 @@ import { getAllBlogCategories } from '@/lib/blog';
 import { getPageTitle } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { BlogCategory, BlogCategoryPageProps, BlogStaticParams } from '@/types/Blog';
+import type { BlogCategory, BlogCategoryPageProps, BlogStaticParams } from '@/types/Blog';
 import { setStaticParamsLocale } from 'next-international/server';
 
 export async function generateMetadata({ params }: BlogCategoryPageProps) {

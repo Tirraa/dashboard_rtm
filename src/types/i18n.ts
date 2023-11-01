@@ -1,8 +1,9 @@
-import { ELanguagesFlag } from '@/config/i18n';
-import VOCAB_SCHEMA, { SHARED_VOCAB_SCHEMA } from '@/i18n/locales/schema';
-import { MakeHomogeneousValuesObjType } from '@/types/CustomUtilitaryTypes';
-import { TypedLeafsJSONData } from '@/types/JSON';
-import { RemovePlural } from '@/types/international-types';
+import type { ELanguagesFlag } from '@/config/i18n';
+import type VOCAB_SCHEMA from '@/i18n/locales/schema';
+import type { SHARED_VOCAB_SCHEMA } from '@/i18n/locales/schema';
+import type { MakeHomogeneousValuesObjType } from '@/types/CustomUtilitaryTypes';
+import type { TypedLeafsJSONData } from '@/types/JSON';
+import type { RemovePlural } from '@/types/international-types';
 
 type KeySeparator = '.';
 

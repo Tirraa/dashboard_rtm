@@ -1,6 +1,6 @@
-import { User } from '@/types/Auth';
+import type { User } from '@/types/Auth';
 import Image from 'next/image';
-import { FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 
 interface UserImageProps {
   user: User;

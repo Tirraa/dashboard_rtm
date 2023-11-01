@@ -1,4 +1,4 @@
-import { BlogCategory, ForcedBlogSubcategoriesPaths, PostsCollectionAssoc } from '@/types/Blog';
+import type { BlogCategory, ForcedBlogSubcategoriesPaths, PostsCollectionAssoc } from '@/types/Blog';
 import { allPatchPostBis, allPatchPosts } from 'contentlayer/generated';
 
 type TBlogConfig = {

@@ -1,4 +1,4 @@
-import { PatchNotesRoutes, PatchNotesRoutesTitles } from '@/config/SitewideNavbar/PatchNotes/utils/RoutesMapping';
+import type { PatchNotesRoutes, PatchNotesRoutesTitles } from '@/config/SitewideNavbar/PatchNotes/utils/RoutesMapping';
 import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { getSlashEnvelope } from '@/lib/str';

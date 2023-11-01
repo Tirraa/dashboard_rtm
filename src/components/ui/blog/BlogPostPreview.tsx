@@ -1,8 +1,8 @@
 import { getBlogPostPathWithoutI18nPart } from '@/lib/blog';
 import { getSlicedBlogPostDescription } from '@/lib/str';
-import { BlogPostProps } from '@/types/Blog';
+import type { BlogPostProps } from '@/types/Blog';
 import Link from 'next/link';
-import { FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 import BlogPostDate from './BlogPostDate';
 
 interface BlogPostPreviewProps extends BlogPostProps {

@@ -13,12 +13,12 @@ import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
 import getComputedNavData from '@/lib/misc/getComputedNavData';
 import { cn } from '@/lib/tailwind';
 import i18nTaxonomy from '@/taxonomies/i18n';
-import { NavbarItems } from '@/types/NavData';
-import { i18nComponentProps } from '@/types/Next';
-import { LanguageFlag } from '@/types/i18n';
+import type { NavbarItems } from '@/types/NavData';
+import type { i18nComponentProps } from '@/types/Next';
+import type { LanguageFlag } from '@/types/i18n';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ComponentType, FunctionComponent, ReactNode } from 'react';
+import type { ComponentType, FunctionComponent, ReactNode } from 'react';
 
 interface SitewideNavbarProps {}
 type TItemAsComponent = unknown & { className: string };
