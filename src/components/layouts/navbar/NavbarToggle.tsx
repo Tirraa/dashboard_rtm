@@ -1,11 +1,12 @@
 'use client';
 
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/DropdownMenu';
 import { i18ns } from '@/config/i18n';
 import { getClientSideI18n, useScopedI18n } from '@/i18n/client';
+import { preserveKeyboardNavigation } from '@/lib/html';
 import { getRefCurrentPtr } from '@/lib/react';
 import { getBreakpoint } from '@/lib/tailwind';
 import type { NavbarItems } from '@/types/NavData';
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { useMediaQuery } from '@react-hook/media-query';
 import type { FunctionComponent } from 'react';
 import { useEffect, useRef, useState } from 'react';
@@ -19,13 +20,14 @@ const menuItemsGenerator = (items: NavbarItems) => {
 
   return items.map((item, index) => {
     return (
-      <DropdownItem
+      <DropdownMenuItem
         key={`navbar-hamburger-menu-item-${index}`}
-        className="p-0 dark:bg-opacity-20 dark:text-gray-300 dark:hover:text-white"
+        className="my-1 p-0 dark:bg-opacity-20 dark:text-gray-300 dark:hover:text-white"
         textValue={globalT(item.i18nTitle)}
+        onClick={(event) => preserveKeyboardNavigation(event.target)}
       >
-        {item.component}
-      </DropdownItem>
+        {item.jsx}
+      </DropdownMenuItem>
     );
   });
 };
@@ -50,26 +52,18 @@ export const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) =>
   }, [isLargeScreen]);
 
   return (
-    <Dropdown
-      closeOnSelect={false}
-      onOpenChange={handleOpenChange}
-      className="border px-1 py-1 dark:border-black dark:bg-slate-950"
-      classNames={{ arrow: 'dark:bg-slate-800' }}
-      key={`reset-dropdown-via-breakpoint-state-${isLargeScreen}`}
-      backdrop="opaque"
-      showArrow
-    >
-      <DropdownTrigger aria-label={!isOpened ? scopedT('open-hamburger-menu') : scopedT('close-hamburger-menu')}>
+    <DropdownMenu open={isOpened} onOpenChange={handleOpenChange} key={`reset-dropdown-via-breakpoint-state-${isLargeScreen}`}>
+      <DropdownMenuTrigger aria-label={!isOpened ? scopedT('open-hamburger-menu') : scopedT('close-hamburger-menu')} asChild>
         <button
           ref={togglerRef}
           className="flex h-full w-full flex-col items-center justify-center text-white outline-none transition-opacity before:block before:h-px before:w-6 before:-translate-y-1 before:rotate-0 before:bg-current before:transition-transform before:duration-150 before:content-[''] after:block after:h-px after:w-6 after:translate-y-1 after:rotate-0 after:bg-current after:transition-transform after:duration-150 after:content-[''] data-[pressed=true]:opacity-70 data-[open=true]:before:translate-y-px data-[open=true]:before:rotate-45 data-[open=true]:after:translate-y-0 data-[open=true]:after:-rotate-45"
         />
-      </DropdownTrigger>
+      </DropdownMenuTrigger>
 
-      <DropdownMenu className="dark:bg-slate-950" aria-label={scopedT('hamburger-menu')}>
-        {menuItemsGenerator(items)}
-      </DropdownMenu>
-    </Dropdown>
+      <DropdownMenuContent className="relative min-w-[145px] ltr:right-4 rtl:left-4 dark:border-card" aria-label={scopedT('hamburger-menu')}>
+        <nav>{menuItemsGenerator(items)}</nav>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

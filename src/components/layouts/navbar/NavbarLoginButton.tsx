@@ -1,8 +1,8 @@
 'use client';
 
 import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
-import UserImage from '@/components/ui/UserImage';
 import ButtonHoC from '@/components/ui/hoc/ButtonHoC';
+import UserImage from '@/components/ui/hoc/UserImage';
 import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { useScopedI18n } from '@/i18n/client';
@@ -26,8 +26,8 @@ const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> =
 
   if (session) {
     return (
-      <ButtonHoC className="min-w-0 bg-transparent p-0" onClick={() => signOut()}>
-        <UserImage user={session?.user} width={SIZE} height={SIZE} className="absolute rounded-full brightness-75" />
+      <ButtonHoC className="min-w-0 p-0" onClick={() => signOut()} withTransparentBackground>
+        <UserImage user={session?.user} width={SIZE} height={SIZE} className="rounded-full absolute brightness-75" />
         <SignalSlashIcon width={SIZE} height={SIZE} className="relative shadow-xl" />
         <span className="sr-only">{scopedT('logout')}</span>
       </ButtonHoC>
@@ -35,7 +35,7 @@ const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> =
   }
 
   return (
-    <ButtonHoC className="min-w-0 bg-transparent p-0" onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })}>
+    <ButtonHoC className="min-w-0 p-0" onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} withTransparentBackground>
       <KeyIcon width={SIZE} height={SIZE} />
       <span className="sr-only">{scopedT('login')}</span>
     </ButtonHoC>
@@ -52,7 +52,7 @@ export const NavbarLoginButton: FunctionComponent<NavbarLoginButtonProps> = ({ i
       <NavbarButton
         i18nTitle={`${i18ns.auth}.logout`}
         onClick={() => signOut()}
-        icon={<UserImage user={session?.user} width={SIZE} height={SIZE} className="rounded-full rounded-bl-lg" />}
+        icon={<UserImage user={session?.user} width={SIZE} height={SIZE} className="rounded-full" />}
       />
     );
 

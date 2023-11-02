@@ -17,7 +17,7 @@ export const PrimitiveComponents: Record<string, (...args: any[]) => JSX.Element
   ol: ({ className, ...props }) => <ol className={cn('my-6 ml-6 list-decimal', className)} {...props} />,
   li: ({ className, ...props }) => <li className={cn('mt-2', className)} {...props} />,
   blockquote: ({ className, ...props }) => (
-    <blockquote className={cn('[&>*]:text-muted-foreground mt-6 border-l-2 pl-6 italic', className)} {...props} />
+    <blockquote className={cn('mt-6 border-l-2 pl-6 italic [&>*]:text-muted-foreground', className)} {...props} />
   ),
   img: ({ className, alt, ...props }: ImgHTMLAttributes<HTMLImageElement>) => (
     // eslint-disable-next-line @next/next/no-img-element
@@ -29,12 +29,18 @@ export const PrimitiveComponents: Record<string, (...args: any[]) => JSX.Element
       <table className={cn('w-full', className)} {...props} />
     </div>
   ),
-  tr: ({ className, ...props }: HTMLAttributes<HTMLTableRowElement>) => <tr className={cn('even:bg-muted m-0 border-t p-0', className)} {...props} />,
+  tr: ({ className, ...props }: HTMLAttributes<HTMLTableRowElement>) => <tr className={cn('m-0 border-t p-0 even:bg-muted', className)} {...props} />,
   th: ({ className, ...props }) => (
-    <th className={cn('border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right', className)} {...props} />
+    <th
+      className={cn('border px-4 py-2 font-bold ltr:text-left rtl:text-right [&[align=center]]:text-center [&[align=right]]:text-right', className)}
+      {...props}
+    />
   ),
   td: ({ className, ...props }) => (
-    <td className={cn('border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right', className)} {...props} />
+    <td
+      className={cn('border px-4 py-2 ltr:text-left rtl:text-right [&[align=center]]:text-center [&[align=right]]:text-right', className)}
+      {...props}
+    />
   ),
   pre: ({ className, ...props }) => (
     <CopyToClipboard>

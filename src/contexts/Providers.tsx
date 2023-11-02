@@ -10,9 +10,9 @@ interface ProvidersProps extends I18nProviderProps {}
 
 export const Providers: FunctionComponent<ProvidersProps> = ({ children, locale }) => (
   <SessionProvider>
-    <UIProvider>
-      <I18nProvider {...{ locale }}>{children}</I18nProvider>
-    </UIProvider>
+    <I18nProvider {...{ locale }}>
+      <UIProvider>{children}</UIProvider>
+    </I18nProvider>
   </SessionProvider>
 );
 

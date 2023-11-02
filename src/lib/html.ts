@@ -31,3 +31,13 @@ export function resetScroll<T extends HTMLElement>(scrollableElementToResetRef?:
   if (refCurrentPtr) scrollToTop(refCurrentPtr);
   if (alsoResetWindowScroll) resetWindowScroll();
 }
+
+export function preserveKeyboardNavigation(element: EventTarget | HTMLElement) {
+  if (!(element instanceof HTMLElement)) return;
+
+  const linkElement = element.querySelector('a');
+  const buttonElement = element.querySelector('button');
+
+  if (linkElement) linkElement.click();
+  else if (buttonElement) buttonElement.click();
+}

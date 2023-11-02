@@ -13,8 +13,13 @@ export const InviteTheBotButton: FunctionComponent<InviteTheBotButtonProps> = ()
   const globalT = getClientSideI18n();
 
   return (
-    <ButtonHoC href={DISCORD_CONFIG.BOT_INVITE_LINK} startContent={<CogIcon className="h-7 w-7" />} size="lg" disableRipple>
-      {globalT(`${i18ns.vocab}.invite-the-bot`)}
+    <ButtonHoC href={DISCORD_CONFIG.BOT_INVITE_LINK}>
+      <span className="flex items-center gap-1">
+        <span>
+          <CogIcon className="h-7 w-7" />
+        </span>
+        <span>{globalT(`${i18ns.vocab}.invite-the-bot`)}</span>
+      </span>
     </ButtonHoC>
   );
 };

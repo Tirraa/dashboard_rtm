@@ -1,13 +1,12 @@
 'use client';
 
 import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
+import { Button } from '@/components/ui/Button';
 import { i18ns } from '@/config/i18n';
 import { DEFAULT_DARK_VARIANT, DEFAULT_VARIANT } from '@/config/themes';
 import { useScopedI18n } from '@/i18n/client';
-import { cn } from '@/lib/tailwind';
 import type { WithIsMobile } from '@/types/Next';
 import { MoonIcon, SunIcon } from '@heroicons/react/20/solid';
-import { Button } from '@nextui-org/button';
 import { useTheme } from 'next-themes';
 import type { FunctionComponent } from 'react';
 import { useEffect, useState } from 'react';
@@ -25,19 +24,18 @@ export const NavbarThemeButton: FunctionComponent<NavbarLoginButtonProps> = ({ i
 
   if (!isMounted) return null;
 
-  const nextuiRelatedClasses = cn('min-w-unit-0', isMobile ? 'w-unit-7' : 'w-unit-5');
-  const classNameBase = 'h-full bg-transparent text-white';
+  const className = 'h-full bg-transparent hover:bg-transparent text-primary-foreground w-fit';
 
   if (theme !== DEFAULT_VARIANT)
     return (
-      <Button className={cn(classNameBase, nextuiRelatedClasses)} onClick={() => setTheme(DEFAULT_VARIANT)} isIconOnly disableRipple>
+      <Button {...{ className }} onClick={() => setTheme(DEFAULT_VARIANT)} size="icon">
         <SunIcon width={SIZE} height={SIZE} />
         <span className="sr-only">{scopedT('switch-to-light-mode')}</span>
       </Button>
     );
 
   return (
-    <Button className={cn(classNameBase, nextuiRelatedClasses)} onClick={() => setTheme(DEFAULT_DARK_VARIANT)} isIconOnly disableRipple>
+    <Button {...{ className }} onClick={() => setTheme(DEFAULT_DARK_VARIANT)} size="icon">
       <MoonIcon width={SIZE} height={SIZE} />
       <span className="sr-only">{scopedT('switch-to-dark-mode')}</span>
     </Button>

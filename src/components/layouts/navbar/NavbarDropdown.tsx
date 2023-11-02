@@ -4,19 +4,19 @@ import NavbarDropdownButtonIconStyle from '@/components/config/styles/navbar/Nav
 import NavbarDropdownMenuButtonStyle, {
   NAVBAR_DROPDOWN_MENU_INNER_BUTTONS_CLASSLIST
 } from '@/components/config/styles/navbar/NavbarDropdownMenuButtonStyle';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/DropdownMenu';
 import { getClientSideI18n } from '@/i18n/client';
-import { getLinkTarget } from '@/lib/react';
+import { getLinkTarget, getRefCurrentPtr } from '@/lib/react';
 import { hrefMatchesPathname } from '@/lib/str';
 import { getBreakpoint } from '@/lib/tailwind';
 import type { EmbeddedEntities, NavbarDropdownElement } from '@/types/NavData';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { useMediaQuery } from '@react-hook/media-query';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import type { FunctionComponent } from 'react';
-import { useEffect, useState } from 'react';
+import type { FunctionComponent, RefObject } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface NavbarButtonProps extends NavbarDropdownElement {}
 
@@ -26,23 +26,27 @@ const { isActiveClassList: navbarDropdownIsActiveClassList, isNotActiveClassList
 const { isActiveClassList: navbarDropdownBtnIconIsActiveClassList, isNotActiveClassList: navbarDropdownBtnIconIsNotActiveClassList } =
   NavbarDropdownButtonIconStyle;
 
-const menuItemsGenerator = (embeddedEntities: EmbeddedEntities) => {
+const menuItemsGenerator = (embeddedEntities: EmbeddedEntities, btnRef: RefObject<HTMLButtonElement>) => {
   const globalT = getClientSideI18n();
 
   return embeddedEntities.map(({ path: href, i18nTitle }) => {
     const title = globalT(i18nTitle);
     const target = getLinkTarget(href);
+    const btnRefCurrentPtr = getRefCurrentPtr(btnRef);
+    const minWidth = btnRefCurrentPtr ? window.getComputedStyle(btnRefCurrentPtr).width : '0';
 
     return (
-      <DropdownItem
+      <DropdownMenuItem
         key={`${href}-${title}-navbar-menu-item`}
-        className="p-0 dark:bg-opacity-20 dark:text-gray-300 dark:hover:text-white"
+        className="p-0 dark:bg-opacity-20 dark:text-muted-foreground dark:hover:text-primary-foreground"
         textValue={title}
+        style={{ minWidth }}
+        asChild
       >
         <Link className={NAVBAR_DROPDOWN_MENU_INNER_BUTTONS_CLASSLIST} {...{ title, href, ...target }}>
           {title}
         </Link>
-      </DropdownItem>
+      </DropdownMenuItem>
     );
   });
 };
@@ -52,6 +56,7 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ i18nTitle
   const handleOpenChange = (opened: boolean) => setIsOpened(opened);
   const globalT = getClientSideI18n();
   const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
+  const btnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!isLargeScreen) setIsOpened(false);
@@ -64,21 +69,15 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ i18nTitle
   const title = globalT(i18nTitle);
 
   return (
-    <Dropdown
-      onOpenChange={handleOpenChange}
-      className="border px-1 py-1 dark:border-black dark:bg-slate-950"
-      key={`reset-dropdown-via-breakpoint-state-${isLargeScreen}`}
-    >
-      <DropdownTrigger>
-        <button className={navbarDropdownClassName}>
+    <DropdownMenu onOpenChange={handleOpenChange} key={`reset-dropdown-via-breakpoint-state-${isLargeScreen}`}>
+      <DropdownMenuTrigger asChild>
+        <button className={navbarDropdownClassName} ref={btnRef}>
           {title}
           <ChevronDownIcon className={navbarDropdownBtnClassName} aria-hidden="true" />
         </button>
-      </DropdownTrigger>
-      <DropdownMenu className="dark:bg-slate-950" aria-label={title}>
-        {menuItemsGenerator(embeddedEntities)}
-      </DropdownMenu>
-    </Dropdown>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent aria-label={title}>{menuItemsGenerator(embeddedEntities, btnRef)}</DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

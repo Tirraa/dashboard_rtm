@@ -2,11 +2,14 @@
 
 import { i18ns } from '@/config/i18n';
 import { useScopedI18n } from '@/i18n/client';
+import { capitalize } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
 import type { FlexJustify } from '@/types/HTML';
-import { Pagination } from '@nextui-org/pagination';
+import type { ClassName } from '@/types/React';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { FunctionComponent, ReactNode } from 'react';
+import ReactPaginate from 'react-paginate';
 import { computePagesAmount } from './hoc/MaybePaginatedElements';
 import type { PaginatedElementsBodyWrapperProps } from './hoc/PaginatedElementsBodyWrapper';
 import PaginatedElementsBodyWrapper from './hoc/PaginatedElementsBodyWrapper';
@@ -17,6 +20,7 @@ export interface PaginatedElementsProps extends PaginatedElementsBodyWrapperProp
   paginationButtonsPosition?: 'top' | 'bottom';
   paginationButtonsJustify?: FlexJustify;
   pagesAmount?: number;
+  pagesRange?: number;
 }
 
 function initializeCurrentPage(pageFromUrl: number, maxPage: number) {
@@ -32,11 +36,13 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   paginationButtonsPosition: position,
   paginationButtonsJustify: justify,
   pagesAmount: forcedPagesAmount,
+  pagesRange: pagesRangeValue,
   paginatedElementsBodyWrapperProps
 }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const scopedT = useScopedI18n(i18ns.vocab);
+  const pagesRange = pagesRangeValue ?? 3;
 
   const pagesAmount = forcedPagesAmount ?? computePagesAmount(paginatedElements.length, elementsPerPage);
   const unsafePageFromUrl = searchParams.get('page');
@@ -49,21 +55,40 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   const ypos = position ?? 'bottom';
   const xpos = justify ?? 'normal';
   const posClassName = ypos === 'bottom' ? 'mt-4' : 'mb-4';
+  const chevronsClassName = 'scale-75';
 
-  const [handlePageClick, setAriaLabels] = [
-    (n: number) => router.push(`?page=${n}`, { scroll: false }),
-    (s?: string) => (s === 'next' || s === 'prev' ? scopedT(s) : s ?? '')
-  ];
+  const NEXT_AND_PREV_ICONS_CLASSLIST: ClassName = { className: 'w-10 h-10 flex items-centers justify-center bg-accent rounded-md' };
+
+  function handlePageClick(event: { selected: number }) {
+    const targetPage = event.selected + 1;
+    router.push(`?page=${targetPage}`, { scroll: false });
+  }
 
   const paginationNode = (
-    <Pagination
-      onChange={handlePageClick}
-      getItemAriaLabel={setAriaLabels}
-      total={pagesAmount}
-      page={pageFromUrl}
-      className={cn(`flex justify-${xpos}`, posClassName)}
-      showControls
-      disableAnimation
+    <ReactPaginate
+      className={cn(`flex justify-${xpos} gap-2`, posClassName)}
+      breakLabel="..."
+      previousAriaLabel={scopedT('prev')}
+      nextAriaLabel={scopedT('next')}
+      previousLabel={
+        <span {...NEXT_AND_PREV_ICONS_CLASSLIST}>
+          <ChevronLeftIcon className={chevronsClassName} />
+        </span>
+      }
+      nextLabel={
+        <span {...NEXT_AND_PREV_ICONS_CLASSLIST}>
+          <ChevronRightIcon className={chevronsClassName} />
+        </span>
+      }
+      onPageChange={handlePageClick}
+      pageRangeDisplayed={pagesRange < pagesAmount ? pagesRange : pagesAmount}
+      pageCount={pagesAmount}
+      containerClassName="flex items-center justify-center mt-8 mb-4 select-none"
+      previousLinkClassName={cn('flex items-center justify-center rounded-md', { 'opacity-50': pageFromUrl <= 1 })}
+      nextLinkClassName={cn('flex items-center justify-center rounded-md', { 'opacity-50': pageFromUrl >= pagesAmount })}
+      pageLinkClassName="flex items-center justify-center hover:bg-accent p-2 rounded-md"
+      activeClassName="bg-accent rounded-md"
+      ariaLabelBuilder={(pageNumber) => `${capitalize(scopedT('page'))} ${pageNumber}`}
     />
   );
 

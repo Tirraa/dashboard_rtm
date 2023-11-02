@@ -91,7 +91,10 @@ export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => 
 
   return (
     <>
-      <aside ref={sidebarRef} className={cn('z-20 w-full justify-center border-t-[1px] border-slate-800 bg-black lg:w-fit')}>
+      <aside
+        ref={sidebarRef}
+        className={'z-20 w-full justify-center border-t-[1px] border-muted-foreground bg-black dark:bg-card lg:w-fit lg:border-0'}
+      >
         <nav className="py-4 lg:overflow-y-auto lg:px-[22px]">
           <ul className={cn('flex flex-wrap justify-center gap-2 lg:block')} role="menu">
             {sidebarBtnsGenerator()}

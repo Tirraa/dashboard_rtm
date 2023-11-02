@@ -1,20 +1,20 @@
 'use client';
 
 import NavbarButtonStyle from '@/components/config/styles/navbar/NavbarButtonStyle';
+import { Button } from '@/components/ui/Button';
 import { getClientSideI18n } from '@/i18n/client';
 import { getLinkTarget } from '@/lib/react';
 import { hrefMatchesPathname } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
 import type { AtomicNavDataEntity } from '@/types/NavData';
 import type { AppPath } from '@/types/Next';
-import { Button } from '@nextui-org/button';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import type { FunctionComponent, ReactNode } from 'react';
+import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
 
 type OptionalIcon = { icon?: ReactNode };
 type OptionalPath = { path?: AppPath };
-type OptionalOnClick = { onClick?: Function };
+type OptionalOnClick = { onClick?: MouseEventHandler<HTMLButtonElement> };
 
 type RequiredPath = Required<OptionalPath>;
 type RequiredOnClick = Required<OptionalOnClick>;
@@ -29,24 +29,24 @@ const ButtonAsIs: FunctionComponent<Pick<NavbarButtonProps, 'i18nTitle' | 'onCli
 
   if (onClickFun) {
     return icon ? (
-      <Button className={cn(isNotActiveClassList, 'items-center gap-2 bg-slate-900')} onClick={() => onClickFun()}>
+      <Button className={cn(isNotActiveClassList, 'items-center gap-2 bg-transparent')} onClick={(event) => onClickFun(event)}>
         {icon}
         {globalT(i18nTitle)}
       </Button>
     ) : (
-      <Button className={cn(isNotActiveClassList, 'bg-slate-900')} onClick={() => onClickFun()}>
+      <Button className={cn(isNotActiveClassList, 'bg-transparent')} onClick={(event) => onClickFun(event)}>
         {globalT(i18nTitle)}
       </Button>
     );
   }
 
   return icon ? (
-    <Button className={cn(isNotActiveClassList, 'bg-slate-900')}>
+    <Button className={cn(isNotActiveClassList, 'bg-transparent')}>
       {icon}
       {globalT(i18nTitle)}
     </Button>
   ) : (
-    <Button className={cn(isNotActiveClassList, 'bg-slate-900')}>{globalT(i18nTitle)}</Button>
+    <Button className={cn(isNotActiveClassList, 'bg-transparent')}>{globalT(i18nTitle)}</Button>
   );
 };
 

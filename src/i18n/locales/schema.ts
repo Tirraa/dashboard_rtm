@@ -48,7 +48,8 @@ export const SHARED_VOCAB_SCHEMA = {
   },
   vocab: {
     logo: _,
-    brand: _
+    brand: _,
+    page: _
   }
 } as const satisfies TypedLeafsJSONData<NotScanned>;
 
@@ -91,7 +92,7 @@ export default {
   },
 
   vocab: {
-    brand: _,
+    ...SHARED_VOCAB_SCHEMA.vocab,
     'brand-short': _,
     'invite-the-bot': _,
     'no-blog-post': _,

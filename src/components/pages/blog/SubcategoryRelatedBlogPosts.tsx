@@ -31,7 +31,7 @@ export const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageP
 
   return (
     <section className="mx-auto max-w-xl py-8" id={slugify(curSubcategTitle.toLowerCase())}>
-      <h1 className="mb-2 text-left">{title}</h1>
+      <h1 className="mb-2 ltr:text-left rtl:text-right">{title}</h1>
       <MaybePaginatedElements
         {...{ paginatedElements, elementsPerPage: BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT }}
         paginationButtonsPosition="top"

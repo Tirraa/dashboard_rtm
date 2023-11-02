@@ -1,7 +1,7 @@
 import type IButtonStyleBase from '@/components/config/styles/types/IButtonStyleBase';
 import { cn } from '@/lib/tailwind';
 
-const COMMONS = 'transition-transform	duration-1000 m-auto w-full h-full p-1 text-white lg:rtl:-scale-x-100';
+const COMMONS = 'transition-transform	duration-1000 m-auto w-full h-full p-1 text-primary-foreground lg:rtl:-scale-x-100';
 
 export const SidebarCollapseButtonIconStyle: IButtonStyleBase = {
   isActiveClassList: COMMONS,

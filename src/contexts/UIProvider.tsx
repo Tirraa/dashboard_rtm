@@ -1,22 +1,13 @@
-import { UI_PROVIDER_CLS } from '@/components/config/styles/next-ui';
-import ELEMENTS_ID from '@/config/elementsId';
-import { DEFAULT_VARIANT } from '@/config/themes';
 import type { LayoutMinimalProps as WithChildren } from '@/types/Next';
-import { NextUIProvider } from '@nextui-org/react';
-import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import type { FunctionComponent } from 'react';
+import { ThemeProvider } from './ThemeProvider';
 
 interface UIProviderProps extends WithChildren {}
 
-const className = UI_PROVIDER_CLS;
-const id = ELEMENTS_ID.NEXTUI_PROVIDER;
-
 export const UIProvider: FunctionComponent<UIProviderProps> = ({ children }) => (
-  <NextUIProvider {...{ className, id }}>
-    <NextThemesProvider attribute="class" defaultTheme={DEFAULT_VARIANT}>
-      {children}
-    </NextThemesProvider>
-  </NextUIProvider>
+  <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+    {children}
+  </ThemeProvider>
 );
 
 export default UIProvider;

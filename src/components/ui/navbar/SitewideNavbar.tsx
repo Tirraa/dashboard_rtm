@@ -26,16 +26,16 @@ type TItemAsComponent = unknown & { className: string };
 const { LOGO_SIZE_PX_VALUE } = NAVBAR_STYLE;
 
 const buildNavbarExtrasForDesktop = (): ReactNode[] =>
-  Object.values(NAVBAR_EXTRAS_COMPONENTS_DESKTOP).map((component, index) => (
-    <li className="flex h-fit w-fit" key={`${index}-navbar-extra-desktop`}>
-      {component}
+  Object.values(NAVBAR_EXTRAS_COMPONENTS_DESKTOP).map((jsx, index) => (
+    <li className="flex h-fit w-fit p-[2px]" key={`${index}-navbar-extra-desktop`}>
+      {jsx}
     </li>
   ));
 
 const buildNavbarExtrasForMobile = (): ReactNode[] =>
-  Object.values(NAVBAR_EXTRAS_COMPONENTS_MOBILE).map((component, index) => (
-    <li className="flex h-full items-center" key={`${index}-navbar-extra-mobile`}>
-      {component}
+  Object.values(NAVBAR_EXTRAS_COMPONENTS_MOBILE).map((jsx, index) => (
+    <li className="flex h-full w-fit items-center" key={`${index}-navbar-extra-mobile`}>
+      {jsx}
     </li>
   ));
 
@@ -43,7 +43,7 @@ function buildNavbarItems({ i18nProps }: i18nComponentProps): NavbarItems {
   const computedNavData = getComputedNavData(SITEWIDE_NAVBAR_ROUTES, SITEWIDE_NAVBAR_ROUTES_TITLES, SITEWIDE_NAVBAR_DROPDOWNS_CONFIG);
   const navbarItems = computedNavData.map(({ i18nTitle, path, embeddedEntities }) => ({
     i18nTitle,
-    component: <NavbarElement key={`${i18nTitle}-${path}-navbar-btn`} {...{ i18nProps, i18nTitle, path, embeddedEntities }} />
+    jsx: <NavbarElement key={`${i18nTitle}-${path}-navbar-btn`} {...{ i18nProps, i18nTitle, path, embeddedEntities }} />
   }));
   return navbarItems;
 }
@@ -53,20 +53,20 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const logoAlt = globalT(`${i18ns.vocab}.sr-only.brand-logo`);
   const currentLocale: LanguageFlag = useCurrentLocale();
 
-  const navbarItemClassName = 'p-1 font-normal';
+  const navbarItemClassName = 'p-[5px] font-normal';
   const navbarItems = buildNavbarItems({ i18nProps: { [i18nTaxonomy.LANG_FLAG]: currentLocale } });
   const desktopNavbarItems = navbarItems.map((item, index) => (
     <li key={`${index}-navbar-btn-typography-desktop`} className={navbarItemClassName}>
-      {item.component}
+      {item.jsx}
     </li>
   ));
 
   const mobileNavbarItems: NavbarItems = navbarItems.map((item, index) => {
     const ItemAsComponent: ComponentType<TItemAsComponent> = () =>
-      item.component.props.embeddedEntities ? <NavbarButton {...item.component.props} /> : item.component;
+      item.jsx.props.embeddedEntities ? <NavbarButton {...item.jsx.props} /> : item.jsx;
     return {
-      i18nTitle: item.i18nTitle,
-      component: <ItemAsComponent key={`${index}-navbar-btn-typography-mobile`} className={navbarItemClassName} />
+      ...item,
+      jsx: <ItemAsComponent key={`${index}-navbar-btn-typography-mobile`} className={navbarItemClassName} />
     };
   });
 
@@ -78,7 +78,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   );
 
   return (
-    <nav className="sticky inset-x-0 top-0 z-30 flex h-auto w-full items-center justify-center bg-black backdrop-blur-lg backdrop-saturate-150">
+    <nav className="sticky inset-x-0 top-0 z-30 flex h-auto w-full items-center justify-center bg-black backdrop-blur-lg backdrop-saturate-150 dark:bg-card">
       <header className="relative z-30 flex h-[82px] w-full max-w-full flex-row flex-nowrap items-center justify-between gap-4 px-5">
         {navbarBrand}
 
@@ -88,7 +88,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
 
         <ul className={cn('flex justify-end lg:hidden', navbarExtrasClassNameBase)}>
           {buildNavbarExtrasForMobile()}
-          <li className="h-unit-10">
+          <li className="h-[40px]">
             <NavbarToggle items={mobileNavbarItems} />
           </li>
         </ul>

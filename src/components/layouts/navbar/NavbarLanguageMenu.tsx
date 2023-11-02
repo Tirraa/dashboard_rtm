@@ -1,22 +1,24 @@
 'use client';
 
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/DropdownMenu';
 import { LANGUAGES, i18ns } from '@/config/i18n';
 import { useChangeLocale, useCurrentLocale, useScopedI18n } from '@/i18n/client';
 import localesLabels, { localesEmojis } from '@/i18n/localesLabels';
 import { cn } from '@/lib/tailwind';
 import type { WithIsMobile } from '@/types/Next';
 import type { LanguageFlag } from '@/types/i18n';
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/dropdown';
 import type { FunctionComponent } from 'react';
 
 interface NavbarLanguageMenuProps extends WithIsMobile {}
 
-const dropdownItemsGenerator = () =>
+const dropdownItemsGenerator = (changeLocale: (language: LanguageFlag) => void) =>
   LANGUAGES.map((language) => (
-    <DropdownItem key={language} className="relative" textValue={localesLabels[language]}>
-      <span className="absolute ltr:right-2 rtl:left-2">{localesEmojis[language]}</span>
-      {localesLabels[language]}
-    </DropdownItem>
+    <DropdownMenuItem key={language} className="relative" textValue={localesLabels[language]} asChild>
+      <button onClick={() => changeLocale(language)} className="w-full">
+        <span className="absolute right-2">{localesEmojis[language]}</span>
+        <span>{localesLabels[language]}</span>
+      </button>
+    </DropdownMenuItem>
   ));
 
 export const NavbarLanguageMenu: FunctionComponent<NavbarLanguageMenuProps> = ({ isMobile }) => {
@@ -24,18 +26,15 @@ export const NavbarLanguageMenu: FunctionComponent<NavbarLanguageMenuProps> = ({
   const currentLocale = useCurrentLocale();
   const scopedT = useScopedI18n(`${i18ns.navbar}.sr-only`);
 
-  const nextuiRelatedClasses = cn('min-w-unit-0', isMobile ? 'w-unit-7' : 'w-unit-5');
-  const classNameBase = 'h-full bg-transparent text-white';
-
   return (
-    <Dropdown className={cn('min-w-[135px]', { 'relative bottom-5': isMobile })}>
-      <DropdownTrigger>
-        <button className={cn(classNameBase, nextuiRelatedClasses)}>{localesEmojis[currentLocale]}</button>
-      </DropdownTrigger>
-      <DropdownMenu aria-label={scopedT('language-switcher-menu')} onAction={(k) => changeLocale(k as LanguageFlag)}>
-        {dropdownItemsGenerator()}
-      </DropdownMenu>
-    </Dropdown>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className="h-full bg-transparent text-primary-foreground">{localesEmojis[currentLocale]}</button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className={cn('min-w-[110px]', { 'relative bottom-5': isMobile })} aria-label={scopedT('language-switcher-menu')}>
+        {dropdownItemsGenerator(changeLocale)}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

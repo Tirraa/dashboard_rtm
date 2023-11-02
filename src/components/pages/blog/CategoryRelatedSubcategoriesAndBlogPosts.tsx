@@ -2,6 +2,7 @@ import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
 import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
+import { Button } from '@/components/ui/Button';
 import BlogConfig from '@/config/blog';
 import { i18ns } from '@/config/i18n';
 import { getScopedI18n, getServerSideI18n } from '@/i18n/server';
@@ -12,7 +13,6 @@ import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import type { BlogCategory, BlogCategoryPageProps, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
 import type { LanguageFlag } from '@/types/i18n';
-import { Button } from '@nextui-org/button';
 import { compareDesc } from 'date-fns';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -57,7 +57,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
       const title = (
         <Link
           {...{ href }}
-          className="mb-4 flex h-fit w-fit border-b-[2px]	border-transparent leading-none	decoration-primary-500 transition-all hover:border-b-[2px] hover:border-inherit hover:pr-2 hover:indent-1"
+          className="mb-4 flex h-fit w-fit border-b-[2px] border-transparent leading-none transition-all hover:border-b-[2px] hover:border-inherit hover:pr-2 hover:indent-1"
         >
           <h2 className="mb-1 mt-2">{curSubcategTitle}</h2>
         </Link>
@@ -67,8 +67,8 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
       if (posts.length > limit) {
         showMoreLink = (
           <div className="flex w-full justify-center">
-            <Button as={Link} size="md" className={cn(BUTTON_CONFIG.CLASSNAME, 'mt-4')} {...{ href }} disableRipple>
-              {globalT(`${i18ns.vocab}.see-more`)}
+            <Button size="lg" className={cn(BUTTON_CONFIG.CLASSNAME, 'mt-4')} asChild>
+              <Link {...{ href }}>{globalT(`${i18ns.vocab}.see-more`)}</Link>
             </Button>
           </div>
         );

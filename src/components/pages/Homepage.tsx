@@ -15,12 +15,12 @@ const [width, height]: [number, number] = [226, 69];
 
 export const Homepage: FunctionComponent<HomepageProps> = () => {
   const scopedT = useScopedI18n(i18ns.vocab);
-  const logoAlt = scopedT('sr-only.brand-logo');
+  const alt = scopedT('sr-only.brand-logo');
   const brand = scopedT('brand');
 
   return (
     <div className="text-center">
-      <Image src="/assets/rtm-txt-logo.svg" {...{ style, width, height }} alt={logoAlt} className="m-auto" priority />
+      <Image src="/assets/rtm-txt-logo.svg" {...{ style, width, height, alt }} className="m-auto" priority />
       <h1 className="mt-2">{brand}</h1>
       <InviteTheBotButton />
     </div>
