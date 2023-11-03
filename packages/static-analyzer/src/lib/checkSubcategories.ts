@@ -1,5 +1,5 @@
 import { LIST_ELEMENT_PREFIX } from '../config';
-import {
+import type {
   CategoriesMetadatas,
   Category,
   DeclaredCategoriesMetadatas,

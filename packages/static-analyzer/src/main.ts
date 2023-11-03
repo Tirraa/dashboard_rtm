@@ -8,7 +8,7 @@ import FeedbackError from './errors/exceptions/FeedbackError';
 import { foldFeedbacks } from './lib/feedbacksMerge';
 import retrieveI18nBlogCategoriesJSONMetadatas from './metadatas-builders/retrieveI18nBlogCategoriesJSONMetadatas';
 import retrieveMetadatas from './metadatas-builders/retrieveMetadatas';
-import { MaybeEmptyErrorsDetectionFeedback } from './types/metadatas';
+import type { MaybeEmptyErrorsDetectionFeedback } from './types/metadatas';
 import declaredBlogArchitectureValidator from './validators/architectureMatching';
 import parseArguments from './validators/arguments';
 import declaredI18nValidator from './validators/i18nMatching';

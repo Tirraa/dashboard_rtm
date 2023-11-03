@@ -4,7 +4,7 @@ import { CRITICAL_ERRORS_STR } from '../config/vocab';
 import BuilderError from '../errors/exceptions/BuilderError';
 import { objInnerToObj } from '../lib/etc';
 import getRawDataFromBracesDeclaration from '../lib/getRawDataFromBracesDeclaration';
-import { I18nJSONPart } from '../types/metadatas';
+import type { I18nJSONPart } from '../types/metadatas';
 
 const { INTERRUPTED: ERROR_SUFFIX } = CRITICAL_ERRORS_STR;
 

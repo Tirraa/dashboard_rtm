@@ -1,6 +1,7 @@
-import { Stats, readdirSync, statSync } from 'fs';
+import type { Stats } from 'fs';
+import { readdirSync, statSync } from 'fs';
 import { basename, extname, join } from 'path';
-import { File, Filename, Path } from '../types/metadatas';
+import type { File, Filename, Path } from '../types/metadatas';
 
 const CURRENT_DIRECTORY_PREFIX = './';
 

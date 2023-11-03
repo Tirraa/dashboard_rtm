@@ -9,7 +9,7 @@ import checkCategories from '../lib/checkCategories';
 import checkSubcategories from '../lib/checkSubcategories';
 import { foldFeedbacks, prefixFeedback } from '../lib/feedbacksMerge';
 import getErrorLabelForDefects from '../lib/getErrorLabelForDefects';
-import {
+import type {
   CategoriesMetadatas,
   Category,
   I18nJSONPart,

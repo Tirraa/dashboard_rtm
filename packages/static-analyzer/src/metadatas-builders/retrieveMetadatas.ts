@@ -5,8 +5,8 @@ import { CRITICAL_ERRORS_STR } from '../config/vocab';
 import BuilderError from '../errors/exceptions/BuilderError';
 import { removeComments } from '../lib/etc';
 import getRawDataFromBracesDeclaration from '../lib/getRawDataFromBracesDeclaration';
-import { CategoriesMetadatas, DeclaredCategoriesMetadatas } from '../types/metadatas';
-import { StringDelimiter } from '../types/parser';
+import type { CategoriesMetadatas, DeclaredCategoriesMetadatas } from '../types/metadatas';
+import type { StringDelimiter } from '../types/parser';
 import isValidTaxonomy, { NAMING_CONSTRAINTS_MSG } from '../validators/taxonomyConvention';
 
 const { INTERRUPTED: ERROR_HEAD } = CRITICAL_ERRORS_STR;

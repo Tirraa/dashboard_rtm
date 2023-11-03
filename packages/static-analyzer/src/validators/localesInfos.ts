@@ -5,7 +5,7 @@ import { CRITICAL_ERRORS_STR } from '../config/vocab';
 import BuilderError from '../errors/exceptions/BuilderError';
 import { prefixFeedback } from '../lib/feedbacksMerge';
 import retrieveLocaleFileInfosMetadatas from '../metadatas-builders/retrieveLocaleFileInfosMetadatas';
-import { ErrorsDetectionFeedback, MaybeEmptyErrorsDetectionFeedback, Path } from '../types/metadatas';
+import type { ErrorsDetectionFeedback, MaybeEmptyErrorsDetectionFeedback, Path } from '../types/metadatas';
 
 const localesExtension = '.ts';
 const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;

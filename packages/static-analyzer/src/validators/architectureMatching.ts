@@ -2,7 +2,7 @@ import { CRITICAL_ERRORS_STR, UPDATE_THE_BLOG_ARCHITECTURE_TYPE } from '../confi
 import checkCategories from '../lib/checkCategories';
 import checkSubcategories from '../lib/checkSubcategories';
 import { mergeFeedbacks, prefixFeedback } from '../lib/feedbacksMerge';
-import { CategoriesMetadatas, DeclaredCategoriesMetadatas, MaybeEmptyErrorsDetectionFeedback } from '../types/metadatas';
+import type { CategoriesMetadatas, DeclaredCategoriesMetadatas, MaybeEmptyErrorsDetectionFeedback } from '../types/metadatas';
 
 const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
