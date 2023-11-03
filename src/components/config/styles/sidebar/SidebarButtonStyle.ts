@@ -8,7 +8,7 @@ const { NOT_ACTIVE_CLASSNAME, ACTIVE_CLASSNAME } = BUTTON_CONFIG;
 export const SidebarButtonStyle: IButtonStyleReactIcon = {
   isActiveClassList: cn(COMMONS, ACTIVE_CLASSNAME),
   isNotActiveClassList: cn(COMMONS, NOT_ACTIVE_CLASSNAME),
-  sidebarIconProps: { size: 22 }
+  sidebarIconProps: { size: 25 }
 } as const;
 
 export default SidebarButtonStyle;

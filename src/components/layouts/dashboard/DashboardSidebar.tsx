@@ -1,21 +1,28 @@
 'use client';
 
+import SidebarButtonStyle from '@/components/config/styles/sidebar/SidebarButtonStyle';
 import DASHBOARD_ROUTES, { DASHBOARD_ROUTES_TITLES } from '@/config/DashboardSidebar/routesImpl';
 import DASHBOARD_ROUTES_SIDEBAR_COMPONENTS from '@/config/DashboardSidebar/utils/IconsMapping';
 import type { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMapping';
+import ROUTES_ROOTS from '@/config/routes';
 import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
 import { computeHTMLElementHeight, computeHTMLElementWidth, getDirection } from '@/lib/html';
 import { getRefCurrentPtr } from '@/lib/react';
+import { hrefMatchesPathname } from '@/lib/str';
 import { cn, getBreakpoint } from '@/lib/tailwind';
+import type { AppPath } from '@/types/Next';
 import { useMediaQuery } from '@react-hook/media-query';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import type { FunctionComponent, ReactElement, ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import DashboardSidebarCollapseButton from './DashboardSidebarCollapseButton';
 
 interface DashboardSidebarProps {}
 
-function sidebarBtnsGenerator(): ReactNode[] {
+const { isActiveClassList, isNotActiveClassList } = SidebarButtonStyle;
+
+function sidebarBtnsGenerator(currentPathname: AppPath): ReactNode[] {
   const keys = Object.keys(DASHBOARD_ROUTES_SIDEBAR_COMPONENTS);
   const lastKey = keys[keys.length - 1];
   const sidebarBtnsSeparator = <hr className="m-auto my-2 hidden w-5/6 lg:block" />;
@@ -26,9 +33,11 @@ function sidebarBtnsGenerator(): ReactNode[] {
     const [btnComponent, href, i18nPath] = [DASHBOARD_ROUTES_SIDEBAR_COMPONENTS[k2], DASHBOARD_ROUTES[k2], DASHBOARD_ROUTES_TITLES[k2]];
     const title = globalT(i18nPath);
 
+    const sidebarButtonClassName = hrefMatchesPathname(href, currentPathname, ROUTES_ROOTS.DASHBOARD) ? isActiveClassList : isNotActiveClassList;
+
     return (
       <li key={`${k}-sidebar-btn-component`}>
-        <Link {...{ title, href }} className="flex w-fit max-w-full flex-col rounded-lg">
+        <Link {...{ title, href }} className={cn('flex w-fit max-w-full flex-col rounded-lg', sidebarButtonClassName)}>
           <span className="sr-only">{title}</span>
           {btnComponent}
         </Link>
@@ -44,6 +53,7 @@ export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => 
   const sidebarRef = useRef<HTMLDivElement>(null);
   const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
   const currentLocale = useCurrentLocale();
+  const currentPathname = usePathname();
 
   useEffect(() => {
     const sidebarInstance = getRefCurrentPtr(sidebarRef);
@@ -97,7 +107,7 @@ export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => 
       >
         <nav className="py-4 lg:overflow-y-auto lg:px-[22px]">
           <ul className={cn('flex flex-wrap justify-center gap-2 lg:block')} role="menu">
-            {sidebarBtnsGenerator()}
+            {sidebarBtnsGenerator(currentPathname)}
           </ul>
         </nav>
       </aside>
