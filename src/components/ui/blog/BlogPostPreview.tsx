@@ -15,8 +15,11 @@ export const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = ({ post,
 
   return (
     <article>
-      <Card className="overflow-hidden rounded shadow-lg transition-transform duration-300 hover:scale-105 hover:delay-0 hover:duration-100">
-        <Link href={getBlogPostPathWithoutI18nPart(post)} className="flex h-full w-full flex-col">
+      <Link
+        href={getBlogPostPathWithoutI18nPart(post)}
+        className="flex h-full w-full flex-col transition-transform duration-300 hover:scale-105 hover:delay-0 hover:duration-100 focus:scale-105 focus:delay-0 focus:duration-100"
+      >
+        <Card className="overflow-hidden rounded shadow-lg">
           <CardHeader className="pb-2">
             <CardTitle titleType={isNotOnBlogSubcategoryPage ? 'h3' : 'h2'} className="is-h3">
               {post.title}
@@ -28,8 +31,8 @@ export const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = ({ post,
           <CardContent>
             <div className="break-words text-sm [&>*:last-child]:mb-0 [&>*]:mb-3">{descriptionSnippet}</div>
           </CardContent>
-        </Link>
-      </Card>
+        </Card>
+      </Link>
     </article>
   );
 };
