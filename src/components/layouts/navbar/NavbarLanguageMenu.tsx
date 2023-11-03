@@ -4,7 +4,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { LANGUAGES, i18ns } from '@/config/i18n';
 import { useChangeLocale, useCurrentLocale, useScopedI18n } from '@/i18n/client';
 import localesLabels, { localesEmojis } from '@/i18n/localesLabels';
-import { cn } from '@/lib/tailwind';
 import type { WithIsMobile } from '@/types/Next';
 import type { LanguageFlag } from '@/types/i18n';
 import type { FunctionComponent } from 'react';
@@ -31,10 +30,7 @@ export const NavbarLanguageMenu: FunctionComponent<NavbarLanguageMenuProps> = ({
       <DropdownMenuTrigger asChild>
         <button className="h-full bg-transparent text-primary-foreground">{localesEmojis[currentLocale]}</button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        className={cn('min-w-[110px] lg:relative ltr:lg:right-10 rtl:lg:left-10', { 'relative bottom-5': isMobile })}
-        aria-label={scopedT('language-switcher-menu')}
-      >
+      <DropdownMenuContent className={'min-w-[110px] lg:relative ltr:lg:right-10 rtl:lg:left-10'} aria-label={scopedT('language-switcher-menu')}>
         {dropdownItemsGenerator(changeLocale)}
       </DropdownMenuContent>
     </DropdownMenu>
