@@ -6,7 +6,8 @@ type TButtonConfig = {
 
 export const BUTTON_CONFIG: TButtonConfig = {
   CLASSNAME: 'font-bold',
-  NOT_ACTIVE_CLASSNAME: 'text-muted-foreground hover:bg-accent bg-transparent hover:text-black dark:hover:text-primary-foreground',
+  NOT_ACTIVE_CLASSNAME:
+    'text-muted-foreground bg-transparent focus:bg-accent hover:bg-accent focus:text-black hover:text-black dark:hover:text-primary-foreground dark:focus:text-primary-foreground',
   ACTIVE_CLASSNAME: 'bg-primary text-primary-foreground'
 } as const;
 
