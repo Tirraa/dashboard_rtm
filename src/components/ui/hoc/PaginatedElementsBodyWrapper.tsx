@@ -15,6 +15,9 @@ export interface PaginatedElementsBodyWrapperProps {
 
 interface IPaginatedElementsBodyWrapperProps extends PaginatedElementsBodyWrapperProps, WithChildren {}
 
+/**
+ * @hoc
+ */
 export const PaginatedElementsBodyWrapper: FunctionComponent<IPaginatedElementsBodyWrapperProps> = ({
   paginatedElementsBodyWrapperProps,
   children

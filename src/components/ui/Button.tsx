@@ -1,8 +1,17 @@
+import { getLinkTarget } from '@/lib/react';
 import { cn } from '@/lib/tailwind';
 import { Slot } from '@radix-ui/react-slot';
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
+import Link from 'next/link';
 import * as React from 'react';
+import BUTTON_CONFIG from '../config/styles/buttons';
+
+interface ButtonHoCProps extends ButtonProps {
+  href?: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  withTransparentBackground?: boolean;
+}
 
 const buttonVariants = cva(
   'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
@@ -34,10 +43,43 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   asChild?: boolean;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({ className, variant, size, asChild = false, ...props }, ref) => {
+const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(({ className, variant, size, asChild = false, ...props }, ref) => {
   const Comp = asChild ? Slot : 'button';
   return <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />;
 });
-Button.displayName = 'Button';
+ButtonBase.displayName = 'Button';
+
+/**
+ * @hoc
+ */
+const Button: React.FunctionComponent<ButtonHoCProps> = ({
+  children,
+  className: classNameValue,
+  href: maybeHref,
+  onClick: maybeOnClick,
+  withTransparentBackground,
+  ...injectedProps
+}) => {
+  const onClickFun = typeof maybeOnClick === 'function' && !maybeHref ? () => (maybeOnClick as Function)() : undefined;
+  const className = cn(classNameValue, BUTTON_CONFIG.CLASSNAME, { 'bg-transparent hover:bg-transparent': withTransparentBackground });
+
+  if (maybeHref) {
+    const target = getLinkTarget(maybeHref);
+
+    return (
+      <ButtonBase {...injectedProps} {...{ className }} asChild>
+        <Link href={maybeHref} {...target} onClick={onClickFun}>
+          {children}
+        </Link>
+      </ButtonBase>
+    );
+  }
+
+  return (
+    <ButtonBase {...injectedProps} {...{ className }} onClick={onClickFun}>
+      {children}
+    </ButtonBase>
+  );
+};
 
 export { Button, buttonVariants };

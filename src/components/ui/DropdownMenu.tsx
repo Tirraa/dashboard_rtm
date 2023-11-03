@@ -1,11 +1,28 @@
 'use client';
 
+import { getCurrentDir } from '@/lib/html';
 import { cn } from '@/lib/tailwind';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { Check, ChevronRight, Circle } from 'lucide-react';
 import * as React from 'react';
 
-const DropdownMenu = DropdownMenuPrimitive.Root;
+const DropdownMenuBase = DropdownMenuPrimitive.Root;
+
+/**
+ * @hoc
+ */
+const DropdownMenu: React.FunctionComponent<DropdownMenuPrimitive.DropdownMenuProps> = ({ children, ...injectedProps }) => {
+  const [isMounted, setIsMounted] = React.useState(false);
+  React.useEffect(() => setIsMounted(true), []);
+
+  const dir = isMounted ? getCurrentDir() : 'ltr';
+
+  return (
+    <DropdownMenuBase {...injectedProps} {...{ dir }}>
+      {children}
+    </DropdownMenuBase>
+  );
+};
 
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
 

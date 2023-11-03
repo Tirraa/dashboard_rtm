@@ -9,6 +9,9 @@ interface UserImageProps {
   className?: string;
 }
 
+/**
+ * @hoc
+ */
 export const UserImage: FunctionComponent<UserImageProps> = ({ user, width: widthValue, height: heightValue, className: classNameValue }) => {
   const className = classNameValue ?? '';
   const src = user?.image ?? '';

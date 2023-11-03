@@ -8,6 +8,9 @@ interface MaybePaginatedElementsProps extends PaginatedElementsProps {}
 const paginationIsNotRequired = (pagesAmount: number) => pagesAmount <= 1;
 export const computePagesAmount = (total: number, perChunk: number) => Math.ceil(total / perChunk);
 
+/**
+ * @hoc
+ */
 export const MaybePaginatedElements: FunctionComponent<MaybePaginatedElementsProps> = ({
   paginatedElements,
   elementsPerPage,

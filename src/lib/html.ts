@@ -1,3 +1,4 @@
+import type { Direction } from '@/types/HTML';
 import type { RefObject } from 'react';
 import { getRefCurrentPtr } from './react';
 
@@ -41,3 +42,5 @@ export function preserveKeyboardNavigation(element: EventTarget | HTMLElement) {
   if (linkElement) linkElement.click();
   else if (buttonElement) buttonElement.click();
 }
+
+export const getCurrentDir = () => document.documentElement.dir as Direction;

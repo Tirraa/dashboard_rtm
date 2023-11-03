@@ -1,6 +1,6 @@
 'use client';
 
-import ButtonHoC from '@/components/ui/hoc/ButtonHoC';
+import { Button } from '@/components/ui/Button';
 import DISCORD_CONFIG from '@/config/discord';
 import { i18ns } from '@/config/i18n';
 import { getClientSideI18n } from '@/i18n/client';
@@ -13,14 +13,14 @@ export const InviteTheBotButton: FunctionComponent<InviteTheBotButtonProps> = ()
   const globalT = getClientSideI18n();
 
   return (
-    <ButtonHoC href={DISCORD_CONFIG.BOT_INVITE_LINK}>
+    <Button href={DISCORD_CONFIG.BOT_INVITE_LINK}>
       <span className="flex items-center gap-1">
         <span>
           <CogIcon className="h-7 w-7" />
         </span>
         <span>{globalT(`${i18ns.vocab}.invite-the-bot`)}</span>
       </span>
-    </ButtonHoC>
+    </Button>
   );
 };
 

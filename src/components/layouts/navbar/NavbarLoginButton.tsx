@@ -1,7 +1,7 @@
 'use client';
 
 import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
-import ButtonHoC from '@/components/ui/hoc/ButtonHoC';
+import { Button } from '@/components/ui/Button';
 import UserImage from '@/components/ui/hoc/UserImage';
 import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
@@ -26,19 +26,19 @@ const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> =
 
   if (session) {
     return (
-      <ButtonHoC className="min-w-0 p-0" onClick={() => signOut()} withTransparentBackground>
-        <UserImage user={session?.user} width={SIZE} height={SIZE} className="rounded-full absolute brightness-75" />
+      <Button className="min-w-0 p-0" onClick={() => signOut()} withTransparentBackground>
+        <UserImage user={session?.user} width={SIZE} height={SIZE} className="absolute rounded-full brightness-75" />
         <SignalSlashIcon width={SIZE} height={SIZE} className="relative shadow-xl" />
         <span className="sr-only">{scopedT('logout')}</span>
-      </ButtonHoC>
+      </Button>
     );
   }
 
   return (
-    <ButtonHoC className="min-w-0 p-0" onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} withTransparentBackground>
+    <Button className="min-w-0 p-0" onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} withTransparentBackground>
       <KeyIcon width={SIZE} height={SIZE} />
       <span className="sr-only">{scopedT('login')}</span>
-    </ButtonHoC>
+    </Button>
   );
 };
 
