@@ -1,22 +1,25 @@
 import { cn } from '@/lib/tailwind';
 import type { FlexDirection, FlexJustify, FlexWrap } from '@/types/HTML';
-import type { LayoutMinimalProps as WithChildren } from '@/types/Next';
+import type { WithChildren, WithClassname } from '@/types/Next';
 import type { FunctionComponent } from 'react';
 
+interface PaginatedElementsBodyWrapperPropsBase extends Partial<WithClassname> {
+  flexWrap?: FlexWrap;
+  flexDirection?: FlexDirection;
+  flexJustify?: FlexJustify;
+  id?: string;
+}
+
 export interface PaginatedElementsBodyWrapperProps {
-  paginatedElementsBodyWrapperProps?: {
-    flexWrap?: FlexWrap;
-    flexDirection?: FlexDirection;
-    flexJustify?: FlexJustify;
-    id?: string;
-    className?: string;
-  };
+  paginatedElementsBodyWrapperProps?: PaginatedElementsBodyWrapperPropsBase;
 }
 
 interface IPaginatedElementsBodyWrapperProps extends PaginatedElementsBodyWrapperProps, WithChildren {}
 
 /**
  * @hoc
+ * @extends {children} - Extra styling?
+ * @implements {IPaginatedElementsBodyWrapperProps}
  */
 export const PaginatedElementsBodyWrapper: FunctionComponent<IPaginatedElementsBodyWrapperProps> = ({
   paginatedElementsBodyWrapperProps,

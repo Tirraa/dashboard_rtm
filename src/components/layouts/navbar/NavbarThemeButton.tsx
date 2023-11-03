@@ -24,18 +24,19 @@ export const NavbarThemeButton: FunctionComponent<NavbarLoginButtonProps> = ({ i
 
   if (!isMounted) return null;
 
-  const className = 'h-full bg-transparent hover:bg-transparent text-primary-foreground w-fit';
+  const className = 'h-full w-fit text-primary-foreground';
 
-  if (theme !== DEFAULT_VARIANT)
+  if (theme !== DEFAULT_VARIANT) {
     return (
-      <Button {...{ className }} onClick={() => setTheme(DEFAULT_VARIANT)} size="icon">
+      <Button {...{ className }} onClick={() => setTheme(DEFAULT_VARIANT)} size="icon" withTransparentBackground>
         <SunIcon width={SIZE} height={SIZE} />
         <span className="sr-only">{scopedT('switch-to-light-mode')}</span>
       </Button>
     );
+  }
 
   return (
-    <Button {...{ className }} onClick={() => setTheme(DEFAULT_DARK_VARIANT)} size="icon">
+    <Button {...{ className }} onClick={() => setTheme(DEFAULT_DARK_VARIANT)} size="icon" withTransparentBackground>
       <MoonIcon width={SIZE} height={SIZE} />
       <span className="sr-only">{scopedT('switch-to-dark-mode')}</span>
     </Button>

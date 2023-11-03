@@ -22,7 +22,7 @@ export const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = ({ post,
               {post.title}
             </CardTitle>
             <CardDescription>
-              <BlogPostDate {...{ post, lng }} />
+              <BlogPostDate {...{ post, lng }} className="bg-secondary p-1 text-black dark:text-white" />
             </CardDescription>
           </CardHeader>
           <CardContent>

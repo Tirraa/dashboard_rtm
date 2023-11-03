@@ -10,6 +10,7 @@ const DropdownMenuBase = DropdownMenuPrimitive.Root;
 
 /**
  * @hoc
+ * @extends {DropdownMenuBase} - Automatic dir attribute
  */
 const DropdownMenu: React.FunctionComponent<DropdownMenuPrimitive.DropdownMenuProps> = ({ children, ...injectedProps }) => {
   const [isMounted, setIsMounted] = React.useState(false);

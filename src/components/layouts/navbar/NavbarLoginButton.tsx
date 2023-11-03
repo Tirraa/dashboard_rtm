@@ -23,10 +23,11 @@ const { SIZE_PX_VALUE: SIZE } = NAVBAR_ICON_STYLE;
 
 const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> = ({ session }) => {
   const scopedT = useScopedI18n(i18ns.auth);
+  const className = 'h-full min-w-0 p-0';
 
   if (session) {
     return (
-      <Button className="min-w-0 p-0" onClick={() => signOut()} withTransparentBackground>
+      <Button {...{ className }} onClick={() => signOut()} withTransparentBackground>
         <UserImage user={session?.user} width={SIZE} height={SIZE} className="absolute rounded-full brightness-75" />
         <SignalSlashIcon width={SIZE} height={SIZE} className="relative shadow-xl" />
         <span className="sr-only">{scopedT('logout')}</span>
@@ -35,7 +36,7 @@ const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> =
   }
 
   return (
-    <Button className="min-w-0 p-0" onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} withTransparentBackground>
+    <Button {...{ className }} onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} withTransparentBackground>
       <KeyIcon width={SIZE} height={SIZE} />
       <span className="sr-only">{scopedT('login')}</span>
     </Button>

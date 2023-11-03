@@ -1,16 +1,18 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/Avatar';
 import type { User } from '@/types/Auth';
+import type { WithClassname } from '@/types/Next';
 import type { CSSProperties, FunctionComponent } from 'react';
 
-interface UserImageProps {
+interface UserImageProps extends Partial<WithClassname> {
   user: User;
   width: number;
   height: number;
-  className?: string;
 }
 
 /**
  * @hoc
+ * @implements {User} image, name
+ * @extends {Avatar}
  */
 export const UserImage: FunctionComponent<UserImageProps> = ({ user, width: widthValue, height: heightValue, className: classNameValue }) => {
   const className = classNameValue ?? '';

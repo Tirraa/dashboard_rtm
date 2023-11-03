@@ -14,14 +14,14 @@ import getComputedNavData from '@/lib/misc/getComputedNavData';
 import { cn } from '@/lib/tailwind';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import type { NavbarItems } from '@/types/NavData';
-import type { i18nComponentProps } from '@/types/Next';
+import type { WithClassname, i18nComponentProps } from '@/types/Next';
 import type { LanguageFlag } from '@/types/i18n';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { ComponentType, FunctionComponent, ReactNode } from 'react';
 
 interface SitewideNavbarProps {}
-type TItemAsComponent = unknown & { className: string };
+type TItemAsComponent = unknown & WithClassname;
 
 const { LOGO_SIZE_PX_VALUE } = NAVBAR_STYLE;
 
@@ -34,7 +34,7 @@ const buildNavbarExtrasForDesktop = (): ReactNode[] =>
 
 const buildNavbarExtrasForMobile = (): ReactNode[] =>
   Object.values(NAVBAR_EXTRAS_COMPONENTS_MOBILE).map((jsx, index) => (
-    <li className="flex h-full w-fit items-center" key={`${index}-navbar-extra-mobile`}>
+    <li className="h-[40px]" key={`${index}-navbar-extra-mobile`}>
       {jsx}
     </li>
   ));
@@ -53,7 +53,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const logoAlt = globalT(`${i18ns.vocab}.sr-only.brand-logo`);
   const currentLocale: LanguageFlag = useCurrentLocale();
 
-  const navbarItemClassName = 'p-[5px] font-normal';
+  const navbarItemClassName = 'p-[5px]';
   const navbarItems = buildNavbarItems({ i18nProps: { [i18nTaxonomy.LANG_FLAG]: currentLocale } });
   const desktopNavbarItems = navbarItems.map((item, index) => (
     <li key={`${index}-navbar-btn-typography-desktop`} className={navbarItemClassName}>

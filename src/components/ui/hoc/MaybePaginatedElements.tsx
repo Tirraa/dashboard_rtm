@@ -10,6 +10,7 @@ export const computePagesAmount = (total: number, perChunk: number) => Math.ceil
 
 /**
  * @hoc
+ * @extends {PaginatedElements} - WithControls?
  */
 export const MaybePaginatedElements: FunctionComponent<MaybePaginatedElementsProps> = ({
   paginatedElements,

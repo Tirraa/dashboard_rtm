@@ -1,60 +1,9 @@
+/* § Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.h-100svh {
-  height: 100svh;
-}
-
-main {
-  padding: 1rem;
-}
-
-h1,
-.is-h1 {
-  font-size: 2rem;
-  font-weight: 700;
-}
-
-h2,
-.is-h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-h3,
-.is-h3 {
-  font-size: 1.25rem;
-}
-
-h4,
-.is-h4 {
-  font-size: 1.125rem;
-}
-
-h5,
-h6,
-.is-h5,
-.is-h6 {
-  font-size: 1rem;
-}
-
-.is-h3,
-.is-h4,
-.is-h5,
-.is-h6 {
-  font-weight: normal;
-}
-
-button:hover:not([aria-disabled='true']),
-a:hover:not([aria-disabled='true']) {
-  cursor: pointer;
-}
-
-[aria-disabled='true'] {
-  cursor: default;
-}
-
+/* § Shadcn/ui */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -100,4 +49,59 @@ a:hover:not([aria-disabled='true']) {
     --input: 240 3.7% 15.9%;
     --ring: 346.8 77.2% 49.8%;
   }
+}
+
+/* § Resets */
+main {
+  padding: 1rem;
+}
+
+button:hover:not([aria-disabled='true']),
+a:hover:not([aria-disabled='true']) {
+  cursor: pointer;
+}
+
+[aria-disabled='true'] {
+  cursor: default;
+}
+
+/* § Utils */
+.h-100svh {
+  height: 100svh;
+}
+
+h1,
+.is-h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+h2,
+.is-h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+h3,
+.is-h3 {
+  font-size: 1.25rem;
+}
+
+h4,
+.is-h4 {
+  font-size: 1.125rem;
+}
+
+h5,
+h6,
+.is-h5,
+.is-h6 {
+  font-size: 1rem;
+}
+
+.is-h3,
+.is-h4,
+.is-h5,
+.is-h6 {
+  font-weight: normal;
 }

@@ -3,7 +3,7 @@
 import { i18ns } from '@/config/i18n';
 import { getClientSideI18n } from '@/i18n/client';
 import { cn } from '@/lib/tailwind';
-import type { LayoutMinimalProps as WithChildren } from '@/types/Next';
+import type { WithChildren } from '@/types/Next';
 import type { FunctionComponent } from 'react';
 import { useRef, useState } from 'react';
 

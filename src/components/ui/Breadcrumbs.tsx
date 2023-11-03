@@ -57,7 +57,7 @@ export const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = ({ displayHomepa
   const pathParts = getPathParts(pathname);
   const displayHomepageElement = Boolean(displayHomepageElementValue);
 
-  if (pathname === ROUTES_ROOTS.WEBSITE) return displayHomepageElement ? <HomepagebreadcrumbsElement /> : <></>;
+  if (pathname === ROUTES_ROOTS.WEBSITE) return displayHomepageElement ? <HomepagebreadcrumbsElement /> : null;
   return <ul className="flex">{breadcrumbsElementsGenerator(pathParts, displayHomepageElement)}</ul>;
 };
 
