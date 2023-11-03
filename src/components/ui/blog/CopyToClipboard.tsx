@@ -2,6 +2,7 @@
 
 import { i18ns } from '@/config/i18n';
 import { getClientSideI18n } from '@/i18n/client';
+import { getRefCurrentPtr } from '@/lib/react';
 import { cn } from '@/lib/tailwind';
 import type { WithChildren } from '@/types/Next';
 import type { FunctionComponent } from 'react';
@@ -10,18 +11,34 @@ import { useRef, useState } from 'react';
 interface CopyToClipboardProps extends WithChildren {}
 
 export const CopyToClipboard: FunctionComponent<CopyToClipboardProps> = ({ children }) => {
-  const textInput = useRef<HTMLDivElement>(null);
+  const textInputRef = useRef<HTMLDivElement>(null);
+  const copyBtnRef = useRef<HTMLButtonElement>(null);
   const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
   const [copied, setCopied] = useState(false);
   const globalT = getClientSideI18n();
 
-  const onEnter = () => setHovered(true);
-  const onExit = () => setHovered(false);
+  const onMouseEnter = () => setHovered(true);
+  const onMouseLeave = () => {
+    setHovered(false);
+  };
+
+  const onFocus = () => setFocused(true);
+  const onBlur = () => {
+    setFocused(false);
+  };
+
+  const isHidden = () => !hovered && !focused;
+  const isShown = () => hovered || focused;
 
   let currentCoroutine: NodeJS.Timeout | null = null;
   const onCopy = () => {
+    const copyBtnInstance = getRefCurrentPtr(copyBtnRef);
+    const textInputInstance = getRefCurrentPtr(textInputRef);
+    if (copyBtnInstance) copyBtnInstance.blur();
+
     setCopied(true);
-    if (textInput.current !== null && textInput.current.textContent !== null) navigator.clipboard.writeText(textInput.current.textContent);
+    if (textInputInstance && textInputInstance.textContent !== null) navigator.clipboard.writeText(textInputInstance.textContent);
     if (currentCoroutine) clearTimeout(currentCoroutine);
 
     currentCoroutine = setTimeout(() => {
@@ -33,17 +50,20 @@ export const CopyToClipboard: FunctionComponent<CopyToClipboardProps> = ({ child
   };
 
   return (
-    <div ref={textInput} onMouseEnter={onEnter} onMouseLeave={onExit} className="code-block relative">
+    <div ref={textInputRef} className="code-block relative" {...{ onMouseEnter, onMouseLeave }}>
       {
         <button
+          ref={copyBtnRef}
+          aria-hidden={isHidden()}
           aria-label={globalT(`${i18ns.vocab}.copy-to-clipboard`)}
           className={cn('absolute right-2 top-2 h-8 w-8 rounded border-2 bg-gray-700 p-1 transition-[opacity] dark:bg-gray-800', {
-            'opacity-100': hovered,
-            'opacity-0 delay-200': !hovered,
+            'opacity-100': isShown(),
+            'opacity-0 delay-200': isHidden(),
             'border-green-400 focus:border-green-400 focus:outline-none': copied,
             'hover:border-gray-300': !copied
           })}
           onClick={onCopy}
+          {...{ onFocus, onBlur }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

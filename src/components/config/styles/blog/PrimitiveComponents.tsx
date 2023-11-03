@@ -44,7 +44,7 @@ export const PrimitiveComponents: Record<string, (...args: any[]) => JSX.Element
   ),
   pre: ({ className, ...props }) => (
     <CopyToClipboard>
-      <pre className={cn('mb-4 mt-6 overflow-x-auto rounded-lg px-4 py-4', className)} {...props} />
+      <pre tabIndex={-1} className={cn('mb-4 mt-6 overflow-x-auto rounded-lg px-4 py-4', className)} {...props} />
     </CopyToClipboard>
   ),
   code: ({ className, ...props }) => <code className={cn('bg-inherit', className)} {...props} />
