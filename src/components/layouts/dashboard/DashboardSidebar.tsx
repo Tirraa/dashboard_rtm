@@ -46,46 +46,46 @@ export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => 
   const currentLocale = useCurrentLocale();
 
   useEffect(() => {
-    const sidebar = getRefCurrentPtr(sidebarRef);
-    if (!sidebar) return;
+    const sidebarInstance = getRefCurrentPtr(sidebarRef);
+    if (!sidebarInstance) return;
 
     const EFFECT_CLASSES = ['transition-all', 'duration-300'];
 
     function applyUncollapsedStyles() {
-      sidebar.style.marginLeft = '0';
-      sidebar.style.marginRight = '0';
-      sidebar.style.marginTop = '0';
+      sidebarInstance.style.marginLeft = '0';
+      sidebarInstance.style.marginRight = '0';
+      sidebarInstance.style.marginTop = '0';
       wasCollapsed.current = false;
     }
 
     function applyCollapsedStyles() {
       const direction = getDirection();
       if (isLargeScreen) {
-        sidebar.style.marginTop = '0';
+        sidebarInstance.style.marginTop = '0';
         if (direction === 'rtl') {
-          sidebar.style.marginRight = '-' + computeHTMLElementWidth(sidebar) + 'px';
-          sidebar.style.marginLeft = '0';
+          sidebarInstance.style.marginRight = '-' + computeHTMLElementWidth(sidebarInstance) + 'px';
+          sidebarInstance.style.marginLeft = '0';
         } else {
-          sidebar.style.marginLeft = '-' + computeHTMLElementWidth(sidebar) + 'px';
-          sidebar.style.marginRight = '0';
+          sidebarInstance.style.marginLeft = '-' + computeHTMLElementWidth(sidebarInstance) + 'px';
+          sidebarInstance.style.marginRight = '0';
         }
       } else {
-        sidebar.style.marginLeft = '0';
-        sidebar.style.marginTop = '-' + computeHTMLElementHeight(sidebar) + 'px';
+        sidebarInstance.style.marginLeft = '0';
+        sidebarInstance.style.marginTop = '-' + computeHTMLElementHeight(sidebarInstance) + 'px';
       }
       wasCollapsed.current = true;
     }
 
     if (!isCollapsed) {
-      if (!wasCollapsed.current) sidebar.classList.remove(...EFFECT_CLASSES);
-      else sidebar.classList.add(...EFFECT_CLASSES);
+      if (!wasCollapsed.current) sidebarInstance.classList.remove(...EFFECT_CLASSES);
+      else sidebarInstance.classList.add(...EFFECT_CLASSES);
 
       applyUncollapsedStyles();
       return;
     }
 
-    if (wasCollapsed.current) sidebar.classList.remove(...EFFECT_CLASSES);
-    else sidebar.classList.add(...EFFECT_CLASSES);
+    if (wasCollapsed.current) sidebarInstance.classList.remove(...EFFECT_CLASSES);
+    else sidebarInstance.classList.add(...EFFECT_CLASSES);
     applyCollapsedStyles();
   }, [isCollapsed, sidebarRef, isLargeScreen, currentLocale]);
 
