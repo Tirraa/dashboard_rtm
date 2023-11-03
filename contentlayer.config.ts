@@ -1,12 +1,13 @@
-import { DocumentType, defineDocumentType, makeSource } from 'contentlayer/source-files';
-import { Element as hASTElement } from 'hast';
+import type { DocumentType } from 'contentlayer/source-files';
+import { defineDocumentType, makeSource } from 'contentlayer/source-files';
+import type { Element as hASTElement } from 'hast';
 import { h, s } from 'hastscript';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
-import { AtomicContentLayerDocumentConfig, DocumentsTypesMetadatas } from 'types/contentlayerConfig';
+import type { AtomicContentLayerDocumentConfig, DocumentsTypesMetadatas } from 'types/contentlayerConfig';
 import CodeSnippetTheme from './config/blog/code-snippet-theme.json';
 import { addClassname } from './src/lib/astElements';
 import {
@@ -74,7 +75,7 @@ export default makeSource({
           properties: {
             class: 'autolink-header',
             ariaHidden: true,
-            tabIndex: -1
+            tabIndex: 0
           },
           content: [
             h('span.sr-only', 'permalink'),

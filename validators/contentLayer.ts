@@ -1,4 +1,4 @@
-import { DocumentType } from 'contentlayer/source-files';
+import type { DocumentType } from 'contentlayer/source-files';
 import ContentLayerDuplicateTypesError from './errors/ContentLayerDuplicateTypesError';
 
 const getDocumentTypeName = (documentType: DocumentType<string>) => documentType.def().name;

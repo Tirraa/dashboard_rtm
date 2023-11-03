@@ -1,5 +1,5 @@
-import { DocumentContentType } from 'contentlayer/source-files';
-import {
+import type { DocumentContentType } from 'contentlayer/source-files';
+import type {
   ComputedFieldsAsFieldsRecord,
   ContentLayerDocumentsConfigType,
   DocumentsComputedFields,

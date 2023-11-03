@@ -31,11 +31,9 @@ export const CopyToClipboard: FunctionComponent<CopyToClipboardProps> = ({ child
   const isHidden = () => !hovered && !focused;
   const isShown = () => hovered || focused;
 
-  let currentCoroutine: NodeJS.Timeout | null = null;
   const onCopy = () => {
-    const copyBtnInstance = getRefCurrentPtr(copyBtnRef);
+    let currentCoroutine: NodeJS.Timeout | null = null;
     const textInputInstance = getRefCurrentPtr(textInputRef);
-    if (copyBtnInstance) copyBtnInstance.blur();
 
     setCopied(true);
     if (textInputInstance && textInputInstance.textContent !== null) navigator.clipboard.writeText(textInputInstance.textContent);
@@ -44,6 +42,8 @@ export const CopyToClipboard: FunctionComponent<CopyToClipboardProps> = ({ child
     currentCoroutine = setTimeout(() => {
       if (!currentCoroutine) return;
       setCopied(false);
+      const copyBtnInstance = getRefCurrentPtr(copyBtnRef);
+      if (copyBtnInstance) copyBtnInstance.blur();
       clearTimeout(currentCoroutine);
       currentCoroutine = null;
     }, 750);
