@@ -3,6 +3,7 @@ import { getSlicedBlogPostDescription } from '@/lib/str';
 import type { BlogPostProps } from '@/types/Blog';
 import Link from 'next/link';
 import type { FunctionComponent } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../Card';
 import BlogPostDate from './BlogPostDate';
 
 interface BlogPostPreviewProps extends BlogPostProps {
@@ -13,12 +14,22 @@ export const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = ({ post,
   const descriptionSnippet = post.description ? getSlicedBlogPostDescription(post.description) : getSlicedBlogPostDescription(post.metadescription);
 
   return (
-    <article className="rounded overflow-hidden border border-2 border-neutral-100 shadow-xl transition-colors transition-transform duration-300 hover:scale-105 hover:delay-0 hover:duration-100 dark:border-muted-foreground">
-      <Link href={getBlogPostPathWithoutI18nPart(post)} className="flex h-full w-full flex-col p-4">
-        {isNotOnBlogSubcategoryPage ? <h3>{post.title}</h3> : <h2 className="is-h3">{post.title}</h2>}
-        <BlogPostDate {...{ post, lng }} />
-        <div className="break-words text-sm [&>*:last-child]:mb-0 [&>*]:mb-3">{descriptionSnippet}</div>
-      </Link>
+    <article>
+      <Card className="overflow-hidden rounded shadow-lg transition-transform duration-300 hover:scale-105 hover:delay-0 hover:duration-100">
+        <Link href={getBlogPostPathWithoutI18nPart(post)} className="flex h-full w-full flex-col">
+          <CardHeader className="pb-2">
+            <CardTitle titleType={isNotOnBlogSubcategoryPage ? 'h3' : 'h2'} className="is-h3">
+              {post.title}
+            </CardTitle>
+            <CardDescription>
+              <BlogPostDate {...{ post, lng }} />
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="break-words text-sm [&>*:last-child]:mb-0 [&>*]:mb-3">{descriptionSnippet}</div>
+          </CardContent>
+        </Link>
+      </Card>
     </article>
   );
 };
