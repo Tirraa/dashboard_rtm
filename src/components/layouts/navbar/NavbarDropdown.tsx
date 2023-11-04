@@ -10,7 +10,7 @@ import { arePointsEqual } from '@/lib/number';
 import { getLinkTarget, getRefCurrentPtr } from '@/lib/react';
 import { hrefMatchesPathname } from '@/lib/str';
 import { getBreakpoint } from '@/lib/tailwind';
-import type { LineSegment } from '@/types/Math';
+import type { LineSegment, Point } from '@/types/Math';
 import type { EmbeddedEntities, NavbarDropdownElement } from '@/types/NavData';
 import type { WithOnMouseEnter, WithOnMouseLeave } from '@/types/Next';
 import type { PointerDownOutsideEvent } from '@/types/radix-ui';
@@ -62,31 +62,53 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({
   withOnMouseEnter,
   withOnMouseLeave
 }) => {
-  const [isOpened, setIsOpened] = useState<boolean>(false);
-  const mousePoints = useRef<LineSegment>({ start: { x: -1, y: -1 }, end: { x: -1, y: -1 } });
-  const handleOpenChange = (opened: boolean) => {
-    setIsOpened(opened);
-  };
+  const currentPathname = usePathname();
   const globalT = getClientSideI18n();
   const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
   const btnRef = useRef<HTMLButtonElement>(null);
 
+  const title = globalT(i18nTitle);
+
+  const [isOpened, setIsOpened] = useState<boolean>(false);
   useEffect(() => {
     if (!isLargeScreen) setIsOpened(false);
   }, [isLargeScreen]);
 
-  const currentPathname = usePathname();
   const navbarDropdownClassName =
     hrefMatchesPathname(href, currentPathname) || isOpened ? navbarDropdownIsActiveClassList : navbarDropdownIsNotActiveClassList;
   const navbarDropdownBtnClassName = isOpened ? navbarDropdownBtnIconIsActiveClassList : navbarDropdownBtnIconIsNotActiveClassList;
-  const title = globalT(i18nTitle);
+
+  const [OFFSCREEN, MOUSE_POINT_KILLSWITCH] = [-1, -666];
+  const mousePointsInitialState = { start: { x: OFFSCREEN, y: OFFSCREEN }, end: { x: OFFSCREEN, y: OFFSCREEN } };
+  const mousePoints = useRef<LineSegment>(mousePointsInitialState);
+
+  const onOpenChange = (opened: boolean) => setIsOpened(opened);
+
+  const triggerKillswitch = () => {
+    const [x, y] = [MOUSE_POINT_KILLSWITCH, MOUSE_POINT_KILLSWITCH];
+    const [start, end] = [
+      { x, y },
+      { x, y }
+    ];
+    mousePoints.current = { start, end };
+  };
+
+  const triggeredKillswitchCtx = () =>
+    (['start', 'end'] as (keyof LineSegment)[]).some((lineSegmentPoint) =>
+      (['x', 'y'] as (keyof Point)[]).some((axis) => mousePoints.current[lineSegmentPoint][axis] === MOUSE_POINT_KILLSWITCH)
+    );
 
   const onMouseEnter = withOnMouseEnter
     ? (event: React.MouseEvent) => {
+        if (triggeredKillswitchCtx()) {
+          mousePoints.current = mousePointsInitialState;
+          return;
+        }
+
         const [start, end] = [{ x: event.clientX, y: event.clientY }, mousePoints.current.end];
         mousePoints.current = { end, start };
-
         if (arePointsEqual(mousePoints.current.start, mousePoints.current.end, 5)) return;
+
         setIsOpened(true);
       }
     : undefined;
@@ -101,15 +123,17 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({
       }
     : undefined;
 
+  const onEscapeKeyDown = withOnMouseEnter ? () => triggerKillswitch() : undefined;
+
   return (
-    <DropdownMenu open={isOpened} onOpenChange={handleOpenChange} withDeepResetOnLgBreakpointEvents>
+    <DropdownMenu open={isOpened} {...{ onOpenChange }} withDeepResetOnLgBreakpointEvents>
       <DropdownMenuTrigger {...{ onMouseEnter }} asChild>
         <button className={navbarDropdownClassName} ref={btnRef}>
           {title}
           <ChevronDownIcon className={navbarDropdownBtnClassName} aria-hidden="true" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent aria-label={title} {...{ onMouseLeave, onPointerDownOutside }}>
+      <DropdownMenuContent aria-label={title} {...{ onMouseLeave, onPointerDownOutside, onEscapeKeyDown }}>
         {menuItemsGenerator(embeddedEntities, btnRef)}
       </DropdownMenuContent>
     </DropdownMenu>
