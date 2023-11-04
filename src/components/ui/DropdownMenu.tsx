@@ -8,13 +8,15 @@ import { useMediaQuery } from '@react-hook/media-query';
 import { Check, ChevronRight, Circle } from 'lucide-react';
 import * as React from 'react';
 
+type DropdownMenuExtensions = Partial<WithDeepResetOnLgBreakpointEvents>;
+
 const DropdownMenuBase = DropdownMenuPrimitive.Root;
 
 /**
  * @hoc
  * @extends {DropdownMenuBase} - Automatic dir attribute, deep reset on screen width heavy changes
  */
-const DropdownMenu: React.FunctionComponent<DropdownMenuPrimitive.DropdownMenuProps & Partial<WithDeepResetOnLgBreakpointEvents>> = ({
+const DropdownMenu: React.FunctionComponent<DropdownMenuPrimitive.DropdownMenuProps & DropdownMenuExtensions> = ({
   children,
   withDeepResetOnLgBreakpointEvents,
   ...injectedProps

@@ -10,6 +10,10 @@ interface NavbarElementProps extends NavbarElementPropsBase {}
  * @generator NavbarDropdown?, NavbarButton?
  */
 export const NavbarElement: FunctionComponent<NavbarElementProps> = ({ i18nProps, i18nTitle, path, embeddedEntities }) =>
-  embeddedEntities ? <NavbarDropdown {...{ i18nProps, i18nTitle, path, embeddedEntities }} /> : <NavbarButton {...{ i18nProps, i18nTitle, path }} />;
+  embeddedEntities ? (
+    <NavbarDropdown {...{ i18nProps, i18nTitle, path, embeddedEntities }} withOnMouseEnter withOnMouseLeave />
+  ) : (
+    <NavbarButton {...{ i18nProps, i18nTitle, path }} />
+  );
 
 export default NavbarElement;

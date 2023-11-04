@@ -10,6 +10,7 @@ import { getLinkTarget, getRefCurrentPtr } from '@/lib/react';
 import { hrefMatchesPathname } from '@/lib/str';
 import { getBreakpoint } from '@/lib/tailwind';
 import type { EmbeddedEntities, NavbarDropdownElement } from '@/types/NavData';
+import type { WithOnMouseEnter, WithOnMouseLeave } from '@/types/Next';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { useMediaQuery } from '@react-hook/media-query';
 
@@ -18,7 +19,7 @@ import { usePathname } from 'next/navigation';
 import type { FunctionComponent, RefObject } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
-interface NavbarButtonProps extends NavbarDropdownElement {}
+interface NavbarButtonProps extends NavbarDropdownElement, Partial<WithOnMouseEnter & WithOnMouseLeave> {}
 
 const { isActiveClassList: navbarDropdownIsActiveClassList, isNotActiveClassList: navbarDropdownIsNotActiveClassList } =
   NavbarDropdownMenuButtonStyle;
@@ -51,7 +52,13 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities, btnRef: RefObjec
   });
 };
 
-export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, path: href, embeddedEntities }) => {
+export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({
+  i18nTitle,
+  path: href,
+  embeddedEntities,
+  withOnMouseEnter,
+  withOnMouseLeave
+}) => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const handleOpenChange = (opened: boolean) => setIsOpened(opened);
   const globalT = getClientSideI18n();
@@ -67,16 +74,20 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ i18nTitle
     hrefMatchesPathname(href, currentPathname) || isOpened ? navbarDropdownIsActiveClassList : navbarDropdownIsNotActiveClassList;
   const navbarDropdownBtnClassName = isOpened ? navbarDropdownBtnIconIsActiveClassList : navbarDropdownBtnIconIsNotActiveClassList;
   const title = globalT(i18nTitle);
+  const onMouseEnter = withOnMouseEnter ? () => setIsOpened(true) : undefined;
+  const onMouseLeave = withOnMouseLeave ? () => setIsOpened(false) : undefined;
 
   return (
-    <DropdownMenu onOpenChange={handleOpenChange} withDeepResetOnLgBreakpointEvents>
-      <DropdownMenuTrigger asChild>
+    <DropdownMenu open={isOpened} onOpenChange={handleOpenChange} withDeepResetOnLgBreakpointEvents>
+      <DropdownMenuTrigger {...{ onMouseEnter }} asChild>
         <button className={navbarDropdownClassName} ref={btnRef}>
           {title}
           <ChevronDownIcon className={navbarDropdownBtnClassName} aria-hidden="true" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent aria-label={title}>{menuItemsGenerator(embeddedEntities, btnRef)}</DropdownMenuContent>
+      <DropdownMenuContent aria-label={title} {...{ onMouseLeave }}>
+        {menuItemsGenerator(embeddedEntities, btnRef)}
+      </DropdownMenuContent>
     </DropdownMenu>
   );
 };
