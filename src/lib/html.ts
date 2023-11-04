@@ -1,3 +1,4 @@
+import ELEMENTS_ID from '@/config/elementsId';
 import type { Direction } from '@/types/HTML';
 import type { RefObject } from 'react';
 import { getRefCurrentPtr } from './react';
@@ -44,3 +45,5 @@ export function preserveKeyboardNavigation(element: EventTarget | HTMLElement) {
 }
 
 export const getCurrentDir = () => document.documentElement.dir as Direction;
+
+export const getBodyContainer = () => document.getElementById(ELEMENTS_ID.BODY_CONTAINER) as HTMLElement;

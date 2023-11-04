@@ -9,6 +9,7 @@ import { cn } from '@/lib/tailwind';
 import type { WithIsMobile } from '@/types/Next';
 import type { ChangeLocaleFun, LanguageFlag } from '@/types/i18n';
 import type { FunctionComponent } from 'react';
+import { useState } from 'react';
 
 interface NavbarLanguageMenuProps extends WithIsMobile {}
 
@@ -35,9 +36,12 @@ export const NavbarLanguageMenu: FunctionComponent<NavbarLanguageMenuProps> = ({
   const changeLocale = useChangeLocale();
   const currentLocale = useCurrentLocale();
   const scopedT = useScopedI18n(`${i18ns.navbar}.sr-only`);
+  const [open, setOpen] = useState<boolean>(false);
+  const onOpenChange = (opened: boolean) => setOpen(opened);
 
+  // * ... {ToDo} Some hand craft aria-labels (as for the NavbarToggle) would be welcome!
   return (
-    <DropdownMenu withDeepResetOnLgBreakpointEvents>
+    <DropdownMenu {...{ open, onOpenChange }} withDeepResetOnLgBreakpointEvents>
       <DropdownMenuTrigger asChild>
         <button className="h-full bg-transparent text-primary-foreground">{localesEmojis[currentLocale]}</button>
       </DropdownMenuTrigger>
