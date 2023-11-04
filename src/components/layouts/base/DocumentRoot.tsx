@@ -1,6 +1,7 @@
-import BODY_CLS from '@/components/config/styles/body';
+import BODY_CLS, { BODY_CONTAINER_CLS } from '@/components/config/styles/body';
 import { HTML_STYLE } from '@/components/config/styles/html';
 import SitewideNavbar from '@/components/ui/navbar/SitewideNavbar';
+import ELEMENTS_ID from '@/config/elementsId';
 import PROGRESSBAR_CONFIG from '@/config/progressbar';
 import { DEFAULT_VARIANT } from '@/config/themes';
 import Providers from '@/contexts/Providers';
@@ -25,11 +26,13 @@ export const DocumentRoot: FunctionComponent<DocumentRootProps> = ({ children, p
   return (
     <html lang={locale} className={DEFAULT_VARIANT} style={HTML_STYLE} {...{ dir }} suppressHydrationWarning>
       <body className={cn(BODY_CLS, fcn(fInter))} style={{ scrollbarGutter: 'stable' }}>
-        <Providers {...{ locale }}>
-          {!disableTopLoader && <NextTopLoader {...PROGRESSBAR_CONFIG} />}
-          {withNavbar && <SitewideNavbar />}
-          {children}
-        </Providers>
+        <div id={ELEMENTS_ID.BODY_CONTAINER} className={BODY_CONTAINER_CLS}>
+          <Providers {...{ locale }}>
+            {!disableTopLoader && <NextTopLoader {...PROGRESSBAR_CONFIG} />}
+            {withNavbar && <SitewideNavbar />}
+            {children}
+          </Providers>
+        </div>
       </body>
     </html>
   );
