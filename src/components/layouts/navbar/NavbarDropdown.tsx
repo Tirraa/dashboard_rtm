@@ -83,8 +83,8 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({
 
   const onMouseEnter = withOnMouseEnter
     ? (event: React.MouseEvent) => {
-        const start = { x: event.clientX, y: event.clientY };
-        mousePoints.current = { end: mousePoints.current.end, start };
+        const [start, end] = [{ x: event.clientX, y: event.clientY }, mousePoints.current.end];
+        mousePoints.current = { end, start };
 
         if (arePointsEqual(mousePoints.current.start, mousePoints.current.end, 5)) return;
         setIsOpened(true);
@@ -96,8 +96,8 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({
   const onPointerDownOutside = withOnMouseEnter
     ? (event: PointerDownOutsideEvent) => {
         const [x, y] = [event.detail.originalEvent.clientX, event.detail.originalEvent.clientY];
-        const end = { x, y };
-        mousePoints.current = { start: mousePoints.current.start, end };
+        const [start, end] = [mousePoints.current.start, { x, y }];
+        mousePoints.current = { start, end };
       }
     : undefined;
 
