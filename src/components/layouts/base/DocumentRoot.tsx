@@ -24,7 +24,7 @@ export const DocumentRoot: FunctionComponent<DocumentRootProps> = ({ children, p
 
   return (
     <html lang={locale} className={DEFAULT_VARIANT} style={HTML_STYLE} {...{ dir }} suppressHydrationWarning>
-      <body className={cn(BODY_CLS, fcn(fInter))}>
+      <body className={cn(BODY_CLS, fcn(fInter))} style={{ scrollbarGutter: 'stable' }}>
         <Providers {...{ locale }}>
           {!disableTopLoader && <NextTopLoader {...PROGRESSBAR_CONFIG} />}
           {withNavbar && <SitewideNavbar />}

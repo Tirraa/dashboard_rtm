@@ -1,4 +1,4 @@
-import MAIN_NEXT_UI_CLS from '@/components/config/styles/next-ui';
+import { MAIN_UI_RELATED_CLS } from '@/components/config/styles/next-ui';
 import Homepage from '@/components/pages/Homepage';
 import { i18ns } from '@/config/i18n';
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
@@ -24,7 +24,7 @@ export default function Page({ params }: i18nPageProps) {
   setStaticParamsLocale(lng);
 
   return (
-    <main className={cn('flex flex-1 flex-col justify-center', MAIN_NEXT_UI_CLS)}>
+    <main className={cn('flex flex-1 flex-col justify-center', MAIN_UI_RELATED_CLS)}>
       <Homepage />
     </main>
   );
