@@ -78,8 +78,8 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   );
 
   return (
-    <nav className="sticky inset-x-0 top-0 z-30 flex h-auto w-full items-center justify-center bg-black backdrop-blur-lg backdrop-saturate-150 dark:bg-card">
-      <header className="relative z-30 flex h-[82px] w-full max-w-full flex-row flex-nowrap items-center justify-between gap-4 px-5">
+    <nav className="sticky inset-x-0 top-0 z-30 flex h-auto w-screen items-center justify-center bg-black backdrop-blur-lg backdrop-saturate-150 dark:bg-card">
+      <header className="max-w-screen relative z-30 flex h-[82px] w-screen flex-row flex-nowrap items-center justify-between gap-4 px-5">
         {navbarBrand}
 
         <ul className="hidden justify-center gap-4 lg:flex">{desktopNavbarItems}</ul>
