@@ -19,7 +19,7 @@ export const DashboardLayoutClient: FunctionComponent<DashboardLayoutClientProps
   const segment = useSelectedLayoutSegment();
 
   useResetScroll(mainElementRef, {
-    alsoResetWindowScroll: true,
+    alsoResetWindowScroll: false,
     additionalDep: segment
   });
 
