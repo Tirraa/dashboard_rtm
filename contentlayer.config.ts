@@ -73,14 +73,14 @@ export default makeSource({
         {
           behavior: 'prepend',
           properties: {
-            class: 'autolink-header',
-            ariaHidden: true,
+            class: 'autolink-header mr-1',
+            ariaHidden: false,
             tabIndex: 0
           },
           content: [
             h('span.sr-only', 'permalink'),
             s(
-              'svg.autolink-svg.m-auto.h-full.mr-2',
+              'svg.autolink-svg.h-full',
               {
                 xmlns: 'http://www.w3.org/2000/svg',
                 width: 24,

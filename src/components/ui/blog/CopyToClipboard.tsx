@@ -54,7 +54,6 @@ export const CopyToClipboard: FunctionComponent<CopyToClipboardProps> = ({ child
       {
         <button
           ref={copyBtnRef}
-          aria-hidden={isHidden()}
           aria-label={globalT(`${i18ns.vocab}.copy-to-clipboard`)}
           className={cn('absolute right-2 top-2 h-8 w-8 rounded border-2 bg-gray-700 p-1 transition-[opacity] dark:bg-gray-800', {
             'opacity-100': isShown(),

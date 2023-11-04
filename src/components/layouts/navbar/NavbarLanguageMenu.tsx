@@ -7,12 +7,12 @@ import { useChangeLocale, useCurrentLocale, useScopedI18n } from '@/i18n/client'
 import localesLabels, { localesEmojis } from '@/i18n/localesLabels';
 import { cn } from '@/lib/tailwind';
 import type { WithIsMobile } from '@/types/Next';
-import type { LanguageFlag } from '@/types/i18n';
+import type { ChangeLocaleFun, LanguageFlag } from '@/types/i18n';
 import type { FunctionComponent } from 'react';
 
 interface NavbarLanguageMenuProps extends WithIsMobile {}
 
-const dropdownItemsGenerator = (changeLocale: (language: LanguageFlag) => void, currentLocale: LanguageFlag) =>
+const dropdownItemsGenerator = (changeLocale: ChangeLocaleFun, currentLocale: LanguageFlag) =>
   LANGUAGES.map((language) => (
     <DropdownMenuItem key={language} className="relative my-1 px-3 py-2" textValue={localesLabels[language]} asChild>
       <button

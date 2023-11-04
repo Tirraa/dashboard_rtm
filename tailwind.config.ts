@@ -16,6 +16,7 @@ const sanitizedDefaultColors = Object.keys(colors).reduce((acc, k) => {
 const config = {
   darkMode: ['class'],
   content: ['./src/**/*.{js,ts,jsx,tsx}', './posts/**/*.{md,mdx}'],
+  safelist: ['mr-1'],
   theme: {
     screens: { ...defaultTheme.screens },
     extend: {
