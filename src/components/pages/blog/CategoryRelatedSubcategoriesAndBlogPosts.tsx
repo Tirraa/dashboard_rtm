@@ -67,7 +67,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
       if (posts.length > limit) {
         showMoreLink = (
           <div className="flex w-full justify-center">
-            <Button size="lg" className={cn(BUTTON_CONFIG.CLASSNAME, 'mt-4')} asChild>
+            <Button size="lg" className={cn(BUTTON_CONFIG.CLASSNAME, 'mb-6 mt-4 lg:mb-0')} asChild>
               <Link {...{ href }}>{globalT(`${i18ns.vocab}.see-more`)}</Link>
             </Button>
           </div>
