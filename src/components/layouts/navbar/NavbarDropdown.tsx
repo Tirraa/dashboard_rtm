@@ -6,11 +6,14 @@ import NavbarDropdownMenuButtonStyle, {
 } from '@/components/config/styles/navbar/NavbarDropdownMenuButtonStyle';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/DropdownMenu';
 import { getClientSideI18n } from '@/i18n/client';
+import { arePointsEqual } from '@/lib/number';
 import { getLinkTarget, getRefCurrentPtr } from '@/lib/react';
 import { hrefMatchesPathname } from '@/lib/str';
 import { getBreakpoint } from '@/lib/tailwind';
+import type { LineSegment } from '@/types/Math';
 import type { EmbeddedEntities, NavbarDropdownElement } from '@/types/NavData';
 import type { WithOnMouseEnter, WithOnMouseLeave } from '@/types/Next';
+import type { PointerDownOutsideEvent } from '@/types/radix-ui';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { useMediaQuery } from '@react-hook/media-query';
 
@@ -60,7 +63,10 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({
   withOnMouseLeave
 }) => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
-  const handleOpenChange = (opened: boolean) => setIsOpened(opened);
+  const mousePoints = useRef<LineSegment>({ start: { x: -1, y: -1 }, end: { x: -1, y: -1 } });
+  const handleOpenChange = (opened: boolean) => {
+    setIsOpened(opened);
+  };
   const globalT = getClientSideI18n();
   const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
   const btnRef = useRef<HTMLButtonElement>(null);
@@ -74,8 +80,26 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({
     hrefMatchesPathname(href, currentPathname) || isOpened ? navbarDropdownIsActiveClassList : navbarDropdownIsNotActiveClassList;
   const navbarDropdownBtnClassName = isOpened ? navbarDropdownBtnIconIsActiveClassList : navbarDropdownBtnIconIsNotActiveClassList;
   const title = globalT(i18nTitle);
-  const onMouseEnter = withOnMouseEnter ? () => setIsOpened(true) : undefined;
+
+  const onMouseEnter = withOnMouseEnter
+    ? (event: React.MouseEvent) => {
+        const start = { x: event.clientX, y: event.clientY };
+        mousePoints.current = { end: mousePoints.current.end, start };
+
+        if (arePointsEqual(mousePoints.current.start, mousePoints.current.end, 5)) return;
+        setIsOpened(true);
+      }
+    : undefined;
+
   const onMouseLeave = withOnMouseLeave ? () => setIsOpened(false) : undefined;
+
+  const onPointerDownOutside = withOnMouseEnter
+    ? (event: PointerDownOutsideEvent) => {
+        const [x, y] = [event.detail.originalEvent.clientX, event.detail.originalEvent.clientY];
+        const end = { x, y };
+        mousePoints.current = { start: mousePoints.current.start, end };
+      }
+    : undefined;
 
   return (
     <DropdownMenu open={isOpened} onOpenChange={handleOpenChange} withDeepResetOnLgBreakpointEvents>
@@ -85,7 +109,7 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({
           <ChevronDownIcon className={navbarDropdownBtnClassName} aria-hidden="true" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent aria-label={title} {...{ onMouseLeave }}>
+      <DropdownMenuContent aria-label={title} {...{ onMouseLeave, onPointerDownOutside }}>
         {menuItemsGenerator(embeddedEntities, btnRef)}
       </DropdownMenuContent>
     </DropdownMenu>
