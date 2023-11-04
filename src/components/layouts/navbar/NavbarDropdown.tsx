@@ -69,7 +69,7 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ i18nTitle
   const title = globalT(i18nTitle);
 
   return (
-    <DropdownMenu onOpenChange={handleOpenChange} key={`reset-dropdown-via-breakpoint-state-${isLargeScreen}`}>
+    <DropdownMenu onOpenChange={handleOpenChange} withDeepResetOnLgBreakpointEvents>
       <DropdownMenuTrigger asChild>
         <button className={navbarDropdownClassName} ref={btnRef}>
           {title}

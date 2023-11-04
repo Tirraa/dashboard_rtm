@@ -14,8 +14,7 @@ interface UserImageProps extends Partial<WithClassname> {
  * @implements {User} image, name
  * @extends {Avatar}
  */
-export const UserImage: FunctionComponent<UserImageProps> = ({ user, width: widthValue, height: heightValue, className: classNameValue }) => {
-  const className = classNameValue ?? '';
+export const UserImage: FunctionComponent<UserImageProps> = ({ user, width: widthValue, height: heightValue, className }) => {
   const src = user?.image ?? '';
   if (!src) return null;
 

@@ -1,8 +1,10 @@
 'use client';
 
 import { getCurrentDir } from '@/lib/html';
-import { cn } from '@/lib/tailwind';
+import { cn, getBreakpoint } from '@/lib/tailwind';
+import type { WithDeepResetOnLgBreakpointEvents } from '@/types/Next';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
+import { useMediaQuery } from '@react-hook/media-query';
 import { Check, ChevronRight, Circle } from 'lucide-react';
 import * as React from 'react';
 
@@ -10,16 +12,21 @@ const DropdownMenuBase = DropdownMenuPrimitive.Root;
 
 /**
  * @hoc
- * @extends {DropdownMenuBase} - Automatic dir attribute
+ * @extends {DropdownMenuBase} - Automatic dir attribute, deep reset on screen width heavy changes
  */
-const DropdownMenu: React.FunctionComponent<DropdownMenuPrimitive.DropdownMenuProps> = ({ children, ...injectedProps }) => {
+const DropdownMenu: React.FunctionComponent<DropdownMenuPrimitive.DropdownMenuProps & Partial<WithDeepResetOnLgBreakpointEvents>> = ({
+  children,
+  withDeepResetOnLgBreakpointEvents,
+  ...injectedProps
+}) => {
   const [isMounted, setIsMounted] = React.useState(false);
   React.useEffect(() => setIsMounted(true), []);
+  const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
 
   const dir = isMounted ? getCurrentDir() : 'ltr';
 
   return (
-    <DropdownMenuBase {...injectedProps} {...{ dir }}>
+    <DropdownMenuBase {...injectedProps} {...{ dir }} key={withDeepResetOnLgBreakpointEvents ? `deep-reset-${isLargeScreen}` : 'no-deep-reset'}>
       {children}
     </DropdownMenuBase>
   );
