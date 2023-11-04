@@ -14,16 +14,16 @@ import getComputedNavData from '@/lib/misc/getComputedNavData';
 import { cn } from '@/lib/tailwind';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import type { NavbarItems } from '@/types/NavData';
-import type { WithClassname, i18nComponentProps } from '@/types/Next';
+import type { i18nComponentProps } from '@/types/Next';
 import type { LanguageFlag } from '@/types/i18n';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { ComponentType, FunctionComponent, ReactNode } from 'react';
+import type { FunctionComponent, ReactNode } from 'react';
 
 interface SitewideNavbarProps {}
-type TItemAsComponent = unknown & WithClassname;
 
 const { LOGO_SIZE_PX_VALUE } = NAVBAR_STYLE;
+const navbarExtrasForMobileClassNameBase = 'h-[40px]';
 
 const buildNavbarExtrasForDesktop = (): ReactNode[] =>
   Object.values(NAVBAR_EXTRAS_COMPONENTS_DESKTOP).map((jsx, index) => (
@@ -34,7 +34,7 @@ const buildNavbarExtrasForDesktop = (): ReactNode[] =>
 
 const buildNavbarExtrasForMobile = (): ReactNode[] =>
   Object.values(NAVBAR_EXTRAS_COMPONENTS_MOBILE).map((jsx, index) => (
-    <li className="h-[40px]" key={`${index}-navbar-extra-mobile`}>
+    <li className={navbarExtrasForMobileClassNameBase} key={`${index}-navbar-extra-mobile`}>
       {jsx}
     </li>
   ));
@@ -61,14 +61,10 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
     </li>
   ));
 
-  const mobileNavbarItems: NavbarItems = navbarItems.map((item, index) => {
-    const ItemAsComponent: ComponentType<TItemAsComponent> = () =>
-      item.jsx.props.embeddedEntities ? <NavbarButton {...item.jsx.props} /> : item.jsx;
-    return {
-      ...item,
-      jsx: <ItemAsComponent key={`${index}-navbar-btn-typography-mobile`} className={navbarItemClassName} />
-    };
-  });
+  const mobileNavbarItems: NavbarItems = navbarItems.map((item) => ({
+    ...item,
+    jsx: item.jsx.props.embeddedEntities ? <NavbarButton {...item.jsx.props} /> : item.jsx
+  }));
 
   const navbarExtrasClassNameBase = 'gap-4 h-full flex-row flex-nowrap items-center';
   const navbarBrand = (
@@ -88,7 +84,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
 
         <ul className={cn('flex justify-end lg:hidden', navbarExtrasClassNameBase)}>
           {buildNavbarExtrasForMobile()}
-          <li className="h-[40px]">
+          <li className={navbarExtrasForMobileClassNameBase}>
             <NavbarToggle items={mobileNavbarItems} />
           </li>
         </ul>

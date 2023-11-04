@@ -73,7 +73,7 @@ export default makeSource({
         {
           behavior: 'prepend',
           properties: {
-            class: 'autolink-header mr-1',
+            class: ['autolink-header', 'mr-1'],
             ariaHidden: false,
             tabIndex: 0
           },
