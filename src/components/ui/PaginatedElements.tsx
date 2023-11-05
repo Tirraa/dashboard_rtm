@@ -68,6 +68,7 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
 
   const paginationNode = (
     <ReactPaginate
+      forcePage={pageFromUrl - 1}
       className={cn(`flex justify-${xpos} gap-2`, posClassName)}
       breakLabel="..."
       previousAriaLabel={scopedT('prev')}
