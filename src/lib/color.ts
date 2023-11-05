@@ -9,7 +9,7 @@ type RGBAColor = Record<RGBAValues, number>;
  * @throws {InvalidArgumentsError}
  */
 export function RGBAColor({ r, g, b, a }: RGBAColor) {
-  if (!isInCloseInterval(a, 0, 1)) throw new InvalidArgumentsError(RGBAColor.name, { a });
+  if (!isInCloseInterval(a, 0, 1)) throw new InvalidArgumentsError(RGBAColor.name, { a }, 'a must be between 0 and 1');
 
   return Color({ r, g, b }).fade(1 - a);
 }

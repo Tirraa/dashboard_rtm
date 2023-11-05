@@ -36,7 +36,8 @@ function getBlogPostSubcategoryFromStr(sourceFileDir: string): BlogSubcategoryFr
   }
 
   const firstSlashIndex = indexOfNthOccurrence(sourceFileDir, '/', 1);
-  if (firstSlashIndex === -1) throw new InvalidArgumentsError(getBlogPostSubcategoryFromStr.name, { sourceFileDir });
+  if (firstSlashIndex === -1)
+    throw new InvalidArgumentsError(getBlogPostSubcategoryFromStr.name, { sourceFileDir }, "Can't find any '/' character in sourceFileDir");
 
   const secondSlashIndex = indexOfNthOccurrence(sourceFileDir, '/', 2);
   const subcateg = subcategGetter(sourceFileDir, firstSlashIndex, secondSlashIndex);
@@ -53,7 +54,7 @@ function getBlogPostSubcategoryFromPostObj(post: PostBase): BlogSubcategoryFromU
  */
 export function getBlogCategoryFromPathname(pathname: AppPath): BlogCategory {
   const firstIndex = indexOfNthOccurrence(pathname, '/', 1);
-  if (firstIndex === -1) throw new InvalidArgumentsError(getBlogCategoryFromPathname.name, { pathname });
+  if (firstIndex === -1) throw new InvalidArgumentsError(getBlogCategoryFromPathname.name, { pathname }, "Can't find any '/' character in pathname");
 
   const secondIndex = indexOfNthOccurrence(pathname, '/', 2);
   if (secondIndex !== -1) return pathname.substring(firstIndex + 1, secondIndex) as BlogCategory;

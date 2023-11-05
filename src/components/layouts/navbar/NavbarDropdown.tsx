@@ -84,6 +84,8 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({
 
   const onOpenChange = (opened: boolean) => setIsOpened(opened);
 
+  const resetMousePoints = () => (mousePoints.current = mousePointsInitialState);
+
   const triggerKillswitch = () => {
     const [x, y] = [MOUSE_POINT_KILLSWITCH, MOUSE_POINT_KILLSWITCH];
     const [start, end] = [
@@ -101,7 +103,7 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({
   const onMouseEnter = withOnMouseEnter
     ? (event: React.MouseEvent) => {
         if (triggeredKillswitchCtx()) {
-          mousePoints.current = mousePointsInitialState;
+          resetMousePoints();
           return;
         }
 
