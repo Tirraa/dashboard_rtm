@@ -2,6 +2,7 @@
 
 import { i18ns } from '@/config/i18n';
 import { useScopedI18n } from '@/i18n/client';
+import { createURLSearchParams } from '@/lib/html';
 import { capitalize } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
 import type { FlexJustify } from '@/types/HTML';
@@ -60,8 +61,9 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   const NEXT_AND_PREV_ICONS_CLASSLIST: ClassName = { className: 'w-10 h-10 flex items-centers justify-center bg-accent rounded-md' };
 
   function handlePageClick(event: { selected: number }) {
-    const targetPage = event.selected + 1;
-    router.push(`?page=${targetPage}`, { scroll: false });
+    const page = event.selected + 1;
+    const q = createURLSearchParams({ page });
+    router.push(q, { scroll: false });
   }
 
   const paginationNode = (

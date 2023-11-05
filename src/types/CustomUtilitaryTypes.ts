@@ -5,3 +5,5 @@ export type RequiredFieldsOnly<T> = {
 export type MakeHomogeneousValuesObjType<Obj extends object, ObjValuesType> = {
   [K in keyof Obj]: Obj[K] extends object ? MakeHomogeneousValuesObjType<Obj[K], ObjValuesType> : ObjValuesType;
 };
+
+export type JSPrimitives = string | number | boolean | null | undefined;

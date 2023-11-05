@@ -1,4 +1,6 @@
-type JSONPrimitiveLeafs = string | number | boolean | null;
+import type { JSPrimitives } from './CustomUtilitaryTypes';
+
+type JSONPrimitiveLeafs = Exclude<JSPrimitives, undefined>;
 type JSONLeafs = JSONPrimitiveLeafs | JSONPrimitiveLeafs[];
 
 export type JSONData = {

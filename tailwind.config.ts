@@ -6,6 +6,8 @@ import type { DefaultColors } from 'tailwindcss/types/generated/colors';
 
 type Colors = { [_ in keyof DefaultColors]: string | Record<string, string> };
 
+const REHYPE_AUTOLINK_HEADINGS_SAFELIST = ['mr-1'];
+
 const deprecatedColors: Array<keyof DefaultColors> = ['lightBlue', 'warmGray', 'trueGray', 'coolGray', 'blueGray'];
 const sanitizedDefaultColors = Object.keys(colors).reduce((acc, k) => {
   const k2 = k as keyof DefaultColors;
@@ -16,7 +18,7 @@ const sanitizedDefaultColors = Object.keys(colors).reduce((acc, k) => {
 const config = {
   darkMode: ['class'],
   content: ['./src/**/*.{js,ts,jsx,tsx}', './posts/**/*.{md,mdx}'],
-  safelist: ['mr-1'],
+  safelist: [...REHYPE_AUTOLINK_HEADINGS_SAFELIST],
   theme: {
     screens: { ...defaultTheme.screens },
     extend: {

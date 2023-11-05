@@ -1,24 +1,27 @@
 import InvalidArgumentsError from '@/errors/exceptions/InvalidArgument';
 import type { LineSegment, Point } from '@/types/Math';
 
-export const getBounds = (n1: number, n2: number): [number, number] => [n1 < n2 ? n1 : n2, n1 > n2 ? n1 : n2];
+type Lower = number;
+type Upper = number;
+
+export const getBounds = (n1: number, n2: number): [Lower, Upper] => [n1 < n2 ? n1 : n2, n1 > n2 ? n1 : n2];
 
 /**
  * @throws {InvalidArgumentsError}
  */
-export function isInOpenInterval(x: number, endpoint1: number, endpoint2: number) {
+export function isInOpenInterval(n: number, endpoint1: number, endpoint2: number) {
   if (endpoint1 === endpoint2)
     throw new InvalidArgumentsError(isInOpenInterval.name, { endpoint1, endpoint2 }, "endpoint1 and endpoint2 shouldn't be equal");
 
   const [lower, upper] = getBounds(endpoint1, endpoint2);
-  return lower < x && x < upper;
+  return lower < n && n < upper;
 }
 
-export function isInCloseInterval(x: number, endpoint1: number, endpoint2: number) {
-  if (endpoint1 === endpoint2) return x === endpoint1;
+export function isInCloseInterval(n: number, endpoint1: number, endpoint2: number) {
+  if (endpoint1 === endpoint2) return n === endpoint1;
 
   const [min, max] = getBounds(endpoint1, endpoint2);
-  return min <= x && x <= max;
+  return min <= n && n <= max;
 }
 
 /**
@@ -36,5 +39,5 @@ export function arePointsEqual(p1: Point, p2: Point, deadZone: number = 0) {
 export function isInRect(diagonalFromTopLeftCornerToBottomRightCorner: LineSegment, point: Point) {
   const [P, D] = [point, diagonalFromTopLeftCornerToBottomRightCorner];
 
-  return isInOpenInterval(P.x, D.start.x, D.end.x) && isInOpenInterval(P.y, D.start.y, D.end.y);
+  return isInCloseInterval(P.x, D.start.x, D.end.x) && isInCloseInterval(P.y, D.start.y, D.end.y);
 }
