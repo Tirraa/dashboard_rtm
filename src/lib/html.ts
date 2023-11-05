@@ -1,5 +1,6 @@
 import ELEMENTS_ID from '@/config/elementsId';
 import type { Direction } from '@/types/HTML';
+import type { LineSegment } from '@/types/Math';
 import type { RefObject } from 'react';
 import { getRefCurrentPtr } from './react';
 
@@ -29,8 +30,8 @@ export function resetScroll<T extends HTMLElement>(scrollableElementToResetRef?:
     return;
   }
 
-  const refCurrentPtr = getRefCurrentPtr(scrollableElementToResetRef);
-  if (refCurrentPtr) scrollToTop(refCurrentPtr);
+  const scrollableElementToResetInstance = getRefCurrentPtr(scrollableElementToResetRef);
+  if (scrollableElementToResetInstance) scrollToTop(scrollableElementToResetInstance);
   if (alsoResetWindowScroll) resetWindowScroll();
 }
 
@@ -47,3 +48,12 @@ export function preserveKeyboardNavigation(element: EventTarget | HTMLElement) {
 export const getCurrentDir = () => document.documentElement.dir as Direction;
 
 export const getBodyContainer = () => document.getElementById(ELEMENTS_ID.BODY_CONTAINER) as HTMLElement;
+
+export function getDOMRectDiagonal(rect: DOMRect): LineSegment {
+  const startX = rect.x;
+  const endX = rect.x + rect.width;
+  const startY = rect.y;
+  const endY = rect.y + rect.height;
+
+  return { start: { x: startX, y: startY }, end: { x: endX, y: endY } };
+}

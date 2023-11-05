@@ -6,7 +6,8 @@ import NavbarDropdownMenuButtonStyle, {
 } from '@/components/config/styles/navbar/NavbarDropdownMenuButtonStyle';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/DropdownMenu';
 import { getClientSideI18n } from '@/i18n/client';
-import { arePointsEqual } from '@/lib/number';
+import { getDOMRectDiagonal } from '@/lib/html';
+import { arePointsEqual, isInRect } from '@/lib/number';
 import { getLinkTarget, getRefCurrentPtr } from '@/lib/react';
 import { hrefMatchesPathname } from '@/lib/str';
 import { getBreakpoint } from '@/lib/tailwind';
@@ -30,14 +31,14 @@ const { isActiveClassList: navbarDropdownIsActiveClassList, isNotActiveClassList
 const { isActiveClassList: navbarDropdownBtnIconIsActiveClassList, isNotActiveClassList: navbarDropdownBtnIconIsNotActiveClassList } =
   NavbarDropdownButtonIconStyle;
 
-const menuItemsGenerator = (embeddedEntities: EmbeddedEntities, btnRef: RefObject<HTMLButtonElement>) => {
+const menuItemsGenerator = (embeddedEntities: EmbeddedEntities, triggerRef: RefObject<HTMLButtonElement>) => {
   const globalT = getClientSideI18n();
 
   return embeddedEntities.map(({ path: href, i18nTitle }) => {
     const title = globalT(i18nTitle);
     const target = getLinkTarget(href);
-    const btnRefCurrentPtr = getRefCurrentPtr(btnRef);
-    const minWidth = btnRefCurrentPtr ? window.getComputedStyle(btnRefCurrentPtr).width : '0';
+    const triggerRefInstance = getRefCurrentPtr(triggerRef);
+    const minWidth = triggerRefInstance ? window.getComputedStyle(triggerRefInstance).width : '0';
 
     return (
       <DropdownMenuItem
@@ -65,7 +66,7 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({
   const currentPathname = usePathname();
   const globalT = getClientSideI18n();
   const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
-  const btnRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   const title = globalT(i18nTitle);
 
@@ -74,17 +75,34 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({
     if (!isLargeScreen) setIsOpened(false);
   }, [isLargeScreen]);
 
+  const handleMouseMove = (event: MouseEvent) => {
+    const [x, y] = [event.clientX, event.clientY];
+    trackedMousePoint.current = { x, y };
+  };
+  useEffect(
+    () => {
+      if (!withOnMouseEnter) return;
+      window.addEventListener('mousemove', handleMouseMove);
+      return () => {
+        if (withOnMouseEnter) window.removeEventListener('mousemove', handleMouseMove);
+      };
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
   const navbarDropdownClassName =
     hrefMatchesPathname(href, currentPathname) || isOpened ? navbarDropdownIsActiveClassList : navbarDropdownIsNotActiveClassList;
   const navbarDropdownBtnClassName = isOpened ? navbarDropdownBtnIconIsActiveClassList : navbarDropdownBtnIconIsNotActiveClassList;
 
   const [OFFSCREEN, MOUSE_POINT_KILLSWITCH] = [-1, -666];
   const mousePointsInitialState = { start: { x: OFFSCREEN, y: OFFSCREEN }, end: { x: OFFSCREEN, y: OFFSCREEN } };
-  const mousePoints = useRef<LineSegment>(mousePointsInitialState);
+  const eventsMousePoints = useRef<LineSegment>(mousePointsInitialState);
+  const trackedMousePoint = useRef<Point>({ x: OFFSCREEN, y: OFFSCREEN });
 
   const onOpenChange = (opened: boolean) => setIsOpened(opened);
 
-  const resetMousePoints = () => (mousePoints.current = mousePointsInitialState);
+  const resetMousePoints = () => (eventsMousePoints.current = mousePointsInitialState);
 
   const triggerKillswitch = () => {
     const [x, y] = [MOUSE_POINT_KILLSWITCH, MOUSE_POINT_KILLSWITCH];
@@ -92,12 +110,18 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({
       { x, y },
       { x, y }
     ];
-    mousePoints.current = { start, end };
+
+    const triggerRefInstance = getRefCurrentPtr(triggerRef);
+    const boundingRect = triggerRefInstance instanceof HTMLElement ? triggerRefInstance.getBoundingClientRect() : null;
+    if (boundingRect) {
+      const diag = getDOMRectDiagonal(boundingRect);
+      if (isInRect(diag, trackedMousePoint.current)) eventsMousePoints.current = { start, end };
+    }
   };
 
   const triggeredKillswitchCtx = () =>
     (['start', 'end'] as (keyof LineSegment)[]).some((lineSegmentPoint) =>
-      (['x', 'y'] as (keyof Point)[]).some((axis) => mousePoints.current[lineSegmentPoint][axis] === MOUSE_POINT_KILLSWITCH)
+      (['x', 'y'] as (keyof Point)[]).some((axis) => eventsMousePoints.current[lineSegmentPoint][axis] === MOUSE_POINT_KILLSWITCH)
     );
 
   const onMouseEnter = withOnMouseEnter
@@ -107,9 +131,9 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({
           return;
         }
 
-        const [start, end] = [{ x: event.clientX, y: event.clientY }, mousePoints.current.end];
-        mousePoints.current = { end, start };
-        if (arePointsEqual(mousePoints.current.start, mousePoints.current.end, 5)) return;
+        const [start, end] = [{ x: event.clientX, y: event.clientY }, eventsMousePoints.current.end];
+        eventsMousePoints.current = { end, start };
+        if (arePointsEqual(eventsMousePoints.current.start, eventsMousePoints.current.end, 5)) return;
 
         setIsOpened(true);
       }
@@ -120,8 +144,8 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({
   const onPointerDownOutside = withOnMouseEnter
     ? (event: PointerDownOutsideEvent) => {
         const [x, y] = [event.detail.originalEvent.clientX, event.detail.originalEvent.clientY];
-        const [start, end] = [mousePoints.current.start, { x, y }];
-        mousePoints.current = { start, end };
+        const [start, end] = [eventsMousePoints.current.start, { x, y }];
+        eventsMousePoints.current = { start, end };
       }
     : undefined;
 
@@ -129,14 +153,14 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({
 
   return (
     <DropdownMenu open={isOpened} {...{ onOpenChange }} withDeepResetOnLgBreakpointEvents>
-      <DropdownMenuTrigger {...{ onMouseEnter }} asChild>
-        <button className={navbarDropdownClassName} ref={btnRef}>
+      <DropdownMenuTrigger {...{ onMouseEnter }} ref={triggerRef} asChild>
+        <button className={navbarDropdownClassName}>
           {title}
           <ChevronDownIcon className={navbarDropdownBtnClassName} aria-hidden="true" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent aria-label={title} {...{ onMouseLeave, onPointerDownOutside, onEscapeKeyDown }}>
-        {menuItemsGenerator(embeddedEntities, btnRef)}
+        {menuItemsGenerator(embeddedEntities, triggerRef)}
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -1,5 +1,5 @@
 import InvalidArgumentsError from '@/errors/exceptions/InvalidArgument';
-import type { Point } from '@/types/Math';
+import type { LineSegment, Point } from '@/types/Math';
 
 export const getBounds = (n1: number, n2: number): [number, number] => [n1 < n2 ? n1 : n2, n1 > n2 ? n1 : n2];
 
@@ -31,4 +31,10 @@ export function arePointsEqual(p1: Point, p2: Point, deadZone: number = 0) {
   const xDistance = Math.abs(p1.x - p2.x);
   const yDistance = Math.abs(p1.y - p2.y);
   return xDistance <= deadZone && yDistance <= deadZone;
+}
+
+export function isInRect(diagonalFromTopLeftCornerToBottomRightCorner: LineSegment, point: Point) {
+  const [P, D] = [point, diagonalFromTopLeftCornerToBottomRightCorner];
+
+  return isInOpenInterval(P.x, D.start.x, D.end.x) && isInOpenInterval(P.y, D.start.y, D.end.y);
 }
