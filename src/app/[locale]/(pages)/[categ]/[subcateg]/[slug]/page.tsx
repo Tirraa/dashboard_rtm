@@ -103,7 +103,7 @@ export default function Page({ params }: BlogPostPageProps) {
             jsx: <BlogPostCrumb />
           }
         ]}
-        className="mx-8 w-full pb-8 pt-4 lg:mx-auto lg:max-w-[750px]"
+        className="mx-8 w-full py-4 lg:mx-auto lg:max-w-[750px]"
       />
       <BlogPost params={params} />
     </div>

@@ -7,7 +7,7 @@ import type { FunctionComponent } from 'react';
 interface BlogPostDateProps extends BlogPostProps, Partial<WithClassname> {}
 
 export const BlogPostDate: FunctionComponent<BlogPostDateProps> = ({ post, lng, className: classNameValue }) => (
-  <time dateTime={post.date} className={cn('mb-1 rounded-md text-xs', classNameValue)}>
+  <time dateTime={post.date} className={cn('text-xs', classNameValue)}>
     {getBlogPostFormattedDate(lng, post)}
   </time>
 );
