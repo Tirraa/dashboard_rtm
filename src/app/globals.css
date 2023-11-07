@@ -51,25 +51,6 @@
   }
 }
 
-/* § Resets */
-main {
-  padding: 1rem;
-}
-
-button:hover:not([aria-disabled='true']),
-a:hover:not([aria-disabled='true']) {
-  cursor: pointer;
-}
-
-[aria-disabled='true'] {
-  cursor: default;
-}
-
-/* § Utils */
-.h-100svh {
-  height: 100svh;
-}
-
 h1,
 .is-h1 {
   font-size: 2rem;
@@ -104,4 +85,27 @@ h6,
 .is-h5,
 .is-h6 {
   font-weight: normal;
+}
+
+/* § Resets */
+main {
+  padding: 1rem;
+}
+
+button:hover:not([aria-disabled='true']),
+a:hover:not([aria-disabled='true']) {
+  cursor: pointer;
+}
+
+[aria-disabled='true'] {
+  cursor: default;
+}
+
+/* § Utils */
+.h-100svh {
+  height: 100svh;
+}
+
+.break-word {
+  word-break: break-word;
 }

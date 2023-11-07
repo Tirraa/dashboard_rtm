@@ -130,7 +130,7 @@ export const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<Categor
   const generatedContent = await postsGenerator(posts, category, lng);
 
   return (
-    <div className="mx-auto max-w-xl py-8">
+    <div className="w-full">
       <h1 className="text-center">{scopedT(`${category}._title`)}</h1>
       {generatedContent}
     </div>

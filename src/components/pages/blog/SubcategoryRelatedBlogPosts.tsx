@@ -30,7 +30,7 @@ export const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageP
   ));
 
   return (
-    <section className="mx-auto max-w-xl py-8" id={slugify(curSubcategTitle.toLowerCase())}>
+    <section className="w-full" id={slugify(curSubcategTitle.toLowerCase())}>
       <h1 className="mb-2 ltr:text-left rtl:text-right">{title}</h1>
       <MaybePaginatedElements
         paginatedElements={paginatedElements}

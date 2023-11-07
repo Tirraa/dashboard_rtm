@@ -29,7 +29,7 @@ export const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = ({ post,
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="break-words text-sm [&>*:last-child]:mb-0 [&>*]:mb-3">{descriptionSnippet}</div>
+            <div className="break-word text-sm [&>*:last-child]:mb-0 [&>*]:mb-3">{descriptionSnippet}</div>
           </CardContent>
         </Card>
       </Link>

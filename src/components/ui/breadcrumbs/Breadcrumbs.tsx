@@ -16,7 +16,8 @@ import HomepageCrumb from './custom/HomepageCrumb';
 
 interface BreadcrumbsProps {
   withHomepageElement?: boolean;
-  customCrumbs: CustomCrumbs;
+  customCrumbs?: CustomCrumbs;
+  className?: string;
 }
 
 function crumbsGenerator(pathParts: string[], withHomepageElement: boolean, scopedT: UnstrictScopedT, customCrumbs?: CustomCrumbs): ReactNode[] {
@@ -60,7 +61,7 @@ function crumbsGenerator(pathParts: string[], withHomepageElement: boolean, scop
   return crumbs;
 }
 
-export const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = ({ withHomepageElement: maybeWithHomepageElement, customCrumbs }) => {
+export const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = ({ withHomepageElement: maybeWithHomepageElement, customCrumbs, className }) => {
   const pathname = usePathname();
   const pathParts = getPathParts(pathname);
   const withHomepageElement = Boolean(maybeWithHomepageElement);
@@ -69,8 +70,10 @@ export const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = ({ withHomepageE
 
   if (pathname === ROUTES_ROOTS.WEBSITE) return withHomepageElement ? <HomepageCrumb scopedT={scopedT} isLeaf /> : null;
   return (
-    <nav aria-label={scopedT2('breadcrumbs')}>
-      <ol className="flex">{crumbsGenerator(pathParts, withHomepageElement, scopedT, customCrumbs)}</ol>
+    <nav aria-label={scopedT2('breadcrumbs')} className={className}>
+      <ol className="flex w-fit flex-wrap gap-y-1 rounded-lg bg-accent bg-opacity-75 px-3 py-2">
+        {crumbsGenerator(pathParts, withHomepageElement, scopedT, customCrumbs)}
+      </ol>
     </nav>
   );
 };

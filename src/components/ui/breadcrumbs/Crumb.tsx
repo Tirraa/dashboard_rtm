@@ -1,3 +1,4 @@
+import { cn } from '@/lib/tailwind';
 import { DATA_QA_WARNING_DOM_KEY, QA_WARNINGS } from '@/types/QA';
 import Link from 'next/link';
 import type { FunctionComponent } from 'react';
@@ -23,6 +24,9 @@ const Crumb: FunctionComponent<CrumbProps> = ({ label, href, isLeaf: maybeIsLeaf
         aria-current={isLeaf ? 'page' : undefined}
         aria-disabled={isLeaf ? 'true' : undefined}
         style={isLeaf ? { pointerEvents: 'none' } : undefined}
+        className={cn('duration-250 transition-colors', {
+          'opacity-60 hover:text-primary hover:opacity-100 focus:text-primary focus:opacity-100': !isLeaf
+        })}
       >
         {label}
       </Link>

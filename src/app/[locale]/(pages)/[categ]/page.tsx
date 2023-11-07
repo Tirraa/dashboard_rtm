@@ -1,4 +1,5 @@
 import CategoryRelatedSubcategoriesAndBlogPosts from '@/components/pages/blog/CategoryRelatedSubcategoriesAndBlogPosts';
+import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
 import { LANGUAGES, i18ns } from '@/config/i18n';
 import { getServerSideI18n } from '@/i18n/server';
 import { getAllBlogCategories } from '@/lib/blog';
@@ -41,5 +42,10 @@ export default function Page({ params }: BlogCategoryPageProps) {
   const lng = params[i18nTaxonomy.LANG_FLAG];
   setStaticParamsLocale(lng);
 
-  return <CategoryRelatedSubcategoriesAndBlogPosts params={params} />;
+  return (
+    <div className="mx-8 flex flex-col items-center lg:mx-auto lg:max-w-[750px]">
+      <Breadcrumbs className="w-full pb-8 pt-4" />
+      <CategoryRelatedSubcategoriesAndBlogPosts params={params} />
+    </div>
+  );
 }

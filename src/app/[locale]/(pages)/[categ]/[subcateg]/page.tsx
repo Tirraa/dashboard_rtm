@@ -1,5 +1,6 @@
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import SubcategoryRelatedBlogPosts from '@/components/pages/blog/SubcategoryRelatedBlogPosts';
+import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
 import { LANGUAGES, i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { getServerSideI18n } from '@/i18n/server';
@@ -75,5 +76,10 @@ export default function Page({ params }: BlogSubcategoryPageProps) {
   const lng = params[i18nTaxonomy.LANG_FLAG];
   setStaticParamsLocale(lng);
 
-  return <SubcategoryRelatedBlogPosts params={params} />;
+  return (
+    <div className="mx-8 flex flex-col items-center lg:mx-auto lg:max-w-[750px]">
+      <Breadcrumbs className="w-full pb-8 pt-4" />
+      <SubcategoryRelatedBlogPosts params={params} />
+    </div>
+  );
 }

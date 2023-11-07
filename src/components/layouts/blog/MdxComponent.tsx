@@ -18,7 +18,7 @@ export const MDX: FunctionComponent<MdxProps> = ({ code }) => {
   const MDXComponent = useMDXComponent(code);
 
   return (
-    <article className="mdx">
+    <article className="mdx break-word">
       <MDXComponent components={components} />
     </article>
   );
