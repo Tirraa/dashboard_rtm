@@ -45,7 +45,7 @@ type NextInternationalMagic = {
   default: VocabType;
 };
 
-export type ScopedT = Awaited<ReturnType<typeof getScopedI18n<I18nVocabScope>>>;
+export type UnstrictScopedT = Awaited<ReturnType<typeof getScopedI18n<I18nVocabScope>>>;
 
 export type I18nMiddlewareConfig = {
   locales: LanguageFlag[];
@@ -63,3 +63,5 @@ export type LocalesObj = Record<LocalesObjKey, NextInternationalLazyLoadFun>;
 export type LocalesGetterConfigObjTypeConstraint = Record<LanguageFlag, () => Promise<TypedLeafsJSONData<VocabObjValue>>>;
 
 export type ChangeLocaleFun = (language: LanguageFlag) => void;
+
+export type PagesTitlesKey = keyof SharedVocabType['pages-titles'];
