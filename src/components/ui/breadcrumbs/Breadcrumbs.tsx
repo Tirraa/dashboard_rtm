@@ -46,7 +46,9 @@ function crumbsGenerator(pathParts: string[], withHomepageElement: boolean, scop
     const shouldGenerateAFallbackLabel = retrievedVocabFromPathPart === pathParts[depth];
     const fallbackLabel = shouldGenerateAFallbackLabel ? changeCase.sentenceCase(retrievedVocabFromPathPart) : undefined;
     const label = fallbackLabel ?? retrievedVocabFromPathPart;
-    return <Crumb {...{ label, href, isLeaf }} />;
+    const withRescueCtx = fallbackLabel !== undefined;
+
+    return <Crumb {...{ label, href, isLeaf, withRescueCtx }} />;
   }
 
   for (let depth = 0; pathParts[depth]; depth++) {
