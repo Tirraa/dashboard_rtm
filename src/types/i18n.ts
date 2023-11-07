@@ -28,7 +28,7 @@ type MakeVocabTargets<VorVL extends VocabOrVocabLeaf, CurrentDeepPath extends Vo
 
 type MakeVocabTargetsScopes<Target extends string> = Target extends `${infer Head}${KeySeparator}${infer Tail}`
   ? Head | `${Head}${KeySeparator}${MakeVocabTargetsScopes<Tail>}`
-  : Exclude<Target | DeepPathToLiteralKeys<Target>, Target>;
+  : DeepPathToLiteralKeys<Target>;
 
 type SharedVocabBase = typeof SHARED_VOCAB_SCHEMA;
 export type SharedVocabType = MakeHomogeneousValuesObjType<SharedVocabBase, VocabObjValue>;
