@@ -17,7 +17,8 @@ const SHARED: SharedVocabType = {
   vocab: {
     brand: 'Rust Team Management',
     logo: 'logo',
-    page: 'page'
+    page: 'page',
+    breadcrumbs: 'Breadcrumbs'
   }
 };
 
@@ -30,6 +31,8 @@ export default {
     assistance: 'Assistance',
     'sr-only': {
       'language-switcher-menu': 'Language choice',
+      'open-language-switcher-menu': 'Open language choice menu',
+      'close-language-switcher-menu': 'Close language choice menu',
       'hamburger-menu': 'Website sections',
       'open-hamburger-menu': 'Open the navbar menu (website sections)',
       'close-hamburger-menu': 'Close the navbar menu (website sections)',

@@ -14,14 +14,16 @@ const Crumb: FunctionComponent<CrumbProps> = ({ label, href: maybeHref, isLeaf: 
   if (maybeHref) {
     return (
       <>
-        <Link href={maybeHref}>{label}</Link>
+        <Link href={maybeHref} aria-hidden={isLeaf}>
+          {label}
+        </Link>
         {!isLeaf && <CrumbSeparator />}
       </>
     );
   }
 
   return (
-    <span>
+    <span aria-hidden={isLeaf}>
       {label}
       {!isLeaf && <CrumbSeparator />}
     </span>

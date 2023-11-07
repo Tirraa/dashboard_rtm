@@ -17,7 +17,8 @@ const SHARED: SharedVocabType = {
   vocab: {
     brand: 'Rust Team Management',
     logo: 'logo',
-    page: 'page'
+    page: 'page',
+    breadcrumbs: "Fil d'ariane"
   }
 };
 
@@ -30,6 +31,8 @@ export default {
     assistance: 'Support',
     'sr-only': {
       'language-switcher-menu': 'Choix de la langue',
+      'open-language-switcher-menu': 'Ouvrir le menu du choix de la langue',
+      'close-language-switcher-menu': 'Fermer le menu du choix de la langue',
       'hamburger-menu': 'Sections du site',
       'open-hamburger-menu': 'Ouvrir le menu de la barre de navigation (sections du site)',
       'close-hamburger-menu': 'Fermer le menu de la barre de navigation (sections du site)',

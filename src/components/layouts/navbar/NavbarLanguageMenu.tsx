@@ -39,10 +39,9 @@ export const NavbarLanguageMenu: FunctionComponent<NavbarLanguageMenuProps> = ({
   const [open, setOpen] = useState<boolean>(false);
   const onOpenChange = (opened: boolean) => setOpen(opened);
 
-  // {ToDo} Some hand craft aria-labels (as for the NavbarToggle) would be welcome!
   return (
     <DropdownMenu {...{ open, onOpenChange }} withDeepResetOnLgBreakpointEvents>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild aria-label={!open ? scopedT('open-language-switcher-menu') : scopedT('close-language-switcher-menu')}>
         <button className="h-full bg-transparent text-primary-foreground">{localesEmojis[currentLocale]}</button>
       </DropdownMenuTrigger>
       <DropdownMenuContent

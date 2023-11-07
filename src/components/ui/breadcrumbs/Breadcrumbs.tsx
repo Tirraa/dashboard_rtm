@@ -1,5 +1,6 @@
 'use client';
 
+import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { useScopedI18n } from '@/i18n/client';
 import { getPathParts } from '@/lib/next';
@@ -61,10 +62,15 @@ export const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = ({ withHomepageE
   const pathname = usePathname();
   const pathParts = getPathParts(pathname);
   const withHomepageElement = Boolean(maybeWithHomepageElement);
-  const scopedT = useScopedI18n('pages-titles');
+  const scopedT = useScopedI18n(i18ns.pagesTitles);
+  const scopedT2 = useScopedI18n(i18ns.vocab);
 
   if (pathname === ROUTES_ROOTS.WEBSITE) return withHomepageElement ? <HomepageCrumb {...{ scopedT }} isLeaf /> : null;
-  return <ul className="flex">{crumbsGenerator(pathParts, withHomepageElement, scopedT, customCrumbs)}</ul>;
+  return (
+    <nav aria-label={scopedT2('breadcrumbs')}>
+      <ol className="flex">{crumbsGenerator(pathParts, withHomepageElement, scopedT, customCrumbs)}</ol>
+    </nav>
+  );
 };
 
 export default Breadcrumbs;
