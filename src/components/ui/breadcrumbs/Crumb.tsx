@@ -5,9 +5,9 @@ import CrumbSeparator from './CrumbSeparator';
 
 interface CrumbProps {
   label: string;
+  href: string;
   isLeaf?: boolean;
   withRescueCtx?: boolean;
-  href: string;
 }
 
 const Crumb: FunctionComponent<CrumbProps> = ({ label, href, isLeaf: maybeIsLeaf, withRescueCtx: maybeWithRescueCtx }) => {

@@ -2,7 +2,7 @@ import type { ELanguagesFlag } from '@/config/i18n';
 import type VOCAB_SCHEMA from '@/i18n/locales/schema';
 import type { SHARED_VOCAB_SCHEMA } from '@/i18n/locales/schema';
 import type { getScopedI18n } from '@/i18n/server';
-import type { KeySeparator, MakeHomogeneousValuesObjType, UnionToLiteral } from '@/types/CustomUtilitaryTypes';
+import type { DeepPathToLiteralKeys, KeySeparator, MakeHomogeneousValuesObjType } from '@/types/CustomUtilitaryTypes';
 import type { TypedLeafsJSONData } from '@/types/JSON';
 import type { RemovePlural } from '@/types/international-types';
 
@@ -26,9 +26,9 @@ type MakeVocabTargets<VorVL extends VocabOrVocabLeaf, CurrentDeepPath extends Vo
     }[keyof VorVL]
   : RemovePlural<CurrentDeepPath>;
 
-type MakeVocabTargetsScopes<T extends string, Delimiter extends string = KeySeparator> = T extends `${infer First}.${infer Rest}`
-  ? First | `${First}.${MakeVocabTargetsScopes<Rest, Delimiter>}`
-  : Exclude<T | UnionToLiteral<T>, T>;
+type MakeVocabTargetsScopes<Target extends string> = Target extends `${infer Head}${KeySeparator}${infer Tail}`
+  ? Head | `${Head}${KeySeparator}${MakeVocabTargetsScopes<Tail>}`
+  : Exclude<Target | DeepPathToLiteralKeys<Target>, Target>;
 
 type SharedVocabBase = typeof SHARED_VOCAB_SCHEMA;
 export type SharedVocabType = MakeHomogeneousValuesObjType<SharedVocabBase, VocabObjValue>;
@@ -64,4 +64,4 @@ export type LocalesGetterConfigObjTypeConstraint = Record<LanguageFlag, () => Pr
 
 export type ChangeLocaleFun = (language: LanguageFlag) => void;
 
-export type PagesTitlesKey = keyof SharedVocabType['pages-titles'];
+export type PagesTitlesKey = keyof VocabType['pages-titles'];

@@ -25,7 +25,7 @@ const BlogPostCrumb: FunctionComponent<BlogPostCrumbProps> = () => {
   ];
 
   const post = getBlogPostUnstrict({ category, subcategory }, targettedSlug, locale);
-  const crumb = post ? <Crumb label={post.title} href={href} isLeaf /> : null;
+  const crumb = post ? <Crumb label={post.title} href={href} isLeaf /> : <Crumb label={targettedSlug} href={href} isLeaf withRescueCtx />;
   return crumb;
 };
 

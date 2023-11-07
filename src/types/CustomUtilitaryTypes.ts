@@ -1,3 +1,15 @@
+type SplitKeys<S extends string> = S extends `${infer Head}${KeySeparator}${infer Tail}` ? [Head, ...SplitKeys<Tail>] : [S];
+
+type JoinKeys<T extends string[]> = T extends []
+  ? never
+  : T extends [infer Head, ...infer Tail]
+  ? Head extends string
+    ? Tail extends string[]
+      ? `${Head}${KeySeparator}${JoinKeys<Tail>}`
+      : never
+    : never
+  : never;
+
 export type RequiredFieldsOnly<T> = {
   [K in keyof T as T[K] extends Required<T>[K] ? K : never]: T[K];
 };
@@ -10,18 +22,4 @@ export type JSPrimitives = string | number | boolean | null | undefined;
 
 export type KeySeparator = '.';
 
-export type Split<S extends string, Delimiter extends string = KeySeparator> = S extends `${infer First}${Delimiter}${infer Rest}`
-  ? [First, ...Split<Rest, Delimiter>]
-  : [S];
-
-export type UnionToLiteral<U> = U extends string ? Join<Split<U>> : never;
-
-export type Join<T extends string[], Delimiter extends string = KeySeparator> = T extends []
-  ? never
-  : T extends [infer First, ...infer Rest]
-  ? First extends string
-    ? Rest extends string[]
-      ? `${First}${Delimiter}${Join<Rest, Delimiter>}`
-      : never
-    : never
-  : never;
+export type DeepPathToLiteralKeys<DeepPath> = DeepPath extends string ? JoinKeys<SplitKeys<DeepPath>> : never;
