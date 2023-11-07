@@ -35,7 +35,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
   function buildPostsCollectionsSnippets() {
     Object.entries(histogram).forEach(([subcategory, posts2]) => {
       postsCollectionsSnippets[subcategory as BlogSubcategoryFromUnknownCategory] = posts2.map((post) => (
-        <BlogPostPreview key={`${post._raw.flattenedPath}-post-snippet`} {...{ post, lng }} isNotOnBlogSubcategoryPage />
+        <BlogPostPreview key={`${post._raw.flattenedPath}-post-snippet`} post={post} lng={lng} isNotOnBlogSubcategoryPage />
       ));
     });
   }
@@ -56,7 +56,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
       const href = buildPathFromParts(category, subcategory);
       const title = (
         <Link
-          {...{ href }}
+          href={href}
           className="mb-4 flex h-fit w-fit border-b-[2px] border-transparent leading-none transition-all hover:border-b-[2px] hover:border-inherit hover:pr-2 hover:indent-1 focus:border-b-[2px] focus:border-inherit focus:pr-2 focus:indent-1"
         >
           <h2 className="mb-1 mt-2">{curSubcategTitle}</h2>
@@ -68,7 +68,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
         showMoreLink = (
           <div className="flex w-full justify-center">
             <Button size="lg" className={cn(BUTTON_CONFIG.CLASSNAME, 'mb-6 mt-4 lg:mb-0')} asChild>
-              <Link {...{ href }}>{globalT(`${i18ns.vocab}.see-more`)}</Link>
+              <Link href={href}>{globalT(`${i18ns.vocab}.see-more`)}</Link>
             </Button>
           </div>
         );
@@ -95,7 +95,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
     return result;
   }
 
-  if (posts.length === 0) return <BlogPostsNotFound {...{ lng }} />;
+  if (posts.length === 0) return <BlogPostsNotFound />;
 
   const globalT = await getServerSideI18n();
   const subcategs: BlogSubcategoryFromUnknownCategory[] = getBlogSubcategoriesByCategory(category);
@@ -108,7 +108,7 @@ async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: La
 
   buildHistogram();
   buildPostsCollectionsSnippets();
-  if (isEmptySnippets()) return <BlogPostsNotFound {...{ lng }} />;
+  if (isEmptySnippets()) return <BlogPostsNotFound />;
 
   const result: ReactNode[] = contentGenerator();
   return result;

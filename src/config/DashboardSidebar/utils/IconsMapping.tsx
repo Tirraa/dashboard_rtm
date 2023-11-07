@@ -8,7 +8,7 @@ export type DashboardRoutesIcons = {
   [_ in keyof DashboardRoutes]: ComponentType<IconBaseProps>;
 };
 
-const createSidebarComponent = (__SidebarIcon: ComponentType<IconBaseProps>) => <DashboardSidebarButton {...{ __SidebarIcon }} />;
+const createSidebarComponent = (__SidebarIcon: ComponentType<IconBaseProps>) => <DashboardSidebarButton __SidebarIcon={__SidebarIcon} />;
 
 const computedDashboardRoutesSidebarComponents = {} as DashboardRoutesSidebarReactElements;
 Object.entries(SIDEBAR_ROUTES_ICONS).forEach(

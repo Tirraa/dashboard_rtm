@@ -70,8 +70,8 @@ const Button: React.FunctionComponent<ButtonHoCProps> = ({
     const target = getLinkTarget(maybeHref);
 
     return (
-      <ButtonBase {...injectedProps} {...{ className }} asChild>
-        <Link href={maybeHref} {...target} onClick={onClickFun}>
+      <ButtonBase {...injectedProps} className={className} asChild>
+        <Link href={maybeHref} target={target} onClick={onClickFun}>
           {children}
         </Link>
       </ButtonBase>
@@ -79,7 +79,7 @@ const Button: React.FunctionComponent<ButtonHoCProps> = ({
   }
 
   return (
-    <ButtonBase {...injectedProps} {...{ className }} onClick={onClickFun}>
+    <ButtonBase {...injectedProps} className={className} onClick={onClickFun}>
       {children}
     </ButtonBase>
   );

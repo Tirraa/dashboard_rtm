@@ -41,7 +41,11 @@ export const PaginatedElementsBodyWrapper: FunctionComponent<IPaginatedElementsB
   const id = idValue ?? undefined;
   const className = cn(`flex-${flexWrap} flex-${flexDirection} justify-${flexJustify}`, classNameValue);
 
-  return <div {...{ className, id }}>{children}</div>;
+  return (
+    <div className={className} id={id}>
+      {children}
+    </div>
+  );
 };
 
 export default PaginatedElementsBodyWrapper;

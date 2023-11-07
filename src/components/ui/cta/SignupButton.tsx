@@ -15,7 +15,7 @@ export const SignupButton: FunctionComponent<SignUpButtonProps> = () => {
   const className = BUTTON_CONFIG.CLASSNAME;
 
   return (
-    <Button size="lg" onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} {...{ className }}>
+    <Button size="lg" onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} className={className}>
       {globalT(`${i18ns.auth}.signup`)}
     </Button>
   );

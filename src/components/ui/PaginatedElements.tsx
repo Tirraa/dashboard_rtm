@@ -6,7 +6,6 @@ import { createURLSearchParams } from '@/lib/html';
 import { capitalize } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
 import type { FlexJustify } from '@/types/HTML';
-import type { ClassName } from '@/types/React';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { FunctionComponent, ReactNode } from 'react';
@@ -58,7 +57,7 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   const posClassName = ypos === 'bottom' ? 'mt-4' : 'mb-4';
   const chevronsClassName = 'scale-75';
 
-  const NEXT_AND_PREV_ICONS_CLASSLIST: ClassName = { className: 'w-10 h-10 flex items-centers justify-center bg-accent rounded-md' };
+  const nextAndPrevIconsClassList = 'w-10 h-10 flex items-centers justify-center bg-accent rounded-md';
 
   function handlePageClick(event: { selected: number }) {
     const page = event.selected + 1;
@@ -74,12 +73,12 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
       previousAriaLabel={scopedT('prev')}
       nextAriaLabel={scopedT('next')}
       previousLabel={
-        <span {...NEXT_AND_PREV_ICONS_CLASSLIST}>
+        <span className={nextAndPrevIconsClassList}>
           <ChevronLeftIcon className={chevronsClassName} />
         </span>
       }
       nextLabel={
-        <span {...NEXT_AND_PREV_ICONS_CLASSLIST}>
+        <span className={nextAndPrevIconsClassList}>
           <ChevronRightIcon className={chevronsClassName} />
         </span>
       }
@@ -96,7 +95,9 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   );
 
   const currentElementsNode = (
-    <PaginatedElementsBodyWrapper {...{ paginatedElementsBodyWrapperProps }}>{currentElements}</PaginatedElementsBodyWrapper>
+    <PaginatedElementsBodyWrapper paginatedElementsBodyWrapperProps={paginatedElementsBodyWrapperProps}>
+      {currentElements}
+    </PaginatedElementsBodyWrapper>
   );
 
   return ypos === 'bottom' ? (

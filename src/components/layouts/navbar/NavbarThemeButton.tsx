@@ -28,7 +28,7 @@ export const NavbarThemeButton: FunctionComponent<NavbarLoginButtonProps> = ({ i
 
   if (theme !== DEFAULT_VARIANT) {
     return (
-      <Button {...{ className }} onClick={() => setTheme(DEFAULT_VARIANT)} size="icon" withTransparentBackground>
+      <Button className={className} onClick={() => setTheme(DEFAULT_VARIANT)} size="icon" withTransparentBackground>
         <SunIcon width={SIZE} height={SIZE} />
         <span className="sr-only">{scopedT('switch-to-light-mode')}</span>
       </Button>
@@ -36,7 +36,7 @@ export const NavbarThemeButton: FunctionComponent<NavbarLoginButtonProps> = ({ i
   }
 
   return (
-    <Button {...{ className }} onClick={() => setTheme(DEFAULT_DARK_VARIANT)} size="icon" withTransparentBackground>
+    <Button className={className} onClick={() => setTheme(DEFAULT_DARK_VARIANT)} size="icon" withTransparentBackground>
       <MoonIcon width={SIZE} height={SIZE} />
       <span className="sr-only">{scopedT('switch-to-dark-mode')}</span>
     </Button>

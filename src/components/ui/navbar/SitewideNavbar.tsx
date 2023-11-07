@@ -43,7 +43,15 @@ function buildNavbarItems({ i18nProps }: i18nComponentProps): NavbarItems {
   const computedNavData = getComputedNavData(SITEWIDE_NAVBAR_ROUTES, SITEWIDE_NAVBAR_ROUTES_TITLES, SITEWIDE_NAVBAR_DROPDOWNS_CONFIG);
   const navbarItems = computedNavData.map(({ i18nTitle, path, embeddedEntities }) => ({
     i18nTitle,
-    jsx: <NavbarElement key={`${i18nTitle}-${path}-navbar-btn`} {...{ i18nProps, i18nTitle, path, embeddedEntities }} />
+    jsx: (
+      <NavbarElement
+        key={`${i18nTitle}-${path}-navbar-btn`}
+        i18nProps={i18nProps}
+        i18nTitle={i18nTitle}
+        path={path}
+        embeddedEntities={embeddedEntities}
+      />
+    )
   }));
   return navbarItems;
 }

@@ -22,17 +22,17 @@ export const MaybePaginatedElements: FunctionComponent<MaybePaginatedElementsPro
   const pagesAmount = computePagesAmount(paginatedElements.length, elementsPerPage);
 
   return paginationIsNotRequired(pagesAmount) ? (
-    <PaginatedElementsBodyWrapper {...{ paginatedElementsBodyWrapperProps }}>{paginatedElements}</PaginatedElementsBodyWrapper>
+    <PaginatedElementsBodyWrapper paginatedElementsBodyWrapperProps={paginatedElementsBodyWrapperProps}>
+      {paginatedElements}
+    </PaginatedElementsBodyWrapper>
   ) : (
     <PaginatedElements
-      {...{
-        paginatedElements,
-        elementsPerPage,
-        paginationButtonsPosition,
-        paginationButtonsJustify,
-        pagesAmount,
-        paginatedElementsBodyWrapperProps
-      }}
+      paginatedElements={paginatedElements}
+      elementsPerPage={elementsPerPage}
+      paginationButtonsPosition={paginationButtonsPosition}
+      paginationButtonsJustify={paginationButtonsJustify}
+      pagesAmount={pagesAmount}
+      paginatedElementsBodyWrapperProps={paginatedElementsBodyWrapperProps}
     />
   );
 };

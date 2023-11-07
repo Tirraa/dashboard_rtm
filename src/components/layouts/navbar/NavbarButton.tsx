@@ -58,25 +58,29 @@ const ButtonAsLink: FunctionComponent<Pick<AtomicNavDataEntity, 'i18nTitle' | 'p
 
   if (icon) {
     return (
-      <Link {...{ href, ...target }} className={cn(className, 'flex items-center')}>
+      <Link href={href} target={target} className={cn(className, 'flex items-center')}>
         {icon}
         {globalT(i18nTitle)}
       </Link>
     );
   }
-  return <Link {...{ className, href, ...target }}>{globalT(i18nTitle)}</Link>;
+  return (
+    <Link className={className} href={href} target={target}>
+      {globalT(i18nTitle)}
+    </Link>
+  );
 };
 
 export const NavbarButton: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, onClick, path, icon }) => {
   const generateNavbarButtonWithoutIcon = (): ReactNode => {
-    if (onClick) return <ButtonAsIs {...{ i18nTitle, onClick }} />;
-    else if (path) return <ButtonAsLink {...{ i18nTitle, path }} />;
+    if (onClick) return <ButtonAsIs onClick={onClick} i18nTitle={i18nTitle} />;
+    else if (path) return <ButtonAsLink i18nTitle={i18nTitle} path={path} />;
     return null;
   };
 
   const generateNavbarButtonWithIcon = (): ReactNode => {
-    if (onClick) return <ButtonAsIs {...{ i18nTitle, onClick, icon }} />;
-    else if (path) return <ButtonAsLink {...{ i18nTitle, path, icon }} />;
+    if (onClick) return <ButtonAsIs i18nTitle={i18nTitle} onClick={onClick} icon={icon} />;
+    else if (path) return <ButtonAsLink i18nTitle={i18nTitle} icon={icon} path={path} />;
     return null;
   };
 

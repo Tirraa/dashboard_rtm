@@ -24,10 +24,10 @@ export const DocumentRoot: FunctionComponent<DocumentRootProps> = ({ children, p
   const { direction: dir } = new Locale(locale).textInfo;
 
   return (
-    <html lang={locale} className={DEFAULT_VARIANT} style={HTML_STYLE} {...{ dir }} suppressHydrationWarning>
+    <html lang={locale} className={DEFAULT_VARIANT} style={HTML_STYLE} dir={dir} suppressHydrationWarning>
       <body className={cn(BODY_CLS, fcn(fInter))} style={{ scrollbarGutter: 'stable' }}>
         <div id={ELEMENTS_ID.BODY_CONTAINER} className={BODY_CONTAINER_CLS}>
-          <Providers {...{ locale }}>
+          <Providers locale={locale}>
             {!disableTopLoader && <NextTopLoader {...PROGRESSBAR_CONFIG} />}
             {withNavbar && <SitewideNavbar />}
             {children}

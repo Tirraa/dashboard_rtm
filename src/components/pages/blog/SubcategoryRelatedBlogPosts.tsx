@@ -21,19 +21,20 @@ export const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageP
   const postsCollection: PostBase[] = getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, lng);
 
   if (blogSubcategoryShouldTriggerNotFound(postsCollection, { category, subcategory })) notFound();
-  if (postsCollection.length === 0) return <BlogPostsNotFound {...{ lng }} />;
+  if (postsCollection.length === 0) return <BlogPostsNotFound />;
   // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
   const [title, curSubcategTitle] = [scopedT(`${category}.${subcategory}.title`), scopedT(`${category}.${subcategory}.title`)];
 
   const paginatedElements = postsCollection.map((post) => (
-    <BlogPostPreview key={`${post._raw.flattenedPath}-paginated-blog-post`} {...{ post, lng }} />
+    <BlogPostPreview key={`${post._raw.flattenedPath}-paginated-blog-post`} post={post} lng={lng} />
   ));
 
   return (
     <section className="mx-auto max-w-xl py-8" id={slugify(curSubcategTitle.toLowerCase())}>
       <h1 className="mb-2 ltr:text-left rtl:text-right">{title}</h1>
       <MaybePaginatedElements
-        {...{ paginatedElements, elementsPerPage: BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT }}
+        paginatedElements={paginatedElements}
+        elementsPerPage={BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT}
         paginationButtonsPosition="top"
         paginatedElementsBodyWrapperProps={{ className: '[&>article:not(:last-of-type)]:mb-6' }}
       />

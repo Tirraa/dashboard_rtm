@@ -30,11 +30,11 @@ export const DashboardSidebarCollapseButton: FunctionComponent<DashboardSidebarC
 
   return (
     <div onClick={() => setIsCollapsed(!isCollapsed)} className={sidebarCollapseBtnWrapperClassList}>
-      <button className={cn(sidebarCollapseBtnClassList, 'hidden lg:inline')} aria-label={ariaLabel} aria-expanded={ariaExpanded} {...{ type }}>
+      <button className={cn(sidebarCollapseBtnClassList, 'hidden lg:inline')} aria-label={ariaLabel} aria-expanded={ariaExpanded} type={type}>
         <ArrowSmallRightIcon width={SIZE_PX_VALUE} height={SIZE_PX_VALUE} className={sidebarCollapseBtnIconClassList} />
       </button>
 
-      <button className={cn(sidebarCollapseBtnClassList, 'lg:hidden')} aria-label={ariaLabel} aria-expanded={ariaExpanded} {...{ type }}>
+      <button className={cn(sidebarCollapseBtnClassList, 'lg:hidden')} aria-label={ariaLabel} aria-expanded={ariaExpanded} type={type}>
         <ArrowSmallDownIcon width={SIZE_PX_VALUE} height={SIZE_PX_VALUE} className={sidebarCollapseBtnIconClassList} />
       </button>
     </div>

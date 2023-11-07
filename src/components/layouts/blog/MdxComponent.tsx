@@ -19,7 +19,7 @@ export const MDX: FunctionComponent<MdxProps> = ({ code }) => {
 
   return (
     <article className="mdx">
-      <Component {...{ components }} />
+      <Component components={components} />
     </article>
   );
 };

@@ -13,7 +13,7 @@ const HomepageCrumb: FunctionComponent<HomepageCrumbProps> = ({ scopedT, isLeaf 
   const label = scopedT(homepage);
   const href = ROUTES_ROOTS.WEBSITE;
 
-  return <Crumb {...{ href, label, isLeaf }} />;
+  return <Crumb href={href} label={label} isLeaf={isLeaf} />;
 };
 
 export default HomepageCrumb;

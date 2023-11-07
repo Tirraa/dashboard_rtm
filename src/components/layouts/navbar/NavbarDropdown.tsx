@@ -48,7 +48,7 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities, triggerRef: RefO
         style={{ minWidth }}
         asChild
       >
-        <Link className={NAVBAR_DROPDOWN_MENU_INNER_BUTTONS_CLASSLIST} {...{ title, href, ...target }}>
+        <Link className={NAVBAR_DROPDOWN_MENU_INNER_BUTTONS_CLASSLIST} title={title} href={href} target={target}>
           {title}
         </Link>
       </DropdownMenuItem>
@@ -154,14 +154,19 @@ export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({
   const onEscapeKeyDown = withOnMouseEnter ? () => triggerKillswitch() : undefined;
 
   return (
-    <DropdownMenu open={isOpened} {...{ onOpenChange }} withDeepResetOnLgBreakpointEvents>
-      <DropdownMenuTrigger {...{ onMouseEnter }} ref={triggerRef} asChild>
+    <DropdownMenu open={isOpened} onOpenChange={onOpenChange} withDeepResetOnLgBreakpointEvents>
+      <DropdownMenuTrigger onMouseEnter={onMouseEnter} ref={triggerRef} asChild>
         <button className={navbarDropdownClassName}>
           {title}
           <ChevronDownIcon className={navbarDropdownBtnClassName} aria-hidden="true" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent aria-label={title} {...{ onMouseLeave, onPointerDownOutside, onEscapeKeyDown }}>
+      <DropdownMenuContent
+        aria-label={title}
+        onMouseLeave={onMouseLeave}
+        onPointerDownOutside={onPointerDownOutside}
+        onEscapeKeyDown={onEscapeKeyDown}
+      >
         {menuItemsGenerator(embeddedEntities, triggerRef)}
       </DropdownMenuContent>
     </DropdownMenu>

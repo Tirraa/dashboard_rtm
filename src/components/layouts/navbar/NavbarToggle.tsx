@@ -55,9 +55,9 @@ export const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) =>
     "flex h-full w-full flex-col items-center justify-center text-white transition-opacity before:block before:h-px before:w-6 before:-translate-y-1 before:rotate-0 before:bg-current before:transition-transform before:duration-150 before:content-[''] after:block after:h-px after:w-6 after:translate-y-1 after:rotate-0 after:bg-current after:transition-transform after:duration-150 after:content-[''] data-[pressed=true]:opacity-70 data-[open=true]:before:translate-y-px data-[open=true]:before:rotate-45 data-[open=true]:after:translate-y-0 data-[open=true]:after:-rotate-45";
 
   return (
-    <DropdownMenu open={isOpened} {...{ onOpenChange }} withDeepResetOnLgBreakpointEvents>
+    <DropdownMenu open={isOpened} onOpenChange={onOpenChange} withDeepResetOnLgBreakpointEvents>
       <DropdownMenuTrigger aria-label={!isOpened ? scopedT('open-hamburger-menu') : scopedT('close-hamburger-menu')} asChild>
-        <button ref={togglerRef} {...{ className }} />
+        <button ref={togglerRef} className={className} />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="relative min-w-[145px] ltr:right-4 rtl:left-4 dark:border-card" aria-label={scopedT('hamburger-menu')}>

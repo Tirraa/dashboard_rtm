@@ -18,7 +18,15 @@ export const Loader: FunctionComponent<LoaderProps> = ({ override: cssOverride }
 
   return (
     <div className="fixed inset-0 z-50 flex h-screen w-full cursor-wait select-none items-center justify-center">
-      <BeatLoader {...{ color, cssOverride }} margin={4.5} speedMultiplier={1.35} loading={true} aria-label="..." className="animate-pulse" />
+      <BeatLoader
+        color={color}
+        cssOverride={cssOverride}
+        margin={4.5}
+        speedMultiplier={1.35}
+        loading={true}
+        aria-label="..."
+        className="animate-pulse"
+      />
     </div>
   );
 };

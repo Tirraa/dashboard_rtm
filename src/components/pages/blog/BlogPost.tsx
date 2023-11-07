@@ -12,7 +12,7 @@ interface BlogPostInnerProps extends BlogPostProps {}
 const BlogPostInner: FunctionComponent<BlogPostInnerProps> = ({ post, lng }) => (
   <section className="mx-auto max-w-xl py-8">
     <div className="mb-8 text-center">
-      <BlogPostDate {...{ post, lng }} />
+      <BlogPostDate post={post} lng={lng} />
       <h1>{post.title}</h1>
     </div>
     <div className="max-w-full [&>*]:break-words">
@@ -33,7 +33,7 @@ export const BlogPost: FunctionComponent<BlogPostPageProps> = ({ params }) => {
   const post = getBlogPostUnstrict({ category, subcategory }, slug, lng);
   if (!post) notFound();
 
-  return <BlogPostInner {...{ post, lng }} />;
+  return <BlogPostInner post={post} lng={lng} />;
 };
 
 export default BlogPost;

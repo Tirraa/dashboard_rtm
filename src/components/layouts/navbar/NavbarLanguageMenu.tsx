@@ -40,7 +40,7 @@ export const NavbarLanguageMenu: FunctionComponent<NavbarLanguageMenuProps> = ({
   const onOpenChange = (opened: boolean) => setOpen(opened);
 
   return (
-    <DropdownMenu {...{ open, onOpenChange }} withDeepResetOnLgBreakpointEvents>
+    <DropdownMenu open={open} onOpenChange={onOpenChange} withDeepResetOnLgBreakpointEvents>
       <DropdownMenuTrigger asChild aria-label={!open ? scopedT('open-language-switcher-menu') : scopedT('close-language-switcher-menu')}>
         <button className="h-full bg-transparent text-primary-foreground">{localesEmojis[currentLocale]}</button>
       </DropdownMenuTrigger>

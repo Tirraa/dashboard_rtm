@@ -41,5 +41,5 @@ export default function Page({ params }: BlogCategoryPageProps) {
   const lng = params[i18nTaxonomy.LANG_FLAG];
   setStaticParamsLocale(lng);
 
-  return <CategoryRelatedSubcategoriesAndBlogPosts {...{ params }} />;
+  return <CategoryRelatedSubcategoriesAndBlogPosts params={params} />;
 }

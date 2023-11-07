@@ -38,7 +38,12 @@ const DropdownMenu: React.FunctionComponent<DropdownMenuPrimitive.DropdownMenuPr
   const dir = isMounted ? getCurrentDir() : 'ltr';
 
   return (
-    <DropdownMenuBase {...injectedProps} {...{ dir, open }} key={withDeepResetOnLgBreakpointEvents ? `deep-reset-${isLargeScreen}` : 'no-deep-reset'}>
+    <DropdownMenuBase
+      {...injectedProps}
+      dir={dir}
+      open={open}
+      key={withDeepResetOnLgBreakpointEvents ? `deep-reset-${isLargeScreen}` : 'no-deep-reset'}
+    >
       {children}
     </DropdownMenuBase>
   );

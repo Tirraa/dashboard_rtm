@@ -20,7 +20,7 @@ export const Homepage: FunctionComponent<HomepageProps> = () => {
 
   return (
     <div className="text-center">
-      <Image src="/assets/rtm-txt-logo.svg" {...{ style, width, height, alt }} className="m-auto" priority />
+      <Image src="/assets/rtm-txt-logo.svg" style={style} width={width} height={height} alt={alt} className="m-auto" priority />
       <h1 className="mt-2">{brand}</h1>
       <InviteTheBotButton />
     </div>

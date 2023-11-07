@@ -2,6 +2,7 @@
 
 import { useCurrentLocale } from '@/i18n/client';
 import { getBlogPostUnstrict } from '@/lib/blog';
+import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
 import { getPathParts } from '@/lib/next';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, UnknownBlogSlug } from '@/types/Blog';
 import { usePathname } from 'next/navigation';
@@ -12,16 +13,20 @@ interface BlogPostCrumbProps {}
 
 const BlogPostCrumb: FunctionComponent<BlogPostCrumbProps> = () => {
   const pathname = usePathname();
-  const pathParts = getPathParts(pathname);
   const locale = useCurrentLocale();
 
-  const category = pathParts[0] as BlogCategory;
-  const subcategory = pathParts[1] as BlogSubcategoryFromUnknownCategory;
-  const targettedSlug = pathParts[2] as UnknownBlogSlug;
-  const post = getBlogPostUnstrict({ category, subcategory }, targettedSlug, locale);
+  const pathParts = getPathParts(pathname);
+  const href = getPathnameWithoutI18nFlag(pathname);
 
-  const res = post ? <Crumb label={post.title} isLeaf /> : null;
-  return res;
+  const [category, subcategory, targettedSlug] = [
+    pathParts[0] as BlogCategory,
+    pathParts[1] as BlogSubcategoryFromUnknownCategory,
+    pathParts[2] as UnknownBlogSlug
+  ];
+
+  const post = getBlogPostUnstrict({ category, subcategory }, targettedSlug, locale);
+  const crumb = post ? <Crumb label={post.title} href={href} isLeaf /> : null;
+  return crumb;
 };
 
 export default BlogPostCrumb;

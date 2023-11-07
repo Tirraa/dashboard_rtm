@@ -29,13 +29,13 @@ function crumbsGenerator(pathParts: string[], withHomepageElement: boolean, scop
   const crumbs: ReactNode[] = withHomepageElement
     ? [
         <>
-          <HomepageCrumb {...{ scopedT }} />
+          <HomepageCrumb scopedT={scopedT} />
           <CrumbSeparator />
         </>
       ]
     : [];
 
-  function crumbGenerator(depth: number, isLeaf: boolean, href?: string) {
+  function crumbGenerator(depth: number, isLeaf: boolean, href: string) {
     if (customCrumbs) {
       for (const customComponent of customCrumbs) {
         if (customComponent.depth === depth + 1) return customComponent.jsx;
@@ -48,12 +48,12 @@ function crumbsGenerator(pathParts: string[], withHomepageElement: boolean, scop
     const label = fallbackLabel ?? retrievedVocabFromPathPart;
     const withRescueCtx = fallbackLabel !== undefined;
 
-    return <Crumb {...{ label, href, isLeaf, withRescueCtx }} />;
+    return <Crumb label={label} href={href} isLeaf={isLeaf} withRescueCtx={withRescueCtx} />;
   }
 
   for (let depth = 0; pathParts[depth]; depth++) {
     const isLeaf = pathParts[depth + 1] === undefined;
-    const href = !isLeaf ? buildCurrentPath(pathParts, depth) : undefined;
+    const href = buildCurrentPath(pathParts, depth);
     const crumb = crumbGenerator(depth, isLeaf, href);
     crumbs.push(<li key={`breadcrumbs-part-${depth}`}>{crumb}</li>);
   }
@@ -67,7 +67,7 @@ export const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = ({ withHomepageE
   const scopedT = useScopedI18n(i18ns.pagesTitles);
   const scopedT2 = useScopedI18n(i18ns.vocab);
 
-  if (pathname === ROUTES_ROOTS.WEBSITE) return withHomepageElement ? <HomepageCrumb {...{ scopedT }} isLeaf /> : null;
+  if (pathname === ROUTES_ROOTS.WEBSITE) return withHomepageElement ? <HomepageCrumb scopedT={scopedT} isLeaf /> : null;
   return (
     <nav aria-label={scopedT2('breadcrumbs')}>
       <ol className="flex">{crumbsGenerator(pathParts, withHomepageElement, scopedT, customCrumbs)}</ol>

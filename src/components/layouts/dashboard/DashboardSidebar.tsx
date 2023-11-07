@@ -37,7 +37,7 @@ function sidebarBtnsGenerator(currentPathname: AppPath): ReactNode[] {
 
     return (
       <li key={`${k}-sidebar-btn-component`}>
-        <Link {...{ title, href }} className={cn('flex w-fit max-w-full flex-col rounded-lg', sidebarButtonClassName)}>
+        <Link title={title} href={href} className={cn('flex w-fit max-w-full flex-col rounded-lg', sidebarButtonClassName)}>
           <span className="sr-only">{title}</span>
           {btnComponent}
         </Link>
@@ -111,7 +111,7 @@ export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => 
           </ul>
         </nav>
       </aside>
-      <DashboardSidebarCollapseButton {...{ isCollapsed, setIsCollapsed }} />
+      <DashboardSidebarCollapseButton isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
     </>
   );
 };

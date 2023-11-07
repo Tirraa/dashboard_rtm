@@ -27,7 +27,7 @@ const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> =
 
   if (session) {
     return (
-      <Button {...{ className }} onClick={() => signOut()} withTransparentBackground>
+      <Button className={className} onClick={() => signOut()} withTransparentBackground>
         <UserImage user={session?.user} width={SIZE} height={SIZE} className="absolute rounded-full brightness-75" />
         <SignalSlashIcon width={SIZE} height={SIZE} className="relative shadow-xl" />
         <span className="sr-only">{scopedT('logout')}</span>
@@ -36,7 +36,7 @@ const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> =
   }
 
   return (
-    <Button {...{ className }} onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} withTransparentBackground>
+    <Button className={className} onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} withTransparentBackground>
       <KeyIcon width={SIZE} height={SIZE} />
       <span className="sr-only">{scopedT('login')}</span>
     </Button>
@@ -46,7 +46,7 @@ const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> =
 export const NavbarLoginButton: FunctionComponent<NavbarLoginButtonProps> = ({ isMobile }) => {
   const { data: session } = useSession();
 
-  if (isMobile) return <NavbarLoginButtonMobile {...{ session }} />;
+  if (isMobile) return <NavbarLoginButtonMobile session={session} />;
 
   if (session)
     return (

@@ -50,7 +50,7 @@ export const CopyToClipboard: FunctionComponent<CopyToClipboardProps> = ({ child
   };
 
   return (
-    <div ref={textInputRef} className="code-block relative" {...{ onMouseEnter, onMouseLeave }}>
+    <div ref={textInputRef} className="code-block relative" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       {
         <button
           ref={copyBtnRef}
@@ -62,7 +62,8 @@ export const CopyToClipboard: FunctionComponent<CopyToClipboardProps> = ({ child
             'hover:border-gray-300': !copied
           })}
           onClick={onCopy}
-          {...{ onFocus, onBlur }}
+          onFocus={onFocus}
+          onBlur={onBlur}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

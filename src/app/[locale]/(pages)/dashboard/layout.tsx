@@ -14,5 +14,5 @@ export default async function DashboardLayout({ params, children }: DashboardLay
   const lng = params[i18nTaxonomy.LANG_FLAG];
   setStaticParamsLocale(lng);
 
-  return <DashboardLayoutClient {...{ children }} />;
+  return <DashboardLayoutClient>{children}</DashboardLayoutClient>;
 }

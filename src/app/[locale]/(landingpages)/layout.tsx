@@ -2,5 +2,5 @@ import LandingPagesHtmlElement from '@/components/layouts/base/LandingPagesHtmlE
 import type { LayoutBaseProps } from '@/types/Next';
 
 export default function RootLayout({ children, params }: LayoutBaseProps) {
-  return <LandingPagesHtmlElement {...{ children, params }} />;
+  return <LandingPagesHtmlElement params={params}>{children}</LandingPagesHtmlElement>;
 }

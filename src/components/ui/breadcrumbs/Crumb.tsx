@@ -7,30 +7,27 @@ interface CrumbProps {
   label: string;
   isLeaf?: boolean;
   withRescueCtx?: boolean;
-  href?: string;
+  href: string;
 }
 
-const Crumb: FunctionComponent<CrumbProps> = ({ label, href: maybeHref, isLeaf: maybeIsLeaf, withRescueCtx: maybeWithRescueCtx }) => {
+const Crumb: FunctionComponent<CrumbProps> = ({ label, href, isLeaf: maybeIsLeaf, withRescueCtx: maybeWithRescueCtx }) => {
   const QA_WARNING = maybeWithRescueCtx ? QA_WARNINGS.IS_A_FALLBACK : undefined;
+  const QA_PROPS = { [DATA_QA_WARNING_DOM_KEY]: QA_WARNING };
   const isLeaf = Boolean(maybeIsLeaf);
-  const p = { 'aria-hidden': isLeaf, [DATA_QA_WARNING_DOM_KEY]: QA_WARNING };
-
-  if (maybeHref) {
-    return (
-      <>
-        <Link href={maybeHref} {...p}>
-          {label}
-        </Link>
-        {!isLeaf && <CrumbSeparator />}
-      </>
-    );
-  }
 
   return (
-    <span {...p}>
-      {label}
+    <>
+      <Link
+        {...QA_PROPS}
+        href={href}
+        aria-current={isLeaf ? 'page' : undefined}
+        aria-disabled={isLeaf ? 'true' : undefined}
+        style={isLeaf ? { pointerEvents: 'none' } : undefined}
+      >
+        {label}
+      </Link>
       {!isLeaf && <CrumbSeparator />}
-    </span>
+    </>
   );
 };
 

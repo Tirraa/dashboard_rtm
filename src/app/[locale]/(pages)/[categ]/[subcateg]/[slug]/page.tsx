@@ -92,5 +92,5 @@ export default function Page({ params }: BlogPostPageProps) {
   const lng = params[i18nTaxonomy.LANG_FLAG];
   setStaticParamsLocale(lng);
 
-  return <BlogPost {...{ params }} />;
+  return <BlogPost params={params} />;
 }
