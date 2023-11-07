@@ -11,8 +11,6 @@ export interface LayoutMinimalProps extends WithChildren {}
 export interface WithClassname extends ClassName {}
 
 export type WithDeepResetOnLgBreakpointEvents = { withDeepResetOnLgBreakpointEvents: boolean };
-export type WithOnMouseLeave = { withOnMouseLeave: boolean };
-export type WithOnMouseEnter = { withOnMouseEnter: boolean };
 
 export interface i18nParams {
   [i18nTaxonomy.LANG_FLAG]: LanguageFlag;
