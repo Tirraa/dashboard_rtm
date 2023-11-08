@@ -9,6 +9,7 @@ import i18nTaxonomy from '@/taxonomies/i18n';
 import type { BlogCategory, BlogCategoryPageProps, BlogStaticParams } from '@/types/Blog';
 import { setStaticParamsLocale } from 'next-international/server';
 
+// {ToDo} Move this logic in the layout?
 export async function generateMetadata({ params }: BlogCategoryPageProps) {
   const globalT = await getServerSideI18n();
   const category = params[BlogTaxonomy.CATEGORY];
@@ -17,6 +18,7 @@ export async function generateMetadata({ params }: BlogCategoryPageProps) {
   return { title, description };
 }
 
+// {ToDo} Refactor this!
 export async function generateStaticParams() {
   function generateBlogStaticParams(): Partial<BlogStaticParams>[] {
     const blogStaticParams: Partial<BlogStaticParams>[] = [];

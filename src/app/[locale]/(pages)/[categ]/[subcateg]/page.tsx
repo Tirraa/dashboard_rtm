@@ -19,6 +19,7 @@ import type { BlogCategory, BlogStaticParams, BlogSubcategoryPageProps, PostBase
 import { setStaticParamsLocale } from 'next-international/server';
 import { redirect } from 'next/navigation';
 
+// {ToDo} Move this logic in the layout?
 export async function generateMetadata({ params }: BlogSubcategoryPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];
 
@@ -38,6 +39,7 @@ export async function generateMetadata({ params }: BlogSubcategoryPageProps) {
   return { title, description };
 }
 
+// {ToDo} Move this logic in the top-level page, using the `allDocuments` generated variable, (loaded on server-side only!)
 export async function generateStaticParams() {
   function generateBlogStaticParams(): Partial<BlogStaticParams>[] {
     const indexedParams = new Set<string>();

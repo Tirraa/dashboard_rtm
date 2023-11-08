@@ -1,7 +1,6 @@
 import ELEMENTS_ID from '@/config/elementsId';
 import type { JSPrimitives } from '@/types/CustomUtilitaryTypes';
 import type { Direction } from '@/types/HTML';
-import type { LineSegment } from '@/types/Math';
 import type { RefObject } from 'react';
 import { isEmptyObject } from './misc/isEmptyObject';
 import { getRefCurrentPtr } from './react';
@@ -50,11 +49,6 @@ export function preserveKeyboardNavigation(element: EventTarget | HTMLElement) {
 export const getCurrentDir = () => document.documentElement.dir as Direction;
 
 export const getBodyContainer = () => document.getElementById(ELEMENTS_ID.BODY_CONTAINER) as HTMLElement;
-
-export function getDOMRectDiagonal(rect: DOMRect): LineSegment {
-  const { x: startX, right: endX, y: startY, bottom: endY } = rect;
-  return { start: { x: startX, y: startY }, end: { x: endX, y: endY } };
-}
 
 export const createURLSearchParams = (searchParams: Record<string, JSPrimitives>) =>
   !isEmptyObject(searchParams) ? '?' + new URLSearchParams({ ...(searchParams as any) }).toString() : '';
