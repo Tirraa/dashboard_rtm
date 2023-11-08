@@ -4,10 +4,9 @@ import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { useScopedI18n } from '@/i18n/client';
 import { getPathParts } from '@/lib/next';
-import { buildAbsolutePathFromParts } from '@/lib/str';
+import { buildAbsolutePathFromParts, fromKebabCaseToSentenceCase } from '@/lib/str';
 import type { CustomCrumbs } from '@/types/Breadcrumbs';
 import type { PagesTitlesKey, UnstrictScopedT } from '@/types/i18n';
-import * as changeCase from 'change-case';
 import { usePathname } from 'next/navigation';
 import type { FunctionComponent, ReactNode } from 'react';
 import Crumb from './Crumb';
@@ -45,7 +44,7 @@ function crumbsGenerator(pathParts: string[], withHomepageElement: boolean, scop
 
     const retrievedVocabFromPathPart = scopedT(pathParts[depth] as PagesTitlesKey);
     const shouldGenerateAFallbackLabel = retrievedVocabFromPathPart === pathParts[depth];
-    const fallbackLabel = shouldGenerateAFallbackLabel ? changeCase.sentenceCase(retrievedVocabFromPathPart) : undefined;
+    const fallbackLabel = shouldGenerateAFallbackLabel ? fromKebabCaseToSentenceCase(retrievedVocabFromPathPart) : undefined;
     const label = fallbackLabel ?? retrievedVocabFromPathPart;
     const withRescueCtx = fallbackLabel !== undefined;
 

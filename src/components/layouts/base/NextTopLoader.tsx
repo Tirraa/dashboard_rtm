@@ -1,7 +1,6 @@
 'use client';
 
 import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
-import MobileDetect from 'mobile-detect';
 
 // A Next.js Top Loading Bar component made using nprogress, works with Next.js 13.
 // https://github.com/TheSGJ/nextjs-toploader
@@ -71,7 +70,7 @@ const NextTopLoader = ({
   speed,
   shadow
 }: NextTopLoaderProps) => {
-  const [mobileDetectInstance, setMobileDetectInstance] = React.useState<MobileDetect | undefined>(undefined);
+  const [isOnMobileOrTablet, setIsOnMobileOrTablet] = React.useState<boolean | undefined>(undefined);
 
   const defaultColor = '#29d';
   const defaultHeight = 3;
@@ -87,7 +86,14 @@ const NextTopLoader = ({
     </style>
   );
 
-  React.useEffect(() => setMobileDetectInstance(new MobileDetect(window.navigator.userAgent)), []);
+  React.useEffect(() => {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const onMobile = Boolean(
+      userAgent.match(/(ipad)|(iphone)|(ipod)|(android)|(webos)|(blackberry)|(tablet)|(kindle)|(playbook)|(silk)|(windows phone)/i)
+    );
+
+    setIsOnMobileOrTablet(onMobile);
+  }, []);
 
   React.useEffect(() => {
     nProgress.configure({
@@ -98,9 +104,6 @@ const NextTopLoader = ({
       easing: easing ?? 'ease',
       speed: speed ?? 200
     });
-
-    const isMobileOrTablet = () =>
-      typeof mobileDetectInstance !== 'undefined' && (mobileDetectInstance.mobile() !== null || mobileDetectInstance.tablet() !== null);
 
     function isAnchorOfCurrentUrl(currentUrl: string, newUrl: string) {
       const currentUrlObj = new URL(currentUrl);
@@ -133,7 +136,7 @@ const NextTopLoader = ({
           const isExternalLink = (anchor as HTMLAnchorElement).target === '_blank';
           const isSamePage = isAnchorOfCurrentUrl(currentUrl, newUrl);
 
-          if (isSamePage || isExternalLink || isMobileOrTablet()) return;
+          if (isSamePage || isExternalLink || isOnMobileOrTablet) return;
 
           nProgress.start();
           (() => {
@@ -157,7 +160,7 @@ const NextTopLoader = ({
     document.addEventListener('click', handleClick);
 
     return () => document.removeEventListener('click', handleClick);
-  }, [crawl, crawlSpeed, easing, initialPosition, showSpinner, speed, mobileDetectInstance]);
+  }, [crawl, crawlSpeed, easing, initialPosition, showSpinner, speed, isOnMobileOrTablet]);
 
   return styles;
 };

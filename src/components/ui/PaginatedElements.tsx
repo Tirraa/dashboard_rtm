@@ -7,12 +7,14 @@ import { capitalize } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
 import type { FlexJustify } from '@/types/HTML';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
+import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { FunctionComponent, ReactNode } from 'react';
-import ReactPaginate from 'react-paginate';
 import { computePagesAmount } from './hoc/MaybePaginatedElements';
 import type { PaginatedElementsBodyWrapperProps } from './hoc/PaginatedElementsBodyWrapper';
 import PaginatedElementsBodyWrapper from './hoc/PaginatedElementsBodyWrapper';
+
+const ReactPaginate = dynamic(() => import('react-paginate'), { ssr: false });
 
 export interface PaginatedElementsProps extends PaginatedElementsBodyWrapperProps {
   paginatedElements: ReactNode[];
@@ -65,33 +67,36 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
     router.push(q, { scroll: false });
   }
 
+  const flexJustifyClass = `justify-${xpos}`;
   const paginationNode = (
-    <ReactPaginate
-      forcePage={pageFromUrl - 1}
-      className={cn(`flex justify-${xpos} gap-2`, posClassName)}
-      breakLabel="..."
-      previousAriaLabel={scopedT('prev')}
-      nextAriaLabel={scopedT('next')}
-      previousLabel={
-        <span className={nextAndPrevIconsClassList}>
-          <ChevronLeftIcon className={chevronsClassName} />
-        </span>
-      }
-      nextLabel={
-        <span className={nextAndPrevIconsClassList}>
-          <ChevronRightIcon className={chevronsClassName} />
-        </span>
-      }
-      onPageChange={handlePageClick}
-      pageRangeDisplayed={pagesRange < pagesAmount ? pagesRange : pagesAmount}
-      pageCount={pagesAmount}
-      containerClassName="flex items-center justify-center mt-8 mb-4 select-none"
-      previousLinkClassName={cn('flex items-center justify-center rounded-md', { 'opacity-50': pageFromUrl <= 1 })}
-      nextLinkClassName={cn('flex items-center justify-center rounded-md', { 'opacity-50': pageFromUrl >= pagesAmount })}
-      pageLinkClassName="flex items-center justify-center hover:bg-accent p-2 rounded-md"
-      activeClassName="bg-accent rounded-md"
-      ariaLabelBuilder={(pageNumber) => `${capitalize(scopedT('page'))} ${pageNumber}`}
-    />
+    <div className={cn('min-h-[40px]', posClassName)}>
+      <ReactPaginate
+        forcePage={pageFromUrl - 1}
+        className={cn(`flex gap-2`, flexJustifyClass)}
+        breakLabel="..."
+        previousAriaLabel={scopedT('prev')}
+        nextAriaLabel={scopedT('next')}
+        previousLabel={
+          <span className={nextAndPrevIconsClassList}>
+            <ChevronLeftIcon className={chevronsClassName} />
+          </span>
+        }
+        nextLabel={
+          <span className={nextAndPrevIconsClassList}>
+            <ChevronRightIcon className={chevronsClassName} />
+          </span>
+        }
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={pagesRange < pagesAmount ? pagesRange : pagesAmount}
+        pageCount={pagesAmount}
+        containerClassName="flex items-center justify-center mt-8 mb-4 select-none"
+        previousLinkClassName={cn('flex items-center justify-center rounded-md', { 'opacity-50': pageFromUrl <= 1 })}
+        nextLinkClassName={cn('flex items-center justify-center rounded-md', { 'opacity-50': pageFromUrl >= pagesAmount })}
+        pageLinkClassName="flex items-center justify-center hover:bg-accent p-2 rounded-md"
+        activeClassName="bg-accent rounded-md"
+        ariaLabelBuilder={(pageNumber) => `${capitalize(scopedT('page'))} ${pageNumber}`}
+      />
+    </div>
   );
 
   const currentElementsNode = (

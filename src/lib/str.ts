@@ -79,3 +79,5 @@ export function getPageTitle(productTitle: string, pageTitle: string, isHomepage
   if (isHomepage) return productTitle + sep + pageTitle;
   return pageTitle + sep + productTitle;
 }
+
+export const fromKebabCaseToSentenceCase = (str: string) => capitalize(str.replace(/-+/g, ' '));
