@@ -1,7 +1,6 @@
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import SubcategoryRelatedBlogPosts from '@/components/pages/blog/SubcategoryRelatedBlogPosts';
 import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
-import { LANGUAGES, i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { getServerSideI18n } from '@/i18n/server';
 import {
@@ -12,10 +11,11 @@ import {
   isValidBlogCategoryAndSubcategoryPair,
   redirectToBlogCategoryPage
 } from '@/lib/blog';
-import { getPageTitle } from '@/lib/str';
+import { buildPageTitle } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import type { BlogCategory, BlogStaticParams, BlogSubcategoryPageProps, PostBase } from '@/types/Blog';
+import { LANGUAGES, i18ns } from 'interop/config/i18n';
 import { setStaticParamsLocale } from 'next-international/server';
 import { redirect } from 'next/navigation';
 
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: BlogSubcategoryPageProps) {
 
   const globalT = await getServerSideI18n();
   // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
-  const title = getPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.blogCategories}.${category}.${subcategory}.title`));
+  const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.blogCategories}.${category}.${subcategory}.title`));
   // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
   const description = globalT(`${i18ns.blogCategories}.${category}.${subcategory}.meta-description`);
   return { title, description };

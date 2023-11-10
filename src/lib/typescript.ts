@@ -1,1 +1,3 @@
-export const getEnumKeys = (e: object): string[] => Object.keys(e).filter((key) => isNaN(Number(key)));
+import getEnumKeys from './app-agnostic/typescript/getEnumKeys';
+
+export { getEnumKeys };

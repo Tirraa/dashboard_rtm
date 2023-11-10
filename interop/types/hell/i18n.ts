@@ -1,10 +1,10 @@
-import type { ELanguagesFlag } from '@/config/i18n';
 import type VOCAB_SCHEMA from '@/i18n/locales/schema';
 import type { SHARED_VOCAB_SCHEMA } from '@/i18n/locales/schema';
 import type { getScopedI18n } from '@/i18n/server';
 import type { DeepPathToLiteralKeys, KeySeparator, MakeHomogeneousValuesObjType } from '@/types/CustomUtilitaryTypes';
-import type { TypedLeafsJSONData } from '@/types/JSON';
 import type { RemovePlural } from '@/types/international-types';
+import type { TypedLeafsJSONData } from './app-agnostic/JSON';
+import type LanguageFlag from './app-agnostic/LanguageFlag';
 
 type AllowedVocabObjValuesTypes = string;
 
@@ -38,9 +38,6 @@ export type VocabType = MakeHomogeneousValuesObjType<VocabBase, VocabObjValue>;
 export type I18nVocabTarget = MakeVocabTargets<VocabBase>;
 export type I18nVocabScope = MakeVocabTargetsScopes<I18nVocabTarget>;
 
-type LanguageFlagKey = keyof typeof ELanguagesFlag;
-export type LanguageFlag = LanguageFlagKey;
-
 type NextInternationalMagic = {
   default: VocabType;
 };
@@ -65,3 +62,4 @@ export type LocalesGetterConfigObjTypeConstraint = Record<LanguageFlag, () => Pr
 export type ChangeLocaleFun = (language: LanguageFlag) => void;
 
 export type PagesTitlesKey = keyof VocabType['pages-titles'];
+export type { LanguageFlag };

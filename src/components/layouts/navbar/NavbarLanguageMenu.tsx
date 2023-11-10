@@ -2,12 +2,12 @@
 
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/DropdownMenu';
-import { LANGUAGES, i18ns } from '@/config/i18n';
 import { useChangeLocale, useCurrentLocale, useScopedI18n } from '@/i18n/client';
 import localesLabels, { localesEmojis } from '@/i18n/localesLabels';
 import { cn } from '@/lib/tailwind';
 import type { WithIsMobile } from '@/types/Next';
-import type { ChangeLocaleFun, LanguageFlag } from '@/types/i18n';
+import { LANGUAGES, i18ns } from 'interop/config/i18n';
+import type { ChangeLocaleFun, LanguageFlag } from 'interop/types/hell/i18n';
 import type { FunctionComponent } from 'react';
 import { useState } from 'react';
 

@@ -2,9 +2,9 @@ import type { BlogArchitecture } from '@/config/blog';
 import type BlogTaxonomy from '@/taxonomies/blog';
 import type { TBlogTaxonomy } from '@/taxonomies/blog';
 import type { PostSchema } from 'contentlayer/generated';
+import type { LanguageFlag } from 'interop/types/hell/i18n';
 import type { RequiredFieldsOnly } from './CustomUtilitaryTypes';
 import type { i18nParams } from './Next';
-import type { LanguageFlag } from './i18n';
 
 type ContentLayerPhantomType = 'type';
 export type PostBase = Omit<PostSchema, ContentLayerPhantomType>;

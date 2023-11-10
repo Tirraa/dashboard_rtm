@@ -1,12 +1,12 @@
 'use client';
 
-import { i18ns } from '@/config/i18n';
 import { useScopedI18n } from '@/i18n/client';
 import { createURLSearchParams } from '@/lib/html';
 import { capitalize } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
 import type { FlexJustify } from '@/types/HTML';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
+import { i18ns } from 'interop/config/i18n';
 import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { FunctionComponent, ReactNode } from 'react';

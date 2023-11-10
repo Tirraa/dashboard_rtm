@@ -1,33 +1,9 @@
-import { DEFAULT_LANGUAGE, LANGUAGES } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
-import type { PostBase } from '@/types/Blog';
 import type { AppPath, AppPathAsIs } from '@/types/Next';
-import type { LanguageFlag } from '@/types/i18n';
+import { DEFAULT_LANGUAGE } from 'interop/config/i18n';
+import type { LanguageFlag } from 'interop/types/hell/i18n';
+import isValidLanguageFlag from './app-agnostic/i18n/isValidLanguageFlag';
 import { indexOfNthOccurrence } from './str';
-
-const isValidLanguageFlag = (key: string): boolean => (LANGUAGES as string[]).includes(key);
-
-function getBlogPostLanguageFlagFromStr(sourceFileDir: string): LanguageFlag {
-  const firstSlashIndex = indexOfNthOccurrence(sourceFileDir, '/', 1);
-  if (firstSlashIndex === -1) return DEFAULT_LANGUAGE;
-
-  const envelopeBeginSlashIndex = indexOfNthOccurrence(sourceFileDir, '/', 2);
-  const envelopeEndSlashIndex = indexOfNthOccurrence(sourceFileDir, '/', 3);
-
-  if (envelopeBeginSlashIndex !== -1) {
-    const langFlag =
-      envelopeEndSlashIndex === -1
-        ? sourceFileDir.substring(envelopeBeginSlashIndex + 1)
-        : sourceFileDir.substring(envelopeBeginSlashIndex + 1, envelopeEndSlashIndex);
-    if (isValidLanguageFlag(langFlag)) return langFlag as LanguageFlag;
-  }
-  return DEFAULT_LANGUAGE;
-}
-
-export function getBlogPostLanguageFlagFromPostObj(post: PostBase): LanguageFlag {
-  const { sourceFileDir } = post._raw;
-  return getBlogPostLanguageFlagFromStr(sourceFileDir);
-}
 
 function computePathnameI18nFlagUnstrict(pathname: AppPath, providedEndIndex?: number): string {
   const compute = (pathname: AppPath, endIndex: number) => (endIndex === -1 ? pathname.substring(1) : pathname.substring(1, endIndex));

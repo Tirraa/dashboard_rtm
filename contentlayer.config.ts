@@ -7,16 +7,16 @@ import rehypeExternalLinks from 'rehype-external-links';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
-import type { AtomicContentLayerDocumentConfig, DocumentsTypesMetadatas } from 'types/contentlayerConfig';
-import CodeSnippetTheme from './config/blog/code-snippet-theme.json';
-import { addClassname } from './src/lib/astElements';
+import CodeSnippetTheme from './interop/config/blog/code-snippet-theme.json';
 import {
   DOCUMENTS_CONTENT_EXTENSION as EXT,
   POST_SCHEMA_CONFIG,
   DOCUMENTS_COMPUTED_FIELDS as computedFields,
   DOCUMENTS_CONTENT_TYPE as contentType,
   DOCUMENTS_FIELDS as fields
-} from './types/contentlayerConfigTweakers';
+} from './interop/types/contentlayerConfigTweakers';
+import type { AtomicContentLayerDocumentConfig, DocumentsTypesMetadatas } from './interop/types/hell/contentlayerConfig';
+import { addClassname } from './src/lib/astElements';
 import { validateContentLayerConfig } from './validators/contentLayer';
 
 const contentDirPath = 'posts';

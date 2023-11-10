@@ -1,4 +1,4 @@
-import type { JSPrimitives } from './CustomUtilitaryTypes';
+import type { JSPrimitives } from '@/types/CustomUtilitaryTypes';
 
 type JSONPrimitiveLeafs = Exclude<JSPrimitives, undefined>;
 type JSONLeafs = JSONPrimitiveLeafs | JSONPrimitiveLeafs[];

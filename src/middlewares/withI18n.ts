@@ -1,6 +1,6 @@
-import { DEFAULT_LANGUAGE, LANGUAGES } from '@/config/i18n';
 import type { MiddlewareFactory } from '@/types/Next';
-import type { I18nMiddlewareConfig } from '@/types/i18n';
+import { DEFAULT_LANGUAGE, LANGUAGES } from 'interop/config/i18n';
+import type { I18nMiddlewareConfig } from 'interop/types/hell/i18n';
 import { createI18nMiddleware } from 'next-international/middleware';
 import type { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
 

@@ -1,17 +1,17 @@
 import SignupButton from '@/components/ui/cta/SignupButton';
-import { i18ns } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
-import { getPageTitle } from '@/lib/str';
+import { buildPageTitle } from '@/lib/str';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import type { i18nPageProps } from '@/types/Next';
+import { i18ns } from 'interop/config/i18n';
 import { getServerSession } from 'next-auth';
 import { setStaticParamsLocale } from 'next-international/server';
 import { redirect } from 'next/navigation';
 
 export async function generateMetadata() {
   const globalT = await getServerSideI18n();
-  const title = getPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.pagesTitles}.sign-up`), true);
+  const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.pagesTitles}.sign-up`), true);
   const description = globalT(`${i18ns.manualSEO}.signup.meta-description`);
   return { title, description };
 }

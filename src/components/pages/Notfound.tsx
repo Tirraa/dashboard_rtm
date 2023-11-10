@@ -1,7 +1,7 @@
 'use client';
 
-import { i18ns } from '@/config/i18n';
 import { getClientSideI18n } from '@/i18n/client';
+import { i18ns } from 'interop/config/i18n';
 import type { FunctionComponent } from 'react';
 
 interface NotFoundProps {}

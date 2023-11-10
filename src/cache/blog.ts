@@ -1,5 +1,4 @@
 import BlogConfig from '@/config/blog';
-import { getBlogPostSubcategory } from '@/lib/blog';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory } from '@/types/Blog';
 
 namespace BlogCache {
@@ -11,7 +10,7 @@ function buildSubcategoriesSet(category: BlogCategory): Set<BlogSubcategoryFromU
     const relatedPosts = BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[category]();
     const subcategoriesSet = new Set<BlogSubcategoryFromUnknownCategory>();
 
-    relatedPosts.forEach((post) => subcategoriesSet.add(getBlogPostSubcategory(post)));
+    relatedPosts.forEach(({ subcategory }) => subcategoriesSet.add(subcategory as BlogSubcategoryFromUnknownCategory));
     return subcategoriesSet;
   } catch {
     const emptySet = new Set<BlogSubcategoryFromUnknownCategory>();

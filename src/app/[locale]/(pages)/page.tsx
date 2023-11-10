@@ -1,16 +1,16 @@
 import { MAIN_UI_RELATED_CLS } from '@/components/config/styles/next-ui';
 import Homepage from '@/components/pages/Homepage';
-import { i18ns } from '@/config/i18n';
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
-import { getPageTitle } from '@/lib/str';
+import { buildPageTitle } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import type { i18nPageProps } from '@/types/Next';
+import { i18ns } from 'interop/config/i18n';
 import { setStaticParamsLocale } from 'next-international/server';
 
 export async function generateMetadata() {
   const globalT = await getServerSideI18n();
-  const title = getPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.pagesTitles}.homepage`), true);
+  const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.pagesTitles}.homepage`), true);
   const description = globalT(`${i18ns.manualSEO}.homepage.meta-description`);
   return { title, description };
 }

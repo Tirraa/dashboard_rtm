@@ -1,4 +1,4 @@
-import type { TypedLeafsJSONData } from '@/types/JSON';
+import type { TypedLeafsJSONData } from 'interop/types/hell/app-agnostic/JSON';
 
 const STATICLY_CHECKED_DATA = {
   'blog-categories': {

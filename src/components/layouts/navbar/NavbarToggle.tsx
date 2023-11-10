@@ -1,13 +1,13 @@
 'use client';
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/DropdownMenu';
-import { i18ns } from '@/config/i18n';
 import { getClientSideI18n, useScopedI18n } from '@/i18n/client';
 import { preserveKeyboardNavigation } from '@/lib/html';
 import { getRefCurrentPtr } from '@/lib/react';
 import { getBreakpoint } from '@/lib/tailwind';
 import type { NavbarItems } from '@/types/NavData';
 import { useMediaQuery } from '@react-hook/media-query';
+import { i18ns } from 'interop/config/i18n';
 import type { FunctionComponent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 

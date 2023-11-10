@@ -1,9 +1,7 @@
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import type { BlogArchitecture } from '@/config/blog';
 import BlogConfig from '@/config/blog';
-import { DEFAULT_LANGUAGE } from '@/config/i18n';
 import ROUTES_ROOTS from '@/config/routes';
-import InvalidArgumentsError from '@/errors/exceptions/InvalidArgument';
 import type {
   BlogCategory,
   BlogCategoryAndSubcategoriesPair,
@@ -13,56 +11,11 @@ import type {
   UnknownCategoryAndUnknownSubcategory
 } from '@/types/Blog';
 import type { AppPath } from '@/types/Next';
-import type { LanguageFlag } from '@/types/i18n';
 import type { IsoDateTimeString } from 'contentlayer/core';
+import { DEFAULT_LANGUAGE } from 'interop/config/i18n';
+import type { LanguageFlag } from 'interop/types/hell/i18n';
 import { redirect } from 'next/navigation';
-import { getBlogPostLanguageFlagFromPostObj } from './i18n';
-import { buildAbsolutePathFromParts, buildPathFromParts, getFormattedDate, getLastPathPart, indexOfNthOccurrence } from './str';
-
-export const getBlogPostLanguageFlag = (post: PostBase): LanguageFlag => getBlogPostLanguageFlagFromPostObj(post);
-
-const getBlogPostSubcategoryAndSlugStr = (post: PostBase): string => buildPathFromParts(getBlogPostSubcategory(post), getBlogPostSlug(post));
-
-const getBlogPostSubcategoryAndSlugStrAndLangFlag = (post: PostBase): string =>
-  buildPathFromParts(getBlogPostSubcategory(post), getBlogPostSlug(post), getBlogPostLanguageFlag(post));
-
-/**
- * @throws {InvalidArgumentsError}
- */
-function getBlogPostSubcategoryFromStr(sourceFileDir: string): BlogSubcategoryFromUnknownCategory {
-  function subcategGetter(sourceFileDir: string, firstSlashIndex: number, secondSlashIndex: number): BlogSubcategoryFromUnknownCategory {
-    if (secondSlashIndex !== -1) return sourceFileDir.substring(firstSlashIndex + 1, secondSlashIndex) as BlogSubcategoryFromUnknownCategory;
-    return sourceFileDir.substring(firstSlashIndex + 1) as BlogSubcategoryFromUnknownCategory;
-  }
-
-  const firstSlashIndex = indexOfNthOccurrence(sourceFileDir, '/', 1);
-  if (firstSlashIndex === -1)
-    throw new InvalidArgumentsError(getBlogPostSubcategoryFromStr.name, { sourceFileDir }, "Can't find any '/' character in sourceFileDir");
-
-  const secondSlashIndex = indexOfNthOccurrence(sourceFileDir, '/', 2);
-  const subcateg = subcategGetter(sourceFileDir, firstSlashIndex, secondSlashIndex);
-  return subcateg;
-}
-
-function getBlogPostSubcategoryFromPostObj(post: PostBase): BlogSubcategoryFromUnknownCategory {
-  const { sourceFileDir } = post._raw;
-  return getBlogPostSubcategoryFromStr(sourceFileDir);
-}
-
-/**
- * @throws {InvalidArgumentsError}
- */
-export function getBlogCategoryFromPathname(pathname: AppPath): BlogCategory {
-  const firstIndex = indexOfNthOccurrence(pathname, '/', 1);
-  if (firstIndex === -1) throw new InvalidArgumentsError(getBlogCategoryFromPathname.name, { pathname }, "Can't find any '/' character in pathname");
-
-  const secondIndex = indexOfNthOccurrence(pathname, '/', 2);
-  if (secondIndex !== -1) return pathname.substring(firstIndex + 1, secondIndex) as BlogCategory;
-  return pathname.substring(firstIndex + 1) as BlogCategory;
-}
-
-export const getBlogPostSubcategory = (post: PostBase): BlogSubcategoryFromUnknownCategory => getBlogPostSubcategoryFromPostObj(post);
-export const getBlogPostSlug = (post: PostBase): UnknownBlogSlug => getLastPathPart(post._raw.flattenedPath);
+import { buildAbsolutePathFromParts, getFormattedDate } from './str';
 
 /**
  * @throws {TypeError}
@@ -71,13 +24,16 @@ export const getBlogPostSlug = (post: PostBase): UnknownBlogSlug => getLastPathP
 export const getAllBlogPostsByCategory = (categ: BlogCategory): PostBase[] => BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[categ]();
 
 export const getAllBlogPostsByCategoryAndSubcategoryUnstrict = ({ category, subcategory }: UnknownCategoryAndUnknownSubcategory): PostBase[] =>
-  getAllBlogPostsByCategory(category).filter((post) => getBlogPostSubcategory(post) === subcategory);
+  getAllBlogPostsByCategory(category).filter(({ subcategory: currentPostSubcategory }) => currentPostSubcategory === subcategory);
 
 export const getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict = (
   { category, subcategory }: UnknownCategoryAndUnknownSubcategory,
   language: LanguageFlag
 ): PostBase[] =>
-  getAllBlogPostsByCategory(category).filter((post) => getBlogPostSubcategory(post) === subcategory && getBlogPostLanguageFlag(post) === language);
+  getAllBlogPostsByCategory(category).filter(
+    ({ subcategory: currentPostSubcategory, language: currentPostLanguage }) =>
+      currentPostSubcategory === subcategory && currentPostLanguage === language
+  );
 
 export function getBlogPostUnstrict(
   { category, subcategory }: UnknownCategoryAndUnknownSubcategory,
@@ -87,10 +43,13 @@ export function getBlogPostUnstrict(
   const postsCollection: PostBase[] = getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
 
   if (langFlag === DEFAULT_LANGUAGE) {
-    return postsCollection.find((post) => getBlogPostSubcategoryAndSlugStr(post) === buildPathFromParts(subcategory, targettedSlug));
+    return postsCollection.find(
+      ({ subcategory: currentPostSubcategory, slug: currentPostSlug }) => currentPostSubcategory === subcategory && currentPostSlug === targettedSlug
+    );
   }
   return postsCollection.find(
-    (post) => getBlogPostSubcategoryAndSlugStrAndLangFlag(post) === buildPathFromParts(subcategory, targettedSlug, langFlag)
+    ({ subcategory: currentPostSubcategory, slug: currentPostSlug, language: currentPostLanguage }) =>
+      currentPostSubcategory === subcategory && currentPostSlug === targettedSlug && currentPostLanguage === langFlag
   );
 }
 
@@ -147,9 +106,20 @@ export const redirectToBlogCategoryPage = (category: BlogCategory): void => redi
 export const redirectToBlogCategoryAndSubcategoryPairPageUnstrict = (category: BlogCategory, subcategory: BlogSubcategoryFromUnknownCategory): void =>
   redirect(buildAbsolutePathFromParts(ROUTES_ROOTS.BLOG, category, subcategory));
 
-export function getBlogPostPathWithoutI18nPart(post: PostBase): AppPath {
-  const langFlag = getBlogPostLanguageFlagFromPostObj(post);
-  if (langFlag === DEFAULT_LANGUAGE) return post.url;
-  const blogPostPathWithoutI18nPart = post.url.replace(`/${langFlag}/`, '/');
+export function getBlogPostPathWithoutI18nPart({ language, url }: PostBase): AppPath {
+  const langFlag = language;
+  if (langFlag === DEFAULT_LANGUAGE) return url;
+  const blogPostPathWithoutI18nPart = url.replace(`/${langFlag}/`, '/');
   return blogPostPathWithoutI18nPart;
+}
+
+type DescriptionAsIs = string;
+type CroppedDescription = string;
+
+export function getSlicedBlogPostDescription(description: string): DescriptionAsIs | CroppedDescription {
+  const takeLimit = BlogConfig.BLOG_POST_PREVIEW_DESCRIPTION_CHARACTERS_LIMIT - 1;
+  if (description.length <= takeLimit) return description;
+
+  const slicedDescription = description.substring(0, takeLimit) + '…';
+  return slicedDescription;
 }

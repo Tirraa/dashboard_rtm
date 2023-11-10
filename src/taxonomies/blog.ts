@@ -1,5 +1,5 @@
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, UnknownBlogSlug } from '@/types/Blog';
-import type { LanguageFlag } from '@/types/i18n';
+import type { LanguageFlag } from 'interop/types/hell/i18n';
 import type i18nTaxonomy from './i18n';
 
 export namespace BlogTaxonomy {

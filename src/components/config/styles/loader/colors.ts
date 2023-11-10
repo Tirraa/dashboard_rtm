@@ -1,16 +1,14 @@
 import type { ThemeVariant } from '@/config/themes';
-import { RGBAColor } from '@/lib/color';
-import Color from 'color';
 
 type TLoaderConfig = {
   COLORS: Record<ThemeVariant, string>;
   DEFAULT_COLOR: string;
 };
 
-const DEFAULT_COLOR = RGBAColor({ r: 0, g: 0, b: 0, a: 0.4 }).hsl().string();
+const DEFAULT_COLOR = '#00000066';
 export const LOADER_CONFIG: TLoaderConfig = {
   COLORS: {
-    dark: Color('#42546E').hex(),
+    dark: '#42546E',
     light: DEFAULT_COLOR
   },
   DEFAULT_COLOR

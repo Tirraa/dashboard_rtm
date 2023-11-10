@@ -1,6 +1,6 @@
 'use client';
 
-import { getBodyContainer, getCurrentDir } from '@/lib/html';
+import { getBodyContainer, getDirection } from '@/lib/html';
 import { cn, getBreakpoint } from '@/lib/tailwind';
 import type { WithDeepResetOnLgBreakpointEvents } from '@/types/Next';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
@@ -35,7 +35,7 @@ const DropdownMenu: React.FunctionComponent<DropdownMenuPrimitive.DropdownMenuPr
     return () => getBodyContainer().classList.remove(...EFFECT_CLASSES);
   }, [open]);
 
-  const dir = isMounted ? getCurrentDir() : 'ltr';
+  const dir = isMounted ? getDirection() : 'ltr';
 
   return (
     <DropdownMenuBase

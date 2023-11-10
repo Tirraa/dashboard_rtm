@@ -1,12 +1,12 @@
 import DashboardFooPage from '@/components/pages/dashboard/foo';
-import { i18ns } from '@/config/i18n';
 import { getServerSideI18n } from '@/i18n/server';
-import { getPageTitle } from '@/lib/str';
+import { buildPageTitle } from '@/lib/str';
+import { i18ns } from 'interop/config/i18n';
 
 export async function generateMetadata() {
   const globalT = await getServerSideI18n();
 
-  const title = getPageTitle(globalT(`${i18ns.pagesTitles}.dashboard`), globalT(`${i18ns.dashboard}.pages-titles.foo`));
+  const title = buildPageTitle(globalT(`${i18ns.pagesTitles}.dashboard`), globalT(`${i18ns.dashboard}.pages-titles.foo`));
   return { title, description: '' };
 }
 

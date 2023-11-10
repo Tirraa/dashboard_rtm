@@ -1,4 +1,4 @@
-const DEFAULT_LANGUAGE = 'fr';
+const DEFAULT_LANGUAGE = require('./interop/config/i18n/adapters/defaultLanguageNextSitemapAdapter');
 const EXCLUDED_ROUTES_PREFIXES = ['/favicon.ico', '/icon.svg', '/apple-icon.png', '/dashboard/'];
 
 const siteUrl = process.env.NEXTAUTH_URL;

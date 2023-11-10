@@ -1,19 +1,18 @@
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
+import { Button } from '@/components/ui/Button';
 import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
-import { Button } from '@/components/ui/Button';
 import BlogConfig from '@/config/blog';
-import { i18ns } from '@/config/i18n';
 import { getScopedI18n, getServerSideI18n } from '@/i18n/server';
-import { getBlogPostLanguageFlag, getBlogPostSubcategory } from '@/lib/blog';
 import { buildPathFromParts } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import type { BlogCategory, BlogCategoryPageProps, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
-import type { LanguageFlag } from '@/types/i18n';
 import { compareDesc } from 'date-fns';
+import { i18ns } from 'interop/config/i18n';
+import type { LanguageFlag } from 'interop/types/hell/i18n';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { FunctionComponent, ReactNode } from 'react';
@@ -24,8 +23,8 @@ interface CategoryRelatedSubcategoriesAndBlogPostsProps extends BlogCategoryPage
 async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: LanguageFlag): Promise<ReactNode[] | JSX.Element> {
   function buildHistogram() {
     for (const post of posts) {
-      const curSubcateg = getBlogPostSubcategory(post);
-      if (histogram[curSubcateg].length < limit + 1 && getBlogPostLanguageFlag(post) === lng) {
+      const curSubcateg = post.subcategory as BlogSubcategoryFromUnknownCategory;
+      if (histogram[curSubcateg].length < limit + 1 && post.language === lng) {
         histogram[curSubcateg].push(post);
         if (Object.values(histogram).every((posts2) => posts2.length >= limit + 1)) break;
       }
