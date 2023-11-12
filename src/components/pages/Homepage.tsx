@@ -1,7 +1,7 @@
 'use client';
 
+import { i18ns } from '##/config/i18n';
 import { useScopedI18n } from '@/i18n/client';
-import { i18ns } from 'interop/config/i18n';
 import Image from 'next/image';
 import type { CSSProperties, FunctionComponent } from 'react';
 import InviteTheBotButton from '../ui/cta/InviteTheBotButton';

@@ -1,3 +1,4 @@
+import { i18ns } from '##/config/i18n';
 import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
 import MaybePaginatedElements from '@/components/ui/hoc/MaybePaginatedElements';
@@ -7,7 +8,6 @@ import { blogSubcategoryShouldTriggerNotFound, getAllBlogPostsByCategoryAndSubca
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import type { BlogSubcategoryPageProps, PostBase } from '@/types/Blog';
-import { i18ns } from 'interop/config/i18n';
 import { notFound } from 'next/navigation';
 import type { FunctionComponent } from 'react';
 import slugify from 'slugify';

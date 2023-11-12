@@ -1,5 +1,7 @@
 'use client';
 
+import { i18ns } from '##/config/i18n';
+import type { LanguageFlag } from '##/types/hell/i18n';
 import NAVBAR_STYLE from '@/components/config/styles/navbar/NavbarStyle';
 import NavbarButton from '@/components/layouts/navbar/NavbarButton';
 import NavbarToggle from '@/components/layouts/navbar/NavbarToggle';
@@ -14,8 +16,6 @@ import { cn } from '@/lib/tailwind';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import type { NavbarItems } from '@/types/NavData';
 import type { i18nComponentProps } from '@/types/Next';
-import { i18ns } from 'interop/config/i18n';
-import type { LanguageFlag } from 'interop/types/hell/i18n';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { FunctionComponent, ReactNode } from 'react';

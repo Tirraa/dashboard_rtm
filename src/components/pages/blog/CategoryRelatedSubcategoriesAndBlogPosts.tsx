@@ -1,3 +1,5 @@
+import { i18ns } from '##/config/i18n';
+import type { LanguageFlag } from '##/types/hell/i18n';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
 import { Button } from '@/components/ui/Button';
@@ -11,8 +13,6 @@ import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import type { BlogCategory, BlogCategoryPageProps, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
 import { compareDesc } from 'date-fns';
-import { i18ns } from 'interop/config/i18n';
-import type { LanguageFlag } from 'interop/types/hell/i18n';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { FunctionComponent, ReactNode } from 'react';

@@ -1,10 +1,10 @@
 'use client';
 
+import { i18ns } from '##/config/i18n';
 import { getClientSideI18n } from '@/i18n/client';
 import { getRefCurrentPtr } from '@/lib/react';
 import { cn } from '@/lib/tailwind';
 import type { WithChildren } from '@/types/Next';
-import { i18ns } from 'interop/config/i18n';
 import type { FunctionComponent } from 'react';
 import { useRef, useState } from 'react';
 

@@ -1,11 +1,11 @@
 'use client';
 
+import { i18ns } from '##/config/i18n';
 import SidebarCollapseButtonIconStyle, { SIZE_PX_VALUE } from '@/components/config/styles/sidebar/SidebarCollapseButtonIconStyle';
 import SidebarCollapseButtonWrapperStyle from '@/components/config/styles/sidebar/SidebarCollapseButtonWrapperStyle';
 import { useScopedI18n } from '@/i18n/client';
 import { cn } from '@/lib/tailwind';
 import { ArrowSmallDownIcon, ArrowSmallRightIcon } from '@heroicons/react/20/solid';
-import { i18ns } from 'interop/config/i18n';
 import type { FunctionComponent } from 'react';
 
 interface DashboardSidebarCollapseButtonProps {

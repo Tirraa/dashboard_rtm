@@ -1,4 +1,4 @@
-import type { I18nVocabTarget } from 'interop/types/hell/i18n';
+import type { I18nVocabTarget } from '##/types/hell/i18n';
 import type { ReactElement } from 'react';
 import type { AppPath } from './Next';
 import type RoutesKeysUnion from './RoutesKeysUnion';

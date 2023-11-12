@@ -21,11 +21,11 @@
       }
     ],
     "paths": {
-      "$/*": ["interop/*"],
-      "@/*": ["./src/*"],
-      "contentlayer/generated": ["./.contentlayer/generated"]
+      "##/*": ["interop/*"],
+      "@/*": ["src/*"],
+      "contentlayer/generated": [".contentlayer/generated"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".contentlayer/generated", "interop/config/i18n/defaultLanguage.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".contentlayer/generated"],
   "exclude": ["node_modules"]
 }

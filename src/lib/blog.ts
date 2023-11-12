@@ -1,3 +1,5 @@
+import { DEFAULT_LANGUAGE } from '##/config/i18n';
+import type { LanguageFlag } from '##/types/hell/i18n';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import type { BlogArchitecture } from '@/config/blog';
 import BlogConfig from '@/config/blog';
@@ -12,8 +14,6 @@ import type {
 } from '@/types/Blog';
 import type { AppPath } from '@/types/Next';
 import type { IsoDateTimeString } from 'contentlayer/core';
-import { DEFAULT_LANGUAGE } from 'interop/config/i18n';
-import type { LanguageFlag } from 'interop/types/hell/i18n';
 import { redirect } from 'next/navigation';
 import { buildAbsolutePathFromParts, getFormattedDate } from './str';
 

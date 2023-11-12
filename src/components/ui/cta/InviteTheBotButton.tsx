@@ -1,10 +1,10 @@
 'use client';
 
+import { i18ns } from '##/config/i18n';
 import { Button } from '@/components/ui/Button';
 import DISCORD_CONFIG from '@/config/discord';
 import { getClientSideI18n } from '@/i18n/client';
 import { CogIcon } from '@heroicons/react/20/solid';
-import { i18ns } from 'interop/config/i18n';
 import type { FunctionComponent } from 'react';
 
 interface InviteTheBotButtonProps {}

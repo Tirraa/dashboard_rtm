@@ -1,7 +1,7 @@
+import type { LanguageFlag } from '##/types/hell/i18n';
 import type i18nTaxonomy from '@/taxonomies/i18n';
 import type NotFoundTaxonomy from '@/taxonomies/notfound';
 import type { ClassName } from '@/types/React';
-import type { LanguageFlag } from 'interop/types/hell/i18n';
 import type { NextMiddleware } from 'next/server';
 import type { ReactNode } from 'react';
 

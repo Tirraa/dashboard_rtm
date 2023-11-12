@@ -1,5 +1,5 @@
+import type { LanguageFlag } from '##/types/hell/app-agnostic/LanguageFlag';
 import type { PostBase } from '@/types/Blog';
-import type { LanguageFlag } from 'interop/types/hell/app-agnostic/LanguageFlag';
 import isValidLanguageFlag from '../../../../src/lib/app-agnostic/i18n/isValidLanguageFlag';
 import indexOfNthOccurrence from '../../../../src/lib/app-agnostic/str/indexOfNthOccurrence';
 import { DEFAULT_LANGUAGE } from '../../../config/i18n';

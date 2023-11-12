@@ -1,3 +1,4 @@
+import { LANGUAGES, i18ns } from '##/config/i18n';
 import CategoryRelatedSubcategoriesAndBlogPosts from '@/components/pages/blog/CategoryRelatedSubcategoriesAndBlogPosts';
 import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
 import { getServerSideI18n } from '@/i18n/server';
@@ -6,7 +7,6 @@ import { buildPageTitle } from '@/lib/str';
 import BlogTaxonomy from '@/taxonomies/blog';
 import i18nTaxonomy from '@/taxonomies/i18n';
 import type { BlogCategory, BlogCategoryPageProps, BlogStaticParams } from '@/types/Blog';
-import { LANGUAGES, i18ns } from 'interop/config/i18n';
 import { setStaticParamsLocale } from 'next-international/server';
 
 // {ToDo} Move this logic in the layout?

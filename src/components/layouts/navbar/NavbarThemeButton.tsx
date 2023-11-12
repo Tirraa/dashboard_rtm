@@ -1,12 +1,12 @@
 'use client';
 
+import { i18ns } from '##/config/i18n';
 import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
 import { Button } from '@/components/ui/Button';
 import { DEFAULT_DARK_VARIANT, DEFAULT_VARIANT } from '@/config/themes';
 import { useScopedI18n } from '@/i18n/client';
 import type { WithIsMobile } from '@/types/Next';
 import { MoonIcon, SunIcon } from '@heroicons/react/20/solid';
-import { i18ns } from 'interop/config/i18n';
 import { useTheme } from 'next-themes';
 import type { FunctionComponent } from 'react';
 import { useEffect, useState } from 'react';

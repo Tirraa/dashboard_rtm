@@ -1,4 +1,4 @@
-import type { SharedVocabType, VocabType } from 'interop/types/hell/i18n';
+import type { SharedVocabType, VocabType } from '##/types/hell/i18n';
 import { capitalize } from '../../lib/app-agnostic/str/capitalize';
 
 const SHARED: SharedVocabType = {

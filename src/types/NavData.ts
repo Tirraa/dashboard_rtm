@@ -1,5 +1,5 @@
+import type { I18nVocabTarget } from '##/types/hell/i18n';
 import type { AppPath, i18nParams } from '@/types/Next';
-import type { I18nVocabTarget } from 'interop/types/hell/i18n';
 import type RoutesKeysUnion from './RoutesKeysUnion';
 
 export interface AtomicNavDataEntity {

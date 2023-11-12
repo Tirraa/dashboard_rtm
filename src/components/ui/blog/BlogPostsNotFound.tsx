@@ -1,5 +1,5 @@
+import { i18ns } from '##/config/i18n';
 import { getServerSideI18n } from '@/i18n/server';
-import { i18ns } from 'interop/config/i18n';
 import type { FunctionComponent } from 'react';
 
 interface BlogPostsNotFoundProps {}

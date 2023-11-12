@@ -1,7 +1,7 @@
+import { DEFAULT_LANGUAGE } from '##/config/i18n';
+import type { LanguageFlag } from '##/types/hell/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import type { AppPath, AppPathAsIs } from '@/types/Next';
-import { DEFAULT_LANGUAGE } from 'interop/config/i18n';
-import type { LanguageFlag } from 'interop/types/hell/i18n';
 import isValidLanguageFlag from './app-agnostic/i18n/isValidLanguageFlag';
 import { indexOfNthOccurrence } from './str';
 
