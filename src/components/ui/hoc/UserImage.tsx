@@ -26,7 +26,7 @@ export const UserImage: FunctionComponent<UserImageProps> = ({ user, width: widt
   return (
     <Avatar className={className} style={style}>
       <AvatarImage src={src} width={width} height={height} alt={alt} />
-      <AvatarFallback>{alt}</AvatarFallback>
+      <AvatarFallback className="sr-only">{alt}</AvatarFallback>
     </Avatar>
   );
 };

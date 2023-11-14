@@ -1,5 +1,5 @@
 import type { I18nVocabTarget } from '##/types/hell/i18n';
-import type { AppPath, i18nParams } from '@/types/Next';
+import type { AppPath, I18nParams } from '@/types/Next';
 import type RoutesKeysUnion from './RoutesKeysUnion';
 
 export interface AtomicNavDataEntity {
@@ -16,7 +16,7 @@ export interface NavbarDropdownElement extends Required<NavDataEntity> {}
 export type NavDataEntities = NavDataEntity[];
 
 export interface NavbarElementProps extends NavDataEntity {
-  i18nProps: i18nParams;
+  i18nProps: I18nParams;
 }
 
 export type NavbarItem = { jsx: JSX.Element; i18nTitle: I18nVocabTarget };

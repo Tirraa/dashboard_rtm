@@ -4,7 +4,7 @@ import type { LanguageFlag } from '##/types/hell/i18n';
 import type { BlogArchitecture } from '@/config/blog';
 import type { PostSchema } from 'contentlayer/generated';
 import type { RequiredFieldsOnly } from './CustomUtilitaryTypes';
-import type { i18nParams } from './Next';
+import type { I18nParams } from './Next';
 
 type ContentLayerPhantomType = 'type';
 export type PostBase = Omit<PostSchema, ContentLayerPhantomType>;
@@ -24,15 +24,15 @@ type BlogSubcategoryPagePropsParams = {
 };
 
 export interface BlogCategoryPageProps {
-  params: BlogCategoryPagePropsParams & i18nParams;
+  params: BlogCategoryPagePropsParams & I18nParams;
 }
 
 export interface BlogSubcategoryPageProps {
-  params: BlogSubcategoryPagePropsParams & i18nParams;
+  params: BlogSubcategoryPagePropsParams & I18nParams;
 }
 
 export interface BlogPostPageProps {
-  params: BlogPostPagePropsParams & i18nParams;
+  params: BlogPostPagePropsParams & I18nParams;
 }
 
 export interface BlogPostProps {

@@ -15,7 +15,7 @@ import type {
 import type { AppPath } from '@/types/Next';
 import type { IsoDateTimeString } from 'contentlayer/core';
 import { redirect } from 'next/navigation';
-import { buildAbsolutePathFromParts, getFormattedDate } from './str';
+import { buildAbsolutePathFromParts, getFormattedDate } from '../str';
 
 /**
  * @throws {TypeError}

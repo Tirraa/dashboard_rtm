@@ -1,7 +1,7 @@
 import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
 import { getMaybeI18nFlagFromRequest } from '@/lib/next';
 import { getSlashEnvelope } from '@/lib/str';
-import { appProtectedPaths } from '@/middleware';
+import { APP_PROTECTED_PATHS } from '@/middleware';
 import { mainMiddlewaresChain } from '@/middlewaresChain';
 import type { AppPath, MiddlewareFactory } from '@/types/Next';
 import type { NextRequestWithAuth } from 'next-auth/middleware';
@@ -19,7 +19,7 @@ function authMiddleware(request: NextRequest) {
 
 function isProtectedRoute(pathname: AppPath) {
   const currentRoute = getPathnameWithoutI18nFlag(pathname);
-  const isProtectedRoute = appProtectedPaths.find((r) => currentRoute.startsWith(r));
+  const isProtectedRoute = APP_PROTECTED_PATHS.find((r) => currentRoute.startsWith(r));
   return Boolean(isProtectedRoute);
 }
 

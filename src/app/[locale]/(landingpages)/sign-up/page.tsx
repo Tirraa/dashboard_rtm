@@ -4,7 +4,7 @@ import SignupButton from '@/components/ui/cta/SignupButton';
 import ROUTES_ROOTS from '@/config/routes';
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
 import { buildPageTitle } from '@/lib/str';
-import type { i18nPageProps } from '@/types/Next';
+import type { I18nPageProps } from '@/types/Next';
 import { getServerSession } from 'next-auth';
 import { setStaticParamsLocale } from 'next-international/server';
 import { redirect } from 'next/navigation';
@@ -20,7 +20,7 @@ export function generateStaticParams() {
   return getStaticParams();
 }
 
-export default async function Page({ params }: i18nPageProps) {
+export default async function Page({ params }: I18nPageProps) {
   const lng = params[i18nTaxonomy.LANG_FLAG];
   setStaticParamsLocale(lng);
 

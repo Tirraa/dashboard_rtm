@@ -15,7 +15,7 @@ import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
 import getComputedNavData from '@/lib/misc/getComputedNavData';
 import { cn } from '@/lib/tailwind';
 import type { NavbarItems } from '@/types/NavData';
-import type { i18nComponentProps } from '@/types/Next';
+import type { I18nComponentProps } from '@/types/Next';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { FunctionComponent, ReactNode } from 'react';
@@ -39,7 +39,7 @@ const buildNavbarExtrasForMobile = (): ReactNode[] =>
     </li>
   ));
 
-function buildNavbarItems({ i18nProps }: i18nComponentProps): NavbarItems {
+function buildNavbarItems({ i18nProps }: I18nComponentProps): NavbarItems {
   const computedNavData = getComputedNavData(SITEWIDE_NAVBAR_ROUTES, SITEWIDE_NAVBAR_ROUTES_TITLES, SITEWIDE_NAVBAR_DROPDOWNS_CONFIG);
   const navbarItems = computedNavData.map(({ i18nTitle, path, embeddedEntities }) => ({
     i18nTitle,

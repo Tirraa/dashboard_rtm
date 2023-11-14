@@ -112,12 +112,10 @@ export default {
 
   'manual-SEO': {
     homepage: {
-      title: _,
       'meta-description': _
     },
 
     signup: {
-      title: _,
       'meta-description': _
     }
   }

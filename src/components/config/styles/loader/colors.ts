@@ -1,17 +1,14 @@
-import type { ThemeVariant } from '@/config/themes';
-
 type TLoaderConfig = {
-  COLORS: Record<ThemeVariant, string>;
-  DEFAULT_COLOR: string;
+  COLOR: string;
+  BACKGROUND_COLOR: string;
 };
 
-const DEFAULT_COLOR = '#00000066';
+const COLOR = '#42546E';
+const BACKGROUND_COLOR = '#000';
+
 export const LOADER_CONFIG: TLoaderConfig = {
-  COLORS: {
-    dark: '#42546E',
-    light: DEFAULT_COLOR
-  },
-  DEFAULT_COLOR
+  COLOR,
+  BACKGROUND_COLOR
 } as const;
 
 export default LOADER_CONFIG;

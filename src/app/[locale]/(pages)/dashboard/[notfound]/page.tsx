@@ -1,3 +1,3 @@
-import NotFoundPage from 'src/app/[locale]/not-found';
+import NotFound from '@/components/pages/Notfound';
 
-export default NotFoundPage;
+export default NotFound;

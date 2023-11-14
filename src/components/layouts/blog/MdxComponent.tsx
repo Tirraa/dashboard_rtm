@@ -1,6 +1,6 @@
-import CTAs from '@/components/config/styles/blog/CTAs';
-import NextComponents from '@/components/config/styles/blog/NextComponents';
-import PrimitiveComponents from '@/components/config/styles/blog/PrimitiveComponents';
+import CTAs from '@/components/config/blog/CTAs';
+import NextComponents from '@/components/config/blog/NextComponents';
+import PrimitiveComponents from '@/components/config/blog/PrimitiveComponents';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import type { FunctionComponent, ReactNode } from 'react';
 

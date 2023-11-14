@@ -12,19 +12,19 @@ export interface WithClassname extends ClassName {}
 
 export type WithDeepResetOnLgBreakpointEvents = { withDeepResetOnLgBreakpointEvents: boolean };
 
-export interface i18nParams {
+export interface I18nParams {
   [i18nTaxonomy.LANG_FLAG]: LanguageFlag;
 }
 
-export interface i18nPageProps {
-  params: i18nParams;
+export interface I18nPageProps {
+  params: I18nParams;
 }
 
-export interface i18nComponentProps {
-  i18nProps: i18nParams;
+export interface I18nComponentProps {
+  i18nProps: I18nParams;
 }
 
-export interface LayoutBaseProps extends i18nPageProps {
+export interface LayoutBaseProps extends I18nPageProps {
   children: ReactNode;
 }
 

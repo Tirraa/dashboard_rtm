@@ -17,13 +17,13 @@ const dropdownItemsGenerator = (changeLocale: ChangeLocaleFun, currentLocale: La
   LANGUAGES.map((language) => (
     <DropdownMenuItem key={language} className="relative my-1 px-3 py-2" textValue={localesLabels[language]} asChild>
       <button
-        onClick={() => changeLocale(language)}
+        onClick={language !== currentLocale ? () => changeLocale(language) : undefined}
         className={cn(
           BUTTON_CONFIG.CLASSNAME,
           'w-full',
           currentLocale === language
             ? cn(BUTTON_CONFIG.ACTIVE_CLASSNAME, 'hover:bg-primary hover:text-white focus:bg-primary focus:text-white')
-            : BUTTON_CONFIG.NOT_ACTIVE_CLASSNAME
+            : cn(BUTTON_CONFIG.NOT_ACTIVE_CLASSNAME, 'text-black')
         )}
       >
         <span className="absolute ltr:right-2 rtl:left-2">{localesEmojis[language]}</span>

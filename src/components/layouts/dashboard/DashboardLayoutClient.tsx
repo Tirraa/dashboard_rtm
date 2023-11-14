@@ -1,6 +1,6 @@
 'use client';
 
-import MAIN_NEXT_UI_CLS from '@/components/config/styles/next-ui';
+import MAIN_NEXT_UI_CLS from '@/components/config/styles/main';
 import useLockScreenScrollY from '@/components/hooks/useLockScreenScrollY';
 import useResetScroll from '@/components/hooks/useResetScroll';
 import DashboardSidebar from '@/components/layouts/dashboard/DashboardSidebar';

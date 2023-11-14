@@ -1,117 +1,14 @@
 import { i18ns } from '##/config/i18n';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import i18nTaxonomy from '##/config/taxonomies/i18n';
-import type { LanguageFlag } from '##/types/hell/i18n';
-import { getBlogSubcategoriesByCategory } from '@/cache/blog';
-import BUTTON_CONFIG from '@/components/config/styles/buttons';
-import { Button } from '@/components/ui/Button';
-import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
-import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
 import BlogConfig from '@/config/blog';
-import { getScopedI18n, getServerSideI18n } from '@/i18n/server';
-import { buildPathFromParts } from '@/lib/str';
-import { cn } from '@/lib/tailwind';
-import type { BlogCategory, BlogCategoryPageProps, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
-import { compareDesc } from 'date-fns';
-import Link from 'next/link';
+import { getScopedI18n } from '@/i18n/server';
+import blogCategoryPageBuilder from '@/lib/blog/blogCategoryPageBuilder';
+import type { BlogCategory, BlogCategoryPageProps, PostBase } from '@/types/Blog';
 import { notFound } from 'next/navigation';
-import type { FunctionComponent, ReactNode } from 'react';
-import slugify from 'slugify';
+import type { FunctionComponent } from 'react';
 
 interface CategoryRelatedSubcategoriesAndBlogPostsProps extends BlogCategoryPageProps {}
-
-async function postsGenerator(posts: PostBase[], category: BlogCategory, lng: LanguageFlag): Promise<ReactNode[] | JSX.Element> {
-  function buildHistogram() {
-    for (const post of posts) {
-      const curSubcateg = post.subcategory as BlogSubcategoryFromUnknownCategory;
-      if (histogram[curSubcateg].length < limit + 1 && post.language === lng) {
-        histogram[curSubcateg].push(post);
-        if (Object.values(histogram).every((posts2) => posts2.length >= limit + 1)) break;
-      }
-    }
-  }
-
-  function buildPostsCollectionsSnippets() {
-    Object.entries(histogram).forEach(([subcategory, posts2]) => {
-      postsCollectionsSnippets[subcategory as BlogSubcategoryFromUnknownCategory] = posts2.map((post) => (
-        <BlogPostPreview key={`${post._raw.flattenedPath}-post-snippet`} post={post} lng={lng} isNotOnBlogSubcategoryPage />
-      ));
-    });
-  }
-
-  const isEmptySnippets = () => Object.values(postsCollectionsSnippets).every((posts2) => posts2.length === 0);
-
-  function contentGenerator(): ReactNode[] {
-    const result: ReactNode[] = [];
-    let isLast = false;
-    const max = Object.entries(postsCollectionsSnippets).length;
-    let counter = 0;
-    for (const [subcategory, posts] of Object.entries(postsCollectionsSnippets)) {
-      counter += 1;
-      isLast = counter >= max;
-      if (posts.length === 0) continue;
-      // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
-      const curSubcategTitle = globalT(`${i18ns.blogCategories}.${category}.${subcategory}.title`);
-      const href = buildPathFromParts(category, subcategory);
-      const title = (
-        <Link
-          href={href}
-          className="mb-4 flex h-fit w-fit border-b-[2px] border-transparent leading-none transition-all hover:border-b-[2px] hover:border-inherit hover:pr-2 hover:indent-1 focus:border-b-[2px] focus:border-inherit focus:pr-2 focus:indent-1"
-        >
-          <h2 className="mb-1 mt-2">{curSubcategTitle}</h2>
-        </Link>
-      );
-
-      let showMoreLink = null;
-      if (posts.length > limit) {
-        showMoreLink = (
-          <div className="flex w-full justify-center">
-            <Button size="lg" className={cn(BUTTON_CONFIG.CLASSNAME, 'mb-6 mt-4 lg:mb-0')} asChild>
-              <Link href={href}>{globalT(`${i18ns.vocab}.see-more`)}</Link>
-            </Button>
-          </div>
-        );
-        posts.pop();
-      }
-
-      const sep = <hr key={`${subcategory}-${curSubcategTitle}-sep`} className="color-inherit m-auto my-5 w-36 opacity-50" />;
-
-      const section = (
-        <section
-          key={`${subcategory}-${curSubcategTitle}-section`}
-          id={slugify(curSubcategTitle.toLowerCase())}
-          className="[&>article:not(:last-of-type)]:mb-6"
-        >
-          {title}
-          {posts}
-          {showMoreLink}
-        </section>
-      );
-
-      result.push(section);
-      if (!isLast && !showMoreLink) result.push(sep);
-    }
-    return result;
-  }
-
-  if (posts.length === 0) return <BlogPostsNotFound />;
-
-  const globalT = await getServerSideI18n();
-  const subcategs: BlogSubcategoryFromUnknownCategory[] = getBlogSubcategoriesByCategory(category);
-  const entries = subcategs.map((subcateg) => [subcateg, []]);
-  const [histogram, postsCollectionsSnippets] = [
-    Object.fromEntries(entries) as Record<BlogSubcategoryFromUnknownCategory, PostBase[]>,
-    Object.fromEntries(entries) as Record<BlogSubcategoryFromUnknownCategory, ReactNode[]>
-  ];
-  const limit = BlogConfig.DISPLAYED_BLOG_POSTS_PER_SUBCATEGORY_ON_BLOG_CATEGORY_PAGE_LIMIT;
-
-  buildHistogram();
-  buildPostsCollectionsSnippets();
-  if (isEmptySnippets()) return <BlogPostsNotFound />;
-
-  const result: ReactNode[] = contentGenerator();
-  return result;
-}
 
 export const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<CategoryRelatedSubcategoriesAndBlogPostsProps> = async ({ params }) => {
   const lng = params[i18nTaxonomy.LANG_FLAG];
@@ -125,8 +22,10 @@ export const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<Categor
     notFound();
   }
 
-  const posts = gettedOnTheFlyPosts.sort((post1, post2) => compareDesc(new Date(post1.date), new Date(post2.date)));
-  const generatedContent = await postsGenerator(posts, category, lng);
+  const posts = gettedOnTheFlyPosts.sort((post1, post2) =>
+    BlogConfig.DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_CATEGORY_PAGE(new Date(post1.date), new Date(post2.date))
+  );
+  const generatedContent = await blogCategoryPageBuilder(posts, category, lng);
 
   return (
     <div className="w-full">

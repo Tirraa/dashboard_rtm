@@ -1,8 +1,6 @@
 'use client';
 
-import LOADER_CONFIG from '@/components/config/styles/loader/colors';
-import type { ThemeVariant } from '@/config/themes';
-import { useTheme } from 'next-themes';
+import LOADER_COLORS from '@/components/config/styles/loader/colors';
 import type { CSSProperties, FunctionComponent } from 'react';
 import { BeatLoader } from 'react-spinners';
 
@@ -10,16 +8,16 @@ interface LoaderProps {
   override?: CSSProperties;
 }
 
-const { COLORS, DEFAULT_COLOR } = LOADER_CONFIG;
+const { BACKGROUND_COLOR, COLOR } = LOADER_COLORS;
 
 export const Loader: FunctionComponent<LoaderProps> = ({ override: cssOverride } = {}) => {
-  const { theme } = useTheme();
-  const color = theme ? COLORS[theme as ThemeVariant] : DEFAULT_COLOR;
-
   return (
-    <div className="fixed inset-0 z-50 flex h-screen w-full cursor-wait select-none items-center justify-center">
+    <div
+      className="fixed inset-0 z-50 flex h-screen w-full cursor-wait select-none items-center justify-center"
+      style={{ backgroundColor: BACKGROUND_COLOR }}
+    >
       <BeatLoader
-        color={color}
+        color={COLOR}
         cssOverride={cssOverride}
         margin={4.5}
         speedMultiplier={1.35}

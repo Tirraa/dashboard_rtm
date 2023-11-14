@@ -25,9 +25,11 @@ export const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageP
   // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
   const [title, curSubcategTitle] = [scopedT(`${category}.${subcategory}.title`), scopedT(`${category}.${subcategory}.title`)];
 
-  const paginatedElements = postsCollection.map((post) => (
-    <BlogPostPreview key={`${post._raw.flattenedPath}-paginated-blog-post`} post={post} lng={lng} />
-  ));
+  const paginatedElements = postsCollection
+    .sort((post1, post2) =>
+      BlogConfig.DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE(new Date(post1.date), new Date(post2.date))
+    )
+    .map((post) => <BlogPostPreview key={`${post._raw.flattenedPath}-paginated-blog-post`} post={post} lng={lng} />);
 
   return (
     <section className="w-full" id={slugify(curSubcategTitle.toLowerCase())}>

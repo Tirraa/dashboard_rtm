@@ -4,7 +4,6 @@ import { HTML_STYLE } from '@/components/config/styles/html';
 import SitewideNavbar from '@/components/ui/navbar/SitewideNavbar';
 import ELEMENTS_ID from '@/config/elementsId';
 import PROGRESSBAR_CONFIG from '@/config/progressbar';
-import { DEFAULT_VARIANT } from '@/config/themes';
 import Providers from '@/contexts/Providers';
 import { fInter } from '@/fonts';
 import { fcn } from '@/lib/next';
@@ -24,7 +23,7 @@ export const DocumentRoot: FunctionComponent<DocumentRootProps> = ({ children, p
   const { direction: dir } = new Locale(locale).textInfo;
 
   return (
-    <html lang={locale} className={DEFAULT_VARIANT} style={HTML_STYLE} dir={dir} suppressHydrationWarning>
+    <html lang={locale} style={HTML_STYLE} dir={dir} suppressHydrationWarning>
       <body className={cn(BODY_CLS, fcn(fInter))} style={{ scrollbarGutter: 'stable' }}>
         <div id={ELEMENTS_ID.BODY_CONTAINER} className={BODY_CONTAINER_CLS}>
           <Providers locale={locale}>

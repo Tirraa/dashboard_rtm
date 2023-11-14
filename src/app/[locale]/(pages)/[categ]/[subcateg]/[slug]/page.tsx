@@ -1,95 +1,19 @@
-import { LANGUAGES, i18ns } from '##/config/i18n';
-import BlogTaxonomy from '##/config/taxonomies/blog';
 import i18nTaxonomy from '##/config/taxonomies/i18n';
-import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import BlogPost from '@/components/pages/blog/BlogPost';
 import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
 import BlogPostCrumb from '@/components/ui/breadcrumbs/custom/BlogPostCrumb';
-import ROUTES_ROOTS from '@/config/routes';
-import { getServerSideI18n } from '@/i18n/server';
-import {
-  getAllBlogCategories,
-  getAllBlogPostsByCategoryAndSubcategoryUnstrict,
-  getBlogPostUnstrict,
-  isValidBlogCategory,
-  isValidBlogCategoryAndSubcategoryPair,
-  redirectToBlogCategoryAndSubcategoryPairPageUnstrict,
-  redirectToBlogCategoryPage
-} from '@/lib/blog';
-import { buildPageTitle } from '@/lib/str';
-import type { BlogCategory, BlogPostPageProps, BlogStaticParams, BlogSubcategoryFromUnknownCategory, PostBase, UnknownBlogSlug } from '@/types/Blog';
+import { blogPostGuard, getBlogPostMetadatas, getBlogStaticParams } from '@/lib/blog/staticGeneration';
+import type { BlogPostPageProps } from '@/types/Blog';
 import { setStaticParamsLocale } from 'next-international/server';
-import { redirect } from 'next/navigation';
 
-// {ToDo} Move this logic in the layout?
 export async function generateMetadata({ params }: BlogPostPageProps) {
-  const category = params[BlogTaxonomy.CATEGORY];
-  const subcategory = params[BlogTaxonomy.SUBCATEGORY];
-  const validCombination = isValidBlogCategoryAndSubcategoryPair(category, subcategory);
-
-  const slug = params[BlogTaxonomy.SLUG];
-  const lang = params[i18nTaxonomy.LANG_FLAG];
-  const post = validCombination ? getBlogPostUnstrict({ category, subcategory }, slug, lang) : undefined;
-
-  if (!post && validCombination) {
-    redirectToBlogCategoryAndSubcategoryPairPageUnstrict(category, subcategory);
-  } else if (!post && isValidBlogCategory(category)) {
-    redirectToBlogCategoryPage(category);
-  } else if (!post) {
-    redirect(ROUTES_ROOTS.WEBSITE + category);
-  }
-
-  const globalT = await getServerSideI18n();
-  const currentPost = post as PostBase;
-  const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), currentPost.title);
-  const { metadescription: description } = post as PostBase;
-  return { title, description };
+  blogPostGuard({ params });
+  const blogPostMetadatas = await getBlogPostMetadatas({ params });
+  return blogPostMetadatas;
 }
 
-// {ToDo} Move this logic in the top-level page, using the `allDocuments` generated variable, (loaded on server-side only!)
 export async function generateStaticParams() {
-  function generateBlogStaticParams(): BlogStaticParams[] {
-    const indexedParams = new Set<string>();
-    const blogStaticParams: BlogStaticParams[] = [];
-    const blogCategories = getAllBlogCategories();
-
-    blogCategories.forEach((categ) => {
-      const category = categ as BlogCategory;
-      const curSubcategs = getBlogSubcategoriesByCategory(category);
-
-      curSubcategs.forEach((subcateg) => {
-        const subcategory = subcateg as BlogSubcategoryFromUnknownCategory;
-        const relatedPosts = getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
-
-        relatedPosts.forEach((post) => {
-          LANGUAGES.forEach((language) => {
-            const slug = post.slug as UnknownBlogSlug;
-
-            const blogPostExists = getBlogPostUnstrict({ category, subcategory }, slug, language);
-            if (!blogPostExists) return;
-
-            const staticParamsIndexKey = `${categ}-${subcategory}-${slug}-${language}`;
-            if (indexedParams.has(staticParamsIndexKey)) return;
-
-            indexedParams.add(staticParamsIndexKey);
-            const entity: BlogStaticParams = {
-              [i18nTaxonomy.LANG_FLAG]: language,
-              [BlogTaxonomy.CATEGORY]: category,
-              [BlogTaxonomy.SUBCATEGORY]: subcategory,
-              [BlogTaxonomy.SLUG]: slug
-            };
-            blogStaticParams.push(entity);
-          });
-        });
-      });
-    });
-    return blogStaticParams as BlogStaticParams[];
-  }
-
-  const blogStaticParamsEntities = generateBlogStaticParams();
-  const staticParams = blogStaticParamsEntities.map((entity) => ({ ...entity }));
-
-  return staticParams;
+  return getBlogStaticParams();
 }
 
 export default function Page({ params }: BlogPostPageProps) {

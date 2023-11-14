@@ -1,5 +1,5 @@
+import { DATA_QA_WARNING_DOM_KEY, QA_WARNINGS } from '##/config/QA';
 import { cn } from '@/lib/tailwind';
-import { DATA_QA_WARNING_DOM_KEY, QA_WARNINGS } from '@/types/QA';
 import Link from 'next/link';
 import type { FunctionComponent } from 'react';
 import CrumbSeparator from './CrumbSeparator';

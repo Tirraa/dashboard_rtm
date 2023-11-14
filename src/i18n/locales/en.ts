@@ -107,12 +107,10 @@ export default {
 
   'manual-SEO': {
     homepage: {
-      title: SHARED['pages-titles'].homepage,
       'meta-description': 'This is the homepage metadescription'
     },
 
     signup: {
-      title: SHARED['pages-titles']['sign-up'],
       'meta-description': 'Dashboard portal metadescription'
     }
   }

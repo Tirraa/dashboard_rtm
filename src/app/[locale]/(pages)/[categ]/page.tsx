@@ -1,43 +1,16 @@
-import { LANGUAGES, i18ns } from '##/config/i18n';
-import BlogTaxonomy from '##/config/taxonomies/blog';
 import i18nTaxonomy from '##/config/taxonomies/i18n';
 import CategoryRelatedSubcategoriesAndBlogPosts from '@/components/pages/blog/CategoryRelatedSubcategoriesAndBlogPosts';
 import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
-import { getServerSideI18n } from '@/i18n/server';
-import { getAllBlogCategories } from '@/lib/blog';
-import { buildPageTitle } from '@/lib/str';
-import type { BlogCategory, BlogCategoryPageProps, BlogStaticParams } from '@/types/Blog';
+import { getBlogCategoryMetadatas, getBlogStaticParams } from '@/lib/blog/staticGeneration';
+import type { BlogCategoryPageProps } from '@/types/Blog';
 import { setStaticParamsLocale } from 'next-international/server';
 
-// {ToDo} Move this logic in the layout?
 export async function generateMetadata({ params }: BlogCategoryPageProps) {
-  const globalT = await getServerSideI18n();
-  const category = params[BlogTaxonomy.CATEGORY];
-  const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.blogCategories}.${category}._title`));
-  const description = globalT(`${i18ns.blogCategories}.${category}._meta-description`);
-  return { title, description };
+  return getBlogCategoryMetadatas({ params });
 }
 
-// {ToDo} Refactor this!
 export async function generateStaticParams() {
-  function generateBlogStaticParams(): Partial<BlogStaticParams>[] {
-    const blogStaticParams: Partial<BlogStaticParams>[] = [];
-    const blogCategories = getAllBlogCategories();
-
-    blogCategories.forEach((categ) => {
-      const category = categ as BlogCategory;
-      LANGUAGES.forEach((language) => {
-        const entity = { [BlogTaxonomy.CATEGORY]: category, [i18nTaxonomy.LANG_FLAG]: language };
-        blogStaticParams.push(entity);
-      });
-    });
-    return blogStaticParams;
-  }
-
-  const blogStaticParamsEntities = generateBlogStaticParams();
-  const staticParams = blogStaticParamsEntities.map((entity) => ({ ...entity }));
-
-  return staticParams;
+  return getBlogStaticParams();
 }
 
 export default function Page({ params }: BlogCategoryPageProps) {
