@@ -1,8 +1,8 @@
+import BlogTaxonomy from '##/config/taxonomies/blog';
+import i18nTaxonomy from '##/config/taxonomies/i18n';
 import MDX from '@/components/layouts/blog/MdxComponent';
 import BlogPostDate from '@/components/ui/blog/BlogPostDate';
 import { getBlogPostUnstrict, isValidBlogCategoryAndSubcategoryPair } from '@/lib/blog';
-import BlogTaxonomy from '@/taxonomies/blog';
-import i18nTaxonomy from '@/taxonomies/i18n';
 import type { BlogPostPageProps, BlogPostProps } from '@/types/Blog';
 import { notFound } from 'next/navigation';
 import type { FunctionComponent } from 'react';

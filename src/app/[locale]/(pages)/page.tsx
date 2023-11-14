@@ -1,10 +1,10 @@
 import { i18ns } from '##/config/i18n';
+import i18nTaxonomy from '##/config/taxonomies/i18n';
 import { MAIN_UI_RELATED_CLS } from '@/components/config/styles/next-ui';
 import Homepage from '@/components/pages/Homepage';
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
 import { buildPageTitle } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
-import i18nTaxonomy from '@/taxonomies/i18n';
 import type { i18nPageProps } from '@/types/Next';
 import { setStaticParamsLocale } from 'next-international/server';
 

@@ -1,4 +1,4 @@
-import type { AppPath, AppPathAsIs, PathSegment } from '../../../types/Next';
+import type { AppPath, AppPathAsIs, PathSegment } from '@/types/Next';
 
 export function getLastPathPart(path: AppPath): AppPathAsIs | PathSegment {
   const lastIndex = path.lastIndexOf('/');

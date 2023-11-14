@@ -3,7 +3,7 @@ import type { LanguageFlag } from '##/types/hell/i18n';
 import ROUTES_ROOTS from '@/config/routes';
 import type { AppPath, AppPathAsIs } from '@/types/Next';
 import isValidLanguageFlag from './app-agnostic/i18n/isValidLanguageFlag';
-import { indexOfNthOccurrence } from './str';
+import indexOfNthOccurrence from './app-agnostic/str/indexOfNthOccurrence';
 
 function computePathnameI18nFlagUnstrict(pathname: AppPath, providedEndIndex?: number): string {
   const compute = (pathname: AppPath, endIndex: number) => (endIndex === -1 ? pathname.substring(1) : pathname.substring(1, endIndex));

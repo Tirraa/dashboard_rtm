@@ -1,6 +1,6 @@
+import i18nTaxonomy from '##/config/taxonomies/i18n';
 import DashboardLayoutClient from '@/components/layouts/dashboard/DashboardLayoutClient';
 import { getStaticParams } from '@/i18n/server';
-import i18nTaxonomy from '@/taxonomies/i18n';
 import type { LayoutBaseProps } from '@/types/Next';
 import { setStaticParamsLocale } from 'next-international/server';
 

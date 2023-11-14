@@ -1,11 +1,11 @@
 import { LANGUAGES, i18ns } from '##/config/i18n';
+import BlogTaxonomy from '##/config/taxonomies/blog';
+import i18nTaxonomy from '##/config/taxonomies/i18n';
 import CategoryRelatedSubcategoriesAndBlogPosts from '@/components/pages/blog/CategoryRelatedSubcategoriesAndBlogPosts';
 import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
 import { getServerSideI18n } from '@/i18n/server';
 import { getAllBlogCategories } from '@/lib/blog';
 import { buildPageTitle } from '@/lib/str';
-import BlogTaxonomy from '@/taxonomies/blog';
-import i18nTaxonomy from '@/taxonomies/i18n';
 import type { BlogCategory, BlogCategoryPageProps, BlogStaticParams } from '@/types/Blog';
 import { setStaticParamsLocale } from 'next-international/server';
 

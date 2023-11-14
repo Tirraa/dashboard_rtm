@@ -1,4 +1,6 @@
 import { LANGUAGES, i18ns } from '##/config/i18n';
+import BlogTaxonomy from '##/config/taxonomies/blog';
+import i18nTaxonomy from '##/config/taxonomies/i18n';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import SubcategoryRelatedBlogPosts from '@/components/pages/blog/SubcategoryRelatedBlogPosts';
 import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
@@ -13,8 +15,6 @@ import {
   redirectToBlogCategoryPage
 } from '@/lib/blog';
 import { buildPageTitle } from '@/lib/str';
-import BlogTaxonomy from '@/taxonomies/blog';
-import i18nTaxonomy from '@/taxonomies/i18n';
 import type { BlogCategory, BlogStaticParams, BlogSubcategoryPageProps, PostBase } from '@/types/Blog';
 import { setStaticParamsLocale } from 'next-international/server';
 import { redirect } from 'next/navigation';

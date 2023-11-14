@@ -1,12 +1,12 @@
 import { i18ns } from '##/config/i18n';
+import BlogTaxonomy from '##/config/taxonomies/blog';
+import i18nTaxonomy from '##/config/taxonomies/i18n';
 import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
 import MaybePaginatedElements from '@/components/ui/hoc/MaybePaginatedElements';
 import BlogConfig from '@/config/blog';
 import { getScopedI18n } from '@/i18n/server';
 import { blogSubcategoryShouldTriggerNotFound, getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict } from '@/lib/blog';
-import BlogTaxonomy from '@/taxonomies/blog';
-import i18nTaxonomy from '@/taxonomies/i18n';
 import type { BlogSubcategoryPageProps, PostBase } from '@/types/Blog';
 import { notFound } from 'next/navigation';
 import type { FunctionComponent } from 'react';

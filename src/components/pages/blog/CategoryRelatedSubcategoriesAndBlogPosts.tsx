@@ -1,4 +1,6 @@
 import { i18ns } from '##/config/i18n';
+import BlogTaxonomy from '##/config/taxonomies/blog';
+import i18nTaxonomy from '##/config/taxonomies/i18n';
 import type { LanguageFlag } from '##/types/hell/i18n';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
@@ -9,8 +11,6 @@ import BlogConfig from '@/config/blog';
 import { getScopedI18n, getServerSideI18n } from '@/i18n/server';
 import { buildPathFromParts } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
-import BlogTaxonomy from '@/taxonomies/blog';
-import i18nTaxonomy from '@/taxonomies/i18n';
 import type { BlogCategory, BlogCategoryPageProps, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
 import { compareDesc } from 'date-fns';
 import Link from 'next/link';

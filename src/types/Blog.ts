@@ -1,7 +1,7 @@
+import type BlogTaxonomy from '##/config/taxonomies/blog';
+import type { TBlogTaxonomy } from '##/config/taxonomies/blog';
 import type { LanguageFlag } from '##/types/hell/i18n';
 import type { BlogArchitecture } from '@/config/blog';
-import type BlogTaxonomy from '@/taxonomies/blog';
-import type { TBlogTaxonomy } from '@/taxonomies/blog';
 import type { PostSchema } from 'contentlayer/generated';
 import type { RequiredFieldsOnly } from './CustomUtilitaryTypes';
 import type { i18nParams } from './Next';

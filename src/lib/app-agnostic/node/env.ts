@@ -1,4 +1,4 @@
-import executionContextWarningsVocabGetter from '@/errors/vocab/warnings/executionContext';
+import executionContextWarningsVocabGetter from '../../../errors/vocab/warnings/executionContext';
 
 type TComputedNodeEnv = {
   PROD: boolean;

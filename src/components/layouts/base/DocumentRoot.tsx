@@ -1,3 +1,4 @@
+import i18nTaxonomy from '##/config/taxonomies/i18n';
 import BODY_CLS, { BODY_CONTAINER_CLS } from '@/components/config/styles/body';
 import { HTML_STYLE } from '@/components/config/styles/html';
 import SitewideNavbar from '@/components/ui/navbar/SitewideNavbar';
@@ -8,7 +9,6 @@ import Providers from '@/contexts/Providers';
 import { fInter } from '@/fonts';
 import { fcn } from '@/lib/next';
 import { cn } from '@/lib/tailwind';
-import i18nTaxonomy from '@/taxonomies/i18n';
 import type { LayoutBaseProps } from '@/types/Next';
 import Locale from 'intl-locale-textinfo-polyfill';
 import type { FunctionComponent } from 'react';

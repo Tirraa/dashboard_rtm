@@ -1,4 +1,4 @@
-import type { LanguageFlag } from '../../../../interop/types/hell/i18n';
+import type { LanguageFlag } from '##/types/hell/i18n';
 import capitalize from './capitalize';
 
 export const getFormattedDate = (lng: LanguageFlag, date: Date, giveTime: boolean = false): string =>

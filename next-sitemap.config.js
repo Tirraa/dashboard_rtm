@@ -13,7 +13,6 @@ const isIgnoredPath = (path) =>
 module.exports = {
   siteUrl,
   generateRobotsTxt: true,
-  exclude: ['/favicon.ico', '/icon.svg', '/apple-icon.png', '/dashboard/*'],
   changefreq: 'monthly',
 
   transform: (config, path) => {

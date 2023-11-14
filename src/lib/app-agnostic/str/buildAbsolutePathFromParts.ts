@@ -1,4 +1,4 @@
-import type { AppPath, PathSegment } from '../../../types/Next';
+import type { AppPath, PathSegment } from '@/types/Next';
 import buildPathFromParts from './buildPathFromParts';
 
 export const buildAbsolutePathFromParts = (...args: PathSegment[]): AppPath => {
