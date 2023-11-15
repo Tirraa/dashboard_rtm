@@ -18,7 +18,7 @@ export const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageP
   const lng = params[i18nTaxonomy.LANG_FLAG];
   const scopedT = await getScopedI18n(i18ns.blogCategories);
 
-  const postsCollection: PostBase[] = getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, lng);
+  const postsCollection: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, lng);
 
   if (blogSubcategoryShouldTriggerNotFound(postsCollection, { category, subcategory })) notFound();
   if (postsCollection.length === 0) return <BlogPostsNotFound />;

@@ -40,7 +40,7 @@ export interface BlogPostProps {
   lng: LanguageFlag;
 }
 
-type AllPostsGetter = () => PostBase[];
+type AllPostsGetter = () => Promise<PostBase[]>;
 export type PostsCollectionAssoc<T extends BlogCategory> = {
   [_ in T]: AllPostsGetter;
 };

@@ -91,7 +91,7 @@ export async function blogCategoryPageBuilder(posts: PostBase[], category: BlogC
   if (posts.length === 0) return <BlogPostsNotFound />;
 
   const globalT = await getServerSideI18n();
-  const subcategs: BlogSubcategoryFromUnknownCategory[] = getBlogSubcategoriesByCategory(category);
+  const subcategs: BlogSubcategoryFromUnknownCategory[] = await getBlogSubcategoriesByCategory(category);
   const entries = subcategs.map((subcateg) => [subcateg, []]);
 
   const sortedEntries = entries.sort((entry1, entry2) =>

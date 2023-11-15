@@ -6,13 +6,14 @@ import type { BlogSubcategoryPageProps } from '@/types/Blog';
 import { setStaticParamsLocale } from 'next-international/server';
 
 export async function generateMetadata({ params }: BlogSubcategoryPageProps) {
-  blogSubcategoryGuard({ params });
+  await blogSubcategoryGuard({ params });
   const blogSubcategoryMetadatas = await getBlogSubcategoryMetadatas({ params });
   return blogSubcategoryMetadatas;
 }
 
 export async function generateStaticParams() {
-  return getBlogStaticParams();
+  const staticParams = await getBlogStaticParams();
+  return staticParams;
 }
 
 export default function Page({ params }: BlogSubcategoryPageProps) {

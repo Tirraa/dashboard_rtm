@@ -21,53 +21,70 @@ import { buildAbsolutePathFromParts, getFormattedDate } from '../str';
  * @throws {TypeError}
  * May throw a TypeError: "x[y] is not a function" at runtime, in a type unsafe context
  */
-export const getAllBlogPostsByCategory = (categ: BlogCategory): PostBase[] => BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[categ]();
+export const getAllBlogPostsByCategory = async (categ: BlogCategory): Promise<PostBase[]> =>
+  await BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[categ]();
 
-export const getAllBlogPostsByCategoryAndSubcategoryUnstrict = ({ category, subcategory }: UnknownCategoryAndUnknownSubcategory): PostBase[] =>
-  getAllBlogPostsByCategory(category).filter(({ subcategory: currentPostSubcategory }) => currentPostSubcategory === subcategory);
+export const getAllBlogPostsByCategoryAndSubcategoryUnstrict = async ({
+  category,
+  subcategory
+}: UnknownCategoryAndUnknownSubcategory): Promise<PostBase[]> => {
+  const allPosts = await getAllBlogPostsByCategory(category);
+  return allPosts.filter((post) => post.subcategory === subcategory);
+};
 
-export const getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict = (
+export const getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict = async (
   { category, subcategory }: UnknownCategoryAndUnknownSubcategory,
   language: LanguageFlag
-): PostBase[] =>
-  getAllBlogPostsByCategory(category).filter(
-    ({ subcategory: currentPostSubcategory, language: currentPostLanguage }) =>
-      currentPostSubcategory === subcategory && currentPostLanguage === language
-  );
+): Promise<PostBase[]> => {
+  const allPosts = await getAllBlogPostsByCategory(category);
+  return allPosts.filter((post) => post.subcategory === subcategory && post.language === language);
+};
 
-export function getBlogPostUnstrict(
+export async function getBlogPostUnstrict(
   { category, subcategory }: UnknownCategoryAndUnknownSubcategory,
   targettedSlug: UnknownBlogSlug,
   langFlag: LanguageFlag
-): undefined | PostBase {
-  const postsCollection: PostBase[] = getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
+): Promise<undefined | PostBase> {
+  const postsCollection: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
 
   if (langFlag === DEFAULT_LANGUAGE) {
     return postsCollection.find(
       ({ subcategory: currentPostSubcategory, slug: currentPostSlug }) => currentPostSubcategory === subcategory && currentPostSlug === targettedSlug
     );
   }
+
   return postsCollection.find(
     ({ subcategory: currentPostSubcategory, slug: currentPostSlug, language: currentPostLanguage }) =>
       currentPostSubcategory === subcategory && currentPostSlug === targettedSlug && currentPostLanguage === langFlag
   );
 }
 
-export const getAllBlogPostsByCategoryAndSubcategoryStrict = <C extends BlogCategory>(category: C, subcategory: BlogArchitecture[C]): PostBase[] =>
-  getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
+export const getAllBlogPostsByCategoryAndSubcategoryStrict = async <C extends BlogCategory>(
+  category: C,
+  subcategory: BlogArchitecture[C]
+): Promise<PostBase[]> => {
+  const allPosts = await getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
+  return allPosts;
+};
 
-export const getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict = <C extends BlogCategory>(
+export const getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict = async <C extends BlogCategory>(
   category: C,
   subcategory: BlogArchitecture[C],
   language: LanguageFlag
-): PostBase[] => getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, language);
+): Promise<PostBase[]> => {
+  const allPosts = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, language);
+  return allPosts;
+};
 
-export const getBlogPostStrict = <C extends BlogCategory>(
+export const getBlogPostStrict = async <C extends BlogCategory>(
   category: C,
   subcategory: BlogArchitecture[C],
   targettedSlug: UnknownBlogSlug,
   langFlag: LanguageFlag
-): undefined | PostBase => getBlogPostUnstrict({ category, subcategory }, targettedSlug, langFlag);
+): Promise<undefined | PostBase> => {
+  const allPosts = await getBlogPostUnstrict({ category, subcategory }, targettedSlug, langFlag);
+  return allPosts;
+};
 
 export const getAllBlogCategories = (): BlogCategory[] => Object.keys(BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC) as BlogCategory[];
 
@@ -93,10 +110,13 @@ export function isValidBlogCategory(category: string): boolean {
   return true;
 }
 
-export function isValidBlogCategoryAndSubcategoryPair(category: BlogCategory, subcategory: BlogSubcategoryFromUnknownCategory): boolean {
+export async function isValidBlogCategoryAndSubcategoryPair(
+  category: BlogCategory,
+  subcategory: BlogSubcategoryFromUnknownCategory
+): Promise<boolean> {
   if (!isValidBlogCategory(category)) return false;
 
-  const subcategories = getBlogSubcategoriesByCategory(category);
+  const subcategories = await getBlogSubcategoriesByCategory(category);
   if (!subcategories.includes(subcategory)) return false;
   return true;
 }

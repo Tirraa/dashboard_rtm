@@ -4,7 +4,7 @@ import type { BlogSubcategoryPageProps } from '@/types/Blog';
 import { redirect } from 'next/navigation';
 import { isValidBlogCategory, isValidBlogCategoryAndSubcategoryPair, redirectToBlogCategoryPage } from '..';
 
-export function blogSubcategoryGuard({ params }: BlogSubcategoryPageProps) {
+export async function blogSubcategoryGuard({ params }: BlogSubcategoryPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];
 
   const validCategory = isValidBlogCategory(category);
@@ -12,7 +12,7 @@ export function blogSubcategoryGuard({ params }: BlogSubcategoryPageProps) {
   if (!validCategory && !equivRoutes) redirect(ROUTES_ROOTS.WEBSITE + category);
 
   const subcategory = params[BlogTaxonomy.SUBCATEGORY];
-  const validCombination = isValidBlogCategoryAndSubcategoryPair(category, subcategory);
+  const validCombination = await isValidBlogCategoryAndSubcategoryPair(category, subcategory);
   if (!validCombination) redirectToBlogCategoryPage(category);
 }
 

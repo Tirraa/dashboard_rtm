@@ -2,7 +2,6 @@ import type { DatesCompareFun } from '##/types/hell/dateManipulations';
 import type { StringsCompareFun } from '##/types/hell/stringManipulations';
 import { compareAlphabetically } from '@/lib/str';
 import type { BlogCategory, ForcedBlogSubcategoriesPaths, PostsCollectionAssoc } from '@/types/Blog';
-import { allPatchPostBis, allPatchPosts } from 'contentlayer/generated';
 import compareDesc from 'date-fns/compareDesc';
 
 type TBlogConfig = {
@@ -27,8 +26,8 @@ export const BlogConfig: TBlogConfig = {
   BLOG_POST_PREVIEW_DESCRIPTION_CHARACTERS_LIMIT: 250,
 
   BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC: {
-    'patch-notes': () => allPatchPosts,
-    'patch-notes-bis': () => allPatchPostBis
+    'patch-notes': () => import('contentlayer/generated').then((module) => module.allPatchPosts),
+    'patch-notes-bis': () => import('contentlayer/generated').then((module) => module.allPatchPostBis)
   },
 
   FORCED_BLOG_SUBCATEGORIES_PATHS: {

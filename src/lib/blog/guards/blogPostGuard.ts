@@ -11,14 +11,14 @@ import {
   redirectToBlogCategoryPage
 } from '..';
 
-export function blogPostGuard({ params }: BlogPostPageProps) {
+export async function blogPostGuard({ params }: BlogPostPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];
   const subcategory = params[BlogTaxonomy.SUBCATEGORY];
-  const validCombination = isValidBlogCategoryAndSubcategoryPair(category, subcategory);
+  const validCombination: boolean = await isValidBlogCategoryAndSubcategoryPair(category, subcategory);
 
   const slug = params[BlogTaxonomy.SLUG];
   const lang = params[i18nTaxonomy.LANG_FLAG];
-  const post = validCombination ? getBlogPostUnstrict({ category, subcategory }, slug, lang) : undefined;
+  const post = validCombination ? await getBlogPostUnstrict({ category, subcategory }, slug, lang) : undefined;
 
   if (!post && validCombination) {
     redirectToBlogCategoryAndSubcategoryPairPageUnstrict(category, subcategory);

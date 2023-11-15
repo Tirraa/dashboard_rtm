@@ -17,7 +17,7 @@ export const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<Categor
 
   let gettedOnTheFlyPosts: PostBase[] = [];
   try {
-    gettedOnTheFlyPosts = BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[category]();
+    gettedOnTheFlyPosts = await BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[category]();
   } catch {
     notFound();
   }

@@ -5,9 +5,9 @@ namespace BlogCache {
   export const subcategoriesCollection = {} as Record<BlogCategory, BlogSubcategoryFromUnknownCategory[]>;
 }
 
-function buildSubcategoriesSet(category: BlogCategory): Set<BlogSubcategoryFromUnknownCategory> {
+async function buildSubcategoriesSet(category: BlogCategory): Promise<Set<BlogSubcategoryFromUnknownCategory>> {
   try {
-    const relatedPosts = BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[category]();
+    const relatedPosts = await BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[category]();
     const subcategoriesSet = new Set<BlogSubcategoryFromUnknownCategory>();
 
     relatedPosts.forEach(({ subcategory }) => subcategoriesSet.add(subcategory as BlogSubcategoryFromUnknownCategory));
@@ -18,15 +18,18 @@ function buildSubcategoriesSet(category: BlogCategory): Set<BlogSubcategoryFromU
   }
 }
 
-function populateSubcategoriesCollectionCache(category: BlogCategory) {
-  const subcategsSet = buildSubcategoriesSet(category);
+async function populateSubcategoriesCollectionCache(category: BlogCategory) {
+  const subcategsSet = await buildSubcategoriesSet(category);
   BlogCache.subcategoriesCollection[category] = Array.from(subcategsSet);
 }
 
-function subcategoriesByCategoryGetter(category: BlogCategory) {
-  if (BlogCache.subcategoriesCollection[category] === undefined) populateSubcategoriesCollectionCache(category);
+async function subcategoriesByCategoryGetter(category: BlogCategory) {
+  if (BlogCache.subcategoriesCollection[category] === undefined) await populateSubcategoriesCollectionCache(category);
   return BlogCache.subcategoriesCollection[category];
 }
 
-export const getBlogSubcategoriesByCategory = (category: BlogCategory): BlogSubcategoryFromUnknownCategory[] =>
+export const getBlogSubcategoriesByCategory = async (category: BlogCategory): Promise<BlogSubcategoryFromUnknownCategory[]> => {
   subcategoriesByCategoryGetter(category);
+  const subcategories = await subcategoriesByCategoryGetter(category);
+  return subcategories;
+};

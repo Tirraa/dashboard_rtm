@@ -18,28 +18,28 @@ import { buildPageTitle } from '../str';
 import blogPostGuard from './guards/blogPostGuard';
 import blogSubcategoryGuard from './guards/blogSubcategoryGuard';
 
-export function getBlogStaticParams(): BlogStaticParams[] {
+export async function getBlogStaticParams(): Promise<BlogStaticParams[]> {
   const indexedParams = new Set<string>();
   const blogStaticParams: BlogStaticParams[] = [];
   const blogCategories = getAllBlogCategories();
 
-  blogCategories.forEach((categ) => {
+  for (const categ of blogCategories) {
     const category = categ as BlogCategory;
-    const curSubcategs = getBlogSubcategoriesByCategory(category);
+    const curSubcategs = await getBlogSubcategoriesByCategory(category);
 
-    curSubcategs.forEach((subcateg) => {
+    for (const subcateg of curSubcategs) {
       const subcategory = subcateg as BlogSubcategoryFromUnknownCategory;
-      const relatedPosts = getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
+      const relatedPosts = await getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
 
-      relatedPosts.forEach((post) => {
-        LANGUAGES.forEach((language) => {
+      for (const post of relatedPosts) {
+        for (const language of LANGUAGES) {
           const slug = post.slug as UnknownBlogSlug;
 
           const blogPostExists = getBlogPostUnstrict({ category, subcategory }, slug, language);
-          if (!blogPostExists) return;
+          if (!blogPostExists) break;
 
           const staticParamsIndexKey = `${language}-${categ}-${subcategory}-${slug}`;
-          if (indexedParams.has(staticParamsIndexKey)) return;
+          if (indexedParams.has(staticParamsIndexKey)) break;
 
           indexedParams.add(staticParamsIndexKey);
           const entity: BlogStaticParams = {
@@ -49,10 +49,10 @@ export function getBlogStaticParams(): BlogStaticParams[] {
             [BlogTaxonomy.SLUG]: slug
           };
           blogStaticParams.push(entity);
-        });
-      });
-    });
-  });
+        }
+      }
+    }
+  }
 
   return blogStaticParams as BlogStaticParams[];
 }
@@ -91,7 +91,7 @@ export async function getBlogPostMetadatas({ params }: BlogPostPageProps) {
 
     const slug = params[BlogTaxonomy.SLUG];
     const lang = params[i18nTaxonomy.LANG_FLAG];
-    const post = getBlogPostUnstrict({ category, subcategory }, slug, lang);
+    const post = await getBlogPostUnstrict({ category, subcategory }, slug, lang);
 
     const globalT = await getServerSideI18n();
     const currentPost = post as PostBase;
