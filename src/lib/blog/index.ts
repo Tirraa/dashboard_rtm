@@ -29,7 +29,9 @@ export const getAllBlogPostsByCategoryAndSubcategoryUnstrict = async ({
   category,
   subcategory
 }: UnknownCategoryAndUnknownSubcategory): Promise<PostBase[]> => {
-  const allPosts = await getAllBlogPostsByCategory(category);
+  const isValidPair: boolean = await isValidBlogCategoryAndSubcategoryPair(category, subcategory);
+  if (!isValidPair) return [];
+  const allPosts: PostBase[] = await getAllBlogPostsByCategory(category);
   return allPosts.filter((post) => post.subcategory === subcategory);
 };
 
@@ -37,7 +39,9 @@ export const getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict = as
   { category, subcategory }: UnknownCategoryAndUnknownSubcategory,
   language: LanguageFlag
 ): Promise<PostBase[]> => {
-  const allPosts = await getAllBlogPostsByCategory(category);
+  const isValidPair: boolean = await isValidBlogCategoryAndSubcategoryPair(category, subcategory);
+  if (!isValidPair) return [];
+  const allPosts: PostBase[] = await getAllBlogPostsByCategory(category);
   return allPosts.filter((post) => post.subcategory === subcategory && post.language === language);
 };
 
@@ -59,7 +63,7 @@ export const getAllBlogPostsByCategoryAndSubcategoryStrict = async <C extends Bl
   category: C,
   subcategory: BlogArchitecture[C]
 ): Promise<PostBase[]> => {
-  const allPosts = await getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
+  const allPosts: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
   return allPosts;
 };
 
@@ -68,7 +72,7 @@ export const getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict = asyn
   subcategory: BlogArchitecture[C],
   language: LanguageFlag
 ): Promise<PostBase[]> => {
-  const allPosts = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, language);
+  const allPosts: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, language);
   return allPosts;
 };
 
@@ -78,8 +82,8 @@ export const getBlogPostStrict = async <C extends BlogCategory>(
   targettedSlug: UnknownBlogSlug,
   langFlag: LanguageFlag
 ): Promise<Maybe<PostBase>> => {
-  const allPosts = await getBlogPostUnstrict({ category, subcategory }, targettedSlug, langFlag);
-  return allPosts;
+  const post: Maybe<PostBase> = await getBlogPostUnstrict({ category, subcategory }, targettedSlug, langFlag);
+  return post;
 };
 
 export const getAllBlogCategories = (): BlogCategory[] => Object.keys(BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC) as BlogCategory[];

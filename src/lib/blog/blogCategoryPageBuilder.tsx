@@ -9,12 +9,12 @@ import BlogConfig from '@/config/blog';
 import { getServerSideI18n } from '@/i18n/server';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
 import Link from 'next/link';
-import type { ReactNode } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import slugify from 'slugify';
 import { buildPathFromParts } from '../str';
 import { cn } from '../tailwind';
 
-export async function blogCategoryPageBuilder(posts: PostBase[], category: BlogCategory, lng: LanguageFlag): Promise<ReactNode[] | JSX.Element> {
+export async function blogCategoryPageBuilder(posts: PostBase[], category: BlogCategory, lng: LanguageFlag): Promise<ReactNode[] | ReactElement> {
   function buildHistogram() {
     for (const post of posts) {
       const curSubcateg = post.subcategory as BlogSubcategoryFromUnknownCategory;
