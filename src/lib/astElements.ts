@@ -1,3 +1,3 @@
-import addClassname from './app-agnostic/astElement/addClassname';
+import addClassname from './functions/astElement/addClassname';
 
 export { addClassname };

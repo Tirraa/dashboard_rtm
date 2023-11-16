@@ -1,3 +1,3 @@
-import getEnumKeys from './app-agnostic/typescript/getEnumKeys';
+import getEnumKeys from './functions/typescript/getEnumKeys';
 
 export { getEnumKeys };

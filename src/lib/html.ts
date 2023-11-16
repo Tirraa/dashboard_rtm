@@ -1,11 +1,11 @@
-import computeHTMLElementHeight from './app-agnostic/html/computeHTMLElementHeight';
-import computeHTMLElementWidth from './app-agnostic/html/computeHTMLElementWidth';
-import createURLSearchParams from './app-agnostic/html/createURLSearchParams';
-import getDirection from './app-agnostic/html/getDirection';
-import preserveKeyboardNavigation from './app-agnostic/html/preserveKeyboardNavigation';
-import resetScroll from './app-agnostic/html/resetScroll';
-import resetWindowScroll from './app-agnostic/html/resetWindowScroll';
-import scrollToTop from './app-agnostic/html/scrollToTop';
+import computeHTMLElementHeight from './functions/html/computeHTMLElementHeight';
+import computeHTMLElementWidth from './functions/html/computeHTMLElementWidth';
+import createURLSearchParams from './functions/html/createURLSearchParams';
+import getDirection from './functions/html/getDirection';
+import preserveKeyboardNavigation from './functions/html/preserveKeyboardNavigation';
+import resetScroll from './functions/html/resetScroll';
+import resetWindowScroll from './functions/html/resetWindowScroll';
+import scrollToTop from './functions/html/scrollToTop';
 
 import ELEMENTS_ID from '@/config/elementsId';
 

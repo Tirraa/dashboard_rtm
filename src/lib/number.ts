@@ -1,4 +1,4 @@
-import isInCloseInterval from './app-agnostic/number/isInCloseInterval';
-import isInOpenInterval from './app-agnostic/number/isInOpenInterval';
+import isInCloseInterval from './functions/number/isInCloseInterval';
+import isInOpenInterval from './functions/number/isInOpenInterval';
 
 export { isInCloseInterval, isInOpenInterval };

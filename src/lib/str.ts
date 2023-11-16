@@ -1,14 +1,14 @@
-import buildAbsolutePathFromParts from './app-agnostic/str/buildAbsolutePathFromParts';
-import buildPageTitle from './app-agnostic/str/buildPageTitle';
-import buildPathFromParts from './app-agnostic/str/buildPathFromParts';
-import capitalize from './app-agnostic/str/capitalize';
-import compareAlphabetically from './app-agnostic/str/compareAlphabetically';
-import fromKebabCaseToSentenceCase from './app-agnostic/str/fromKebabCaseToSentenceCase';
-import getFormattedDate from './app-agnostic/str/getFormattedDate';
-import getLastPathPart from './app-agnostic/str/getLastPathPart';
-import getSlashEnvelope from './app-agnostic/str/getSlashEnvelope';
-import indexOfNthOccurrence from './app-agnostic/str/indexOfNthOccurrence';
-import pluralize from './app-agnostic/str/pluralize';
+import buildAbsolutePathFromParts from './functions/str/buildAbsolutePathFromParts';
+import buildPageTitle from './functions/str/buildPageTitle';
+import buildPathFromParts from './functions/str/buildPathFromParts';
+import capitalize from './functions/str/capitalize';
+import compareAlphabetically from './functions/str/compareAlphabetically';
+import fromKebabCaseToSentenceCase from './functions/str/fromKebabCaseToSentenceCase';
+import getFormattedDate from './functions/str/getFormattedDate';
+import getLastPathPart from './functions/str/getLastPathPart';
+import getSlashEnvelope from './functions/str/getSlashEnvelope';
+import indexOfNthOccurrence from './functions/str/indexOfNthOccurrence';
+import pluralize from './functions/str/pluralize';
 import { getPathnameWithoutI18nFlag } from './i18n';
 
 import ROUTES_ROOTS from '@/config/routes';

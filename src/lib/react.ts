@@ -1,4 +1,4 @@
-import getLinkTarget from './app-agnostic/react/getLinkTarget';
-import getRefCurrentPtr from './app-agnostic/react/getRefCurrentPtr';
+import getLinkTarget from './functions/react/getLinkTarget';
+import getRefCurrentPtr from './functions/react/getRefCurrentPtr';
 
 export { getLinkTarget, getRefCurrentPtr };
