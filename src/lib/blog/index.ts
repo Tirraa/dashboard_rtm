@@ -48,19 +48,9 @@ export async function getBlogPostUnstrict(
 ): Promise<Maybe<PostBase>> {
   const postsCollection: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
 
-  if (langFlag === DEFAULT_LANGUAGE) {
-    return (
-      postsCollection.find(
-        ({ subcategory: currentPostSubcategory, slug: currentPostSlug }) =>
-          currentPostSubcategory === subcategory && currentPostSlug === targettedSlug
-      ) ?? null
-    );
-  }
-
   return (
     postsCollection.find(
-      ({ subcategory: currentPostSubcategory, slug: currentPostSlug, language: currentPostLanguage }) =>
-        currentPostSubcategory === subcategory && currentPostSlug === targettedSlug && currentPostLanguage === langFlag
+      ({ language: currentPostLanguage, slug: currentPostSlug }) => currentPostLanguage === langFlag && currentPostSlug === targettedSlug
     ) ?? null
   );
 }

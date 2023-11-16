@@ -37,10 +37,10 @@ export async function getBlogStaticParams(): Promise<BlogStaticParams[]> {
           const slug = post.slug as UnknownBlogSlug;
 
           const blogPost: Maybe<PostBase> = await getBlogPostUnstrict({ category, subcategory }, slug, language);
-          if (!blogPost) break;
+          if (!blogPost) continue;
 
           const staticParamsIndexKey = `${language}-${categ}-${subcategory}-${slug}`;
-          if (indexedParams.has(staticParamsIndexKey)) break;
+          if (indexedParams.has(staticParamsIndexKey)) continue;
 
           indexedParams.add(staticParamsIndexKey);
           const entity: BlogStaticParams = {
