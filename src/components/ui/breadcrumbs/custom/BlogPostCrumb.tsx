@@ -1,13 +1,11 @@
-'use client';
-
-import type { PostBase } from '@/types/Blog';
 import type { FunctionComponent } from 'react';
 import Crumb from '../Crumb';
 
 interface BlogPostCrumbProps {
-  post: PostBase;
+  label: string;
+  url: string;
 }
 
-const BlogPostCrumb: FunctionComponent<BlogPostCrumbProps> = ({ post }) => <Crumb label={post.title} href={post.url} isLeaf />;
+const BlogPostCrumb: FunctionComponent<BlogPostCrumbProps> = ({ label, url }) => <Crumb label={label} href={url} isLeaf />;
 
 export default BlogPostCrumb;

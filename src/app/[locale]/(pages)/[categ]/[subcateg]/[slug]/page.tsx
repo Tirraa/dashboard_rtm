@@ -38,7 +38,7 @@ export default async function Page({ params }: BlogPostPageProps) {
         customCrumbs={[
           {
             depth: 3,
-            jsx: <BlogPostCrumb post={post} />
+            jsx: <BlogPostCrumb label={post.title} url={post.url} />
           }
         ]}
         className="mx-8 w-full py-4 lg:mx-auto lg:max-w-[750px]"
