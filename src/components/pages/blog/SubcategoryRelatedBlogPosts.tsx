@@ -6,7 +6,11 @@ import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
 import MaybePaginatedElements from '@/components/ui/hoc/MaybePaginatedElements';
 import BlogConfig from '@/config/blog';
 import { getScopedI18n } from '@/i18n/server';
-import { blogSubcategoryShouldTriggerNotFound, getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict } from '@/lib/blog';
+import {
+  blogSubcategoryShouldTriggerNotFound,
+  getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict,
+  isValidBlogCategoryAndSubcategoryPair
+} from '@/lib/blog';
 import type { BlogSubcategoryPageProps, PostBase } from '@/types/Blog';
 import { notFound } from 'next/navigation';
 import type { FunctionComponent } from 'react';
@@ -15,6 +19,10 @@ import slugify from 'slugify';
 export const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> = async ({ params }) => {
   const category = params[BlogTaxonomy.CATEGORY];
   const subcategory = params[BlogTaxonomy.SUBCATEGORY];
+
+  const isValidPair: boolean = await isValidBlogCategoryAndSubcategoryPair(category, subcategory);
+  if (!isValidPair) notFound();
+
   const lng = params[i18nTaxonomy.LANG_FLAG];
   const scopedT = await getScopedI18n(i18ns.blogCategories);
 
