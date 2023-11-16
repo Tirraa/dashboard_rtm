@@ -41,8 +41,8 @@ export interface BlogPostProps {
 }
 
 type AllPostsGetter = () => Promise<PostBase[]>;
-export type PostsCollectionAssoc<T extends BlogCategory> = {
-  [_ in T]: AllPostsGetter;
+export type PostsCollectionAssoc = {
+  [_ in BlogCategory]: AllPostsGetter;
 };
 
 type BlogStaticParamsValue = string;

@@ -1,6 +1,6 @@
 import type { BlogCategory, PostBase } from '@/types/Blog';
-import InvalidArgumentsError from '../../../../src/errors/exceptions/InvalidArgument';
-import { indexOfNthOccurrence } from '../../../../src/lib/app-agnostic/str/indexOfNthOccurrence';
+import InvalidArgumentsError from '../../../../../../src/errors/exceptions/InvalidArgument';
+import { indexOfNthOccurrence } from '../../../../../../src/lib/app-agnostic/str/indexOfNthOccurrence';
 
 /**
  * @throws {InvalidArgumentsError}

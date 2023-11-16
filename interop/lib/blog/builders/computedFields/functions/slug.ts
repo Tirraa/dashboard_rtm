@@ -1,5 +1,5 @@
 import type { PostBase, UnknownBlogSlug } from '@/types/Blog';
-import InvalidArgumentsError from '../../../../src/errors/exceptions/InvalidArgument';
+import InvalidArgumentsError from '../../../../../../src/errors/exceptions/InvalidArgument';
 
 /**
  * @throws {InvalidArgumentsError}

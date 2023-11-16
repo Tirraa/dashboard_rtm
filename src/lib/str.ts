@@ -8,6 +8,7 @@ import getFormattedDate from './app-agnostic/str/getFormattedDate';
 import getLastPathPart from './app-agnostic/str/getLastPathPart';
 import getSlashEnvelope from './app-agnostic/str/getSlashEnvelope';
 import indexOfNthOccurrence from './app-agnostic/str/indexOfNthOccurrence';
+import pluralize from './app-agnostic/str/pluralize';
 import { getPathnameWithoutI18nFlag } from './i18n';
 
 import ROUTES_ROOTS from '@/config/routes';
@@ -30,5 +31,6 @@ export {
   getFormattedDate,
   getLastPathPart,
   getSlashEnvelope,
-  indexOfNthOccurrence
+  indexOfNthOccurrence,
+  pluralize
 };

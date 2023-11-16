@@ -1,5 +1,4 @@
-import type { DocumentType } from 'contentlayer/source-files';
-import { defineDocumentType, makeSource } from 'contentlayer/source-files';
+import { makeSource } from 'contentlayer/source-files';
 import type { Element as hASTElement } from 'hast';
 import { h, s } from 'hastscript';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -8,29 +7,11 @@ import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 import CodeSnippetTheme from './interop/config/blog/code-snippet-theme.json';
-import documentsTypesMetadatas from './interop/config/blog/documentsTypesMetadatas';
-import {
-  POST_SCHEMA_CONFIG,
-  DOCUMENTS_COMPUTED_FIELDS as computedFields,
-  DOCUMENTS_CONTENT_TYPE as contentType,
-  DOCUMENTS_FIELDS as fields
-} from './interop/types/contentlayerConfigTweakers';
-import type { AtomicContentLayerDocumentConfig } from './interop/types/hell/contentlayerConfig';
+import { documentTypes } from './interop/config/blog/documentsTypesMetadatas';
 import { addClassname } from './src/lib/astElements';
 import { validateContentLayerConfig } from './validators/contentLayer';
 
 const contentDirPath = 'posts';
-
-const documentTypes: DocumentType<string>[] = Object.values(documentsTypesMetadatas).reduce(
-  (acc, documentTypeMetadatas) => {
-    const { name, filePathPattern } = documentTypeMetadatas;
-    acc.push(
-      defineDocumentType(() => ({ name, filePathPattern, contentType, fields, computedFields }) as const satisfies AtomicContentLayerDocumentConfig)
-    );
-    return acc;
-  },
-  [defineDocumentType(() => POST_SCHEMA_CONFIG)]
-);
 
 validateContentLayerConfig(documentTypes);
 

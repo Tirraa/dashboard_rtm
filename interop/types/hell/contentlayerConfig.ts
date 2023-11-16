@@ -15,6 +15,7 @@ type ComputedFieldsMappedToPartialBaseFieldsSumType<K extends keyof BaseFields> 
   [_ in K]: ComputedField<K>;
 };
 
+type CategoryFolder = string;
 type FilePathPattern = string;
 type PostSchemaKey = 'PostSchema';
 export type TypeName = DocumentsTypesKey | PostSchemaKey;
@@ -24,7 +25,12 @@ type DocumentsConfigTypeContentLayerMetadatas<T extends TypeName = TypeName> = {
   filePathPattern: FilePathPattern;
 };
 
-export type DocumentsTypesMetadatas = Record<DocumentsTypesKey, DocumentsConfigTypeContentLayerMetadatas<DocumentsTypesKey>>;
+type DocumentsConfigTypeMetadatas<T extends TypeName = TypeName> = {
+  name: T;
+  categoryFolder: CategoryFolder;
+};
+
+export type DocumentsTypesMetadatas = Record<DocumentsTypesKey, DocumentsConfigTypeMetadatas<DocumentsTypesKey>>;
 
 // * ... https://github.com/microsoft/TypeScript/issues/56080
 export type DocumentsConfigType<ComputedFields extends keyof BaseFields = never> = {} & ComputedFields extends never

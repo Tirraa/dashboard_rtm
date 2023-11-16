@@ -1,9 +1,13 @@
 import type { DocumentContentType } from 'contentlayer/source-files';
-import buildBlogPostCategory from '../lib/blog/computedFieldsBuilders/category';
-import buildBlogPostLanguageFlag from '../lib/blog/computedFieldsBuilders/language';
-import buildBlogPostSlug from '../lib/blog/computedFieldsBuilders/slug';
-import buildBlogPostSubcategory from '../lib/blog/computedFieldsBuilders/subcategory';
-import buildBlogPostUrl from '../lib/blog/computedFieldsBuilders/url';
+
+import {
+  buildBlogPostCategory,
+  buildBlogPostLanguageFlag,
+  buildBlogPostSlug,
+  buildBlogPostSubcategory,
+  buildBlogPostUrl
+} from '../lib/blog/builders/computedFields';
+
 import type {
   ComputedFieldsAsFieldsRecord,
   ContentLayerDocumentsConfigType,

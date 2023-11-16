@@ -1,8 +1,8 @@
 import type { LanguageFlag } from '##/types/hell/app-agnostic/LanguageFlag';
 import type { PostBase } from '@/types/Blog';
-import isValidLanguageFlag from '../../../../src/lib/app-agnostic/i18n/isValidLanguageFlag';
-import indexOfNthOccurrence from '../../../../src/lib/app-agnostic/str/indexOfNthOccurrence';
-import { DEFAULT_LANGUAGE } from '../../../config/i18n';
+import isValidLanguageFlag from '../../../../../../src/lib/app-agnostic/i18n/isValidLanguageFlag';
+import indexOfNthOccurrence from '../../../../../../src/lib/app-agnostic/str/indexOfNthOccurrence';
+import { DEFAULT_LANGUAGE } from '../../../../../config/i18n';
 
 function buildBlogPostLanguageFlagFromStr(sourceFileDir: string): LanguageFlag {
   const firstSlashIndex = indexOfNthOccurrence(sourceFileDir, '/', 1);
