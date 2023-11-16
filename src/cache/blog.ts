@@ -28,8 +28,7 @@ async function subcategoriesByCategoryGetter(category: BlogCategory) {
   return BlogCache.subcategoriesCollection[category];
 }
 
-export const getBlogSubcategoriesByCategory = async (category: BlogCategory): Promise<BlogSubcategoryFromUnknownCategory[]> => {
-  subcategoriesByCategoryGetter(category);
+export async function getBlogSubcategoriesByCategory(category: BlogCategory): Promise<BlogSubcategoryFromUnknownCategory[]> {
   const subcategories = await subcategoriesByCategoryGetter(category);
   return subcategories;
-};
+}
