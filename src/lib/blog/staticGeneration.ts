@@ -14,13 +14,17 @@ import type {
   UnknownBlogSlug
 } from '@/types/Blog';
 import type { Maybe } from '@/types/CustomUtilitaryTypes';
-import { getAllBlogCategories, getAllBlogPostsByCategoryAndSubcategoryUnstrict, getBlogPostUnstrict, isValidBlogCategoryAndSubcategoryPair } from '.';
+import {
+  getAllBlogCategories,
+  getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict,
+  getBlogPostUnstrict,
+  isValidBlogCategoryAndSubcategoryPair
+} from '.';
 import { buildPageTitle } from '../str';
 import blogPostGuard from './guards/blogPostGuard';
 import blogSubcategoryGuard from './guards/blogSubcategoryGuard';
 
 export async function getBlogStaticParams(): Promise<BlogStaticParams[]> {
-  const indexedParams = new Set<string>();
   const blogStaticParams: BlogStaticParams[] = [];
   const blogCategories = getAllBlogCategories();
 
@@ -30,19 +34,13 @@ export async function getBlogStaticParams(): Promise<BlogStaticParams[]> {
 
     for (const subcateg of curSubcategs) {
       const subcategory = subcateg as BlogSubcategoryFromUnknownCategory;
-      const relatedPosts: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
 
-      for (const post of relatedPosts) {
-        for (const language of LANGUAGES) {
+      for (const language of LANGUAGES) {
+        const relatedPosts: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, language);
+
+        for (const post of relatedPosts) {
           const slug = post.slug as UnknownBlogSlug;
 
-          const blogPost: Maybe<PostBase> = await getBlogPostUnstrict({ category, subcategory }, slug, language);
-          if (!blogPost) continue;
-
-          const staticParamsIndexKey = `${language}-${categ}-${subcategory}-${slug}`;
-          if (indexedParams.has(staticParamsIndexKey)) continue;
-
-          indexedParams.add(staticParamsIndexKey);
           const entity: BlogStaticParams = {
             [i18nTaxonomy.LANG_FLAG]: language,
             [BlogTaxonomy.CATEGORY]: category,
@@ -55,7 +53,7 @@ export async function getBlogStaticParams(): Promise<BlogStaticParams[]> {
     }
   }
 
-  return blogStaticParams as BlogStaticParams[];
+  return blogStaticParams;
 }
 
 export async function getBlogCategoryMetadatas({ params }: BlogCategoryPageProps) {
