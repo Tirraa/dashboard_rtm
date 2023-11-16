@@ -1,6 +1,7 @@
 'use client';
 
 import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
+import type { Maybe } from '@/types/CustomUtilitaryTypes';
 
 // A Next.js Top Loading Bar component made using nprogress, works with Next.js 13.
 // https://github.com/TheSGJ/nextjs-toploader
@@ -70,7 +71,7 @@ const NextTopLoader = ({
   speed,
   shadow
 }: NextTopLoaderProps) => {
-  const [isOnMobileOrTablet, setIsOnMobileOrTablet] = React.useState<boolean | undefined>(undefined);
+  const [isOnMobileOrTablet, setIsOnMobileOrTablet] = React.useState<Maybe<boolean>>(null);
 
   const defaultColor = '#29d';
   const defaultHeight = 3;

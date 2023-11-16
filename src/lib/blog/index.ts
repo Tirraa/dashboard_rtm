@@ -12,6 +12,7 @@ import type {
   UnknownBlogSlug,
   UnknownCategoryAndUnknownSubcategory
 } from '@/types/Blog';
+import type { Maybe } from '@/types/CustomUtilitaryTypes';
 import type { AppPath } from '@/types/Next';
 import type { IsoDateTimeString } from 'contentlayer/core';
 import { redirect } from 'next/navigation';
@@ -44,18 +45,23 @@ export async function getBlogPostUnstrict(
   { category, subcategory }: UnknownCategoryAndUnknownSubcategory,
   targettedSlug: UnknownBlogSlug,
   langFlag: LanguageFlag
-): Promise<undefined | PostBase> {
+): Promise<Maybe<PostBase>> {
   const postsCollection: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
 
   if (langFlag === DEFAULT_LANGUAGE) {
-    return postsCollection.find(
-      ({ subcategory: currentPostSubcategory, slug: currentPostSlug }) => currentPostSubcategory === subcategory && currentPostSlug === targettedSlug
+    return (
+      postsCollection.find(
+        ({ subcategory: currentPostSubcategory, slug: currentPostSlug }) =>
+          currentPostSubcategory === subcategory && currentPostSlug === targettedSlug
+      ) ?? null
     );
   }
 
-  return postsCollection.find(
-    ({ subcategory: currentPostSubcategory, slug: currentPostSlug, language: currentPostLanguage }) =>
-      currentPostSubcategory === subcategory && currentPostSlug === targettedSlug && currentPostLanguage === langFlag
+  return (
+    postsCollection.find(
+      ({ subcategory: currentPostSubcategory, slug: currentPostSlug, language: currentPostLanguage }) =>
+        currentPostSubcategory === subcategory && currentPostSlug === targettedSlug && currentPostLanguage === langFlag
+    ) ?? null
   );
 }
 
@@ -81,7 +87,7 @@ export const getBlogPostStrict = async <C extends BlogCategory>(
   subcategory: BlogArchitecture[C],
   targettedSlug: UnknownBlogSlug,
   langFlag: LanguageFlag
-): Promise<undefined | PostBase> => {
+): Promise<Maybe<PostBase>> => {
   const allPosts = await getBlogPostUnstrict({ category, subcategory }, targettedSlug, langFlag);
   return allPosts;
 };

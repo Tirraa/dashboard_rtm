@@ -23,3 +23,6 @@ export type JSPrimitives = string | number | boolean | null | undefined;
 export type KeySeparator = '.';
 
 export type DeepPathToLiteralKeys<DeepPath> = DeepPath extends string ? JoinKeys<SplitKeys<DeepPath>> : never;
+
+export type Maybe<T> = T | null;
+export type MaybeObjectValue<T> = T | undefined;

@@ -13,6 +13,7 @@ import type {
   PostBase,
   UnknownBlogSlug
 } from '@/types/Blog';
+import type { Maybe } from '@/types/CustomUtilitaryTypes';
 import { getAllBlogCategories, getAllBlogPostsByCategoryAndSubcategoryUnstrict, getBlogPostUnstrict, isValidBlogCategoryAndSubcategoryPair } from '.';
 import { buildPageTitle } from '../str';
 import blogPostGuard from './guards/blogPostGuard';
@@ -25,18 +26,18 @@ export async function getBlogStaticParams(): Promise<BlogStaticParams[]> {
 
   for (const categ of blogCategories) {
     const category = categ as BlogCategory;
-    const curSubcategs = await getBlogSubcategoriesByCategory(category);
+    const curSubcategs: BlogSubcategoryFromUnknownCategory[] = await getBlogSubcategoriesByCategory(category);
 
     for (const subcateg of curSubcategs) {
       const subcategory = subcateg as BlogSubcategoryFromUnknownCategory;
-      const relatedPosts = await getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
+      const relatedPosts: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
 
       for (const post of relatedPosts) {
         for (const language of LANGUAGES) {
           const slug = post.slug as UnknownBlogSlug;
 
-          const blogPostExists = getBlogPostUnstrict({ category, subcategory }, slug, language);
-          if (!blogPostExists) break;
+          const blogPost: Maybe<PostBase> = await getBlogPostUnstrict({ category, subcategory }, slug, language);
+          if (!blogPost) break;
 
           const staticParamsIndexKey = `${language}-${categ}-${subcategory}-${slug}`;
           if (indexedParams.has(staticParamsIndexKey)) break;
@@ -91,7 +92,7 @@ export async function getBlogPostMetadatas({ params }: BlogPostPageProps) {
 
     const slug = params[BlogTaxonomy.SLUG];
     const lang = params[i18nTaxonomy.LANG_FLAG];
-    const post = await getBlogPostUnstrict({ category, subcategory }, slug, lang);
+    const post: Maybe<PostBase> = await getBlogPostUnstrict({ category, subcategory }, slug, lang);
 
     const globalT = await getServerSideI18n();
     const currentPost = post as PostBase;

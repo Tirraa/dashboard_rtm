@@ -1,7 +1,10 @@
-export type User =
-  | {
-      name?: string | null | undefined;
-      email?: string | null | undefined;
-      image?: string | null | undefined;
-    }
-  | undefined;
+import type { Maybe, MaybeObjectValue } from './CustomUtilitaryTypes';
+
+type MaybeSession<T> = T | undefined;
+type MaybeSessionProp<T> = MaybeObjectValue<Maybe<T>>;
+
+export type User = MaybeSession<{
+  name?: MaybeSessionProp<string>;
+  email?: MaybeSessionProp<string>;
+  image?: MaybeSessionProp<string>;
+}>;
