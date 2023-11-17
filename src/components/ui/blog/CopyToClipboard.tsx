@@ -13,9 +13,9 @@ interface CopyToClipboardProps extends WithChildren {}
 export const CopyToClipboard: FunctionComponent<CopyToClipboardProps> = ({ children }) => {
   const textInputRef = useRef<HTMLDivElement>(null);
   const copyBtnRef = useRef<HTMLButtonElement>(null);
-  const [hovered, setHovered] = useState(false);
-  const [focused, setFocused] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [hovered, setHovered] = useState<boolean>(false);
+  const [focused, setFocused] = useState<boolean>(false);
+  const [copied, setCopied] = useState<boolean>(false);
   const globalT = getClientSideI18n();
 
   const onMouseEnter = () => setHovered(true);

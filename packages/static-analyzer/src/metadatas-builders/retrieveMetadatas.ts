@@ -84,14 +84,18 @@ function buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitectureInner
     return result;
   }
 
+  const declaredCategoriesMetadatas: DeclaredCategoriesMetadatas = {};
   const instructions = blogArchitectureInner
     .replace(/\n/g, '')
     .split(';')
     .map((a) => a.trim());
-  const declaredCategoriesMetadatas: DeclaredCategoriesMetadatas = {};
 
   for (const instruction of instructions) {
-    const [categ, subcategsSum] = instruction.split(':');
+    const indexOfSeparator = instruction.indexOf(':');
+    if (indexOfSeparator === -1) continue;
+
+    const categ = instruction.substring(0, indexOfSeparator);
+    const subcategsSum = instruction.substring(indexOfSeparator + 1);
     if (!categ || !subcategsSum) continue;
 
     const category = removeQuotesEnvelope(categ);

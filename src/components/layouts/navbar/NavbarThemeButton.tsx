@@ -17,7 +17,8 @@ const { SIZE_PX_VALUE: SIZE } = NAVBAR_ICON_STYLE;
 
 export const NavbarThemeButton: FunctionComponent<NavbarLoginButtonProps> = ({ isMobile }) => {
   const { theme, setTheme } = useTheme();
-  const [isMounted, setIsMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+
   const scopedT = useScopedI18n(`${i18ns.navbar}.sr-only`);
 
   useEffect(() => setIsMounted(true), []);

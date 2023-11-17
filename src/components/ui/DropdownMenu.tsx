@@ -22,7 +22,7 @@ const DropdownMenu: React.FunctionComponent<DropdownMenuPrimitive.DropdownMenuPr
   open,
   ...injectedProps
 }) => {
-  const [isMounted, setIsMounted] = React.useState(false);
+  const [isMounted, setIsMounted] = React.useState<boolean>(false);
   React.useEffect(() => setIsMounted(true), []);
   const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
 
