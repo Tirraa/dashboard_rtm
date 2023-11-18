@@ -22,28 +22,30 @@ import { buildAbsolutePathFromParts, getFormattedDate } from '../str';
  * @throws {TypeError}
  * May throw a TypeError: "x[y] is not a function" at runtime, in a type unsafe context
  */
-export const getAllBlogPostsByCategory = async (categ: BlogCategory): Promise<PostBase[]> =>
-  await BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[categ]();
+export async function getAllBlogPostsByCategory(categ: BlogCategory): Promise<PostBase[]> {
+  const posts = await BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[categ]();
+  return posts;
+}
 
-export const getAllBlogPostsByCategoryAndSubcategoryUnstrict = async ({
+export async function getAllBlogPostsByCategoryAndSubcategoryUnstrict({
   category,
   subcategory
-}: UnknownCategoryAndUnknownSubcategory): Promise<PostBase[]> => {
+}: UnknownCategoryAndUnknownSubcategory): Promise<PostBase[]> {
   const isValidPair: boolean = await isValidBlogCategoryAndSubcategoryPair(category, subcategory);
   if (!isValidPair) return [];
   const allPosts: PostBase[] = await getAllBlogPostsByCategory(category);
   return allPosts.filter((post) => post.subcategory === subcategory);
-};
+}
 
-export const getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict = async (
+export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(
   { category, subcategory }: UnknownCategoryAndUnknownSubcategory,
   language: LanguageFlag
-): Promise<PostBase[]> => {
+): Promise<PostBase[]> {
   const isValidPair: boolean = await isValidBlogCategoryAndSubcategoryPair(category, subcategory);
   if (!isValidPair) return [];
   const allPosts: PostBase[] = await getAllBlogPostsByCategory(category);
   return allPosts.filter((post) => post.subcategory === subcategory && post.language === language);
-};
+}
 
 export async function getBlogPostUnstrict(
   { category, subcategory }: UnknownCategoryAndUnknownSubcategory,
@@ -59,32 +61,32 @@ export async function getBlogPostUnstrict(
   );
 }
 
-export const getAllBlogPostsByCategoryAndSubcategoryStrict = async <C extends BlogCategory>(
+export async function getAllBlogPostsByCategoryAndSubcategoryStrict<C extends BlogCategory>(
   category: C,
   subcategory: BlogArchitecture[C]
-): Promise<PostBase[]> => {
+): Promise<PostBase[]> {
   const allPosts: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
   return allPosts;
-};
+}
 
-export const getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict = async <C extends BlogCategory>(
+export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict<C extends BlogCategory>(
   category: C,
   subcategory: BlogArchitecture[C],
   language: LanguageFlag
-): Promise<PostBase[]> => {
+): Promise<PostBase[]> {
   const allPosts: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, language);
   return allPosts;
-};
+}
 
-export const getBlogPostStrict = async <C extends BlogCategory>(
+export async function getBlogPostStrict<C extends BlogCategory>(
   category: C,
   subcategory: BlogArchitecture[C],
   targettedSlug: UnknownBlogSlug,
   langFlag: LanguageFlag
-): Promise<Maybe<PostBase>> => {
+): Promise<Maybe<PostBase>> {
   const post: Maybe<PostBase> = await getBlogPostUnstrict({ category, subcategory }, targettedSlug, langFlag);
   return post;
-};
+}
 
 export const getAllBlogCategories = (): BlogCategory[] => Object.keys(BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC) as BlogCategory[];
 
@@ -127,14 +129,10 @@ export const redirectToBlogCategoryAndSubcategoryPairPageUnstrict = (category: B
   redirect(buildAbsolutePathFromParts(ROUTES_ROOTS.BLOG, category, subcategory));
 
 export function getBlogPostPathWithoutI18nPart({ language, url }: PostBase): AppPath {
-  const langFlag = language;
-  if (langFlag === DEFAULT_LANGUAGE) return url;
-  const blogPostPathWithoutI18nPart = url.replace(`/${langFlag}/`, '/');
+  if (language === DEFAULT_LANGUAGE) return url;
+  const blogPostPathWithoutI18nPart = url.replace(`/${language}/`, '/');
   return blogPostPathWithoutI18nPart;
 }
-
-type DescriptionAsIs = string;
-type CroppedDescription = string;
 
 export function getSlicedBlogPostDescription(description: string): DescriptionAsIs | CroppedDescription {
   const takeLimit = BlogConfig.BLOG_POST_PREVIEW_DESCRIPTION_CHARACTERS_LIMIT - 1;
@@ -143,3 +141,6 @@ export function getSlicedBlogPostDescription(description: string): DescriptionAs
   const slicedDescription = description.substring(0, takeLimit) + '…';
   return slicedDescription;
 }
+
+type DescriptionAsIs = string;
+type CroppedDescription = string;

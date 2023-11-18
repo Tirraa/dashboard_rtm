@@ -9,12 +9,6 @@ import {
 } from '../../types/contentlayerConfigTweakers';
 import type { AtomicContentLayerDocumentConfig, DocumentsTypesMetadatas } from '../../types/hell/contentlayerConfig';
 
-const defineDocumentType = (def: () => DocumentTypeDef<string>) =>
-  ({
-    type: 'document',
-    def
-  }) as const;
-
 const documentsTypesMetadatas: DocumentsTypesMetadatas = {
   PatchPost: {
     name: 'PatchPost',
@@ -25,6 +19,12 @@ const documentsTypesMetadatas: DocumentsTypesMetadatas = {
     categoryFolder: 'patch-notes-bis'
   }
 } as const;
+
+const defineDocumentType = (def: () => DocumentTypeDef<string>) =>
+  ({
+    type: 'document',
+    def
+  }) as const;
 
 export const documentTypes: DocumentType[] = Object.values(documentsTypesMetadatas).reduce(
   (acc, documentTypeMetadatas) => {

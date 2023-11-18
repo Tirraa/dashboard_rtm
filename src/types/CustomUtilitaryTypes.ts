@@ -10,10 +10,6 @@ type JoinKeys<T extends string[]> = T extends []
     : never
   : never;
 
-export type RequiredFieldsOnly<T> = {
-  [K in keyof T as T[K] extends Required<T>[K] ? K : never]: T[K];
-};
-
 export type MakeHomogeneousValuesObjType<Obj extends object, ObjValuesType> = {
   [K in keyof Obj]: Obj[K] extends object ? MakeHomogeneousValuesObjType<Obj[K], ObjValuesType> : ObjValuesType;
 };
@@ -24,5 +20,15 @@ export type KeySeparator = '.';
 
 export type DeepPathToLiteralKeys<DeepPath> = DeepPath extends string ? JoinKeys<SplitKeys<DeepPath>> : never;
 
+// * ... https://github.com/microsoft/TypeScript/issues/56080
+export type Tuple<T1, T2 = never> = [] & T2 extends never ? [T1, T1] : [T1, T2];
+
 export type Maybe<T> = T | null;
 export type MaybeObjectValue<T> = T | undefined;
+
+// * ... https://github.com/microsoft/TypeScript/issues/56080
+export type CompareFun<T extends Tuple<unknown>, CTX extends unknown[] = never> = Function & CTX extends never
+  ? (x1: T[0], x2: T[1]) => CompareFunReturnValue
+  : (x1: T[0], x2: T[1], ...ctx: [...CTX]) => CompareFunReturnValue;
+
+type CompareFunReturnValue = number;

@@ -1,1 +1,3 @@
-export type DatesCompareFun = (d1: Date, d2: Date) => number;
+import type { CompareFun, Tuple } from '@/types/CustomUtilitaryTypes';
+
+export type DatesCompareFun = CompareFun<Tuple<Date>>;

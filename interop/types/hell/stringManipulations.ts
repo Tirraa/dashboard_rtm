@@ -1,3 +1,4 @@
+import type { CompareFun, Tuple } from '@/types/CustomUtilitaryTypes';
 import type { LanguageFlag } from './i18n';
 
-export type StringsCompareFun = (s1: string, s2: string, locale: LanguageFlag) => number;
+export type StringsCompareFun = CompareFun<Tuple<string>> | CompareFun<Tuple<string>, [LanguageFlag]>;

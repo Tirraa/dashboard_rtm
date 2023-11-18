@@ -1,4 +1,4 @@
-import { categoriesBlogDataAssoc } from '##/config/blog/documentsTypesMetadatas';
+import { categoriesBlogDataAssoc } from '##/config/blog/documentsTypes';
 import type { DatesCompareFun } from '##/types/hell/dateManipulations';
 import type { StringsCompareFun } from '##/types/hell/stringManipulations';
 import { compareAlphabetically } from '@/lib/str';

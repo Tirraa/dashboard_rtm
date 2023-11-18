@@ -8,8 +8,8 @@ export async function blogSubcategoryGuard({ params }: BlogSubcategoryPageProps)
   const category = params[BlogTaxonomy.CATEGORY];
 
   const validCategory = isValidBlogCategory(category);
-  const equivRoutes = ROUTES_ROOTS.WEBSITE + category === ROUTES_ROOTS.BLOG + category;
-  if (!validCategory && !equivRoutes) redirect(ROUTES_ROOTS.WEBSITE + category);
+  const categServedAtRoot = ROUTES_ROOTS.WEBSITE + category === ROUTES_ROOTS.BLOG + category;
+  if (!validCategory && !categServedAtRoot) redirect(ROUTES_ROOTS.WEBSITE + category);
 
   const subcategory = params[BlogTaxonomy.SUBCATEGORY];
   const validCombination: boolean = await isValidBlogCategoryAndSubcategoryPair(category, subcategory);

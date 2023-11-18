@@ -7,7 +7,7 @@ import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 import CodeSnippetTheme from './interop/config/blog/code-snippet-theme.json';
-import { documentTypes } from './interop/config/blog/documentsTypesMetadatas';
+import { documentTypes } from './interop/config/blog/documentsTypes';
 import { addClassname } from './src/lib/astElements';
 import { validateContentLayerConfig } from './validators/contentLayer';
 

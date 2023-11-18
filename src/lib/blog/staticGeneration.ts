@@ -28,14 +28,14 @@ export async function getBlogStaticParams(): Promise<BlogStaticParams[]> {
   const blogStaticParams: BlogStaticParams[] = [];
   const blogCategories = getAllBlogCategories();
 
-  for (const categ of blogCategories) {
-    const category = categ as BlogCategory;
-    const curSubcategs: BlogSubcategoryFromUnknownCategory[] = await getBlogSubcategoriesByCategory(category);
+  for (const language of LANGUAGES) {
+    for (const categ of blogCategories) {
+      const category = categ as BlogCategory;
+      const curSubcategs: BlogSubcategoryFromUnknownCategory[] = await getBlogSubcategoriesByCategory(category);
 
-    for (const subcateg of curSubcategs) {
-      const subcategory = subcateg as BlogSubcategoryFromUnknownCategory;
+      for (const subcateg of curSubcategs) {
+        const subcategory = subcateg as BlogSubcategoryFromUnknownCategory;
 
-      for (const language of LANGUAGES) {
         const relatedPosts: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, language);
 
         for (const post of relatedPosts) {

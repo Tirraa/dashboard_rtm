@@ -1,5 +1,6 @@
 import { DATA_QA_WARNING_DOM_KEY, QA_WARNINGS } from '##/config/QA';
 import { cn } from '@/lib/tailwind';
+import type { MaybeObjectValue } from '@/types/CustomUtilitaryTypes';
 import Link from 'next/link';
 import type { FunctionComponent } from 'react';
 import CrumbSeparator from './CrumbSeparator';
@@ -12,7 +13,7 @@ interface CrumbProps {
 }
 
 const Crumb: FunctionComponent<CrumbProps> = ({ label, href, isLeaf: maybeIsLeaf, withRescueCtx: maybeWithRescueCtx }) => {
-  const QA_WARNING = maybeWithRescueCtx ? QA_WARNINGS.IS_A_FALLBACK : undefined;
+  const QA_WARNING: MaybeObjectValue<string> = maybeWithRescueCtx ? QA_WARNINGS.IS_A_FALLBACK : undefined;
   const QA_PROPS = { [DATA_QA_WARNING_DOM_KEY]: QA_WARNING };
   const isLeaf = Boolean(maybeIsLeaf);
 

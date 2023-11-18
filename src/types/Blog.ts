@@ -3,7 +3,6 @@ import type { TBlogTaxonomy } from '##/config/taxonomies/blog';
 import type { LanguageFlag } from '##/types/hell/i18n';
 import type { BlogArchitecture } from '@/config/blog';
 import type { PostSchema } from 'contentlayer/generated';
-import type { RequiredFieldsOnly } from './CustomUtilitaryTypes';
 import type { I18nParams } from './Next';
 
 type ContentLayerPhantomType = 'type';
@@ -15,13 +14,16 @@ export type BlogSubcategoryFromUnknownCategory = BlogArchitecture[BlogCategory];
 
 export type UnknownBlogSlug = string;
 
-type BlogPostPagePropsParams = RequiredFieldsOnly<TBlogTaxonomy>;
-type BlogCategoryPagePropsParams = Pick<TBlogTaxonomy, 'categ'>;
+type BlogCategoryPagePropsParams = {
+  [BlogTaxonomy.CATEGORY]: BlogCategory;
+};
 
 type BlogSubcategoryPagePropsParams = {
   [BlogTaxonomy.CATEGORY]: BlogCategory;
   [BlogTaxonomy.SUBCATEGORY]: BlogSubcategoryFromUnknownCategory;
 };
+
+type BlogPostPagePropsParams = TBlogTaxonomy;
 
 export interface BlogCategoryPageProps {
   params: BlogCategoryPagePropsParams & I18nParams;
@@ -32,7 +34,7 @@ export interface BlogSubcategoryPageProps {
 }
 
 export interface BlogPostPageProps {
-  params: BlogPostPagePropsParams & I18nParams;
+  params: BlogPostPagePropsParams;
 }
 
 export interface BlogPostProps {
