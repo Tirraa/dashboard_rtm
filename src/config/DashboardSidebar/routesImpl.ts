@@ -1,6 +1,6 @@
 import { i18ns } from '##/config/i18n';
+import ROUTES_ROOTS from '##/config/routes';
 import type { DashboardRoutes, DashboardRoutesTitles } from '@/config/DashboardSidebar/utils/RoutesMapping';
-import ROUTES_ROOTS from '@/config/routes';
 import { getSlashEnvelope } from '@/lib/str';
 
 const BASE = getSlashEnvelope(ROUTES_ROOTS.DASHBOARD);

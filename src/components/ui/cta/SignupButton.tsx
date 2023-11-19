@@ -1,9 +1,9 @@
 'use client';
 
 import { i18ns } from '##/config/i18n';
+import ROUTES_ROOTS from '##/config/routes';
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
 import { Button } from '@/components/ui/Button';
-import ROUTES_ROOTS from '@/config/routes';
 import { getClientSideI18n } from '@/i18n/client';
 import { signIn } from 'next-auth/react';
 import type { FunctionComponent } from 'react';

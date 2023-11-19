@@ -1,10 +1,10 @@
 'use client';
 
 import { i18ns } from '##/config/i18n';
+import ROUTES_ROOTS from '##/config/routes';
 import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
 import { Button } from '@/components/ui/Button';
 import UserImage from '@/components/ui/hoc/UserImage';
-import ROUTES_ROOTS from '@/config/routes';
 import { useScopedI18n } from '@/i18n/client';
 import type { WithIsMobile } from '@/types/Next';
 import { KeyIcon, SignalSlashIcon } from '@heroicons/react/20/solid';

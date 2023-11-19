@@ -1,10 +1,10 @@
 'use client';
 
+import ROUTES_ROOTS from '##/config/routes';
 import SidebarButtonStyle from '@/components/config/styles/sidebar/SidebarButtonStyle';
 import DASHBOARD_ROUTES, { DASHBOARD_ROUTES_TITLES } from '@/config/DashboardSidebar/routesImpl';
 import DASHBOARD_ROUTES_SIDEBAR_COMPONENTS from '@/config/DashboardSidebar/utils/IconsMapping';
 import type { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMapping';
-import ROUTES_ROOTS from '@/config/routes';
 import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
 import { computeHTMLElementHeight, computeHTMLElementWidth, getDirection } from '@/lib/html';
 import { getRefCurrentPtr } from '@/lib/react';

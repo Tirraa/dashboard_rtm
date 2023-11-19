@@ -1,5 +1,5 @@
+import ROUTES_ROOTS from '##/config/routes';
 import BlogTaxonomy from '##/config/taxonomies/blog';
-import ROUTES_ROOTS from '@/config/routes';
 import type { BlogSubcategoryPageProps } from '@/types/Blog';
 import { redirect } from 'next/navigation';
 import { isValidBlogCategory, isValidBlogCategoryAndSubcategoryPair, redirectToBlogCategoryPage } from '..';

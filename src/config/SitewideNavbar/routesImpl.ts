@@ -1,7 +1,7 @@
 import { i18ns } from '##/config/i18n';
+import ROUTES_ROOTS from '##/config/routes';
 import type { SitewideNavbarRoutes, SitewideNavbarRoutesTitles } from '@/config/SitewideNavbar/utils/RoutesMapping';
 import DISCORD_CONFIG from '@/config/discord';
-import ROUTES_ROOTS from '@/config/routes';
 import { getSlashEnvelope } from '@/lib/str';
 
 const BASE = getSlashEnvelope(ROUTES_ROOTS.WEBSITE);

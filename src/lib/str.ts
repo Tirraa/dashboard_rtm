@@ -11,7 +11,7 @@ import indexOfNthOccurrence from './functions/str/indexOfNthOccurrence';
 import pluralize from './functions/str/pluralize';
 import { getPathnameWithoutI18nFlag } from './i18n';
 
-import ROUTES_ROOTS from '@/config/routes';
+import ROUTES_ROOTS from '##/config/routes';
 import type { AppPath } from '@/types/Next';
 
 export function hrefMatchesPathname(href: AppPath, pathname: AppPath, root: AppPath = ROUTES_ROOTS.WEBSITE): boolean {

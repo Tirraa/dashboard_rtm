@@ -1,6 +1,7 @@
 'use client';
 
 import { i18ns } from '##/config/i18n';
+import ROUTES_ROOTS from '##/config/routes';
 import i18nTaxonomy from '##/config/taxonomies/i18n';
 import type { LanguageFlag } from '##/types/hell/i18n';
 import NAVBAR_STYLE from '@/components/config/styles/navbar/NavbarStyle';
@@ -10,7 +11,6 @@ import NavbarElement from '@/components/ui/hoc/NavbarElement';
 import { NAVBAR_EXTRAS_COMPONENTS_DESKTOP, NAVBAR_EXTRAS_COMPONENTS_MOBILE } from '@/config/SitewideNavbar/Extras/utils/ComponentsMapping';
 import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsConfig';
 import SITEWIDE_NAVBAR_ROUTES, { SITEWIDE_NAVBAR_ROUTES_TITLES } from '@/config/SitewideNavbar/routesImpl';
-import ROUTES_ROOTS from '@/config/routes';
 import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
 import getComputedNavData from '@/lib/misc/getComputedNavData';
 import { cn } from '@/lib/tailwind';

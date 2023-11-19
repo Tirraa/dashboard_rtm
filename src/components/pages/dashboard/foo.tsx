@@ -1,4 +1,4 @@
-import ROUTES_ROOTS from '@/config/routes';
+import ROUTES_ROOTS from '##/config/routes';
 import Link from 'next/link';
 import type { FunctionComponent } from 'react';
 

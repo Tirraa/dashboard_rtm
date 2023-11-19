@@ -1,9 +1,9 @@
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
+import ROUTES_ROOTS from '##/config/routes';
 import type { LanguageFlag } from '##/types/hell/i18n';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import type { BlogArchitecture } from '@/config/blog';
 import BlogConfig from '@/config/blog';
-import ROUTES_ROOTS from '@/config/routes';
 import type {
   BlogCategory,
   BlogCategoryAndSubcategoriesPair,

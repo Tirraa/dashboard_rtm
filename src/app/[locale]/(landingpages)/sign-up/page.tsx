@@ -1,7 +1,7 @@
 import { i18ns } from '##/config/i18n';
+import ROUTES_ROOTS from '##/config/routes';
 import i18nTaxonomy from '##/config/taxonomies/i18n';
 import SignupButton from '@/components/ui/cta/SignupButton';
-import ROUTES_ROOTS from '@/config/routes';
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
 import { buildPageTitle } from '@/lib/str';
 import type { I18nPageProps } from '@/types/Next';

@@ -1,8 +1,8 @@
 'use client';
 
 import { i18ns } from '##/config/i18n';
+import ROUTES_ROOTS from '##/config/routes';
 import type { PagesTitlesKey, UnstrictScopedT } from '##/types/hell/i18n';
-import ROUTES_ROOTS from '@/config/routes';
 import { useScopedI18n } from '@/i18n/client';
 import { getPathParts } from '@/lib/next';
 import { buildAbsolutePathFromParts, fromKebabCaseToSentenceCase } from '@/lib/str';

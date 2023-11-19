@@ -1,6 +1,6 @@
+import ROUTES_ROOTS from '##/config/routes';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import i18nTaxonomy from '##/config/taxonomies/i18n';
-import ROUTES_ROOTS from '@/config/routes';
 import type { BlogPostPageProps } from '@/types/Blog';
 import { redirect } from 'next/navigation';
 import {
