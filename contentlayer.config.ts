@@ -7,16 +7,19 @@ import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 import CodeSnippetTheme from './interop/config/blog/code-snippet-theme.json';
-import { documentTypes } from './interop/config/blog/documentsTypes';
+import { POSTS_FOLDER } from './interop/config/blog/documentSpecs';
+import { documentTypes } from './interop/config/blog/documentTypes';
 import { addClassname } from './src/lib/astElements';
 import { validateContentLayerConfig } from './validators/contentLayer';
 
-const contentDirPath = 'posts';
+const contentDirPath = '.';
+const contentDirInclude = [POSTS_FOLDER];
 
 validateContentLayerConfig(documentTypes);
 
 export default makeSource({
   contentDirPath,
+  contentDirInclude,
   documentTypes,
   mdx: {
     remarkPlugins: [remarkGfm],

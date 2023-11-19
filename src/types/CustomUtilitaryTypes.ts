@@ -18,7 +18,7 @@ export type JSPrimitives = string | number | boolean | null | undefined;
 
 export type KeySeparator = '.';
 
-export type DeepPathToLiteralKeys<DeepPath> = DeepPath extends string ? JoinKeys<SplitKeys<DeepPath>> : never;
+export type DeepPathToLiteralKeys<DeepPath extends string> = JoinKeys<SplitKeys<DeepPath>>;
 
 // * ... https://github.com/microsoft/TypeScript/issues/56080
 export type Tuple<T1, T2 = never> = [] & T2 extends never ? [T1, T1] : [T1, T2];

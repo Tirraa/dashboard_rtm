@@ -4,6 +4,7 @@ import buildPathFromParts from './functions/str/buildPathFromParts';
 import capitalize from './functions/str/capitalize';
 import compareAlphabetically from './functions/str/compareAlphabetically';
 import countCharacter from './functions/str/countCharacter';
+import endsWithChars from './functions/str/endsWithChar';
 import fromKebabCaseToSentenceCase from './functions/str/fromKebabCaseToSentenceCase';
 import getFormattedDate from './functions/str/getFormattedDate';
 import getLastPathPart from './functions/str/getLastPathPart';
@@ -29,6 +30,7 @@ export {
   capitalize,
   compareAlphabetically,
   countCharacter,
+  endsWithChars,
   fromKebabCaseToSentenceCase,
   getFormattedDate,
   getLastPathPart,
