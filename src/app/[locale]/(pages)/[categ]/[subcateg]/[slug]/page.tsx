@@ -1,3 +1,4 @@
+import ROUTES_ROOTS from '##/config/routes';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import i18nTaxonomy from '##/config/taxonomies/i18n';
 import BlogPost from '@/components/pages/blog/BlogPost';
@@ -5,6 +6,7 @@ import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
 import BlogPostCrumb from '@/components/ui/breadcrumbs/custom/BlogPostCrumb';
 import { getBlogPostUnstrict } from '@/lib/blog';
 import { blogPostGuard, getBlogPostMetadatas, getBlogStaticParams } from '@/lib/blog/staticGeneration';
+import { countCharacter } from '@/lib/str';
 import type { BlogPostPageProps, PostBase } from '@/types/Blog';
 import type { Maybe } from '@/types/CustomUtilitaryTypes';
 import { setStaticParamsLocale } from 'next-international/server';
@@ -32,12 +34,15 @@ export default async function Page({ params }: BlogPostPageProps) {
   const post: Maybe<PostBase> = await getBlogPostUnstrict({ category, subcategory }, slug, lng);
   if (!post) notFound();
 
+  const MIN_DEPTH = 3;
+  const depth = countCharacter(ROUTES_ROOTS.BLOG, '/') - 1 + MIN_DEPTH;
+
   return (
     <div className="mx-4 flex flex-col items-center lg:mx-24">
       <Breadcrumbs
         customCrumbs={[
           {
-            depth: 3,
+            depth,
             jsx: <BlogPostCrumb label={post.title} url={post.url} />
           }
         ]}

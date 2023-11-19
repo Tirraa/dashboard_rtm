@@ -3,6 +3,7 @@ import buildPageTitle from './functions/str/buildPageTitle';
 import buildPathFromParts from './functions/str/buildPathFromParts';
 import capitalize from './functions/str/capitalize';
 import compareAlphabetically from './functions/str/compareAlphabetically';
+import countCharacter from './functions/str/countCharacter';
 import fromKebabCaseToSentenceCase from './functions/str/fromKebabCaseToSentenceCase';
 import getFormattedDate from './functions/str/getFormattedDate';
 import getLastPathPart from './functions/str/getLastPathPart';
@@ -27,6 +28,7 @@ export {
   buildPathFromParts,
   capitalize,
   compareAlphabetically,
+  countCharacter,
   fromKebabCaseToSentenceCase,
   getFormattedDate,
   getLastPathPart,

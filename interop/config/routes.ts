@@ -1,4 +1,5 @@
 import type { AppPath } from '@/types/Next';
+import getSlashEnvelope from '../../src/lib/functions/str/getSlashEnvelope';
 
 enum ERoutesRoots {
   WEBSITE,
@@ -11,8 +12,8 @@ type RoutesRootsKeys = keyof typeof ERoutesRoots;
 type TRoutesRoots = Record<RoutesRootsKeys, AppPath>;
 
 const ROUTES_ROOTS_BASE = {
-  WEBSITE: '/',
-  BLOG: '/'
+  WEBSITE: getSlashEnvelope('/'),
+  BLOG: getSlashEnvelope('/')
 } satisfies Partial<TRoutesRoots>;
 
 const blogRoutesBase = ROUTES_ROOTS_BASE.BLOG;
