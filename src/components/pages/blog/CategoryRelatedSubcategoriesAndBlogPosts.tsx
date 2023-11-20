@@ -1,6 +1,6 @@
 import { i18ns } from '##/config/i18n';
 import BlogTaxonomy from '##/config/taxonomies/blog';
-import i18nTaxonomy from '##/config/taxonomies/i18n';
+import I18nTaxonomy from '##/config/taxonomies/i18n';
 import BlogConfig from '@/config/blog';
 import { getScopedI18n } from '@/i18n/server';
 import blogCategoryPageBuilder from '@/lib/blog/blogCategoryPageBuilder';
@@ -11,7 +11,7 @@ import type { FunctionComponent } from 'react';
 interface CategoryRelatedSubcategoriesAndBlogPostsProps extends BlogCategoryPageProps {}
 
 export const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<CategoryRelatedSubcategoriesAndBlogPostsProps> = async ({ params }) => {
-  const lng = params[i18nTaxonomy.LANG_FLAG];
+  const language = params[I18nTaxonomy.LANGUAGE];
   const category: BlogCategory = params[BlogTaxonomy.CATEGORY];
   const scopedT = await getScopedI18n(i18ns.blogCategories);
 
@@ -25,7 +25,7 @@ export const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<Categor
   const posts = gettedOnTheFlyPosts.sort((post1, post2) =>
     BlogConfig.DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_CATEGORY_PAGE(new Date(post1.date), new Date(post2.date))
   );
-  const generatedContent = await blogCategoryPageBuilder(posts, category, lng);
+  const generatedContent = await blogCategoryPageBuilder(posts, category, language);
 
   return (
     <div className="w-full">

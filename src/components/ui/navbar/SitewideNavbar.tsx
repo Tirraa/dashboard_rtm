@@ -2,7 +2,7 @@
 
 import { i18ns } from '##/config/i18n';
 import ROUTES_ROOTS from '##/config/routes';
-import i18nTaxonomy from '##/config/taxonomies/i18n';
+import I18nTaxonomy from '##/config/taxonomies/i18n';
 import type { LanguageFlag } from '##/types/hell/i18n';
 import NAVBAR_STYLE from '@/components/config/styles/navbar/NavbarStyle';
 import NavbarButton from '@/components/layouts/navbar/NavbarButton';
@@ -62,7 +62,7 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const currentLocale: LanguageFlag = useCurrentLocale();
 
   const navbarItemClassName = 'p-[5px]';
-  const navbarItems = buildNavbarItems({ i18nProps: { [i18nTaxonomy.LANG_FLAG]: currentLocale } });
+  const navbarItems = buildNavbarItems({ i18nProps: { [I18nTaxonomy.LANGUAGE]: currentLocale } });
   const desktopNavbarItems = navbarItems.map((item, index) => (
     <li key={`${index}-navbar-btn-typography-desktop`} className={navbarItemClassName}>
       {item.jsx}

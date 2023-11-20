@@ -39,7 +39,7 @@ export interface BlogPostPageProps {
 
 export interface BlogPostProps {
   post: PostBase;
-  lng: LanguageFlag;
+  language: LanguageFlag;
 }
 
 type AllPostsGetter = () => Promise<PostBase[]>;
@@ -50,13 +50,4 @@ export type PostsCollectionAssoc = {
 type BlogStaticParamsValue = string;
 export type BlogStaticParams = {
   [_ in keyof TBlogTaxonomy]: BlogStaticParamsValue;
-};
-
-export type UnknownCategoryAndUnknownSubcategory = {
-  category: BlogCategory;
-  subcategory: BlogSubcategoryFromUnknownCategory;
-};
-
-type BlogSubcategoryMappedToBlogCategory = {
-  [C in BlogCategory]: BlogArchitecture[C];
 };

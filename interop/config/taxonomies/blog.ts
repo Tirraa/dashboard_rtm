@@ -1,6 +1,6 @@
 import type { LanguageFlag } from '##/types/hell/i18n';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, UnknownBlogSlug } from '@/types/Blog';
-import type i18nTaxonomy from './i18n';
+import type I18nTaxonomy from './i18n';
 
 export namespace BlogTaxonomy {
   export const CATEGORY = 'categ';
@@ -12,7 +12,7 @@ export type TBlogTaxonomy = {
   [BlogTaxonomy.CATEGORY]: BlogCategory;
   [BlogTaxonomy.SUBCATEGORY]: BlogSubcategoryFromUnknownCategory;
   [BlogTaxonomy.SLUG]: UnknownBlogSlug;
-  [i18nTaxonomy.LANG_FLAG]: LanguageFlag;
+  [I18nTaxonomy.LANGUAGE]: LanguageFlag;
 };
 
 export default BlogTaxonomy;

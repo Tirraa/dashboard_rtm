@@ -1,6 +1,6 @@
 import ROUTES_ROOTS from '##/config/routes';
 import BlogTaxonomy from '##/config/taxonomies/blog';
-import i18nTaxonomy from '##/config/taxonomies/i18n';
+import I18nTaxonomy from '##/config/taxonomies/i18n';
 import BlogPost from '@/components/pages/blog/BlogPost';
 import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
 import BlogPostCrumb from '@/components/ui/breadcrumbs/custom/BlogPostCrumb';
@@ -24,14 +24,14 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }: BlogPostPageProps) {
-  const lng = params[i18nTaxonomy.LANG_FLAG];
-  setStaticParamsLocale(lng);
+  const language = params[I18nTaxonomy.LANGUAGE];
+  setStaticParamsLocale(language);
 
   const category = params[BlogTaxonomy.CATEGORY];
   const subcategory = params[BlogTaxonomy.SUBCATEGORY];
   const slug = params[BlogTaxonomy.SLUG];
 
-  const post: Maybe<PostBase> = await getBlogPostUnstrict({ category, subcategory }, slug, lng);
+  const post: Maybe<PostBase> = await getBlogPostUnstrict(category, subcategory, slug, language);
   if (!post) notFound();
 
   const MIN_DEPTH = 3;

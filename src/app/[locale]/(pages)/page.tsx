@@ -1,5 +1,5 @@
 import { i18ns } from '##/config/i18n';
-import i18nTaxonomy from '##/config/taxonomies/i18n';
+import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { MAIN_CLS } from '@/components/config/styles/main';
 import Homepage from '@/components/pages/Homepage';
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
@@ -20,8 +20,8 @@ export function generateStaticParams() {
 }
 
 export default function Page({ params }: I18nPageProps) {
-  const lng = params[i18nTaxonomy.LANG_FLAG];
-  setStaticParamsLocale(lng);
+  const language = params[I18nTaxonomy.LANGUAGE];
+  setStaticParamsLocale(language);
 
   return (
     <main className={cn('flex flex-1 flex-col justify-center', MAIN_CLS)}>

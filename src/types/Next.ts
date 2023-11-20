@@ -1,4 +1,4 @@
-import type i18nTaxonomy from '##/config/taxonomies/i18n';
+import type I18nTaxonomy from '##/config/taxonomies/i18n';
 import type NotFoundTaxonomy from '##/config/taxonomies/notfound';
 import type { LanguageFlag } from '##/types/hell/i18n';
 import type { ClassName } from '@/types/React';
@@ -13,7 +13,7 @@ export interface WithClassname extends ClassName {}
 export type WithDeepResetOnLgBreakpointEvents = { withDeepResetOnLgBreakpointEvents: boolean };
 
 export interface I18nParams {
-  [i18nTaxonomy.LANG_FLAG]: LanguageFlag;
+  [I18nTaxonomy.LANGUAGE]: LanguageFlag;
 }
 
 export interface I18nPageProps {

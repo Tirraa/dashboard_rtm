@@ -1,6 +1,6 @@
 import { LANGUAGES, i18ns } from '##/config/i18n';
 import BlogTaxonomy from '##/config/taxonomies/blog';
-import i18nTaxonomy from '##/config/taxonomies/i18n';
+import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import { getServerSideI18n } from '@/i18n/server';
 import type {
@@ -31,18 +31,18 @@ export async function getBlogStaticParams(): Promise<BlogStaticParams[]> {
   for (const language of LANGUAGES) {
     for (const categ of blogCategories) {
       const category = categ as BlogCategory;
-      const curSubcategs: BlogSubcategoryFromUnknownCategory[] = await getBlogSubcategoriesByCategory(category);
+      const curSubcategs: BlogSubcategoryFromUnknownCategory[] = await getBlogSubcategoriesByCategory(category, language);
 
       for (const subcateg of curSubcategs) {
         const subcategory = subcateg as BlogSubcategoryFromUnknownCategory;
 
-        const relatedPosts: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, language);
+        const relatedPosts: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(category, subcategory, language);
 
         for (const post of relatedPosts) {
           const slug = post.slug as UnknownBlogSlug;
 
           const entity: BlogStaticParams = {
-            [i18nTaxonomy.LANG_FLAG]: language,
+            [I18nTaxonomy.LANGUAGE]: language,
             [BlogTaxonomy.CATEGORY]: category,
             [BlogTaxonomy.SUBCATEGORY]: subcategory,
             [BlogTaxonomy.SLUG]: slug
@@ -69,8 +69,9 @@ export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPag
   try {
     const category = params[BlogTaxonomy.CATEGORY];
     const subcategory = params[BlogTaxonomy.SUBCATEGORY];
+    const language = params[I18nTaxonomy.LANGUAGE];
 
-    if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory)) throw new Error('Fallbacking on the catch block...');
+    if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory, language)) throw new Error('Fallbacking on the catch block...');
 
     const globalT = await getServerSideI18n();
     // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER (AND THE GUARD)
@@ -89,13 +90,13 @@ export async function getBlogPostMetadatas({ params }: BlogPostPageProps) {
     const subcategory = params[BlogTaxonomy.SUBCATEGORY];
 
     const slug = params[BlogTaxonomy.SLUG];
-    const lang = params[i18nTaxonomy.LANG_FLAG];
-    const post: Maybe<PostBase> = await getBlogPostUnstrict({ category, subcategory }, slug, lang);
+    const language = params[I18nTaxonomy.LANGUAGE];
+    const post: Maybe<PostBase> = await getBlogPostUnstrict(category, subcategory, slug, language);
 
     const globalT = await getServerSideI18n();
     const currentPost = post as PostBase;
 
-    if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory)) throw new Error('Fallbacking on the catch block...');
+    if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory, language)) throw new Error('Fallbacking on the catch block...');
 
     const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), currentPost.title);
     const { metadescription: description } = post as PostBase;

@@ -1,5 +1,5 @@
 import { i18ns } from '##/config/i18n';
-import i18nTaxonomy from '##/config/taxonomies/i18n';
+import I18nTaxonomy from '##/config/taxonomies/i18n';
 import PagesHtmlElement from '@/components/layouts/base/PagesHtmlElement';
 import NotFound from '@/components/pages/Notfound';
 import { getCurrentLocale, getScopedI18n } from '@/i18n/server';
@@ -16,9 +16,9 @@ export async function generateMetadata() {
 }
 
 export default async function NotFoundPage() {
-  const locale = getCurrentLocale();
+  const language = getCurrentLocale();
 
-  const params: I18nParams = { [i18nTaxonomy.LANG_FLAG]: locale };
+  const params: I18nParams = { [I18nTaxonomy.LANGUAGE]: language };
 
   return (
     <PagesHtmlElement params={params}>

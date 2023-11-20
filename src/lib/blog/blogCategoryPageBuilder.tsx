@@ -14,11 +14,17 @@ import slugify from 'slugify';
 import { buildPathFromParts } from '../str';
 import { cn } from '../tailwind';
 
-export async function blogCategoryPageBuilder(posts: PostBase[], category: BlogCategory, lng: LanguageFlag): Promise<ReactNode[] | ReactElement> {
+export async function blogCategoryPageBuilder(
+  posts: PostBase[],
+  category: BlogCategory,
+  language: LanguageFlag
+): Promise<ReactNode[] | ReactElement> {
   function buildHistogram() {
     for (const post of posts) {
       const curSubcateg = post.subcategory as BlogSubcategoryFromUnknownCategory;
-      if (histogram[curSubcateg].length < limit + 1 && post.language === lng) {
+      if (histogram[curSubcateg] === undefined) continue;
+
+      if (histogram[curSubcateg].length < limit + 1 && post.language === language) {
         histogram[curSubcateg].push(post);
         if (Object.values(histogram).every((posts2) => posts2.length >= limit + 1)) break;
       }
@@ -28,7 +34,7 @@ export async function blogCategoryPageBuilder(posts: PostBase[], category: BlogC
   function buildPostsCollectionsSnippets() {
     Object.entries(histogram).forEach(([subcategory, posts2]) => {
       postsCollectionsSnippets[subcategory as BlogSubcategoryFromUnknownCategory] = posts2.map((post) => (
-        <BlogPostPreview key={`${post._raw.flattenedPath}-post-snippet`} post={post} lng={lng} isNotOnBlogSubcategoryPage />
+        <BlogPostPreview key={`${post._raw.flattenedPath}-post-snippet`} post={post} language={language} isNotOnBlogSubcategoryPage />
       ));
     });
   }
@@ -83,7 +89,7 @@ export async function blogCategoryPageBuilder(posts: PostBase[], category: BlogC
       );
 
       result.push(section);
-      if (!isLast && !showMoreLink) result.push(sep);
+      if (!isLast && !showMoreLink && max > 1) result.push(sep);
     }
     return result;
   }
@@ -91,7 +97,7 @@ export async function blogCategoryPageBuilder(posts: PostBase[], category: BlogC
   if (posts.length === 0) return <BlogPostsNotFound />;
 
   const globalT = await getServerSideI18n();
-  const subcategs: BlogSubcategoryFromUnknownCategory[] = await getBlogSubcategoriesByCategory(category);
+  const subcategs: BlogSubcategoryFromUnknownCategory[] = await getBlogSubcategoriesByCategory(category, language);
   const entries = subcategs.map((subcateg) => [subcateg, []]);
 
   const sortedEntries = entries.sort((entry1, entry2) =>
@@ -100,7 +106,7 @@ export async function blogCategoryPageBuilder(posts: PostBase[], category: BlogC
       globalT(`${i18ns.pagesTitles}.${entry1[0]}`),
       // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
       globalT(`${i18ns.pagesTitles}.${entry2[0]}`),
-      lng
+      language
     )
   );
 

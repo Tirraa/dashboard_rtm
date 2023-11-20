@@ -5,6 +5,7 @@ import { isValidBlogCategory } from '..';
 
 export async function blogCategoryGuard({ params }: BlogCategoryPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];
+
   if (!isValidBlogCategory(category)) notFound();
 }
 

@@ -14,11 +14,11 @@ function buildBlogPostLanguageFlagFromStr(flattenedPath: string): LanguageFlag {
   const envelopeEndSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 3);
 
   if (envelopeBeginSlashIndex !== -1) {
-    const langFlag =
+    const language =
       envelopeEndSlashIndex === -1
         ? flattenedPath.substring(envelopeBeginSlashIndex + 1)
         : flattenedPath.substring(envelopeBeginSlashIndex + 1, envelopeEndSlashIndex);
-    if (isValidLanguageFlag(langFlag)) return langFlag as LanguageFlag;
+    if (isValidLanguageFlag(language)) return language as LanguageFlag;
   }
   return DEFAULT_LANGUAGE;
 }

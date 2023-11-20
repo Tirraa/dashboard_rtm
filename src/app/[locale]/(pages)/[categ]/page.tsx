@@ -1,4 +1,4 @@
-import i18nTaxonomy from '##/config/taxonomies/i18n';
+import I18nTaxonomy from '##/config/taxonomies/i18n';
 import CategoryRelatedSubcategoriesAndBlogPosts from '@/components/pages/blog/CategoryRelatedSubcategoriesAndBlogPosts';
 import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
 import blogCategoryGuard from '@/lib/blog/guards/blogCategoryGuard';
@@ -18,8 +18,8 @@ export async function generateStaticParams() {
 }
 
 export default function Page({ params }: BlogCategoryPageProps) {
-  const lng = params[i18nTaxonomy.LANG_FLAG];
-  setStaticParamsLocale(lng);
+  const language = params[I18nTaxonomy.LANGUAGE];
+  setStaticParamsLocale(language);
 
   return (
     <div className="mx-8 flex flex-col items-center lg:mx-auto lg:max-w-[750px]">

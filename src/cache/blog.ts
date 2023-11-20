@@ -1,13 +1,18 @@
-import BlogConfig from '@/config/blog';
+import { LANGUAGES } from '##/config/i18n';
+import type { LanguageFlag } from '##/types/hell/i18n';
+import { getAllBlogPostsByCategoryAndLanguage } from '@/lib/blog';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
 
 namespace BlogCache {
-  export const subcategoriesCollection = {} as Record<BlogCategory, BlogSubcategoryFromUnknownCategory[]>;
+  export const subcategoriesCollection = Object.fromEntries(LANGUAGES.map((language) => [language, {}])) as Record<
+    LanguageFlag,
+    Record<BlogCategory, BlogSubcategoryFromUnknownCategory[]>
+  >;
 }
 
-async function buildSubcategoriesSet(category: BlogCategory): Promise<Set<BlogSubcategoryFromUnknownCategory>> {
+async function buildSubcategoriesSet(category: BlogCategory, language: LanguageFlag): Promise<Set<BlogSubcategoryFromUnknownCategory>> {
   try {
-    const relatedPosts: PostBase[] = await BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[category]();
+    const relatedPosts: PostBase[] = await getAllBlogPostsByCategoryAndLanguage(category, language);
     const subcategoriesSet = new Set<BlogSubcategoryFromUnknownCategory>();
 
     relatedPosts.forEach(({ subcategory }) => subcategoriesSet.add(subcategory as BlogSubcategoryFromUnknownCategory));
@@ -18,17 +23,17 @@ async function buildSubcategoriesSet(category: BlogCategory): Promise<Set<BlogSu
   }
 }
 
-async function populateSubcategoriesCollectionCache(category: BlogCategory) {
-  const subcategsSet: Set<BlogSubcategoryFromUnknownCategory> = await buildSubcategoriesSet(category);
-  BlogCache.subcategoriesCollection[category] = Array.from(subcategsSet);
+async function populateSubcategoriesCollectionCache(category: BlogCategory, language: LanguageFlag) {
+  const subcategsSet: Set<BlogSubcategoryFromUnknownCategory> = await buildSubcategoriesSet(category, language);
+  BlogCache.subcategoriesCollection[language][category] = Array.from(subcategsSet);
 }
 
-async function subcategoriesByCategoryGetter(category: BlogCategory) {
-  if (BlogCache.subcategoriesCollection[category] === undefined) await populateSubcategoriesCollectionCache(category);
-  return BlogCache.subcategoriesCollection[category];
+async function subcategoriesByCategoryGetter(category: BlogCategory, language: LanguageFlag) {
+  if (BlogCache.subcategoriesCollection[language][category] === undefined) await populateSubcategoriesCollectionCache(category, language);
+  return BlogCache.subcategoriesCollection[language][category];
 }
 
-export async function getBlogSubcategoriesByCategory(category: BlogCategory): Promise<BlogSubcategoryFromUnknownCategory[]> {
-  const subcategories: BlogSubcategoryFromUnknownCategory[] = await subcategoriesByCategoryGetter(category);
+export async function getBlogSubcategoriesByCategory(category: BlogCategory, language: LanguageFlag): Promise<BlogSubcategoryFromUnknownCategory[]> {
+  const subcategories: BlogSubcategoryFromUnknownCategory[] = await subcategoriesByCategoryGetter(category, language);
   return subcategories;
 }

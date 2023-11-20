@@ -1,4 +1,4 @@
-import i18nTaxonomy from '##/config/taxonomies/i18n';
+import I18nTaxonomy from '##/config/taxonomies/i18n';
 import DashboardLayoutClient from '@/components/layouts/dashboard/DashboardLayoutClient';
 import { getStaticParams } from '@/i18n/server';
 import type { LayoutBaseProps } from '@/types/Next';
@@ -11,8 +11,8 @@ export function generateStaticParams() {
 }
 
 export default async function DashboardLayout({ params, children }: DashboardLayoutProps) {
-  const lng = params[i18nTaxonomy.LANG_FLAG];
-  setStaticParamsLocale(lng);
+  const language = params[I18nTaxonomy.LANGUAGE];
+  setStaticParamsLocale(language);
 
   return <DashboardLayoutClient>{children}</DashboardLayoutClient>;
 }

@@ -9,7 +9,7 @@ interface BlogPostPreviewProps extends BlogPostProps {
   isNotOnBlogSubcategoryPage?: boolean;
 }
 
-export const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = ({ post, lng, isNotOnBlogSubcategoryPage }) => {
+export const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = ({ post, language, isNotOnBlogSubcategoryPage }) => {
   const descriptionSnippet = post.description ? getSlicedBlogPostDescription(post.description) : getSlicedBlogPostDescription(post.metadescription);
 
   return (
@@ -24,7 +24,7 @@ export const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = ({ post,
               {post.title}
             </CardTitle>
             <CardDescription>
-              <BlogPostDate post={post} lng={lng} className="bg-secondary p-1 text-black dark:text-white" />
+              <BlogPostDate post={post} language={language} className="bg-secondary p-1 text-black dark:text-white" />
             </CardDescription>
           </CardHeader>
           <CardContent>

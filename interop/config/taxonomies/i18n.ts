@@ -1,5 +1,5 @@
-export namespace i18nTaxonomy {
-  export const LANG_FLAG = 'locale';
+export namespace I18nTaxonomy {
+  export const LANGUAGE = 'locale';
 }
 
-export default i18nTaxonomy;
+export default I18nTaxonomy;

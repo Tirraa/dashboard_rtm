@@ -1,6 +1,6 @@
 import { i18ns } from '##/config/i18n';
 import ROUTES_ROOTS from '##/config/routes';
-import i18nTaxonomy from '##/config/taxonomies/i18n';
+import I18nTaxonomy from '##/config/taxonomies/i18n';
 import SignupButton from '@/components/ui/cta/SignupButton';
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
 import { buildPageTitle } from '@/lib/str';
@@ -21,8 +21,8 @@ export function generateStaticParams() {
 }
 
 export default async function Page({ params }: I18nPageProps) {
-  const lng = params[i18nTaxonomy.LANG_FLAG];
-  setStaticParamsLocale(lng);
+  const language = params[I18nTaxonomy.LANGUAGE];
+  setStaticParamsLocale(language);
 
   const session = await getServerSession();
   if (session) redirect(ROUTES_ROOTS.DASHBOARD);

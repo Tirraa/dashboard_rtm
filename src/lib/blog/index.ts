@@ -1,10 +1,10 @@
-import { DEFAULT_LANGUAGE } from '##/config/i18n';
+import { DEFAULT_LANGUAGE, LANGUAGES } from '##/config/i18n';
 import ROUTES_ROOTS from '##/config/routes';
 import type { LanguageFlag } from '##/types/hell/i18n';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import type { BlogArchitecture } from '@/config/blog';
 import BlogConfig from '@/config/blog';
-import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase, UnknownBlogSlug, UnknownCategoryAndUnknownSubcategory } from '@/types/Blog';
+import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase, UnknownBlogSlug } from '@/types/Blog';
 import type { Maybe } from '@/types/CustomUtilityTypes';
 import type { AppPath } from '@/types/Next';
 import type { IsoDateTimeString } from 'contentlayer/core';
@@ -20,46 +20,36 @@ export async function getAllBlogPostsByCategory(categ: BlogCategory): Promise<Po
   return posts;
 }
 
-export async function getAllBlogPostsByCategoryAndSubcategoryUnstrict({
-  category,
-  subcategory
-}: UnknownCategoryAndUnknownSubcategory): Promise<PostBase[]> {
-  const isValidPair: boolean = await isValidBlogCategoryAndSubcategoryPair(category, subcategory);
-  if (!isValidPair) return [];
-  const allPosts: PostBase[] = await getAllBlogPostsByCategory(category);
-  return allPosts.filter((post) => post.subcategory === subcategory);
+/**
+ * @throws {TypeError}
+ * May throw a TypeError: "x[y] is not a function" at runtime, in a type unsafe context
+ */
+export async function getAllBlogPostsByCategoryAndLanguage(categ: BlogCategory, language: LanguageFlag): Promise<PostBase[]> {
+  const allPosts = await getAllBlogPostsByCategory(categ);
+  const posts = allPosts.filter((post) => post.language === language);
+  return posts;
 }
 
 export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(
-  { category, subcategory }: UnknownCategoryAndUnknownSubcategory,
+  category: BlogCategory,
+  subcategory: BlogSubcategoryFromUnknownCategory,
   language: LanguageFlag
 ): Promise<PostBase[]> {
-  const isValidPair: boolean = await isValidBlogCategoryAndSubcategoryPair(category, subcategory);
+  const isValidPair: boolean = await isValidBlogCategoryAndSubcategoryPair(category, subcategory, language);
   if (!isValidPair) return [];
   const allPosts: PostBase[] = await getAllBlogPostsByCategory(category);
   return allPosts.filter((post) => post.subcategory === subcategory && post.language === language);
 }
 
 export async function getBlogPostUnstrict(
-  { category, subcategory }: UnknownCategoryAndUnknownSubcategory,
+  category: BlogCategory,
+  subcategory: BlogSubcategoryFromUnknownCategory,
   targettedSlug: UnknownBlogSlug,
-  langFlag: LanguageFlag
+  language: LanguageFlag
 ): Promise<Maybe<PostBase>> {
-  const postsCollection: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
+  const postsCollection: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(category, subcategory, language);
 
-  return (
-    postsCollection.find(
-      ({ language: currentPostLanguage, slug: currentPostSlug }) => currentPostLanguage === langFlag && currentPostSlug === targettedSlug
-    ) ?? null
-  );
-}
-
-export async function getAllBlogPostsByCategoryAndSubcategoryStrict<C extends BlogCategory>(
-  category: C,
-  subcategory: BlogArchitecture[C]
-): Promise<PostBase[]> {
-  const allPosts: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryUnstrict({ category, subcategory });
-  return allPosts;
+  return postsCollection.find(({ slug: currentPostSlug }) => currentPostSlug === targettedSlug) ?? null;
 }
 
 export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict<C extends BlogCategory>(
@@ -67,7 +57,7 @@ export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStri
   subcategory: BlogArchitecture[C],
   language: LanguageFlag
 ): Promise<PostBase[]> {
-  const allPosts: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, language);
+  const allPosts: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(category, subcategory, language);
   return allPosts;
 }
 
@@ -75,9 +65,9 @@ export async function getBlogPostStrict<C extends BlogCategory>(
   category: C,
   subcategory: BlogArchitecture[C],
   targettedSlug: UnknownBlogSlug,
-  langFlag: LanguageFlag
+  language: LanguageFlag
 ): Promise<Maybe<PostBase>> {
-  const post: Maybe<PostBase> = await getBlogPostUnstrict({ category, subcategory }, targettedSlug, langFlag);
+  const post: Maybe<PostBase> = await getBlogPostUnstrict(category, subcategory, targettedSlug, language);
   return post;
 }
 
@@ -88,11 +78,11 @@ export function blogSubcategoryShouldTriggerNotFound(postsCollection: PostBase[]
   return postsCollection.length === 0 && !isForcedPath;
 }
 
-export function getBlogPostFormattedDate(lng: LanguageFlag, { date }: PostBase): string {
+export function getBlogPostFormattedDate(language: LanguageFlag, { date }: PostBase): string {
   const postDateHasTime = (date: IsoDateTimeString) => date.substring(date.indexOf('T') + 1) !== '00:00:00.000Z';
 
   const giveTime = postDateHasTime(date);
-  const formattedDate = getFormattedDate(lng, new Date(date), giveTime);
+  const formattedDate = getFormattedDate(language, new Date(date), giveTime);
   return formattedDate;
 }
 
@@ -102,13 +92,27 @@ export function isValidBlogCategory(category: string): boolean {
   return true;
 }
 
-export async function isValidBlogCategoryAndSubcategoryPair(
+export async function isValidBlogCategoryAndSubcategoryPairInAnyLanguage(
   category: BlogCategory,
   subcategory: BlogSubcategoryFromUnknownCategory
 ): Promise<boolean> {
   if (!isValidBlogCategory(category)) return false;
 
-  const subcategories = await getBlogSubcategoriesByCategory(category);
+  for (const language of LANGUAGES) {
+    const currentSubcategories = await getBlogSubcategoriesByCategory(category, language);
+    if (currentSubcategories.includes(subcategory)) return true;
+  }
+  return false;
+}
+
+export async function isValidBlogCategoryAndSubcategoryPair(
+  category: BlogCategory,
+  subcategory: BlogSubcategoryFromUnknownCategory,
+  language: LanguageFlag
+): Promise<boolean> {
+  if (!isValidBlogCategory(category)) return false;
+
+  const subcategories = await getBlogSubcategoriesByCategory(category, language);
   if (!subcategories.includes(subcategory)) return false;
   return true;
 }

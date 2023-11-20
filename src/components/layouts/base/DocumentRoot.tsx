@@ -1,4 +1,4 @@
-import i18nTaxonomy from '##/config/taxonomies/i18n';
+import I18nTaxonomy from '##/config/taxonomies/i18n';
 import BODY_CLS, { BODY_CONTAINER_CLS } from '@/components/config/styles/body';
 import { HTML_STYLE } from '@/components/config/styles/html';
 import SitewideNavbar from '@/components/ui/navbar/SitewideNavbar';
@@ -19,14 +19,14 @@ interface DocumentRootProps extends LayoutBaseProps {
 }
 
 export const DocumentRoot: FunctionComponent<DocumentRootProps> = ({ children, params, withNavbar, disableTopLoader }) => {
-  const locale = params[i18nTaxonomy.LANG_FLAG];
-  const { direction: dir } = new Locale(locale).textInfo;
+  const language = params[I18nTaxonomy.LANGUAGE];
+  const { direction: dir } = new Locale(language).textInfo;
 
   return (
-    <html lang={locale} style={HTML_STYLE} dir={dir} suppressHydrationWarning>
+    <html lang={language} style={HTML_STYLE} dir={dir} suppressHydrationWarning>
       <body className={cn(BODY_CLS, fcn(fInter))} style={{ scrollbarGutter: 'stable' }}>
         <div id={ELEMENTS_ID.BODY_CONTAINER} className={BODY_CONTAINER_CLS}>
-          <Providers locale={locale}>
+          <Providers locale={language}>
             {!disableTopLoader && <NextTopLoader {...PROGRESSBAR_CONFIG} />}
             {withNavbar && <SitewideNavbar />}
             {children}
