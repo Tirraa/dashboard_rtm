@@ -1,4 +1,4 @@
-import type { MaybeObjectValue } from '@/types/CustomUtilitaryTypes';
+import type { MaybeObjectValue } from '@/types/CustomUtilityTypes';
 import executionContextWarningsVocabGetter from '../../../errors/vocab/warnings/executionContext';
 
 type TComputedNodeEnv = {

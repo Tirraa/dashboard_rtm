@@ -1,4 +1,4 @@
-import type { Maybe, MaybeObjectValue } from './CustomUtilitaryTypes';
+import type { Maybe, MaybeObjectValue } from './CustomUtilityTypes';
 
 type MaybeSession<T> = T | undefined;
 type MaybeSessionProp<T> = MaybeObjectValue<Maybe<T>>;

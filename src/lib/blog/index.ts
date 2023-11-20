@@ -12,7 +12,7 @@ import type {
   UnknownBlogSlug,
   UnknownCategoryAndUnknownSubcategory
 } from '@/types/Blog';
-import type { Maybe } from '@/types/CustomUtilitaryTypes';
+import type { Maybe } from '@/types/CustomUtilityTypes';
 import type { AppPath } from '@/types/Next';
 import type { IsoDateTimeString } from 'contentlayer/core';
 import { redirect } from 'next/navigation';

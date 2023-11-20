@@ -1,6 +1,6 @@
 import { DATA_QA_WARNING_DOM_KEY, QA_WARNINGS } from '##/config/QA';
 import { cn } from '@/lib/tailwind';
-import type { MaybeObjectValue } from '@/types/CustomUtilitaryTypes';
+import type { MaybeObjectValue } from '@/types/CustomUtilityTypes';
 import Link from 'next/link';
 import type { FunctionComponent } from 'react';
 import CrumbSeparator from './CrumbSeparator';

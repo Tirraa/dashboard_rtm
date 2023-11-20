@@ -1,4 +1,4 @@
-import type { MaybeObjectValue } from '@/types/CustomUtilitaryTypes';
+import type { MaybeObjectValue } from '@/types/CustomUtilityTypes';
 import type { AnchorTarget } from '@/types/HTML';
 import type { AppPath } from '@/types/Next';
 

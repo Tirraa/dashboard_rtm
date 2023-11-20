@@ -13,7 +13,7 @@ import type {
   PostBase,
   UnknownBlogSlug
 } from '@/types/Blog';
-import type { Maybe } from '@/types/CustomUtilitaryTypes';
+import type { Maybe } from '@/types/CustomUtilityTypes';
 import {
   getAllBlogCategories,
   getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict,

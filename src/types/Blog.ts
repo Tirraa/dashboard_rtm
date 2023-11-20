@@ -64,7 +64,7 @@ type BlogSubcategoryMappedToBlogCategory = {
 type BlogSubcategories<C extends BlogCategory> = BlogSubcategoryMappedToBlogCategory[C];
 
 export type ForcedBlogSubcategoriesPaths = {
-  [C in BlogCategory]?: BlogSubcategories<C>[];
+  [C in BlogCategory]?: readonly BlogSubcategories<C>[];
 };
 
 export type BlogCategoryAndSubcategoriesPair<C extends BlogCategory> = {

@@ -1,7 +1,7 @@
 import type VOCAB_SCHEMA from '@/i18n/locales/schema';
 import type { SHARED_VOCAB_SCHEMA } from '@/i18n/locales/schema';
 import type { getScopedI18n } from '@/i18n/server';
-import type { DeepPathToLiteralKeys, KeySeparator, MakeHomogeneousValuesObjType } from '@/types/CustomUtilitaryTypes';
+import type { DeepPathToLiteralKeys, KeySeparator, MakeHomogeneousValuesObjType } from '@/types/CustomUtilityTypes';
 import type { RemovePlural } from '@/types/international-types';
 import type { TypedLeafsJSONData } from './etc/JSON';
 import type LanguageFlag from './etc/LanguageFlag';

@@ -1,4 +1,4 @@
-import type { JSPrimitives } from '@/types/CustomUtilitaryTypes';
+import type { JSPrimitives } from '@/types/CustomUtilityTypes';
 import { isEmptyObject } from '../../misc/isEmptyObject';
 
 export const createURLSearchParams = (searchParams: Record<string, JSPrimitives>) =>
