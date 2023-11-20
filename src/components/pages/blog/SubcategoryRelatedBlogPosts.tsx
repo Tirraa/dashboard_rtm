@@ -28,7 +28,7 @@ export const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageP
 
   const postsCollection: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict({ category, subcategory }, lng);
 
-  if (blogSubcategoryShouldTriggerNotFound(postsCollection, { category, subcategory })) notFound();
+  if (blogSubcategoryShouldTriggerNotFound(postsCollection)) notFound();
   if (postsCollection.length === 0) return <BlogPostsNotFound />;
   // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
   const [title, curSubcategTitle] = [scopedT(`${category}.${subcategory}.title`), scopedT(`${category}.${subcategory}.title`)];

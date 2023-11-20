@@ -4,14 +4,7 @@ import type { LanguageFlag } from '##/types/hell/i18n';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import type { BlogArchitecture } from '@/config/blog';
 import BlogConfig from '@/config/blog';
-import type {
-  BlogCategory,
-  BlogCategoryAndSubcategoriesPair,
-  BlogSubcategoryFromUnknownCategory,
-  PostBase,
-  UnknownBlogSlug,
-  UnknownCategoryAndUnknownSubcategory
-} from '@/types/Blog';
+import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase, UnknownBlogSlug, UnknownCategoryAndUnknownSubcategory } from '@/types/Blog';
 import type { Maybe } from '@/types/CustomUtilityTypes';
 import type { AppPath } from '@/types/Next';
 import type { IsoDateTimeString } from 'contentlayer/core';
@@ -90,11 +83,8 @@ export async function getBlogPostStrict<C extends BlogCategory>(
 
 export const getAllBlogCategories = (): BlogCategory[] => Object.keys(BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC) as BlogCategory[];
 
-export function blogSubcategoryShouldTriggerNotFound<C extends BlogCategory>(
-  postsCollection: PostBase[],
-  { category, subcategory }: BlogCategoryAndSubcategoriesPair<C>
-): boolean {
-  const isForcedPath = BlogConfig.FORCED_BLOG_SUBCATEGORIES_PATHS[category]?.includes(subcategory);
+export function blogSubcategoryShouldTriggerNotFound(postsCollection: PostBase[]): boolean {
+  const isForcedPath = BlogConfig.USE_BLOG_POSTS_NOTFOUND_WHEN_SUBCATEGORY_IS_EMPTY_INSTEAD_OF_NOT_FOUND;
   return postsCollection.length === 0 && !isForcedPath;
 }
 

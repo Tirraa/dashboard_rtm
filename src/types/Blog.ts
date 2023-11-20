@@ -60,14 +60,3 @@ export type UnknownCategoryAndUnknownSubcategory = {
 type BlogSubcategoryMappedToBlogCategory = {
   [C in BlogCategory]: BlogArchitecture[C];
 };
-
-type BlogSubcategories<C extends BlogCategory> = BlogSubcategoryMappedToBlogCategory[C];
-
-export type ForcedBlogSubcategoriesPaths = {
-  [C in BlogCategory]?: readonly BlogSubcategories<C>[];
-};
-
-export type BlogCategoryAndSubcategoriesPair<C extends BlogCategory> = {
-  category: C;
-  subcategory: BlogSubcategories<C>;
-};
