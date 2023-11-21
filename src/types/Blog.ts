@@ -9,9 +9,7 @@ type ContentLayerPhantomType = 'type';
 export type PostBase = Omit<PostSchema, ContentLayerPhantomType>;
 
 export type BlogCategory = keyof BlogArchitecture;
-
 export type BlogSubcategoryFromUnknownCategory = BlogArchitecture[BlogCategory];
-
 export type UnknownBlogSlug = string;
 
 type BlogCategoryPagePropsParams = {
