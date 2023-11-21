@@ -10,7 +10,7 @@ export const NAVBAR_EXTRAS_COMPONENTS_DESKTOP: NavbarExtrasFeaturesReactElements
 };
 
 export const NAVBAR_EXTRAS_COMPONENTS_MOBILE: NavbarExtrasFeaturesReactElements = {
-  THEME: <NavbarThemeButton isMobile />,
+  THEME: <NavbarThemeButton />,
   LANGUAGE: <NavbarLanguageMenu isMobile />,
   LOGIN: <NavbarLoginButton isMobile />
 };
