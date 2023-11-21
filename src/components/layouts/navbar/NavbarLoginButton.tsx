@@ -10,24 +10,34 @@ import type { WithIsMobile } from '@/types/Next';
 import { KeyIcon, SignalSlashIcon } from '@heroicons/react/20/solid';
 import type { Session } from 'next-auth';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
 import type { FunctionComponent } from 'react';
 import NavbarButton from './NavbarButton';
 
 interface NavbarLoginButtonMobileProps {
   session: Session | null;
+  currentPathname: string;
 }
 
 interface NavbarLoginButtonProps extends WithIsMobile {}
 
 const { SIZE_PX_VALUE: SIZE } = NAVBAR_ICON_STYLE;
 
-const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> = ({ session }) => {
+const handleSignOut = (currentUrl: string) => {
+  if (currentUrl.startsWith(ROUTES_ROOTS.DASHBOARD)) {
+    signOut({ callbackUrl: ROUTES_ROOTS.WEBSITE });
+    return;
+  }
+  signOut();
+};
+
+const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> = ({ session, currentPathname }) => {
   const scopedT = useScopedI18n(i18ns.auth);
   const className = 'h-full min-w-0 p-0';
 
   if (session) {
     return (
-      <Button className={className} onClick={() => signOut()} withTransparentBackground>
+      <Button className={className} onClick={() => handleSignOut(currentPathname)} withTransparentBackground>
         <UserImage user={session?.user} width={SIZE} height={SIZE} className="absolute rounded-full brightness-75" />
         <SignalSlashIcon width={SIZE} height={SIZE} className="relative shadow-xl" />
         <span className="sr-only">{scopedT('logout')}</span>
@@ -45,14 +55,15 @@ const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> =
 
 export const NavbarLoginButton: FunctionComponent<NavbarLoginButtonProps> = ({ isMobile }) => {
   const { data: session } = useSession();
+  const currentPathname = usePathname();
 
-  if (isMobile) return <NavbarLoginButtonMobile session={session} />;
+  if (isMobile) return <NavbarLoginButtonMobile session={session} currentPathname={currentPathname} />;
 
   if (session)
     return (
       <NavbarButton
         i18nTitle={`${i18ns.auth}.logout`}
-        onClick={() => signOut()}
+        onClick={() => handleSignOut(currentPathname)}
         icon={<UserImage user={session?.user} width={SIZE} height={SIZE} className="rounded-full" />}
       />
     );
