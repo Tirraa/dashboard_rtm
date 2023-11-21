@@ -1,6 +1,12 @@
 {
-  "extends": "@tsconfig/node18/tsconfig.json",
-  "include": ["src"],
-  "exclude": ["node_modules"],
-  "type": ["node"]
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
 }

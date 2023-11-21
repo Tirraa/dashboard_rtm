@@ -8,8 +8,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "postinstall": "npm --prefix ./packages/static-analyzer install",
-    "prebuild": "npm --prefix ./packages/static-analyzer start -- --posts-folder ./posts --blog-config-file ./src/config/blog.ts --i18n-locales-schema ./src/i18n/locales/schema.ts",
+    "prebuild": "cross-env POSTS_FOLDER=./posts BLOG_CONFIG_FILE=./src/config/blog.ts I18N_LOCALES_SCHEMA=./src/i18n/locales/schema.ts yarn workspace static-analyzer start",
     "build": "next build",
     "postbuild": "next-sitemap",
     "dev": "next dev",
@@ -67,22 +66,26 @@
     "@typescript-eslint/parser": "^6.9.1",
     "autoprefixer": "10.4.15",
     "commitizen": "^4.3.0",
+    "cross-env": "^7.0.3",
     "eslint": "8.47.0",
     "eslint-config-next": "^13.5.3",
     "eslint-plugin-import": "^2.29.0",
     "husky": "^8.0.3",
     "lint-staged": "^15.0.2",
     "next-sitemap": "^4.2.3",
-    "tailwindcss": "3.3.3",
     "postcss": "^8.4.31",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.6",
     "static-analyzer": "file:./packages/static-analyzer",
+    "tailwindcss": "3.3.3",
     "typescript": "^5.2.2"
   },
   "config": {
     "commitizen": {
       "path": "@commitlint/cz-commitlint"
     }
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
