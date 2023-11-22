@@ -33,7 +33,7 @@ export function checkSubcategories(sysData: CategoriesMetadatas, userDeclaredDat
       const currentUnknownSubcategories = unknownSubcategories[categoryWithDefect];
       feedback += getErrorLabelForDefects(
         currentUnknownSubcategories,
-        `Unknown blog subcategory for the '${categoryWithDefect}' category: ${unknownSubcategories}` + '\n',
+        `Unknown blog subcategory for the '${categoryWithDefect}' category: ${currentUnknownSubcategories}` + '\n',
         `Unknown blog subcategories for the '${categoryWithDefect}' category: ${LIST_ELEMENT_PREFIX}${currentUnknownSubcategories.join(
           LIST_ELEMENT_PREFIX
         )}` + '\n'
