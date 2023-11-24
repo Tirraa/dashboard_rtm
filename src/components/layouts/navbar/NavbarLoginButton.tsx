@@ -6,6 +6,7 @@ import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle
 import { Button } from '@/components/ui/Button';
 import UserImage from '@/components/ui/hoc/UserImage';
 import { useScopedI18n } from '@/i18n/client';
+import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
 import type { WithIsMobile } from '@/types/Next';
 import { KeyIcon, SignalSlashIcon } from '@heroicons/react/20/solid';
 import type { Session } from 'next-auth';
@@ -24,7 +25,7 @@ interface NavbarLoginButtonProps extends WithIsMobile {}
 const { SIZE_PX_VALUE: SIZE } = NAVBAR_ICON_STYLE;
 
 const handleSignOut = (currentUrl: string) => {
-  if (currentUrl.startsWith(ROUTES_ROOTS.DASHBOARD)) {
+  if (getPathnameWithoutI18nFlag(currentUrl).startsWith(ROUTES_ROOTS.DASHBOARD)) {
     signOut({ callbackUrl: ROUTES_ROOTS.WEBSITE });
     return;
   }
