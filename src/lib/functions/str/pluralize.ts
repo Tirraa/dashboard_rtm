@@ -1,5 +1,5 @@
 export function pluralize(word: string): string {
-  if (word.toLocaleLowerCase().endsWith('S')) word = word.slice(0, -1);
+  if (word.endsWith('S')) word = word.slice(0, -1) + 's';
   return word.endsWith('s') ? word : word + 's';
 }
 
