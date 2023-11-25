@@ -51,7 +51,7 @@ function crumbsGenerator(pathParts: string[], withHomepageElement: boolean, scop
     return <Crumb label={label} href={href} isLeaf={isLeaf} withRescueCtx={withRescueCtx} />;
   }
 
-  for (let depth = 0; pathParts[depth]; depth++) {
+  for (let depth = 0; depth < pathParts.length; depth++) {
     const isLeaf = pathParts[depth + 1] === undefined;
     const href = buildCurrentPath(pathParts, depth);
     const crumb = crumbGenerator(depth, isLeaf, href);

@@ -62,7 +62,7 @@ function buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitectureInner
     let result: string = '';
     let currentQuoteDelimiter: null | StringDelimiter = null;
 
-    for (let i = 0; code[i]; i++) {
+    for (let i = 0; i < code.length; i++) {
       const char = code[i];
       const prevChar = i > 0 ? code[i - 1] : '';
       const charBeforePrevChar = i > 1 ? code[i - 2] : '';
