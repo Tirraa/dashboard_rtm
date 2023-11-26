@@ -1,5 +1,5 @@
 import type { BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
-import InvalidArgumentsError from '../../../../../../src/errors/exceptions/InvalidArgument';
+import InvalidArgumentsError from '../../../../../../src/errors/exceptions/InvalidArguments';
 import { indexOfNthOccurrence } from '../../../../../../src/lib/functions/str/indexOfNthOccurrence';
 import { POSTS_FOLDER } from '../../../../../config/blog/documentSpecs';
 import { getFlattenedPathWithoutRootFolder } from '../getFlattenedPathWithoutRootFolder';

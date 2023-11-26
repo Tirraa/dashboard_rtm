@@ -7,7 +7,7 @@ import countCharacter from './functions/str/countCharacter';
 import endsWithChars from './functions/str/endsWithChar';
 import fromKebabCaseToSentenceCase from './functions/str/fromKebabCaseToSentenceCase';
 import getFormattedDate from './functions/str/getFormattedDate';
-import getLastPathPart from './functions/str/getLastPathPart';
+import getPathLastPart from './functions/str/getPathLastPart';
 import getSlashEnvelope from './functions/str/getSlashEnvelope';
 import indexOfNthOccurrence from './functions/str/indexOfNthOccurrence';
 import pluralize from './functions/str/pluralize';
@@ -33,7 +33,7 @@ export {
   endsWithChars,
   fromKebabCaseToSentenceCase,
   getFormattedDate,
-  getLastPathPart,
+  getPathLastPart,
   getSlashEnvelope,
   indexOfNthOccurrence,
   pluralize
