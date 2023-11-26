@@ -1,13 +1,13 @@
 {
+  "private": true,
   "name": "static-analyzer",
+  "author": "gustaveWPM (github.com/gustaveWPM)",
+  "license": "MIT",
   "version": "1.0.0",
   "description": "GustaveWPM's NextJS Dashboard codebase internal static analyzer",
   "scripts": {
     "start": "tsc --build && node dist/main.js --posts-folder $POSTS_FOLDER --blog-config-file $BLOG_CONFIG_FILE --i18n-locales-schema $I18N_LOCALES_SCHEMA"
   },
-  "author": "gustaveWPM (github.com/gustaveWPM)",
-  "license": "UNLICENSED",
-  "private": true,
   "devDependencies": {
     "@types/node": "^20.6.0",
     "@types/strip-comments": "^2.0.4",
