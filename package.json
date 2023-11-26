@@ -80,11 +80,6 @@
     "tailwindcss": "3.3.3",
     "typescript": "^5.3.0"
   },
-  "config": {
-    "commitizen": {
-      "path": "@commitlint/cz-commitlint"
-    }
-  },
   "workspaces": [
     "packages/*"
   ]
