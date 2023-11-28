@@ -1,5 +1,5 @@
 import type { PostBase } from '@/types/Blog';
-import type { AppPath } from '@/types/Next';
+import type { AppPath } from '@rtm/shared-types/src/Next';
 import { POSTS_FOLDER } from '../../../../../config/blog/documentSpecs';
 import { DEFAULT_LANGUAGE } from '../../../../../config/i18n';
 import ROUTES_ROOTS from '../../../../../config/routes';

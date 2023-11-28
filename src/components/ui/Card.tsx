@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/tailwind';
-import type { TitleType } from '@/types/HTML';
+import type { TitleType } from '@rtm/shared-types/src/HTML';
 
 const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
   <div ref={ref} className={cn('rounded-lg border bg-card text-card-foreground shadow-sm', className)} {...props} />

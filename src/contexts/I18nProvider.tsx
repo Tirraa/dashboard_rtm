@@ -2,7 +2,7 @@
 
 import Loader from '@/components/ui/Loader';
 import { I18nProviderClient } from '@/i18n/client';
-import type { WithChildren } from '@/types/Next';
+import type { WithChildren } from '@rtm/shared-types/src/Next';
 import type { FunctionComponent } from 'react';
 
 export interface I18nProviderProps extends WithChildren {

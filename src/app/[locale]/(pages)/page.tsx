@@ -3,9 +3,9 @@ import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { MAIN_CLS } from '@/components/config/styles/main';
 import Homepage from '@/components/pages/Homepage';
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
-import { buildPageTitle } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
 import type { I18nPageProps } from '@/types/Next';
+import { buildPageTitle } from '@rtm/shared-lib/src/str';
 import { setStaticParamsLocale } from 'next-international/server';
 
 export async function generateMetadata() {

@@ -3,11 +3,11 @@
 import NavbarButtonStyle from '@/components/config/styles/navbar/NavbarButtonStyle';
 import { Button } from '@/components/ui/Button';
 import { getClientSideI18n } from '@/i18n/client';
-import { getLinkTarget } from '@/lib/react';
 import { hrefMatchesPathname } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
 import type { AtomicNavDataEntity } from '@/types/NavData';
-import type { AppPath } from '@/types/Next';
+import { getLinkTarget } from '@rtm/shared-lib/src/react';
+import type { AppPath } from '@rtm/shared-types/src/Next';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';

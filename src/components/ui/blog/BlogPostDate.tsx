@@ -1,7 +1,7 @@
 import { getBlogPostFormattedDate } from '@/lib/blog';
 import { cn } from '@/lib/tailwind';
 import type { BlogPostProps } from '@/types/Blog';
-import type { WithClassname } from '@/types/Next';
+import type { WithClassname } from '@rtm/shared-types/src/Next';
 import type { FunctionComponent } from 'react';
 
 interface BlogPostDateProps extends BlogPostProps, Partial<WithClassname> {}

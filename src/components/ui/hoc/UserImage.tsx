@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/Avatar';
-import type { User } from '@/types/Auth';
-import type { WithClassname } from '@/types/Next';
+import type { User } from '@rtm/shared-types/src/Auth';
+import type { WithClassname } from '@rtm/shared-types/src/Next';
 import type { CSSProperties, FunctionComponent } from 'react';
 
 interface UserImageProps extends Partial<WithClassname> {

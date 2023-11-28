@@ -6,12 +6,12 @@ import NavbarDropdownMenuButtonStyle, {
 } from '@/components/config/styles/navbar/NavbarDropdownMenuButtonStyle';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/DropdownMenu';
 import { getClientSideI18n } from '@/i18n/client';
-import { getLinkTarget, getRefCurrentPtr } from '@/lib/react';
 import { hrefMatchesPathname } from '@/lib/str';
 import { getBreakpoint } from '@/lib/tailwind';
 import type { EmbeddedEntities, NavbarDropdownElement } from '@/types/NavData';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { useMediaQuery } from '@react-hook/media-query';
+import { getLinkTarget, getRefCurrentPtr } from '@rtm/shared-lib/src/react';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';

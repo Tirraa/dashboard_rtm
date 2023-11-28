@@ -1,7 +1,7 @@
 import type { I18nVocabTarget } from '##/types/hell/i18n';
 import type { DropdownsConfig, NavDataEntities, NavDataEntity } from '@/types/NavData';
-import type { AppPath } from '@/types/Next';
 import type RoutesKeysUnion from '@/types/RoutesKeysUnion';
+import type { AppPath } from '@rtm/shared-types/src/Next';
 
 // {ToDo} Recursive embeddedEntities?
 export function getComputedNavData<ScopedRoutesK extends RoutesKeysUnion>(

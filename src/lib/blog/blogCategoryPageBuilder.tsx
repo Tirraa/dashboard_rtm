@@ -7,12 +7,12 @@ import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
 import BlogConfig from '@/config/blog';
 import { getServerSideI18n } from '@/i18n/server';
+import { cn } from '@/lib/tailwind';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
+import { buildPathFromParts } from '@rtm/shared-lib/src/str';
 import Link from 'next/link';
 import type { ReactElement, ReactNode } from 'react';
 import slugify from 'slugify';
-import { buildPathFromParts } from '../str';
-import { cn } from '../tailwind';
 
 export async function blogCategoryPageBuilder(
   posts: PostBase[],

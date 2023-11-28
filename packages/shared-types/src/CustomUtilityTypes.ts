@@ -3,12 +3,12 @@ type SplitKeys<S extends string> = S extends `${infer Head}${KeySeparator}${infe
 type JoinKeys<T extends string[]> = T extends []
   ? never
   : T extends [infer Head, ...infer Tail]
-  ? Head extends string
-    ? Tail extends string[]
-      ? `${Head}${KeySeparator}${JoinKeys<Tail>}`
+    ? Head extends string
+      ? Tail extends string[]
+        ? `${Head}${KeySeparator}${JoinKeys<Tail>}`
+        : never
       : never
-    : never
-  : never;
+    : never;
 
 export type MakeHomogeneousValuesObjType<Obj extends object, ObjValuesType> = {
   [K in keyof Obj]: Obj[K] extends object ? MakeHomogeneousValuesObjType<Obj[K], ObjValuesType> : ObjValuesType;

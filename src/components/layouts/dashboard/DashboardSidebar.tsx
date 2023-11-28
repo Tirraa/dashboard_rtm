@@ -6,12 +6,12 @@ import DASHBOARD_ROUTES, { DASHBOARD_ROUTES_TITLES } from '@/config/DashboardSid
 import DASHBOARD_ROUTES_SIDEBAR_COMPONENTS from '@/config/DashboardSidebar/utils/IconsMapping';
 import type { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMapping';
 import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
-import { computeHTMLElementHeight, computeHTMLElementWidth, getDirection } from '@/lib/html';
-import { getRefCurrentPtr } from '@/lib/react';
 import { hrefMatchesPathname } from '@/lib/str';
 import { cn, getBreakpoint } from '@/lib/tailwind';
-import type { AppPath } from '@/types/Next';
 import { useMediaQuery } from '@react-hook/media-query';
+import { computeHTMLElementHeight, computeHTMLElementWidth, getDirection } from '@rtm/shared-lib/src/html';
+import { getRefCurrentPtr } from '@rtm/shared-lib/src/react';
+import type { AppPath } from '@rtm/shared-types/src/Next';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { FunctionComponent, ReactElement, ReactNode } from 'react';

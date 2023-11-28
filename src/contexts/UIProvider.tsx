@@ -1,4 +1,4 @@
-import type { WithChildren } from '@/types/Next';
+import type { WithChildren } from '@rtm/shared-types/src/Next';
 import type { FunctionComponent } from 'react';
 import { ThemeProvider } from './ThemeProvider';
 
