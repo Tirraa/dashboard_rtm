@@ -5,9 +5,6 @@ public/robots.txt
 public/sitemap*.xml
 public/sitemap.xml
 
-# * ... 極彩色纏う　狂気の幕開け; 何処にも逃がさない　無条件牢獄;;
-package-lock.json
-
 # * ... 割れたガラスの先　滲む鉄の色; 味わい吐き出せば　無意味に朽ちたさえずり;;
 .env
 .vscode/*
