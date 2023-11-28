@@ -14,7 +14,7 @@
     "dev": "next dev",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watch",
+    "test": "jest",
     "test:ci": "jest --ci",
     "prepare": "husky install",
     "commit": "git-cz",
