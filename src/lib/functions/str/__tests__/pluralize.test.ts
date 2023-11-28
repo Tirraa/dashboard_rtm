@@ -6,8 +6,7 @@ it('should return a pluralized string', () => {
 
 it('should return the same string', () => {
   expect(pluralize('hellos')).toBe('hellos');
-  expect(pluralize('wosrldsss')).toBe('worldsss');
-  //  expect(pluralize('worldsss')).toBe('worldsss');
+  expect(pluralize('worldsss')).toBe('worldsss');
 });
 
 it("should return the pluralized string with a lowercased 's'", () => {
