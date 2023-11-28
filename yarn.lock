@@ -1231,6 +1231,13 @@
   dependencies:
     undici-types "~5.26.4"
 
+"@types/node@^20.6.0":
+  version "20.10.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.10.0.tgz#16ddf9c0a72b832ec4fcce35b8249cf149214617"
+  integrity sha512-D0WfRmU9TQ8I9PFx9Yc+EBHw+vSpIub4IDvQivcp26PtPrdMGAq5SDcpXEo/epqa/DXotVpekHiLNTg3iaKXBQ==
+  dependencies:
+    undici-types "~5.26.4"
+
 "@types/nprogress@^0.2.0":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@types/nprogress/-/nprogress-0.2.2.tgz#c73bf540ac7926fb1b6d03f9d2725e07b3848d65"
@@ -1285,6 +1292,11 @@
   version "7.5.4"
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.4.tgz#0a41252ad431c473158b22f9bfb9a63df7541cff"
   integrity sha512-MMzuxN3GdFwskAnb6fz0orFvhfqi752yjaXylr0Rp4oDg5H0Zn1IuyRhDVvYOwAXoJirx2xuS16I3WjxnAIHiQ==
+
+"@types/strip-comments@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@types/strip-comments/-/strip-comments-2.0.4.tgz#5531b00da37f2ea424195a6805b8c26b3564d466"
+  integrity sha512-YwcQqIGy90zEHrReYrMTpZfq003Um77WayeE8UwJTHvaM9g9XR9N7GMVSnjRhhDzQYVX375JnB5P6q5kAg221g==
 
 "@types/unist@*", "@types/unist@^3.0.0":
   version "3.0.1"
@@ -6120,12 +6132,6 @@ sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==
-
-"static-analyzer@file:./packages/static-analyzer":
-  version "1.0.0"
-  dependencies:
-    arg "^5.0.2"
-    strip-comments "^2.0.1"
 
 streamsearch@^1.1.0:
   version "1.1.0"

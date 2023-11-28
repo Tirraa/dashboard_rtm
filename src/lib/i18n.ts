@@ -17,7 +17,7 @@ function computePathnameI18nFlagUnstrict(pathname: AppPath, providedEndIndex?: n
 function computePathnameI18nFlagStrict(pathname: AppPath, providedEndIndex?: number): LanguageFlag {
   const languageFlag = computePathnameI18nFlagUnstrict(pathname, providedEndIndex);
   if (!isValidLanguageFlag(languageFlag)) return DEFAULT_LANGUAGE;
-  return languageFlag as LanguageFlag;
+  return languageFlag;
 }
 
 export function getPathnameWithoutI18nFlag(pathname: AppPath): AppPathAsIs | AppPath {
@@ -38,5 +38,5 @@ export function getPathnameI18nFlag(pathname: AppPath): LanguageFlag {
 export function getPathnameMaybeI18nFlag(pathname: AppPath): '' | LanguageFlag {
   const languageFlag = computePathnameI18nFlagUnstrict(pathname);
   if (!isValidLanguageFlag(languageFlag)) return '';
-  return languageFlag as LanguageFlag;
+  return languageFlag;
 }

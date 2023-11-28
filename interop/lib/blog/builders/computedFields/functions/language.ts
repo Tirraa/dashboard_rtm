@@ -18,7 +18,7 @@ function buildBlogPostLanguageFlagFromStr(flattenedPath: string): LanguageFlag {
       envelopeEndSlashIndex === -1
         ? flattenedPath.substring(envelopeBeginSlashIndex + 1)
         : flattenedPath.substring(envelopeBeginSlashIndex + 1, envelopeEndSlashIndex);
-    if (isValidLanguageFlag(language)) return language as LanguageFlag;
+    if (isValidLanguageFlag(language)) return language;
   }
   return DEFAULT_LANGUAGE;
 }

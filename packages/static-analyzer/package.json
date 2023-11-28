@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "static-analyzer",
+  "name": "@rtm/static-analyzer",
   "author": "gustaveWPM (github.com/gustaveWPM)",
   "license": "MIT",
   "version": "1.0.0",
