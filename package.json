@@ -19,6 +19,8 @@
     "format": "prettier --log-level warn --write ."
   },
   "dependencies": {
+    "@rtm/shared-lib": "*",
+    "@rtm/shared-types": "*",
     "@heroicons/react": "^2.0.18",
     "@next/bundle-analyzer": "^14.0.2",
     "@radix-ui/react-avatar": "^1.0.4",

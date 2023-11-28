@@ -1,10 +1,11 @@
 'use client';
 
-import { getBodyContainer, getDirection } from '@/lib/html';
+import { getBodyContainer } from '@/lib/html';
 import { cn, getBreakpoint } from '@/lib/tailwind';
-import type { WithDeepResetOnLgBreakpointEvents } from '@/types/Next';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { useMediaQuery } from '@react-hook/media-query';
+import { getDirection } from '@rtm/shared-lib/src/html';
+import type { WithDeepResetOnLgBreakpointEvents } from '@rtm/shared-types/src/Next';
 import { Check, ChevronRight, Circle } from 'lucide-react';
 import * as React from 'react';
 

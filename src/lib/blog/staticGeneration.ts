@@ -13,14 +13,14 @@ import type {
   PostBase,
   UnknownBlogSlug
 } from '@/types/Blog';
-import type { Maybe } from '@/types/CustomUtilityTypes';
+import { buildPageTitle } from '@rtm/shared-lib/src/str';
+import type { Maybe } from '@rtm/shared-types/src/CustomUtilityTypes';
 import {
   getAllBlogCategories,
   getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict,
   getBlogPostUnstrict,
   isValidBlogCategoryAndSubcategoryPair
 } from '.';
-import { buildPageTitle } from '../str';
 import blogPostGuard from './guards/blogPostGuard';
 import blogSubcategoryGuard from './guards/blogSubcategoryGuard';
 

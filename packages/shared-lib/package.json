@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "name": "@rtm/shared-lib",
+  "author": "gustaveWPM (github.com/gustaveWPM)",
+  "license": "MIT",
+  "version": "1.0.0",
+  "description": "lol",
+  "files": [
+    "src"
+  ],
+  "dependencies": {
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^1.14.0"
+  },
+  "devDependencies": {
+    "@types/hast": "^3.0.2"
+  }
+}

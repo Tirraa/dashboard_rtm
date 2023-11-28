@@ -7,7 +7,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useChangeLocale, useCurrentLocale, useScopedI18n } from '@/i18n/client';
 import localesLabels, { localesEmojis } from '@/i18n/localesLabels';
 import { cn } from '@/lib/tailwind';
-import type { WithIsMobile } from '@/types/Next';
+import type { WithIsMobile } from '@rtm/shared-types/src/Next';
 import type { FunctionComponent } from 'react';
 import { useState } from 'react';
 

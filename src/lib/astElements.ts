@@ -1,3 +1,3 @@
-import addClassname from './functions/astElement/addClassname';
+import addClassname from './astElement/addClassname';
 
 export { addClassname };

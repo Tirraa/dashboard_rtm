@@ -3,7 +3,7 @@ import { getMaybeI18nFlagFromRequest } from '@/lib/next';
 import { getSlashEnvelope } from '@/lib/str';
 import { APP_PROTECTED_PATHS } from '@/middleware';
 import { mainMiddlewaresChain } from '@/middlewaresChain';
-import type { AppPath, MiddlewareFactory } from '@/types/Next';
+import type { AppPath, MiddlewareFactory } from '@rtm/shared-types/src/Next';
 import type { NextRequestWithAuth } from 'next-auth/middleware';
 import { withAuth } from 'next-auth/middleware';
 import type { NextFetchEvent, NextMiddleware, NextRequest } from 'next/server';

@@ -1,4 +1,4 @@
-import type { AppPath, MiddlewareFactory } from '@/types/Next';
+import type { AppPath, MiddlewareFactory } from '@rtm/shared-types/src/Next';
 import type { NextFont } from 'next/dist/compiled/@next/font';
 import type { NextMiddleware, NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';

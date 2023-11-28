@@ -25,6 +25,12 @@ importers:
       '@react-hook/media-query':
         specifier: ^1.1.1
         version: 1.1.1(react@18.2.0)
+      '@rtm/shared-lib':
+        specifier: '*'
+        version: link:packages/shared-lib
+      '@rtm/shared-types':
+        specifier: '*'
+        version: link:packages/shared-types
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -185,6 +191,21 @@ importers:
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
+
+  packages/shared-lib:
+    dependencies:
+      clsx:
+        specifier: ^2.0.0
+        version: 2.0.0
+      tailwind-merge:
+        specifier: ^1.14.0
+        version: 1.14.0
+    devDependencies:
+      '@types/hast':
+        specifier: ^3.0.2
+        version: 3.0.3
+
+  packages/shared-types: {}
 
   packages/static-analyzer:
     dependencies:

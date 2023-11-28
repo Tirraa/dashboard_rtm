@@ -9,7 +9,8 @@ const nextConfig = {
   swcMinify: true,
   images: {
     domains: ['cdn.discordapp.com']
-  }
+  },
+  transpilePackages: ['@rtm/shared-lib']
 };
 
 module.exports = withBundleAnalyzer(withContentlayer(nextConfig));

@@ -5,11 +5,12 @@ import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import type { BlogArchitecture } from '@/config/blog';
 import BlogConfig from '@/config/blog';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase, UnknownBlogSlug } from '@/types/Blog';
-import type { Maybe } from '@/types/CustomUtilityTypes';
-import type { AppPath } from '@/types/Next';
+import { buildAbsolutePathFromParts } from '@rtm/shared-lib/src/str';
+import type { Maybe } from '@rtm/shared-types/src/CustomUtilityTypes';
+import type { AppPath } from '@rtm/shared-types/src/Next';
 import type { IsoDateTimeString } from 'contentlayer/core';
 import { redirect } from 'next/navigation';
-import { buildAbsolutePathFromParts, getFormattedDate } from '../str';
+import { getFormattedDate } from '../str';
 
 /**
  * @throws {TypeError}

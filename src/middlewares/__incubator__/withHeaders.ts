@@ -1,4 +1,4 @@
-import type { MiddlewareFactory } from '@/types/Next';
+import type { MiddlewareFactory } from '@rtm/shared-types/src/Next';
 import type { NextFetchEvent, NextMiddleware, NextRequest } from 'next/server';
 
 export const withHeaders: MiddlewareFactory = (next: NextMiddleware) => {
