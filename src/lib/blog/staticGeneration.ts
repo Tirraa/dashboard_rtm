@@ -14,7 +14,7 @@ import type {
   UnknownBlogSlug
 } from '@/types/Blog';
 import { buildPageTitle } from '@rtm/shared-lib/str';
-import type { Maybe } from '@rtm/shared-types/CustomUtilityTypes';
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import {
   getAllBlogCategories,
   getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict,
@@ -91,7 +91,7 @@ export async function getBlogPostMetadatas({ params }: BlogPostPageProps) {
 
     const slug = params[BlogTaxonomy.SLUG];
     const language = params[I18nTaxonomy.LANGUAGE];
-    const post: Maybe<PostBase> = await getBlogPostUnstrict(category, subcategory, slug, language);
+    const post: MaybeNull<PostBase> = await getBlogPostUnstrict(category, subcategory, slug, language);
 
     const globalT = await getServerSideI18n();
     const currentPost = post as PostBase;

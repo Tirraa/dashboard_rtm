@@ -6,7 +6,7 @@ import type { BlogArchitecture } from '@/config/blog';
 import BlogConfig from '@/config/blog';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase, UnknownBlogSlug } from '@/types/Blog';
 import { buildAbsolutePathFromParts } from '@rtm/shared-lib/str';
-import type { Maybe } from '@rtm/shared-types/CustomUtilityTypes';
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { AppPath } from '@rtm/shared-types/Next';
 import type { IsoDateTimeString } from 'contentlayer/core';
 import { redirect } from 'next/navigation';
@@ -47,7 +47,7 @@ export async function getBlogPostUnstrict(
   subcategory: BlogSubcategoryFromUnknownCategory,
   targettedSlug: UnknownBlogSlug,
   language: LanguageFlag
-): Promise<Maybe<PostBase>> {
+): Promise<MaybeNull<PostBase>> {
   const postsCollection: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(category, subcategory, language);
 
   return postsCollection.find(({ slug: currentPostSlug }) => currentPostSlug === targettedSlug) ?? null;
@@ -67,8 +67,8 @@ export async function getBlogPostStrict<C extends BlogCategory>(
   subcategory: BlogArchitecture[C],
   targettedSlug: UnknownBlogSlug,
   language: LanguageFlag
-): Promise<Maybe<PostBase>> {
-  const post: Maybe<PostBase> = await getBlogPostUnstrict(category, subcategory, targettedSlug, language);
+): Promise<MaybeNull<PostBase>> {
+  const post: MaybeNull<PostBase> = await getBlogPostUnstrict(category, subcategory, targettedSlug, language);
   return post;
 }
 

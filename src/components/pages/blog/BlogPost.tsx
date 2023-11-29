@@ -4,7 +4,7 @@ import MDX from '@/components/layouts/blog/MdxComponent';
 import BlogPostDate from '@/components/ui/blog/BlogPostDate';
 import { getBlogPostUnstrict, isValidBlogCategoryAndSubcategoryPair } from '@/lib/blog';
 import type { BlogPostPageProps, BlogPostProps, PostBase } from '@/types/Blog';
-import type { Maybe } from '@rtm/shared-types/CustomUtilityTypes';
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import { notFound } from 'next/navigation';
 import type { FunctionComponent } from 'react';
 
@@ -32,7 +32,7 @@ export const BlogPost: FunctionComponent<BlogPostPageProps> = async ({ params })
 
   const slug = params[BlogTaxonomy.SLUG];
 
-  const post: Maybe<PostBase> = await getBlogPostUnstrict(category, subcategory, slug, language);
+  const post: MaybeNull<PostBase> = await getBlogPostUnstrict(category, subcategory, slug, language);
   if (!post) notFound();
 
   return <BlogPostInner post={post} language={language} />;

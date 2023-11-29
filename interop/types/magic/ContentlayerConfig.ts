@@ -33,7 +33,7 @@ type DocumentsConfigTypeMetadatas<T extends TypeName = TypeName> = {
 export type DocumentsTypesMetadatas = Record<DocumentsTypesKey, DocumentsConfigTypeMetadatas<DocumentsTypesKey>>;
 
 // * ... https://github.com/microsoft/TypeScript/issues/56080
-export type DocumentsConfigType<ComputedFields extends keyof BaseFields = never> = {} & ComputedFields extends never
+export type DocumentsConfigType<ComputedFields extends keyof BaseFields = never> = /*__CAST `never` TO__*/ {} & ComputedFields extends never
   ? DocumentsConfigTypeContentLayerMetadatas & { fields: BaseFields }
   : DocumentsConfigTypeContentLayerMetadatas & {
       fields: Omit<BaseFields, ComputedFields>;

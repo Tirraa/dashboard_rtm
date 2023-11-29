@@ -8,7 +8,7 @@ import { getBlogPostUnstrict } from '@/lib/blog';
 import { blogPostGuard, getBlogPostMetadatas, getBlogStaticParams } from '@/lib/blog/staticGeneration';
 import { countCharacter } from '@/lib/str';
 import type { BlogPostPageProps, PostBase } from '@/types/Blog';
-import type { Maybe } from '@rtm/shared-types/CustomUtilityTypes';
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import { setStaticParamsLocale } from 'next-international/server';
 import { notFound } from 'next/navigation';
 
@@ -31,7 +31,7 @@ export default async function Page({ params }: BlogPostPageProps) {
   const subcategory = params[BlogTaxonomy.SUBCATEGORY];
   const slug = params[BlogTaxonomy.SLUG];
 
-  const post: Maybe<PostBase> = await getBlogPostUnstrict(category, subcategory, slug, language);
+  const post: MaybeNull<PostBase> = await getBlogPostUnstrict(category, subcategory, slug, language);
   if (!post) notFound();
 
   const MIN_DEPTH = 3;
