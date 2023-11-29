@@ -7,5 +7,47 @@
   "description": "types",
   "files": [
     "src"
-  ]
+  ],
+  "exports": {
+    "./Auth": "./src/Auth.ts",
+    "./Breadcrumbs": "./src/Breadcrumbs.ts",
+    "./CustomUtilityTypes": "./src/CustomUtilityTypes.ts",
+    "./DateManipulations": "./src/DateManipulations.ts",
+    "./HTML": "./src/HTML.ts",
+    "./international-types": "./src/international-types.ts",
+    "./Next": "./src/Next.ts",
+    "./React": "./src/React.ts",
+    "./StringManipulations": "./src/StringManipulations.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "Auth": [
+        "./src/Auth.ts"
+      ],
+      "Breadcrumbs": [
+        "./src/Breadcrumbs.ts"
+      ],
+      "CustomUtilityTypes": [
+        "./src/CustomUtilityTypes.ts"
+      ],
+      "DateManipulations": [
+        "./src/DateManipulations.ts"
+      ],
+      "HTML": [
+        "./src/HTML.ts"
+      ],
+      "international-types": [
+        "./src/international-types.ts"
+      ],
+      "Next": [
+        "./src/Next.ts"
+      ],
+      "React": [
+        "./src/React.ts"
+      ],
+      "StringManipulations": [
+        "./src/StringManipulations.ts"
+      ]
+    }
+  }
 }

@@ -1,4 +1,4 @@
-import type { LanguageFlag, VocabType } from '##/types/hell/i18n';
+import type { LanguageFlag, VocabType } from '##/types/magic/i18n';
 import DEFAULT_LANGUAGE_OBJ from '../../src/i18n/locales/fr';
 import { getEnumKeys } from '../../src/lib/functions/typescript/getEnumKeys';
 

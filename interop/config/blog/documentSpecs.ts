@@ -1,3 +1,10 @@
+import type {
+  ComputedFieldsAsFieldsRecord,
+  ContentLayerDocumentsConfigType,
+  DocumentsComputedFields,
+  DocumentsFields,
+  PostToBuild
+} from '##/types/magic/ContentlayerConfig';
 import type { DocumentContentType } from 'contentlayer/source-files';
 import {
   buildBlogPostCategory,
@@ -6,13 +13,6 @@ import {
   buildBlogPostSubcategory,
   buildBlogPostUrl
 } from '../../lib/blog/builders/computedFields';
-import type {
-  ComputedFieldsAsFieldsRecord,
-  ContentLayerDocumentsConfigType,
-  DocumentsComputedFields,
-  DocumentsFields,
-  PostToBuild
-} from '../../types/hell/contentlayerConfig';
 
 export const POSTS_FOLDER = 'posts';
 export const DOCUMENTS_CONTENT_TYPE: DocumentContentType = 'mdx';

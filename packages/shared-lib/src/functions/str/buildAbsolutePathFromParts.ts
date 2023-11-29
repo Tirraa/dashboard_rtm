@@ -1,4 +1,4 @@
-import type { AppPath, PathSegment } from '@rtm/shared-types/src/Next';
+import type { AppPath, PathSegment } from '@rtm/shared-types/Next';
 import buildPathFromParts from './buildPathFromParts';
 
 export const buildAbsolutePathFromParts = (...args: PathSegment[]): AppPath => {

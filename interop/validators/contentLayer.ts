@@ -23,3 +23,5 @@ export function validateContentLayerConfig(documentTypes: DocumentType<string>[]
   const duplicates = Array.from(duplicatesSet);
   if (duplicates.length > 0) throw new ContentLayerDuplicateTypesError(duplicates);
 }
+
+export default validateContentLayerConfig;

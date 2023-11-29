@@ -1,10 +1,10 @@
 import type VOCAB_SCHEMA from '@/i18n/locales/schema';
 import type { SHARED_VOCAB_SCHEMA } from '@/i18n/locales/schema';
 import type { getScopedI18n } from '@/i18n/server';
-import type { DeepPathToLiteralKeys, KeySeparator, MakeHomogeneousValuesObjType } from '@rtm/shared-types/src/CustomUtilityTypes';
-import type { RemovePlural } from '@rtm/shared-types/src/international-types';
-import type { TypedLeafsJSONData } from './etc/JSON';
-import type LanguageFlag from './etc/LanguageFlag';
+import type { DeepPathToLiteralKeys, KeySeparator, MakeHomogeneousValuesObjType } from '@rtm/shared-types/CustomUtilityTypes';
+import type { RemovePlural } from '@rtm/shared-types/international-types';
+import type { TypedLeafsJSONData } from '../JSON';
+import type LanguageFlag from '../LanguageFlag';
 
 type AllowedVocabObjValuesTypes = string;
 

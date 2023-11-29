@@ -1,6 +1,6 @@
+import type { AtomicContentLayerDocumentConfig, DocumentsTypesMetadatas } from '##/types/magic/ContentlayerConfig';
 import type { DocumentType, DocumentTypeDef } from 'contentlayer/source-files';
 import blogDataAssocBuilder from '../../lib/blog/builders/blogDataAssoc';
-import type { AtomicContentLayerDocumentConfig, DocumentsTypesMetadatas } from '../../types/hell/contentlayerConfig';
 import {
   DOCUMENTS_CONTENT_EXTENSION as EXT,
   POSTS_FOLDER,
@@ -40,3 +40,5 @@ export const documentTypes: DocumentType[] = Object.values(documentsTypesMetadat
 );
 
 export const categoriesBlogDataAssoc = blogDataAssocBuilder(documentsTypesMetadatas);
+
+export default documentTypes;

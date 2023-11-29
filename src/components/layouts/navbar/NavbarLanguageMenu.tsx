@@ -1,13 +1,13 @@
 'use client';
 
 import { LANGUAGES, i18ns } from '##/config/i18n';
-import type { ChangeLocaleFun, LanguageFlag } from '##/types/hell/i18n';
+import type { ChangeLocaleFun, LanguageFlag } from '##/types/magic/i18n';
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/DropdownMenu';
 import { useChangeLocale, useCurrentLocale, useScopedI18n } from '@/i18n/client';
 import localesLabels, { localesEmojis } from '@/i18n/localesLabels';
 import { cn } from '@/lib/tailwind';
-import type { WithIsMobile } from '@rtm/shared-types/src/Next';
+import type { WithIsMobile } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 import { useState } from 'react';
 

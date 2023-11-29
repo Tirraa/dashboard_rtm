@@ -1,6 +1,6 @@
 import type BlogTaxonomy from '##/config/taxonomies/blog';
 import type { TBlogTaxonomy } from '##/config/taxonomies/blog';
-import type { LanguageFlag } from '##/types/hell/i18n';
+import type { LanguageFlag } from '##/types/magic/i18n';
 import type { BlogArchitecture } from '@/config/blog';
 import type { PostSchema } from 'contentlayer/generated';
 import type { I18nParams } from './Next';

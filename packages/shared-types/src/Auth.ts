@@ -1,4 +1,4 @@
-import type { Maybe, MaybeObjectValue } from '@rtm/shared-types/src/CustomUtilityTypes';
+import type { Maybe, MaybeObjectValue } from '@rtm/shared-types/CustomUtilityTypes';
 
 type MaybeSession<T> = T | undefined;
 type MaybeSessionProp<T> = MaybeObjectValue<Maybe<T>>;

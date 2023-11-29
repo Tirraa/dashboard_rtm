@@ -1,4 +1,4 @@
-import type { AppPath, PathSegment } from '@rtm/shared-types/src/Next';
+import type { AppPath, PathSegment } from '@rtm/shared-types/Next';
 import deleteLeadingSlashes from './deleteLeadingSlashes';
 import deleteTrailingSlashes from './deleteTrailingSlashes';
 

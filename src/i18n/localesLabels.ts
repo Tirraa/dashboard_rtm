@@ -1,4 +1,4 @@
-import type { LanguageLabels } from '##/types/hell/i18n';
+import type { LanguageLabels } from '##/types/magic/i18n';
 
 export const localesLabels: LanguageLabels = {
   en: 'English',

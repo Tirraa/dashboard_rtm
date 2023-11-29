@@ -1,5 +1,4 @@
-import capitalize from '../../../../../src/lib/functions/str/capitalize';
-import pluralize from '../../../../../src/lib/functions/str/pluralize';
+import { capitalize, pluralize } from '../../unifiedImport';
 
 export const getBlogDataVariableName = (name: string): string => 'all' + capitalize(pluralize(name));
 

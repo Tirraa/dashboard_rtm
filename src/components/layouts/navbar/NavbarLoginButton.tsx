@@ -8,7 +8,7 @@ import UserImage from '@/components/ui/hoc/UserImage';
 import { useScopedI18n } from '@/i18n/client';
 import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
 import { KeyIcon, SignalSlashIcon } from '@heroicons/react/20/solid';
-import type { WithIsMobile } from '@rtm/shared-types/src/Next';
+import type { WithIsMobile } from '@rtm/shared-types/Next';
 import type { Session } from 'next-auth';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';

@@ -8,6 +8,91 @@
   "files": [
     "src"
   ],
+  "exports": {
+    "./html": "./src/html.ts",
+    "./misc": "./src/misc.ts",
+    "./react": "./src/react.ts",
+    "./str": "./src/str.ts",
+    "./functions/html/computeHTMLElementHeight": "./src/functions/html/computeHTMLElementHeight.ts",
+    "./functions/html/computeHTMLElementWidth": "./src/functions/html/computeHTMLElementWidth.ts",
+    "./functions/html/createURLSearchParams": "./src/functions/html/createURLSearchParams.ts",
+    "./functions/html/getDirection": "./functions/html/getDirection.ts",
+    "./functions/html/preserveKeyboardNavigation": "./functions/html/preserveKeyboardNavigation.ts",
+    "./functions/html/resetScroll": "./src/functions/html/resetScroll.ts",
+    "./functions/html/resetWindowScroll": "./src/functions/html/resetWindowScroll.ts",
+    "./functions/html/scrollToTop": "./src/functions/html/scrollToTop.ts",
+    "./functions/misc/isEmptyObject": "./src/functions/misc/isEmptyObject.ts",
+    "./functions/react/getLinkTarget": "./functions/react/getLinkTarget.ts",
+    "./functions/react/getRefCurrentPtr": "./functions/react/getRefCurrentPtr.ts",
+    "./functions/str/buildAbsolutePathFromParts": "./functions/str/buildAbsolutePathFromParts.ts",
+    "./functions/str/buildPageTitle": "./functions/str/buildPageTitle.ts",
+    "./functions/str/deleteLeadingSlashes": "./functions/str/deleteLeadingSlashes.ts",
+    "./functions/str/deleteTrailingSlashes": "./functions/str/deleteTrailingSlashes.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "html": [
+        "./src/html.ts"
+      ],
+      "misc": [
+        "./src/misc.ts"
+      ],
+      "react": [
+        "./src/react.ts"
+      ],
+      "str": [
+        "./src/str.ts"
+      ],
+      "functions/html/computeHTMLElementHeight": [
+        "./src/functions/html/computeHTMLElementHeight.ts"
+      ],
+      "international-types": [
+        "./src/international-types.ts"
+      ],
+      "functions/html/computeHTMLElementWidth": [
+        "./src/functions/html/computeHTMLElementWidth.ts"
+      ],
+      "functions/html/createURLSearchParams": [
+        "./src/functions/html/createURLSearchParams.ts"
+      ],
+      "functions/html/getDirection": [
+        "./src/functions/html/getDirection.ts"
+      ],
+      "functions/html/preserveKeyboardNavigation": [
+        "./src/functions/html/preserveKeyboardNavigation.ts"
+      ],
+      "functions/html/resetScroll": [
+        "./src/functions/html/resetScroll.ts"
+      ],
+      "functions/html/resetWindowScroll": [
+        "./src/functions/html/resetWindowScroll.ts"
+      ],
+      "functions/html/scrollToTop": [
+        "./src/functions/html/scrollToTop.ts"
+      ],
+      "functions/misc/isEmptyObject": [
+        "./src/functions/misc/isEmptyObject.ts"
+      ],
+      "functions/react/getLinkTarget": [
+        "./src/functions/react/getLinkTarget.ts"
+      ],
+      "functions/react/getRefCurrentPtr": [
+        "./src/functions/react/getRefCurrentPtr.ts"
+      ],
+      "functions/str/buildAbsolutePathFromParts": [
+        "./src/functions/str/buildAbsolutePathFromParts.ts"
+      ],
+      "functions/str/buildPageTitle": [
+        "./src/functions/str/buildPageTitle.ts"
+      ],
+      "functions/str/deleteLeadingSlashes": [
+        "./src/functions/str/deleteLeadingSlashes.ts"
+      ],
+      "functions/str/deleteTrailingSlashes": [
+        "./src/functions/str/deleteTrailingSlashes.ts"
+      ]
+    }
+  },
   "dependencies": {
     "clsx": "^2.0.0",
     "tailwind-merge": "^1.14.0"

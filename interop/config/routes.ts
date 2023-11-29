@@ -1,4 +1,4 @@
-import type { AppPath } from '@rtm/shared-types/src/Next';
+import type { AppPath } from '@rtm/shared-types/Next';
 import getSlashEnvelope from '../../src/lib/functions/str/getSlashEnvelope';
 
 enum ERoutesRoots {

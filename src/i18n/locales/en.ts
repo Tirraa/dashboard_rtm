@@ -1,4 +1,4 @@
-import type { SharedVocabType, VocabType } from '##/types/hell/i18n';
+import type { SharedVocabType, VocabType } from '##/types/magic/i18n';
 import { capitalize } from '../../lib/functions/str/capitalize';
 
 const SHARED: SharedVocabType = {

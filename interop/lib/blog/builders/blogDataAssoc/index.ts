@@ -1,4 +1,4 @@
-import type { DocumentsTypesMetadatas } from '##/types/hell/contentlayerConfig';
+import type { DocumentsTypesMetadatas } from '##/types/magic/ContentlayerConfig';
 import getBlogDataVariableName from './getBlogDataVariableName';
 
 export function blogDataAssocBuilder(documentsTypesMetadatas: DocumentsTypesMetadatas) {

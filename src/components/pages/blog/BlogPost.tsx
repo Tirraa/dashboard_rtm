@@ -4,7 +4,7 @@ import MDX from '@/components/layouts/blog/MdxComponent';
 import BlogPostDate from '@/components/ui/blog/BlogPostDate';
 import { getBlogPostUnstrict, isValidBlogCategoryAndSubcategoryPair } from '@/lib/blog';
 import type { BlogPostPageProps, BlogPostProps, PostBase } from '@/types/Blog';
-import type { Maybe } from '@rtm/shared-types/src/CustomUtilityTypes';
+import type { Maybe } from '@rtm/shared-types/CustomUtilityTypes';
 import { notFound } from 'next/navigation';
 import type { FunctionComponent } from 'react';
 

@@ -5,7 +5,7 @@ import Homepage from '@/components/pages/Homepage';
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
 import { cn } from '@/lib/tailwind';
 import type { I18nPageProps } from '@/types/Next';
-import { buildPageTitle } from '@rtm/shared-lib/src/str';
+import { buildPageTitle } from '@rtm/shared-lib/str';
 import { setStaticParamsLocale } from 'next-international/server';
 
 export async function generateMetadata() {

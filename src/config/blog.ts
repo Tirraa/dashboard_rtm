@@ -1,8 +1,8 @@
 import { categoriesBlogDataAssoc } from '##/config/blog/documentTypes';
-import type { DatesCompareFun } from '##/types/hell/dateManipulations';
-import type { StringsCompareFun } from '##/types/hell/stringManipulations';
 import { compareAlphabetically } from '@/lib/str';
 import type { PostsCollectionAssoc } from '@/types/Blog';
+import type { DatesCompareFun } from '@rtm/shared-types/DateManipulations';
+import type { StringsCompareFun } from '@rtm/shared-types/StringManipulations';
 import compareDesc from 'date-fns/compareDesc';
 
 export type BlogArchitecture = {

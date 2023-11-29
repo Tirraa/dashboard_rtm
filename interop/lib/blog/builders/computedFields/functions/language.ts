@@ -1,10 +1,6 @@
-import type { LanguageFlag } from '##/types/hell/etc/LanguageFlag';
+import type { LanguageFlag } from '##/types/LanguageFlag';
 import type { PostBase } from '@/types/Blog';
-import isValidLanguageFlag from '../../../../../../src/lib/functions/i18n/isValidLanguageFlag';
-import indexOfNthOccurrence from '../../../../../../src/lib/functions/str/indexOfNthOccurrence';
-import { POSTS_FOLDER } from '../../../../../config/blog/documentSpecs';
-import { DEFAULT_LANGUAGE } from '../../../../../config/i18n';
-import { getFlattenedPathWithoutRootFolder } from '../getFlattenedPathWithoutRootFolder';
+import { DEFAULT_LANGUAGE, POSTS_FOLDER, getFlattenedPathWithoutRootFolder, indexOfNthOccurrence, isValidLanguageFlag } from '../../../unifiedImport';
 
 function buildBlogPostLanguageFlagFromStr(flattenedPath: string): LanguageFlag {
   const firstSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 1);

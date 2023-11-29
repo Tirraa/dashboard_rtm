@@ -1,4 +1,4 @@
-import InvalidArgumentsError from '../../../../../src/errors/exceptions/InvalidArguments';
+import { InvalidArgumentsError } from '../../unifiedImport';
 
 /**
  * @throws {InvalidArgumentsError}

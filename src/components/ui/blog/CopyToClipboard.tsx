@@ -3,8 +3,8 @@
 import { i18ns } from '##/config/i18n';
 import { getClientSideI18n } from '@/i18n/client';
 import { cn } from '@/lib/tailwind';
-import { getRefCurrentPtr } from '@rtm/shared-lib/src/react';
-import type { WithChildren } from '@rtm/shared-types/src/Next';
+import { getRefCurrentPtr } from '@rtm/shared-lib/react';
+import type { WithChildren } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 import { useRef, useState } from 'react';
 

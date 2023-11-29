@@ -1,5 +1,5 @@
-import { resetScroll } from '@rtm/shared-lib/src/html';
-import type { HookDepsArrayPrimitives } from '@rtm/shared-types/src/React';
+import { resetScroll } from '@rtm/shared-lib/html';
+import type { HookDepsArrayPrimitives } from '@rtm/shared-types/React';
 import type { RefObject } from 'react';
 import { useLayoutEffect } from 'react';
 

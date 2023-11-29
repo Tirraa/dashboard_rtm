@@ -1,9 +1,6 @@
 import type { PostBase } from '@/types/Blog';
-import type { AppPath } from '@rtm/shared-types/src/Next';
-import { POSTS_FOLDER } from '../../../../../config/blog/documentSpecs';
-import { DEFAULT_LANGUAGE } from '../../../../../config/i18n';
-import ROUTES_ROOTS from '../../../../../config/routes';
-import { getFlattenedPathWithoutRootFolder } from '../getFlattenedPathWithoutRootFolder';
+import type { AppPath } from '@rtm/shared-types/Next';
+import { DEFAULT_LANGUAGE, POSTS_FOLDER, ROUTES_ROOTS, getFlattenedPathWithoutRootFolder } from '../../../unifiedImport';
 
 export const buildBlogPostUrl = (post: PostBase): AppPath => {
   const OPTIONAL_LOCALE_PART_INDEX = 2;

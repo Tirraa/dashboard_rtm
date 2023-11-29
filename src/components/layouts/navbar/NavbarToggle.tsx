@@ -6,8 +6,8 @@ import { getClientSideI18n, useScopedI18n } from '@/i18n/client';
 import { getBreakpoint } from '@/lib/tailwind';
 import type { NavbarItems } from '@/types/NavData';
 import { useMediaQuery } from '@react-hook/media-query';
-import { preserveKeyboardNavigation } from '@rtm/shared-lib/src/html';
-import { getRefCurrentPtr } from '@rtm/shared-lib/src/react';
+import { preserveKeyboardNavigation } from '@rtm/shared-lib/html';
+import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import type { FunctionComponent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 

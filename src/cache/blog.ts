@@ -1,5 +1,5 @@
 import { LANGUAGES } from '##/config/i18n';
-import type { LanguageFlag } from '##/types/hell/i18n';
+import type { LanguageFlag } from '##/types/magic/i18n';
 import { getAllBlogPostsByCategoryAndLanguage } from '@/lib/blog';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
 

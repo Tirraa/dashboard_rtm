@@ -8,7 +8,7 @@ import { getBlogPostUnstrict } from '@/lib/blog';
 import { blogPostGuard, getBlogPostMetadatas, getBlogStaticParams } from '@/lib/blog/staticGeneration';
 import { countCharacter } from '@/lib/str';
 import type { BlogPostPageProps, PostBase } from '@/types/Blog';
-import type { Maybe } from '@rtm/shared-types/src/CustomUtilityTypes';
+import type { Maybe } from '@rtm/shared-types/CustomUtilityTypes';
 import { setStaticParamsLocale } from 'next-international/server';
 import { notFound } from 'next/navigation';
 

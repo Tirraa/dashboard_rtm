@@ -1,5 +1,5 @@
 import { i18ns } from '##/config/i18n';
-import type { LanguageFlag } from '##/types/hell/i18n';
+import type { LanguageFlag } from '##/types/magic/i18n';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
 import { Button } from '@/components/ui/Button';
@@ -9,7 +9,7 @@ import BlogConfig from '@/config/blog';
 import { getServerSideI18n } from '@/i18n/server';
 import { cn } from '@/lib/tailwind';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
-import { buildPathFromParts } from '@rtm/shared-lib/src/str';
+import { buildPathFromParts } from '@rtm/shared-lib/str';
 import Link from 'next/link';
 import type { ReactElement, ReactNode } from 'react';
 import slugify from 'slugify';
@@ -50,7 +50,7 @@ export async function blogCategoryPageBuilder(
       counter += 1;
       isLast = counter >= max;
       if (posts.length === 0) continue;
-      // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
+      // @ts-ignore - checked via the static analyzer
       const curSubcategTitle = globalT(`${i18ns.blogCategories}.${category}.${subcategory}.title`);
       const href = buildPathFromParts(category, subcategory);
       const title = (
@@ -102,9 +102,9 @@ export async function blogCategoryPageBuilder(
 
   const sortedEntries = entries.sort((entry1, entry2) =>
     BlogConfig.DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_SUBCATEGORIES_ON_BLOG_CATEGORY_PAGE(
-      // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
+      // @ts-ignore - checked via the static analyzer
       globalT(`${i18ns.pagesTitles}.${entry1[0]}`),
-      // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER
+      // @ts-ignore - checked via the static analyzer
       globalT(`${i18ns.pagesTitles}.${entry2[0]}`),
       language
     )

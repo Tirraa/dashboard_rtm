@@ -19,7 +19,7 @@ import type {
   OptionalField,
   PostToBuild,
   RequiredField
-} from './hell/contentlayerConfig';
+} from './magic/ContentlayerConfig';
 
 export type BaseFields = {
   title: MakeTypeField<'string'> & RequiredField;

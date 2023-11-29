@@ -1,6 +1,6 @@
 import type { FieldDefType } from 'contentlayer/core';
 import type { DocumentContentType } from 'contentlayer/source-files';
-import type { BaseFields, DOCUMENTS_COMPUTED_FIELDS, DocumentsComputedFieldsKey, DocumentsTypesKey } from '../contentlayerConfigTweakers';
+import type { BaseFields, DOCUMENTS_COMPUTED_FIELDS, DocumentsComputedFieldsKey, DocumentsTypesKey } from '../ContentlayerConfigTweakers';
 
 type ContentLayerContentType = { contentType: DocumentContentType };
 

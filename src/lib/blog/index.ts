@@ -1,13 +1,13 @@
 import { DEFAULT_LANGUAGE, LANGUAGES } from '##/config/i18n';
 import ROUTES_ROOTS from '##/config/routes';
-import type { LanguageFlag } from '##/types/hell/i18n';
+import type { LanguageFlag } from '##/types/magic/i18n';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import type { BlogArchitecture } from '@/config/blog';
 import BlogConfig from '@/config/blog';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase, UnknownBlogSlug } from '@/types/Blog';
-import { buildAbsolutePathFromParts } from '@rtm/shared-lib/src/str';
-import type { Maybe } from '@rtm/shared-types/src/CustomUtilityTypes';
-import type { AppPath } from '@rtm/shared-types/src/Next';
+import { buildAbsolutePathFromParts } from '@rtm/shared-lib/str';
+import type { Maybe } from '@rtm/shared-types/CustomUtilityTypes';
+import type { AppPath } from '@rtm/shared-types/Next';
 import type { IsoDateTimeString } from 'contentlayer/core';
 import { redirect } from 'next/navigation';
 import { getFormattedDate } from '../str';

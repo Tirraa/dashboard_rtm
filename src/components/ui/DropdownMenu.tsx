@@ -4,8 +4,8 @@ import { getBodyContainer } from '@/lib/html';
 import { cn, getBreakpoint } from '@/lib/tailwind';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { useMediaQuery } from '@react-hook/media-query';
-import { getDirection } from '@rtm/shared-lib/src/html';
-import type { WithDeepResetOnLgBreakpointEvents } from '@rtm/shared-types/src/Next';
+import { getDirection } from '@rtm/shared-lib/html';
+import type { WithDeepResetOnLgBreakpointEvents } from '@rtm/shared-types/Next';
 import { Check, ChevronRight, Circle } from 'lucide-react';
 import * as React from 'react';
 

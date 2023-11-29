@@ -1,4 +1,4 @@
-import type { JSPrimitives } from '@rtm/shared-types/src/CustomUtilityTypes';
+import type { JSPrimitives } from '@rtm/shared-types/CustomUtilityTypes';
 
 type JSONPrimitiveLeafs = Exclude<JSPrimitives, undefined>;
 type JSONLeafs = JSONPrimitiveLeafs | JSONPrimitiveLeafs[];

@@ -8,9 +8,9 @@ import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 import CodeSnippetTheme from './interop/config/blog/code-snippet-theme.json';
 import { POSTS_FOLDER } from './interop/config/blog/documentSpecs';
-import { documentTypes } from './interop/config/blog/documentTypes';
-import { addClassname } from './src/lib/astElements';
-import { validateContentLayerConfig } from './validators/contentLayer';
+import documentTypes from './interop/config/blog/documentTypes';
+import addClassname from './interop/lib/misc/addClassname';
+import validateContentLayerConfig from './interop/validators/contentLayer';
 
 const contentDirPath = '.';
 const contentDirInclude = [POSTS_FOLDER];

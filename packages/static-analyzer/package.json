@@ -6,7 +6,7 @@
   "version": "1.0.0",
   "description": "GustaveWPM's NextJS Dashboard codebase internal static analyzer",
   "scripts": {
-    "start": "tsc --build && node dist/main.js --posts-folder $POSTS_FOLDER --blog-config-file $BLOG_CONFIG_FILE --i18n-locales-schema $I18N_LOCALES_SCHEMA"
+    "start": "cross-env tsc --build && node dist/main.js --posts-folder $POSTS_FOLDER --blog-config-file $BLOG_CONFIG_FILE --i18n-locales-schema $I18N_LOCALES_SCHEMA"
   },
   "devDependencies": {
     "@types/node": "^20.6.0",

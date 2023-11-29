@@ -5,7 +5,7 @@ import useLockScreenScrollY from '@/components/hooks/useLockScreenScrollY';
 import useResetScroll from '@/components/hooks/useResetScroll';
 import DashboardSidebar from '@/components/layouts/dashboard/DashboardSidebar';
 import { cn } from '@/lib/tailwind';
-import type { LayoutMinimalProps } from '@rtm/shared-types/src/Next';
+import type { LayoutMinimalProps } from '@rtm/shared-types/Next';
 import { useSelectedLayoutSegment } from 'next/navigation';
 import type { FunctionComponent } from 'react';
 import { useRef } from 'react';

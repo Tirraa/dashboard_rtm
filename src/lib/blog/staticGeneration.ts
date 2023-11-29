@@ -13,8 +13,8 @@ import type {
   PostBase,
   UnknownBlogSlug
 } from '@/types/Blog';
-import { buildPageTitle } from '@rtm/shared-lib/src/str';
-import type { Maybe } from '@rtm/shared-types/src/CustomUtilityTypes';
+import { buildPageTitle } from '@rtm/shared-lib/str';
+import type { Maybe } from '@rtm/shared-types/CustomUtilityTypes';
 import {
   getAllBlogCategories,
   getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict,
@@ -74,9 +74,9 @@ export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPag
     if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory, language)) throw new Error('Fallbacking on the catch block...');
 
     const globalT = await getServerSideI18n();
-    // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER (AND THE GUARD)
+    // @ts-ignore - checked via the static analyzer (and the guard)
     const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.blogCategories}.${category}.${subcategory}.title`));
-    // @ts-ignore - VERIFIED BY THE INTERNAL STATIC ANALYZER (AND THE GUARD)
+    // @ts-ignore - checked via the static analyzer (and the guard)
     const description = globalT(`${i18ns.blogCategories}.${category}.${subcategory}.meta-description`);
     return { title, description };
   } catch {

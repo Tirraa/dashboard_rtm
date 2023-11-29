@@ -1,7 +1,7 @@
 import { i18ns } from '##/config/i18n';
 import DashboardBarPage from '@/components/pages/dashboard/bar';
 import { getServerSideI18n } from '@/i18n/server';
-import { buildPageTitle } from '@rtm/shared-lib/src/str';
+import { buildPageTitle } from '@rtm/shared-lib/str';
 
 export async function generateMetadata() {
   const globalT = await getServerSideI18n();

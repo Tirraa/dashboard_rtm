@@ -4,7 +4,7 @@ import PagesHtmlElement from '@/components/layouts/base/PagesHtmlElement';
 import NotFound from '@/components/pages/Notfound';
 import { getCurrentLocale, getScopedI18n } from '@/i18n/server';
 import type { I18nParams } from '@/types/Next';
-import { buildPageTitle } from '@rtm/shared-lib/src/str';
+import { buildPageTitle } from '@rtm/shared-lib/str';
 
 export async function generateMetadata() {
   const scopedT = await getScopedI18n(i18ns.vocab);

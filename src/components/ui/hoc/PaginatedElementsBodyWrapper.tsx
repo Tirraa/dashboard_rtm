@@ -1,6 +1,6 @@
 import { cn } from '@/lib/tailwind';
-import type { FlexDirection, FlexJustify, FlexWrap } from '@rtm/shared-types/src/HTML';
-import type { WithChildren, WithClassname } from '@rtm/shared-types/src/Next';
+import type { FlexDirection, FlexJustify, FlexWrap } from '@rtm/shared-types/HTML';
+import type { WithChildren, WithClassname } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
 interface PaginatedElementsBodyWrapperPropsBase extends Partial<WithClassname> {

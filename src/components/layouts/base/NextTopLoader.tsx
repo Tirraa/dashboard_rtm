@@ -1,7 +1,7 @@
 'use client';
 
 import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
-import type { Maybe } from '@rtm/shared-types/src/CustomUtilityTypes';
+import type { Maybe } from '@rtm/shared-types/CustomUtilityTypes';
 
 // A Next.js Top Loading Bar component made using nprogress, works with Next.js 13.
 // https://github.com/TheSGJ/nextjs-toploader
