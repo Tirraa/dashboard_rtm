@@ -9,7 +9,7 @@ export type ComputedFieldsAsFieldsRecord = {
   [Key in ComputedFieldsKey]: Key extends keyof BaseFields ? BaseFields[Key] : never;
 };
 
-type ComputedField<K extends keyof BaseFields> = Pick<BaseFields[K], 'type'> & { resolve: (...args: any[]) => unknown };
+type ComputedField<K extends keyof BaseFields> = Pick<BaseFields[K], 'type'> & { resolve: (post: PostToBuild) => unknown };
 
 type ComputedFieldsMappedToPartialBaseFieldsSumType<K extends keyof BaseFields> = {
   [_ in K]: ComputedField<K>;
@@ -55,6 +55,7 @@ export type ContentLayerDocumentsConfigType<ComputedFields extends keyof BaseFie
   ContentLayerContentType;
 
 type MakeRequiredField<T extends boolean> = { required: T };
+export type MakeDefaultField<T> = { default: T };
 export type MakeTypeField<T extends FieldDefType> = { type: T };
 export type RequiredField = MakeRequiredField<true>;
 export type OptionalField = MakeRequiredField<false>;
