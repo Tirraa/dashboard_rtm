@@ -1,8 +1,4 @@
 import type { RoutesDefinition } from '@/types/RoutesMapping';
 
-enum EAuthRoutes {
-  LOGIN
-}
-
-export type AuthRoutesKeys = keyof typeof EAuthRoutes;
+export type AuthRoutesKeys = 'LOGIN';
 export type AuthRoutes = RoutesDefinition<AuthRoutesKeys>;

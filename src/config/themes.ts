@@ -1,10 +1,5 @@
-enum EThemeVariants {
-  LIGHT,
-  DARK
-}
-
 type ColorScheme = 'light' | 'dark';
-type ThemeVariantKey = keyof typeof EThemeVariants;
+type ThemeVariantKey = 'LIGHT' | 'DARK';
 type ThemeConfig = Record<'VARIANTS', Record<ThemeVariantKey, string>> & Record<'VARIANTS_COLORS_SCHEME', Record<ThemeVariantKey, ColorScheme>>;
 
 const THEME_CONFIG = {

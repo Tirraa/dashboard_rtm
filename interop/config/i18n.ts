@@ -18,5 +18,5 @@ export const i18ns = {
   vocab: 'vocab'
 } as const satisfies Record<string, keyof VocabType>;
 
-export const LANGUAGES: LanguageFlag[] = getEnumKeys(ELanguagesFlag) as LanguageFlag[];
+export const LANGUAGES: LanguageFlag[] = getEnumKeys(ELanguagesFlag);
 export const DEFAULT_LANGUAGE: LanguageFlag = DEFAULT_LANGUAGE_OBJ._infos.lng;
