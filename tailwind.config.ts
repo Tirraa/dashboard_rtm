@@ -4,7 +4,7 @@ import colors from 'tailwindcss/colors';
 import defaultTheme, { fontFamily } from 'tailwindcss/defaultTheme';
 import type { DefaultColors } from 'tailwindcss/types/generated/colors';
 
-type Colors = { [_ in keyof DefaultColors]: string | Record<string, string> };
+type Colors = { [_ in keyof DefaultColors]: string | Record<PropertyKey, string> };
 
 const REHYPE_AUTOLINK_HEADINGS_SAFELIST = ['mr-1'];
 

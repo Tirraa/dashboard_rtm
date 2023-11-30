@@ -4,7 +4,7 @@ import PrimitiveComponents from '@/components/config/blog/PrimitiveComponents';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import type { FunctionComponent, ReactNode } from 'react';
 
-const components: Record<string, (...args: any[]) => JSX.Element | ReactNode> = {
+const components: Record<PropertyKey, (...args: any[]) => JSX.Element | ReactNode> = {
   ...PrimitiveComponents,
   ...NextComponents,
   ...CTAs

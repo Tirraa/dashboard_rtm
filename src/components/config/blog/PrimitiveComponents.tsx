@@ -2,7 +2,7 @@ import CopyToClipboard from '@/components/ui/blog/CopyToClipboard';
 import { cn } from '@/lib/tailwind';
 import type { HTMLAttributes, ImgHTMLAttributes } from 'react';
 
-export const PrimitiveComponents: Record<string, (...args: any[]) => JSX.Element> = {
+export const PrimitiveComponents: Record<PropertyKey, (...args: any[]) => JSX.Element> = {
   h1: ({ className, ...props }) => <h1 className={cn('mt-2 flex scroll-m-20 text-4xl font-bold tracking-tight', className)} {...props} />,
   h2: ({ className, ...props }) => (
     <h2 className={cn('mt-10 flex scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0', className)} {...props} />
