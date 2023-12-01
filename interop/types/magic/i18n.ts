@@ -12,19 +12,16 @@ type VocabObjKey = string;
 type VocabObjKeyDeepPath = string;
 type VocabObjValue = AllowedVocabObjValuesTypes;
 
-type UnknownVocabObj = {
-  [_: VocabObjKey]: UnknownVocabObj | VocabObjValue;
-};
-
+type UnknownVocabObj = { [_: VocabObjKey]: UnknownVocabObj | VocabObjValue };
 type VocabOrVocabLeaf = UnknownVocabObj | VocabObjValue;
 
-type MakeVocabTargets<VorVL extends VocabOrVocabLeaf, CurrentDeepPath extends VocabObjKeyDeepPath = ''> = VorVL extends UnknownVocabObj
+type MakeVocabTargets<VorVL extends VocabOrVocabLeaf, __CurrentDeepPath extends VocabObjKeyDeepPath = ''> = VorVL extends UnknownVocabObj
   ? {
       [VKorVL in keyof VorVL]: VKorVL extends VocabObjKey
-        ? MakeVocabTargets<VorVL[VKorVL], `${CurrentDeepPath}${CurrentDeepPath extends '' ? '' : KeySeparator}${VKorVL}`>
+        ? MakeVocabTargets<VorVL[VKorVL], `${__CurrentDeepPath}${__CurrentDeepPath extends '' ? '' : KeySeparator}${VKorVL}`>
         : never;
     }[keyof VorVL]
-  : RemovePlural<CurrentDeepPath>;
+  : RemovePlural<__CurrentDeepPath>;
 
 type MakeVocabTargetsScopes<Target extends string> = Target extends `${infer Head}${KeySeparator}${infer Tail}`
   ? Head | `${Head}${KeySeparator}${MakeVocabTargetsScopes<Tail>}`
@@ -38,10 +35,6 @@ export type VocabType = MakeHomogeneousValuesObjType<VocabBase, VocabObjValue>;
 export type I18nVocabTarget = MakeVocabTargets<VocabBase>;
 export type I18nVocabScope = MakeVocabTargetsScopes<I18nVocabTarget>;
 
-type NextInternationalMagic = {
-  default: VocabType;
-};
-
 export type UnstrictScopedT = Awaited<ReturnType<typeof getScopedI18n<I18nVocabScope>>>;
 
 export type I18nMiddlewareConfig = {
@@ -51,6 +44,7 @@ export type I18nMiddlewareConfig = {
 };
 
 type LocalesObjKey = LanguageFlag;
+type NextInternationalMagic = { default: VocabType };
 type NextInternationalLazyLoadFun = () => Promise<NextInternationalMagic>;
 
 export type LanguageLabels = Record<LanguageFlag, string>;
@@ -62,4 +56,17 @@ export type LocalesGetterConfigObjTypeConstraint = Record<LanguageFlag, () => Pr
 export type ChangeLocaleFun = (language: LanguageFlag) => void;
 
 export type PagesTitlesKey = keyof VocabType['pages-titles'];
+
+type ExpectedI18nsValues = { [K in keyof VocabType]: unknown };
+type GivenI18nsValues<FLIPPED_I18NS_CONST extends object> = { [K in keyof FLIPPED_I18NS_CONST]: unknown };
+type FlipI18ns<I18NS_CONST extends I18ns> = { [P in keyof I18NS_CONST as I18NS_CONST[P]]: P };
+type I18nsDiff<GivenI18nsValues extends object> = { [K in Exclude<keyof ExpectedI18nsValues, keyof GivenI18nsValues>]: K };
+
+export type I18ns = Record<PropertyKey, keyof VocabType>;
+export type MakeI18ns<I18NS_CONST extends I18ns, __FLIP extends object = FlipI18ns<I18NS_CONST>> = keyof VocabType extends keyof __FLIP
+  ? I18NS_CONST
+  : I18NS_CONST extends I18ns
+    ? I18nsDiff<GivenI18nsValues<__FLIP>>
+    : never;
+
 export type { LanguageFlag };
