@@ -24,13 +24,12 @@ const Crumb: FunctionComponent<CrumbProps> = ({ label, href, isLeaf: maybeIsLeaf
         href={href}
         aria-current={isLeaf ? 'page' : undefined}
         aria-disabled={isLeaf ? 'true' : undefined}
-        style={isLeaf ? { pointerEvents: 'none' } : undefined}
         className={cn(
           'duration-250 transition-colors',
           {
             'opacity-60 hover:text-primary hover:opacity-100 focus:text-primary focus:opacity-100': !isLeaf
           },
-          { 'font-semibold': isLeaf }
+          { 'pointer-events-none font-semibold': isLeaf }
         )}
       >
         {label}

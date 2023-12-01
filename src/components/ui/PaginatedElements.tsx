@@ -90,10 +90,10 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
         pageRangeDisplayed={pagesRange < pagesAmount ? pagesRange : pagesAmount}
         pageCount={pagesAmount}
         containerClassName="flex items-center justify-center mt-8 mb-4 select-none"
-        previousLinkClassName={cn('flex items-center justify-center rounded-md', { 'opacity-50': pageFromUrl <= 1 })}
-        nextLinkClassName={cn('flex items-center justify-center rounded-md', { 'opacity-50': pageFromUrl >= pagesAmount })}
+        previousLinkClassName={cn('flex items-center justify-center rounded-md', { 'pointer-events-none opacity-50': pageFromUrl <= 1 })}
+        nextLinkClassName={cn('flex items-center justify-center rounded-md', { 'pointer-events-none opacity-50': pageFromUrl >= pagesAmount })}
         pageLinkClassName="flex items-center justify-center hover:bg-accent p-2 rounded-md"
-        activeClassName="bg-accent rounded-md"
+        activeClassName="pointer-events-none bg-accent rounded-md"
         ariaLabelBuilder={(pageNumber) => `${capitalize(scopedT('page'))} ${pageNumber}`}
       />
     </div>
