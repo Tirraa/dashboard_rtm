@@ -62,17 +62,4 @@ export type LocalesGetterConfigObjTypeConstraint = Record<LanguageFlag, () => Pr
 export type ChangeLocaleFun = (language: LanguageFlag) => void;
 
 export type PagesTitlesKey = keyof VocabType['pages-titles'];
-
-type ExpectedI18nsValues = { [K in keyof VocabType]: unknown };
-type GivenI18nsValues<FLIPPED_I18N_CONST extends object> = { [K in keyof FLIPPED_I18N_CONST]: unknown };
-type FlipI18ns<I18NS_CONST extends I18ns> = { [P in keyof I18NS_CONST as I18NS_CONST[P]]: P };
-type I18nsDiff<GivenI18nsValues extends object> = { [K in Exclude<keyof ExpectedI18nsValues, keyof GivenI18nsValues>]: K };
-
-export type I18ns = Record<PropertyKey, keyof VocabType>;
-export type MakeI18ns<I18NS_CONST extends I18ns> = keyof VocabType extends keyof FlipI18ns<I18NS_CONST>
-  ? I18ns
-  : I18NS_CONST extends I18ns
-    ? I18nsDiff<GivenI18nsValues<FlipI18ns<I18NS_CONST>>>
-    : never;
-
 export type { LanguageFlag };
