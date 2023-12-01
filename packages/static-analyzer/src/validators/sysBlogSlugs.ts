@@ -15,9 +15,10 @@ export function sysBlogSlugsValidator(postsFolder: string): MaybeEmptyErrorsDete
   const filesCollection = traverseFolder(postsFolder);
 
   for (const file of filesCollection) {
-    if (!isValidTaxonomy(file.filename)) {
+    const slug = file.filename;
+    if (!isValidTaxonomy(slug)) {
       if (!foldersWithDefects[file.fileDirectory]) foldersWithDefects[file.fileDirectory] = [];
-      foldersWithDefects[file.fileDirectory].push(file.filename);
+      foldersWithDefects[file.fileDirectory].push(slug);
     }
   }
 

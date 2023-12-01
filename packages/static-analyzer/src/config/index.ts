@@ -7,6 +7,8 @@ export const FLAGS = {
   NO_I18N: '--no-i18n'
 } as const;
 
+export const MAX_TAXONOMY_LEN: number = 34;
+
 export const LOCALES_INFOS_ROOT_KEY: string = '_infos';
 export const BLOG_CATEGORIES_I18N_ROOT_KEY: string = 'blog-categories';
 export const BLOG_ARCHITECTURE_TYPE_STR: string = 'BlogArchitecture';
