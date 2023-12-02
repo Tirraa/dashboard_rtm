@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs';
-import { LOCALES_INFOS_ROOT_KEY } from '../config';
+import { LOCALES_INFOS_OBJ_NEEDLE, LOCALES_INFOS_ROOT_KEY } from '../config';
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
 import BuilderError from '../errors/exceptions/BuilderError';
 import { objInnerToObj } from '../lib/etc';
@@ -14,7 +14,7 @@ const { INTERRUPTED: ERROR_SUFFIX } = CRITICAL_ERRORS_STR;
 function buildLocaleFileMetadatasFromLocaleFile(localeFilePath: string): I18nJSONPart {
   const error = new BuilderError(`Couldn't extract the content of the '${LOCALES_INFOS_ROOT_KEY}' i18n section!` + ' ' + ERROR_SUFFIX + '\n');
   const localeFileContent = readFileSync(localeFilePath, 'utf8');
-  const startIndex = localeFileContent.indexOf(LOCALES_INFOS_ROOT_KEY);
+  const startIndex = localeFileContent.indexOf(LOCALES_INFOS_OBJ_NEEDLE);
 
   const localeInfosInner = getRawDataFromBracesDeclaration(localeFileContent, startIndex);
   if (!localeInfosInner) throw error;

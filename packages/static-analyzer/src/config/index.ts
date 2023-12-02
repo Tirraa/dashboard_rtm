@@ -20,5 +20,6 @@ export const LIST_ELEMENT_PREFIX: string = '\n - ';
 
 export const BLOG_ARCHITECTURE_TYPE_NEEDLE: string = `type ${BLOG_ARCHITECTURE_TYPE_STR} =`;
 export const I18N_BLOG_CATEGORIES_OBJ_NEEDLE: string = `'${BLOG_CATEGORIES_I18N_ROOT_KEY}':`;
+export const LOCALES_INFOS_OBJ_NEEDLE: string = `${LOCALES_INFOS_ROOT_KEY}:`;
 
 export const ROOT_FOLDER_RELATIVE_PATH_FROM_STATIC_ANALYZER_CTX: string = '../../../';

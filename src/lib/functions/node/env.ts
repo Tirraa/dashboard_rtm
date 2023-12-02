@@ -12,7 +12,7 @@ const NODE_ENV = process.env.NODE_ENV;
 
 let devCtx: MaybeObjectValue<boolean> = NODE_ENV ? NODE_ENV.startsWith(NODE_DEV_ENV_NEEDLE) : undefined;
 let testCtx: MaybeObjectValue<boolean> = NODE_ENV ? NODE_ENV.startsWith(NODE_TEST_ENV_NEEDLE) : undefined;
-let prodCtx: MaybeObjectValue<boolean> = NODE_ENV ? NODE_ENV.startsWith(NODE_PROD_ENV_NEEDLE) : undefined;
+const prodCtx: MaybeObjectValue<boolean> = NODE_ENV ? NODE_ENV.startsWith(NODE_PROD_ENV_NEEDLE) : undefined;
 let forcedToProd: boolean = Boolean(prodCtx);
 
 if (NODE_ENV === undefined) {
