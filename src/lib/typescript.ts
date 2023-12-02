@@ -1,3 +1,3 @@
-import getEnumKeys from './functions/typescript/getEnumKeys';
+import getEnumKeys from './portable/typescript/getEnumKeys';
 
 export { getEnumKeys };

@@ -1,7 +1,7 @@
-import isValidLanguageFlag from '../../../src/lib/functions/i18n/isValidLanguageFlag';
-import capitalize from '../../../src/lib/functions/str/capitalize';
-import { indexOfNthOccurrence } from '../../../src/lib/functions/str/indexOfNthOccurrence';
-import pluralize from '../../../src/lib/functions/str/pluralize';
+import isValidLanguageFlag from '../../../src/lib/portable/i18n/isValidLanguageFlag';
+import capitalize from '../../../src/lib/portable/str/capitalize';
+import { indexOfNthOccurrence } from '../../../src/lib/portable/str/indexOfNthOccurrence';
+import pluralize from '../../../src/lib/portable/str/pluralize';
 import { POSTS_FOLDER } from '../../config/blog/documentSpecs';
 import { DEFAULT_LANGUAGE } from '../../config/i18n';
 import ROUTES_ROOTS from '../../config/routes';

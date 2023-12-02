@@ -1,12 +1,12 @@
-import capitalize from './functions/str/capitalize';
-import compareAlphabetically from './functions/str/compareAlphabetically';
-import countCharacter from './functions/str/countCharacter';
-import endsWithChars from './functions/str/endsWithChar';
-import fromKebabCaseToSentenceCase from './functions/str/fromKebabCaseToSentenceCase';
-import getFormattedDate from './functions/str/getFormattedDate';
-import getSlashEnvelope from './functions/str/getSlashEnvelope';
-import indexOfNthOccurrence from './functions/str/indexOfNthOccurrence';
-import pluralize from './functions/str/pluralize';
+import capitalize from './portable/str/capitalize';
+import compareAlphabetically from './portable/str/compareAlphabetically';
+import countCharacter from './portable/str/countCharacter';
+import endsWithChars from './portable/str/endsWithChar';
+import fromKebabCaseToSentenceCase from './portable/str/fromKebabCaseToSentenceCase';
+import getFormattedDate from './portable/str/getFormattedDate';
+import getSlashEnvelope from './portable/str/getSlashEnvelope';
+import indexOfNthOccurrence from './portable/str/indexOfNthOccurrence';
+import pluralize from './portable/str/pluralize';
 import { getPathnameWithoutI18nFlag } from './i18n';
 
 import ROUTES_ROOTS from '##/config/routes';

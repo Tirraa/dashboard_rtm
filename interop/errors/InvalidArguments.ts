@@ -1,4 +1,4 @@
-import { endsWithChars } from '../../src/lib/functions/str/endsWithChar';
+import { endsWithChars } from '../../src/lib/portable/str/endsWithChar';
 
 export class InvalidArgumentsError extends Error {
   constructor(method: string, args: object, hint: string = '') {

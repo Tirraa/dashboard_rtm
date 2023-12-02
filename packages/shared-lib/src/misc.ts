@@ -1,3 +1,3 @@
-import isEmptyObject from './functions/misc/isEmptyObject';
+import isEmptyObject from './portable/misc/isEmptyObject';
 
 export { isEmptyObject };

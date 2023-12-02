@@ -1,4 +1,4 @@
-import getLinkTarget from './functions/react/getLinkTarget';
-import getRefCurrentPtr from './functions/react/getRefCurrentPtr';
+import getLinkTarget from './portable/react/getLinkTarget';
+import getRefCurrentPtr from './portable/react/getRefCurrentPtr';
 
 export { getLinkTarget, getRefCurrentPtr };

@@ -13,21 +13,21 @@
     "./misc": "./src/misc.ts",
     "./react": "./src/react.ts",
     "./str": "./src/str.ts",
-    "./functions/html/computeHTMLElementHeight": "./src/functions/html/computeHTMLElementHeight.ts",
-    "./functions/html/computeHTMLElementWidth": "./src/functions/html/computeHTMLElementWidth.ts",
-    "./functions/html/createURLSearchParams": "./src/functions/html/createURLSearchParams.ts",
-    "./functions/html/getDirection": "./functions/html/getDirection.ts",
-    "./functions/html/preserveKeyboardNavigation": "./functions/html/preserveKeyboardNavigation.ts",
-    "./functions/html/resetScroll": "./src/functions/html/resetScroll.ts",
-    "./functions/html/resetWindowScroll": "./src/functions/html/resetWindowScroll.ts",
-    "./functions/html/scrollToTop": "./src/functions/html/scrollToTop.ts",
-    "./functions/misc/isEmptyObject": "./src/functions/misc/isEmptyObject.ts",
-    "./functions/react/getLinkTarget": "./functions/react/getLinkTarget.ts",
-    "./functions/react/getRefCurrentPtr": "./functions/react/getRefCurrentPtr.ts",
-    "./functions/str/buildAbsolutePathFromParts": "./functions/str/buildAbsolutePathFromParts.ts",
-    "./functions/str/buildPageTitle": "./functions/str/buildPageTitle.ts",
-    "./functions/str/deleteLeadingSlashes": "./functions/str/deleteLeadingSlashes.ts",
-    "./functions/str/deleteTrailingSlashes": "./functions/str/deleteTrailingSlashes.ts"
+    "./portable/html/computeHTMLElementHeight": "./src/portable/html/computeHTMLElementHeight.ts",
+    "./portable/html/computeHTMLElementWidth": "./src/portable/html/computeHTMLElementWidth.ts",
+    "./portable/html/createURLSearchParams": "./src/portable/html/createURLSearchParams.ts",
+    "./portable/html/getDirection": "./portable/html/getDirection.ts",
+    "./portable/html/preserveKeyboardNavigation": "./portable/html/preserveKeyboardNavigation.ts",
+    "./portable/html/resetScroll": "./src/portable/html/resetScroll.ts",
+    "./portable/html/resetWindowScroll": "./src/portable/html/resetWindowScroll.ts",
+    "./portable/html/scrollToTop": "./src/portable/html/scrollToTop.ts",
+    "./portable/misc/isEmptyObject": "./src/portable/misc/isEmptyObject.ts",
+    "./portable/react/getLinkTarget": "./portable/react/getLinkTarget.ts",
+    "./portable/react/getRefCurrentPtr": "./portable/react/getRefCurrentPtr.ts",
+    "./portable/str/buildAbsolutePathFromParts": "./portable/str/buildAbsolutePathFromParts.ts",
+    "./portable/str/buildPageTitle": "./portable/str/buildPageTitle.ts",
+    "./portable/str/deleteLeadingSlashes": "./portable/str/deleteLeadingSlashes.ts",
+    "./portable/str/deleteTrailingSlashes": "./portable/str/deleteTrailingSlashes.ts"
   },
   "typesVersions": {
     "*": {
@@ -43,53 +43,53 @@
       "str": [
         "./src/str.ts"
       ],
-      "functions/html/computeHTMLElementHeight": [
-        "./src/functions/html/computeHTMLElementHeight.ts"
-      ],
       "international-types": [
         "./src/international-types.ts"
       ],
-      "functions/html/computeHTMLElementWidth": [
-        "./src/functions/html/computeHTMLElementWidth.ts"
+      "portable/html/computeHTMLElementHeight": [
+        "./src/portable/html/computeHTMLElementHeight.ts"
       ],
-      "functions/html/createURLSearchParams": [
-        "./src/functions/html/createURLSearchParams.ts"
+      "portable/html/computeHTMLElementWidth": [
+        "./src/portable/html/computeHTMLElementWidth.ts"
       ],
-      "functions/html/getDirection": [
-        "./src/functions/html/getDirection.ts"
+      "portable/html/createURLSearchParams": [
+        "./src/portable/html/createURLSearchParams.ts"
       ],
-      "functions/html/preserveKeyboardNavigation": [
-        "./src/functions/html/preserveKeyboardNavigation.ts"
+      "portable/html/getDirection": [
+        "./src/portable/html/getDirection.ts"
       ],
-      "functions/html/resetScroll": [
-        "./src/functions/html/resetScroll.ts"
+      "portable/html/preserveKeyboardNavigation": [
+        "./src/portable/html/preserveKeyboardNavigation.ts"
       ],
-      "functions/html/resetWindowScroll": [
-        "./src/functions/html/resetWindowScroll.ts"
+      "portable/html/resetScroll": [
+        "./src/portable/html/resetScroll.ts"
       ],
-      "functions/html/scrollToTop": [
-        "./src/functions/html/scrollToTop.ts"
+      "portable/html/resetWindowScroll": [
+        "./src/portable/html/resetWindowScroll.ts"
       ],
-      "functions/misc/isEmptyObject": [
-        "./src/functions/misc/isEmptyObject.ts"
+      "portable/html/scrollToTop": [
+        "./src/portable/html/scrollToTop.ts"
       ],
-      "functions/react/getLinkTarget": [
-        "./src/functions/react/getLinkTarget.ts"
+      "portable/misc/isEmptyObject": [
+        "./src/portable/misc/isEmptyObject.ts"
       ],
-      "functions/react/getRefCurrentPtr": [
-        "./src/functions/react/getRefCurrentPtr.ts"
+      "portable/react/getLinkTarget": [
+        "./src/portable/react/getLinkTarget.ts"
       ],
-      "functions/str/buildAbsolutePathFromParts": [
-        "./src/functions/str/buildAbsolutePathFromParts.ts"
+      "portable/react/getRefCurrentPtr": [
+        "./src/portable/react/getRefCurrentPtr.ts"
       ],
-      "functions/str/buildPageTitle": [
-        "./src/functions/str/buildPageTitle.ts"
+      "portable/str/buildAbsolutePathFromParts": [
+        "./src/portable/str/buildAbsolutePathFromParts.ts"
       ],
-      "functions/str/deleteLeadingSlashes": [
-        "./src/functions/str/deleteLeadingSlashes.ts"
+      "portable/str/buildPageTitle": [
+        "./src/portable/str/buildPageTitle.ts"
       ],
-      "functions/str/deleteTrailingSlashes": [
-        "./src/functions/str/deleteTrailingSlashes.ts"
+      "portable/str/deleteLeadingSlashes": [
+        "./src/portable/str/deleteLeadingSlashes.ts"
+      ],
+      "portable/str/deleteTrailingSlashes": [
+        "./src/portable/str/deleteTrailingSlashes.ts"
       ]
     }
   },

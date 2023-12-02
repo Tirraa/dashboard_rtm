@@ -1,5 +1,5 @@
 import type { SharedVocabType, VocabType } from '##/types/magic/i18n';
-import { capitalize } from '../../lib/functions/str/capitalize';
+import { capitalize } from '../../lib/portable/str/capitalize';
 
 const SHARED: SharedVocabType = {
   'pages-titles': {

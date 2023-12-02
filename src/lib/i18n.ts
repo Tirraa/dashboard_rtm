@@ -2,8 +2,8 @@ import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import ROUTES_ROOTS from '##/config/routes';
 import type { LanguageFlag } from '##/types/magic/i18n';
 import type { AppPath, AppPathAsIs } from '@rtm/shared-types/Next';
-import isValidLanguageFlag from './functions/i18n/isValidLanguageFlag';
-import indexOfNthOccurrence from './functions/str/indexOfNthOccurrence';
+import isValidLanguageFlag from './portable/i18n/isValidLanguageFlag';
+import indexOfNthOccurrence from './portable/str/indexOfNthOccurrence';
 
 function computePathnameI18nFlagUnstrict(pathname: AppPath, providedEndIndex?: number): string {
   const compute = (pathname: AppPath, endIndex: number) => (endIndex === -1 ? pathname.substring(1) : pathname.substring(1, endIndex));

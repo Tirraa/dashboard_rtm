@@ -1,6 +1,6 @@
 import type { I18ns, LanguageFlag, MakeI18ns } from '##/types/magic/i18n';
 import DEFAULT_LANGUAGE_OBJ from '../../src/i18n/locales/fr';
-import { getEnumKeys } from '../../src/lib/functions/typescript/getEnumKeys';
+import { getEnumKeys } from '../../src/lib/portable/typescript/getEnumKeys';
 
 export enum ELanguagesFlag {
   fr,
