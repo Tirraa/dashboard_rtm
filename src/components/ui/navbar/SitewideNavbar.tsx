@@ -88,7 +88,9 @@ export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
 
         <ul className="hidden justify-center gap-4 lg:flex">{desktopNavbarItems}</ul>
 
-        <ul className={cn('hidden justify-end lg:flex', navbarExtrasClassNameBase)}>{buildNavbarExtrasForDesktop()}</ul>
+        <ul className={cn('relative hidden justify-end ltr:left-1 rtl:right-1 lg:flex', navbarExtrasClassNameBase)}>
+          {buildNavbarExtrasForDesktop()}
+        </ul>
 
         <ul className={cn('flex justify-end lg:hidden', navbarExtrasClassNameBase)}>
           {buildNavbarExtrasForMobile()}
