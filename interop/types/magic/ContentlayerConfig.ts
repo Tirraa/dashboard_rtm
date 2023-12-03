@@ -11,9 +11,7 @@ export type ComputedFieldsAsFieldsRecord = {
 
 type ComputedField<K extends keyof BaseFields> = Pick<BaseFields[K], 'type'> & { resolve: (post: PostToBuild) => unknown };
 
-type ComputedFieldsMappedToPartialBaseFieldsSumType<K extends keyof BaseFields> = {
-  [_ in K]: ComputedField<K>;
-};
+type ComputedFieldsMappedToPartialBaseFieldsSumType<K extends keyof BaseFields> = Record<K, ComputedField<K>>;
 
 type CategoryFolder = string;
 type FilePathPattern = string;

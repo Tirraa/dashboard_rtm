@@ -42,6 +42,7 @@ export const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageP
   return (
     <section className="w-full" id={slugify(curSubcategTitle.toLowerCase())}>
       <h1 className="mb-2 ltr:text-left rtl:text-right">{title}</h1>
+      {/* {ToDo} Use shadcn/ui Data Table? */}
       <MaybePaginatedElements
         paginatedElements={paginatedElements}
         elementsPerPage={BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT}

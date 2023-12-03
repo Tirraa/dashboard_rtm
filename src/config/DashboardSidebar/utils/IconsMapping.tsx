@@ -4,9 +4,7 @@ import type { ComponentType } from 'react';
 import type { IconBaseProps } from 'react-icons';
 import type { DashboardRoutes, DashboardRoutesKeys, DashboardRoutesSidebarReactElements } from './RoutesMapping';
 
-export type DashboardRoutesIcons = {
-  [_ in keyof DashboardRoutes]: ComponentType<IconBaseProps>;
-};
+export type DashboardRoutesIcons = Record<keyof DashboardRoutes, ComponentType<IconBaseProps>>;
 
 const createSidebarComponent = (__SidebarIcon: ComponentType<IconBaseProps>) => <DashboardSidebarButton __SidebarIcon={__SidebarIcon} />;
 

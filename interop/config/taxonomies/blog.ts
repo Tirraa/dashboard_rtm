@@ -9,10 +9,10 @@ export namespace BlogTaxonomy {
 }
 
 export type TBlogTaxonomy = {
+  [I18nTaxonomy.LANGUAGE]: LanguageFlag;
   [BlogTaxonomy.CATEGORY]: BlogCategory;
   [BlogTaxonomy.SUBCATEGORY]: BlogSubcategoryFromUnknownCategory;
   [BlogTaxonomy.SLUG]: UnknownBlogSlug;
-  [I18nTaxonomy.LANGUAGE]: LanguageFlag;
 };
 
 export default BlogTaxonomy;

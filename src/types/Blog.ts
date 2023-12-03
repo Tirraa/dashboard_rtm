@@ -41,11 +41,7 @@ export interface BlogPostProps {
 }
 
 type AllPostsGetter = () => Promise<PostBase[]>;
-export type PostsCollectionAssoc = {
-  [_ in BlogCategory]: AllPostsGetter;
-};
+export type PostsCollectionAssoc = Record<BlogCategory, AllPostsGetter>;
 
 type BlogStaticParamsValue = string;
-export type BlogStaticParams = {
-  [_ in keyof TBlogTaxonomy]: BlogStaticParamsValue;
-};
+export type BlogStaticParams = Record<keyof TBlogTaxonomy, BlogStaticParamsValue>;

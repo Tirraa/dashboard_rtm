@@ -57,8 +57,8 @@ export type ChangeLocaleFun = (language: LanguageFlag) => void;
 
 export type PagesTitlesKey = keyof VocabType['pages-titles'];
 
-type ExpectedI18nsValues = { [K in keyof VocabType]: unknown };
-type GivenI18nsValues<FLIPPED_I18NS_CONST extends object> = { [K in keyof FLIPPED_I18NS_CONST]: unknown };
+type ExpectedI18nsValues = Record<keyof VocabType, unknown>;
+type GivenI18nsValues<FLIPPED_I18NS_CONST extends object> = Record<keyof FLIPPED_I18NS_CONST, unknown>;
 type FlipI18ns<I18NS_CONST extends I18ns> = { [P in keyof I18NS_CONST as I18NS_CONST[P]]: P };
 type I18nsDiff<GivenI18nsValues extends object> = { [K in Exclude<keyof ExpectedI18nsValues, keyof GivenI18nsValues>]: K };
 
