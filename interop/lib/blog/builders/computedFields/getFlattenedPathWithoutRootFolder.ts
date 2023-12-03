@@ -33,3 +33,5 @@ export function getFlattenedPathWithoutRootFolder(flattenedPath: string, rootFol
 
   return flattenedPath.substring(expectedFlattenedPathStartStr.length);
 }
+
+export default getFlattenedPathWithoutRootFolder;

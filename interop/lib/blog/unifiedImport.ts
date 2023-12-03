@@ -1,12 +1,12 @@
 import isValidLanguageFlag from '../../../src/lib/portable/i18n/isValidLanguageFlag';
 import capitalize from '../../../src/lib/portable/str/capitalize';
-import { indexOfNthOccurrence } from '../../../src/lib/portable/str/indexOfNthOccurrence';
+import indexOfNthOccurrence from '../../../src/lib/portable/str/indexOfNthOccurrence';
 import pluralize from '../../../src/lib/portable/str/pluralize';
 import { POSTS_FOLDER } from '../../config/blog/documentSpecs';
 import { DEFAULT_LANGUAGE } from '../../config/i18n';
 import ROUTES_ROOTS from '../../config/routes';
 import InvalidArgumentsError from '../../errors/InvalidArguments';
-import { getFlattenedPathWithoutRootFolder } from './builders/computedFields/getFlattenedPathWithoutRootFolder';
+import getFlattenedPathWithoutRootFolder from './builders/computedFields/getFlattenedPathWithoutRootFolder';
 
 export {
   DEFAULT_LANGUAGE,
