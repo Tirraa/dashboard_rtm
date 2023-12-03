@@ -59,7 +59,7 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   const posClassName = ypos === 'bottom' ? 'mt-4' : 'mb-4';
   const chevronsClassName = 'scale-75';
 
-  const nextAndPrevIconsClassList = 'w-10 h-10 flex items-centers justify-center bg-accent rounded-md';
+  const nextAndPrevIconsClassList = 'w-10 h-10 lg:w-8 lg:h-7 flex items-centers justify-center bg-accent rounded-md';
 
   function handlePageClick(event: { selected: number }) {
     const page = event.selected + 1;
@@ -69,10 +69,10 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
 
   const flexJustifyClass = `justify-${xpos}`;
   const paginationNode = (
-    <div className={cn('min-h-[40px]', posClassName)}>
+    <div className={cn('min-h-[40px] lg:min-h-[32px]', posClassName)}>
       <ReactPaginate
         forcePage={pageFromUrl - 1}
-        className={cn(`flex gap-2`, flexJustifyClass)}
+        className={cn('flex items-center gap-2', flexJustifyClass)}
         breakLabel="..."
         previousAriaLabel={scopedT('prev')}
         nextAriaLabel={scopedT('next')}
@@ -92,7 +92,7 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
         containerClassName="flex items-center justify-center mt-8 mb-4 select-none"
         previousLinkClassName={cn('flex items-center justify-center rounded-md', { 'pointer-events-none opacity-50': pageFromUrl <= 1 })}
         nextLinkClassName={cn('flex items-center justify-center rounded-md', { 'pointer-events-none opacity-50': pageFromUrl >= pagesAmount })}
-        pageLinkClassName="flex items-center justify-center hover:bg-accent p-2 rounded-md"
+        pageLinkClassName="flex items-center justify-center hover:bg-accent p-2 lg:p-1 lg:px-3 rounded-md"
         activeClassName="pointer-events-none bg-accent rounded-md"
         ariaLabelBuilder={(pageNumber) => `${capitalize(scopedT('page'))} ${pageNumber}`}
       />
