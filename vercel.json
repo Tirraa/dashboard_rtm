@@ -1,0 +1,4 @@
+{
+  "installCommand": "pnpm i",
+  "buildCommand": "jest && pnpm prebuild && next build && pnpm postbuild"
+}
