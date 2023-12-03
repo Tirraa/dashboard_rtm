@@ -7,7 +7,7 @@ describe('isValidLanguageFlag', () => {
   it('should return true for valid language flag', () => expect(isValidLanguageFlag(FIRST_LANG)).toBe(true));
 
   it('should return false for invalid language flag', () => {
-    const PREFIX = '_';
+    const PREFIX = '$';
     let prefixAcc = PREFIX;
     while (LANGUAGES.includes((prefixAcc + FIRST_LANG) as any)) prefixAcc += PREFIX;
     const invalidLanguage = prefixAcc + FIRST_LANG;
