@@ -16,6 +16,7 @@ import PaginatedElementsBodyWrapper from './hoc/PaginatedElementsBodyWrapper';
 
 const ReactPaginate = dynamic(() => import('react-paginate'), { ssr: false });
 
+// {ToDo} Use shadcn/ui Data Table?
 export interface PaginatedElementsProps extends PaginatedElementsBodyWrapperProps {
   paginatedElements: ReactNode[];
   elementsPerPage: number;
