@@ -18,6 +18,7 @@ module.exports = {
   siteUrl,
   generateRobotsTxt: true,
   changefreq: 'monthly',
+  priority: 0.5,
 
   transform: (config, path) => {
     const defaultLanguageNeedle = '/' + DEFAULT_LANGUAGE;
