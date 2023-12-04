@@ -1,5 +1,5 @@
 import { expectAssignable, expectNotAssignable, expectType } from 'jest-tsd';
-import type { MakeI18ns, MakeVocabTargets, MakeVocabTargetsScopes } from './i18n';
+import type { MakeI18ns, MakeVocabTargets, MakeVocabTargetsScopes } from './I18n';
 
 const _ = {};
 

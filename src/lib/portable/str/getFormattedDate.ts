@@ -1,4 +1,4 @@
-import type { LanguageFlag } from '##/types/magic/i18n';
+import type { LanguageFlag } from '##/types/magic/I18n';
 import capitalize from './capitalize';
 
 export const getFormattedDate = (language: LanguageFlag, date: Date, giveTime: boolean = false): string =>

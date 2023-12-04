@@ -1,5 +1,5 @@
 import { DEFAULT_LANGUAGE, LANGUAGES } from '##/config/i18n';
-import type { I18nMiddlewareConfig } from '##/types/magic/i18n';
+import type { I18nMiddlewareConfig } from '##/types/magic/I18n';
 import type { MiddlewareFactory } from '@rtm/shared-types/Next';
 import { createI18nMiddleware } from 'next-international/middleware';
 import type { NextFetchEvent, NextRequest, NextResponse } from 'next/server';

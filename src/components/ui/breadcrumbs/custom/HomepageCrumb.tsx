@@ -1,5 +1,5 @@
 import ROUTES_ROOTS from '##/config/routes';
-import type { PagesTitlesKey, UnstrictScopedT } from '##/types/magic/i18n';
+import type { PagesTitlesKey, UnstrictScopedT } from '##/types/magic/I18n';
 import type { FunctionComponent } from 'react';
 import Crumb from '../Crumb';
 

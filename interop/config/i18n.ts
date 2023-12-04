@@ -1,4 +1,4 @@
-import type { I18ns, LanguageFlag, MakeI18ns } from '##/types/magic/i18n';
+import type { I18ns, LanguageFlag, MakeI18ns } from '##/types/magic/I18n';
 import DEFAULT_LANGUAGE_OBJ from '../../src/i18n/locales/fr';
 import { getEnumKeys } from '../../src/lib/portable/typescript/getEnumKeys';
 

@@ -1,5 +1,5 @@
 import { i18ns } from '##/config/i18n';
-import type { LanguageFlag } from '##/types/magic/i18n';
+import type { LanguageFlag } from '##/types/magic/I18n';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
 import { Button } from '@/components/ui/Button';

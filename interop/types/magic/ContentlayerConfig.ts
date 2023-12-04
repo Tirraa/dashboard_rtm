@@ -38,9 +38,7 @@ export type DocumentsConfigType<ComputedFields extends keyof BaseFields = never>
       computedFields: ComputedFieldsMappedToPartialBaseFieldsSumType<ComputedFields>;
     };
 
-export type ComputedFields = {
-  [K in keyof BaseFields]: ComputedField<K>;
-};
+export type ComputedFields = Record<keyof BaseFields, ComputedField<keyof BaseFields>>;
 
 export type MakeDocumentsBaseFieldsSumType<T extends keyof BaseFields> = T;
 export type MakeDocumentsTypesSumType<T extends string> = T;
@@ -49,8 +47,7 @@ export type DocumentsFields = Omit<BaseFields, DocumentsComputedFieldsKey>;
 export type DocumentsComputedFields = Pick<ComputedFields, DocumentsComputedFieldsKey>;
 export type AtomicDocumentConfig = DocumentsConfigType<DocumentsComputedFieldsKey>;
 export type AtomicContentLayerDocumentConfig = AtomicDocumentConfig & ContentLayerContentType;
-export type ContentLayerDocumentsConfigType<ComputedFields extends keyof BaseFields = never> = DocumentsConfigType<ComputedFields> &
-  ContentLayerContentType;
+export type ContentLayerDocumentsConfigType = DocumentsConfigType & ContentLayerContentType;
 
 type MakeRequiredField<T extends boolean> = { required: T };
 export type MakeDefaultField<T> = { default: T };

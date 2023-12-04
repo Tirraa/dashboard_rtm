@@ -8,7 +8,7 @@ import {
   DOCUMENTS_COMPUTED_FIELDS as computedFields,
   DOCUMENTS_CONTENT_TYPE as contentType,
   DOCUMENTS_FIELDS as fields
-} from './documentSpecs';
+} from '../../types/ContentlayerConfigTweakers';
 
 const documentsTypesMetadatas: DocumentsTypesMetadatas = {
   PatchPost: {
@@ -27,6 +27,7 @@ const defineDocumentType = (def: () => DocumentTypeDef<string>) =>
     def
   }) as const;
 
+// * ... VSCode may raise an error on "fields". It's a false positive.
 export const documentTypes: DocumentType[] = Object.values(documentsTypesMetadatas).reduce(
   (acc, documentTypeMetadatas) => {
     const { name, categoryFolder } = documentTypeMetadatas;

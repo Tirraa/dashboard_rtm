@@ -1,4 +1,4 @@
-import type { I18nVocabTarget } from '##/types/magic/i18n';
+import type { I18nVocabTarget } from '##/types/magic/I18n';
 import type { DropdownsConfig, NavDataEntities, NavDataEntity } from '@/types/NavData';
 import type RoutesKeysUnion from '@/types/RoutesKeysUnion';
 import type { AppPath } from '@rtm/shared-types/Next';

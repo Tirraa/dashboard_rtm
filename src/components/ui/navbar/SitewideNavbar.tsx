@@ -3,7 +3,7 @@
 import { i18ns } from '##/config/i18n';
 import ROUTES_ROOTS from '##/config/routes';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
-import type { LanguageFlag } from '##/types/magic/i18n';
+import type { LanguageFlag } from '##/types/magic/I18n';
 import NAVBAR_STYLE from '@/components/config/styles/navbar/NavbarStyle';
 import NavbarButton from '@/components/layouts/navbar/NavbarButton';
 import NavbarToggle from '@/components/layouts/navbar/NavbarToggle';

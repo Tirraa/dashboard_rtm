@@ -1,4 +1,4 @@
-import type { LanguageFlag } from '##/types/magic/i18n';
+import type { LanguageFlag } from '##/types/magic/I18n';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, UnknownBlogSlug } from '@/types/Blog';
 import type I18nTaxonomy from './i18n';
 

@@ -1,5 +1,4 @@
 import type { DocumentContentType } from 'contentlayer/source-files';
-
 import {
   buildBlogPostCategory,
   buildBlogPostLanguageFlag,
@@ -7,7 +6,6 @@ import {
   buildBlogPostSubcategory,
   buildBlogPostUrl
 } from '../lib/blog/builders/computedFields';
-
 import type {
   ComputedFieldsAsFieldsRecord,
   ContentLayerDocumentsConfigType,
@@ -21,6 +19,10 @@ import type {
   RequiredField
 } from './magic/ContentlayerConfig';
 
+export const POSTS_FOLDER = 'posts';
+export const DOCUMENTS_CONTENT_TYPE: DocumentContentType = 'mdx';
+export const DOCUMENTS_CONTENT_EXTENSION = 'mdx';
+
 export type BaseFields = {
   title: MakeTypeField<'string'> & RequiredField;
   description: MakeTypeField<'string'> & OptionalField;
@@ -32,9 +34,6 @@ export type BaseFields = {
   slug: MakeTypeField<'string'> & RequiredField;
   language: MakeTypeField<'string'> & RequiredField;
 };
-
-export const DOCUMENTS_CONTENT_TYPE: DocumentContentType = 'mdx';
-export const DOCUMENTS_CONTENT_EXTENSION = 'mdx';
 
 export const DOCUMENTS_FIELDS = {
   title: { type: 'string', required: true },
@@ -59,6 +58,7 @@ const DOCUMENTS_COMPUTED_FIELDS_AS_FIELDS = {
   language: { type: 'string', required: true }
 } as const satisfies ComputedFieldsAsFieldsRecord;
 
+// * ... VSCode may raise an error on "POST_SCHEMA_CONFIG". It's a false positive.
 export const POST_SCHEMA_CONFIG: ContentLayerDocumentsConfigType = {
   name: 'PostSchema',
   filePathPattern: '',
