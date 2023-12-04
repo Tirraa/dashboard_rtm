@@ -5,11 +5,12 @@ import { useScopedI18n } from '@/i18n/client';
 import { capitalize } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
-import { createURLSearchParams } from '@rtm/shared-lib/html';
+import { createURLSearchParams, getDirection } from '@rtm/shared-lib/html';
 import type { FlexJustify } from '@rtm/shared-types/HTML';
 import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { FunctionComponent, ReactNode } from 'react';
+import { useEffect, useState } from 'react';
 import { computePagesAmount } from './hoc/MaybePaginatedElements';
 import type { PaginatedElementsBodyWrapperProps } from './hoc/PaginatedElementsBodyWrapper';
 import PaginatedElementsBodyWrapper from './hoc/PaginatedElementsBodyWrapper';
@@ -44,6 +45,10 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   const searchParams = useSearchParams();
   const router = useRouter();
   const scopedT = useScopedI18n(i18ns.vocab);
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+  useEffect(() => setIsMounted(true), []);
+  const dir = isMounted ? getDirection() : 'ltr';
+
   const pagesRange = pagesRangeValue ?? 3;
 
   const pagesAmount = forcedPagesAmount ?? computePagesAmount(paginatedElements.length, elementsPerPage);
@@ -78,12 +83,12 @@ export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
         nextAriaLabel={scopedT('next')}
         previousLabel={
           <span className={nextAndPrevIconsClassList}>
-            <ChevronLeftIcon className={chevronsClassName} />
+            {dir === 'ltr' ? <ChevronLeftIcon className={chevronsClassName} /> : <ChevronRightIcon className={chevronsClassName} />}
           </span>
         }
         nextLabel={
           <span className={nextAndPrevIconsClassList}>
-            <ChevronRightIcon className={chevronsClassName} />
+            {dir === 'ltr' ? <ChevronRightIcon className={chevronsClassName} /> : <ChevronLeftIcon className={chevronsClassName} />}
           </span>
         }
         onPageChange={handlePageClick}

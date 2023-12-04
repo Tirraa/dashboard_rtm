@@ -110,3 +110,7 @@ h6,
 .break-word {
   word-break: break-word;
 }
+
+[dir='rtl'] .rtl-magic {
+  margin-right: calc(-100vw - -100%);
+}
