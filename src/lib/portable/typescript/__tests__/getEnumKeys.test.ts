@@ -1,18 +1,18 @@
 import getEnumKeys from '../getEnumKeys';
 
 it('should return an array of enum keys', () => {
-  enum DummyEnum {
+  enum Fake_E {
     foo,
     bar
   }
 
-  const result = getEnumKeys(DummyEnum);
+  const result = getEnumKeys(Fake_E);
   const expected: typeof result = ['foo', 'bar'];
   expect(result).toEqual(expected);
 });
 
 it('should return an empty array for an empty enum', () => {
-  enum DummyEmptyEnum {}
-  const result: never[] = getEnumKeys(DummyEmptyEnum);
+  enum Empty_E {}
+  const result: never[] = getEnumKeys(Empty_E);
   expect(result).toEqual([]);
 });

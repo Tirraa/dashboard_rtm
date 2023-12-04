@@ -125,6 +125,9 @@ importers:
       '@transloadit/ts-fly':
         specifier: ^0.1.4
         version: 0.1.4
+      '@tsd/typescript':
+        specifier: ^5.3.2
+        version: 5.3.2
       '@types/hast':
         specifier: ^3.0.2
         version: 3.0.3
@@ -185,6 +188,9 @@ importers:
       jest-mock:
         specifier: ^29.7.0
         version: 29.7.0
+      jest-tsd:
+        specifier: ^0.2.2
+        version: 0.2.2(@tsd/typescript@5.3.2)
       lint-staged:
         specifier: ^15.0.2
         version: 15.1.0
@@ -2397,6 +2403,11 @@ packages:
 
   /@tsconfig/node16@1.0.4:
     resolution: { integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA== }
+
+  /@tsd/typescript@5.3.2:
+    resolution: { integrity: sha512-CgECyqLqPRCIcOLJeKvlx4iNs1/IS8SCE/Kb8NlTl3TklLkhtp1jHwZf5VTSTzCH5twlATgdMQfEe+vFzKpHFw== }
+    engines: { node: '>=14.17' }
+    dev: true
 
   /@types/acorn@4.0.6:
     resolution: { integrity: sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ== }
@@ -5924,6 +5935,17 @@ packages:
       - supports-color
     dev: true
 
+  /jest-tsd@0.2.2(@tsd/typescript@5.3.2):
+    resolution: { integrity: sha512-Nzgo5E9F1RON3GDkAHxVOf1dqSSRMnhJ5txULHhhK+qs2xSLmLWBbtYjKSlAYNpW/fOXSrGPOs6uE0YyWAchhA== }
+    peerDependencies:
+      '@tsd/typescript': 4.x || 5.x
+    dependencies:
+      '@babel/code-frame': 7.23.4
+      '@tsd/typescript': 5.3.2
+      chalk: 4.1.2
+      tsd-lite: 0.7.0(@tsd/typescript@5.3.2)
+    dev: true
+
   /jest-util@29.7.0:
     resolution: { integrity: sha512-z6EbKajIpqGKU56y5KBUgy1dt1ihhQJgWzUlZHArA/+X2ad7Cb5iF+AK1EWVL/Bo7Rz9uurpqw6SiBCefUbCGA== }
     engines: { node: ^14.15.0 || ^16.10.0 || >=18.0.0 }
@@ -8987,6 +9009,15 @@ packages:
       json5: 2.2.3
       minimist: 1.2.8
       strip-bom: 3.0.0
+    dev: true
+
+  /tsd-lite@0.7.0(@tsd/typescript@5.3.2):
+    resolution: { integrity: sha512-XhQ7w/RPzfjSb98LIQB1qx7yAvRV6+h5JFP4dCvd79Hbp23X8CCx4EdRAQm6faTkRdprKYvZE8kxlK6LpJp8vg== }
+    engines: { node: '>=14' }
+    peerDependencies:
+      '@tsd/typescript': 4.x || 5.x
+    dependencies:
+      '@tsd/typescript': 5.3.2
     dev: true
 
   /tslib@2.6.2:
