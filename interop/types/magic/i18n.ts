@@ -23,8 +23,8 @@ export type MakeVocabTargets<VorVL extends VocabOrVocabLeaf, __CurrentDeepPath e
     }[keyof VorVL]
   : RemovePlural<__CurrentDeepPath>;
 
-export type MakeVocabTargetsScopes<Target extends string> = Target extends `${infer Head}${KeySeparator}${infer Tail}`
-  ? Head | `${Head}${KeySeparator}${MakeVocabTargetsScopes<Tail>}`
+export type MakeVocabTargetsScopes<Target extends string> = Target extends `${infer Namespace}${KeySeparator}${infer Tail}`
+  ? Namespace | `${Namespace}${KeySeparator}${MakeVocabTargetsScopes<Tail>}`
   : DeepPathToLiteralKeys<Target>;
 
 type SharedVocabBase = typeof SHARED_VOCAB_SCHEMA;
@@ -58,13 +58,19 @@ export type ChangeLocaleFun = (language: LanguageFlag) => void;
 export type PagesTitlesKey = keyof VocabType['pages-titles'];
 
 type NamespacesKeys<__VocabType extends UnknownVocabObj = VocabType> = {
-  [K in keyof __VocabType]-?: __VocabType[K] extends UnknownVocabObj ? K : never;
+  [K in keyof __VocabType]-?: __VocabType[K] extends UnknownVocabObj
+    ? K
+    : K extends `${infer Namespace}${KeySeparator}${infer _}`
+      ? Namespace
+      : never;
 }[keyof __VocabType];
-type ExpectedI18nsValues<__VocabType extends UnknownVocabObj = VocabType> = Record<NamespacesKeys<__VocabType>, unknown>;
-type GivenI18nsValues<FLIPPED_I18NS_CONST extends object> = Record<keyof FLIPPED_I18NS_CONST, unknown>;
+
 type FlipI18ns<I18NS_CONST extends I18ns<__VocabType>, __VocabType extends UnknownVocabObj = VocabType> = {
   [P in keyof I18NS_CONST as I18NS_CONST[P]]: P;
 };
+
+type ExpectedI18nsValues<__VocabType extends UnknownVocabObj = VocabType> = Record<NamespacesKeys<__VocabType>, unknown>;
+type GivenI18nsValues<FLIPPED_I18NS_CONST extends object> = Record<keyof FLIPPED_I18NS_CONST, unknown>;
 type I18nsDiff<OBJ_A extends object, OBJ_B extends object> = { [K in Exclude<keyof OBJ_A, keyof OBJ_B>]: K };
 
 export type I18ns<__VocabType extends UnknownVocabObj = VocabType> = Record<PropertyKey, NamespacesKeys<__VocabType>>;
