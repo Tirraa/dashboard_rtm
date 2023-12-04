@@ -57,19 +57,22 @@ export type ChangeLocaleFun = (language: LanguageFlag) => void;
 
 export type PagesTitlesKey = keyof VocabType['pages-titles'];
 
-type ExpectedI18nsValues<__VocabType extends UnknownVocabObj = VocabType> = Record<keyof __VocabType, unknown>;
+type NamespacesKeys<__VocabType extends UnknownVocabObj = VocabType> = {
+  [K in keyof __VocabType]-?: __VocabType[K] extends UnknownVocabObj ? K : never;
+}[keyof __VocabType];
+type ExpectedI18nsValues<__VocabType extends UnknownVocabObj = VocabType> = Record<NamespacesKeys<__VocabType>, unknown>;
 type GivenI18nsValues<FLIPPED_I18NS_CONST extends object> = Record<keyof FLIPPED_I18NS_CONST, unknown>;
 type FlipI18ns<I18NS_CONST extends I18ns<__VocabType>, __VocabType extends UnknownVocabObj = VocabType> = {
   [P in keyof I18NS_CONST as I18NS_CONST[P]]: P;
 };
 type I18nsDiff<OBJ_A extends object, OBJ_B extends object> = { [K in Exclude<keyof OBJ_A, keyof OBJ_B>]: K };
 
-export type I18ns<__VocabType extends UnknownVocabObj = VocabType> = Record<PropertyKey, keyof __VocabType>;
+export type I18ns<__VocabType extends UnknownVocabObj = VocabType> = Record<PropertyKey, NamespacesKeys<__VocabType>>;
 export type MakeI18ns<
   I18NS_CONST extends I18ns<__VocabType>,
   __VocabType extends UnknownVocabObj = VocabType,
   __FLIP extends object = FlipI18ns<I18NS_CONST, __VocabType>
-> = keyof __VocabType extends keyof __FLIP
+> = NamespacesKeys<__VocabType> extends keyof __FLIP
   ? I18NS_CONST
   : I18NS_CONST extends I18ns<__VocabType>
     ? I18nsDiff<ExpectedI18nsValues<__VocabType>, GivenI18nsValues<__FLIP>>

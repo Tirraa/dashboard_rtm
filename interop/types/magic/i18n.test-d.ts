@@ -147,9 +147,8 @@ describe('MakeVocabTargetsScopes', () => {
 
 describe('MakeI18ns', () => {
   type FakeVocabType = {
-    foo: 'bar';
-    bar: {
-      foo: 'bar';
+    foo: {
+      bar: 'bar';
     };
     etc: {
       a: {
@@ -158,12 +157,12 @@ describe('MakeI18ns', () => {
         };
       };
     };
+    NOT_A_NAMESPACE: "I'm NOT a namespace!";
   };
 
   test('should pass an exhaustive I18ns pattern', () => {
     const fakeI18ns = {
       fooNamespace: 'foo',
-      barNamespace: 'bar',
       etcNamespace: 'etc'
     } as const;
 
@@ -172,8 +171,7 @@ describe('MakeI18ns', () => {
 
   test("shouldn't allow an unexhaustive I18ns pattern", () => {
     const fakeI18ns = {
-      fooNamespace: 'foo',
-      barNamespace: 'bar'
+      fooNamespace: 'foo'
     } as const;
 
     expectNotAssignable<MakeI18ns<typeof fakeI18ns, FakeVocabType>>(fakeI18ns);
