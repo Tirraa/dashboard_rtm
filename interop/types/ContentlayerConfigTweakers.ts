@@ -1,4 +1,4 @@
-import type { DocumentContentType, FieldDefs } from 'contentlayer/source-files';
+import type { ComputedFields, DocumentContentType, FieldDefs } from 'contentlayer/source-files';
 import {
   buildBlogPostCategory,
   buildBlogPostLanguageFlag,
@@ -60,7 +60,15 @@ const _BASE_FIELDS = {
   }
 } as const satisfies FieldDefs;
 
-export type BaseFields = MakeBaseFields<typeof _BASE_FIELDS>;
+const _DOCUMENTS_COMPUTED_FIELDS = {
+  url: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostUrl(post) },
+  category: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostCategory(post) },
+  subcategory: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostSubcategory(post) },
+  slug: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostSlug(post) },
+  language: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostLanguageFlag(post) }
+} as const satisfies Partial<Record<keyof typeof _BASE_FIELDS, unknown>> satisfies ComputedFields;
+
+export const DOCUMENTS_COMPUTED_FIELDS = _DOCUMENTS_COMPUTED_FIELDS satisfies DocumentsComputedFields;
 
 export const DOCUMENTS_FIELDS = {
   title: { type: 'string', required: true },
@@ -68,14 +76,6 @@ export const DOCUMENTS_FIELDS = {
   description: { type: 'string', required: false },
   date: { type: 'date', required: true }
 } as const satisfies DocumentsFields;
-
-export const DOCUMENTS_COMPUTED_FIELDS = {
-  url: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostUrl(post) },
-  category: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostCategory(post) },
-  subcategory: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostSubcategory(post) },
-  slug: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostSlug(post) },
-  language: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostLanguageFlag(post) }
-} as const satisfies DocumentsComputedFields;
 
 const DOCUMENTS_COMPUTED_FIELDS_AS_FIELDS = {
   url: { type: 'string', required: true },
@@ -96,5 +96,8 @@ export const POST_SCHEMA_CONFIG: ContentLayerDocumentsConfigType = {
   }
 } as const;
 
-export type DocumentsComputedFieldsKey = MakeDocumentsBaseFieldsSumType<'url' | 'category' | 'subcategory' | 'slug' | 'language'>;
 export type DocumentsTypesKey = MakeDocumentsTypesSumType<'PatchPost' | 'PatchPostBis'>;
+
+export type BaseFields = MakeBaseFields<typeof _BASE_FIELDS>;
+
+export type DocumentsComputedFieldsKey = MakeDocumentsBaseFieldsSumType<keyof typeof _DOCUMENTS_COMPUTED_FIELDS>;
