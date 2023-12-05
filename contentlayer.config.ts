@@ -7,13 +7,13 @@ import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 import CodeSnippetTheme from './interop/config/blog/code-snippet-theme.json';
+import { BLOG_POSTS_FOLDER } from './interop/config/blog/contentlayerConfigTweakers';
 import documentTypes from './interop/config/blog/documentTypes';
 import addClassname from './interop/lib/misc/addClassname';
-import { POSTS_FOLDER } from './interop/types/ContentlayerConfigTweakers';
 import validateContentLayerConfig from './interop/validators/contentLayer';
 
 const contentDirPath = '.';
-const contentDirInclude = [POSTS_FOLDER];
+const contentDirInclude = [BLOG_POSTS_FOLDER];
 
 validateContentLayerConfig(documentTypes);
 

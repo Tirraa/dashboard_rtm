@@ -1,6 +1,12 @@
 import type { LanguageFlag } from '##/types/LanguageFlag';
-import type { PostBase } from '@/types/Blog';
-import { DEFAULT_LANGUAGE, POSTS_FOLDER, getFlattenedPathWithoutRootFolder, indexOfNthOccurrence, isValidLanguageFlag } from '../../../unifiedImport';
+import type { PostToBuild } from '##/types/magic/ContentlayerConfig';
+import {
+  BLOG_POSTS_FOLDER,
+  DEFAULT_LANGUAGE,
+  getFlattenedPathWithoutRootFolder,
+  indexOfNthOccurrence,
+  isValidLanguageFlag
+} from '../../../unifiedImport';
 
 function buildBlogPostLanguageFlagFromStr(flattenedPath: string): LanguageFlag {
   const firstSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 1);
@@ -19,8 +25,8 @@ function buildBlogPostLanguageFlagFromStr(flattenedPath: string): LanguageFlag {
   return DEFAULT_LANGUAGE;
 }
 
-export function buildBlogPostLanguageFlag(post: PostBase): LanguageFlag {
-  const flattenedPath = getFlattenedPathWithoutRootFolder(post._raw.flattenedPath, POSTS_FOLDER);
+export function buildBlogPostLanguageFlag(post: PostToBuild): LanguageFlag {
+  const flattenedPath = getFlattenedPathWithoutRootFolder(post._raw.flattenedPath, BLOG_POSTS_FOLDER);
   const language = buildBlogPostLanguageFlagFromStr(flattenedPath);
   return language;
 }

@@ -1,5 +1,6 @@
-import type { BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
-import { InvalidArgumentsError, POSTS_FOLDER, getFlattenedPathWithoutRootFolder, indexOfNthOccurrence } from '../../../unifiedImport';
+import type { PostToBuild } from '##/types/magic/ContentlayerConfig';
+import type { BlogSubcategoryFromUnknownCategory } from '@/types/Blog';
+import { BLOG_POSTS_FOLDER, InvalidArgumentsError, getFlattenedPathWithoutRootFolder, indexOfNthOccurrence } from '../../../unifiedImport';
 
 /**
  * @throws {InvalidArgumentsError}
@@ -20,11 +21,11 @@ export function buildBlogPostSubcategoryFromStr(flattenedPath: string): BlogSubc
   return subcateg;
 }
 
-function buildBlogPostSubcategoryFromPostObj(post: PostBase): BlogSubcategoryFromUnknownCategory {
-  const flattenedPath = getFlattenedPathWithoutRootFolder(post._raw.flattenedPath, POSTS_FOLDER);
+function buildBlogPostSubcategoryFromPostObj(post: PostToBuild): BlogSubcategoryFromUnknownCategory {
+  const flattenedPath = getFlattenedPathWithoutRootFolder(post._raw.flattenedPath, BLOG_POSTS_FOLDER);
   return buildBlogPostSubcategoryFromStr(flattenedPath);
 }
 
-export const buildBlogPostSubcategory = (post: PostBase): BlogSubcategoryFromUnknownCategory => buildBlogPostSubcategoryFromPostObj(post);
+export const buildBlogPostSubcategory = (post: PostToBuild): BlogSubcategoryFromUnknownCategory => buildBlogPostSubcategoryFromPostObj(post);
 
 export default buildBlogPostSubcategory;

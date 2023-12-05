@@ -1,4 +1,5 @@
-import type { PostBase, UnknownBlogSlug } from '@/types/Blog';
+import type { PostToBuild } from '##/types/magic/ContentlayerConfig';
+import type { UnknownBlogSlug } from '@/types/Blog';
 import { InvalidArgumentsError } from '../../../unifiedImport';
 
 /**
@@ -17,11 +18,11 @@ function buildBlogPostSlugFromStr(flattenedPath: string): UnknownBlogSlug {
   return slug;
 }
 
-function buildBlogPostSlugFromPostObj(post: PostBase): UnknownBlogSlug {
+function buildBlogPostSlugFromPostObj(post: PostToBuild): UnknownBlogSlug {
   const { flattenedPath } = post._raw;
   return buildBlogPostSlugFromStr(flattenedPath);
 }
 
-export const buildBlogPostSlug = (post: PostBase): UnknownBlogSlug => buildBlogPostSlugFromPostObj(post);
+export const buildBlogPostSlug = (post: PostToBuild): UnknownBlogSlug => buildBlogPostSlugFromPostObj(post);
 
 export default buildBlogPostSlug;

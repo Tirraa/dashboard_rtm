@@ -29,7 +29,7 @@ function processStaticAnalysis() {
   try {
     const retrievedValuesFromArgs = parseArguments();
     const {
-      [ARGV.POSTS_FOLDER]: POSTS_FOLDER,
+      [ARGV.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
       [ARGV.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
       [ARGV.BLOG_CONFIG_FILEPATH]: BLOG_CONFIG_FILEPATH,
       [ARGV.SKIP_LOCALES_INFOS]: SKIP_LOCALES_INFOS,
@@ -54,7 +54,7 @@ function processStaticAnalysis() {
 
     const blogArchitectureValidatorFeedback = declaredBlogArchitectureValidator(metadatasFromSys, declaredMetadatas, BLOG_CONFIG_FILEPATH);
 
-    const sysBlogSlugsValidatorFeedback = sysBlogSlugsValidator(POSTS_FOLDER);
+    const sysBlogSlugsValidatorFeedback = sysBlogSlugsValidator(BLOG_POSTS_FOLDER);
 
     const i18nValidatorFeedback = NO_I18N ? '' : declaredI18nValidator(metadatasFromSys, i18nBlogCategoriesJSON, I18N_LOCALES_SCHEMA_FILEPATH);
 

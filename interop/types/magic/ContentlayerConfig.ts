@@ -1,49 +1,55 @@
-import type { DocumentContentType, FieldDefs } from 'contentlayer/source-files';
+import type { Document } from 'contentlayer/core';
+import type { ComputedFields, DocumentContentType, FieldDefs } from 'contentlayer/source-files';
 import type {
-  BaseFields,
-  DOCUMENTS_COMPUTED_FIELDS,
-  DOCUMENTS_FIELDS,
-  DocumentsComputedFieldsKey,
-  DocumentsTypesKey
-} from '../ContentlayerConfigTweakers';
+  AllBlogFields,
+  BlogComputedFields,
+  BlogDocumentsComputedFieldsKeys,
+  BlogDocumentsTypesKeys,
+  BlogFields
+} from '../../config/blog/contentlayerConfigTweakers';
 
 type ContentLayerContentType = { contentType: DocumentContentType };
 
-type ComputedFieldsKey = keyof typeof DOCUMENTS_COMPUTED_FIELDS;
-export type ComputedFieldsAsFieldsRecord = {
-  [Key in ComputedFieldsKey]: Key extends keyof BaseFields ? BaseFields[Key] : never;
-};
-
 type CategoryFolder = string;
 type FilePathPattern = string;
-type PostSchemaKey = 'PostSchema';
-export type TypeName = DocumentsTypesKey | PostSchemaKey;
+export type PostSchemaKey = 'PostSchema';
+export type TypeName = BlogDocumentsTypesKeys;
 
-type DocumentsConfigTypeContentLayerMetadatas<T extends TypeName = TypeName> = {
-  name: T;
+type DocumentsConfigTypeContentLayerMetadatas<TYPENAME extends string> = {
+  name: TYPENAME;
   filePathPattern: FilePathPattern;
 };
 
-type DocumentsConfigTypeMetadatas<T extends TypeName = TypeName> = {
-  name: T;
+type DocumentsConfigTypeMetadatas<TYPENAME extends TypeName = TypeName> = {
+  name: TYPENAME;
   categoryFolder: CategoryFolder;
 };
 
-export type DocumentsTypesMetadatas = Record<DocumentsTypesKey, DocumentsConfigTypeMetadatas<DocumentsTypesKey>>;
+export type BlogDocumentsTypesMetadatas = Record<BlogDocumentsTypesKeys, DocumentsConfigTypeMetadatas<BlogDocumentsTypesKeys>>;
 
-export type DocumentsConfigType = DocumentsConfigTypeContentLayerMetadatas & {
-  fields: typeof DOCUMENTS_FIELDS;
-  computedFields: typeof DOCUMENTS_COMPUTED_FIELDS;
+export type DocumentsConfigType<
+  __Fields extends DocumentsFields = BlogFields,
+  __ComputedFields extends ComputedFields = BlogComputedFields,
+  __TypeName extends string = TypeName
+> = DocumentsConfigTypeContentLayerMetadatas<__TypeName> & {
+  fields: __Fields;
+  computedFields: __ComputedFields;
 };
 
-export type MakeDocumentsBaseFieldsSumType<T extends keyof BaseFields> = T;
-export type MakeDocumentsTypesSumType<T extends string> = T;
+export type DocumentsFields<
+  __AllFields extends Record<string, unknown> & FieldDefs = AllBlogFields,
+  __DocumentsComputedFieldsKeys extends keyof __AllFields = BlogDocumentsComputedFieldsKeys
+> = Omit<__AllFields, __DocumentsComputedFieldsKeys>;
 
-export type DocumentsFields = Omit<BaseFields, DocumentsComputedFieldsKey>;
 export type AtomicDocumentConfig = DocumentsConfigType;
 export type AtomicContentLayerDocumentConfig = AtomicDocumentConfig & ContentLayerContentType;
-export type ContentLayerDocumentsConfigType = { fields: BaseFields } & ContentLayerContentType & DocumentsConfigTypeContentLayerMetadatas;
+export type ContentLayerDocumentsConfigType<__TypeName extends string = TypeName> = { fields: AllBlogFields } & ContentLayerContentType &
+  DocumentsConfigTypeContentLayerMetadatas<__TypeName>;
 
-export type MakeBaseFields<__BaseFields extends FieldDefs> = __BaseFields;
+export type MakeDocumentsAllFieldsSumType<T extends keyof __AllFields, __AllFields extends FieldDefs = AllBlogFields> = T;
+export type MakeDocumentsTypesSumType<T extends string> = T;
+export type MakeAllFields<T extends FieldDefs> = T;
+export type MakeFields<T extends DocumentsFields> = T;
+export type MakeComputedFields<T extends ComputedFields> = T;
 
-export type PostToBuild = any;
+export type PostToBuild = Document;

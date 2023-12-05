@@ -20,7 +20,7 @@ const { IMPOSSIBLE_TO_START: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
  */
 function crashIfArgumentsAreInvalid({ ...args }) {
   const {
-    [OPTIONS.POSTS_FOLDER]: POSTS_FOLDER,
+    [OPTIONS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
     [OPTIONS.BLOG_CONFIG_FILEPATH]: BLOG_CONFIG_FILEPATH,
     [OPTIONS.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
     [OPTIONS.NO_BLOG]: NO_BLOG,
@@ -28,11 +28,11 @@ function crashIfArgumentsAreInvalid({ ...args }) {
     _: UNKNOWN_OPTIONS
   } = args;
 
-  const invalidBlogOptions = (POSTS_FOLDER === undefined || BLOG_CONFIG_FILEPATH === undefined) && !NO_BLOG;
+  const invalidBlogOptions = (BLOG_POSTS_FOLDER === undefined || BLOG_CONFIG_FILEPATH === undefined) && !NO_BLOG;
   const invalidI18nOptions = I18N_LOCALES_SCHEMA_FILEPATH === undefined && !NO_I18N;
-  const wrongUseOfNoBlogOption = (POSTS_FOLDER !== undefined || BLOG_CONFIG_FILEPATH !== undefined) && NO_BLOG;
+  const wrongUseOfNoBlogOption = (BLOG_POSTS_FOLDER !== undefined || BLOG_CONFIG_FILEPATH !== undefined) && NO_BLOG;
   const wrongUseOfNoI18nOption = I18N_LOCALES_SCHEMA_FILEPATH !== undefined && NO_I18N;
-  const breakingBlogDependencyToI18n = (POSTS_FOLDER !== undefined || BLOG_CONFIG_FILEPATH !== undefined) && NO_I18N;
+  const breakingBlogDependencyToI18n = (BLOG_POSTS_FOLDER !== undefined || BLOG_CONFIG_FILEPATH !== undefined) && NO_I18N;
   const unknownOptions = UNKNOWN_OPTIONS.length > 0;
   const P = ARG_ERROR_PREFIX + UNKNOWN_OPTIONS_PREFIX;
   const P2 = ARG_ERROR_PREFIX + WRONG_OPTIONS_PREFIX;
@@ -40,7 +40,8 @@ function crashIfArgumentsAreInvalid({ ...args }) {
   let feedback = unknownOptions ? P + UNKNOWN_OPTIONS.join(', ') + '\n' + KNOWN_OPTIONS_PREFIX + Object.values(OPTIONS).join(', ') : '';
   if (invalidBlogOptions) {
     feedback +=
-      P2 + `you must use the ${OPTIONS.POSTS_FOLDER} and ${OPTIONS.BLOG_CONFIG_FILEPATH} options unless you are using the ${OPTIONS.NO_BLOG} option.`;
+      P2 +
+      `you must use the ${OPTIONS.BLOG_POSTS_FOLDER} and ${OPTIONS.BLOG_CONFIG_FILEPATH} options unless you are using the ${OPTIONS.NO_BLOG} option.`;
   } else if (invalidI18nOptions) {
     feedback += P2 + `you can't omit the ${OPTIONS.I18N_LOCALES_SCHEMA_FILEPATH} option if you don't use the ${OPTIONS.NO_I18N} option.`;
   } else if (wrongUseOfNoBlogOption) {
@@ -69,7 +70,7 @@ function checkIfFilesExist({ ...args }) {
   const {
     [OPTIONS.BLOG_CONFIG_FILEPATH]: BLOG_CONFIG_FILEPATH,
     [OPTIONS.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
-    [OPTIONS.POSTS_FOLDER]: POSTS_FOLDER,
+    [OPTIONS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
     [OPTIONS.NO_BLOG]: NO_BLOG,
     [OPTIONS.NO_I18N]: NO_I18N
   } = args;
@@ -92,12 +93,12 @@ function checkIfFilesExist({ ...args }) {
       throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + "Can't open the blog config file!" + '\n' + ADVICE);
     }
 
-    const postsFolderExists = existsSync(POSTS_FOLDER);
+    const postsFolderExists = existsSync(BLOG_POSTS_FOLDER);
     if (!postsFolderExists) {
       throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + "Can't open the posts folder!" + '\n' + ADVICE);
     }
 
-    const postsFolderIsDirectory = statSync(POSTS_FOLDER).isDirectory();
+    const postsFolderIsDirectory = statSync(BLOG_POSTS_FOLDER).isDirectory();
     if (!postsFolderIsDirectory) {
       throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + 'The posts folder you indicated is NOT a directory!' + '\n' + ADVICE);
     }
@@ -112,7 +113,7 @@ export function parseArguments() {
     {
       [OPTIONS.BLOG_CONFIG_FILEPATH]: String,
       [OPTIONS.I18N_LOCALES_SCHEMA_FILEPATH]: String,
-      [OPTIONS.POSTS_FOLDER]: String,
+      [OPTIONS.BLOG_POSTS_FOLDER]: String,
       [OPTIONS.SKIP_LOCALES_INFOS]: Boolean,
       [OPTIONS.NO_BLOG]: Boolean,
       [OPTIONS.NO_I18N]: Boolean

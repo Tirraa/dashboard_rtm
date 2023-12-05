@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "prebuild": "cross-env POSTS_FOLDER=./posts BLOG_CONFIG_FILE=./src/config/blog.ts I18N_LOCALES_SCHEMA=./src/i18n/locales/schema.ts pnpm --filter @rtm/static-analyzer start",
+    "prebuild": "cross-env BLOG_POSTS_FOLDER=./posts BLOG_CONFIG_FILE=./src/config/blog.ts I18N_LOCALES_SCHEMA=./src/i18n/locales/schema.ts pnpm --filter @rtm/static-analyzer start",
     "build": "next build",
     "postbuild": "next-sitemap",
     "dev": "next dev",

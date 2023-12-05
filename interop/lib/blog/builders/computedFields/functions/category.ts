@@ -1,5 +1,6 @@
-import type { BlogCategory, PostBase } from '@/types/Blog';
-import { InvalidArgumentsError, POSTS_FOLDER, getFlattenedPathWithoutRootFolder, indexOfNthOccurrence } from '../../../unifiedImport';
+import type { PostToBuild } from '##/types/magic/ContentlayerConfig';
+import type { BlogCategory } from '@/types/Blog';
+import { BLOG_POSTS_FOLDER, InvalidArgumentsError, getFlattenedPathWithoutRootFolder, indexOfNthOccurrence } from '../../../unifiedImport';
 
 /**
  * @throws {InvalidArgumentsError}
@@ -16,11 +17,11 @@ function buildBlogPostCategoryFromStr(flattenedPath: string): BlogCategory {
   return categ;
 }
 
-function buildBlogPostCategoryFromPostObj(post: PostBase): BlogCategory {
-  const flattenedPath = getFlattenedPathWithoutRootFolder(post._raw.flattenedPath, POSTS_FOLDER);
+function buildBlogPostCategoryFromPostObj(post: PostToBuild): BlogCategory {
+  const flattenedPath = getFlattenedPathWithoutRootFolder(post._raw.flattenedPath, BLOG_POSTS_FOLDER);
   return buildBlogPostCategoryFromStr(flattenedPath);
 }
 
-export const buildBlogPostCategory = (post: PostBase): BlogCategory => buildBlogPostCategoryFromPostObj(post);
+export const buildBlogPostCategory = (post: PostToBuild): BlogCategory => buildBlogPostCategoryFromPostObj(post);
 
 export default buildBlogPostCategory;
