@@ -1,4 +1,3 @@
-import type { MaybeObjectValue } from '@rtm/shared-types/CustomUtilityTypes';
 import executionContextWarningsVocabGetter from '../../../errors/vocab/warnings/executionContext';
 
 type TComputedNodeEnv = {
@@ -10,9 +9,9 @@ type TComputedNodeEnv = {
 const [NODE_PROD_ENV_NEEDLE, NODE_DEV_ENV_NEEDLE, NODE_TEST_ENV_NEEDLE] = ['prod', 'dev', 'test'];
 const NODE_ENV = process.env.NODE_ENV;
 
-let devCtx: MaybeObjectValue<boolean> = NODE_ENV ? NODE_ENV.startsWith(NODE_DEV_ENV_NEEDLE) : undefined;
-let testCtx: MaybeObjectValue<boolean> = NODE_ENV ? NODE_ENV.startsWith(NODE_TEST_ENV_NEEDLE) : undefined;
-const prodCtx: MaybeObjectValue<boolean> = NODE_ENV ? NODE_ENV.startsWith(NODE_PROD_ENV_NEEDLE) : undefined;
+let devCtx: boolean = NODE_ENV ? NODE_ENV.startsWith(NODE_DEV_ENV_NEEDLE) : false;
+let testCtx: boolean = NODE_ENV ? NODE_ENV.startsWith(NODE_TEST_ENV_NEEDLE) : false;
+const prodCtx: boolean = NODE_ENV ? NODE_ENV.startsWith(NODE_PROD_ENV_NEEDLE) : false;
 let forcedToProd: boolean = Boolean(prodCtx);
 
 if (NODE_ENV === undefined) {
@@ -25,18 +24,7 @@ if (forcedToProd) {
   testCtx = false;
 }
 
-if (devCtx === undefined) {
-  console.warn(executionContextWarningsVocabGetter('UNABLE_TO_INFER_DEV_CTX'));
-  forcedToProd = true;
-  devCtx = false;
-}
-
-if (testCtx === undefined) {
-  console.warn(executionContextWarningsVocabGetter('UNABLE_TO_INFER_TEST_CTX'));
-  testCtx = false;
-}
-
-if ([devCtx, testCtx, prodCtx, forcedToProd].every((v) => Boolean(v) === false)) {
+if ([devCtx, testCtx, prodCtx, forcedToProd].every((v) => v === false)) {
   console.warn(executionContextWarningsVocabGetter('FAILED_TO_INFER_CTX'));
   forcedToProd = true;
 }

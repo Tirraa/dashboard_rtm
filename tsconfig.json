@@ -22,6 +22,7 @@
     "paths": {
       "##/*": ["interop/*"],
       "@/*": ["src/*"],
+      "𝕋/*": [".jest/*"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },
