@@ -1,4 +1,4 @@
-import type { Document } from 'contentlayer/core';
+import type { Document, FieldDefType } from 'contentlayer/core';
 import type { ComputedFields, DocumentContentType, FieldDefs } from 'contentlayer/source-files';
 import type {
   AllBlogFields,
@@ -53,3 +53,7 @@ export type MakeFields<T extends DocumentsFields> = T;
 export type MakeComputedFields<T extends ComputedFields> = T;
 
 export type PostToBuild = Document;
+export type ComputedField = {
+  type: FieldDefType;
+  resolve: (post: PostToBuild) => unknown;
+};

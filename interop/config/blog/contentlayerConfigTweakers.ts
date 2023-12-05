@@ -7,6 +7,7 @@ import {
   buildBlogPostUrl
 } from '../../lib/blog/builders/computedFields';
 import type {
+  ComputedField,
   ContentLayerDocumentsConfigType,
   DocumentsFields,
   MakeAllFields,
@@ -62,12 +63,12 @@ const _ALL_BLOG_FIELDS = {
 } as const satisfies FieldDefs;
 
 export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
-  url: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostUrl(post) },
+  url: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostUrl(post) as 'string' },
   language: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostLanguageFlag(post) },
   category: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostCategory(post) },
   subcategory: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostSubcategory(post) },
   slug: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostSlug(post) }
-} as const satisfies Partial<Record<keyof _AllBlogFields, unknown>> satisfies ComputedFields;
+} as const satisfies Partial<Record<keyof _AllBlogFields, ComputedField>> satisfies ComputedFields;
 
 export const BLOG_DOCUMENTS_FIELDS = {
   title: { type: 'string', required: true },
