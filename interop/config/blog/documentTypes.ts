@@ -27,7 +27,6 @@ const defineDocumentType = (def: () => DocumentTypeDef<string>) =>
     def
   }) as const;
 
-// * ... VSCode may raise an error on "fields". It's a false positive.
 export const documentTypes: DocumentType[] = Object.values(documentsTypesMetadatas).reduce(
   (acc, documentTypeMetadatas) => {
     const { name, categoryFolder } = documentTypeMetadatas;

@@ -9,7 +9,6 @@ import {
 import type {
   ComputedFieldsAsFieldsRecord,
   ContentLayerDocumentsConfigType,
-  DocumentsComputedFields,
   DocumentsFields,
   MakeBaseFields,
   MakeDocumentsBaseFieldsSumType,
@@ -60,15 +59,13 @@ const _BASE_FIELDS = {
   }
 } as const satisfies FieldDefs;
 
-const _DOCUMENTS_COMPUTED_FIELDS = {
+export const DOCUMENTS_COMPUTED_FIELDS = {
   url: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostUrl(post) },
   category: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostCategory(post) },
   subcategory: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostSubcategory(post) },
   slug: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostSlug(post) },
   language: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostLanguageFlag(post) }
 } as const satisfies Partial<Record<keyof typeof _BASE_FIELDS, unknown>> satisfies ComputedFields;
-
-export const DOCUMENTS_COMPUTED_FIELDS = _DOCUMENTS_COMPUTED_FIELDS satisfies DocumentsComputedFields;
 
 export const DOCUMENTS_FIELDS = {
   title: { type: 'string', required: true },
@@ -85,7 +82,6 @@ const DOCUMENTS_COMPUTED_FIELDS_AS_FIELDS = {
   language: { type: 'string', required: true }
 } as const satisfies ComputedFieldsAsFieldsRecord;
 
-// * ... VSCode may raise an error on "POST_SCHEMA_CONFIG". It's a false positive.
 export const POST_SCHEMA_CONFIG: ContentLayerDocumentsConfigType = {
   name: 'PostSchema',
   filePathPattern: '',
@@ -97,7 +93,5 @@ export const POST_SCHEMA_CONFIG: ContentLayerDocumentsConfigType = {
 } as const;
 
 export type DocumentsTypesKey = MakeDocumentsTypesSumType<'PatchPost' | 'PatchPostBis'>;
-
 export type BaseFields = MakeBaseFields<typeof _BASE_FIELDS>;
-
-export type DocumentsComputedFieldsKey = MakeDocumentsBaseFieldsSumType<keyof typeof _DOCUMENTS_COMPUTED_FIELDS>;
+export type DocumentsComputedFieldsKey = MakeDocumentsBaseFieldsSumType<keyof typeof DOCUMENTS_COMPUTED_FIELDS>;
