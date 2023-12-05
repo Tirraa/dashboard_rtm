@@ -12,9 +12,11 @@ import {
   isValidBlogCategoryAndSubcategoryPairInAnyLanguage
 } from '@/lib/blog';
 import type { BlogSubcategoryPageProps, PostBase } from '@/types/Blog';
+import GithubSlugger from 'github-slugger';
 import { notFound } from 'next/navigation';
 import type { FunctionComponent } from 'react';
-import slugify from 'slugify';
+
+const slugger = new GithubSlugger();
 
 export const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> = async ({ params }) => {
   const category = params[BlogTaxonomy.CATEGORY];
@@ -40,7 +42,7 @@ export const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageP
     .map((post) => <BlogPostPreview key={`${post._raw.flattenedPath}-paginated-blog-post`} post={post} language={language} />);
 
   return (
-    <section className="w-full" id={slugify(curSubcategTitle.toLowerCase())}>
+    <section className="w-full" id={slugger.slug(curSubcategTitle)}>
       <h1 className="mb-2 ltr:text-left rtl:text-right">{title}</h1>
       {/* {ToDo} Use shadcn/ui Data Table? */}
       <MaybePaginatedElements

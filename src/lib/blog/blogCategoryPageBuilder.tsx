@@ -10,9 +10,11 @@ import { getServerSideI18n } from '@/i18n/server';
 import { cn } from '@/lib/tailwind';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
 import { buildPathFromParts } from '@rtm/shared-lib/str';
+import GithubSlugger from 'github-slugger';
 import Link from 'next/link';
 import type { ReactElement, ReactNode } from 'react';
-import slugify from 'slugify';
+
+const slugger = new GithubSlugger();
 
 export async function blogCategoryPageBuilder(
   posts: PostBase[],
@@ -79,7 +81,7 @@ export async function blogCategoryPageBuilder(
       const section = (
         <section
           key={`${subcategory}-${curSubcategTitle}-section`}
-          id={slugify(curSubcategTitle.toLowerCase())}
+          id={slugger.slug(curSubcategTitle)}
           className="[&>article:not(:last-of-type)]:mb-6"
         >
           {title}

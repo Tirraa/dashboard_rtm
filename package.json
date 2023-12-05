@@ -32,6 +32,7 @@
     "clsx": "^2.0.0",
     "contentlayer": "^0.3.4",
     "date-fns": "^2.30.0",
+    "github-slugger": "^2.0.0",
     "hastscript": "^8.0.0",
     "intl-locale-textinfo-polyfill": "^2.1.1",
     "lucide-react": "^0.290.0",
@@ -53,7 +54,6 @@
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.0",
     "shiki": "^0.14.5",
-    "slugify": "^1.6.6",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7"
   },
