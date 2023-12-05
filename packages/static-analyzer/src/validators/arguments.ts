@@ -66,7 +66,7 @@ function crashIfArgumentsAreInvalid({ ...args }) {
 /**
  * @throws {ArgumentsValidatorError}
  */
-function checkIfFilesExist({ ...args }) {
+function crashIfFilesDoesNotExist({ ...args }) {
   const {
     [OPTIONS.BLOG_CONFIG_FILEPATH]: BLOG_CONFIG_FILEPATH,
     [OPTIONS.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
@@ -122,7 +122,7 @@ export function parseArguments() {
   );
 
   crashIfArgumentsAreInvalid(args);
-  checkIfFilesExist(args);
+  crashIfFilesDoesNotExist(args);
   return args;
 }
 

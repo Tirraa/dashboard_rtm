@@ -17,7 +17,7 @@ import sysBlogSlugsValidator from './validators/sysBlogSlugs';
 
 const HANDLED_ERRORS_TYPES = [FeedbackError, BuilderError, ArgumentsValidatorError, ArgError];
 
-const moveToCallerDirectory = () => process.chdir(path.join(__dirname, ROOT_FOLDER_RELATIVE_PATH_FROM_STATIC_ANALYZER_CTX));
+const moveToRoot = () => process.chdir(path.join(__dirname, ROOT_FOLDER_RELATIVE_PATH_FROM_STATIC_ANALYZER_CTX));
 
 const printStaticAnalysisPassedMsg = () => console.log(STATIC_ANALYSIS_DONE);
 
@@ -25,7 +25,7 @@ const printStaticAnalysisPassedMsg = () => console.log(STATIC_ANALYSIS_DONE);
  * @throws {FeedbackError}
  */
 function processStaticAnalysis() {
-  moveToCallerDirectory();
+  moveToRoot();
   try {
     const retrievedValuesFromArgs = parseArguments();
     const {

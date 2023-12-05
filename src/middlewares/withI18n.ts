@@ -14,6 +14,6 @@ const i18nMiddlewareInstance = createI18nMiddleware(I18N_MIDDLEWARE_CONFIG);
 
 const i18nMiddleware = (request: NextRequest): NextResponse => i18nMiddlewareInstance(request);
 
-export const withI18n: MiddlewareFactory = (_) => async (request: NextRequest, _next: NextFetchEvent) => i18nMiddleware(request);
+export const withI18n: MiddlewareFactory = () => async (request: NextRequest, _next: NextFetchEvent) => i18nMiddleware(request);
 
 export default withI18n;

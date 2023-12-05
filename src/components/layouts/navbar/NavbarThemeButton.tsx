@@ -36,10 +36,10 @@ export const NavbarThemeButton: FunctionComponent<NavbarLoginButtonProps> = () =
         theme === DEFAULT_DARK_VARIANT
           ? DEFAULT_VARIANT
           : theme === DEFAULT_VARIANT
-          ? DEFAULT_DARK_VARIANT
-          : checkDarkTheme
-          ? DEFAULT_VARIANT
-          : DEFAULT_DARK_VARIANT;
+            ? DEFAULT_DARK_VARIANT
+            : checkDarkTheme
+              ? DEFAULT_VARIANT
+              : DEFAULT_DARK_VARIANT;
       setChangeThemeValue(newValue);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

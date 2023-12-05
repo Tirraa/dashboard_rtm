@@ -15,8 +15,7 @@ import type {
   MakeDocumentsAllFieldsSumType,
   MakeDocumentsTypesSumType,
   MakeFields,
-  PostSchemaKey,
-  PostToBuild
+  TypeName
 } from '../../types/magic/ContentlayerConfig';
 
 export const BLOG_POSTS_FOLDER = 'posts';
@@ -63,11 +62,11 @@ const _ALL_BLOG_FIELDS = {
 } as const satisfies FieldDefs;
 
 export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
-  url: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostUrl(post) as 'string' },
-  language: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostLanguageFlag(post) },
-  category: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostCategory(post) },
-  subcategory: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostSubcategory(post) },
-  slug: { type: 'string', resolve: (post: PostToBuild) => buildBlogPostSlug(post) }
+  url: { type: 'string', resolve: (post) => buildBlogPostUrl(post) },
+  language: { type: 'string', resolve: (post) => buildBlogPostLanguageFlag(post) },
+  category: { type: 'string', resolve: (post) => buildBlogPostCategory(post) },
+  subcategory: { type: 'string', resolve: (post) => buildBlogPostSubcategory(post) },
+  slug: { type: 'string', resolve: (post) => buildBlogPostSlug(post) }
 } as const satisfies Partial<Record<keyof _AllBlogFields, ComputedField>> satisfies ComputedFields;
 
 export const BLOG_DOCUMENTS_FIELDS = {
@@ -93,3 +92,13 @@ export type AllBlogFields = MakeAllFields<_AllBlogFields>;
 export type BlogFields = MakeFields<_BlogFields>;
 export type BlogComputedFields = MakeComputedFields<_BlogComputedFields>;
 export type BlogDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _BlogComputedFields>;
+
+type PostSchemaKey = 'PostSchema';
+
+export type BlogDocumentsTypesMetadatas = Record<BlogDocumentsTypesKeys, BlogDocumentsConfigTypeMetadatas<BlogDocumentsTypesKeys>>;
+
+type BlogDocumentsConfigTypeMetadatas<TYPENAME extends TypeName = TypeName> = {
+  name: TYPENAME;
+  categoryFolder: CategoryFolder;
+};
+type CategoryFolder = string;

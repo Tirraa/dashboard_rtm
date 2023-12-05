@@ -14,10 +14,15 @@
     "dev": "next dev",
     "start": "next start",
     "lint": "next lint",
+    "test-before-build": "jest --testPathIgnorePatterns '/node_modules/|/interop/types/magic/ContentlayerConfig*'",
+    "test-after-build": "jest --testPathPattern '/interop/types/magic/ContentlayerConfig*'",
+    "pretest": "next build",
     "test": "jest",
+    "only-test": "jest",
     "prepare": "husky install",
     "commit": "git-cz",
-    "format": "prettier --log-level warn --write ."
+    "format": "prettier --log-level warn --write .",
+    "vercel-ci-build-command": "pnpm test-before-build && pnpm build && pnpm test-after-build"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",

@@ -1,6 +1,7 @@
-import type { AtomicContentLayerDocumentConfig, BlogDocumentsTypesMetadatas } from '##/types/magic/ContentlayerConfig';
+import type { AtomicContentLayerDocumentConfig } from '##/types/magic/ContentlayerConfig';
 import type { DocumentType, DocumentTypeDef } from 'contentlayer/source-files';
 import blogDataAssocBuilder from '../../lib/blog/builders/blogDataAssoc';
+import type { BlogDocumentsTypesMetadatas } from './contentlayerConfigTweakers';
 import {
   BLOG_POSTS_FOLDER,
   BLOG_POST_SCHEMA_CONFIG,
@@ -21,6 +22,7 @@ const documentsTypesMetadatas: BlogDocumentsTypesMetadatas = {
   }
 } as const;
 
+// * ... Adapter
 const defineDocumentType = (def: () => DocumentTypeDef<string>) =>
   ({
     type: 'document',
