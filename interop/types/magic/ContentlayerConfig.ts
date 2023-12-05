@@ -1,5 +1,4 @@
-import type { FieldDefType } from 'contentlayer/core';
-import type { DocumentContentType } from 'contentlayer/source-files';
+import type { DocumentContentType, FieldDefs } from 'contentlayer/source-files';
 import type { BaseFields, DOCUMENTS_COMPUTED_FIELDS, DocumentsComputedFieldsKey, DocumentsTypesKey } from '../ContentlayerConfigTweakers';
 
 type ContentLayerContentType = { contentType: DocumentContentType };
@@ -49,10 +48,6 @@ export type AtomicDocumentConfig = DocumentsConfigType<DocumentsComputedFieldsKe
 export type AtomicContentLayerDocumentConfig = AtomicDocumentConfig & ContentLayerContentType;
 export type ContentLayerDocumentsConfigType = DocumentsConfigType & ContentLayerContentType;
 
-type MakeRequiredField<T extends boolean> = { required: T };
-export type MakeDefaultField<T> = { default: T };
-export type MakeTypeField<T extends FieldDefType> = { type: T };
-export type RequiredField = MakeRequiredField<true>;
-export type OptionalField = MakeRequiredField<false>;
+export type MakeBaseFields<__BASE_FIELDS extends FieldDefs> = __BASE_FIELDS;
 
 export type PostToBuild = any;

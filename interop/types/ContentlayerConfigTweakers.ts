@@ -1,4 +1,4 @@
-import type { DocumentContentType } from 'contentlayer/source-files';
+import type { DocumentContentType, FieldDefs } from 'contentlayer/source-files';
 import {
   buildBlogPostCategory,
   buildBlogPostLanguageFlag,
@@ -11,29 +11,56 @@ import type {
   ContentLayerDocumentsConfigType,
   DocumentsComputedFields,
   DocumentsFields,
+  MakeBaseFields,
   MakeDocumentsBaseFieldsSumType,
   MakeDocumentsTypesSumType,
-  MakeTypeField,
-  OptionalField,
-  PostToBuild,
-  RequiredField
+  PostToBuild
 } from './magic/ContentlayerConfig';
 
 export const POSTS_FOLDER = 'posts';
 export const DOCUMENTS_CONTENT_TYPE: DocumentContentType = 'mdx';
 export const DOCUMENTS_CONTENT_EXTENSION = 'mdx';
 
-export type BaseFields = {
-  title: MakeTypeField<'string'> & RequiredField;
-  description: MakeTypeField<'string'> & OptionalField;
-  metadescription: MakeTypeField<'string'> & RequiredField;
-  date: MakeTypeField<'date'> & RequiredField;
-  url: MakeTypeField<'string'> & RequiredField;
-  category: MakeTypeField<'string'> & RequiredField;
-  subcategory: MakeTypeField<'string'> & RequiredField;
-  slug: MakeTypeField<'string'> & RequiredField;
-  language: MakeTypeField<'string'> & RequiredField;
-};
+const _BASE_FIELDS = {
+  title: {
+    type: 'string',
+    required: true
+  },
+  description: {
+    type: 'string',
+    required: false
+  },
+  metadescription: {
+    type: 'string',
+    required: true
+  },
+  date: {
+    type: 'date',
+    required: true
+  },
+  url: {
+    type: 'string',
+    required: true
+  },
+  category: {
+    type: 'string',
+    required: true
+  },
+  subcategory: {
+    type: 'string',
+    required: true
+  },
+  slug: {
+    type: 'string',
+    required: true
+  },
+  language: {
+    type: 'string',
+    required: true
+  }
+} as const satisfies FieldDefs;
+
+export type BaseFields = MakeBaseFields<typeof _BASE_FIELDS>;
 
 export const DOCUMENTS_FIELDS = {
   title: { type: 'string', required: true },
