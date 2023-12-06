@@ -2,6 +2,7 @@ import CopyToClipboard from '@/components/ui/blog/CopyToClipboard';
 import { cn } from '@/lib/tailwind';
 import type { HTMLAttributes, ImgHTMLAttributes } from 'react';
 
+// eslint-disable-next-line no-unused-vars
 export const PrimitiveComponents: Record<PropertyKey, (...args: any[]) => JSX.Element> = {
   h1: ({ className, ...props }) => <h1 className={cn('mt-2 flex scroll-m-20 text-4xl font-bold tracking-tight', className)} {...props} />,
   h2: ({ className, ...props }) => (

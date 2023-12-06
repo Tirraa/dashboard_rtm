@@ -2,8 +2,6 @@
 
 import { i18ns } from '##/config/i18n';
 import ROUTES_ROOTS from '##/config/routes';
-import I18nTaxonomy from '##/config/taxonomies/i18n';
-import type { LanguageFlag } from '##/types/magic/I18n';
 import NAVBAR_STYLE from '@/components/config/styles/navbar/NavbarStyle';
 import NavbarButton from '@/components/layouts/navbar/NavbarButton';
 import NavbarToggle from '@/components/layouts/navbar/NavbarToggle';
@@ -11,11 +9,10 @@ import NavbarElement from '@/components/ui/hoc/NavbarElement';
 import { NAVBAR_EXTRAS_COMPONENTS_DESKTOP, NAVBAR_EXTRAS_COMPONENTS_MOBILE } from '@/config/SitewideNavbar/Extras/utils/ComponentsMapping';
 import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsConfig';
 import SITEWIDE_NAVBAR_ROUTES, { SITEWIDE_NAVBAR_ROUTES_TITLES } from '@/config/SitewideNavbar/routesImpl';
-import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
+import { getClientSideI18n } from '@/i18n/client';
 import getComputedNavData from '@/lib/misc/getComputedNavData';
 import { cn } from '@/lib/tailwind';
 import type { NavbarItems } from '@/types/NavData';
-import type { I18nComponentProps } from '@/types/Next';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { FunctionComponent, ReactNode } from 'react';
@@ -39,19 +36,11 @@ const buildNavbarExtrasForMobile = (): ReactNode[] =>
     </li>
   ));
 
-function buildNavbarItems({ i18nProps }: I18nComponentProps): NavbarItems {
+function buildNavbarItems(): NavbarItems {
   const computedNavData = getComputedNavData(SITEWIDE_NAVBAR_ROUTES, SITEWIDE_NAVBAR_ROUTES_TITLES, SITEWIDE_NAVBAR_DROPDOWNS_CONFIG);
   const navbarItems = computedNavData.map(({ i18nTitle, path, embeddedEntities }) => ({
     i18nTitle,
-    jsx: (
-      <NavbarElement
-        key={`${i18nTitle}-${path}-navbar-btn`}
-        i18nProps={i18nProps}
-        i18nTitle={i18nTitle}
-        path={path}
-        embeddedEntities={embeddedEntities}
-      />
-    )
+    jsx: <NavbarElement key={`${i18nTitle}-${path}-navbar-btn`} i18nTitle={i18nTitle} path={path} embeddedEntities={embeddedEntities} />
   }));
   return navbarItems;
 }
@@ -59,10 +48,9 @@ function buildNavbarItems({ i18nProps }: I18nComponentProps): NavbarItems {
 export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const globalT = getClientSideI18n();
   const logoAlt = globalT(`${i18ns.vocab}.sr-only.brand-logo`);
-  const currentLocale: LanguageFlag = useCurrentLocale();
 
   const navbarItemClassName = 'p-[5px]';
-  const navbarItems = buildNavbarItems({ i18nProps: { [I18nTaxonomy.LANGUAGE]: currentLocale } });
+  const navbarItems = buildNavbarItems();
   const desktopNavbarItems = navbarItems.map((item, index) => (
     <li key={`${index}-navbar-btn-typography-desktop`} className={navbarItemClassName}>
       {item.jsx}

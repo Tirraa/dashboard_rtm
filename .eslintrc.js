@@ -1,9 +1,20 @@
+const [_OFF, _WARN, _ERROR] = [0, 1, 2];
+const [, , ERROR] = [_OFF, _WARN, _ERROR];
+
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
-  plugins: ['@typescript-eslint', 'import'],
-  extends: 'next/core-web-vitals',
+  extends: ['next/core-web-vitals'],
+  plugins: ['@typescript-eslint', 'import', 'unused-imports', 'only-error'],
+
   rules: {
-    '@typescript-eslint/consistent-type-imports': ['error', { fixStyle: 'separate-type-imports' }],
-    'import/consistent-type-specifier-style': ['error', 'prefer-top-level']
+    'import/no-duplicates': ERROR,
+    'import/first': ERROR,
+    'import/no-extraneous-dependencies': [ERROR, { devDependencies: false }],
+
+    'unused-imports/no-unused-imports': ERROR,
+
+    'no-unused-vars': [ERROR, { vars: 'all', args: 'after-used', ignoreRestSiblings: false }],
+    '@typescript-eslint/consistent-type-imports': [ERROR, { fixStyle: 'separate-type-imports' }],
+    'import/consistent-type-specifier-style': [ERROR, 'prefer-top-level']
   }
 };
