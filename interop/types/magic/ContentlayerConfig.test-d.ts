@@ -29,11 +29,11 @@ describe('ContentLayerConfig walkthrough', () => {
   const FAKE_COMPUTED_FIELDS = { foo: { type: 'string', resolve: () => 'FAKE' } } as const;
   const FAKE_FIELDS = { bar: { type: 'string', required: false } } as const;
 
-  test('should pass, given the correct FAKE_FIELDS pattern', () => {
+  it('should pass, given the correct FAKE_FIELDS pattern', () => {
     expectAssignable<DocumentsFields<_AllFakeFields, keyof _FakeComputedFields>>(FAKE_FIELDS);
   });
 
-  test('should pass, given an invalid FAKE_FIELDS pattern, and expecting the type system to disallow this unhappy path', () => {
+  it('should pass, given an invalid FAKE_FIELDS pattern, and expecting the type system to disallow this unhappy path', () => {
     expectNotAssignable<DocumentsFields<_AllFakeFields, keyof _FakeComputedFields>>({
       foo: { type: 'string', required: true }, // <== Invalid: foo is a computed field
       bar: { type: 'string', required: false }
@@ -47,11 +47,10 @@ describe('ContentLayerConfig walkthrough', () => {
     fields: _FAKE_ALL_FIELDS
   } as const;
 
-  test('should pass, given the correct FAKE_SCHEMA pattern', () => {
-    expectAssignable<ContentLayerDocumentsConfigType<'FakeSchema', _AllFakeFields>>(FAKE_SCHEMA);
-  });
+  it('should pass, given the correct FAKE_SCHEMA pattern', () =>
+    expectAssignable<ContentLayerDocumentsConfigType<'FakeSchema', _AllFakeFields>>(FAKE_SCHEMA));
 
-  test('should pass, given two invalid FAKE_SCHEMA patterns, and expecting the type system to disallow this unhappy path', () => {
+  it('should pass, given two invalid FAKE_SCHEMA patterns, and expecting the type system to disallow this unhappy path', () => {
     const INVALID_FAKE_SCHEMA_1 = {
       name: FAKE_SCHEMA_KEY,
       filePathPattern: '',
@@ -82,11 +81,11 @@ describe('ContentLayerConfig walkthrough', () => {
     }
   } as const;
 
-  test('should pass, given the correct FAKE_DOCUMENTS_TYPES_METADATAS pattern', () => {
+  it('should pass, given the correct FAKE_DOCUMENTS_TYPES_METADATAS pattern', () => {
     expectAssignable<FakeDocumentsTypesMetadatas>(FAKE_DOCUMENTS_TYPES_METADATAS);
   });
 
-  test('should pass, given two invalid FAKE_SCHEMA patterns, and expecting the type system to disallow this unhappy path', () => {
+  it('should pass, given two invalid FAKE_SCHEMA patterns, and expecting the type system to disallow this unhappy path', () => {
     const INVALID_FAKE_DOCUMENTS_TYPES_METADATAS = {
       // Invalid: not allowed index. Only the FakeDocumentsTypesKeys literals are allowed here
       $: {
@@ -114,7 +113,7 @@ describe('ContentLayerConfig walkthrough', () => {
   type FakeDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _FakeComputedFields, _AllFakeFields>;
   type FakeFields = MakeFields<_FakeFields, _AllFakeFields, keyof _FakeComputedFields>;
 
-  test('should pass, otherwise it means that the type constructors are corrupted', () => {
+  it('should pass, otherwise it means that the type constructors are corrupted', () => {
     expectAssignable<AllFakeFields>(_FAKE_ALL_FIELDS);
     expectAssignable<FakeComputedFields>(FAKE_COMPUTED_FIELDS);
     expectAssignable<FakeDocumentsComputedFieldsKeys>('foo' as keyof typeof FAKE_COMPUTED_FIELDS);

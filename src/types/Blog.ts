@@ -3,6 +3,7 @@ import type { TBlogTaxonomy } from '##/config/taxonomies/blog';
 import type { LanguageFlag } from '##/types/magic/I18n';
 import type { BlogArchitecture } from '@/config/blog';
 import type { PostSchema } from 'contentlayer/generated';
+import type { WithClassname } from 'packages/shared-types/src/Next';
 import type { I18nParams } from './Next';
 
 type ContentLayerPhantomType = 'type';
@@ -35,7 +36,7 @@ export interface BlogPostPageProps {
   params: BlogPostPagePropsParams;
 }
 
-export interface BlogPostProps {
+export interface BlogPostProps extends Partial<WithClassname> {
   post: PostBase;
   language: LanguageFlag;
 }

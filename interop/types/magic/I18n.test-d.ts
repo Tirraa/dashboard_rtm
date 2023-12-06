@@ -4,7 +4,7 @@ import type { MakeI18ns, MakeVocabTargets, MakeVocabTargetsScopes } from './I18n
 const _ = {};
 
 describe('MakeVocabTargets', () => {
-  test('should pass, given a simple object notation', () => {
+  it('should pass, given a simple object notation', () => {
     const fake = _ as MakeVocabTargets<{
       hello: {
         world: 'hello world!';
@@ -20,7 +20,7 @@ describe('MakeVocabTargets', () => {
     expectType<'root' | 'hello.world' | 'foo.bar..bar'>(fake);
   });
 
-  test('should pass, given a simple dot notation', () => {
+  it('should pass, given a simple dot notation', () => {
     const fake = _ as MakeVocabTargets<{
       hello: 'Hello';
       'hello.world': 'Hello World';
@@ -31,7 +31,7 @@ describe('MakeVocabTargets', () => {
     expectType<'hello' | 'hello.world' | 'foo.bar.bar' | 'foo.bar..bar'>(fake);
   });
 
-  test('should pass, given an object notation with plural keys', () => {
+  it('should pass, given an object notation with plural keys', () => {
     const fake = _ as MakeVocabTargets<{
       'cows#zero': 'No cow';
       'cows#one': 'A cow';
@@ -53,7 +53,7 @@ describe('MakeVocabTargets', () => {
     expectType<'cows' | 'magic.cows' | 'very.magic.cows'>(fake);
   });
 
-  test('should pass, given a dot notation with plural keys', () => {
+  it('should pass, given a dot notation with plural keys', () => {
     const fake = _ as MakeVocabTargets<{
       'cows#zero': 'No cow';
       'cows#one': 'A cow';
@@ -71,7 +71,7 @@ describe('MakeVocabTargets', () => {
 });
 
 describe('MakeVocabTargetsScopes', () => {
-  test('should pass, given a simple object notation', () => {
+  it('should pass, given a simple object notation', () => {
     const fake = _ as MakeVocabTargetsScopes<
       MakeVocabTargets<{
         hello: {
@@ -89,7 +89,7 @@ describe('MakeVocabTargetsScopes', () => {
     expectType<'hello' | 'foo' | 'foo.bar' | 'foo.bar.'>(fake);
   });
 
-  test('should pass, given a simple dot notation', () => {
+  it('should pass, given a simple dot notation', () => {
     const fake = _ as MakeVocabTargetsScopes<
       MakeVocabTargets<{
         hello: 'Hello';
@@ -114,7 +114,7 @@ describe('MakeVocabTargetsScopes', () => {
     >(fake);
   });
 
-  test('should pass, given an object notation with plural keys', () => {
+  it('should pass, given an object notation with plural keys', () => {
     const fake = _ as MakeVocabTargetsScopes<
       MakeVocabTargets<{
         'cows#zero': 'No cow';
@@ -138,7 +138,7 @@ describe('MakeVocabTargetsScopes', () => {
     expectType<'magic' | 'very' | 'very.magic'>(fake);
   });
 
-  test('should pass, given a dot notation with plural keys', () => {
+  it('should pass, given a dot notation with plural keys', () => {
     const fake = _ as MakeVocabTargetsScopes<
       MakeVocabTargets<{
         'cows#zero': 'No cow';
@@ -178,7 +178,7 @@ describe('MakeI18ns', () => {
     NOT_A_NAMESPACE: "I'm NOT a namespace!";
   };
 
-  test('should pass, given an exhaustive I18ns pattern, using object notation', () => {
+  it('should pass, given an exhaustive I18ns pattern, using object notation', () => {
     const fakeI18ns = {
       fooNamespace: 'foo',
       etcNamespace: 'etc'
@@ -187,7 +187,7 @@ describe('MakeI18ns', () => {
     expectAssignable<MakeI18ns<typeof fakeI18ns, FakeVocabTypeObjNotation>>(fakeI18ns);
   });
 
-  test('should pass, given an exhaustive I18ns pattern, using dot notation', () => {
+  it('should pass, given an exhaustive I18ns pattern, using dot notation', () => {
     const fakeI18ns = {
       fooNamespace: 'foo',
       etcNamespace: 'etc'
@@ -196,7 +196,7 @@ describe('MakeI18ns', () => {
     expectAssignable<MakeI18ns<typeof fakeI18ns, FakeVocabTypeDotNotation>>(fakeI18ns);
   });
 
-  test('should pass, given an unexhaustive I18ns pattern, using object notation, and expecting the type system to disallow this unhappy path', () => {
+  it('should pass, given an unexhaustive I18ns pattern, using object notation, and expecting the type system to disallow this unhappy path', () => {
     const fakeI18ns = {
       fooNamespace: 'foo'
     } as const;
@@ -204,7 +204,7 @@ describe('MakeI18ns', () => {
     expectNotAssignable<MakeI18ns<typeof fakeI18ns, FakeVocabTypeObjNotation>>(fakeI18ns);
   });
 
-  test('should pass, given an unexhaustive I18ns pattern, using dot notation, and expecting the type system to disallow this unhappy path', () => {
+  it('should pass, given an unexhaustive I18ns pattern, using dot notation, and expecting the type system to disallow this unhappy path', () => {
     const fakeI18ns = {
       fooNamespace: 'foo'
     } as const;

@@ -38,17 +38,21 @@ export default async function Page({ params }: BlogPostPageProps) {
   const depth = countCharacter(ROUTES_ROOTS.BLOG, '/') - 1 + MIN_DEPTH;
 
   return (
-    <div className="mx-4 flex flex-col items-center lg:mx-24">
-      <Breadcrumbs
-        customCrumbs={[
-          {
-            depth,
-            jsx: <BlogPostCrumb label={post.title} url={post.url} />
-          }
-        ]}
-        className="mx-8 w-full py-4 lg:mx-auto lg:max-w-[750px]"
-      />
-      <BlogPost params={params} />
-    </div>
+    <>
+      <div className="mx-8 flex flex-col items-center lg:mx-auto lg:max-w-[750px]">
+        <Breadcrumbs
+          customCrumbs={[
+            {
+              depth,
+              jsx: <BlogPostCrumb label={post.title} url={post.url} />
+            }
+          ]}
+          className="w-fit self-start py-4"
+        />
+      </div>
+      <div className="mx-4 flex flex-col items-center lg:mx-24">
+        <BlogPost params={params} className="mx-4" />
+      </div>
+    </>
   );
 }

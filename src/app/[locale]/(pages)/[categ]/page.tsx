@@ -23,7 +23,7 @@ export default function Page({ params }: BlogCategoryPageProps) {
 
   return (
     <div className="mx-8 flex flex-col items-center lg:mx-auto lg:max-w-[750px]">
-      <Breadcrumbs className="w-full py-4" />
+      <Breadcrumbs className="w-fit self-start py-4" />
       <CategoryRelatedSubcategoriesAndBlogPosts params={params} />
     </div>
   );

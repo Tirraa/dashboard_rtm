@@ -47,29 +47,33 @@ describe('ComputedNodeCtx', () => {
     });
   });
 
-  it('should fallback on PROD, given an unknown NODE_ENV value', () => {
-    // @ts-expect-error
-    process.env.NODE_ENV = '$';
-    const ctx = getCtx();
+  describe('Fallbacks', () => {
+    beforeEach(() => jest.spyOn(console, 'warn').mockImplementation(jest.fn()));
 
-    Object.keys(ctx).forEach((k) => {
-      const k2 = k as keyof typeof ctx;
-      if (k2 === 'PROD') expect(ctx[k2]).toBe(true);
-      else expect(ctx[k2]).toBe(false);
+    it('should fallback on PROD, given an unknown NODE_ENV value', () => {
+      // @ts-expect-error
+      process.env.NODE_ENV = '$';
+      const ctx = getCtx();
+
+      Object.keys(ctx).forEach((k) => {
+        const k2 = k as keyof typeof ctx;
+        if (k2 === 'PROD') expect(ctx[k2]).toBe(true);
+        else expect(ctx[k2]).toBe(false);
+      });
+    });
+
+    it('should fallback on PROD, given an undefined NODE_ENV value', () => {
+      // @ts-expect-error
+      process.env.NODE_ENV = undefined;
+      const ctx = getCtx();
+
+      Object.keys(ctx).forEach((k) => {
+        const k2 = k as keyof typeof ctx;
+        if (k2 === 'PROD') expect(ctx[k2]).toBe(true);
+        else expect(ctx[k2]).toBe(false);
+      });
     });
   });
 
-  it('should fallback on PROD, given an undefined NODE_ENV value', () => {
-    // @ts-expect-error
-    process.env.NODE_ENV = undefined;
-    const ctx = getCtx();
-
-    Object.keys(ctx).forEach((k) => {
-      const k2 = k as keyof typeof ctx;
-      if (k2 === 'PROD') expect(ctx[k2]).toBe(true);
-      else expect(ctx[k2]).toBe(false);
-    });
-  });
-
-  test('NODE_ENV value should be reset', () => expect(process.env.NODE_ENV).toBe(NODE_ENV));
+  it('should be reset', () => expect(process.env.NODE_ENV).toBe(NODE_ENV));
 });
