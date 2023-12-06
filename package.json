@@ -22,7 +22,7 @@
     "prepare": "husky install",
     "commit": "git-cz",
     "format": "prettier --log-level warn --write .",
-    "ts-prune": "ts-prune --ignore '^.(next|contentlayer|jest)' | grep -vFf tsprune-false-positives.txt",
+    "ts-prune": "ts-prune --ignore '^.(next|contentlayer|jest)' | .ts-prune/sanitize.py",
     "vercel-ci-build-command": "pnpm test-before-build && pnpm build && pnpm test-after-build"
   },
   "dependencies": {
