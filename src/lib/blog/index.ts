@@ -2,7 +2,6 @@ import { DEFAULT_LANGUAGE, LANGUAGES } from '##/config/i18n';
 import ROUTES_ROOTS from '##/config/routes';
 import type { LanguageFlag } from '##/types/magic/I18n';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
-import type { BlogArchitecture } from '@/config/blog';
 import BlogConfig from '@/config/blog';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase, UnknownBlogSlug } from '@/types/Blog';
 import { buildAbsolutePathFromParts } from '@rtm/shared-lib/str';
@@ -53,24 +52,24 @@ export async function getBlogPostUnstrict(
   return postsCollection.find(({ slug: currentPostSlug }) => currentPostSlug === targettedSlug) ?? null;
 }
 
-export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict<C extends BlogCategory>(
-  category: C,
-  subcategory: BlogArchitecture[C],
-  language: LanguageFlag
-): Promise<PostBase[]> {
-  const allPosts: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(category, subcategory, language);
-  return allPosts;
-}
+// export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict<C extends BlogCategory>(
+//   category: C,
+//   subcategory: BlogArchitecture[C],
+//   language: LanguageFlag
+// ): Promise<PostBase[]> {
+//   const allPosts: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(category, subcategory, language);
+//   return allPosts;
+// }
 
-export async function getBlogPostStrict<C extends BlogCategory>(
-  category: C,
-  subcategory: BlogArchitecture[C],
-  targettedSlug: UnknownBlogSlug,
-  language: LanguageFlag
-): Promise<MaybeNull<PostBase>> {
-  const post: MaybeNull<PostBase> = await getBlogPostUnstrict(category, subcategory, targettedSlug, language);
-  return post;
-}
+// export async function getBlogPostStrict<C extends BlogCategory>(
+//   category: C,
+//   subcategory: BlogArchitecture[C],
+//   targettedSlug: UnknownBlogSlug,
+//   language: LanguageFlag
+// ): Promise<MaybeNull<PostBase>> {
+//   const post: MaybeNull<PostBase> = await getBlogPostUnstrict(category, subcategory, targettedSlug, language);
+//   return post;
+// }
 
 export const getAllBlogCategories = (): BlogCategory[] => Object.keys(BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC) as BlogCategory[];
 

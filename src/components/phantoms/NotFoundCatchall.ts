@@ -7,7 +7,7 @@ import type { FunctionComponent } from 'react';
 
 interface NotFoundCatchallProps extends NotFoundCatchallParams {}
 
-export const NotFoundCatchall: FunctionComponent<NotFoundCatchallProps> = ({ params }) => {
+const NotFoundCatchall: FunctionComponent<NotFoundCatchallProps> = ({ params }) => {
   const pathname = usePathname();
   const pathnameUnknownPart = params[NotFoundTaxonomy.NOT_FOUND].join('/');
   const computedRedirectPathname = pathname.slice(0, -pathnameUnknownPart.length);

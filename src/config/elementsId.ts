@@ -1,4 +1,4 @@
-export const ELEMENTS_ID = {
+const ELEMENTS_ID = {
   BODY_CONTAINER: 'the-top'
 } as const;
 

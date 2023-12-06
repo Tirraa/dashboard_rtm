@@ -11,7 +11,7 @@ import {
   redirectToBlogCategoryPage
 } from '..';
 
-export async function blogPostGuard({ params }: BlogPostPageProps) {
+async function blogPostGuard({ params }: BlogPostPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];
   const subcategory = params[BlogTaxonomy.SUBCATEGORY];
 

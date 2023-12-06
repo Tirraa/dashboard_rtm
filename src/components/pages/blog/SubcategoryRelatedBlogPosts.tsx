@@ -18,7 +18,7 @@ import type { FunctionComponent } from 'react';
 
 const slugger = new GithubSlugger();
 
-export const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> = async ({ params }) => {
+const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> = async ({ params }) => {
   const category = params[BlogTaxonomy.CATEGORY];
   const subcategory = params[BlogTaxonomy.SUBCATEGORY];
   const language = params[I18nTaxonomy.LANGUAGE];

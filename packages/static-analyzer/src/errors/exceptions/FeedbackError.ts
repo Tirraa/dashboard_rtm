@@ -1,4 +1,4 @@
-export class FeedbackError extends Error {
+class FeedbackError extends Error {
   constructor(message: string) {
     super(message);
     this.name = 'FeedbackError';

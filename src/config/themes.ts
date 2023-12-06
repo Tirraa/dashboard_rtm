@@ -16,13 +16,11 @@ const THEME_CONFIG = {
 
 const DEFAULT_VARIANT_KEY: ThemeVariantKey = 'LIGHT';
 
-export type ThemeVariant = (typeof THEME_CONFIG.VARIANTS)[keyof typeof THEME_CONFIG.VARIANTS];
+type ThemeVariant = (typeof THEME_CONFIG.VARIANTS)[keyof typeof THEME_CONFIG.VARIANTS];
 
 export const DEFAULT_DARK_VARIANT: ThemeVariant = 'dark';
-export const DEFAULT_LIGHT_VARIANT: ThemeVariant = THEME_CONFIG.VARIANTS[DEFAULT_VARIANT_KEY];
+const DEFAULT_LIGHT_VARIANT: ThemeVariant = THEME_CONFIG.VARIANTS[DEFAULT_VARIANT_KEY];
 export const DEFAULT_VARIANT: ThemeVariant = DEFAULT_LIGHT_VARIANT;
 export const DEFAULT_VARIANT_COLOR_SCHEME: ColorScheme = THEME_CONFIG.VARIANTS_COLORS_SCHEME[DEFAULT_VARIANT_KEY];
 
-export const THEME_VARIANTS: ThemeVariant[] = Object.values(THEME_CONFIG.VARIANTS);
-
-export default THEME_CONFIG;
+// export const THEME_VARIANTS: ThemeVariant[] = Object.values(THEME_CONFIG.VARIANTS);

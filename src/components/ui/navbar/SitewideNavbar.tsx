@@ -45,7 +45,7 @@ function buildNavbarItems(): NavbarItems {
   return navbarItems;
 }
 
-export const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
+const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   const globalT = getClientSideI18n();
   const logoAlt = globalT(`${i18ns.vocab}.sr-only.brand-logo`);
 

@@ -8,5 +8,5 @@ const PATCH_NOTES_PAGE: EmbeddedEntities = Object.keys(PATCH_NOTES_ROUTES).map((
   return { path: PATCH_NOTES_ROUTES[k2], i18nTitle: PATCH_NOTES_ROUTES_TITLES[k2] };
 });
 
-export const SITEWIDE_NAVBAR_DROPDOWNS_CONFIG: NavbarDropdownsConfig = { PATCH_NOTES_PAGE } as const;
+const SITEWIDE_NAVBAR_DROPDOWNS_CONFIG: NavbarDropdownsConfig = { PATCH_NOTES_PAGE } as const;
 export default SITEWIDE_NAVBAR_DROPDOWNS_CONFIG;

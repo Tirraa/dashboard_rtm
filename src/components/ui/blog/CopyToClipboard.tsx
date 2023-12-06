@@ -10,7 +10,7 @@ import { useRef, useState } from 'react';
 
 interface CopyToClipboardProps extends WithChildren {}
 
-export const CopyToClipboard: FunctionComponent<CopyToClipboardProps> = ({ children }) => {
+const CopyToClipboard: FunctionComponent<CopyToClipboardProps> = ({ children }) => {
   const textInputRef = useRef<HTMLDivElement>(null);
   const copyBtnRef = useRef<HTMLButtonElement>(null);
   const [hovered, setHovered] = useState<boolean>(false);

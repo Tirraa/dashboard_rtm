@@ -4,7 +4,7 @@ import type { FunctionComponent } from 'react';
 
 interface DashboardBarPageProps {}
 
-export const DashboardBarPage: FunctionComponent<DashboardBarPageProps> = () => {
+const DashboardBarPage: FunctionComponent<DashboardBarPageProps> = () => {
   return (
     <>
       <h1>Hello there (Dashboard bar tab)</h1>

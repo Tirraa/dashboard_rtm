@@ -32,7 +32,7 @@ const dropdownItemsGenerator = (changeLocale: ChangeLocaleFun, currentLocale: La
     </DropdownMenuItem>
   ));
 
-export const NavbarLanguageMenu: FunctionComponent<NavbarLanguageMenuProps> = ({ isMobile }) => {
+const NavbarLanguageMenu: FunctionComponent<NavbarLanguageMenuProps> = ({ isMobile }) => {
   const changeLocale = useChangeLocale();
   const currentLocale = useCurrentLocale();
   const scopedT = useScopedI18n(`${i18ns.navbar}.sr-only`);

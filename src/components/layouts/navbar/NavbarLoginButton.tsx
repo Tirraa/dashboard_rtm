@@ -54,7 +54,7 @@ const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> =
   );
 };
 
-export const NavbarLoginButton: FunctionComponent<NavbarLoginButtonProps> = ({ isMobile }) => {
+const NavbarLoginButton: FunctionComponent<NavbarLoginButtonProps> = ({ isMobile }) => {
   const { data: session } = useSession();
   const currentPathname = usePathname();
 

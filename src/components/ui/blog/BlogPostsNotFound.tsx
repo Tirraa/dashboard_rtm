@@ -4,7 +4,7 @@ import type { FunctionComponent } from 'react';
 
 interface BlogPostsNotFoundProps {}
 
-export const BlogPostsNotFound: FunctionComponent<BlogPostsNotFoundProps> = async () => {
+const BlogPostsNotFound: FunctionComponent<BlogPostsNotFoundProps> = async () => {
   const globalT = await getServerSideI18n();
   const txt = globalT(`${i18ns.vocab}.no-blog-post`);
   return <p>{txt}</p>;

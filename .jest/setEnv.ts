@@ -1,4 +1,4 @@
-export const NODE_ENV = 'test';
+const NODE_ENV = 'test';
 
 // @ts-expect-error
 process.env.NODE_ENV = NODE_ENV;

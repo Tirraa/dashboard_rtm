@@ -4,7 +4,7 @@ import type { FunctionComponent } from 'react';
 
 interface DashboardFooPageProps {}
 
-export const DashboardFooPage: FunctionComponent<DashboardFooPageProps> = () => {
+const DashboardFooPage: FunctionComponent<DashboardFooPageProps> = () => {
   return (
     <>
       <h1>Hello there (Dashboard foo tab)</h1>

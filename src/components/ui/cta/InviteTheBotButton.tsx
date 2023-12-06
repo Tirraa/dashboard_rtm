@@ -9,7 +9,7 @@ import type { FunctionComponent } from 'react';
 
 interface InviteTheBotButtonProps {}
 
-export const InviteTheBotButton: FunctionComponent<InviteTheBotButtonProps> = () => {
+const InviteTheBotButton: FunctionComponent<InviteTheBotButtonProps> = () => {
   const globalT = getClientSideI18n();
 
   return (

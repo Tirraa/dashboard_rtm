@@ -47,7 +47,7 @@ function sidebarBtnsGenerator(currentPathname: AppPath): ReactNode[] {
   });
 }
 
-export const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => {
+const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => {
   const wasCollapsed = useRef<boolean>(false);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(wasCollapsed.current);
   const sidebarRef = useRef<HTMLDivElement>(null);

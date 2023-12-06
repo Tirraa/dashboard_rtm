@@ -29,7 +29,7 @@ const defineDocumentType = (def: () => DocumentTypeDef<string>) =>
     def
   }) as const;
 
-export const documentTypes: DocumentType[] = Object.values(documentsTypesMetadatas).reduce(
+const blogDocumentTypes: DocumentType[] = Object.values(documentsTypesMetadatas).reduce(
   (acc, documentTypeMetadatas) => {
     const { name, categoryFolder } = documentTypeMetadatas;
     const filePathPattern = BLOG_POSTS_FOLDER + '/' + categoryFolder + `/**/*.${EXT}`;
@@ -43,4 +43,4 @@ export const documentTypes: DocumentType[] = Object.values(documentsTypesMetadat
 
 export const categoriesBlogDataAssoc = blogDataAssocBuilder(documentsTypesMetadatas);
 
-export default documentTypes;
+export default blogDocumentTypes;

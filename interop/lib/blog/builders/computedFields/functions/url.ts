@@ -2,7 +2,7 @@ import type { PostToBuild } from '##/types/magic/ContentlayerConfig';
 import type { AppPath } from '@rtm/shared-types/Next';
 import { BLOG_POSTS_FOLDER, DEFAULT_LANGUAGE, ROUTES_ROOTS, getFlattenedPathWithoutRootFolder } from '../../../unifiedImport';
 
-export const buildBlogPostUrl = (post: PostToBuild): AppPath => {
+const buildBlogPostUrl = (post: PostToBuild): AppPath => {
   const OPTIONAL_LOCALE_PART_INDEX = 2;
   const root = ROUTES_ROOTS.BLOG;
 

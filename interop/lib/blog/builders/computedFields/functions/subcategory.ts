@@ -5,7 +5,7 @@ import { BLOG_POSTS_FOLDER, InvalidArgumentsError, getFlattenedPathWithoutRootFo
 /**
  * @throws {InvalidArgumentsError}
  */
-export function buildBlogPostSubcategoryFromStr(flattenedPath: string): BlogSubcategoryFromUnknownCategory {
+function buildBlogPostSubcategoryFromStr(flattenedPath: string): BlogSubcategoryFromUnknownCategory {
   function subcategBuilder(flattenedPath: string, firstSlashIndex: number, secondSlashIndex: number): BlogSubcategoryFromUnknownCategory {
     if (secondSlashIndex !== -1) return flattenedPath.substring(firstSlashIndex + 1, secondSlashIndex) as BlogSubcategoryFromUnknownCategory;
     return flattenedPath.substring(firstSlashIndex + 1) as BlogSubcategoryFromUnknownCategory;
@@ -26,6 +26,6 @@ function buildBlogPostSubcategoryFromPostObj(post: PostToBuild): BlogSubcategory
   return buildBlogPostSubcategoryFromStr(flattenedPath);
 }
 
-export const buildBlogPostSubcategory = (post: PostToBuild): BlogSubcategoryFromUnknownCategory => buildBlogPostSubcategoryFromPostObj(post);
+const buildBlogPostSubcategory = (post: PostToBuild): BlogSubcategoryFromUnknownCategory => buildBlogPostSubcategoryFromPostObj(post);
 
 export default buildBlogPostSubcategory;

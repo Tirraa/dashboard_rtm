@@ -5,7 +5,7 @@ import type { File, Filename, Path } from '../types/metadatas';
 
 const CURRENT_DIRECTORY_PREFIX = './';
 
-export function traverseFolder(rootFolder: Path): File[] {
+function traverseFolder(rootFolder: Path): File[] {
   const filesCollection: File[] = [];
 
   function traverse(currentFolder: Path, currentDeepPath: Path = currentFolder): void {

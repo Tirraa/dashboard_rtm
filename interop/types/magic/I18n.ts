@@ -33,7 +33,7 @@ export type SharedVocabType = MakeHomogeneousValuesObjType<SharedVocabBase, Voca
 type VocabBase = typeof VOCAB_SCHEMA;
 export type VocabType = MakeHomogeneousValuesObjType<VocabBase, VocabObjValue>;
 export type I18nVocabTarget = MakeVocabTargets<VocabBase>;
-export type I18nVocabScope = MakeVocabTargetsScopes<I18nVocabTarget>;
+type I18nVocabScope = MakeVocabTargetsScopes<I18nVocabTarget>;
 
 export type UnstrictScopedT = Awaited<ReturnType<typeof getScopedI18n<I18nVocabScope>>>;
 
@@ -60,7 +60,8 @@ export type PagesTitlesKey = keyof VocabType['pages-titles'];
 type NamespacesKeys<__VocabType extends UnknownVocabObj = VocabType> = {
   [K in keyof __VocabType]-?: __VocabType[K] extends UnknownVocabObj
     ? K
-    : K extends `${infer Namespace}${KeySeparator}${infer _}`
+    : // eslint-disable-next-line no-unused-vars
+      K extends `${infer Namespace}${KeySeparator}${infer _}`
       ? Namespace
       : never;
 }[keyof __VocabType];

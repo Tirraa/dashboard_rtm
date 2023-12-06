@@ -5,7 +5,7 @@ import { getSlashEnvelope } from '@/lib/str';
 
 const BASE = getSlashEnvelope(ROUTES_ROOTS.PATCH_NOTES);
 
-export const PATCH_NOTES_ROUTES: PatchNotesRoutes = {
+const PATCH_NOTES_ROUTES: PatchNotesRoutes = {
   DASHBOARD_PATCH_NOTES_PAGE: BASE + 'dashboard',
   DISCORD_BOT_PATCH_NOTES_PAGE: BASE + 'discord-bot'
 } as const;

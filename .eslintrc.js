@@ -16,5 +16,14 @@ module.exports = {
     'no-unused-vars': [ERROR, { vars: 'all', args: 'after-used', ignoreRestSiblings: false }],
     '@typescript-eslint/consistent-type-imports': [ERROR, { fixStyle: 'separate-type-imports' }],
     'import/consistent-type-specifier-style': [ERROR, 'prefer-top-level']
-  }
+  },
+
+  overrides: [
+    {
+      files: ['*.test-d.ts'],
+      rules: {
+        'import/no-extraneous-dependencies': [ERROR, { devDependencies: true }]
+      }
+    }
+  ]
 };

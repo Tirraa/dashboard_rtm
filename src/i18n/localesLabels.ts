@@ -1,6 +1,6 @@
 import type { LanguageLabels } from '##/types/magic/I18n';
 
-export const localesLabels: LanguageLabels = {
+const localesLabels: LanguageLabels = {
   en: 'English',
   fr: 'Français'
 } as const;

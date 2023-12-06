@@ -5,7 +5,7 @@ import { cn } from '@/lib/tailwind';
 
 const { NOT_ACTIVE_CLASSNAME, ACTIVE_CLASSNAME } = BUTTON_CONFIG;
 
-export const NavbarDropdownMenuButtonStyle: IButtonStyleBase = {
+const NavbarDropdownMenuButtonStyle: IButtonStyleBase = {
   isActiveClassList: cn(COMMONS, ACTIVE_CLASSNAME),
   isNotActiveClassList: cn(COMMONS, NOT_ACTIVE_CLASSNAME)
 } as const;

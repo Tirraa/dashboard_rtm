@@ -25,7 +25,7 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = ({ post, language, 
   </section>
 );
 
-export const BlogPost: FunctionComponent<_BlogPostPageProps> = async ({ params, className: classNameValue }) => {
+const BlogPost: FunctionComponent<_BlogPostPageProps> = async ({ params, className: classNameValue }) => {
   const category = params[BlogTaxonomy.CATEGORY];
   const subcategory = params[BlogTaxonomy.SUBCATEGORY];
   const language = params[I18nTaxonomy.LANGUAGE];

@@ -1,7 +1,7 @@
 import type { JSPrimitives } from '@rtm/shared-types/CustomUtilityTypes';
-import { isEmptyObject } from '../misc/isEmptyObject';
+import isEmptyObject from '../misc/isEmptyObject';
 
-export const createURLSearchParams = (searchParams: Record<PropertyKey, JSPrimitives>) =>
+const createURLSearchParams = (searchParams: Record<PropertyKey, JSPrimitives>) =>
   !isEmptyObject(searchParams) ? '?' + new URLSearchParams({ ...(searchParams as any) }).toString() : '';
 
 export default createURLSearchParams;

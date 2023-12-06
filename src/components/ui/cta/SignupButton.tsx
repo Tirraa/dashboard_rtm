@@ -10,7 +10,7 @@ import type { FunctionComponent } from 'react';
 
 interface SignUpButtonProps {}
 
-export const SignupButton: FunctionComponent<SignUpButtonProps> = () => {
+const SignupButton: FunctionComponent<SignUpButtonProps> = () => {
   const globalT = getClientSideI18n();
   const className = BUTTON_CONFIG.CLASSNAME;
 

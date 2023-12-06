@@ -1,2 +1,2 @@
-export interface IStyleBase {}
+interface IStyleBase {}
 export default IStyleBase;

@@ -9,7 +9,7 @@ interface DashboardSidebarButtonProps {
 const { sidebarIconProps } = SidebarButtonStyle;
 const ICON_PROPS = { ...sidebarIconProps };
 
-export const DashboardSidebarButton: FunctionComponent<DashboardSidebarButtonProps> = ({ __SidebarIcon }) => {
+const DashboardSidebarButton: FunctionComponent<DashboardSidebarButtonProps> = ({ __SidebarIcon }) => {
   const pSize = ICON_PROPS.size;
   const size = typeof pSize === 'number' ? pSize : typeof pSize === 'string' ? parseFloat(pSize) : null;
   const sizeInPx = size ? size + 'px' : null;

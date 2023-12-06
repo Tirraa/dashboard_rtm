@@ -12,7 +12,7 @@ import { useRef } from 'react';
 
 interface DashboardLayoutClientProps extends LayoutMinimalProps {}
 
-export const DashboardLayoutClient: FunctionComponent<DashboardLayoutClientProps> = ({ children }) => {
+const DashboardLayoutClient: FunctionComponent<DashboardLayoutClientProps> = ({ children }) => {
   useLockScreenScrollY();
 
   const mainElementRef = useRef<HTMLDivElement>(null);

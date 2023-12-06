@@ -144,7 +144,7 @@ function removeFieldsFromCategoriesMetadatasObj(i18nCategoriesMetadatas: Categor
   });
 }
 
-export function declaredI18nValidator(
+function declaredI18nValidator(
   sysData: CategoriesMetadatas,
   i18nBlogCategoriesData: I18nJSONPart,
   i18nSchemaFilePath: Path

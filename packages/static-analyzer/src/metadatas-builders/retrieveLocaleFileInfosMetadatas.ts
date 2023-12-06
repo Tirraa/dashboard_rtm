@@ -26,7 +26,7 @@ function buildLocaleFileMetadatasFromLocaleFile(localeFilePath: string): I18nJSO
   }
 }
 
-export function retrieveLocaleFileInfosMetadatas(localeFilePath: string): I18nJSONPart {
+function retrieveLocaleFileInfosMetadatas(localeFilePath: string): I18nJSONPart {
   const localeFileInfos = buildLocaleFileMetadatasFromLocaleFile(localeFilePath);
   return localeFileInfos;
 }

@@ -1,7 +1,7 @@
 import type { AppPath, PathSegment } from '@rtm/shared-types/Next';
 import buildPathFromParts from './buildPathFromParts';
 
-export const buildAbsolutePathFromParts = (...args: PathSegment[]): AppPath => {
+const buildAbsolutePathFromParts = (...args: PathSegment[]): AppPath => {
   const path = buildPathFromParts(...args);
   if (path.charAt(0) !== '/') return '/' + path;
   return path;

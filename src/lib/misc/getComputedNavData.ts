@@ -4,7 +4,7 @@ import type RoutesKeysUnion from '@/types/RoutesKeysUnion';
 import type { AppPath } from '@rtm/shared-types/Next';
 
 // {ToDo} Recursive embeddedEntities?
-export function getComputedNavData<ScopedRoutesK extends RoutesKeysUnion>(
+function getComputedNavData<ScopedRoutesK extends RoutesKeysUnion>(
   routes: Record<ScopedRoutesK, AppPath>,
   routesTitles: Record<ScopedRoutesK, I18nVocabTarget>,
   dropdownConfig?: DropdownsConfig<ScopedRoutesK>

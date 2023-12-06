@@ -6,7 +6,7 @@ const getDocumentTypeName = (documentType: DocumentType<string>) => documentType
 /**
  * @throws {ContentLayerDuplicateTypesError}
  */
-export function validateContentLayerConfig(documentTypes: DocumentType<string>[]) {
+function validateContentLayerConfig(documentTypes: DocumentType<string>[]) {
   const documentTypesMemory: unknown[] = [];
   const duplicatesSet = new Set<unknown>();
 

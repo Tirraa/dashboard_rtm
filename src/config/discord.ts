@@ -4,7 +4,7 @@ type TDiscordConfig = {
 };
 
 const [CLIENT_ID, PERMISSIONS]: [string, string] = ['1120800430897778700', '8'];
-export const DISCORD_CONFIG: TDiscordConfig = {
+const DISCORD_CONFIG: TDiscordConfig = {
   BOT_INVITE_LINK: `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&permissions=${PERMISSIONS}&scope=bot`,
   SUPPORT_SERVER_INVITE_LINK: 'https://discord.gg/QWTXj3Dv4k'
 } as const;

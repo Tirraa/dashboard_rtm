@@ -4,7 +4,7 @@ import type { BlogSubcategoryPageProps } from '@/types/Blog';
 import { redirect } from 'next/navigation';
 import { isValidBlogCategory, isValidBlogCategoryAndSubcategoryPairInAnyLanguage, redirectToBlogCategoryPage } from '..';
 
-export async function blogSubcategoryGuard({ params }: BlogSubcategoryPageProps) {
+async function blogSubcategoryGuard({ params }: BlogSubcategoryPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];
 
   const validCategory = isValidBlogCategory(category);

@@ -19,7 +19,7 @@ function getFlattenedPathWithoutUnkownRootFolder(flattenedPath: string) {
 /**
  * @throws {InvalidArgumentsError}
  */
-export function getFlattenedPathWithoutRootFolder(flattenedPath: string, rootFolderNeedle?: string) {
+function getFlattenedPathWithoutRootFolder(flattenedPath: string, rootFolderNeedle?: string) {
   if (!rootFolderNeedle) return getFlattenedPathWithoutUnkownRootFolder(flattenedPath);
 
   const expectedFlattenedPathStartStr = rootFolderNeedle + '/';

@@ -13,6 +13,6 @@ Object.entries(SIDEBAR_ROUTES_ICONS).forEach(
   ([k, icon]) => (computedDashboardRoutesSidebarComponents[k as DashboardRoutesKeys] = createSidebarComponent(icon))
 );
 
-export const DASHBOARD_ROUTES_SIDEBAR_COMPONENTS: DashboardRoutesSidebarReactElements = computedDashboardRoutesSidebarComponents;
+const DASHBOARD_ROUTES_SIDEBAR_COMPONENTS: DashboardRoutesSidebarReactElements = computedDashboardRoutesSidebarComponents;
 
 export default DASHBOARD_ROUTES_SIDEBAR_COMPONENTS;

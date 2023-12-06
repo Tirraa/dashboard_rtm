@@ -23,6 +23,6 @@ function buildBlogPostSlugFromPostObj(post: PostToBuild): UnknownBlogSlug {
   return buildBlogPostSlugFromStr(flattenedPath);
 }
 
-export const buildBlogPostSlug = (post: PostToBuild): UnknownBlogSlug => buildBlogPostSlugFromPostObj(post);
+const buildBlogPostSlug = (post: PostToBuild): UnknownBlogSlug => buildBlogPostSlugFromPostObj(post);
 
 export default buildBlogPostSlug;

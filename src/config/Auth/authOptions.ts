@@ -1,7 +1,7 @@
 import type { NextAuthOptions } from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/sign-up'
   },

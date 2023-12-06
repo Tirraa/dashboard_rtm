@@ -1,5 +1,5 @@
 import NODE_ENV from '𝕋/setEnv';
-import type { ComputedNodeCtx } from '../env';
+import type ComputedNodeCtx from '../env';
 
 const getCtx = () => require('../env').default as typeof ComputedNodeCtx;
 

@@ -3,6 +3,6 @@ import config from 'tailwind.config';
 
 const getScreens = () => config.theme.screens;
 
-export const getBreakpoint = (breakpoint: TailwindScreensBreakpoint): number => parseInt(getScreens()[breakpoint]);
+const getBreakpoint = (breakpoint: TailwindScreensBreakpoint): number => parseInt(getScreens()[breakpoint]);
 
 export default getBreakpoint;

@@ -53,7 +53,7 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities, triggerRef: RefO
 
 // {ToDo} Use Navigation Menu instead of this.
 // https://github.com/radix-ui/themes/discussions/139
-export const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, path: href, embeddedEntities }) => {
+const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, path: href, embeddedEntities }) => {
   const currentPathname = usePathname();
   const globalT = getClientSideI18n();
   const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);

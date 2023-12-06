@@ -1,0 +1,115 @@
+contentlayer.config.ts:21 - default
+jest.config.ts:14 - default
+src/middleware.ts:4 - config
+src/middleware.ts:7 - default
+src/app/error.tsx:7 - default
+src/app/layout.tsx:4 - default
+src/app/not-found.tsx:1 - default
+src/contexts/SessionProvider.tsx:2 - default
+src/lib/str.ts:26 - endsWithChars (used in module)
+src/lib/str.ts:30 - indexOfNthOccurrence (used in module)
+src/lib/str.ts:31 - pluralize (used in module)
+src/lib/typescript.ts:3 - getEnumKeys (used in module)
+interop/config/blog/contentlayerConfigTweakers.ts:70 - satisfies (used in module)
+interop/config/blog/contentlayerConfigTweakers.ts:70 - Partial
+interop/config/blog/contentlayerConfigTweakers.ts:77 - DocumentsFields (used in module)
+interop/types/magic/ContentlayerConfig.ts:16 - DocumentsConfigTypeContentLayerMetadatas (used in module)
+interop/types/magic/ContentlayerConfig.ts:21 - DocumentsConfigType (used in module)
+interop/types/magic/I18n.ts:18 - MakeVocabTargets (used in module)
+interop/types/magic/I18n.ts:26 - MakeVocabTargetsScopes (used in module)
+packages/shared-lib/src/html.ts:11 - computeHTMLElementHeight (used in module)
+packages/shared-lib/src/html.ts:12 - computeHTMLElementWidth (used in module)
+packages/shared-lib/src/html.ts:13 - createURLSearchParams (used in module)
+packages/shared-lib/src/html.ts:14 - getDirection (used in module)
+packages/shared-lib/src/html.ts:15 - preserveKeyboardNavigation (used in module)
+packages/shared-lib/src/html.ts:16 - resetScroll (used in module)
+packages/shared-lib/src/html.ts:17 - resetWindowScroll (used in module)
+packages/shared-lib/src/html.ts:18 - scrollToTop (used in module)
+packages/shared-lib/src/misc.ts:3 - isEmptyObject (used in module)
+packages/shared-lib/src/react.ts:4 - getLinkTarget (used in module)
+packages/shared-lib/src/react.ts:4 - getRefCurrentPtr (used in module)
+packages/shared-lib/src/str.ts:5 - buildAbsolutePathFromParts (used in module)
+packages/shared-lib/src/str.ts:5 - buildPageTitle (used in module)
+packages/shared-lib/src/str.ts:5 - buildPathFromParts (used in module)
+packages/shared-types/src/Auth.ts:3 - User
+packages/shared-types/src/Breadcrumbs.ts:8 - CustomCrumbs
+packages/shared-types/src/CustomUtilityTypes.ts:13 - MakeHomogeneousValuesObjType (used in module)
+packages/shared-types/src/CustomUtilityTypes.ts:17 - JSPrimitives
+packages/shared-types/src/CustomUtilityTypes.ts:19 - KeySeparator (used in module)
+packages/shared-types/src/CustomUtilityTypes.ts:21 - DeepPathToLiteralKeys
+packages/shared-types/src/CustomUtilityTypes.ts:24 - Tuple (used in module)
+packages/shared-types/src/CustomUtilityTypes.ts:26 - MaybeNull (used in module)
+packages/shared-types/src/CustomUtilityTypes.ts:27 - MaybeUndefined (used in module)
+packages/shared-types/src/CustomUtilityTypes.ts:28 - MaybeObjectValue
+packages/shared-types/src/CustomUtilityTypes.ts:29 - MaybeSessionUser
+packages/shared-types/src/CustomUtilityTypes.ts:30 - MaybeSessionUserField
+packages/shared-types/src/CustomUtilityTypes.ts:33 - CompareFun
+packages/shared-types/src/DateManipulations.ts:3 - DatesCompareFun
+packages/shared-types/src/HTML.ts:3 - FlexJustify
+packages/shared-types/src/HTML.ts:4 - FlexDirection
+packages/shared-types/src/HTML.ts:5 - FlexWrap
+packages/shared-types/src/HTML.ts:6 - Direction
+packages/shared-types/src/HTML.ts:7 - TitleType
+packages/shared-types/src/HTML.ts:8 - AnchorTarget
+packages/shared-types/src/international-types.ts:3 - RemovePlural
+packages/shared-types/src/Next.ts:5 - AppPath (used in module)
+packages/shared-types/src/Next.ts:6 - PathSegment
+packages/shared-types/src/Next.ts:7 - AppPathAsIs
+packages/shared-types/src/Next.ts:9 - WithChildren (used in module)
+packages/shared-types/src/Next.ts:10 - LayoutMinimalProps
+packages/shared-types/src/Next.ts:14 - WithDeepResetOnLgBreakpointEvents
+packages/shared-types/src/Next.ts:16 - WithIsMobile
+packages/shared-types/src/Next.ts:20 - MiddlewareFactory
+packages/shared-types/src/React.ts:2 - HookDepsArrayPrimitives
+packages/shared-types/src/StringManipulations.ts:4 - StringsCompareFun
+src/app/[locale]/not-found.tsx:9 - generateMetadata
+src/app/[locale]/not-found.tsx:18 - default
+src/components/ui/Button.tsx:88 - buttonVariants (used in module)
+src/components/ui/Card.tsx:51 - CardFooter (used in module)
+src/components/ui/DropdownMenu.tsx:203 - DropdownMenuCheckboxItem (used in module)
+src/components/ui/DropdownMenu.tsx:205 - DropdownMenuGroup (used in module)
+src/components/ui/DropdownMenu.tsx:207 - DropdownMenuLabel (used in module)
+src/components/ui/DropdownMenu.tsx:208 - DropdownMenuPortal (used in module)
+src/components/ui/DropdownMenu.tsx:209 - DropdownMenuRadioGroup (used in module)
+src/components/ui/DropdownMenu.tsx:210 - DropdownMenuRadioItem (used in module)
+src/components/ui/DropdownMenu.tsx:211 - DropdownMenuSeparator (used in module)
+src/components/ui/DropdownMenu.tsx:212 - DropdownMenuShortcut (used in module)
+src/components/ui/DropdownMenu.tsx:213 - DropdownMenuSub (used in module)
+src/components/ui/DropdownMenu.tsx:214 - DropdownMenuSubContent (used in module)
+src/components/ui/DropdownMenu.tsx:215 - DropdownMenuSubTrigger (used in module)
+src/i18n/locales/en.ts:25 - default
+src/i18n/locales/schema.ts:55 - satisfies (used in module)
+src/i18n/locales/schema.ts:55 - TypedLeafsJSONData (used in module)
+src/lib/blog/index.ts:18 - getAllBlogPostsByCategory (used in module)
+src/lib/blog/index.ts:27 - getAllBlogPostsByCategoryAndLanguage
+src/lib/blog/index.ts:33 - getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict (used in module)
+src/lib/blog/index.ts:44 - getBlogPostUnstrict
+src/lib/blog/index.ts:76 - blogSubcategoryShouldTriggerNotFound
+src/lib/blog/index.ts:81 - getBlogPostFormattedDate
+src/lib/blog/index.ts:89 - isValidBlogCategory (used in module)
+src/lib/blog/index.ts:95 - isValidBlogCategoryAndSubcategoryPairInAnyLanguage
+src/lib/blog/index.ts:108 - isValidBlogCategoryAndSubcategoryPair (used in module)
+src/lib/blog/index.ts:125 - getBlogPostPathWithoutI18nPart
+src/lib/blog/index.ts:131 - getSlicedBlogPostDescription
+src/lib/blog/index.ts:74 - getAllBlogCategories (used in module)
+src/lib/blog/index.ts:120 - redirectToBlogCategoryPage
+src/lib/blog/index.ts:122 - redirectToBlogCategoryAndSubcategoryPairPageUnstrict
+packages/static-analyzer/src/config/index.ts:1 - FLAGS
+packages/static-analyzer/src/config/index.ts:10 - MAX_TAXONOMY_LEN
+packages/static-analyzer/src/config/index.ts:12 - LOCALES_INFOS_ROOT_KEY (used in module)
+packages/static-analyzer/src/config/index.ts:13 - BLOG_CATEGORIES_I18N_ROOT_KEY (used in module)
+packages/static-analyzer/src/config/index.ts:14 - BLOG_ARCHITECTURE_TYPE_STR (used in module)
+packages/static-analyzer/src/config/index.ts:16 - LOCALES_LNG_INFOS_KEY
+packages/static-analyzer/src/config/index.ts:17 - I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS
+packages/static-analyzer/src/config/index.ts:18 - I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS
+packages/static-analyzer/src/config/index.ts:19 - LIST_ELEMENT_PREFIX
+packages/static-analyzer/src/config/index.ts:21 - BLOG_ARCHITECTURE_TYPE_NEEDLE
+packages/static-analyzer/src/config/index.ts:22 - I18N_BLOG_CATEGORIES_OBJ_NEEDLE
+packages/static-analyzer/src/config/index.ts:23 - LOCALES_INFOS_OBJ_NEEDLE
+packages/static-analyzer/src/config/index.ts:25 - ROOT_FOLDER_RELATIVE_PATH_FROM_STATIC_ANALYZER_CTX
+interop/lib/blog/builders/blogDataAssoc/index.ts:15 - default
+interop/lib/blog/builders/computedFields/index.ts:7 - buildBlogPostCategory (used in module)
+interop/lib/blog/builders/computedFields/index.ts:7 - buildBlogPostLanguageFlag (used in module)
+interop/lib/blog/builders/computedFields/index.ts:7 - buildBlogPostSlug (used in module)
+interop/lib/blog/builders/computedFields/index.ts:7 - buildBlogPostSubcategory (used in module)
+interop/lib/blog/builders/computedFields/index.ts:7 - buildBlogPostUrl (used in module)

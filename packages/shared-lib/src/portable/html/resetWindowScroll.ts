@@ -1,4 +1,4 @@
 import { scrollToTop } from './scrollToTop';
 
-export const resetWindowScroll = () => scrollToTop();
+const resetWindowScroll = () => scrollToTop();
 export default resetWindowScroll;

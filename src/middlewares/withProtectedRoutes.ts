@@ -23,7 +23,7 @@ function isProtectedRoute(pathname: AppPath) {
   return Boolean(isProtectedRoute);
 }
 
-export const withProtectedRoutes: MiddlewareFactory = (next: NextMiddleware) => async (req: NextRequest, _next: NextFetchEvent) => {
+const withProtectedRoutes: MiddlewareFactory = (next: NextMiddleware) => async (req: NextRequest, _next: NextFetchEvent) => {
   const request = req as NextRequestWithAuth;
   if (isProtectedRoute(request.nextUrl.pathname)) return authMiddleware(request)(request, _next);
   const res = await next(request, _next);

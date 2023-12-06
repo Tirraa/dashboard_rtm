@@ -5,7 +5,7 @@ import { getSlashEnvelope } from '@/lib/str';
 
 const BASE = getSlashEnvelope(ROUTES_ROOTS.DASHBOARD);
 
-export const DASHBOARD_ROUTES: DashboardRoutes = {
+const DASHBOARD_ROUTES: DashboardRoutes = {
   MAIN_PAGE: ROUTES_ROOTS.DASHBOARD,
   FOO_PAGE: BASE + 'foo',
   BAR_PAGE: BASE + 'bar'

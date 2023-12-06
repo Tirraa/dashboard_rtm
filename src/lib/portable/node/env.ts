@@ -29,7 +29,7 @@ if ([devCtx, testCtx, prodCtx, forcedToProd].every((v) => v === false)) {
   forcedToProd = true;
 }
 
-export const ComputedNodeCtx: TComputedNodeEnv = {
+const ComputedNodeCtx: TComputedNodeEnv = {
   PROD: forcedToProd || !testCtx ? !devCtx : false,
   DEV: !forcedToProd ? devCtx : false,
   TEST: !forcedToProd ? testCtx : false

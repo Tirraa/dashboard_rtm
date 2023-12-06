@@ -5,7 +5,7 @@ import type { FunctionComponent } from 'react';
 
 interface HtmlElementProps extends LayoutBaseProps {}
 
-export const LandingPagesHtmlElement: FunctionComponent<HtmlElementProps> = ({ children, params }) => (
+const LandingPagesHtmlElement: FunctionComponent<HtmlElementProps> = ({ children, params }) => (
   <DocumentRoot params={params}>{children}</DocumentRoot>
 );
 

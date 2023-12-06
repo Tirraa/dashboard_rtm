@@ -2,7 +2,7 @@ import type { LanguageFlag } from '##/types/magic/I18n';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, UnknownBlogSlug } from '@/types/Blog';
 import type I18nTaxonomy from './i18n';
 
-export namespace BlogTaxonomy {
+namespace BlogTaxonomy {
   export const CATEGORY = 'categ';
   export const SUBCATEGORY = 'subcateg';
   export const SLUG = 'slug';

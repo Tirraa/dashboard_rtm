@@ -32,7 +32,7 @@ export type DocumentsFields<
   __DocumentsComputedFieldsKeys extends keyof __AllFields = BlogDocumentsComputedFieldsKeys
 > = Omit<__AllFields, __DocumentsComputedFieldsKeys>;
 
-export type AtomicDocumentConfig = DocumentsConfigType;
+type AtomicDocumentConfig = DocumentsConfigType;
 export type AtomicContentLayerDocumentConfig = AtomicDocumentConfig & ContentLayerContentType;
 export type ContentLayerDocumentsConfigType<__TypeName extends string = TypeName, __AllBlogFields extends FieldDefs = AllBlogFields> = {
   fields: __AllBlogFields;

@@ -32,7 +32,7 @@ function localeFileInfosValidator(localeFilePath: string): MaybeEmptyErrorsDetec
 /**
  * @throws {BuilderError}
  */
-export function localesInfosValidator(localesFolder: string, i18nSchemaFilePath: Path): MaybeEmptyErrorsDetectionFeedback {
+function localesInfosValidator(localesFolder: string, i18nSchemaFilePath: Path): MaybeEmptyErrorsDetectionFeedback {
   const ERROR_PREFIX_TAIL = `(locales files infos)`;
   let feedback: ErrorsDetectionFeedback = '';
 

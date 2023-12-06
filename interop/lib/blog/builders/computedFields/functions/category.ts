@@ -22,6 +22,6 @@ function buildBlogPostCategoryFromPostObj(post: PostToBuild): BlogCategory {
   return buildBlogPostCategoryFromStr(flattenedPath);
 }
 
-export const buildBlogPostCategory = (post: PostToBuild): BlogCategory => buildBlogPostCategoryFromPostObj(post);
+const buildBlogPostCategory = (post: PostToBuild): BlogCategory => buildBlogPostCategoryFromPostObj(post);
 
 export default buildBlogPostCategory;

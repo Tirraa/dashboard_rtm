@@ -1,4 +1,4 @@
-export function computeHTMLElementWidth(htmlElement: HTMLElement): number {
+function computeHTMLElementWidth(htmlElement: HTMLElement): number {
   const { width } = htmlElement.getBoundingClientRect();
   const { marginRight, marginLeft } = getComputedStyle(htmlElement);
   const widthDeltas = [marginRight, marginLeft].map(parseFloat);

@@ -9,7 +9,7 @@ export interface I18nProviderProps extends WithChildren {
   locale: string;
 }
 
-export const I18nProvider: FunctionComponent<I18nProviderProps> = ({ children, locale }) => (
+const I18nProvider: FunctionComponent<I18nProviderProps> = ({ children, locale }) => (
   <I18nProviderClient locale={locale} fallback={<Loader />}>
     {children}
   </I18nProviderClient>

@@ -11,7 +11,7 @@ import UIProvider from './UIProvider';
 
 interface ProvidersProps extends I18nProviderProps {}
 
-export const Providers: FunctionComponent<ProvidersProps> = ({ children, locale }) => {
+const Providers: FunctionComponent<ProvidersProps> = ({ children, locale }) => {
   // {ToDo} Get rid of this workaround when it will be fixed: https://github.com/TheSGJ/nextjs-toploader/issues/56#issuecomment-1819837995
   const pathname = usePathname();
   const router = useRouter();

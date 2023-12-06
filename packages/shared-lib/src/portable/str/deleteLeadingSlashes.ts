@@ -1,4 +1,4 @@
-export function deleteLeadingSlashes(str: string): string {
+function deleteLeadingSlashes(str: string): string {
   const maxStartIndex = str.length - 1;
   let startIndex = 0;
 

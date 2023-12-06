@@ -1,4 +1,3 @@
-import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import ROUTES_ROOTS from '##/config/routes';
 import type { LanguageFlag } from '##/types/magic/I18n';
 import type { AppPath, AppPathAsIs } from '@rtm/shared-types/Next';
@@ -14,12 +13,6 @@ function computePathnameI18nFlagUnstrict(pathname: AppPath, providedEndIndex?: n
   return compute(pathname, endIndex);
 }
 
-function computePathnameI18nFlagStrict(pathname: AppPath, providedEndIndex?: number): LanguageFlag {
-  const languageFlag = computePathnameI18nFlagUnstrict(pathname, providedEndIndex);
-  if (!isValidLanguageFlag(languageFlag)) return DEFAULT_LANGUAGE;
-  return languageFlag;
-}
-
 export function getPathnameWithoutI18nFlag(pathname: AppPath): AppPathAsIs | AppPath {
   const secondSlashIndex = indexOfNthOccurrence(pathname, '/', 2);
 
@@ -28,11 +21,6 @@ export function getPathnameWithoutI18nFlag(pathname: AppPath): AppPathAsIs | App
 
   const pathnameWithouti18n = secondSlashIndex === -1 ? ROUTES_ROOTS.WEBSITE : pathname.substring(secondSlashIndex);
   return pathnameWithouti18n;
-}
-
-export function getPathnameI18nFlag(pathname: AppPath): LanguageFlag {
-  const pathnameI18nFlag = computePathnameI18nFlagStrict(pathname);
-  return pathnameI18nFlag;
 }
 
 export function getPathnameMaybeI18nFlag(pathname: AppPath): '' | LanguageFlag {

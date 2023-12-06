@@ -1,4 +1,4 @@
-export function getRawDataFromBracesDeclaration(fileContent: string, startIndex: number): string | null {
+function getRawDataFromBracesDeclaration(fileContent: string, startIndex: number): string | null {
   if (startIndex < 0) return null;
 
   let openBracesDepth = 0;

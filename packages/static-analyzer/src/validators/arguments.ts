@@ -108,7 +108,7 @@ function crashIfFilesDoesNotExist({ ...args }) {
   checkBlog();
 }
 
-export function parseArguments() {
+function parseArguments() {
   const args = arg(
     {
       [OPTIONS.BLOG_CONFIG_FILEPATH]: String,

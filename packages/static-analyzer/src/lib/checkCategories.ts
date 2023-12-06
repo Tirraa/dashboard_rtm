@@ -1,7 +1,7 @@
 import type { Category, ErrorsDetectionFeedback, MaybeEmptyErrorsDetectionFeedback } from '../types/metadatas';
 import getErrorLabelForDefects from './getErrorLabelForDefects';
 
-export function checkCategories(sysCategories: Category[], userDeclaredCategories: Category[]): MaybeEmptyErrorsDetectionFeedback {
+function checkCategories(sysCategories: Category[], userDeclaredCategories: Category[]): MaybeEmptyErrorsDetectionFeedback {
   let feedback: ErrorsDetectionFeedback = '';
   const missingDeclaredCategories = sysCategories.filter((category) => !userDeclaredCategories.includes(category));
   const unknownCategories: Category[] = [];

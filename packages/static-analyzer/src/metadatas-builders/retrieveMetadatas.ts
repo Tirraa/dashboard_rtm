@@ -132,7 +132,7 @@ function buildCategoriesMetadatasFromBlogConfigFile(blogConfigFilePath: string):
   return buildCategoriesMetadatasFromBlogArchitectureInner(blogArchitecture, blogConfigFilePath);
 }
 
-export function retrieveMetadatas({ ...args }): [CategoriesMetadatas, DeclaredCategoriesMetadatas] {
+function retrieveMetadatas({ ...args }): [CategoriesMetadatas, DeclaredCategoriesMetadatas] {
   const { [FLAGS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER, [FLAGS.BLOG_CONFIG_FILEPATH]: BLOG_CONFIG_FILEPATH } = args;
   const blogArchitectureSysMetadata = buildCategoriesMetadatasFromPostsFolder(BLOG_POSTS_FOLDER);
   const blogArchitectureDeclaredMetadata = buildCategoriesMetadatasFromBlogConfigFile(BLOG_CONFIG_FILEPATH);

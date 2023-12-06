@@ -17,7 +17,7 @@ export type NavDataEntities = NavDataEntity[];
 
 export interface NavbarElementProps extends NavDataEntity {}
 
-export type NavbarItem = { jsx: JSX.Element; i18nTitle: I18nVocabTarget };
+type NavbarItem = { jsx: JSX.Element; i18nTitle: I18nVocabTarget };
 export type NavbarItems = NavbarItem[];
 
 export type DropdownsConfig<K extends RoutesKeysUnion> = Partial<Record<K, NavDataEntities>>;

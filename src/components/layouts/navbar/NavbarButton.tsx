@@ -71,7 +71,7 @@ const ButtonAsLink: FunctionComponent<Pick<AtomicNavDataEntity, 'i18nTitle' | 'p
   );
 };
 
-export const NavbarButton: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, onClick, path, icon }) => {
+const NavbarButton: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, onClick, path, icon }) => {
   const generateNavbarButtonWithoutIcon = (): ReactNode => {
     if (onClick) return <ButtonAsIs onClick={onClick} i18nTitle={i18nTitle} />;
     else if (path) return <ButtonAsLink i18nTitle={i18nTitle} path={path} />;

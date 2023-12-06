@@ -15,7 +15,7 @@ interface MdxProps {
   code: string;
 }
 
-export const MDX: FunctionComponent<MdxProps> = ({ code }) => {
+const MDX: FunctionComponent<MdxProps> = ({ code }) => {
   const MDXComponent = useMDXComponent(code);
 
   return (

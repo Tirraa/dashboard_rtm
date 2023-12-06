@@ -1,4 +1,4 @@
-export function preserveKeyboardNavigation(element: EventTarget | HTMLElement) {
+function preserveKeyboardNavigation(element: EventTarget | HTMLElement) {
   if (!(element instanceof HTMLElement)) return;
 
   const linkElement = element.querySelector('a');

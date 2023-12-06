@@ -6,7 +6,7 @@ import { getSlashEnvelope } from '@/lib/str';
 
 const BASE = getSlashEnvelope(ROUTES_ROOTS.WEBSITE);
 
-export const SITEWIDE_NAVBAR_ROUTES: SitewideNavbarRoutes = {
+const SITEWIDE_NAVBAR_ROUTES: SitewideNavbarRoutes = {
   HOME_PAGE: BASE,
   DASHBOARD_PAGE: ROUTES_ROOTS.DASHBOARD,
   PATCH_NOTES_PAGE: ROUTES_ROOTS.PATCH_NOTES,

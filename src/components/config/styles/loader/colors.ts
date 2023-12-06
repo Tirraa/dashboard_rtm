@@ -6,7 +6,7 @@ type TLoaderConfig = {
 const COLOR = '#42546E';
 const BACKGROUND_COLOR = '#000';
 
-export const LOADER_CONFIG: TLoaderConfig = {
+const LOADER_CONFIG: TLoaderConfig = {
   COLOR,
   BACKGROUND_COLOR
 } as const;

@@ -61,7 +61,7 @@ function crumbsGenerator(pathParts: string[], withHomepageElement: boolean, scop
   return crumbs;
 }
 
-export const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = ({ withHomepageElement: maybeWithHomepageElement, customCrumbs, className }) => {
+const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = ({ withHomepageElement: maybeWithHomepageElement, customCrumbs, className }) => {
   const pathname = usePathname();
   const pathParts = getPathParts(pathname);
   const withHomepageElement = Boolean(maybeWithHomepageElement);

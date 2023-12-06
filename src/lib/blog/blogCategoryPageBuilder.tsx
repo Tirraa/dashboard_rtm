@@ -16,11 +16,7 @@ import type { ReactElement, ReactNode } from 'react';
 
 const slugger = new GithubSlugger();
 
-export async function blogCategoryPageBuilder(
-  posts: PostBase[],
-  category: BlogCategory,
-  language: LanguageFlag
-): Promise<ReactNode[] | ReactElement> {
+async function blogCategoryPageBuilder(posts: PostBase[], category: BlogCategory, language: LanguageFlag): Promise<ReactNode[] | ReactElement> {
   function buildHistogram() {
     for (const post of posts) {
       const curSubcateg = post.subcategory as BlogSubcategoryFromUnknownCategory;

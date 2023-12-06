@@ -1,4 +1,4 @@
-export function computeHTMLElementHeight(htmlElement: HTMLElement): number {
+function computeHTMLElementHeight(htmlElement: HTMLElement): number {
   const { height } = htmlElement.getBoundingClientRect();
   const { marginTop, marginBottom } = getComputedStyle(htmlElement);
   const heightDeltas = [marginTop, marginBottom].map(parseFloat);

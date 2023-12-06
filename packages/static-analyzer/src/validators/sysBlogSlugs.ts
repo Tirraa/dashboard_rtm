@@ -8,7 +8,7 @@ import isValidTaxonomy, { NAMING_CONSTRAINTS_MSG } from './taxonomyConvention';
 
 const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
-export function sysBlogSlugsValidator(postsFolder: string): MaybeEmptyErrorsDetectionFeedback {
+function sysBlogSlugsValidator(postsFolder: string): MaybeEmptyErrorsDetectionFeedback {
   let feedback = '';
 
   const foldersWithDefects: Record<Path, Filename[]> = {};

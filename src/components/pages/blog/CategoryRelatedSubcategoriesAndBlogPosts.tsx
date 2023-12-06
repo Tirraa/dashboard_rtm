@@ -10,7 +10,7 @@ import type { FunctionComponent } from 'react';
 
 interface CategoryRelatedSubcategoriesAndBlogPostsProps extends BlogCategoryPageProps {}
 
-export const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<CategoryRelatedSubcategoriesAndBlogPostsProps> = async ({ params }) => {
+const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<CategoryRelatedSubcategoriesAndBlogPostsProps> = async ({ params }) => {
   const language = params[I18nTaxonomy.LANGUAGE];
   const category: BlogCategory = params[BlogTaxonomy.CATEGORY];
   const scopedT = await getScopedI18n(i18ns.blogCategories);

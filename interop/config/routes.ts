@@ -20,7 +20,7 @@ const DASHBOARD_ROUTES_ROOTS = {
   DASHBOARD: dashboardRoutesBase + 'dashboard'
 } satisfies Partial<RoutesRoots>;
 
-export const ROUTES_ROOTS = {
+const ROUTES_ROOTS = {
   ...ROUTES_ROOTS_BASE,
   ...BLOG_ROUTES_ROOTS,
   ...DASHBOARD_ROUTES_ROOTS

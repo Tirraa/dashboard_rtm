@@ -6,7 +6,7 @@ import type { CategoriesMetadatas, DeclaredCategoriesMetadatas, MaybeEmptyErrors
 
 const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
-export function declaredBlogArchitectureValidator(
+function declaredBlogArchitectureValidator(
   sysData: CategoriesMetadatas,
   userDeclaredData: DeclaredCategoriesMetadatas,
   blogConfigFilePath: string

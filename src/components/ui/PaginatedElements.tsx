@@ -33,7 +33,7 @@ function initializeCurrentPage(pageFromUrl: number, maxPage: number) {
   return pageFromUrl;
 }
 
-export const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
+const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   paginatedElements,
   elementsPerPage,
   paginationButtonsPosition: position,

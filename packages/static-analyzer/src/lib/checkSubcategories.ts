@@ -8,7 +8,7 @@ import type {
 } from '../types/metadatas';
 import getErrorLabelForDefects from './getErrorLabelForDefects';
 
-export function checkSubcategories(sysData: CategoriesMetadatas, userDeclaredData: DeclaredCategoriesMetadatas): MaybeEmptyErrorsDetectionFeedback {
+function checkSubcategories(sysData: CategoriesMetadatas, userDeclaredData: DeclaredCategoriesMetadatas): MaybeEmptyErrorsDetectionFeedback {
   let feedback: ErrorsDetectionFeedback = '';
   const sysCategories = Object.keys(sysData);
   const userDeclaredCategories = Object.keys(userDeclaredData);

@@ -16,7 +16,7 @@ const { SIZE_PX_VALUE: SIZE } = NAVBAR_ICON_STYLE;
 
 // https://github.com/pacocoursey/next-themes/issues/220#issuecomment-1818410035
 
-export const NavbarThemeButton: FunctionComponent<NavbarLoginButtonProps> = () => {
+const NavbarThemeButton: FunctionComponent<NavbarLoginButtonProps> = () => {
   const { theme, setTheme } = useTheme();
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const [changeThemeValue, setChangeThemeValue] = useState<string>('');

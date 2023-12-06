@@ -1,4 +1,4 @@
-export namespace NotFoundTaxonomy {
+namespace NotFoundTaxonomy {
   export const NOT_FOUND = 'notfound';
 }
 

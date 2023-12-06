@@ -1,4 +1,4 @@
-export function deleteTrailingSlashes(str: string): string {
+function deleteTrailingSlashes(str: string): string {
   const maxEndIndex = str.length - 1;
   let endIndex = maxEndIndex;
 

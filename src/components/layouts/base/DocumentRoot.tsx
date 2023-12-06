@@ -18,7 +18,7 @@ interface DocumentRootProps extends LayoutBaseProps {
   disableTopLoader?: boolean;
 }
 
-export const DocumentRoot: FunctionComponent<DocumentRootProps> = ({ children, params, withNavbar, disableTopLoader }) => {
+const DocumentRoot: FunctionComponent<DocumentRootProps> = ({ children, params, withNavbar, disableTopLoader }) => {
   const language = params[I18nTaxonomy.LANGUAGE];
   const { direction: dir } = new Locale(language).textInfo;
 

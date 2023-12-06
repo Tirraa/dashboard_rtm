@@ -10,7 +10,7 @@ interface LoaderProps {
 
 const { BACKGROUND_COLOR, COLOR } = LOADER_COLORS;
 
-export const Loader: FunctionComponent<LoaderProps> = ({ override: cssOverride } = {}) => {
+const Loader: FunctionComponent<LoaderProps> = ({ override: cssOverride } = {}) => {
   return (
     <div
       className="fixed inset-0 z-50 flex h-screen w-full cursor-wait select-none items-center justify-center"

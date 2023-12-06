@@ -13,7 +13,7 @@ const style: CSSProperties = {
 };
 const [width, height]: [number, number] = [226, 69];
 
-export const Homepage: FunctionComponent<HomepageProps> = () => {
+const Homepage: FunctionComponent<HomepageProps> = () => {
   const scopedT = useScopedI18n(i18ns.vocab);
   const alt = scopedT('sr-only.brand-logo');
   const brand = scopedT('brand');

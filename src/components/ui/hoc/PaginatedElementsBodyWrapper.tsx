@@ -21,10 +21,7 @@ interface IPaginatedElementsBodyWrapperProps extends PaginatedElementsBodyWrappe
  * @extends {children} - Extra styling?
  * @implements {IPaginatedElementsBodyWrapperProps}
  */
-export const PaginatedElementsBodyWrapper: FunctionComponent<IPaginatedElementsBodyWrapperProps> = ({
-  paginatedElementsBodyWrapperProps,
-  children
-}) => {
+const PaginatedElementsBodyWrapper: FunctionComponent<IPaginatedElementsBodyWrapperProps> = ({ paginatedElementsBodyWrapperProps, children }) => {
   if (!paginatedElementsBodyWrapperProps) return <>{children}</>;
 
   const {

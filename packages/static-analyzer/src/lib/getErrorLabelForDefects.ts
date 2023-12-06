@@ -1,7 +1,7 @@
 import { LIST_ELEMENT_PREFIX } from '../config';
 import type { ErrorsDetectionFeedback } from '../types/metadatas';
 
-export function getErrorLabelForDefects(
+function getErrorLabelForDefects(
   defectsList: unknown[],
   eSingular: string,
   ePlural: string,

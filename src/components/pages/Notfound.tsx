@@ -4,7 +4,7 @@ import type { FunctionComponent } from 'react';
 
 interface NotFoundProps {}
 
-export const NotFound: FunctionComponent<NotFoundProps> = async () => {
+const NotFound: FunctionComponent<NotFoundProps> = async () => {
   const globalT = await getServerSideI18n();
 
   return (

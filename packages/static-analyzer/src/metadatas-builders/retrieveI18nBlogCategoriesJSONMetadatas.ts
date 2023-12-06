@@ -26,7 +26,7 @@ function buildBlogCategoriesMetadatasFromI18nConfigFile(i18nSchemaFilePath: stri
   }
 }
 
-export function retrieveI18nBlogCategoriesJSONMetadatas(i18nSchemaFilePath: string): I18nJSONPart {
+function retrieveI18nBlogCategoriesJSONMetadatas(i18nSchemaFilePath: string): I18nJSONPart {
   const i18nDeclaredMetadata = buildBlogCategoriesMetadatasFromI18nConfigFile(i18nSchemaFilePath);
   return i18nDeclaredMetadata;
 }

@@ -25,7 +25,7 @@ function buildBlogPostLanguageFlagFromStr(flattenedPath: string): LanguageFlag {
   return DEFAULT_LANGUAGE;
 }
 
-export function buildBlogPostLanguageFlag(post: PostToBuild): LanguageFlag {
+function buildBlogPostLanguageFlag(post: PostToBuild): LanguageFlag {
   const flattenedPath = getFlattenedPathWithoutRootFolder(post._raw.flattenedPath, BLOG_POSTS_FOLDER);
   const language = buildBlogPostLanguageFlagFromStr(flattenedPath);
   return language;
