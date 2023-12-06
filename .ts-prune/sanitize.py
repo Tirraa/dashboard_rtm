@@ -4,73 +4,135 @@
 """This sanitizer filters out ts-prune output matches defined as false positives,
 then show only the relevant results. I think it is reasonably fast."""
 
-EARLY_EXIT_CODE: int = 0
-
 import sys
 
-if sys.stdin.isatty():
-    sys.exit(EARLY_EXIT_CODE)
-
-if __name__ != "__main__":
-    sys.exit(EARLY_EXIT_CODE)
+if sys.stdin.isatty() or __name__ != "__main__":
+    sys.exit(0)
 
 import os
 import re
 import time
-
+from typing import Tuple
 # pylint: disable-next=too-few-public-methods
 class PrintSideEffect:
     """Effect"""
 
 TIMER_PIPELINE_START: float = time.monotonic()
-ARTIFACT_RELATIVE_PATH: str = "../__artifacts/tsprune-false-positives.txt"
-
-tsprune_output: str = sys.stdin.read()
-
+TSPRUNE_OUTPUT: str = sys.stdin.read()
 TIMER_SANITIZING_START: float = time.monotonic()
-tokenized_tsprune_output: list[str] = tsprune_output.splitlines()
-
-def benchmark(t_pipeline_start: float, t_process_start: float, t_end: float) -> PrintSideEffect:
-    """Displays elapsed time."""
-    process_delta: float = t_end - t_process_start
-    truncated_process_delta = f"{process_delta:.5f}"
-    pipeline_delta: float = t_end - t_pipeline_start
-    truncated_pipeline_delta = f"{pipeline_delta:.5f}"
-    unit: str = 's'
-    print("Sanitized and printed results in: ~", truncated_process_delta, unit, sep='')
-    print("Total execution time: ~", truncated_pipeline_delta, unit, sep='')
-
-script_path: str = os.path.abspath(__file__)
-script_dir: str = os.path.dirname(script_path)
-
-false_positives_filepath: str = os.path.join(script_dir, ARTIFACT_RELATIVE_PATH)
-
-with open(false_positives_filepath, "r", encoding="utf-8") as input_file:
-    false_positives_raw: str = input_file.read()
+QUIET_CTX = "--quiet" in sys.argv[1:]
+DIR: str = os.path.dirname(os.path.abspath(__file__))
+FALSE_POSITIVES_FILEPATH: str = os.path.join(DIR, "../__artifacts/tsprune-false-positives.conf")
 
 REGEX_PATTERN: str
 REGEX_REPL: str
 REGEX_PATTERN, REGEX_REPL = r':[0-9]+ - ', ':* - '
 
-wildcarded_false_positives_raw: str = re.sub(REGEX_PATTERN, REGEX_REPL, false_positives_raw)
+with open(FALSE_POSITIVES_FILEPATH, "r", encoding="utf-8") as input_file:
+    FALSE_POSITIVES_RAW: str = input_file.read()
 
-archive: dict = {}
+# pylint: disable-next=too-many-statements
+def analyze() -> PrintSideEffect:
+    """Main"""
 
-for org_line in tokenized_tsprune_output:
-    wildcarded_line: str = re.sub(REGEX_PATTERN, REGEX_REPL, org_line)
-    archive[wildcarded_line] = org_line
+    def build_false_positives_deck(tokens: list[str]) -> dict:
+        """Deck builder"""
+        deck: dict = {}
+        for org_line in tokens:
+            _org_line = org_line.strip()
+            if len(_org_line) == 0 or _org_line.startswith('#'):
+                continue
+            card: str = re.sub(REGEX_PATTERN, REGEX_REPL, _org_line)
+            deck[card] = org_line
+        return deck
 
-wildcarded_tsprune_output_lines_set = s1 = set(archive.keys())
-wildcarded_false_positives_lines_set = s2 = set(wildcarded_false_positives_raw.splitlines())
+    def build_tsprune_output_deck(tokens: list[str]) -> dict:
+        """Deck builder"""
+        deck: dict = {}
+        for org_line in tokens:
+            card: str = re.sub(REGEX_PATTERN, REGEX_REPL, org_line)
+            deck[card] = org_line
+        return deck
 
-potential_issues: set = s1.symmetric_difference(s2)
+    tsprune_output_deck = build_tsprune_output_deck(TSPRUNE_OUTPUT.splitlines())
+    false_positives_deck = build_false_positives_deck(FALSE_POSITIVES_RAW.splitlines())
 
-if len(potential_issues) == 0:
-    print("OK: No ts-prune errors")
-    benchmark(TIMER_PIPELINE_START, TIMER_SANITIZING_START, time.monotonic())
-else:
-    for wildcarded_element in potential_issues:
-        print(archive[wildcarded_element])
-    print()
-    print("ATTENTION: Found", len(potential_issues), "potential issues.")
-    benchmark(TIMER_PIPELINE_START, TIMER_SANITIZING_START, time.monotonic())
+    s1, s2 = set(tsprune_output_deck.keys()), set(false_positives_deck.keys())
+    potential_issues: set = s1.symmetric_difference(s2)
+
+    def make_reports() -> PrintSideEffect:
+        """Makes reports, then displays them"""
+        def retrieve_original_values() -> Tuple[list[str], list[str]]:
+            """Retrieves original data via the analyzer indexes"""
+            issues, false_positives = [], []
+            if len(potential_issues) > 0:
+                for unsafe_wildcarded_element in potential_issues:
+                    try:
+                        issues.append(tsprune_output_deck[unsafe_wildcarded_element])
+                    except KeyError:
+                        false_positives.append(false_positives_deck[unsafe_wildcarded_element])
+            return issues, false_positives
+
+        issues, false_positives = retrieve_original_values()
+        issues_count, false_positives_count = len(issues), len(false_positives)
+
+        def print_benchmark(
+          t_pipeline_start: float, t_process_start: float, t_end: float = time.monotonic()
+        ) -> PrintSideEffect:
+            """Report"""
+            unit: str = 's'
+            process_delta, pipeline_delta = t_end - t_process_start, t_end - t_pipeline_start
+            trunc_proc_delta, trunc_pipe_delta = f"{process_delta:.5f}", f"{pipeline_delta:.5f}"
+            print("Sanitized and printed results in: ~", trunc_proc_delta, unit, sep='')
+            print("Total execution time: ~", trunc_pipe_delta, unit, sep='')
+
+        def print_issues() -> PrintSideEffect:
+            """Report"""
+            if issues_count <= 0:
+                return
+            w = "unknown ts-prune issues" if issues_count > 1 else "an unknown ts-prune issue"
+            print(f"Found {w}:")
+            for issue in issues:
+                print(issue)
+
+        def print_outdated_artifact() -> PrintSideEffect:
+            """Report"""
+            _c = false_positives_count
+            if QUIET_CTX or _c <= 0:
+                return
+            if issues_count > 0:
+                print()
+            w = "entries" if _c > 1 else "entry"
+            print(f"Found {_c} outdated {w} in the false positives artifact:", file=sys.stderr)
+            for false_positive in false_positives:
+                print(false_positive, file=sys.stderr)
+
+        def print_brief() -> PrintSideEffect:
+            """Report"""
+            if not QUIET_CTX and false_positives_count > 0:
+                print()
+            elif issues_count > 0:
+                print()
+            if issues_count == 0:
+                print("OK: No ts-prune errors")
+                print_benchmark(TIMER_PIPELINE_START, TIMER_SANITIZING_START)
+            else:
+                w = 'issues' if issues_count > 1 else 'issue'
+                print(f"ATTENTION: Found {issues_count} unknown {w}.")
+                print_benchmark(TIMER_PIPELINE_START, TIMER_SANITIZING_START)
+
+        def print_notes() -> PrintSideEffect:
+            """Report"""
+            _c = false_positives_count
+            if _c > 0 and QUIET_CTX:
+                w = "outdated entries" if _c > 1 else 'outdated entry'
+                print(
+                  '\n' + f"[Note] Found {_c} {w} in the false positives artifact",
+                  file=sys.stderr)
+                w = "them" if _c > 1 else 'it'
+                print(f"(Use the 'ts-prune-verbose' script to log {w})", file=sys.stderr)
+
+        # pylint: disable-next=multiple-statements
+        print_issues(); print_outdated_artifact(); print_brief(); print_notes()
+    make_reports()
+analyze()
