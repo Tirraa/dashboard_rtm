@@ -1,17 +1,20 @@
-import NODE_ENV from '𝕋/setEnvVars';
+import NODE_ENV from '𝕋/setEnv';
 import type { ComputedNodeCtx } from '../env';
 
 const getCtx = () => require('../env').default as typeof ComputedNodeCtx;
 
 describe('ComputedNodeCtx', () => {
+  const OLD_ENV = process.env;
+
   beforeEach(() => {
     jest.resetModules();
-    // @ts-expect-error
-    process.env.NODE_ENV = NODE_ENV;
+    jest.spyOn(console, 'warn').mockImplementation(jest.fn());
+
+    // * ... Workaround: if we only reassign process.env.NODE_ENV, the coverage decreases
+    process.env = { ...OLD_ENV };
   });
 
-  // @ts-expect-error
-  afterAll(() => (process.env.NODE_ENV = NODE_ENV));
+  afterAll(() => (process.env = OLD_ENV));
 
   it('should have all values to false, except TEST', () => {
     const ctx = getCtx();
@@ -47,33 +50,29 @@ describe('ComputedNodeCtx', () => {
     });
   });
 
-  describe('Fallbacks', () => {
-    beforeEach(() => jest.spyOn(console, 'warn').mockImplementation(jest.fn()));
+  it('should fallback on PROD, given an unknown NODE_ENV value', () => {
+    // @ts-expect-error
+    process.env.NODE_ENV = '$';
+    const ctx = getCtx();
 
-    it('should fallback on PROD, given an unknown NODE_ENV value', () => {
-      // @ts-expect-error
-      process.env.NODE_ENV = '$';
-      const ctx = getCtx();
-
-      Object.keys(ctx).forEach((k) => {
-        const k2 = k as keyof typeof ctx;
-        if (k2 === 'PROD') expect(ctx[k2]).toBe(true);
-        else expect(ctx[k2]).toBe(false);
-      });
-    });
-
-    it('should fallback on PROD, given an undefined NODE_ENV value', () => {
-      // @ts-expect-error
-      process.env.NODE_ENV = undefined;
-      const ctx = getCtx();
-
-      Object.keys(ctx).forEach((k) => {
-        const k2 = k as keyof typeof ctx;
-        if (k2 === 'PROD') expect(ctx[k2]).toBe(true);
-        else expect(ctx[k2]).toBe(false);
-      });
+    Object.keys(ctx).forEach((k) => {
+      const k2 = k as keyof typeof ctx;
+      if (k2 === 'PROD') expect(ctx[k2]).toBe(true);
+      else expect(ctx[k2]).toBe(false);
     });
   });
 
-  it('should be reset', () => expect(process.env.NODE_ENV).toBe(NODE_ENV));
+  it('should fallback on PROD, given an undefined NODE_ENV value', () => {
+    // @ts-expect-error
+    process.env.NODE_ENV = undefined;
+    const ctx = getCtx();
+
+    Object.keys(ctx).forEach((k) => {
+      const k2 = k as keyof typeof ctx;
+      if (k2 === 'PROD') expect(ctx[k2]).toBe(true);
+      else expect(ctx[k2]).toBe(false);
+    });
+  });
+
+  test('NODE_ENV value should be reset', () => expect(process.env.NODE_ENV).toBe(NODE_ENV));
 });

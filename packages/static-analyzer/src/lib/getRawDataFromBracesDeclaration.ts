@@ -6,10 +6,12 @@ export function getRawDataFromBracesDeclaration(fileContent: string, startIndex:
   let rawDataStartIndex = -1;
 
   for (let i = startIndex; i < fileContent.length; i++) {
-    if (fileContent[i] === '{') {
+    const currentChar = fileContent[i];
+
+    if (currentChar === '{') {
       if (openBracesDepth === 0) rawDataStartIndex = i + 1;
       openBracesDepth += 1;
-    } else if (fileContent[i] === '}') {
+    } else if (currentChar === '}') {
       openBracesDepth -= 1;
       if (openBracesDepth === 0) {
         rawDataEndIndex = i;

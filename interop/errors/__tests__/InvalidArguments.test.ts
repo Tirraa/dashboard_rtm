@@ -1,4 +1,5 @@
-import { InvalidArgumentsError } from '../InvalidArguments';
+import { InvalidArgumentsError, PUNCTUATION } from '../InvalidArguments';
+PUNCTUATION; // {ToDo} Remove this line
 
 const FAKE_FUNCTION_NAME = 'FAKE_FUNCTION';
 const FAKE_ARG = 'FAKE';
@@ -26,37 +27,19 @@ it('should generate an error message with trimmed hint', () => {
 ${FAKE_HINT.trim()}.`);
 });
 
-it('should generate an error message with hint, without additional punctuation (.)', () => {
-  const FAKE_HINT = 'FAKE HINT.';
-  const FAKE_ERROR = new InvalidArgumentsError(FAKE_FUNCTION_NAME, { [FAKE_ARG_KEY]: FAKE_ARG }, FAKE_HINT);
+it('should generate an error message with hint, without additional punctuation', () => {
+  for (const currentPunctuation of PUNCTUATION) {
+    const FAKE_HINT = 'FAKE HINT' + currentPunctuation;
+    const FAKE_ERROR = new InvalidArgumentsError(FAKE_FUNCTION_NAME, { [FAKE_ARG_KEY]: FAKE_ARG }, FAKE_HINT);
 
-  expect(FAKE_ERROR.message).toBe(`Impossible to ${FAKE_FUNCTION_NAME} with:
+    expect(FAKE_ERROR.message).toBe(
+      `Impossible to ${FAKE_FUNCTION_NAME} with:
 {
   "${FAKE_ARG_KEY}": "${FAKE_ARG}"
 }
-${FAKE_HINT}`);
-});
-
-it('should generate an error message with hint, without additional punctuation (!)', () => {
-  const FAKE_HINT = 'FAKE HINT!';
-  const FAKE_ERROR = new InvalidArgumentsError(FAKE_FUNCTION_NAME, { [FAKE_ARG_KEY]: FAKE_ARG }, FAKE_HINT);
-
-  expect(FAKE_ERROR.message).toBe(`Impossible to ${FAKE_FUNCTION_NAME} with:
-{
-  "${FAKE_ARG_KEY}": "${FAKE_ARG}"
-}
-${FAKE_HINT}`);
-});
-
-it('should generate an error message with hint, without additional punctuation (?)', () => {
-  const FAKE_HINT = 'FAKE HINT?';
-  const FAKE_ERROR = new InvalidArgumentsError(FAKE_FUNCTION_NAME, { [FAKE_ARG_KEY]: FAKE_ARG }, FAKE_HINT);
-
-  expect(FAKE_ERROR.message).toBe(`Impossible to ${FAKE_FUNCTION_NAME} with:
-{
-  "${FAKE_ARG_KEY}": "${FAKE_ARG}"
-}
-${FAKE_HINT}`);
+${FAKE_HINT}`
+    );
+  }
 });
 
 it('should generate an error message without hint', () => {

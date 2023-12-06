@@ -113,7 +113,7 @@ describe('ContentLayerConfig walkthrough', () => {
   type FakeDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _FakeComputedFields, _AllFakeFields>;
   type FakeFields = MakeFields<_FakeFields, _AllFakeFields, keyof _FakeComputedFields>;
 
-  it('should pass, otherwise it means that the type constructors are corrupted', () => {
+  it('should pass, otherwise it means that the type constructors are broken', () => {
     expectAssignable<AllFakeFields>(_FAKE_ALL_FIELDS);
     expectAssignable<FakeComputedFields>(FAKE_COMPUTED_FIELDS);
     expectAssignable<FakeDocumentsComputedFieldsKeys>('foo' as keyof typeof FAKE_COMPUTED_FIELDS);
