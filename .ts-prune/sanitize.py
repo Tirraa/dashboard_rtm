@@ -22,11 +22,11 @@ TSPRUNE_OUTPUT: str = sys.stdin.read()
 TIMER_SANITIZING_START: float = time.monotonic()
 QUIET_CTX = "--quiet" in sys.argv[1:]
 DIR: str = os.path.dirname(os.path.abspath(__file__))
-FALSE_POSITIVES_FILEPATH: str = os.path.join(DIR, "../__artifacts/tsprune-false-positives.conf")
+FALSE_POSITIVES_FILEPATH: str = os.path.join(DIR, "./artifacts/tsprune-false-positives.conf")
 
 REGEX_PATTERN: str
 REGEX_REPL: str
-REGEX_PATTERN, REGEX_REPL = r':[0-9]+ - ', ':* - '
+REGEX_PATTERN, REGEX_REPL = r":[0-9]+ - ", ":* - "
 
 __errno: int = 0
 
@@ -68,11 +68,11 @@ def analyze() -> PrintSideEffect:
             """Retrieves original data via the analyzer indexes"""
             issues, false_positives = [], []
             if len(potential_issues) > 0:
-                for unsafe_wildcarded_element in potential_issues:
+                for wildcarded_element in potential_issues:
                     try:
-                        issues.append(tsprune_output_deck[unsafe_wildcarded_element])
+                        issues.append(tsprune_output_deck[wildcarded_element])
                     except KeyError:
-                        false_positives.append(false_positives_deck[unsafe_wildcarded_element])
+                        false_positives.append(false_positives_deck[wildcarded_element])
             return issues, false_positives
 
         issues, false_positives = retrieve_original_values()
@@ -122,7 +122,7 @@ def analyze() -> PrintSideEffect:
                 # pylint: disable-next=global-statement
                 global __errno
                 __errno = 1
-                w = 'issues' if issues_count > 1 else 'issue'
+                w = "issues" if issues_count > 1 else "issue"
                 print(f"FAILURE: Found {issues_count} unknown {w}.")
                 print_benchmark(TIMER_PIPELINE_START, TIMER_SANITIZING_START)
 
@@ -130,11 +130,11 @@ def analyze() -> PrintSideEffect:
             """Report"""
             _c = false_positives_count
             if _c > 0 and QUIET_CTX:
-                w = "outdated entries" if _c > 1 else 'outdated entry'
+                w = "outdated entries" if _c > 1 else "outdated entry"
                 print(
                   '\n' + f"[Note] Found {_c} {w} in the false positives artifact",
                   file=sys.stderr)
-                w = "them" if _c > 1 else 'it'
+                w = "them" if _c > 1 else "it"
                 print(f"(Use the 'ts-prune-verbose' script to log {w})", file=sys.stderr)
 
         # pylint: disable-next=multiple-statements

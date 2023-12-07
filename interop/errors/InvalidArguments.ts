@@ -1,4 +1,4 @@
-import { endsWithChars } from '../../src/lib/portable/str/endsWithChar';
+import endsWithChars from '../../src/lib/portable/str/endsWithChar';
 
 export const PUNCTUATION = '.?!';
 

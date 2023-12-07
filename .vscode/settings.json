@@ -4,6 +4,7 @@
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
   "editor.wordWrap": "on",
+  "typescript.referencesCodeLens.enabled": true,
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   }

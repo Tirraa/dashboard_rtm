@@ -1,3 +1,3 @@
-export const endsWithChars = (str: string, endsChar: string) => endsChar.split('').some((char) => str.endsWith(char));
+const endsWithChars = (str: string, endsChar: string) => endsChar.split('').some((char) => str.endsWith(char));
 
 export default endsWithChars;

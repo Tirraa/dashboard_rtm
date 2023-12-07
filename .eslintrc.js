@@ -20,7 +20,7 @@ module.exports = {
 
   overrides: [
     {
-      files: ['*.test-d.ts'],
+      files: ['*.test-d.ts', '*.test.ts'],
       rules: {
         'import/no-extraneous-dependencies': [ERROR, { devDependencies: true }]
       }
