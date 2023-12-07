@@ -28,6 +28,8 @@ REGEX_PATTERN: str
 REGEX_REPL: str
 REGEX_PATTERN, REGEX_REPL = r':[0-9]+ - ', ':* - '
 
+__errno: int = 0
+
 with open(FALSE_POSITIVES_FILEPATH, "r", encoding="utf-8") as input_file:
     FALSE_POSITIVES_RAW: str = input_file.read()
 
@@ -114,11 +116,14 @@ def analyze() -> PrintSideEffect:
             elif issues_count > 0:
                 print()
             if issues_count == 0:
-                print("OK: No ts-prune errors")
+                print("SUCCESS: No ts-prune errors")
                 print_benchmark(TIMER_PIPELINE_START, TIMER_SANITIZING_START)
             else:
+                # pylint: disable-next=global-statement
+                global __errno
+                __errno = 1
                 w = 'issues' if issues_count > 1 else 'issue'
-                print(f"ATTENTION: Found {issues_count} unknown {w}.")
+                print(f"FAILURE: Found {issues_count} unknown {w}.")
                 print_benchmark(TIMER_PIPELINE_START, TIMER_SANITIZING_START)
 
         def print_notes() -> PrintSideEffect:
@@ -133,6 +138,6 @@ def analyze() -> PrintSideEffect:
                 print(f"(Use the 'ts-prune-verbose' script to log {w})", file=sys.stderr)
 
         # pylint: disable-next=multiple-statements
-        print_issues(); print_outdated_artifact(); print_brief(); print_notes()
+        print_issues(); print_outdated_artifact(); print_brief(); print_notes(); sys.exit(__errno)
     make_reports()
 analyze()
