@@ -33,7 +33,7 @@ export type SharedVocabType = MakeHomogeneousValuesObjType<SharedVocabBase, Voca
 type VocabBase = typeof VOCAB_SCHEMA;
 export type VocabType = MakeHomogeneousValuesObjType<VocabBase, VocabObjValue>;
 export type I18nVocabTarget = MakeVocabTargets<VocabBase>;
-type I18nVocabScope = MakeVocabTargetsScopes<I18nVocabTarget>;
+export type I18nVocabScope = MakeVocabTargetsScopes<I18nVocabTarget>;
 
 export type UnstrictScopedT = Awaited<ReturnType<typeof getScopedI18n<I18nVocabScope>>>;
 
@@ -66,23 +66,23 @@ type NamespacesKeys<__VocabType extends UnknownVocabObj = VocabType> = {
       : never;
 }[keyof __VocabType];
 
-type FlipI18ns<I18NS_CONST extends I18ns<__VocabType>, __VocabType extends UnknownVocabObj = VocabType> = {
+type FlipI18nsBase<I18NS_CONST extends I18nsBase<__VocabType>, __VocabType extends UnknownVocabObj = VocabType> = {
   [P in keyof I18NS_CONST as I18NS_CONST[P]]: P;
 };
 
-type ExpectedI18nsValues<__VocabType extends UnknownVocabObj = VocabType> = Record<NamespacesKeys<__VocabType>, unknown>;
-type GivenI18nsValues<FLIPPED_I18NS_CONST extends object> = Record<keyof FLIPPED_I18NS_CONST, unknown>;
-type I18nsDiff<OBJ_A extends object, OBJ_B extends object> = { [K in Exclude<keyof OBJ_A, keyof OBJ_B>]: K };
+type ExpectedI18nsBaseValues<__VocabType extends UnknownVocabObj = VocabType> = Record<NamespacesKeys<__VocabType>, unknown>;
+type GivenI18nsBaseValues<FLIPPED_I18NS_CONST extends object> = Record<keyof FLIPPED_I18NS_CONST, unknown>;
+type I18nsBaseDiff<OBJ_A extends object, OBJ_B extends object> = { [K in Exclude<keyof OBJ_A, keyof OBJ_B>]: K };
 
-export type I18ns<__VocabType extends UnknownVocabObj = VocabType> = Record<PropertyKey, NamespacesKeys<__VocabType>>;
-export type MakeI18ns<
-  I18NS_CONST extends I18ns<__VocabType>,
+export type I18nsBase<__VocabType extends UnknownVocabObj = VocabType> = Record<PropertyKey, NamespacesKeys<__VocabType>>;
+export type MakeI18nsBase<
+  I18NS_CONST extends I18nsBase<__VocabType>,
   __VocabType extends UnknownVocabObj = VocabType,
-  __FLIP extends object = FlipI18ns<I18NS_CONST, __VocabType>
+  __FLIP extends object = FlipI18nsBase<I18NS_CONST, __VocabType>
 > = NamespacesKeys<__VocabType> extends keyof __FLIP
   ? I18NS_CONST
-  : I18NS_CONST extends I18ns<__VocabType>
-    ? I18nsDiff<ExpectedI18nsValues<__VocabType>, GivenI18nsValues<__FLIP>>
+  : I18NS_CONST extends I18nsBase<__VocabType>
+    ? I18nsBaseDiff<ExpectedI18nsBaseValues<__VocabType>, GivenI18nsBaseValues<__FLIP>>
     : never;
 
 export type { LanguageFlag };

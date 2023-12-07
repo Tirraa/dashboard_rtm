@@ -1,4 +1,4 @@
-import type { I18ns, LanguageFlag, MakeI18ns } from '##/types/magic/I18n';
+import type { I18nVocabScope, I18nsBase, LanguageFlag, MakeI18nsBase } from '##/types/magic/I18n';
 import DEFAULT_LANGUAGE_OBJ from '../../src/i18n/locales/fr';
 import { getEnumKeys } from '../../src/lib/portable/typescript/getEnumKeys';
 
@@ -7,7 +7,7 @@ export enum ELanguagesFlag {
   en
 }
 
-const _i18ns = {
+const _i18nsBase = {
   auth: 'auth',
   blogCategories: 'blog-categories',
   dashboard: 'dashboard',
@@ -16,9 +16,14 @@ const _i18ns = {
   navbar: 'navbar',
   pagesTitles: 'pages-titles',
   vocab: 'vocab'
-} as const satisfies I18ns;
+} as const satisfies I18nsBase;
 
-export const i18ns: MakeI18ns<typeof _i18ns> = _i18ns;
+const i18nsBase: MakeI18nsBase<typeof _i18nsBase> = _i18nsBase;
+
+export const i18ns = {
+  ...i18nsBase,
+  dashboardPagesTitles: 'dashboard.pages-titles'
+} as const satisfies typeof i18nsBase & Record<string, I18nVocabScope>;
 
 export const LANGUAGES: LanguageFlag[] = getEnumKeys(ELanguagesFlag);
 export const DEFAULT_LANGUAGE: LanguageFlag = DEFAULT_LANGUAGE_OBJ._infos.lng;

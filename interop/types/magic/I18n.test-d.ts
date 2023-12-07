@@ -1,5 +1,5 @@
 import { expectAssignable, expectNotAssignable, expectType } from 'jest-tsd';
-import type { MakeI18ns, MakeVocabTargets, MakeVocabTargetsScopes } from './I18n';
+import type { MakeI18nsBase, MakeVocabTargets, MakeVocabTargetsScopes } from './I18n';
 
 const _ = {};
 
@@ -157,7 +157,7 @@ describe('MakeVocabTargetsScopes', () => {
   });
 });
 
-describe('MakeI18ns', () => {
+describe('MakeI18nsBase', () => {
   type FakeVocabTypeObjNotation = {
     foo: {
       bar: 'bar';
@@ -184,7 +184,7 @@ describe('MakeI18ns', () => {
       etcNamespace: 'etc'
     } as const;
 
-    expectAssignable<MakeI18ns<typeof fakeI18ns, FakeVocabTypeObjNotation>>(fakeI18ns);
+    expectAssignable<MakeI18nsBase<typeof fakeI18ns, FakeVocabTypeObjNotation>>(fakeI18ns);
   });
 
   it('should pass, given an exhaustive I18ns pattern, using dot notation', () => {
@@ -193,7 +193,7 @@ describe('MakeI18ns', () => {
       etcNamespace: 'etc'
     } as const;
 
-    expectAssignable<MakeI18ns<typeof fakeI18ns, FakeVocabTypeDotNotation>>(fakeI18ns);
+    expectAssignable<MakeI18nsBase<typeof fakeI18ns, FakeVocabTypeDotNotation>>(fakeI18ns);
   });
 
   it('should pass, given an unexhaustive I18ns pattern, using object notation, and expecting the type system to disallow this unhappy path', () => {
@@ -201,7 +201,7 @@ describe('MakeI18ns', () => {
       fooNamespace: 'foo'
     } as const;
 
-    expectNotAssignable<MakeI18ns<typeof fakeI18ns, FakeVocabTypeObjNotation>>(fakeI18ns);
+    expectNotAssignable<MakeI18nsBase<typeof fakeI18ns, FakeVocabTypeObjNotation>>(fakeI18ns);
   });
 
   it('should pass, given an unexhaustive I18ns pattern, using dot notation, and expecting the type system to disallow this unhappy path', () => {
@@ -209,6 +209,6 @@ describe('MakeI18ns', () => {
       fooNamespace: 'foo'
     } as const;
 
-    expectNotAssignable<MakeI18ns<typeof fakeI18ns, FakeVocabTypeDotNotation>>(fakeI18ns);
+    expectNotAssignable<MakeI18nsBase<typeof fakeI18ns, FakeVocabTypeDotNotation>>(fakeI18ns);
   });
 });
