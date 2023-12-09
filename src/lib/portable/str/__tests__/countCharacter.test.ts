@@ -1,3 +1,4 @@
+import InvalidArgumentsError from '##/errors/InvalidArguments';
 import countCharacter from '../countCharacter';
 
 it('should return a positive value', () => {
@@ -8,5 +9,5 @@ it('should return a positive value', () => {
 it('should throw when char argument is not a char', () => {
   expect(() => {
     countCharacter('aa    bbqsklqjdkqjdkqjd   aa   qlj,dqkdjqkdjkbb', 'asqdqd');
-  }).toThrow();
+  }).toThrow(InvalidArgumentsError);
 });
