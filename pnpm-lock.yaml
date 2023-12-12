@@ -49,6 +49,9 @@ importers:
       hastscript:
         specifier: ^8.0.0
         version: 8.0.0
+      inflection:
+        specifier: ^2.0.1
+        version: 2.0.1
       intl-locale-textinfo-polyfill:
         specifier: ^2.1.1
         version: 2.1.1
@@ -134,6 +137,9 @@ importers:
       '@types/hast':
         specifier: ^3.0.2
         version: 3.0.3
+      '@types/inflection':
+        specifier: ^1.13.0
+        version: 1.13.2
       '@types/jest':
         specifier: ^29.5.10
         version: 29.5.10
@@ -2506,6 +2512,10 @@ packages:
     resolution: { integrity: sha512-2fYGlaDy/qyLlhidX42wAH0KBi2TCjKMH8CHmBXgRlJ3Y+OXTiqsPQ6IWarZKwF1JoUcAJdPogv1d4b0COTpmQ== }
     dependencies:
       '@types/unist': 3.0.2
+
+  /@types/inflection@1.13.2:
+    resolution: { integrity: sha512-VxXY8dNLrxn7nDvsud77K60uD3a9RSmKfa0k/N/zvP2G55R5/8DSO5Ferz3mQdlAo8jPnpQLilCx9rABdPHSVg== }
+    dev: true
 
   /@types/istanbul-lib-coverage@2.0.6:
     resolution: { integrity: sha512-2QF/t/auWm0lsy8XtKVPG19v3sSOQlJe/YHZgfjb/KBBHOGSV+J2q/S671rcq9uTBrLAXmZpqJiaQbMT+zNU1w== }

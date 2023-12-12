@@ -1,3 +1,4 @@
+import { getPathnameWithoutI18nFlag } from './i18n';
 import capitalize from './portable/str/capitalize';
 import compareAlphabetically from './portable/str/compareAlphabetically';
 import countCharacter from './portable/str/countCharacter';
@@ -6,8 +7,6 @@ import fromKebabCaseToSentenceCase from './portable/str/fromKebabCaseToSentenceC
 import getFormattedDate from './portable/str/getFormattedDate';
 import getSlashEnvelope from './portable/str/getSlashEnvelope';
 import indexOfNthOccurrence from './portable/str/indexOfNthOccurrence';
-import pluralize from './portable/str/pluralize';
-import { getPathnameWithoutI18nFlag } from './i18n';
 
 import ROUTES_ROOTS from '##/config/routes';
 import type { AppPath } from '@rtm/shared-types/Next';
@@ -27,6 +26,5 @@ export {
   fromKebabCaseToSentenceCase,
   getFormattedDate,
   getSlashEnvelope,
-  indexOfNthOccurrence,
-  pluralize
+  indexOfNthOccurrence
 };
