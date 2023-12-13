@@ -27,9 +27,17 @@ const STATICLY_CHECKED_DATA = {
         title: '__SCANNED_ON_BUILD_FIELD__',
         'meta-description': '__SCANNED_ON_BUILD_FIELD__'
       }
+    },
+    testing: {
+      _title: '__SCANNED_ON_BUILD_FIELD__',
+      '_meta-description': '__SCANNED_ON_BUILD_FIELD__',
+      'fake-subcategory': {
+        title: '__SCANNED_ON_BUILD_FIELD__',
+        'meta-description': '__SCANNED_ON_BUILD_FIELD__'
+      }
     }
   }
-} as const satisfies TypedLeafsJSONData<Scanned>;
+} as const satisfies TypedLeafsJSONData<Scanned> satisfies BlogCategoriesArtefact;
 
 const _: NotScanned = '';
 
@@ -124,3 +132,8 @@ export default {
 type NotScanned = '';
 type Scanned = '__SCANNED_ON_BUILD_FIELD__';
 type MaybeScanned = NotScanned | Scanned;
+
+type SubcategoriesMetadatas = Record<'title' | 'meta-description', Scanned>;
+type CategoriesMetadatas = Record<'_title' | '_meta-description', Scanned> | Record<string, SubcategoriesMetadatas>;
+type Categories = Record<string, CategoriesMetadatas>;
+type BlogCategoriesArtefact = { 'blog-categories': Categories };

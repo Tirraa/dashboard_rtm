@@ -4,6 +4,7 @@ import I18nTaxonomy from '##/config/taxonomies/i18n';
 import BlogConfig from '@/config/blog';
 import { getScopedI18n } from '@/i18n/server';
 import blogCategoryPageBuilder from '@/lib/blog/blogCategoryPageBuilder';
+import ComputedBlogCtx from '@/lib/blog/ctx';
 import type { BlogCategory, BlogCategoryPageProps, PostBase } from '@/types/Blog';
 import { notFound } from 'next/navigation';
 import type { FunctionComponent } from 'react';
@@ -17,7 +18,18 @@ const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<CategoryRelate
 
   let gettedOnTheFlyPosts: PostBase[] = [];
   try {
-    gettedOnTheFlyPosts = await BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[category]();
+    const getPostsWithAllowedDraftsCtx: () => PostBase[] = () =>
+      ComputedBlogCtx.TESTING ? postsCollection : postsCollection.filter(({ category: currentPostCategory }) => currentPostCategory !== 'testing');
+
+    const getPostsWithDisallowedDraftsCtx: () => PostBase[] = () =>
+      ComputedBlogCtx.TESTING
+        ? postsCollection.filter(({ draft: currentPostDraft }) => !currentPostDraft)
+        : postsCollection.filter(
+            ({ draft: currentPostDraft, category: currentPostCategory }) => currentPostCategory !== 'testing' && !currentPostDraft
+          );
+
+    const postsCollection = await BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[category]();
+    gettedOnTheFlyPosts = ComputedBlogCtx.ALLOWED_DRAFTS ? getPostsWithAllowedDraftsCtx() : getPostsWithDisallowedDraftsCtx();
   } catch {
     notFound();
   }

@@ -1,5 +1,4 @@
 import { InvalidArgumentsError, PUNCTUATION } from '../InvalidArguments';
-PUNCTUATION; // {ToDo} Remove this line
 
 const FAKE_FUNCTION_NAME = 'FAKE_FUNCTION';
 const FAKE_ARG = 'FAKE';

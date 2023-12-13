@@ -58,6 +58,11 @@ const _ALL_BLOG_FIELDS = {
   language: {
     type: 'string',
     required: true
+  },
+  draft: {
+    type: 'boolean',
+    default: false,
+    required: false
   }
 } as const satisfies FieldDefs;
 
@@ -73,7 +78,8 @@ export const BLOG_DOCUMENTS_FIELDS = {
   title: { type: 'string', required: true },
   metadescription: { type: 'string', required: true },
   description: { type: 'string', required: false },
-  date: { type: 'date', required: true }
+  date: { type: 'date', required: true },
+  draft: { type: 'boolean', required: false, default: false }
 } as const satisfies DocumentsFields;
 
 export const BLOG_POST_SCHEMA_CONFIG: ContentLayerDocumentsConfigType<PostSchemaKey> = {
@@ -87,7 +93,7 @@ type _AllBlogFields = typeof _ALL_BLOG_FIELDS;
 type _BlogComputedFields = typeof BLOG_DOCUMENTS_COMPUTED_FIELDS;
 type _BlogFields = typeof BLOG_DOCUMENTS_FIELDS;
 
-export type BlogDocumentsTypesKeys = MakeDocumentsTypesSumType<'PatchPost' | 'PatchPostBis'>;
+export type BlogDocumentsTypesKeys = MakeDocumentsTypesSumType<'PatchPost' | 'PatchPostBis' | 'TestingPost'>;
 export type AllBlogFields = MakeAllFields<_AllBlogFields>;
 export type BlogFields = MakeFields<_BlogFields>;
 export type BlogComputedFields = MakeComputedFields<_BlogComputedFields>;

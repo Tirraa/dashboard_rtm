@@ -86,6 +86,15 @@ export default {
         title: SHARED['pages-titles']['dashboard-bis'],
         'meta-description': 'Metadescription Patch-notes -> Dashboard (bis)'
       }
+    },
+
+    testing: {
+      _title: 'Testing',
+      '_meta-description': 'Testing',
+      'fake-subcategory': {
+        title: 'Testing',
+        'meta-description': 'Testing'
+      }
     }
   },
 

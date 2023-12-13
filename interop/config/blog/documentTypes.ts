@@ -19,6 +19,10 @@ const documentsTypesMetadatas: BlogDocumentsTypesMetadatas = {
   PatchPostBis: {
     name: 'PatchPostBis',
     categoryFolder: 'patch-notes-bis'
+  },
+  TestingPost: {
+    name: 'TestingPost',
+    categoryFolder: 'testing'
   }
 } as const;
 

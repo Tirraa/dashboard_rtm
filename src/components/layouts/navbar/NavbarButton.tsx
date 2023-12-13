@@ -72,13 +72,13 @@ const ButtonAsLink: FunctionComponent<Pick<AtomicNavDataEntity, 'i18nTitle' | 'p
 };
 
 const NavbarButton: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, onClick, path, icon }) => {
-  const generateNavbarButtonWithoutIcon = (): ReactNode => {
+  const generateNavbarButtonWithoutIcon: () => ReactNode = () => {
     if (onClick) return <ButtonAsIs onClick={onClick} i18nTitle={i18nTitle} />;
     else if (path) return <ButtonAsLink i18nTitle={i18nTitle} path={path} />;
     return null;
   };
 
-  const generateNavbarButtonWithIcon = (): ReactNode => {
+  const generateNavbarButtonWithIcon: () => ReactNode = () => {
     if (onClick) return <ButtonAsIs i18nTitle={i18nTitle} onClick={onClick} icon={icon} />;
     else if (path) return <ButtonAsLink i18nTitle={i18nTitle} icon={icon} path={path} />;
     return null;

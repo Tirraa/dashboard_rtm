@@ -22,14 +22,14 @@ interface SitewideNavbarProps {}
 const { LOGO_SIZE_PX_VALUE } = NAVBAR_STYLE;
 const navbarExtrasForMobileClassNameBase = 'h-[40px]';
 
-const buildNavbarExtrasForDesktop = (): ReactNode[] =>
+const buildNavbarExtrasForDesktop: () => ReactNode[] = () =>
   Object.values(NAVBAR_EXTRAS_COMPONENTS_DESKTOP).map((jsx, index) => (
     <li className="flex h-fit w-fit p-[2px]" key={`${index}-navbar-extra-desktop`}>
       {jsx}
     </li>
   ));
 
-const buildNavbarExtrasForMobile = (): ReactNode[] =>
+const buildNavbarExtrasForMobile: () => ReactNode[] = () =>
   Object.values(NAVBAR_EXTRAS_COMPONENTS_MOBILE).map((jsx, index) => (
     <li className={navbarExtrasForMobileClassNameBase} key={`${index}-navbar-extra-mobile`}>
       {jsx}

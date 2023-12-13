@@ -10,6 +10,7 @@ import type { AppPath } from '@rtm/shared-types/Next';
 import type { IsoDateTimeString } from 'contentlayer/core';
 import { redirect } from 'next/navigation';
 import { getFormattedDate } from '../str';
+import ComputedBlogCtx from './ctx';
 
 /**
  * @throws {TypeError}
@@ -35,10 +36,26 @@ export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnst
   subcategory: BlogSubcategoryFromUnknownCategory,
   language: LanguageFlag
 ): Promise<PostBase[]> {
+  if (!ComputedBlogCtx.TESTING && category === 'testing') return [];
+
   const isValidPair: boolean = await isValidBlogCategoryAndSubcategoryPair(category, subcategory, language);
   if (!isValidPair) return [];
-  const allPosts: PostBase[] = await getAllBlogPostsByCategory(category);
-  return allPosts.filter((post) => post.subcategory === subcategory && post.language === language);
+
+  const getPostsWithAllowedDraftsCtx: () => PostBase[] = () =>
+    postsCollection.filter(
+      ({ subcategory: currentPostSubcategory, language: currentPostLanguage }) =>
+        currentPostSubcategory === subcategory && currentPostLanguage === language
+    );
+
+  const getPostsWithDisallowedDraftsCtx: () => PostBase[] = () =>
+    postsCollection.filter(
+      ({ subcategory: currentPostSubcategory, language: currentPostLanguage, draft: currentPostDraft }) =>
+        !currentPostDraft && currentPostSubcategory === subcategory && currentPostLanguage === language
+    );
+
+  const postsCollection: PostBase[] = await getAllBlogPostsByCategory(category);
+
+  return ComputedBlogCtx.ALLOWED_DRAFTS ? getPostsWithAllowedDraftsCtx() : getPostsWithDisallowedDraftsCtx();
 }
 
 export async function getBlogPostUnstrict(
@@ -47,9 +64,17 @@ export async function getBlogPostUnstrict(
   targettedSlug: UnknownBlogSlug,
   language: LanguageFlag
 ): Promise<MaybeNull<PostBase>> {
+  if (!ComputedBlogCtx.TESTING && category === 'testing') return null;
+
+  const getPostWithAllowedDraftsCtx: () => MaybeNull<PostBase> = () =>
+    postsCollection.find(({ slug: currentPostSlug }) => currentPostSlug === targettedSlug) ?? null;
+
+  const getPostWithDisallowedDraftsCtx: () => MaybeNull<PostBase> = () =>
+    postsCollection.find(({ slug: currentPostSlug, draft: currentPostDraft }) => !currentPostDraft && currentPostSlug === targettedSlug) ?? null;
+
   const postsCollection: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(category, subcategory, language);
 
-  return postsCollection.find(({ slug: currentPostSlug }) => currentPostSlug === targettedSlug) ?? null;
+  return ComputedBlogCtx.ALLOWED_DRAFTS ? getPostWithAllowedDraftsCtx() : getPostWithDisallowedDraftsCtx();
 }
 
 // export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict<C extends BlogCategory>(
@@ -71,7 +96,7 @@ export async function getBlogPostUnstrict(
 //   return post;
 // }
 
-export const getAllBlogCategories = (): BlogCategory[] => Object.keys(BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC) as BlogCategory[];
+export const getAllBlogCategories: () => BlogCategory[] = () => Object.keys(BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC) as BlogCategory[];
 
 export function blogSubcategoryShouldTriggerNotFound(postsCollection: PostBase[]): boolean {
   const isForcedPath = BlogConfig.USE_BLOG_POSTS_NOTFOUND_WHEN_SUBCATEGORY_IS_EMPTY_INSTEAD_OF_NOT_FOUND;
@@ -87,6 +112,8 @@ export function getBlogPostFormattedDate(language: LanguageFlag, { date }: PostB
 }
 
 export function isValidBlogCategory(category: string): boolean {
+  if (!ComputedBlogCtx.TESTING && category === ('testing' satisfies BlogCategory)) return false;
+
   const categories = getAllBlogCategories();
   if (!categories.includes(category as any)) return false;
   return true;
