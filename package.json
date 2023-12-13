@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "prebuild": "cross-env BLOG_POSTS_FOLDER=./posts BLOG_CONFIG_FILE=./src/config/blog.ts I18N_LOCALES_SCHEMA=./src/i18n/locales/schema.ts pnpm --filter @rtm/static-analyzer start",
+    "prebuild": "cross-env BLOG_POSTS_FOLDER=./posts I18N_LOCALES_SCHEMA=./src/i18n/locales/schema.ts pnpm --filter @rtm/prebuilder start",
     "build": "next build",
     "postbuild": "next-sitemap",
     "dev": "next dev",
@@ -24,7 +24,7 @@
     "format": "prettier --log-level warn --write .",
     "ts-prune": "ts-prune --ignore '^.(next|contentlayer|jest)' | .ts-prune/sanitize.py --quiet",
     "ts-prune-verbose": "ts-prune --ignore '^.(next|contentlayer|jest)' | .ts-prune/sanitize.py",
-    "vercel-ci-build-command": "pnpm test-before-build && pnpm build && pnpm test-after-build"
+    "vercel-ci-build-command": "pnpm --filter @rtm/prebuilder typecheck-ugly && pnpm test-before-build && pnpm build && pnpm test-after-build"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
@@ -106,5 +106,6 @@
     "ts-prune": "^0.10.3",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.3.2"
-  }
+  },
+  "packageManager": "^pnpm@8.12.0"
 }

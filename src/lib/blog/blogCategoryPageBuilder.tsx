@@ -48,7 +48,7 @@ async function blogCategoryPageBuilder(posts: PostBase[], category: BlogCategory
       counter += 1;
       isLast = counter >= max;
       if (posts.length === 0) continue;
-      // @ts-ignore - checked via the static analyzer
+      // @ts-expect-error - it will NEVER be typesafe, so protect it by design
       const curSubcategTitle = globalT(`${i18ns.blogCategories}.${category}.${subcategory}.title`);
       const href = buildPathFromParts(category, subcategory);
       const title = (
@@ -100,9 +100,9 @@ async function blogCategoryPageBuilder(posts: PostBase[], category: BlogCategory
 
   const sortedEntries = entries.sort((entry1, entry2) =>
     BlogConfig.DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_SUBCATEGORIES_ON_BLOG_CATEGORY_PAGE(
-      // @ts-ignore - checked via the static analyzer
+      // @ts-expect-error - it will NEVER be typesafe, so protect it by design
       globalT(`${i18ns.pagesTitles}.${entry1[0]}`),
-      // @ts-ignore - checked via the static analyzer
+      // @ts-expect-error - it will NEVER be typesafe, so protect it by design
       globalT(`${i18ns.pagesTitles}.${entry2[0]}`),
       language
     )

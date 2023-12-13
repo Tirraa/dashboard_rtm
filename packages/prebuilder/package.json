@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "name": "@rtm/prebuilder",
+  "author": "gustaveWPM (github.com/gustaveWPM)",
+  "license": "MIT",
+  "version": "1.0.0",
+  "description": "GustaveWPM's NextJS Dashboard codebase internal prebuilder",
+  "module": "src/main.ts",
+  "type": "module",
+  "scripts": {
+    "typecheck-ugly": "tsc --noEmit",
+    "typecheck": "tsc --noEmit --pretty",
+    "start": "cross-env bun run src/main.ts --posts-folder $BLOG_POSTS_FOLDER --i18n-locales-schema $I18N_LOCALES_SCHEMA"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0",
+    "bun-types": "^1.0.16"
+  },
+  "dependencies": {
+    "arg": "^5.0.2",
+    "ts-morph": "^21.0.1"
+  },
+  "packageManager": "^pnpm@8.12.0"
+}

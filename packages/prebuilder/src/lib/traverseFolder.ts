@@ -1,11 +1,11 @@
+import type { File, Filename, Path } from '@/types/metadatas';
 import type { Stats } from 'fs';
 import { readdirSync, statSync } from 'fs';
 import { basename, extname, join } from 'path';
-import type { File, Filename, Path } from '../types/metadatas';
 
 const CURRENT_DIRECTORY_PREFIX = './';
 
-function traverseFolder(rootFolder: Path): File[] {
+export default function traverseFolder(rootFolder: Path): File[] {
   const filesCollection: File[] = [];
 
   function traverse(currentFolder: Path, currentDeepPath: Path = currentFolder): void {
@@ -33,5 +33,3 @@ function traverseFolder(rootFolder: Path): File[] {
   traverse(rootFolder);
   return filesCollection;
 }
-
-export default traverseFolder;

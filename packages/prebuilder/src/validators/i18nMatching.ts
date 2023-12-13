@@ -3,12 +3,12 @@ import {
   I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS,
   I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS,
   LIST_ELEMENT_PREFIX
-} from '../config';
-import { CRITICAL_ERRORS_STR, UPDATE_THE_BLOG_CATEGORIES_OBJECT } from '../config/vocab';
-import checkCategories from '../lib/checkCategories';
-import checkSubcategories from '../lib/checkSubcategories';
-import { foldFeedbacks, prefixFeedback } from '../lib/feedbacksMerge';
-import getErrorLabelForDefects from '../lib/getErrorLabelForDefects';
+} from '@/config';
+import { CRITICAL_ERRORS_STR, UPDATE_THE_BLOG_CATEGORIES_OBJECT } from '@/config/vocab';
+import checkCategories from '@/lib/checkCategories';
+import checkSubcategories from '@/lib/checkSubcategories';
+import { foldFeedbacks, prefixFeedback } from '@/lib/feedbacksMerge';
+import getErrorLabelForDefects from '@/lib/getErrorLabelForDefects';
 import type {
   CategoriesMetadatas,
   Category,
@@ -18,7 +18,7 @@ import type {
   Subcategory,
   UnknownI18nJSONObj,
   i18nField
-} from '../types/metadatas';
+} from '@/types/metadatas';
 
 const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 

@@ -1,11 +1,10 @@
+import { LIST_ELEMENT_PREFIX, LOCALES_INFOS_ROOT_KEY, LOCALES_LNG_INFOS_KEY } from '@/config';
+import { CRITICAL_ERRORS_STR } from '@/config/vocab';
+import { prefixFeedback } from '@/lib/feedbacksMerge';
+import retrieveLocaleFileInfosMetadatas from '@/metadatas-builders/retrieveLocaleFileInfosMetadatas';
+import type { ErrorsDetectionFeedback, MaybeEmptyErrorsDetectionFeedback, Path } from '@/types/metadatas';
 import { readdirSync } from 'fs';
 import path from 'path';
-import { LIST_ELEMENT_PREFIX, LOCALES_INFOS_ROOT_KEY, LOCALES_LNG_INFOS_KEY } from '../config';
-import { CRITICAL_ERRORS_STR } from '../config/vocab';
-import BuilderError from '../errors/exceptions/BuilderError';
-import { prefixFeedback } from '../lib/feedbacksMerge';
-import retrieveLocaleFileInfosMetadatas from '../metadatas-builders/retrieveLocaleFileInfosMetadatas';
-import type { ErrorsDetectionFeedback, MaybeEmptyErrorsDetectionFeedback, Path } from '../types/metadatas';
 
 const localesExtension = '.ts';
 const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;

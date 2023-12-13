@@ -1,10 +1,10 @@
+import { BLOG_CATEGORIES_I18N_ROOT_KEY, I18N_BLOG_CATEGORIES_OBJ_NEEDLE } from '@/config';
+import { CRITICAL_ERRORS_STR } from '@/config/vocab';
+import BuilderError from '@/errors/BuilderError';
+import { objInnerToObj } from '@/lib/etc';
+import getRawDataFromBracesDeclaration from '@/lib/getRawDataFromBracesDeclaration';
+import type { I18nJSONPart } from '@/types/metadatas';
 import { readFileSync } from 'fs';
-import { BLOG_CATEGORIES_I18N_ROOT_KEY, I18N_BLOG_CATEGORIES_OBJ_NEEDLE } from '../config';
-import { CRITICAL_ERRORS_STR } from '../config/vocab';
-import BuilderError from '../errors/exceptions/BuilderError';
-import { objInnerToObj } from '../lib/etc';
-import getRawDataFromBracesDeclaration from '../lib/getRawDataFromBracesDeclaration';
-import type { I18nJSONPart } from '../types/metadatas';
 
 const { INTERRUPTED: ERROR_SUFFIX } = CRITICAL_ERRORS_STR;
 

@@ -74,9 +74,9 @@ export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPag
     if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory, language)) throw new Error('Fallbacking on the catch block...');
 
     const globalT = await getServerSideI18n();
-    // @ts-ignore - checked via the static analyzer (and the guard)
+    // @ts-expect-error - it will NEVER be typesafe, so protect it by design
     const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.blogCategories}.${category}.${subcategory}.title`));
-    // @ts-ignore - checked via the static analyzer (and the guard)
+    // @ts-expect-error - it will NEVER be typesafe, so protect it by design
     const description = globalT(`${i18ns.blogCategories}.${category}.${subcategory}.meta-description`);
     return { title, description };
   } catch {

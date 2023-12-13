@@ -1,5 +1,5 @@
-import { LIST_ELEMENT_PREFIX } from '../config';
-import type { ErrorsDetectionFeedback } from '../types/metadatas';
+import { LIST_ELEMENT_PREFIX } from '@/config';
+import type { ErrorsDetectionFeedback } from '@/types/metadatas';
 
 function getErrorLabelForDefects(
   defectsList: unknown[],

@@ -1,24 +1,25 @@
+import { FLAGS as ARGV, ROOT_FOLDER_RELATIVE_PATH_FROM_STATIC_ANALYZER_CTX } from '@/config';
+import { BUGTRACKER_URL, DOC_URL, PREBUILD_DONE } from '@/config/vocab';
+import ArgumentsValidatorError from '@/errors/ArgumentsValidatorError';
+import BuilderError from '@/errors/BuilderError';
+import FeedbackError from '@/errors/FeedbackError';
+import generateBlogArchitectureMetadatas from '@/generators/blogArchitecture/blogArchitectureMetadatas';
+import generateBlogArchitectureType from '@/generators/blogArchitecture/blogArchitectureType';
+import { foldFeedbacks } from '@/lib/feedbacksMerge';
+import retrieveI18nBlogCategoriesJSONMetadatas from '@/metadatas-builders/retrieveI18nBlogCategoriesJSONMetadatas';
+import type { MaybeEmptyErrorsDetectionFeedback } from '@/types/metadatas';
+import parseArguments from '@/validators/arguments';
+import declaredI18nValidator from '@/validators/i18nMatching';
+import localesInfosValidator from '@/validators/localesInfos';
+import sysBlogSlugsValidator from '@/validators/sysBlogSlugs';
 import { ArgError } from 'arg';
 import path from 'path';
-import { FLAGS as ARGV, ROOT_FOLDER_RELATIVE_PATH_FROM_STATIC_ANALYZER_CTX } from './config';
-import { BUGTRACKER_URL, DOC_URL, STATIC_ANALYSIS_DONE } from './config/vocab';
-import ArgumentsValidatorError from './errors/exceptions/ArgumentsValidatorError';
-import BuilderError from './errors/exceptions/BuilderError';
-import FeedbackError from './errors/exceptions/FeedbackError';
-import { generateBlogArchitectureMetadatas, generateBlogArchitectureType } from './generators/blogArchitecture';
-import { foldFeedbacks } from './lib/feedbacksMerge';
-import retrieveI18nBlogCategoriesJSONMetadatas from './metadatas-builders/retrieveI18nBlogCategoriesJSONMetadatas';
-import type { MaybeEmptyErrorsDetectionFeedback } from './types/metadatas';
-import parseArguments from './validators/arguments';
-import declaredI18nValidator from './validators/i18nMatching';
-import localesInfosValidator from './validators/localesInfos';
-import sysBlogSlugsValidator from './validators/sysBlogSlugs';
 
 const HANDLED_ERRORS_TYPES = [FeedbackError, BuilderError, ArgumentsValidatorError, ArgError];
 
 const moveToRoot = () => process.chdir(path.join(__dirname, ROOT_FOLDER_RELATIVE_PATH_FROM_STATIC_ANALYZER_CTX));
 
-const printStaticAnalysisPassedMsg = () => console.log(STATIC_ANALYSIS_DONE);
+const printStaticAnalysisPassedMsg = () => console.log(PREBUILD_DONE);
 
 /**
  * @throws {FeedbackError}

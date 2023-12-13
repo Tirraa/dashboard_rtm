@@ -32,7 +32,7 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
 
   if (blogSubcategoryShouldTriggerNotFound(postsCollection)) notFound();
   else if (postsCollection.length === 0) return <BlogPostsNotFound />;
-  // @ts-ignore - checked via the static analyzer
+  // @ts-expect-error - it will NEVER be typesafe, so protect it by design
   const [title, curSubcategTitle] = [scopedT(`${category}.${subcategory}.title`), scopedT(`${category}.${subcategory}.title`)];
 
   const paginatedElements = postsCollection

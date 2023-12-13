@@ -1,4 +1,4 @@
-import type { Category, ErrorsDetectionFeedback, MaybeEmptyErrorsDetectionFeedback } from '../types/metadatas';
+import type { Category, ErrorsDetectionFeedback, MaybeEmptyErrorsDetectionFeedback } from '@/types/metadatas';
 import getErrorLabelForDefects from './getErrorLabelForDefects';
 
 function checkCategories(sysCategories: Category[], userDeclaredCategories: Category[]): MaybeEmptyErrorsDetectionFeedback {

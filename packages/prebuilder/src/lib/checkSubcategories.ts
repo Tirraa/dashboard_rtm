@@ -1,11 +1,11 @@
-import { LIST_ELEMENT_PREFIX } from '../config';
+import { LIST_ELEMENT_PREFIX } from '@/config';
 import type {
   CategoriesMetadatas,
   Category,
   DeclaredCategoriesMetadatas,
   ErrorsDetectionFeedback,
   MaybeEmptyErrorsDetectionFeedback
-} from '../types/metadatas';
+} from '@/types/metadatas';
 import getErrorLabelForDefects from './getErrorLabelForDefects';
 
 function checkSubcategories(sysData: CategoriesMetadatas, userDeclaredData: DeclaredCategoriesMetadatas): MaybeEmptyErrorsDetectionFeedback {
