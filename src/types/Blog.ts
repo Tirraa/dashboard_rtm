@@ -1,7 +1,7 @@
 import type BlogTaxonomy from '##/config/taxonomies/blog';
 import type { TBlogTaxonomy } from '##/config/taxonomies/blog';
 import type { LanguageFlag } from '##/types/magic/I18n';
-import type { BlogArchitecture } from '@/config/blog';
+import type BlogArchitecture from '@rtm/generated/BlogArchitecture';
 import type { PostSchema } from 'contentlayer/generated';
 import type { WithClassname } from 'packages/shared-types/src/Next';
 import type { I18nParams } from './Next';

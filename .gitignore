@@ -13,6 +13,7 @@ public/sitemap.xml
 
 # * ... 虹色揺れるたび; 恍惚踊る;;
 .contentlayer
+.rtm-generated
 
 # dependencies
 node_modules

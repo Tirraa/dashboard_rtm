@@ -5,11 +5,10 @@ import { BUGTRACKER_URL, DOC_URL, STATIC_ANALYSIS_DONE } from './config/vocab';
 import ArgumentsValidatorError from './errors/exceptions/ArgumentsValidatorError';
 import BuilderError from './errors/exceptions/BuilderError';
 import FeedbackError from './errors/exceptions/FeedbackError';
+import { generateBlogArchitectureMetadatas, generateBlogArchitectureType } from './generators/blogArchitecture';
 import { foldFeedbacks } from './lib/feedbacksMerge';
 import retrieveI18nBlogCategoriesJSONMetadatas from './metadatas-builders/retrieveI18nBlogCategoriesJSONMetadatas';
-import retrieveMetadatas from './metadatas-builders/retrieveMetadatas';
 import type { MaybeEmptyErrorsDetectionFeedback } from './types/metadatas';
-import declaredBlogArchitectureValidator from './validators/architectureMatching';
 import parseArguments from './validators/arguments';
 import declaredI18nValidator from './validators/i18nMatching';
 import localesInfosValidator from './validators/localesInfos';
@@ -26,12 +25,12 @@ const printStaticAnalysisPassedMsg = () => console.log(STATIC_ANALYSIS_DONE);
  */
 function processStaticAnalysis() {
   moveToRoot();
+
   try {
     const retrievedValuesFromArgs = parseArguments();
     const {
       [ARGV.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
       [ARGV.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
-      [ARGV.BLOG_CONFIG_FILEPATH]: BLOG_CONFIG_FILEPATH,
       [ARGV.SKIP_LOCALES_INFOS]: SKIP_LOCALES_INFOS,
       [ARGV.NO_I18N]: NO_I18N,
       [ARGV.NO_BLOG]: NO_BLOG
@@ -49,21 +48,16 @@ function processStaticAnalysis() {
       return;
     }
 
-    const [metadatasFromSys, declaredMetadatas] = retrieveMetadatas(retrievedValuesFromArgs);
-    const i18nBlogCategoriesJSON = retrieveI18nBlogCategoriesJSONMetadatas(I18N_LOCALES_SCHEMA_FILEPATH);
+    const blogArchitecture = generateBlogArchitectureMetadatas(retrievedValuesFromArgs);
+    generateBlogArchitectureType(blogArchitecture);
 
-    const blogArchitectureValidatorFeedback = declaredBlogArchitectureValidator(metadatasFromSys, declaredMetadatas, BLOG_CONFIG_FILEPATH);
+    const i18nBlogCategoriesJSON = retrieveI18nBlogCategoriesJSONMetadatas(I18N_LOCALES_SCHEMA_FILEPATH);
 
     const sysBlogSlugsValidatorFeedback = sysBlogSlugsValidator(BLOG_POSTS_FOLDER);
 
-    const i18nValidatorFeedback = NO_I18N ? '' : declaredI18nValidator(metadatasFromSys, i18nBlogCategoriesJSON, I18N_LOCALES_SCHEMA_FILEPATH);
+    const i18nValidatorFeedback = NO_I18N ? '' : declaredI18nValidator(blogArchitecture, i18nBlogCategoriesJSON, I18N_LOCALES_SCHEMA_FILEPATH);
 
-    const feedbacks = foldFeedbacks(
-      blogArchitectureValidatorFeedback,
-      sysBlogSlugsValidatorFeedback,
-      localesValidatorFeedback,
-      i18nValidatorFeedback
-    );
+    const feedbacks = foldFeedbacks(sysBlogSlugsValidatorFeedback, localesValidatorFeedback, i18nValidatorFeedback);
     if (feedbacks) throw new FeedbackError(feedbacks);
 
     printStaticAnalysisPassedMsg();

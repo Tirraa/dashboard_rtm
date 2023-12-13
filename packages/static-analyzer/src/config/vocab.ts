@@ -1,5 +1,5 @@
 import { ArgError } from 'arg';
-import { BLOG_ARCHITECTURE_TYPE_STR, BLOG_CATEGORIES_I18N_ROOT_KEY, FLAGS } from '.';
+import { BLOG_CATEGORIES_I18N_ROOT_KEY, FLAGS } from '.';
 
 export const CRITICAL_ERRORS_STR = {
   IMPOSSIBLE_TO_START: 'Impossible to start the static analyzer!',
@@ -13,7 +13,6 @@ export const DOC_URL: string = 'https://github.com/Tirraa/dashboard_rtm/tree/mai
 export const BUGTRACKER_URL: string = 'https://github.com/Tirraa/dashboard_rtm/issues';
 
 export const UPDATE_THE_BLOG_CATEGORIES_OBJECT = `(Update the '${BLOG_CATEGORIES_I18N_ROOT_KEY}' object)`;
-export const UPDATE_THE_BLOG_ARCHITECTURE_TYPE = `(Update the '${BLOG_ARCHITECTURE_TYPE_STR}' type)`;
 
 export const ARG_ERROR_PREFIX = ArgError.name + ': ';
 export const UNKNOWN_OPTIONS_PREFIX = 'unknown or unexpected option(s): ';

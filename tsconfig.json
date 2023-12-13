@@ -23,9 +23,10 @@
       "##/*": ["interop/*"],
       "@/*": ["src/*"],
       "Ț/*": [".jest/*"],
-      "contentlayer/generated": ["./.contentlayer/generated"]
+      "contentlayer/generated": [".contentlayer/generated"],
+      "@rtm/generated/*": [".rtm-generated/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".contentlayer/generated"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".contentlayer/generated", ".rtm-generated"],
   "exclude": ["node_modules", "**/*.test-d.ts"]
 }
