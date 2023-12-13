@@ -1,4 +1,4 @@
-import { getBlogPostFormattedDate } from '@/lib/blog';
+import { getBlogPostFormattedDate } from '@/lib/blog/api';
 import { cn } from '@/lib/tailwind';
 import type { BlogPostProps } from '@/types/Blog';
 import type { WithClassname } from '@rtm/shared-types/Next';

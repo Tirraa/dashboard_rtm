@@ -20,7 +20,7 @@ import {
   getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict,
   getBlogPostUnstrict,
   isValidBlogCategoryAndSubcategoryPair
-} from '.';
+} from './api';
 import blogPostGuard from './guards/blogPostGuard';
 import blogSubcategoryGuard from './guards/blogSubcategoryGuard';
 

@@ -16,7 +16,7 @@ import ComputedBlogCtx from './ctx';
  * @throws {TypeError}
  * May throw a TypeError: "x[y] is not a function" at runtime, in a type unsafe context
  */
-export async function getAllBlogPostsByCategory(categ: BlogCategory): Promise<PostBase[]> {
+async function getAllBlogPostsByCategory(categ: BlogCategory): Promise<PostBase[]> {
   const posts = await BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[categ]();
   return posts;
 }

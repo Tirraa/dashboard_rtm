@@ -129,6 +129,8 @@ export default {
   }
 } as const satisfies TypedLeafsJSONData<MaybeScanned>;
 
+// * ... Internal magic
+
 type NotScanned = '';
 type Scanned = '__SCANNED_ON_BUILD_FIELD__';
 type MaybeScanned = NotScanned | Scanned;

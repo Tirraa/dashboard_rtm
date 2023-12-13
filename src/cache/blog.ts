@@ -1,6 +1,6 @@
 import { LANGUAGES } from '##/config/i18n';
 import type { LanguageFlag } from '##/types/magic/I18n';
-import { getAllBlogPostsByCategoryAndLanguage } from '@/lib/blog';
+import { getAllBlogPostsByCategoryAndLanguage } from '@/lib/blog/api';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
 
 namespace BlogCache {

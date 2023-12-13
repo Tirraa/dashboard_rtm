@@ -10,7 +10,7 @@ import {
   blogSubcategoryShouldTriggerNotFound,
   getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict,
   isValidBlogCategoryAndSubcategoryPairInAnyLanguage
-} from '@/lib/blog';
+} from '@/lib/blog/api';
 import type { BlogSubcategoryPageProps, PostBase } from '@/types/Blog';
 import GithubSlugger from 'github-slugger';
 import { notFound } from 'next/navigation';

@@ -9,7 +9,7 @@ import {
   isValidBlogCategoryAndSubcategoryPairInAnyLanguage,
   redirectToBlogCategoryAndSubcategoryPairPageUnstrict,
   redirectToBlogCategoryPage
-} from '..';
+} from '../api';
 
 async function blogPostGuard({ params }: BlogPostPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];

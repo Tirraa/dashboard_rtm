@@ -4,7 +4,7 @@ import I18nTaxonomy from '##/config/taxonomies/i18n';
 import BlogPost from '@/components/pages/blog/BlogPost';
 import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
 import BlogPostCrumb from '@/components/ui/breadcrumbs/custom/BlogPostCrumb';
-import { getBlogPostUnstrict } from '@/lib/blog';
+import { getBlogPostUnstrict } from '@/lib/blog/api';
 import { blogPostGuard, getBlogPostMetadatas, getBlogStaticParams } from '@/lib/blog/staticGeneration';
 import { countCharacter } from '@/lib/str';
 import type { BlogPostPageProps, PostBase } from '@/types/Blog';

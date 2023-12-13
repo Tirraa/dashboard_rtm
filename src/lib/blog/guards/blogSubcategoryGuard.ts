@@ -2,7 +2,7 @@ import ROUTES_ROOTS from '##/config/routes';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import type { BlogSubcategoryPageProps } from '@/types/Blog';
 import { redirect } from 'next/navigation';
-import { isValidBlogCategory, isValidBlogCategoryAndSubcategoryPairInAnyLanguage, redirectToBlogCategoryPage } from '..';
+import { isValidBlogCategory, isValidBlogCategoryAndSubcategoryPairInAnyLanguage, redirectToBlogCategoryPage } from '../api';
 
 async function blogSubcategoryGuard({ params }: BlogSubcategoryPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];

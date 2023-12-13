@@ -2,7 +2,7 @@ import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import MDX from '@/components/layouts/blog/MdxComponent';
 import BlogPostDate from '@/components/ui/blog/BlogPostDate';
-import { getBlogPostUnstrict, isValidBlogCategoryAndSubcategoryPair } from '@/lib/blog';
+import { getBlogPostUnstrict, isValidBlogCategoryAndSubcategoryPair } from '@/lib/blog/api';
 import { cn } from '@/lib/tailwind';
 import type { BlogPostPageProps, BlogPostProps, PostBase } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';

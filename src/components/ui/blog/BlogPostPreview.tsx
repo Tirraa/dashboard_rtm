@@ -1,4 +1,4 @@
-import { getBlogPostPathWithoutI18nPart, getSlicedBlogPostDescription } from '@/lib/blog';
+import { getBlogPostPathWithoutI18nPart, getSlicedBlogPostDescription } from '@/lib/blog/api';
 import type { BlogPostProps } from '@/types/Blog';
 import Link from 'next/link';
 import type { FunctionComponent } from 'react';
