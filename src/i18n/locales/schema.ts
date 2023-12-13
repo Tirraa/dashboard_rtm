@@ -1,5 +1,6 @@
 import type { TypedLeafsJSONData } from '##/types/JSON';
 
+// {ToDo} Autogenerate this
 const STATICLY_CHECKED_DATA = {
   'blog-categories': {
     'patch-notes': {
