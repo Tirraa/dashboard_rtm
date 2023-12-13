@@ -19,13 +19,16 @@ const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<CategoryRelate
   let gettedOnTheFlyPosts: PostBase[] = [];
   try {
     const getPostsWithAllowedDraftsCtx: () => PostBase[] = () =>
-      ComputedBlogCtx.TESTING ? postsCollection : postsCollection.filter(({ category: currentPostCategory }) => currentPostCategory !== 'testing');
+      ComputedBlogCtx.TESTING
+        ? postsCollection
+        : postsCollection.filter(({ category: currentPostCategory }) => currentPostCategory !== ('testing' satisfies BlogCategory));
 
     const getPostsWithDisallowedDraftsCtx: () => PostBase[] = () =>
       ComputedBlogCtx.TESTING
         ? postsCollection.filter(({ draft: currentPostDraft }) => !currentPostDraft)
         : postsCollection.filter(
-            ({ draft: currentPostDraft, category: currentPostCategory }) => currentPostCategory !== 'testing' && !currentPostDraft
+            ({ draft: currentPostDraft, category: currentPostCategory }) =>
+              currentPostCategory !== ('testing' satisfies BlogCategory) && !currentPostDraft
           );
 
     const postsCollection = await BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[category]();

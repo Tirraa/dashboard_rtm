@@ -36,7 +36,7 @@ export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnst
   subcategory: BlogSubcategoryFromUnknownCategory,
   language: LanguageFlag
 ): Promise<PostBase[]> {
-  if (!ComputedBlogCtx.TESTING && category === 'testing') return [];
+  if (!ComputedBlogCtx.TESTING && category === ('testing' satisfies BlogCategory)) return [];
 
   const isValidPair: boolean = await isValidBlogCategoryAndSubcategoryPair(category, subcategory, language);
   if (!isValidPair) return [];
@@ -64,7 +64,7 @@ export async function getBlogPostUnstrict(
   targettedSlug: UnknownBlogSlug,
   language: LanguageFlag
 ): Promise<MaybeNull<PostBase>> {
-  if (!ComputedBlogCtx.TESTING && category === 'testing') return null;
+  if (!ComputedBlogCtx.TESTING && category === ('testing' satisfies BlogCategory)) return null;
 
   const getPostWithAllowedDraftsCtx: () => MaybeNull<PostBase> = () =>
     postsCollection.find(({ slug: currentPostSlug }) => currentPostSlug === targettedSlug) ?? null;
