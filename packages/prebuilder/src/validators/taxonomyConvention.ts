@@ -1,4 +1,4 @@
-import { MAX_TAXONOMY_LEN } from '@/config';
+import { MAX_TAXONOMY_LEN } from '../config';
 
 function isValidTaxonomy(s: string): boolean {
   if (s.length > MAX_TAXONOMY_LEN) return false;

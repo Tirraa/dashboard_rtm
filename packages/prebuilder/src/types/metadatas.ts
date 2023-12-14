@@ -1,9 +1,8 @@
-export type Subcategory = string;
-export type Category = string;
+type Subcategory = string;
+type Category = string;
 
 type Subcategories = Subcategory[];
 export type CategoriesMetadatas = Record<Category, Subcategories>;
-export type DeclaredCategoriesMetadatas = CategoriesMetadatas;
 
 type JSONKey = string;
 type UnknownI18nJSONProp = string | UnknownI18nJSONObj;
@@ -20,4 +19,3 @@ export type File = {
 
 export type Path = string;
 export type Filename = string;
-export type i18nField = string;

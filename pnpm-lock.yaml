@@ -246,12 +246,9 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2
       ts-morph:
-        specifier: ^21.0.1
+        specifier: 21.0.1
         version: 21.0.1
     devDependencies:
-      bun-types:
-        specifier: ^1.0.16
-        version: 1.0.17
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
@@ -3307,10 +3304,6 @@ packages:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
-    dev: true
-
-  /bun-types@1.0.17:
-    resolution: { integrity: sha512-5dj7Pi0qmZB1gaY2LmtKKrKixgnxi/qDcawsA4ttWQhT0jWyecSEB8la7c6DIgrMkJciixAtyLLe3aj0SJaRAw== }
     dev: true
 
   /busboy@1.6.0:

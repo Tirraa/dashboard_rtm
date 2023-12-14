@@ -1,9 +1,9 @@
-import { LIST_ELEMENT_PREFIX } from '@/config';
-import { CRITICAL_ERRORS_STR } from '@/config/vocab';
-import { prefixFeedback } from '@/lib/feedbacksMerge';
-import getErrorLabelForDefects from '@/lib/getErrorLabelForDefects';
-import traverseFolder from '@/lib/traverseFolder';
-import type { Filename, MaybeEmptyErrorsDetectionFeedback, Path } from '@/types/metadatas';
+import { LIST_ELEMENT_PREFIX } from '../config';
+import { CRITICAL_ERRORS_STR } from '../config/vocab';
+import { prefixFeedback } from '../lib/feedbacksMerge';
+import getErrorLabelForDefects from '../lib/getErrorLabelForDefects';
+import traverseFolder from '../lib/traverseFolder';
+import type { Filename, MaybeEmptyErrorsDetectionFeedback, Path } from '../types/metadatas';
 import isValidTaxonomy, { NAMING_CONSTRAINTS_MSG } from './taxonomyConvention';
 
 const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;

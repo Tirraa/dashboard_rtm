@@ -19,5 +19,5 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".contentlayer/generated", ".rtm-generated"],
-  "exclude": ["node_modules", "**/*.test-d.ts", "packages/prebuilder"]
+  "exclude": ["node_modules", "dist", "**/*.test-d.ts"]
 }

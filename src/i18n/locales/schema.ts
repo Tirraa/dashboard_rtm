@@ -1,44 +1,5 @@
 import type { TypedLeafsJSONData } from '##/types/JSON';
-
-// {ToDo} Autogenerate this
-const STATICLY_CHECKED_DATA = {
-  'blog-categories': {
-    'patch-notes': {
-      _title: '__SCANNED_ON_BUILD_FIELD__',
-      '_meta-description': '__SCANNED_ON_BUILD_FIELD__',
-
-      'discord-bot': {
-        title: '__SCANNED_ON_BUILD_FIELD__',
-        'meta-description': '__SCANNED_ON_BUILD_FIELD__'
-      },
-      dashboard: {
-        title: '__SCANNED_ON_BUILD_FIELD__',
-        'meta-description': '__SCANNED_ON_BUILD_FIELD__'
-      }
-    },
-    'patch-notes-bis': {
-      _title: '__SCANNED_ON_BUILD_FIELD__',
-      '_meta-description': '__SCANNED_ON_BUILD_FIELD__',
-
-      'discord-bot-bis': {
-        title: '__SCANNED_ON_BUILD_FIELD__',
-        'meta-description': '__SCANNED_ON_BUILD_FIELD__'
-      },
-      'dashboard-bis': {
-        title: '__SCANNED_ON_BUILD_FIELD__',
-        'meta-description': '__SCANNED_ON_BUILD_FIELD__'
-      }
-    },
-    testing: {
-      _title: '__SCANNED_ON_BUILD_FIELD__',
-      '_meta-description': '__SCANNED_ON_BUILD_FIELD__',
-      'fake-subcategory': {
-        title: '__SCANNED_ON_BUILD_FIELD__',
-        'meta-description': '__SCANNED_ON_BUILD_FIELD__'
-      }
-    }
-  }
-} as const satisfies TypedLeafsJSONData<Scanned> satisfies BlogCategoriesArtefact;
+import blogCategories from '@rtm/generated/blogCategories';
 
 const _: NotScanned = '';
 
@@ -64,7 +25,7 @@ export const SHARED_VOCAB_SCHEMA = {
 } as const satisfies TypedLeafsJSONData<NotScanned>;
 
 export default {
-  'blog-categories': STATICLY_CHECKED_DATA['blog-categories'],
+  'blog-categories': blogCategories,
   'pages-titles': { ...SHARED_VOCAB_SCHEMA['pages-titles'] },
 
   _infos: {
@@ -130,13 +91,6 @@ export default {
   }
 } as const satisfies TypedLeafsJSONData<MaybeScanned>;
 
-// * ... Internal magic
-
 type NotScanned = '';
 type Scanned = '__SCANNED_ON_BUILD_FIELD__';
 type MaybeScanned = NotScanned | Scanned;
-
-type SubcategoriesMetadatas = Record<'title' | 'meta-description', Scanned>;
-type CategoriesMetadatas = Record<'_title' | '_meta-description', Scanned> | Record<string, SubcategoriesMetadatas>;
-type Categories = Record<string, CategoriesMetadatas>;
-type BlogCategoriesArtefact = { 'blog-categories': Categories };

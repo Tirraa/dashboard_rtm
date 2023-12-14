@@ -1,4 +1,6 @@
-import { FLAGS as OPTIONS } from '@/config';
+import arg from 'arg';
+import { existsSync, statSync } from 'fs';
+import { FLAGS as OPTIONS } from '../config';
 import {
   ARG_ERROR_PREFIX,
   CRITICAL_ERRORS_STR,
@@ -7,11 +9,9 @@ import {
   KNOWN_OPTIONS_PREFIX,
   UNKNOWN_OPTIONS_PREFIX,
   WRONG_OPTIONS_PREFIX
-} from '@/config/vocab';
-import ArgumentsValidatorError from '@/errors/ArgumentsValidatorError';
-import { prefixFeedback } from '@/lib/feedbacksMerge';
-import arg from 'arg';
-import { existsSync, statSync } from 'fs';
+} from '../config/vocab';
+import ArgumentsValidatorError from '../errors/ArgumentsValidatorError';
+import { prefixFeedback } from '../lib/feedbacksMerge';
 
 const { IMPOSSIBLE_TO_START: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 

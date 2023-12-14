@@ -1,10 +1,10 @@
-import { FLAGS } from '@/config';
-import { CRITICAL_ERRORS_STR } from '@/config/vocab';
-import BuilderError from '@/errors/BuilderError';
-import type { CategoriesMetadatas } from '@/types/metadatas';
-import isValidTaxonomy, { NAMING_CONSTRAINTS_MSG } from '@/validators/taxonomyConvention';
 import { readdirSync } from 'fs';
 import { join } from 'path';
+import { FLAGS } from '../config';
+import { CRITICAL_ERRORS_STR } from '../config/vocab';
+import BuilderError from '../errors/BuilderError';
+import type { CategoriesMetadatas } from '../types/metadatas';
+import isValidTaxonomy, { NAMING_CONSTRAINTS_MSG } from '../validators/taxonomyConvention';
 
 const { INTERRUPTED: ERROR_HEAD } = CRITICAL_ERRORS_STR;
 const CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL = '\n' + NAMING_CONSTRAINTS_MSG;
@@ -45,7 +45,7 @@ function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): Categorie
   return metadatas;
 }
 
-export default function generateBlogArchitectureMetadatas({ ...args }): CategoriesMetadatas {
+export default function getBlogArchitectureMetadatas({ ...args }): CategoriesMetadatas {
   const { [FLAGS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER } = args;
   const blogArchitectureSysMetadata = buildCategoriesMetadatasFromPostsFolder(BLOG_POSTS_FOLDER);
 

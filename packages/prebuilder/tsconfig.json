@@ -2,26 +2,14 @@
   "extends": "../../tsconfig.common.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "lib": ["esnext"],
     "incremental": true,
-    "esModuleInterop": true,
-    "strictNullChecks": true,
-    "resolveJsonModule": true,
-    "noEmit": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "isolatedModules": true,
-    "verbatimModuleSyntax": true,
-    "composite": true,
-    "strict": true,
-    "downlevelIteration": true,
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowJs": true,
-    "paths": {
-      "@/*": ["src/*"]
-    },
-    "types": ["bun-types"]
+    "noEmit": false,
+    "outDir": "dist",
+    "rootDir": "src",
+    "moduleResolution": "Node16",
+    "module": "Node16",
+    "skipLibCheck": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]

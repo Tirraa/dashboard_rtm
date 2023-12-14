@@ -14,8 +14,8 @@
     "dev": "next dev",
     "start": "next start",
     "lint": "next lint",
-    "test-before-build": "jest --testPathIgnorePatterns '/node_modules/|/interop/types/magic/ContentlayerConfig*'",
-    "test-after-build": "jest --testPathPattern '/interop/types/magic/ContentlayerConfig*'",
+    "test-before-build": "jest --testPathIgnorePatterns '/node_modules/|/interop/types/magic/*'",
+    "test-after-build": "jest --testPathPattern '/interop/types/magic/*'",
     "pretest": "next build",
     "test": "jest",
     "only-test": "jest",
@@ -24,7 +24,7 @@
     "format": "prettier --log-level warn --write .",
     "ts-prune": "ts-prune --ignore '^.(next|contentlayer|jest)' | .ts-prune/sanitize.py --quiet",
     "ts-prune-verbose": "ts-prune --ignore '^.(next|contentlayer|jest)' | .ts-prune/sanitize.py",
-    "vercel-ci-build-command": "pnpm --filter @rtm/prebuilder typecheck-ugly && pnpm test-before-build && pnpm build && pnpm test-after-build"
+    "vercel-ci-build-command": "pnpm test-before-build && pnpm build && pnpm test-after-build"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",

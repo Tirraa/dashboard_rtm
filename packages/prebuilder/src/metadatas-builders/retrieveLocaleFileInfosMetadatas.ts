@@ -1,10 +1,10 @@
-import { LOCALES_INFOS_OBJ_NEEDLE, LOCALES_INFOS_ROOT_KEY } from '@/config';
-import { CRITICAL_ERRORS_STR } from '@/config/vocab';
-import BuilderError from '@/errors/BuilderError';
-import { objInnerToObj } from '@/lib/etc';
-import getRawDataFromBracesDeclaration from '@/lib/getRawDataFromBracesDeclaration';
-import type { I18nJSONPart } from '@/types/metadatas';
 import { readFileSync } from 'fs';
+import { LOCALES_INFOS_OBJ_NEEDLE, LOCALES_INFOS_ROOT_KEY } from '../config';
+import { CRITICAL_ERRORS_STR } from '../config/vocab';
+import BuilderError from '../errors/BuilderError';
+import { objInnerToObj } from '../lib/etc';
+import getRawDataFromBracesDeclaration from '../lib/getRawDataFromBracesDeclaration';
+import type { I18nJSONPart } from '../types/metadatas';
 
 const { INTERRUPTED: ERROR_SUFFIX } = CRITICAL_ERRORS_STR;
 
