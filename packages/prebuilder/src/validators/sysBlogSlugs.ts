@@ -22,20 +22,18 @@ function sysBlogSlugsValidator(postsFolder: string): MaybeEmptyErrorsDetectionFe
     }
   }
 
-  Object.keys(foldersWithDefects).forEach((folderWithDefect) => {
-    const filenamesWithDefects = foldersWithDefects[folderWithDefect];
+  Object.entries(foldersWithDefects).forEach(([folderWithDefects, defects]) => {
     if (feedback) feedback += '\n';
 
     feedback += getErrorLabelForDefects(
-      filenamesWithDefects,
-      `Incorrect filename in the '${folderWithDefect}' folder: ${filenamesWithDefects}` + '\n' + NAMING_CONSTRAINTS_MSG + '\n',
-      `Incorrect filenames in the '${folderWithDefect}' folder: ${LIST_ELEMENT_PREFIX}${filenamesWithDefects.join(LIST_ELEMENT_PREFIX)}` +
+      defects,
+      `Incorrect filename in the '${folderWithDefects}' folder: ${defects}` + '\n' + NAMING_CONSTRAINTS_MSG + '\n',
+      `Incorrect filenames in the '${folderWithDefects}' folder: ${LIST_ELEMENT_PREFIX}${defects.join(LIST_ELEMENT_PREFIX)}` +
         '\n' +
         NAMING_CONSTRAINTS_MSG +
         '\n'
     );
   });
-
   feedback = prefixFeedback(feedback, ERROR_PREFIX + '\n');
   return feedback;
 }

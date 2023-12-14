@@ -1,5 +1,5 @@
-type BlogSubcategory = string;
-type BlogCategory = string;
+export type BlogSubcategory = string;
+export type BlogCategory = string;
 export type BlogSlug = string;
 type I18nLanguageFlag = string;
 export type CategoriesMetadatasEntity = Record<BlogSubcategory, Record<I18nLanguageFlag, BlogSlug[]>>;

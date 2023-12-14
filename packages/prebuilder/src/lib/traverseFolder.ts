@@ -3,8 +3,6 @@ import { readdirSync, statSync } from 'fs';
 import { basename, extname, join } from 'path';
 import type { File, Filename, Path } from '../types/metadatas';
 
-const CURRENT_DIRECTORY_PREFIX = './';
-
 export default function traverseFolder(rootFolder: Path): File[] {
   const filesCollection: File[] = [];
 
@@ -21,10 +19,7 @@ export default function traverseFolder(rootFolder: Path): File[] {
       }
 
       const filename = basename(currentFilename, extname(currentFilename));
-      const fileDirectory =
-        !currentDeepPath.startsWith(CURRENT_DIRECTORY_PREFIX) && rootFolder.startsWith(CURRENT_DIRECTORY_PREFIX)
-          ? CURRENT_DIRECTORY_PREFIX + currentDeepPath
-          : currentDeepPath;
+      const fileDirectory = currentDeepPath;
 
       filesCollection.push({ fileDirectory, filename });
     }

@@ -1,13 +1,7 @@
 import { readdirSync } from 'fs';
-import { basename, extname, join } from 'path';
-import { BLOG_POST_FILE_EXT, FLAGS } from '../config';
-import { CRITICAL_ERRORS_STR } from '../config/vocab';
-import BuilderError from '../errors/BuilderError';
+import { basename, extname } from 'path';
+import { BLOG_POST_FILE_EXT, DEFAULT_LANGUAGE_KEY, FLAGS } from '../config';
 import type { BlogSlug, CategoriesMetadatas, CategoriesMetadatasEntity } from '../types/metadatas';
-import isValidTaxonomy, { NAMING_CONSTRAINTS_MSG } from '../validators/taxonomyConvention';
-
-const { INTERRUPTED: ERROR_HEAD } = CRITICAL_ERRORS_STR;
-const CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL = '\n' + NAMING_CONSTRAINTS_MSG;
 
 function getSlug(filename: string): BlogSlug | null {
   const ext = extname(filename);
@@ -21,57 +15,41 @@ function getSlug(filename: string): BlogSlug | null {
 function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): CategoriesMetadatas {
   const metadatas: CategoriesMetadatas = {};
 
-  const categories = readdirSync(postsFolder, { withFileTypes: true });
-  for (const categ of categories) {
-    if (categ.isDirectory()) {
-      const category = categ.name;
-      const subcategories = readdirSync(join(postsFolder, category), { withFileTypes: true })
-        .filter((subcategory) => subcategory.isDirectory())
-        .map((subcategory) => subcategory.name);
+  const maybeCategories = readdirSync(postsFolder, { withFileTypes: true });
+  for (const maybeCategory of maybeCategories) {
+    if (!maybeCategory.isDirectory()) continue;
 
-      if (subcategories.length <= 0) continue;
+    const category = maybeCategory.name;
+    const maybeSubcategories = readdirSync([maybeCategory.path, maybeCategory.name].join('/'), { withFileTypes: true });
+    const subcategoriesMetadatas = {} as CategoriesMetadatasEntity;
 
-      const subcategoriesMetadatas = {} as CategoriesMetadatasEntity;
+    for (const maybeSubcategory of maybeSubcategories) {
+      if (!maybeSubcategory.isDirectory()) continue;
+      const subcategory = maybeSubcategory.name;
 
-      // {ToDo} Don't unvalidate here: write a dedicated procedure
-      if (!isValidTaxonomy(category)) {
-        throw new BuilderError(
-          ERROR_HEAD + '\n' + `Unauthorized category folder name ('${category}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL
-        );
-      }
+      const languagesOrPosts = readdirSync([maybeSubcategory.path, maybeSubcategory.name].join('/'), { withFileTypes: true });
 
-      for (const subcategory of subcategories) {
-        // {ToDo} Don't unvalidate here: write a dedicated procedure
-        if (!isValidTaxonomy(subcategory)) {
-          throw new BuilderError(
-            ERROR_HEAD + '\n' + `Unauthorized subcategory folder name ('${subcategory}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL
-          );
-        }
-
-        const languagesOrPosts = readdirSync([postsFolder, category, subcategory].join('/'), { withFileTypes: true });
-
-        for (const maybeLanguage of languagesOrPosts) {
-          if (maybeLanguage.isDirectory()) {
-            const posts = readdirSync(maybeLanguage.path, { withFileTypes: true });
-            for (const post of posts) {
-              const filename = post.name;
-              const slug = getSlug(filename);
-              if (slug === null) continue;
-
-              const language = maybeLanguage.name;
-              if (subcategoriesMetadatas[subcategory] === undefined) subcategoriesMetadatas[subcategory] = {};
-              if (subcategoriesMetadatas[subcategory][language] === undefined) subcategoriesMetadatas[subcategory][language] = [];
-              subcategoriesMetadatas[subcategory][language].push(slug);
-            }
-          } else if (maybeLanguage.isFile()) {
-            const filename = maybeLanguage.name;
+      for (const maybeLanguage of languagesOrPosts) {
+        if (maybeLanguage.isDirectory()) {
+          const posts = readdirSync([maybeLanguage.path, maybeLanguage.name].join('/'), { withFileTypes: true });
+          for (const post of posts) {
+            const filename = post.name;
             const slug = getSlug(filename);
             if (slug === null) continue;
 
+            const language = maybeLanguage.name;
             if (subcategoriesMetadatas[subcategory] === undefined) subcategoriesMetadatas[subcategory] = {};
-            if (subcategoriesMetadatas[subcategory].DEFAULT_LANGUAGE === undefined) subcategoriesMetadatas[subcategory].DEFAULT_LANGUAGE = [];
-            subcategoriesMetadatas[subcategory].DEFAULT_LANGUAGE.push(slug);
+            if (subcategoriesMetadatas[subcategory][language] === undefined) subcategoriesMetadatas[subcategory][language] = [];
+            subcategoriesMetadatas[subcategory][language].push(slug);
           }
+        } else if (maybeLanguage.isFile()) {
+          const postFilename = maybeLanguage.name;
+          const slug = getSlug(postFilename);
+          if (slug === null) continue;
+
+          if (subcategoriesMetadatas[subcategory] === undefined) subcategoriesMetadatas[subcategory] = {};
+          if (subcategoriesMetadatas[subcategory][DEFAULT_LANGUAGE_KEY] === undefined) subcategoriesMetadatas[subcategory][DEFAULT_LANGUAGE_KEY] = [];
+          subcategoriesMetadatas[subcategory][DEFAULT_LANGUAGE_KEY].push(slug);
         }
       }
 

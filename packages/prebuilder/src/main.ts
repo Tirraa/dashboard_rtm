@@ -13,7 +13,9 @@ import getBlogArchitectureMetadatas from './metadatas-builders/blogArchitectureM
 import type { MaybeEmptyErrorsDetectionFeedback } from './types/metadatas';
 import parseArguments from './validators/arguments';
 import localesInfosValidator from './validators/localesInfos';
+import sysBlogCategoriesValidator from './validators/sysBlogCategories';
 import sysBlogSlugsValidator from './validators/sysBlogSlugs';
+import sysBlogSubcategoriesValidator from './validators/sysBlogSubcategories';
 
 const HANDLED_ERRORS_TYPES = [FeedbackError, BuilderError, ArgumentsValidatorError, ArgError];
 
@@ -49,9 +51,16 @@ function processStaticAnalysis() {
       return;
     }
 
+    const sysBlogCategoriesValidatorFeedback = sysBlogCategoriesValidator(BLOG_POSTS_FOLDER);
+    const sysBlogSubcategoriesValidatorFeedback = sysBlogSubcategoriesValidator(BLOG_POSTS_FOLDER);
     const sysBlogSlugsValidatorFeedback = sysBlogSlugsValidator(BLOG_POSTS_FOLDER);
 
-    const feedbacks = foldFeedbacks(sysBlogSlugsValidatorFeedback, localesValidatorFeedback);
+    const feedbacks = foldFeedbacks(
+      sysBlogCategoriesValidatorFeedback,
+      sysBlogSubcategoriesValidatorFeedback,
+      sysBlogSlugsValidatorFeedback,
+      localesValidatorFeedback
+    );
     if (feedbacks) throw new FeedbackError(feedbacks);
 
     const blogArchitecture = getBlogArchitectureMetadatas(retrievedValuesFromArgs);
