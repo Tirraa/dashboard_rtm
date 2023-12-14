@@ -1,6 +1,6 @@
 import { ArgError } from 'arg';
 import path from 'path';
-import { FLAGS as ARGV, ROOT_FOLDER_RELATIVE_PATH_FROM_STATIC_ANALYZER_CTX } from './config';
+import { FLAGS as ARGV, ROOT_FOLDER_RELATIVE_PATH_FROM_PREBUILDER_CTX } from './config';
 import { BUGTRACKER_URL, DOC_URL, PREBUILD_DONE } from './config/vocab';
 import ArgumentsValidatorError from './errors/ArgumentsValidatorError';
 import BuilderError from './errors/BuilderError';
@@ -16,7 +16,7 @@ import sysBlogSlugsValidator from './validators/sysBlogSlugs';
 
 const HANDLED_ERRORS_TYPES = [FeedbackError, BuilderError, ArgumentsValidatorError, ArgError];
 
-const moveToRoot = () => process.chdir(path.join(__dirname, ROOT_FOLDER_RELATIVE_PATH_FROM_STATIC_ANALYZER_CTX));
+const moveToRoot = () => process.chdir(path.join(__dirname, ROOT_FOLDER_RELATIVE_PATH_FROM_PREBUILDER_CTX));
 
 const printPrebuilderDoneMsg = () => console.log(PREBUILD_DONE);
 

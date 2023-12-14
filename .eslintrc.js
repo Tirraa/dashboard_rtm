@@ -20,7 +20,7 @@ module.exports = {
 
   overrides: [
     {
-      files: ['*.test-d.ts', '*.test.ts', 'jest.config.ts', 'webpack.config.cjs'],
+      files: ['*.test-d.ts', '*.test.ts', 'jest.config.ts', '*Adapter.js'],
       rules: {
         'import/no-extraneous-dependencies': [ERROR, { devDependencies: true }]
       }

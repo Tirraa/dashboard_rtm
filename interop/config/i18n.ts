@@ -26,4 +26,4 @@ export const i18ns = {
 } as const satisfies typeof i18nsBase & Record<string, I18nVocabScope>;
 
 export const LANGUAGES: LanguageFlag[] = getEnumKeys(ELanguagesFlag);
-export const DEFAULT_LANGUAGE: LanguageFlag = DEFAULT_LANGUAGE_OBJ._infos.lng;
+export const DEFAULT_LANGUAGE = DEFAULT_LANGUAGE_OBJ._infos.lng satisfies LanguageFlag;
