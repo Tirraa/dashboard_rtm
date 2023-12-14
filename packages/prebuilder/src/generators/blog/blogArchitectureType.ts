@@ -9,7 +9,9 @@ export default function generateBlogArchitectureType(blogArchitecture: Categorie
   const writerFunction: WriterFunction = Writers.objectType({
     properties: Object.entries(blogArchitecture).map(([category, subcategories]) => ({
       name: `'${category}'`,
-      type: subcategories.map((sc) => `'${sc}'`).join(' | ')
+      type: Object.keys(subcategories)
+        .map((subcategory) => `'${subcategory}'`)
+        .join(' | ')
     }))
   });
 

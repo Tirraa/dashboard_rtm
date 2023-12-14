@@ -3,14 +3,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "lib": ["esnext"],
-    "incremental": true,
-    "noEmit": false,
-    "outDir": "dist",
+    "incremental": false,
     "rootDir": "src",
     "moduleResolution": "Node16",
     "module": "Node16",
     "skipLibCheck": true
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules"]
 }

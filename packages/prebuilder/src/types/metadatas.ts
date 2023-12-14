@@ -1,8 +1,9 @@
 type Subcategory = string;
 type Category = string;
-
-type Subcategories = Subcategory[];
-export type CategoriesMetadatas = Record<Category, Subcategories>;
+export type Slug = string;
+type LanguageFlag = string;
+export type CategoriesMetadatasEntity = Record<Subcategory, Record<LanguageFlag, Slug[]>>;
+export type CategoriesMetadatas = Record<Category, CategoriesMetadatasEntity>;
 
 type JSONKey = string;
 type UnknownI18nJSONProp = string | UnknownI18nJSONObj;

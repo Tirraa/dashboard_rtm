@@ -12,6 +12,7 @@ export const MAX_TAXONOMY_LEN: number = 34;
 
 export const LOCALES_INFOS_ROOT_KEY: string = '_infos';
 export const BLOG_CATEGORIES_I18N_ROOT_KEY: string = 'blog-categories';
+export const BLOG_TYPE_STR: string = 'Blog';
 export const BLOG_ARCHITECTURE_TYPE_STR: string = 'BlogArchitecture';
 export const BLOG_CATEGORIES_CONST_STR: string = 'blogCategories';
 

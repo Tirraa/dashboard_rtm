@@ -6,6 +6,7 @@ import ArgumentsValidatorError from './errors/ArgumentsValidatorError';
 import BuilderError from './errors/BuilderError';
 import FeedbackError from './errors/FeedbackError';
 import generateBlogArchitectureType from './generators/blog/blogArchitectureType';
+import generateBlogType from './generators/blog/blogType';
 import generateI18nBlogCategories from './generators/blog/i18nBlogCategories';
 import { foldFeedbacks } from './lib/feedbacksMerge';
 import getBlogArchitectureMetadatas from './metadatas-builders/blogArchitectureMetadatas';
@@ -57,6 +58,7 @@ function processStaticAnalysis() {
 
     generateBlogArchitectureType(blogArchitecture);
     generateI18nBlogCategories(blogArchitecture);
+    generateBlogType(blogArchitecture);
 
     printPrebuilderDoneMsg();
   } catch (error) {

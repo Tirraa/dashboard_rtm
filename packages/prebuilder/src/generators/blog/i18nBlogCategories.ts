@@ -19,7 +19,7 @@ function generateSchema(blogArchitecture: CategoriesMetadatas) {
     schema[category]._title = '';
     schema[category]['_meta-description'] = '';
 
-    subcategories.forEach((subcategory) => {
+    Object.keys(subcategories).forEach((subcategory) => {
       schema[category][subcategory] = {
         title: '',
         'meta-description': ''

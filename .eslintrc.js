@@ -14,6 +14,7 @@ module.exports = {
     'unused-imports/no-unused-imports': ERROR,
 
     'no-unused-vars': [ERROR, { vars: 'all', args: 'after-used', ignoreRestSiblings: false }],
+    'no-unreachable': [ERROR],
     '@typescript-eslint/consistent-type-imports': [ERROR, { fixStyle: 'separate-type-imports' }],
     'import/consistent-type-specifier-style': [ERROR, 'prefer-top-level']
   },
