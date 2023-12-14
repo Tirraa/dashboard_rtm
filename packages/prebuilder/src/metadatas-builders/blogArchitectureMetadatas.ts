@@ -1,17 +1,17 @@
 import { readdirSync } from 'fs';
 import { basename, extname, join } from 'path';
-import { FLAGS } from '../config';
+import { BLOG_POST_FILE_EXT, FLAGS } from '../config';
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
 import BuilderError from '../errors/BuilderError';
-import type { CategoriesMetadatas, CategoriesMetadatasEntity, Slug } from '../types/metadatas';
+import type { BlogSlug, CategoriesMetadatas, CategoriesMetadatasEntity } from '../types/metadatas';
 import isValidTaxonomy, { NAMING_CONSTRAINTS_MSG } from '../validators/taxonomyConvention';
 
 const { INTERRUPTED: ERROR_HEAD } = CRITICAL_ERRORS_STR;
 const CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL = '\n' + NAMING_CONSTRAINTS_MSG;
 
-function getSlug(filename: string): Slug | null {
+function getSlug(filename: string): BlogSlug | null {
   const ext = extname(filename);
-  if (ext === '.mdx') return basename(filename, extname(filename));
+  if (ext === BLOG_POST_FILE_EXT) return basename(filename, extname(filename));
   return null;
 }
 
@@ -33,7 +33,7 @@ function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): Categorie
 
       const subcategoriesMetadatas = {} as CategoriesMetadatasEntity;
 
-      // {ToDo} Don't validate here
+      // {ToDo} Don't unvalidate here: write a dedicated procedure
       if (!isValidTaxonomy(category)) {
         throw new BuilderError(
           ERROR_HEAD + '\n' + `Unauthorized category folder name ('${category}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL
@@ -41,7 +41,7 @@ function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): Categorie
       }
 
       for (const subcategory of subcategories) {
-        // {ToDo} Don't validate here
+        // {ToDo} Don't unvalidate here: write a dedicated procedure
         if (!isValidTaxonomy(subcategory)) {
           throw new BuilderError(
             ERROR_HEAD + '\n' + `Unauthorized subcategory folder name ('${subcategory}').` + CATEG_OR_SUBCATEG_UNAUTHORIZED_TOKEN_ERROR_TAIL

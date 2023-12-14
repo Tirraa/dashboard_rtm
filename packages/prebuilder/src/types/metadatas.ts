@@ -1,9 +1,9 @@
-type Subcategory = string;
-type Category = string;
-export type Slug = string;
-type LanguageFlag = string;
-export type CategoriesMetadatasEntity = Record<Subcategory, Record<LanguageFlag, Slug[]>>;
-export type CategoriesMetadatas = Record<Category, CategoriesMetadatasEntity>;
+type BlogSubcategory = string;
+type BlogCategory = string;
+export type BlogSlug = string;
+type I18nLanguageFlag = string;
+export type CategoriesMetadatasEntity = Record<BlogSubcategory, Record<I18nLanguageFlag, BlogSlug[]>>;
+export type CategoriesMetadatas = Record<BlogCategory, CategoriesMetadatasEntity>;
 
 type JSONKey = string;
 type UnknownI18nJSONProp = string | UnknownI18nJSONObj;

@@ -16,6 +16,7 @@ export const BLOG_TYPE_STR: string = 'Blog';
 export const BLOG_ARCHITECTURE_TYPE_STR: string = 'BlogArchitecture';
 export const BLOG_CATEGORIES_CONST_STR: string = 'blogCategories';
 
+export const BLOG_POST_FILE_EXT: string = '.mdx';
 export const LOCALES_LNG_INFOS_KEY: string = 'lng';
 export const I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = ['_title', '_meta-description'];
 export const I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = ['title', 'meta-description'];

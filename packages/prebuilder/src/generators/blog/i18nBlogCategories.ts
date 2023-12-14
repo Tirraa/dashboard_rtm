@@ -35,7 +35,7 @@ export default function generateI18nBlogCategories(blogArchitecture: CategoriesM
 
   const initializerWriterFunction: WriterFunction = Writers.assertion(
     JSON.stringify(generateSchema(blogArchitecture), null, 2).replace(/""|''|``/g, '_'),
-    'const satisfies BlogCategoriesArtefact;\n'
+    'const satisfies BlogCategoriesArtifact;\n'
   );
 
   const sourceFile = project.createSourceFile(
@@ -68,7 +68,7 @@ export default function generateI18nBlogCategories(blogArchitecture: CategoriesM
                 `type CategoriesMetadatas = Record<${I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS.map((field) => `'${field}'`).join(
                   ' | '
                 )}, EmptyString> | Record<string, SubcategoriesMetadatas>;`,
-                'type BlogCategoriesArtefact = Record<string, CategoriesMetadatas>'
+                'type BlogCategoriesArtifact = Record<string, CategoriesMetadatas>'
               ].join('\n')
             }
           ],
