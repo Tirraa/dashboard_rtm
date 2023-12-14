@@ -1,6 +1,8 @@
+import type { DEFAULT_LANGUAGE } from '##/config/i18n';
 import type BlogTaxonomy from '##/config/taxonomies/blog';
 import type { TBlogTaxonomy } from '##/config/taxonomies/blog';
 import type { LanguageFlag } from '##/types/magic/I18n';
+import type Blog from '@rtm/generated/Blog';
 import type BlogArchitecture from '@rtm/generated/BlogArchitecture';
 import type { PostSchema } from 'contentlayer/generated';
 import type { WithClassname } from 'packages/shared-types/src/Next';
@@ -46,3 +48,13 @@ export type PostsCollectionAssoc = Record<BlogCategory, AllPostsGetter>;
 
 type BlogStaticParamsValue = string;
 export type BlogStaticParams = Record<keyof TBlogTaxonomy, BlogStaticParamsValue>;
+
+export type StrictBlog = {
+  [Category in keyof Blog]: {
+    [Subcategory in keyof Blog[Category]]: {
+      [Language in keyof Blog[Category][Subcategory] as Language extends 'DEFAULT_LANGUAGE'
+        ? typeof DEFAULT_LANGUAGE
+        : Language]: Blog[Category][Subcategory][Language];
+    };
+  };
+};

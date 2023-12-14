@@ -3,7 +3,7 @@ import ROUTES_ROOTS from '##/config/routes';
 import type { LanguageFlag } from '##/types/magic/I18n';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import BlogConfig from '@/config/blog';
-import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase, UnknownBlogSlug } from '@/types/Blog';
+import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase, StrictBlog, UnknownBlogSlug } from '@/types/Blog';
 import { buildAbsolutePathFromParts } from '@rtm/shared-lib/str';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { AppPath } from '@rtm/shared-types/Next';
@@ -77,24 +77,37 @@ export async function getBlogPostUnstrict(
   return ComputedBlogCtx.ALLOWED_DRAFTS ? getPostWithAllowedDraftsCtx() : getPostWithDisallowedDraftsCtx();
 }
 
-// export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict<C extends BlogCategory>(
-//   category: C,
-//   subcategory: BlogArchitecture[C],
-//   language: LanguageFlag
-// ): Promise<PostBase[]> {
-//   const allPosts: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(category, subcategory, language);
-//   return allPosts;
-// }
+export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict<C extends keyof StrictBlog>(
+  category: C,
+  subcategory: keyof StrictBlog[C],
+  language: keyof StrictBlog[C][keyof StrictBlog[C]]
+): Promise<PostBase[]> {
+  const allPosts: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(
+    category,
+    subcategory as BlogSubcategoryFromUnknownCategory,
+    language as LanguageFlag
+  );
+  return allPosts;
+}
 
-// export async function getBlogPostStrict<C extends BlogCategory>(
-//   category: C,
-//   subcategory: BlogArchitecture[C],
-//   targettedSlug: UnknownBlogSlug,
-//   language: LanguageFlag
-// ): Promise<MaybeNull<PostBase>> {
-//   const post: MaybeNull<PostBase> = await getBlogPostUnstrict(category, subcategory, targettedSlug, language);
-//   return post;
-// }
+export async function getBlogPostStrict<
+  Category extends keyof StrictBlog,
+  Subcategory extends keyof StrictBlog[Category],
+  Language extends keyof StrictBlog[Category][keyof StrictBlog[Category]]
+>(
+  category: Category,
+  subcategory: Subcategory,
+  language: Language,
+  targettedSlug: StrictBlog[Category][Subcategory][Language]
+): Promise<MaybeNull<PostBase>> {
+  const post: MaybeNull<PostBase> = await getBlogPostUnstrict(
+    category,
+    subcategory as BlogSubcategoryFromUnknownCategory,
+    targettedSlug as UnknownBlogSlug,
+    language as LanguageFlag
+  );
+  return post;
+}
 
 export const getAllBlogCategories: () => BlogCategory[] = () => Object.keys(BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC) as BlogCategory[];
 
