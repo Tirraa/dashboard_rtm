@@ -6,13 +6,12 @@ import { Project, StructureKind, Writers } from 'ts-morph';
 export default function generateBlogArchitectureType(blogArchitecture: CategoriesMetadatas) {
   const project = new Project();
 
-  const writerFunction = (blogArchitecture: CategoriesMetadatas): WriterFunction =>
-    Writers.objectType({
-      properties: Object.entries(blogArchitecture).map(([category, subcategories]) => ({
-        name: `'${category}'`,
-        type: subcategories.map((sc) => `'${sc}'`).join(' | ')
-      }))
-    });
+  const writerFunction: WriterFunction = Writers.objectType({
+    properties: Object.entries(blogArchitecture).map(([category, subcategories]) => ({
+      name: `'${category}'`,
+      type: subcategories.map((sc) => `'${sc}'`).join(' | ')
+    }))
+  });
 
   const sourceFile = project.createSourceFile(
     `${GENERATIONS_TARGET_FOLDER}/${BLOG_ARCHITECTURE_TYPE_STR}.ts`,
@@ -21,7 +20,7 @@ export default function generateBlogArchitectureType(blogArchitecture: Categorie
         {
           kind: StructureKind.TypeAlias,
           name: BLOG_ARCHITECTURE_TYPE_STR,
-          type: writerFunction(blogArchitecture),
+          type: writerFunction,
           isExported: false
         }
       ]
