@@ -9,6 +9,7 @@ import { fInter } from '@/fonts';
 import { fcn } from '@/lib/next';
 import { cn } from '@/lib/tailwind';
 import type { LayoutBaseProps } from '@/types/Next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import Locale from 'intl-locale-textinfo-polyfill';
 import type { FunctionComponent } from 'react';
 import NextTopLoader from './NextTopLoader';
@@ -32,6 +33,7 @@ const DocumentRoot: FunctionComponent<DocumentRootProps> = ({ children, params, 
             {children}
           </Providers>
         </div>
+        <SpeedInsights />
       </body>
     </html>
   );
