@@ -24,8 +24,8 @@
     "prepare": "husky install",
     "commit": "git-cz",
     "format": "prettier --log-level warn --write .",
-    "ts-prune": "ts-prune --ignore '^.(next|contentlayer)' | .ts-prune/sanitize.py --quiet",
-    "ts-prune-verbose": "ts-prune --ignore '^.(next|contentlayer)' | .ts-prune/sanitize.py",
+    "ts-prune": "ts-prune --ignore '^.(next|contentlayer|vitest)' | .ts-prune/sanitize.py --quiet",
+    "ts-prune-verbose": "ts-prune --ignore '^.(next|contentlayer|vitest)' | .ts-prune/sanitize.py",
     "vercel-ci-build-command": "pnpm test-before-build && pnpm build && pnpm test-after-build"
   },
   "dependencies": {
@@ -108,7 +108,7 @@
     "vitest": "1.0.4"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "18.x"
   },
   "packageManager": "^pnpm@8.12.0"
 }

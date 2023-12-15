@@ -16,6 +16,7 @@
     "paths": {
       "##/*": ["interop/*"],
       "@/*": ["src/*"],
+      "Ț/*": [".vitest/*"],
       "contentlayer/generated": [".contentlayer/generated"],
       "@rtm/generated/*": [".rtm-generated/*"]
     }
