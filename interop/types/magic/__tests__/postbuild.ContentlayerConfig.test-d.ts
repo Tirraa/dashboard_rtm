@@ -1,5 +1,6 @@
 import type { FieldDefs } from 'contentlayer/source-files';
 import { expectAssignable, expectNotAssignable } from 'jest-tsd';
+import { describe, it } from 'vitest';
 import type {
   ContentLayerDocumentsConfigType,
   DocumentsConfigTypeContentLayerMetadatas,
@@ -9,7 +10,7 @@ import type {
   MakeDocumentsAllFieldsSumType,
   MakeDocumentsTypesSumType,
   MakeFields
-} from '../../types/magic/ContentlayerConfig';
+} from '../ContentlayerConfig';
 
 describe('ContentLayerConfig walkthrough', () => {
   const EXT = 'mdx';

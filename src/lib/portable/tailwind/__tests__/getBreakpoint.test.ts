@@ -1,19 +1,30 @@
+import { afterAll, describe, expect, it, vi } from 'vitest';
 import getBreakpoint from '../getBreakpoint';
 
-jest.mock('tailwind.config', () => ({
-  theme: {
-    screens: {
-      sm: '640px',
-      md: '768px'
+vi.mock('tailwind.config', async () => {
+  return {
+    default: {
+      theme: {
+        screens: {
+          sm: '279px',
+          md: '729px'
+        }
+      }
     }
-  }
-}));
-
-it('should return the correct breakpoint value', () => {
-  expect(getBreakpoint('sm')).toBe(640);
-  expect(getBreakpoint('md')).toBe(768);
+  };
 });
 
-it('should return NaN for an invalid breakpoint', () => {
-  expect(getBreakpoint('foo' as any)).toBeNaN();
+describe('getBreakpoint', () => {
+  afterAll(() => {
+    vi.doUnmock('tailwind.config');
+  });
+
+  it('should return the correct breakpoint value', () => {
+    expect(getBreakpoint('sm')).toBe(279);
+    expect(getBreakpoint('md')).toBe(729);
+  });
+
+  it('should return NaN for an invalid breakpoint', () => {
+    expect(getBreakpoint('foo' as any)).toBeNaN();
+  });
 });
