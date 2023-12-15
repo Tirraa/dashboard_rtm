@@ -110,5 +110,10 @@
   "engines": {
     "node": "18.x"
   },
+  "overrides": {
+    "next-contentlayer": {
+      "next": "$next"
+    }
+  },
   "packageManager": "^pnpm@8.12.0"
 }
