@@ -3,6 +3,7 @@ import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import BlogConfig from '@/config/blog';
 import { getScopedI18n } from '@/i18n/server';
+import { getAllBlogPostsByCategory } from '@/lib/blog/api';
 import blogCategoryPageBuilder from '@/lib/blog/blogCategoryPageBuilder';
 import ComputedBlogCtx from '@/lib/blog/ctx';
 import type { BlogCategory, BlogCategoryPageProps, PostBase } from '@/types/Blog';
@@ -17,25 +18,25 @@ const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<CategoryRelate
   const scopedT = await getScopedI18n(i18ns.blogCategories);
 
   let gettedOnTheFlyPosts: PostBase[] = [];
-  try {
-    const getPostsWithAllowedDraftsCtx: () => PostBase[] = () =>
-      ComputedBlogCtx.TESTING
-        ? postsCollection
-        : postsCollection.filter(({ category: currentPostCategory }) => currentPostCategory !== ('testing' satisfies BlogCategory));
+  const getPostsWithAllowedDraftsCtx = (postsCollection: PostBase[]): PostBase[] =>
+    ComputedBlogCtx.TESTING
+      ? postsCollection
+      : postsCollection.filter(({ category: currentPostCategory }) => currentPostCategory !== ('testing' satisfies BlogCategory));
 
-    const getPostsWithDisallowedDraftsCtx: () => PostBase[] = () =>
-      ComputedBlogCtx.TESTING
-        ? postsCollection.filter(({ draft: currentPostDraft }) => !currentPostDraft)
-        : postsCollection.filter(
-            ({ draft: currentPostDraft, category: currentPostCategory }) =>
-              currentPostCategory !== ('testing' satisfies BlogCategory) && !currentPostDraft
-          );
+  const getPostsWithDisallowedDraftsCtx = (postsCollection: PostBase[]): PostBase[] =>
+    ComputedBlogCtx.TESTING
+      ? postsCollection.filter(({ draft: currentPostDraft }) => !currentPostDraft)
+      : postsCollection.filter(
+          ({ draft: currentPostDraft, category: currentPostCategory }) =>
+            currentPostCategory !== ('testing' satisfies BlogCategory) && !currentPostDraft
+        );
 
-    const postsCollection = await BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[category]();
-    gettedOnTheFlyPosts = ComputedBlogCtx.ALLOWED_DRAFTS ? getPostsWithAllowedDraftsCtx() : getPostsWithDisallowedDraftsCtx();
-  } catch {
-    notFound();
-  }
+  const postsCollection = await getAllBlogPostsByCategory(category);
+  if (postsCollection === null) notFound();
+
+  gettedOnTheFlyPosts = ComputedBlogCtx.ALLOWED_DRAFTS
+    ? getPostsWithAllowedDraftsCtx(postsCollection)
+    : getPostsWithDisallowedDraftsCtx(postsCollection);
 
   const posts = gettedOnTheFlyPosts.sort((post1, post2) =>
     BlogConfig.DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_CATEGORY_PAGE(new Date(post1.date), new Date(post2.date))

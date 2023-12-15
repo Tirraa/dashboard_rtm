@@ -66,44 +66,36 @@ export async function getBlogCategoryMetadatas({ params }: BlogCategoryPageProps
 }
 
 export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPageProps) {
-  try {
-    const category = params[BlogTaxonomy.CATEGORY];
-    const subcategory = params[BlogTaxonomy.SUBCATEGORY];
-    const language = params[I18nTaxonomy.LANGUAGE];
+  const category = params[BlogTaxonomy.CATEGORY];
+  const subcategory = params[BlogTaxonomy.SUBCATEGORY];
+  const language = params[I18nTaxonomy.LANGUAGE];
 
-    if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory, language)) throw new Error('Fallbacking on the catch block...');
+  if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory, language)) return {};
 
-    const globalT = await getServerSideI18n();
-    // @ts-expect-error - it will NEVER be typesafe, so protect it by design
-    const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.blogCategories}.${category}.${subcategory}.title`));
-    // @ts-expect-error - it will NEVER be typesafe, so protect it by design
-    const description = globalT(`${i18ns.blogCategories}.${category}.${subcategory}.meta-description`);
-    return { title, description };
-  } catch {
-    return {};
-  }
+  const globalT = await getServerSideI18n();
+  // @ts-expect-error - it will NEVER be typesafe, so protect it by design
+  const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.blogCategories}.${category}.${subcategory}.title`));
+  // @ts-expect-error - it will NEVER be typesafe, so protect it by design
+  const description = globalT(`${i18ns.blogCategories}.${category}.${subcategory}.meta-description`);
+  return { title, description };
 }
 
 export async function getBlogPostMetadatas({ params }: BlogPostPageProps) {
-  try {
-    const category = params[BlogTaxonomy.CATEGORY];
-    const subcategory = params[BlogTaxonomy.SUBCATEGORY];
+  const category = params[BlogTaxonomy.CATEGORY];
+  const subcategory = params[BlogTaxonomy.SUBCATEGORY];
 
-    const slug = params[BlogTaxonomy.SLUG];
-    const language = params[I18nTaxonomy.LANGUAGE];
-    const post: MaybeNull<PostBase> = await getBlogPostUnstrict(category, subcategory, slug, language);
+  const slug = params[BlogTaxonomy.SLUG];
+  const language = params[I18nTaxonomy.LANGUAGE];
+  const post: MaybeNull<PostBase> = await getBlogPostUnstrict(category, subcategory, slug, language);
 
-    const globalT = await getServerSideI18n();
-    const currentPost = post as PostBase;
+  const globalT = await getServerSideI18n();
+  const currentPost = post as PostBase;
 
-    if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory, language)) throw new Error('Fallbacking on the catch block...');
+  if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory, language)) return {};
 
-    const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), currentPost.title);
-    const { metadescription: description } = post as PostBase;
-    return { title, description };
-  } catch {
-    return {};
-  }
+  const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), currentPost.title);
+  const { metadescription: description } = post as PostBase;
+  return { title, description };
 }
 
 export { blogPostGuard, blogSubcategoryGuard };

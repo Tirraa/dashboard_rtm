@@ -2,6 +2,7 @@ import { LANGUAGES } from '##/config/i18n';
 import type { LanguageFlag } from '##/types/magic/I18n';
 import { getAllBlogPostsByCategoryAndLanguage } from '@/lib/blog/api';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
+import type { MaybeNull } from 'packages/shared-types/src/CustomUtilityTypes';
 
 namespace BlogCache {
   export const subcategoriesCollection = Object.fromEntries(LANGUAGES.map((language) => [language, {}])) as Record<
@@ -11,16 +12,15 @@ namespace BlogCache {
 }
 
 async function buildSubcategoriesSet(category: BlogCategory, language: LanguageFlag): Promise<Set<BlogSubcategoryFromUnknownCategory>> {
-  try {
-    const relatedPosts: PostBase[] = await getAllBlogPostsByCategoryAndLanguage(category, language);
-    const subcategoriesSet = new Set<BlogSubcategoryFromUnknownCategory>();
+  const relatedPosts: MaybeNull<PostBase[]> = await getAllBlogPostsByCategoryAndLanguage(category, language);
+  const subcategoriesSet = new Set<BlogSubcategoryFromUnknownCategory>();
 
-    relatedPosts.forEach(({ subcategory }) => subcategoriesSet.add(subcategory as BlogSubcategoryFromUnknownCategory));
-    return subcategoriesSet;
-  } catch {
+  if (relatedPosts === null) {
     const emptySet = new Set<BlogSubcategoryFromUnknownCategory>();
     return emptySet;
   }
+  relatedPosts.forEach(({ subcategory }) => subcategoriesSet.add(subcategory as BlogSubcategoryFromUnknownCategory));
+  return subcategoriesSet;
 }
 
 async function populateSubcategoriesCollectionCache(category: BlogCategory, language: LanguageFlag) {

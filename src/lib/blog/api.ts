@@ -12,22 +12,20 @@ import { redirect } from 'next/navigation';
 import { getFormattedDate } from '../str';
 import ComputedBlogCtx from './ctx';
 
-/**
- * @throws {TypeError}
- * May throw a TypeError: "x[y] is not a function" at runtime, in a type unsafe context
- */
-async function getAllBlogPostsByCategory(categ: BlogCategory): Promise<PostBase[]> {
-  const posts = await BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[categ]();
-  return posts;
+export async function getAllBlogPostsByCategory(categ: BlogCategory): Promise<MaybeNull<PostBase[]>> {
+  try {
+    const posts = await BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[categ]();
+    return posts;
+  } catch {
+    return null;
+  }
 }
 
-/**
- * @throws {TypeError}
- * May throw a TypeError: "x[y] is not a function" at runtime, in a type unsafe context
- */
-export async function getAllBlogPostsByCategoryAndLanguage(categ: BlogCategory, language: LanguageFlag): Promise<PostBase[]> {
+export async function getAllBlogPostsByCategoryAndLanguage(categ: BlogCategory, language: LanguageFlag): Promise<MaybeNull<PostBase[]>> {
   const allPosts = await getAllBlogPostsByCategory(categ);
-  const posts = allPosts.filter((post) => post.language === language);
+  if (allPosts === null) return null;
+
+  const posts = allPosts.filter(({ language: currentPostLanguage }) => currentPostLanguage === language);
   return posts;
 }
 
@@ -41,21 +39,22 @@ export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnst
   const isValidPair: boolean = await isValidBlogCategoryAndSubcategoryPair(category, subcategory, language);
   if (!isValidPair) return [];
 
-  const getPostsWithAllowedDraftsCtx: () => PostBase[] = () =>
+  const getPostsWithAllowedDraftsCtx = (postsCollection: PostBase[]): PostBase[] =>
     postsCollection.filter(
       ({ subcategory: currentPostSubcategory, language: currentPostLanguage }) =>
         currentPostSubcategory === subcategory && currentPostLanguage === language
     );
 
-  const getPostsWithDisallowedDraftsCtx: () => PostBase[] = () =>
+  const getPostsWithDisallowedDraftsCtx = (postsCollection: PostBase[]): PostBase[] =>
     postsCollection.filter(
       ({ subcategory: currentPostSubcategory, language: currentPostLanguage, draft: currentPostDraft }) =>
         !currentPostDraft && currentPostSubcategory === subcategory && currentPostLanguage === language
     );
 
-  const postsCollection: PostBase[] = await getAllBlogPostsByCategory(category);
+  const postsCollection: MaybeNull<PostBase[]> = await getAllBlogPostsByCategory(category);
+  if (postsCollection === null) return [];
 
-  return ComputedBlogCtx.ALLOWED_DRAFTS ? getPostsWithAllowedDraftsCtx() : getPostsWithDisallowedDraftsCtx();
+  return ComputedBlogCtx.ALLOWED_DRAFTS ? getPostsWithAllowedDraftsCtx(postsCollection) : getPostsWithDisallowedDraftsCtx(postsCollection);
 }
 
 export async function getBlogPostUnstrict(
