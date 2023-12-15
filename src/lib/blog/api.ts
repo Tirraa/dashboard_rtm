@@ -1,11 +1,11 @@
 import { DEFAULT_LANGUAGE, LANGUAGES } from '##/config/i18n';
 import ROUTES_ROOTS from '##/config/routes';
-import type { LanguageFlag } from '##/types/magic/I18n';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import BlogConfig from '@/config/blog';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase, StrictBlog, UnknownBlogSlug } from '@/types/Blog';
 import { buildAbsolutePathFromParts } from '@rtm/shared-lib/str';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { AppPath } from '@rtm/shared-types/Next';
 import type { IsoDateTimeString } from 'contentlayer/core';
 import { redirect } from 'next/navigation';
@@ -34,7 +34,7 @@ export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnst
   subcategory: BlogSubcategoryFromUnknownCategory,
   language: LanguageFlag
 ): Promise<PostBase[]> {
-  if (!ComputedBlogCtx.TESTING && category === ('testing' satisfies BlogCategory)) return [];
+  if (!ComputedBlogCtx.TESTING && category === BlogConfig.TESTING_CATEGORY) return [];
 
   const isValidPair: boolean = await isValidBlogCategoryAndSubcategoryPair(category, subcategory, language);
   if (!isValidPair) return [];
@@ -63,7 +63,7 @@ export async function getBlogPostUnstrict(
   targettedSlug: UnknownBlogSlug,
   language: LanguageFlag
 ): Promise<MaybeNull<PostBase>> {
-  if (!ComputedBlogCtx.TESTING && category === ('testing' satisfies BlogCategory)) return null;
+  if (!ComputedBlogCtx.TESTING && category === BlogConfig.TESTING_CATEGORY) return null;
 
   const getPostWithAllowedDraftsCtx: () => MaybeNull<PostBase> = () =>
     postsCollection.find(({ slug: currentPostSlug }) => currentPostSlug === targettedSlug) ?? null;
@@ -124,7 +124,7 @@ export function getBlogPostFormattedDate(language: LanguageFlag, { date }: PostB
 }
 
 export function isValidBlogCategory(category: string): boolean {
-  if (!ComputedBlogCtx.TESTING && category === ('testing' satisfies BlogCategory)) return false;
+  if (!ComputedBlogCtx.TESTING && category === BlogConfig.TESTING_CATEGORY) return false;
 
   const categories = getAllBlogCategories();
   if (!categories.includes(category as any)) return false;

@@ -2,15 +2,15 @@ import type VOCAB_SCHEMA from '@/i18n/locales/schema';
 import type { SHARED_VOCAB_SCHEMA } from '@/i18n/locales/schema';
 import type { getScopedI18n } from '@/i18n/server';
 import type { DeepPathToLiteralKeys, KeySeparator, MakeHomogeneousValuesObjType } from '@rtm/shared-types/CustomUtilityTypes';
+import type { JSONKey, TypedLeafsJSONData } from '@rtm/shared-types/JSON';
+import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
 import type { RemovePlural } from '@rtm/shared-types/international-types';
-import type { JSONKey, TypedLeafsJSONData } from '../JSON';
-import type LanguageFlag from '../LanguageFlag';
 
 type AllowedVocabObjValuesTypes = string;
 
 type VocabObjKey = JSONKey;
 type VocabObjKeyDeepPath = string;
-type VocabObjValue = AllowedVocabObjValuesTypes;
+export type VocabObjValue = AllowedVocabObjValuesTypes;
 
 type UnknownVocabObj = { [_: VocabObjKey]: UnknownVocabObj | VocabObjValue };
 type VocabOrVocabLeaf = UnknownVocabObj | VocabObjValue;

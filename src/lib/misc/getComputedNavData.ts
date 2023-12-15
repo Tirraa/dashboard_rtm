@@ -1,6 +1,6 @@
-import type { I18nVocabTarget } from '##/types/magic/I18n';
 import type { DropdownsConfig, NavDataEntities, NavDataEntity } from '@/types/NavData';
 import type RoutesKeysUnion from '@/types/RoutesKeysUnion';
+import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
 import type { AppPath } from '@rtm/shared-types/Next';
 
 // {ToDo} Recursive embeddedEntities?

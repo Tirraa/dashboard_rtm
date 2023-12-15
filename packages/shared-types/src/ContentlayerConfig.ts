@@ -1,12 +1,12 @@
-import type { Document, FieldDefType } from 'contentlayer/core';
-import type { ComputedFields, DocumentContentType, FieldDefs } from 'contentlayer/source-files';
 import type {
   AllBlogFields,
   BlogComputedFields,
   BlogDocumentsComputedFieldsKeys,
   BlogDocumentsTypesKeys,
   BlogFields
-} from '../../config/blog/contentlayerConfigTweakers';
+} from '##/config/blog/contentlayerConfigTweakers';
+import type { Document, FieldDefType } from 'contentlayer/core';
+import type { ComputedFields, DocumentContentType, FieldDefs } from 'contentlayer/source-files';
 
 type ContentLayerContentType = { contentType: DocumentContentType };
 

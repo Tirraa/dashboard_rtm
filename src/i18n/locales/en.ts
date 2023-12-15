@@ -1,5 +1,6 @@
-import type { SharedVocabType, VocabType } from '##/types/magic/I18n';
+import type { SharedVocabType, VocabType } from '@rtm/shared-types/I18n';
 import capitalize from '../../lib/portable/str/capitalize';
+import { SHARED_TESTING_BLOG_CATEGORY_METADATAS } from '../lazybones';
 
 const SHARED: SharedVocabType = {
   'pages-titles': {
@@ -88,14 +89,7 @@ export default {
       }
     },
 
-    testing: {
-      _title: 'Testing',
-      '_meta-description': 'Testing',
-      'fake-subcategory': {
-        title: 'Testing',
-        'meta-description': 'Testing'
-      }
-    }
+    testing: SHARED_TESTING_BLOG_CATEGORY_METADATAS
   },
 
   vocab: {

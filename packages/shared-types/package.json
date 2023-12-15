@@ -11,10 +11,14 @@
   "exports": {
     "./Auth": "./src/Auth.ts",
     "./Breadcrumbs": "./src/Breadcrumbs.ts",
+    "./ContentlayerConfig": "./src/ContentlayerConfig.ts",
     "./CustomUtilityTypes": "./src/CustomUtilityTypes.ts",
     "./DateManipulations": "./src/DateManipulations.ts",
+    "./I18n": "./src/I18n.ts",
     "./HTML": "./src/HTML.ts",
     "./international-types": "./src/international-types.ts",
+    "./JSON": "./src/JSON.ts",
+    "./LanguageFlag": "./src/LanguageFlag.ts",
     "./Next": "./src/Next.ts",
     "./React": "./src/React.ts",
     "./StringManipulations": "./src/StringManipulations.ts"
@@ -27,17 +31,29 @@
       "Breadcrumbs": [
         "./src/Breadcrumbs.ts"
       ],
+      "ContentlayerConfig": [
+        "./src/ContentlayerConfig.ts"
+      ],
       "CustomUtilityTypes": [
         "./src/CustomUtilityTypes.ts"
       ],
       "DateManipulations": [
         "./src/DateManipulations.ts"
       ],
+      "I18n": [
+        "./src/I18n.ts"
+      ],
       "HTML": [
         "./src/HTML.ts"
       ],
       "international-types": [
         "./src/international-types.ts"
+      ],
+      "JSON": [
+        "./src/JSON.ts"
+      ],
+      "LanguageFlag": [
+        "./src/LanguageFlag.ts"
       ],
       "Next": [
         "./src/Next.ts"
@@ -49,5 +65,9 @@
         "./src/StringManipulations.ts"
       ]
     }
+  },
+  "devDependencies": {
+    "vitest": "1.0.4",
+    "jest-tsd": "0.2.2"
   }
 }

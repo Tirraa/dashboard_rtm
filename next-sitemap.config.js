@@ -5,7 +5,7 @@ const APP_PROTECTED_PATHS_AS_EXCLUDED_ROUTES_PREFIXES = APP_PROTECTED_PATHS.map(
 
 const EXCLUDED_ROUTES_PREFIXES = ['/favicon.ico', '/icon.svg', '/apple-icon.png', ...APP_PROTECTED_PATHS_AS_EXCLUDED_ROUTES_PREFIXES];
 
-const siteUrl = process.env.NEXTAUTH_URL;
+const siteUrl = process.env.NEXT_SITEMAP_SITE_URL;
 
 const getPathWithoutI18nPart = (path) => path.substring(path.indexOf('/', path.indexOf('/') + 1));
 

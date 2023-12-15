@@ -1,4 +1,4 @@
-import type { PostToBuild } from '##/types/magic/ContentlayerConfig';
+import type { PostToBuild } from '@rtm/shared-types/ContentlayerConfig';
 import type { AppPath } from '@rtm/shared-types/Next';
 import { BLOG_POSTS_FOLDER, DEFAULT_LANGUAGE, ROUTES_ROOTS, getFlattenedPathWithoutRootFolder } from '../../../unifiedImport';
 

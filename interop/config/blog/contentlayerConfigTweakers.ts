@@ -1,11 +1,3 @@
-import type { ComputedFields, DocumentContentType, FieldDefs } from 'contentlayer/source-files';
-import {
-  buildBlogPostCategory,
-  buildBlogPostLanguageFlag,
-  buildBlogPostSlug,
-  buildBlogPostSubcategory,
-  buildBlogPostUrl
-} from '../../lib/blog/builders/computedFields';
 import type {
   ComputedField,
   ContentLayerDocumentsConfigType,
@@ -16,7 +8,15 @@ import type {
   MakeDocumentsTypesSumType,
   MakeFields,
   TypeName
-} from '../../types/magic/ContentlayerConfig';
+} from '@rtm/shared-types/ContentlayerConfig';
+import type { ComputedFields, DocumentContentType, FieldDefs } from 'contentlayer/source-files';
+import {
+  buildBlogPostCategory,
+  buildBlogPostLanguageFlag,
+  buildBlogPostSlug,
+  buildBlogPostSubcategory,
+  buildBlogPostUrl
+} from '../../lib/blog/builders/computedFields';
 
 export const BLOG_POSTS_FOLDER = 'posts';
 export const BLOG_DOCUMENTS_CONTENT_TYPE: DocumentContentType = 'mdx';

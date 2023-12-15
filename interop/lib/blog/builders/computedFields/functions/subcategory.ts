@@ -1,5 +1,5 @@
-import type { PostToBuild } from '##/types/magic/ContentlayerConfig';
 import type { BlogSubcategoryFromUnknownCategory } from '@/types/Blog';
+import type { PostToBuild } from '@rtm/shared-types/ContentlayerConfig';
 import { BLOG_POSTS_FOLDER, InvalidArgumentsError, getFlattenedPathWithoutRootFolder, indexOfNthOccurrence } from '../../../unifiedImport';
 
 /**

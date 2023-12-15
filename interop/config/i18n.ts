@@ -1,4 +1,4 @@
-import type { I18nVocabScope, I18nsBase, LanguageFlag, MakeI18nsBase } from '##/types/magic/I18n';
+import type { I18nVocabScope, I18nsBase, LanguageFlag, MakeI18nsBase } from '@rtm/shared-types/I18n';
 import DEFAULT_LANGUAGE_OBJ from '../../src/i18n/locales/fr';
 import getEnumKeys from '../../src/lib/portable/typescript/getEnumKeys';
 

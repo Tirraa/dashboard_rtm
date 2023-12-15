@@ -1,4 +1,4 @@
-import type { I18nVocabTarget } from '##/types/magic/I18n';
+import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
 import type { AppPath } from '@rtm/shared-types/Next';
 import type RoutesKeysUnion from './RoutesKeysUnion';
 

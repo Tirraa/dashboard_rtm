@@ -2,12 +2,12 @@
 
 import { i18ns } from '##/config/i18n';
 import ROUTES_ROOTS from '##/config/routes';
-import type { PagesTitlesKey, UnstrictScopedT } from '##/types/magic/I18n';
 import { useScopedI18n } from '@/i18n/client';
 import { getPathParts } from '@/lib/next';
 import { fromKebabCaseToSentenceCase } from '@/lib/str';
 import { buildAbsolutePathFromParts } from '@rtm/shared-lib/str';
 import type { CustomCrumbs } from '@rtm/shared-types/Breadcrumbs';
+import type { PagesTitlesKey, UnstrictScopedT } from '@rtm/shared-types/I18n';
 import { usePathname } from 'next/navigation';
 import type { FunctionComponent, ReactNode } from 'react';
 import Crumb from './Crumb';

@@ -1,5 +1,5 @@
-import type { TypedLeafsJSONData } from '##/types/JSON';
 import blogCategories from '@rtm/generated/blogCategories';
+import type { TypedLeafsJSONData } from '@rtm/shared-types/JSON';
 
 const _: NotScanned = '';
 

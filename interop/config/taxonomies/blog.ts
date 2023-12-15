@@ -1,5 +1,5 @@
-import type { LanguageFlag } from '##/types/magic/I18n';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, UnknownBlogSlug } from '@/types/Blog';
+import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type I18nTaxonomy from './i18n';
 
 namespace BlogTaxonomy {

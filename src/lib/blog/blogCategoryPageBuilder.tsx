@@ -1,5 +1,4 @@
 import { i18ns } from '##/config/i18n';
-import type { LanguageFlag } from '##/types/magic/I18n';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
 import { Button } from '@/components/ui/Button';
@@ -10,6 +9,7 @@ import { getServerSideI18n } from '@/i18n/server';
 import { cn } from '@/lib/tailwind';
 import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
 import { buildPathFromParts } from '@rtm/shared-lib/str';
+import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import GithubSlugger from 'github-slugger';
 import Link from 'next/link';
 import type { ReactElement, ReactNode } from 'react';

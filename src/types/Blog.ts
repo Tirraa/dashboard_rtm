@@ -1,9 +1,9 @@
 import type { DEFAULT_LANGUAGE } from '##/config/i18n';
 import type BlogTaxonomy from '##/config/taxonomies/blog';
 import type { TBlogTaxonomy } from '##/config/taxonomies/blog';
-import type { LanguageFlag } from '##/types/magic/I18n';
 import type Blog from '@rtm/generated/Blog';
 import type BlogArchitecture from '@rtm/generated/BlogArchitecture';
+import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { PostSchema } from 'contentlayer/generated';
 import type { WithClassname } from 'packages/shared-types/src/Next';
 import type { I18nParams } from './Next';

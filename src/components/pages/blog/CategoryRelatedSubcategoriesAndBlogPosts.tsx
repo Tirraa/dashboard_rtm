@@ -21,14 +21,13 @@ const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<CategoryRelate
   const getPostsWithAllowedDraftsCtx = (postsCollection: PostBase[]): PostBase[] =>
     ComputedBlogCtx.TESTING
       ? postsCollection
-      : postsCollection.filter(({ category: currentPostCategory }) => currentPostCategory !== ('testing' satisfies BlogCategory));
+      : postsCollection.filter(({ category: currentPostCategory }) => currentPostCategory !== BlogConfig.TESTING_CATEGORY);
 
   const getPostsWithDisallowedDraftsCtx = (postsCollection: PostBase[]): PostBase[] =>
     ComputedBlogCtx.TESTING
       ? postsCollection.filter(({ draft: currentPostDraft }) => !currentPostDraft)
       : postsCollection.filter(
-          ({ draft: currentPostDraft, category: currentPostCategory }) =>
-            currentPostCategory !== ('testing' satisfies BlogCategory) && !currentPostDraft
+          ({ draft: currentPostDraft, category: currentPostCategory }) => currentPostCategory !== BlogConfig.TESTING_CATEGORY && !currentPostDraft
         );
 
   const postsCollection = await getAllBlogPostsByCategory(category);

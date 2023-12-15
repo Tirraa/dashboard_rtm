@@ -1,5 +1,5 @@
-import type { PostToBuild } from '##/types/magic/ContentlayerConfig';
 import type { UnknownBlogSlug } from '@/types/Blog';
+import type { PostToBuild } from '@rtm/shared-types/ContentlayerConfig';
 import { InvalidArgumentsError } from '../../../unifiedImport';
 
 /**

@@ -1,6 +1,6 @@
 import type I18nTaxonomy from '##/config/taxonomies/i18n';
 import type NotFoundTaxonomy from '##/config/taxonomies/notfound';
-import type { LanguageFlag } from '##/types/magic/I18n';
+import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { ReactNode } from 'react';
 
 export interface I18nParams {

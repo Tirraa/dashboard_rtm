@@ -94,7 +94,6 @@
     "eslint-plugin-only-error": "^1.0.2",
     "eslint-plugin-unused-imports": "^3.0.0",
     "husky": "^8.0.3",
-    "jest-tsd": "^0.2.2",
     "lint-staged": "^15.0.2",
     "madge": "^6.1.0",
     "next-sitemap": "^4.2.3",
@@ -110,11 +109,6 @@
   },
   "engines": {
     "node": "18.x"
-  },
-  "overrides": {
-    "next-contentlayer": {
-      "next": "$next"
-    }
   },
   "packageManager": "^pnpm@8.12.0"
 }

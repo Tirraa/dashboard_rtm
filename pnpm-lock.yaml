@@ -197,9 +197,6 @@ importers:
       husky:
         specifier: ^8.0.3
         version: 8.0.3
-      jest-tsd:
-        specifier: ^0.2.2
-        version: 0.2.2(@tsd/typescript@5.3.2)
       lint-staged:
         specifier: ^15.0.2
         version: 15.1.0
@@ -266,7 +263,14 @@ importers:
         specifier: 1.0.4
         version: 1.0.4(@types/node@20.5.0)
 
-  packages/shared-types: {}
+  packages/shared-types:
+    devDependencies:
+      jest-tsd:
+        specifier: 0.2.2
+        version: 0.2.2(@tsd/typescript@5.3.2)
+      vitest:
+        specifier: 1.0.4
+        version: 1.0.4(@types/node@20.5.0)
 
 packages:
   /@aashutoshrathi/word-wrap@1.2.6:

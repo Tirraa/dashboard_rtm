@@ -1,4 +1,4 @@
-import type { AtomicContentLayerDocumentConfig } from '##/types/magic/ContentlayerConfig';
+import type { AtomicContentLayerDocumentConfig } from '@rtm/shared-types/ContentlayerConfig';
 import type { DocumentType, DocumentTypeDef } from 'contentlayer/source-files';
 import blogDataAssocBuilder from '../../lib/blog/builders/blogDataAssoc';
 import type { BlogDocumentsTypesMetadatas } from './contentlayerConfigTweakers';
