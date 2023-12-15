@@ -4,6 +4,9 @@
     "baseUrl": ".",
     "lib": ["dom", "dom.iterable", "esnext"],
     "noEmit": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "incremental": true,
     "jsx": "preserve",
     "plugins": [
       {
@@ -13,11 +16,10 @@
     "paths": {
       "##/*": ["interop/*"],
       "@/*": ["src/*"],
-      "Ț/*": [".jest/*"],
       "contentlayer/generated": [".contentlayer/generated"],
       "@rtm/generated/*": [".rtm-generated/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".contentlayer/generated", ".rtm-generated"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".contentlayer/generated", ".rtm-generated", "vitest.config.js"],
   "exclude": ["node_modules", "dist", "**/*.test-d.ts"]
 }

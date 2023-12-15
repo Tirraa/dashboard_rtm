@@ -1,13 +1,16 @@
 import InvalidArgumentsError from '##/errors/InvalidArguments';
+import { describe, expect, it } from 'vitest';
 import countCharacter from '../countCharacter';
 
-it('should return a positive value', () => {
-  expect(countCharacter('aa    bbqsklqjdkqjdkqjd   aa   qlj,dqkdjqkdjkbb', 'a')).toBe(4);
-  expect(countCharacter('aa    bbqsklqjdkqjdkqjd   aa   qlj,dqkdjqkdjkbb', '$')).toBe(0);
-});
+describe('countCharacter', () => {
+  it('should return a positive value, given strings containing the searched char', () => {
+    expect(countCharacter('aa    bbqsklqjdkqjdkqjd   aa   qlj,dqkdjqkdjkbb', 'a')).toBe(4);
+    expect(countCharacter('aa    bbqsklqjdkqjdkqjd   aa   qlj,dqkdjqkdjkbb', '$')).toBe(0);
+  });
 
-it('should throw when char argument is not a char', () => {
-  expect(() => {
-    countCharacter('aa    bbqsklqjdkqjdkqjd   aa   qlj,dqkdjqkdjkbb', 'asqdqd');
-  }).toThrow(InvalidArgumentsError);
+  it('should throw, given char is not a char but a string', () => {
+    expect(() => {
+      countCharacter('aa    bbqsklqjdkqjdkqjd   aa   qlj,dqkdjqkdjkbb', 'asqdqd');
+    }).toThrow(InvalidArgumentsError);
+  });
 });

@@ -1,23 +1,26 @@
-import NODE_ENV from 'Ț/setEnv';
+import { afterAll, beforeEach, describe, expect, it, test, vi } from 'vitest';
 import type ComputedNodeCtx from '../env';
 
-const getCtx = () => require('../env').default as typeof ComputedNodeCtx;
+const NODE_ENV = 'test';
+const getCtx = async () => (await import('../env')).default as typeof ComputedNodeCtx;
 
 describe('ComputedNodeCtx', () => {
   const OLD_ENV = process.env;
 
   beforeEach(() => {
-    jest.resetModules();
-    jest.spyOn(console, 'warn').mockImplementation(jest.fn());
+    vi.resetModules();
+    vi.spyOn(console, 'warn').mockImplementationOnce(vi.fn(() => {}));
 
     // * ... Workaround: if we only reassign process.env.NODE_ENV, the coverage decreases
     process.env = { ...OLD_ENV };
   });
 
-  afterAll(() => (process.env = OLD_ENV));
+  afterAll(() => {
+    process.env = OLD_ENV;
+  });
 
-  it('should have all values to false, except TEST', () => {
-    const ctx = getCtx();
+  it('should have all values to false, except TEST', async () => {
+    const ctx = await getCtx();
 
     Object.keys(ctx).forEach((k) => {
       const k2 = k as keyof typeof ctx;
@@ -26,10 +29,10 @@ describe('ComputedNodeCtx', () => {
     });
   });
 
-  it('should have all values to false, except DEV', () => {
+  it('should have all values to false, except DEV', async () => {
     // @ts-expect-error
     process.env.NODE_ENV = 'dev';
-    const ctx = getCtx();
+    const ctx = await getCtx();
 
     Object.keys(ctx).forEach((k) => {
       const k2 = k as keyof typeof ctx;
@@ -38,10 +41,10 @@ describe('ComputedNodeCtx', () => {
     });
   });
 
-  it('should have all values to false, except PROD', () => {
+  it('should have all values to false, except PROD', async () => {
     // @ts-expect-error
     process.env.NODE_ENV = 'prod';
-    const ctx = getCtx();
+    const ctx = await getCtx();
 
     Object.keys(ctx).forEach((k) => {
       const k2 = k as keyof typeof ctx;
@@ -50,10 +53,10 @@ describe('ComputedNodeCtx', () => {
     });
   });
 
-  it('should fallback on PROD, given an unknown NODE_ENV value', () => {
+  it('should fallback on PROD, given an unknown NODE_ENV value', async () => {
     // @ts-expect-error
     process.env.NODE_ENV = '$';
-    const ctx = getCtx();
+    const ctx = await getCtx();
 
     Object.keys(ctx).forEach((k) => {
       const k2 = k as keyof typeof ctx;
@@ -62,10 +65,10 @@ describe('ComputedNodeCtx', () => {
     });
   });
 
-  it('should fallback on PROD, given an undefined NODE_ENV value', () => {
+  it('should fallback on PROD, given an undefined NODE_ENV value', async () => {
     // @ts-expect-error
     process.env.NODE_ENV = undefined;
-    const ctx = getCtx();
+    const ctx = await getCtx();
 
     Object.keys(ctx).forEach((k) => {
       const k2 = k as keyof typeof ctx;

@@ -4,7 +4,7 @@
   "author": "gustaveWPM (github.com/gustaveWPM)",
   "license": "MIT",
   "version": "1.0.0",
-  "description": "lol",
+  "description": "",
   "files": [
     "src"
   ],
@@ -98,7 +98,8 @@
     "tailwind-merge": "^1.14.0"
   },
   "devDependencies": {
-    "@types/hast": "^3.0.2"
+    "@types/hast": "^3.0.2",
+    "vitest": "1.0.4"
   },
   "packageManager": "^pnpm@8.12.0"
 }
