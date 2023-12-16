@@ -10,8 +10,9 @@ import { setStaticParamsLocale } from 'next-international/server';
 
 export async function generateMetadata() {
   const globalT = await getServerSideI18n();
-  const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.pagesTitles}.homepage`), true);
-  const description = globalT(`${i18ns.manualSEO}.homepage.meta-description`);
+  const { vocab, pagesTitles, manualSEO } = i18ns;
+  const title = buildPageTitle(globalT(`${vocab}.brand-short`), globalT(`${pagesTitles}.homepage`), true);
+  const description = globalT(`${manualSEO}.homepage.meta-description`);
   return { title, description };
 }
 

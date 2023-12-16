@@ -97,13 +97,14 @@ async function blogCategoryPageBuilder(posts: PostBase[], category: BlogCategory
   const globalT = await getServerSideI18n();
   const subcategs: BlogSubcategoryFromUnknownCategory[] = await getBlogSubcategoriesByCategory(category, language);
   const entries = subcategs.map((subcateg) => [subcateg, []]);
+  const { pagesTitles } = i18ns;
 
   const sortedEntries = entries.sort((entry1, entry2) =>
     BlogConfig.DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_SUBCATEGORIES_ON_BLOG_CATEGORY_PAGE(
       // @ts-expect-error - [i18n] this will NEVER be typesafe, so protect it by design
-      globalT(`${i18ns.pagesTitles}.${entry1[0]}`),
+      globalT(`${pagesTitles}.${entry1[0]}`),
       // @ts-expect-error - [i18n] this will NEVER be typesafe, so protect it by design
-      globalT(`${i18ns.pagesTitles}.${entry2[0]}`),
+      globalT(`${pagesTitles}.${entry2[0]}`),
       language
     )
   );

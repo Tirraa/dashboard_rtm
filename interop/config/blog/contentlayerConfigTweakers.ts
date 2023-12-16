@@ -66,6 +66,7 @@ const _ALL_BLOG_FIELDS = {
   }
 } as const satisfies FieldDefs;
 
+/* v8 ignore start */
 export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
   url: { type: 'string', resolve: (post) => buildBlogPostUrl(post) },
   language: { type: 'string', resolve: (post) => buildBlogPostLanguageFlag(post) },
@@ -73,6 +74,7 @@ export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
   subcategory: { type: 'string', resolve: (post) => buildBlogPostSubcategory(post) },
   slug: { type: 'string', resolve: (post) => buildBlogPostSlug(post) }
 } as const satisfies Partial<Record<keyof _AllBlogFields, ComputedField>> satisfies ComputedFields;
+/* v8 ignore stop */
 
 export const BLOG_DOCUMENTS_FIELDS = {
   title: { type: 'string', required: true },

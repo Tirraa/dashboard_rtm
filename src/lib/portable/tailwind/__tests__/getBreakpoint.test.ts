@@ -1,4 +1,4 @@
-import { afterAll, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import getBreakpoint from '../getBreakpoint';
 
 vi.mock('tailwind.config', async () => {
@@ -15,10 +15,6 @@ vi.mock('tailwind.config', async () => {
 });
 
 describe('getBreakpoint', () => {
-  afterAll(() => {
-    vi.doUnmock('tailwind.config');
-  });
-
   it('should return the correct breakpoint value', () => {
     expect(getBreakpoint('sm')).toBe(279);
     expect(getBreakpoint('md')).toBe(729);
@@ -28,3 +24,5 @@ describe('getBreakpoint', () => {
     expect(getBreakpoint('foo' as any)).toBeNaN();
   });
 });
+
+vi.doUnmock('tailwind.config');

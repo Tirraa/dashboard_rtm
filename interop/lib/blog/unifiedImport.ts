@@ -1,4 +1,3 @@
-import isValidLanguageFlag from '../../../src/lib/portable/i18n/isValidLanguageFlag';
 import capitalize from '../../../src/lib/portable/str/capitalize';
 import indexOfNthOccurrence from '../../../src/lib/portable/str/indexOfNthOccurrence';
 import { BLOG_POSTS_FOLDER } from '../../config/blog/contentlayerConfigTweakers';
@@ -14,6 +13,5 @@ export {
   ROUTES_ROOTS,
   capitalize,
   getFlattenedPathWithoutRootFolder,
-  indexOfNthOccurrence,
-  isValidLanguageFlag
+  indexOfNthOccurrence
 };

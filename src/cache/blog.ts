@@ -29,6 +29,9 @@ async function populateSubcategoriesCollectionCache(category: BlogCategory, lang
 }
 
 async function subcategoriesByCategoryGetter(category: BlogCategory, language: LanguageFlag) {
+  if (BlogCache.subcategoriesCollection[language] === undefined) {
+    BlogCache.subcategoriesCollection[language] = {} as Record<BlogCategory, BlogSubcategoryFromUnknownCategory[]>;
+  }
   if (BlogCache.subcategoriesCollection[language][category] === undefined) await populateSubcategoriesCollectionCache(category, language);
   return BlogCache.subcategoriesCollection[language][category];
 }

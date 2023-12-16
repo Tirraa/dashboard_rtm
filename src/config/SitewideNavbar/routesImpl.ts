@@ -13,8 +13,7 @@ const SITEWIDE_NAVBAR_ROUTES: SitewideNavbarRoutes = {
   SUPPORT_PAGE: DISCORD_CONFIG.SUPPORT_SERVER_INVITE_LINK
 } as const;
 
-const navbar = i18ns.navbar;
-const pagesTitles = i18ns.pagesTitles;
+const { navbar, pagesTitles } = i18ns;
 export const SITEWIDE_NAVBAR_ROUTES_TITLES: SitewideNavbarRoutesTitles = {
   HOME_PAGE: `${pagesTitles}.homepage`,
   DASHBOARD_PAGE: `${pagesTitles}.dashboard`,

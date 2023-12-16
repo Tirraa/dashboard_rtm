@@ -59,8 +59,9 @@ export async function getBlogStaticParams(): Promise<BlogStaticParams[]> {
 export async function getBlogCategoryMetadatas({ params }: BlogCategoryPageProps) {
   const globalT = await getServerSideI18n();
   const category = params[BlogTaxonomy.CATEGORY];
-  const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.blogCategories}.${category}._title`));
-  const description = globalT(`${i18ns.blogCategories}.${category}._meta-description`);
+  const { vocab, blogCategories } = i18ns;
+  const title = buildPageTitle(globalT(`${vocab}.brand-short`), globalT(`${blogCategories}.${category}._title`));
+  const description = globalT(`${blogCategories}.${category}._meta-description`);
 
   return { title, description };
 }
@@ -73,10 +74,11 @@ export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPag
   if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory, language)) return {};
 
   const globalT = await getServerSideI18n();
+  const { vocab, blogCategories } = i18ns;
   // @ts-expect-error - [i18n] this will NEVER be typesafe, so protect it by design
-  const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.blogCategories}.${category}.${subcategory}.title`));
+  const title = buildPageTitle(globalT(`${vocab}.brand-short`), globalT(`${blogCategories}.${category}.${subcategory}.title`));
   // @ts-expect-error - [i18n] this will NEVER be typesafe, so protect it by design
-  const description = globalT(`${i18ns.blogCategories}.${category}.${subcategory}.meta-description`);
+  const description = globalT(`${blogCategories}.${category}.${subcategory}.meta-description`);
   return { title, description };
 }
 

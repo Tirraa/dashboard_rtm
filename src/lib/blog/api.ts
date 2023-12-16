@@ -1,4 +1,4 @@
-import { DEFAULT_LANGUAGE, LANGUAGES } from '##/config/i18n';
+import { LANGUAGES } from '##/config/i18n';
 import ROUTES_ROOTS from '##/config/routes';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import BlogConfig from '@/config/blog';
@@ -112,10 +112,10 @@ export const getAllBlogCategories: () => BlogCategory[] = () => Object.keys(Blog
 
 export function blogSubcategoryShouldTriggerNotFound(postsCollection: PostBase[]): boolean {
   const isForcedPath = BlogConfig.USE_BLOG_POSTS_NOTFOUND_WHEN_SUBCATEGORY_IS_EMPTY_INSTEAD_OF_NOT_FOUND;
-  return postsCollection.length === 0 && !isForcedPath;
+  return !isForcedPath && postsCollection.length === 0;
 }
 
-export function getBlogPostFormattedDate(language: LanguageFlag, { date }: PostBase): string {
+export function getBlogPostFormattedDate(language: LanguageFlag, date: IsoDateTimeString): string {
   const postDateHasTime = (date: IsoDateTimeString) => date.substring(date.indexOf('T') + 1) !== '00:00:00.000Z';
 
   const giveTime = postDateHasTime(date);
@@ -162,7 +162,6 @@ export const redirectToBlogCategoryAndSubcategoryPairPageUnstrict = (category: B
   redirect(buildAbsolutePathFromParts(ROUTES_ROOTS.BLOG, category, subcategory));
 
 export function getBlogPostPathWithoutI18nPart({ language, url }: PostBase): AppPath {
-  if (language === DEFAULT_LANGUAGE) return url;
   const blogPostPathWithoutI18nPart = url.replace(`/${language}/`, '/');
   return blogPostPathWithoutI18nPart;
 }

@@ -5,8 +5,8 @@ import { buildPageTitle } from '@rtm/shared-lib/str';
 
 export async function generateMetadata() {
   const globalT = await getServerSideI18n();
-
-  const title = buildPageTitle(globalT(`${i18ns.pagesTitles}.dashboard`), globalT(`${i18ns.dashboardPagesTitles}.foo`));
+  const { pagesTitles, dashboardPagesTitles } = i18ns;
+  const title = buildPageTitle(globalT(`${pagesTitles}.dashboard`), globalT(`${dashboardPagesTitles}.foo`));
   return { title, description: '' };
 }
 

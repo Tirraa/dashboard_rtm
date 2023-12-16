@@ -14,6 +14,7 @@ export const FLAGS = {
   NO_I18N: '--no-i18n'
 } as const;
 export const LIST_ELEMENT_PREFIX: string = '\n - ';
+export const TS_MORPH_FORMATTER_SETTINGS = { indentSize: 2, ensureNewLineAtEndOfFile: true };
 
 export const BLOG_POST_FILE_EXT: string = '.mdx';
 export const I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_PREFIX: string = '_';

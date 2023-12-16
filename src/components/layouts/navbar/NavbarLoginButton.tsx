@@ -57,19 +57,20 @@ const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> =
 const NavbarLoginButton: FunctionComponent<NavbarLoginButtonProps> = ({ isMobile }) => {
   const { data: session } = useSession();
   const currentPathname = usePathname();
+  const { auth } = i18ns;
 
   if (isMobile) return <NavbarLoginButtonMobile session={session} currentPathname={currentPathname} />;
 
   if (session)
     return (
       <NavbarButton
-        i18nTitle={`${i18ns.auth}.logout`}
+        i18nTitle={`${auth}.logout`}
         onClick={() => handleSignOut(currentPathname)}
         icon={<UserImage user={session?.user} width={SIZE} height={SIZE} className="rounded-full" />}
       />
     );
 
-  return <NavbarButton i18nTitle={`${i18ns.auth}.login`} onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} />;
+  return <NavbarButton i18nTitle={`${auth}.login`} onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} />;
 };
 
 export default NavbarLoginButton;

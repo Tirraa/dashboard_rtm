@@ -12,7 +12,7 @@ const NODE_ENV = process.env.NODE_ENV;
 const prodCtx: boolean = NODE_ENV ? NODE_ENV.startsWith(NODE_PROD_ENV_NEEDLE) : false;
 let devCtx: boolean = NODE_ENV ? NODE_ENV.startsWith(NODE_DEV_ENV_NEEDLE) : false;
 let testCtx: boolean = NODE_ENV ? NODE_ENV.startsWith(NODE_TEST_ENV_NEEDLE) : false;
-let forcedToProd: boolean = Boolean(prodCtx);
+let forcedToProd: boolean = prodCtx;
 
 if (NODE_ENV === undefined) {
   console.warn(executionContextWarningsVocabGetter('UNABLE_TO_GET_NODE_ENV'));

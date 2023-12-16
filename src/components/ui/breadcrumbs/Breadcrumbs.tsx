@@ -65,8 +65,9 @@ const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = ({ withHomepageElement:
   const pathname = usePathname();
   const pathParts = getPathParts(pathname);
   const withHomepageElement = Boolean(maybeWithHomepageElement);
-  const scopedT = useScopedI18n(i18ns.pagesTitles);
-  const scopedT2 = useScopedI18n(i18ns.vocab);
+  const { pagesTitles, vocab } = i18ns;
+  const scopedT = useScopedI18n(pagesTitles);
+  const scopedT2 = useScopedI18n(vocab);
 
   if (pathname === ROUTES_ROOTS.WEBSITE) return withHomepageElement ? <HomepageCrumb scopedT={scopedT} isLeaf /> : null;
   return (

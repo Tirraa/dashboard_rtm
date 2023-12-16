@@ -1,4 +1,4 @@
-.PHONY: all initialize install prebuild build vercel-ci-build-command build-contentlayer clean fclean re re-cache simulate-deploy simulate-deploy-discarding-build-cache
+.PHONY: all initialize install prebuild build vercel-ci-build-command build-contentlayer clean fclean re re-using-pnpm-cache re-using-next-cache simulate-deploy simulate-deploy-discarding-build-cache
 
 MAKEFLAGS += --silent
 PM = pnpm
@@ -35,7 +35,9 @@ fclean: clean
 
 re: fclean install build
 
-re-cache: clean build
+re-using-pnpm-cache: clean build
+
+re-using-next-cache: build
 
 simulate-deploy: clean vercel-ci-build-command
 

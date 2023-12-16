@@ -5,7 +5,7 @@ import { InvalidArgumentsError } from '../../unifiedImport';
  */
 function getFlattenedPathWithoutUnkownRootFolder(flattenedPath: string) {
   const firstSlashIndex = flattenedPath.indexOf('/');
-  if (firstSlashIndex === -1 || flattenedPath.length <= firstSlashIndex) {
+  if (firstSlashIndex === -1 || flattenedPath.length - 1 <= firstSlashIndex) {
     throw new InvalidArgumentsError(
       getFlattenedPathWithoutUnkownRootFolder.name,
       { flattenedPath },

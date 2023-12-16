@@ -11,8 +11,17 @@ function buildBlogPostSlugFromStr(flattenedPath: string): UnknownBlogSlug {
 
   const lastSlashIndex = flattenedPath.lastIndexOf('/');
 
-  if (lastSlashIndex === -1)
+  if (lastSlashIndex === -1) {
     throw new InvalidArgumentsError(buildBlogPostSlugFromStr.name, { flattenedPath }, "Can't find any '/' character in flattenedPath");
+  }
+
+  if (lastSlashIndex === flattenedPath.length - 1) {
+    throw new InvalidArgumentsError(
+      buildBlogPostSlugFromStr.name,
+      { flattenedPath },
+      "Can't find anything after the last '/' character in flattenedPath"
+    );
+  }
 
   const slug = slugBuilder(flattenedPath, lastSlashIndex);
   return slug;

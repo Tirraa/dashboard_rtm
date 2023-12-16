@@ -11,7 +11,7 @@ const DASHBOARD_ROUTES: DashboardRoutes = {
   BAR_PAGE: BASE + 'bar'
 } as const;
 
-const dashboardPagesTitles = i18ns.dashboardPagesTitles;
+const { dashboardPagesTitles } = i18ns;
 export const DASHBOARD_ROUTES_TITLES: DashboardRoutesTitles = {
   MAIN_PAGE: `${dashboardPagesTitles}.main`,
   FOO_PAGE: `${dashboardPagesTitles}.foo`,

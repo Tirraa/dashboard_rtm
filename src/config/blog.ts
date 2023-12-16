@@ -5,7 +5,7 @@ import type { DatesCompareFun } from '@rtm/shared-types/DateManipulations';
 import type { StringsCompareFun } from '@rtm/shared-types/StringManipulations';
 import compareDesc from 'date-fns/compareDesc';
 
-type TBlogConfig = {
+export type TBlogConfig = {
   DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT: number;
   DISPLAYED_BLOG_POSTS_PER_SUBCATEGORY_ON_BLOG_CATEGORY_PAGE_LIMIT: number;
   BLOG_POST_PREVIEW_DESCRIPTION_CHARACTERS_LIMIT: number;

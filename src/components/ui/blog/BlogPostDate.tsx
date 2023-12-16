@@ -8,7 +8,7 @@ interface BlogPostDateProps extends BlogPostProps, Partial<WithClassname> {}
 
 const BlogPostDate: FunctionComponent<BlogPostDateProps> = ({ post, language, className: classNameValue }) => (
   <time dateTime={post.date} className={cn('text-xs', classNameValue)}>
-    {getBlogPostFormattedDate(language, post)}
+    {getBlogPostFormattedDate(language, post.date)}
   </time>
 );
 

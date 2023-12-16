@@ -10,7 +10,7 @@ const PATCH_NOTES_ROUTES: PatchNotesRoutes = {
   DISCORD_BOT_PATCH_NOTES_PAGE: BASE + 'discord-bot'
 } as const;
 
-const pagesTitles = i18ns.pagesTitles;
+const { pagesTitles } = i18ns;
 export const PATCH_NOTES_ROUTES_TITLES: PatchNotesRoutesTitles = {
   DASHBOARD_PATCH_NOTES_PAGE: `${pagesTitles}.dashboard`,
   DISCORD_BOT_PATCH_NOTES_PAGE: `${pagesTitles}.discord-bot`
