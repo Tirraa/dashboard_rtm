@@ -73,9 +73,9 @@ export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPag
   if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory, language)) return {};
 
   const globalT = await getServerSideI18n();
-  // @ts-expect-error - it will NEVER be typesafe, so protect it by design
+  // @ts-expect-error - [i18n] this will NEVER be typesafe, so protect it by design
   const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), globalT(`${i18ns.blogCategories}.${category}.${subcategory}.title`));
-  // @ts-expect-error - it will NEVER be typesafe, so protect it by design
+  // @ts-expect-error - [i18n] this will NEVER be typesafe, so protect it by design
   const description = globalT(`${i18ns.blogCategories}.${category}.${subcategory}.meta-description`);
   return { title, description };
 }

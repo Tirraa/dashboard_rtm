@@ -26,7 +26,7 @@ export const SHARED_VOCAB_SCHEMA = {
 
 export default {
   'blog-categories': blogCategories,
-  'pages-titles': { ...SHARED_VOCAB_SCHEMA['pages-titles'] },
+  'pages-titles': SHARED_VOCAB_SCHEMA['pages-titles'],
 
   _infos: {
     lng: '__SCANNED_ON_BUILD_FIELD__'

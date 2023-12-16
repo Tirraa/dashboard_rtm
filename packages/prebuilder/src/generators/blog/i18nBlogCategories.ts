@@ -5,29 +5,72 @@ import {
   BLOG_CATEGORIES_CONST_STR,
   GENERATIONS_TARGET_FOLDER,
   I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS,
+  I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_PREFIX,
   I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS
 } from '../../config';
 import type { CategoriesMetadatas } from '../../types/metadatas';
 
+const emptyString = '';
+const PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS = I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS.map(
+  (field) => I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_PREFIX + field
+);
+
+type BlogCategoriesSchemaSubcategoryEntity = Record<string, unknown>;
+type BlogCategoriesSchema = Record<string, BlogCategoriesSchemaSubcategoryEntity>;
+
 function generateSchema(blogArchitecture: CategoriesMetadatas) {
-  const schema = {} as Record<string, Record<string, unknown>>;
+  const schema = {} as BlogCategoriesSchema;
 
   for (const category in blogArchitecture) {
     const subcategories = blogArchitecture[category];
 
     schema[category] = {};
-    schema[category]._title = '';
-    schema[category]['_meta-description'] = '';
+    for (const extraField of PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS) {
+      schema[category][extraField] = emptyString;
+    }
 
     Object.keys(subcategories).forEach((subcategory) => {
-      schema[category][subcategory] = {
-        title: '',
-        'meta-description': ''
-      };
+      if (I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS.length <= 0) {
+        schema[category][subcategory] = emptyString;
+        return;
+      }
+      const obj = {} as BlogCategoriesSchemaSubcategoryEntity;
+      for (const extraField of I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS) {
+        obj[extraField] = emptyString;
+      }
+      schema[category][subcategory] = obj;
     });
   }
 
   return schema;
+}
+
+function generateTrailingTrivia() {
+  const CategoriesMetadatasBaseProps = 'Record<string, SubcategoriesMetadatas>';
+
+  const CategoriesMetadatas =
+    'type CategoriesMetadatas =' +
+    ' ' +
+    (PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS.length > 0
+      ? [
+          `Record<${PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS.map((field) => `'${field}'`).join(' | ')}, EmptyString>`,
+          CategoriesMetadatasBaseProps
+        ].join(' | ')
+      : CategoriesMetadatasBaseProps);
+
+  const SubcategoriesMetadatas =
+    'type SubcategoriesMetadatas =' +
+    ' ' +
+    (I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS.length > 0
+      ? `Record<${I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS.map((field) => `'${field}'`).join(' | ')}, EmptyString>`
+      : 'EmptyString');
+
+  return [
+    "type EmptyString = '';",
+    `${SubcategoriesMetadatas};`,
+    `${CategoriesMetadatas};`,
+    'type BlogCategoriesArtifact = Record<string, CategoriesMetadatas>'
+  ].join('\n');
 }
 
 export default function generateI18nBlogCategories(blogArchitecture: CategoriesMetadatas) {
@@ -60,16 +103,7 @@ export default function generateI18nBlogCategories(blogArchitecture: CategoriesM
             {
               name: BLOG_CATEGORIES_CONST_STR,
               initializer: initializerWriterFunction,
-              trailingTrivia: [
-                "type EmptyString = '';",
-                `type SubcategoriesMetadatas = Record<${I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS.map((field) => `'${field}'`).join(
-                  ' | '
-                )}, EmptyString>;`,
-                `type CategoriesMetadatas = Record<${I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS.map((field) => `'${field}'`).join(
-                  ' | '
-                )}, EmptyString> | Record<string, SubcategoriesMetadatas>;`,
-                'type BlogCategoriesArtifact = Record<string, CategoriesMetadatas>'
-              ].join('\n')
+              trailingTrivia: generateTrailingTrivia()
             }
           ],
           isExported: false

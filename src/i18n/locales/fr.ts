@@ -24,7 +24,7 @@ const SHARED: SharedVocabType = {
 };
 
 export default {
-  'pages-titles': { ...SHARED['pages-titles'] },
+  'pages-titles': SHARED['pages-titles'],
 
   _infos: { lng: 'fr' },
 

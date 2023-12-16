@@ -1,6 +1,6 @@
 import { readdirSync } from 'fs';
 import { basename, extname } from 'path';
-import { BLOG_POST_FILE_EXT, DEFAULT_LANGUAGE_KEY, FLAGS } from '../config';
+import { BLOG_POST_FILE_EXT, BLOG_ARCHITECTURE_METADATAS_DEFAULT_LANGUAGE_KEY as DEFAULT_LANGUAGE_KEY, FLAGS } from '../config';
 import type { BlogSlug, CategoriesMetadatas, CategoriesMetadatasEntity } from '../types/metadatas';
 
 function getSlug(filename: string): BlogSlug | null {
