@@ -16,18 +16,18 @@
     "./portable/html/computeHTMLElementHeight": "./src/portable/html/computeHTMLElementHeight.ts",
     "./portable/html/computeHTMLElementWidth": "./src/portable/html/computeHTMLElementWidth.ts",
     "./portable/html/createURLSearchParams": "./src/portable/html/createURLSearchParams.ts",
-    "./portable/html/getDirection": "./portable/html/getDirection.ts",
-    "./portable/html/preserveKeyboardNavigation": "./portable/html/preserveKeyboardNavigation.ts",
+    "./portable/html/getDirection": "./src/portable/html/getDirection.ts",
+    "./portable/html/preserveKeyboardNavigation": "./src/portable/html/preserveKeyboardNavigation.ts",
     "./portable/html/resetScroll": "./src/portable/html/resetScroll.ts",
     "./portable/html/resetWindowScroll": "./src/portable/html/resetWindowScroll.ts",
     "./portable/html/scrollToTop": "./src/portable/html/scrollToTop.ts",
     "./portable/misc/isEmptyObject": "./src/portable/misc/isEmptyObject.ts",
-    "./portable/react/getLinkTarget": "./portable/react/getLinkTarget.ts",
-    "./portable/react/getRefCurrentPtr": "./portable/react/getRefCurrentPtr.ts",
-    "./portable/str/buildAbsolutePathFromParts": "./portable/str/buildAbsolutePathFromParts.ts",
-    "./portable/str/buildPageTitle": "./portable/str/buildPageTitle.ts",
-    "./portable/str/deleteLeadingSlashes": "./portable/str/deleteLeadingSlashes.ts",
-    "./portable/str/deleteTrailingSlashes": "./portable/str/deleteTrailingSlashes.ts"
+    "./portable/react/getLinkTarget": "./src/portable/react/getLinkTarget.ts",
+    "./portable/react/getRefCurrentPtr": "./src/portable/react/getRefCurrentPtr.ts",
+    "./portable/str/buildAbsolutePathFromParts": "./src/portable/str/buildAbsolutePathFromParts.ts",
+    "./portable/str/buildPageTitle": "./src/portable/str/buildPageTitle.ts",
+    "./portable/str/deleteLeadingSlashes": "./src/portable/str/deleteLeadingSlashes.ts",
+    "./portable/str/deleteTrailingSlashes": "./src/portable/str/deleteTrailingSlashes.ts"
   },
   "typesVersions": {
     "*": {
