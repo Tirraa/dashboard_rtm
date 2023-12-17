@@ -1,12 +1,13 @@
 'use client';
 
-import { i18ns } from '##/config/i18n';
-import ROUTES_ROOTS from '##/config/routes';
-import BUTTON_CONFIG from '@/components/config/styles/buttons';
-import { Button } from '@/components/ui/Button';
-import { getClientSideI18n } from '@/i18n/client';
-import { signIn } from 'next-auth/react';
 import type { FunctionComponent } from 'react';
+
+import BUTTON_CONFIG from '@/components/config/styles/buttons';
+import { getClientSideI18n } from '@/i18n/client';
+import { Button } from '@/components/ui/Button';
+import ROUTES_ROOTS from '##/config/routes';
+import { signIn } from 'next-auth/react';
+import { i18ns } from '##/config/i18n';
 
 interface SignUpButtonProps {}
 
@@ -15,7 +16,7 @@ const SignupButton: FunctionComponent<SignUpButtonProps> = () => {
   const className = BUTTON_CONFIG.CLASSNAME;
 
   return (
-    <Button size="lg" onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} className={className}>
+    <Button onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} className={className} size="lg">
       {globalT(`${i18ns.auth}.signup`)}
     </Button>
   );

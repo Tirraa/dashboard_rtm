@@ -1,17 +1,18 @@
-import arg from 'arg';
 import { existsSync, statSync } from 'fs';
-import { FLAGS as OPTIONS } from '../config';
+import arg from 'arg';
+
 import {
-  ARG_ERROR_PREFIX,
-  CRITICAL_ERRORS_STR,
   DISABLE_BLOG_ANALYSIS_ADVICE,
   DISABLE_I18N_ANALYSIS_ADVICE,
-  KNOWN_OPTIONS_PREFIX,
   UNKNOWN_OPTIONS_PREFIX,
-  WRONG_OPTIONS_PREFIX
+  KNOWN_OPTIONS_PREFIX,
+  WRONG_OPTIONS_PREFIX,
+  CRITICAL_ERRORS_STR,
+  ARG_ERROR_PREFIX
 } from '../config/vocab';
 import ArgumentsValidatorError from '../errors/ArgumentsValidatorError';
 import { prefixFeedback } from '../lib/feedbacksMerge';
+import { FLAGS as OPTIONS } from '../config';
 
 const { IMPOSSIBLE_TO_START: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
@@ -20,8 +21,8 @@ const { IMPOSSIBLE_TO_START: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
  */
 function crashIfArgumentsAreInvalid({ ...args }) {
   const {
-    [OPTIONS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
     [OPTIONS.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
+    [OPTIONS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
     [OPTIONS.NO_BLOG]: NO_BLOG,
     [OPTIONS.NO_I18N]: NO_I18N,
     _: UNKNOWN_OPTIONS
@@ -104,8 +105,8 @@ function parseArguments() {
   const args = arg(
     {
       [OPTIONS.I18N_LOCALES_SCHEMA_FILEPATH]: String,
-      [OPTIONS.BLOG_POSTS_FOLDER]: String,
       [OPTIONS.SKIP_LOCALES_INFOS]: Boolean,
+      [OPTIONS.BLOG_POSTS_FOLDER]: String,
       [OPTIONS.NO_BLOG]: Boolean,
       [OPTIONS.NO_I18N]: Boolean
     },

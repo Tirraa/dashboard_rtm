@@ -1,15 +1,16 @@
-import { getPathnameWithoutI18nFlag } from './i18n';
-import capitalize from './portable/str/capitalize';
-import compareAlphabetically from './portable/str/compareAlphabetically';
-import countCharacter from './portable/str/countCharacter';
-import endsWithChars from './portable/str/endsWithChar';
-import fromKebabCaseToSentenceCase from './portable/str/fromKebabCaseToSentenceCase';
-import getFormattedDate from './portable/str/getFormattedDate';
-import getSlashEnvelope from './portable/str/getSlashEnvelope';
-import indexOfNthOccurrence from './portable/str/indexOfNthOccurrence';
+import type { AppPath } from '@rtm/shared-types/Next';
 
 import ROUTES_ROOTS from '##/config/routes';
-import type { AppPath } from '@rtm/shared-types/Next';
+
+import fromKebabCaseToSentenceCase from './portable/str/fromKebabCaseToSentenceCase';
+import compareAlphabetically from './portable/str/compareAlphabetically';
+import indexOfNthOccurrence from './portable/str/indexOfNthOccurrence';
+import getFormattedDate from './portable/str/getFormattedDate';
+import getSlashEnvelope from './portable/str/getSlashEnvelope';
+import countCharacter from './portable/str/countCharacter';
+import endsWithChars from './portable/str/endsWithChar';
+import { getPathnameWithoutI18nFlag } from './i18n';
+import capitalize from './portable/str/capitalize';
 
 export function hrefMatchesPathname(href: AppPath, pathname: AppPath, root: AppPath = ROUTES_ROOTS.WEBSITE): boolean {
   const pathnameWithoutI18n = getSlashEnvelope(getPathnameWithoutI18nFlag(pathname));
@@ -22,12 +23,12 @@ export function hrefMatchesPathname(href: AppPath, pathname: AppPath, root: AppP
 }
 
 export {
-  capitalize,
-  compareAlphabetically,
-  countCharacter,
-  endsWithChars,
   fromKebabCaseToSentenceCase,
+  compareAlphabetically,
+  indexOfNthOccurrence,
   getFormattedDate,
   getSlashEnvelope,
-  indexOfNthOccurrence
+  countCharacter,
+  endsWithChars,
+  capitalize
 };

@@ -15,11 +15,6 @@ const isIgnoredPath = (path) =>
 
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl,
-  generateRobotsTxt: true,
-  changefreq: 'monthly',
-  priority: 0.5,
-
   transform: (config, path) => {
     const defaultLanguageNeedle = '/' + DEFAULT_LANGUAGE;
     const defaultLanguageEnvelopeNeedle = defaultLanguageNeedle + '/';
@@ -31,9 +26,14 @@ module.exports = {
     else if (path === defaultLanguageNeedle) path = '/';
 
     return {
-      loc: path,
       changefreq: config.changefreq,
-      priority: config.priority
+      priority: config.priority,
+      loc: path
     };
-  }
+  },
+  generateRobotsTxt: true,
+  changefreq: 'monthly',
+  priority: 0.5,
+
+  siteUrl
 };

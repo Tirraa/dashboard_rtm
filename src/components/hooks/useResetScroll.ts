@@ -1,11 +1,12 @@
-import { resetScroll } from '@rtm/shared-lib/html';
 import type { HookDepsArrayPrimitives } from '@rtm/shared-types/React';
 import type { RefObject } from 'react';
+
+import { resetScroll } from '@rtm/shared-lib/html';
 import { useLayoutEffect } from 'react';
 
 interface ResetScrollOptions {
-  alsoResetWindowScroll?: boolean;
   additionalDep?: HookDepsArrayPrimitives;
+  alsoResetWindowScroll?: boolean;
 }
 
 function useResetScroll<T extends HTMLElement>(

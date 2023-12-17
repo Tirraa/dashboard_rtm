@@ -1,9 +1,11 @@
 'use client';
 
-import { i18ns } from '##/config/i18n';
+import type { FunctionComponent, CSSProperties } from 'react';
+
 import { useScopedI18n } from '@/i18n/client';
+import { i18ns } from '##/config/i18n';
 import Image from 'next/image';
-import type { CSSProperties, FunctionComponent } from 'react';
+
 import InviteTheBotButton from '../ui/cta/InviteTheBotButton';
 
 interface HomepageProps {}
@@ -20,7 +22,7 @@ const Homepage: FunctionComponent<HomepageProps> = () => {
 
   return (
     <div className="text-center">
-      <Image src="/assets/rtm-txt-logo.svg" style={style} width={width} height={height} alt={alt} className="m-auto" priority />
+      <Image src="/assets/rtm-txt-logo.svg" className="m-auto" height={height} style={style} width={width} alt={alt} priority />
       <h1 className="mt-2">{brand}</h1>
       <InviteTheBotButton />
     </div>

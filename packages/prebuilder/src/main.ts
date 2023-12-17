@@ -1,21 +1,23 @@
 import { ArgError } from 'arg';
 import path from 'path';
-import { FLAGS as ARGV, ROOT_FOLDER_RELATIVE_PATH_FROM_PREBUILDER_CTX } from './config';
-import { BUGTRACKER_URL, DOC_URL, PREBUILD_DONE } from './config/vocab';
-import ArgumentsValidatorError from './errors/ArgumentsValidatorError';
-import BuilderError from './errors/BuilderError';
-import FeedbackError from './errors/FeedbackError';
-import generateBlogArchitectureType from './generators/blog/blogArchitectureType';
-import generateBlogType from './generators/blog/blogType';
-import generateI18nBlogCategories from './generators/blog/i18nBlogCategories';
-import { foldFeedbacks } from './lib/feedbacksMerge';
-import getBlogArchitectureMetadatas from './metadatas-builders/blogArchitectureMetadatas';
+
 import type { MaybeEmptyErrorsDetectionFeedback } from './types/metadatas';
-import parseArguments from './validators/arguments';
-import localesInfosValidator from './validators/localesInfos';
-import sysBlogCategoriesValidator from './validators/sysBlogCategories';
-import sysBlogSlugsValidator from './validators/sysBlogSlugs';
+
+import getBlogArchitectureMetadatas from './metadatas-builders/blogArchitectureMetadatas';
+import { ROOT_FOLDER_RELATIVE_PATH_FROM_PREBUILDER_CTX, FLAGS as ARGV } from './config';
+import generateBlogArchitectureType from './generators/blog/blogArchitectureType';
+import generateI18nBlogCategories from './generators/blog/i18nBlogCategories';
 import sysBlogSubcategoriesValidator from './validators/sysBlogSubcategories';
+import { BUGTRACKER_URL, PREBUILD_DONE, DOC_URL } from './config/vocab';
+import sysBlogCategoriesValidator from './validators/sysBlogCategories';
+import ArgumentsValidatorError from './errors/ArgumentsValidatorError';
+import localesInfosValidator from './validators/localesInfos';
+import sysBlogSlugsValidator from './validators/sysBlogSlugs';
+import generateBlogType from './generators/blog/blogType';
+import { foldFeedbacks } from './lib/feedbacksMerge';
+import parseArguments from './validators/arguments';
+import FeedbackError from './errors/FeedbackError';
+import BuilderError from './errors/BuilderError';
 
 const HANDLED_ERRORS_TYPES = [FeedbackError, BuilderError, ArgumentsValidatorError, ArgError];
 
@@ -32,9 +34,9 @@ function processStaticAnalysis() {
   try {
     const retrievedValuesFromArgs = parseArguments();
     const {
-      [ARGV.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
       [ARGV.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
       [ARGV.SKIP_LOCALES_INFOS]: SKIP_LOCALES_INFOS,
+      [ARGV.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
       [ARGV.NO_I18N]: NO_I18N,
       [ARGV.NO_BLOG]: NO_BLOG
     } = retrievedValuesFromArgs as Required<typeof retrievedValuesFromArgs>;

@@ -3,28 +3,33 @@ const [, , ERROR] = [_OFF, _WARN, _ERROR];
 
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
-  extends: ['next/core-web-vitals'],
-  plugins: ['@typescript-eslint', 'import', 'unused-imports', 'only-error'],
-
   rules: {
-    'import/no-duplicates': ERROR,
-    'import/first': ERROR,
+    '@typescript-eslint/consistent-type-imports': [ERROR, { fixStyle: 'separate-type-imports' }],
+    'no-unused-vars': [ERROR, { ignoreRestSiblings: false, args: 'after-used', vars: 'all' }],
     'import/no-extraneous-dependencies': [ERROR, { devDependencies: false }],
 
+    'import/consistent-type-specifier-style': [ERROR, 'prefer-top-level'],
+
     'unused-imports/no-unused-imports': ERROR,
-
-    'no-unused-vars': [ERROR, { vars: 'all', args: 'after-used', ignoreRestSiblings: false }],
+    'import/no-duplicates': ERROR,
     'no-unreachable': [ERROR],
-    '@typescript-eslint/consistent-type-imports': [ERROR, { fixStyle: 'separate-type-imports' }],
-    'import/consistent-type-specifier-style': [ERROR, 'prefer-top-level']
+    'import/first': ERROR
   },
-
   overrides: [
     {
-      files: ['vitest.config.ts', '*.test.ts', '*.test-d.ts', '*Adapter.js'],
       rules: {
         'import/no-extraneous-dependencies': [ERROR, { devDependencies: true }]
-      }
+      },
+      files: ['vitest.config.ts', '*.test.ts', '*.test-d.ts', '*Adapter.js']
     }
-  ]
+  ],
+
+  extends: [
+    'next/core-web-vitals',
+    'plugin:perfectionist/recommended-alphabetical',
+    'plugin:perfectionist/recommended-natural',
+    'plugin:perfectionist/recommended-line-length'
+  ],
+
+  plugins: ['@typescript-eslint', 'import', 'unused-imports', 'only-error', 'perfectionist']
 };

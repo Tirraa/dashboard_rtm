@@ -1,8 +1,9 @@
-import { LANGUAGES } from '##/config/i18n';
-import { getAllBlogPostsByCategoryAndLanguage } from '@/lib/blog/api';
-import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
+import type { BlogSubcategoryFromUnknownCategory, BlogCategory, PostBase } from '@/types/Blog';
 import type { MaybeNull } from 'packages/shared-types/src/CustomUtilityTypes';
+import type { LanguageFlag } from '@rtm/shared-types/I18n';
+
+import { getAllBlogPostsByCategoryAndLanguage } from '@/lib/blog/api';
+import { LANGUAGES } from '##/config/i18n';
 
 namespace BlogCache {
   export const subcategoriesCollection = Object.fromEntries(LANGUAGES.map((language) => [language, {}])) as Record<

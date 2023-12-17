@@ -1,8 +1,10 @@
-import ROUTES_ROOTS from '##/config/routes';
-import BlogTaxonomy from '##/config/taxonomies/blog';
 import type { BlogSubcategoryPageProps } from '@/types/Blog';
+
+import BlogTaxonomy from '##/config/taxonomies/blog';
+import ROUTES_ROOTS from '##/config/routes';
 import { redirect } from 'next/navigation';
-import { isValidBlogCategory, isValidBlogCategoryAndSubcategoryPairInAnyLanguage, redirectToBlogCategoryPage } from '../api';
+
+import { isValidBlogCategoryAndSubcategoryPairInAnyLanguage, redirectToBlogCategoryPage, isValidBlogCategory } from '../api';
 
 async function blogSubcategoryGuard({ params }: BlogSubcategoryPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];

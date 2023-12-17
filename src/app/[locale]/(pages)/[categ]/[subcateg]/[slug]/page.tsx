@@ -1,15 +1,16 @@
-import ROUTES_ROOTS from '##/config/routes';
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { BlogPostPageProps, PostBase } from '@/types/Blog';
+
+import { getBlogPostMetadatas, getBlogStaticParams, blogPostGuard } from '@/lib/blog/staticGeneration';
+import BlogPostCrumb from '@/components/ui/breadcrumbs/custom/BlogPostCrumb';
+import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
+import { setStaticParamsLocale } from 'next-international/server';
+import BlogPost from '@/components/pages/blog/BlogPost';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
-import BlogPost from '@/components/pages/blog/BlogPost';
-import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
-import BlogPostCrumb from '@/components/ui/breadcrumbs/custom/BlogPostCrumb';
 import { getBlogPostUnstrict } from '@/lib/blog/api';
-import { blogPostGuard, getBlogPostMetadatas, getBlogStaticParams } from '@/lib/blog/staticGeneration';
+import ROUTES_ROOTS from '##/config/routes';
 import { countCharacter } from '@/lib/str';
-import type { BlogPostPageProps, PostBase } from '@/types/Blog';
-import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
-import { setStaticParamsLocale } from 'next-international/server';
 import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }: BlogPostPageProps) {
@@ -43,15 +44,15 @@ export default async function Page({ params }: BlogPostPageProps) {
         <Breadcrumbs
           customCrumbs={[
             {
-              depth,
-              jsx: <BlogPostCrumb label={post.title} url={post.url} />
+              jsx: <BlogPostCrumb label={post.title} url={post.url} />,
+              depth
             }
           ]}
           className="w-fit self-start py-4"
         />
       </div>
       <div className="mx-4 flex flex-col items-center lg:mx-24">
-        <BlogPost params={params} className="mx-4" />
+        <BlogPost className="mx-4" params={params} />
       </div>
     </>
   );

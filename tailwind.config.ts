@@ -1,10 +1,12 @@
+import type { DefaultColors } from 'tailwindcss/types/generated/colors';
 import type { Config } from 'tailwindcss';
+
+import defaultTheme, { fontFamily } from 'tailwindcss/defaultTheme';
 import TailwindCSSAnimate from 'tailwindcss-animate';
 import colors from 'tailwindcss/colors';
-import defaultTheme, { fontFamily } from 'tailwindcss/defaultTheme';
-import type { DefaultColors } from 'tailwindcss/types/generated/colors';
 
-type Colors = { [_ in keyof DefaultColors]: string | Record<PropertyKey, string> };
+// eslint-disable-next-line no-unused-vars
+type Colors = { [_ in keyof DefaultColors]: Record<PropertyKey, string> | string };
 
 const REHYPE_AUTOLINK_HEADINGS_SAFELIST = ['mr-1'];
 
@@ -16,75 +18,49 @@ const sanitizedDefaultColors = Object.keys(colors).reduce((acc, k) => {
 }, {} as Colors);
 
 const config = {
-  darkMode: ['class'],
-  content: ['./src/**/*.{js,ts,jsx,tsx}', './posts/**/*.{md,mdx}'],
-  safelist: [...REHYPE_AUTOLINK_HEADINGS_SAFELIST],
   theme: {
-    screens: { ...defaultTheme.screens },
     extend: {
-      color: {
-        inherit: 'inherit'
-      },
-
-      fontFamily: {
-        sans: ['var(--font-sans)', ...fontFamily.sans]
-      },
-
       colors: {
         ...sanitizedDefaultColors,
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
-        primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))'
+        destructive: {
+          foreground: 'hsl(var(--destructive-foreground))',
+          DEFAULT: 'hsl(var(--destructive))'
         },
         secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))'
+          foreground: 'hsl(var(--secondary-foreground))',
+          DEFAULT: 'hsl(var(--secondary))'
         },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))'
-        },
-        muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))'
-        },
-        accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))'
+        primary: {
+          foreground: 'hsl(var(--primary-foreground))',
+          DEFAULT: 'hsl(var(--primary))'
         },
         popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))'
+          foreground: 'hsl(var(--popover-foreground))',
+          DEFAULT: 'hsl(var(--popover))'
+        },
+        accent: {
+          foreground: 'hsl(var(--accent-foreground))',
+          DEFAULT: 'hsl(var(--accent))'
+        },
+        muted: {
+          foreground: 'hsl(var(--muted-foreground))',
+          DEFAULT: 'hsl(var(--muted))'
         },
         card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))'
-        }
-      },
-
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)'
-      },
-
-      container: {
-        center: true,
-        padding: '2rem',
-        screens: {
-          '2xl': '1400px'
-        }
+          foreground: 'hsl(var(--card-foreground))',
+          DEFAULT: 'hsl(var(--card))'
+        },
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))'
       },
 
       keyframes: {
         'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' }
+          to: { height: 'var(--radix-accordion-content-height)' },
+          from: { height: '0' }
         },
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
@@ -92,13 +68,39 @@ const config = {
         }
       },
 
+      borderRadius: {
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
+        lg: 'var(--radius)'
+      },
+
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out'
+      },
+
+      container: {
+        screens: {
+          '2xl': '1400px'
+        },
+        padding: '2rem',
+        center: true
+      },
+
+      fontFamily: {
+        sans: ['var(--font-sans)', ...fontFamily.sans]
+      },
+
+      color: {
+        inherit: 'inherit'
       }
-    }
+    },
+    screens: { ...defaultTheme.screens }
   },
-  plugins: [TailwindCSSAnimate]
+  content: ['./src/**/*.{js,ts,jsx,tsx}', './posts/**/*.{md,mdx}'],
+  safelist: [...REHYPE_AUTOLINK_HEADINGS_SAFELIST],
+  plugins: [TailwindCSSAnimate],
+  darkMode: ['class']
 } satisfies Config;
 
 export default config;

@@ -1,8 +1,10 @@
-import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import type { TBlogConfig } from '@/config/blog';
-import BlogConfig from '@/config/blog';
 import type { PostBase } from '@/types/Blog';
+
+import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, it, vi } from 'vitest';
+import BlogConfig from '@/config/blog';
+
 import { blogSubcategoryShouldTriggerNotFound, getBlogPostStrict } from '../api';
 
 vi.mock('@/config/blog', async (orgImport) => {

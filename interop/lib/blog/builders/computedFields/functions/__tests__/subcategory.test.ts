@@ -1,5 +1,6 @@
-import { BLOG_POSTS_FOLDER, InvalidArgumentsError } from '##/lib/blog/unifiedImport';
+import { InvalidArgumentsError, BLOG_POSTS_FOLDER } from '##/lib/blog/unifiedImport';
 import { describe, expect, it } from 'vitest';
+
 import buildBlogPostSubcategory from '../subcategory';
 
 describe('subcategory', () => {
@@ -7,19 +8,19 @@ describe('subcategory', () => {
   it('should return the subcategory string part, given a valid flattenedPath', () => {
     expect(
       buildBlogPostSubcategory({
-        _id: '_',
         _raw: {
           flattenedPath: BLOG_POSTS_FOLDER + `/category/${subcategory}/slug`
-        }
+        },
+        _id: '_'
       })
     ).toBe(subcategory);
 
     expect(
       buildBlogPostSubcategory({
-        _id: '_',
         _raw: {
           flattenedPath: BLOG_POSTS_FOLDER + `/category/${subcategory}/lang/slug`
-        }
+        },
+        _id: '_'
       })
     ).toBe(subcategory);
   });
@@ -27,28 +28,28 @@ describe('subcategory', () => {
   it('should throw, given an invalid flattenedPath', () => {
     expect(() =>
       buildBlogPostSubcategory({
-        _id: '_',
         _raw: {
           flattenedPath: BLOG_POSTS_FOLDER
-        }
+        },
+        _id: '_'
       })
     ).toThrow(InvalidArgumentsError);
 
     expect(() =>
       buildBlogPostSubcategory({
-        _id: '_',
         _raw: {
           flattenedPath: BLOG_POSTS_FOLDER + '/'
-        }
+        },
+        _id: '_'
       })
     ).toThrow(InvalidArgumentsError);
 
     expect(() =>
       buildBlogPostSubcategory({
-        _id: '_',
         _raw: {
           flattenedPath: '_' + BLOG_POSTS_FOLDER + `/category/${subcategory}/lang/slug`
-        }
+        },
+        _id: '_'
       })
     ).toThrow(InvalidArgumentsError);
   });
@@ -56,10 +57,10 @@ describe('subcategory', () => {
   it('should be fault tolerant', () => {
     expect(
       buildBlogPostSubcategory({
-        _id: '_',
         _raw: {
           flattenedPath: BLOG_POSTS_FOLDER + `/category/${subcategory}`
-        }
+        },
+        _id: '_'
       })
     ).toBe(subcategory);
   });

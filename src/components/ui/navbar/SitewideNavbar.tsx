@@ -1,21 +1,22 @@
 'use client';
 
-import { i18ns } from '##/config/i18n';
-import ROUTES_ROOTS from '##/config/routes';
+import type { FunctionComponent, ReactNode } from 'react';
+import type { NavbarItems } from '@/types/NavData';
+
+import { NAVBAR_EXTRAS_COMPONENTS_DESKTOP, NAVBAR_EXTRAS_COMPONENTS_MOBILE } from '@/config/SitewideNavbar/Extras/utils/ComponentsMapping';
+import SITEWIDE_NAVBAR_ROUTES, { SITEWIDE_NAVBAR_ROUTES_TITLES } from '@/config/SitewideNavbar/routesImpl';
+import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsConfig';
 import NAVBAR_STYLE from '@/components/config/styles/navbar/NavbarStyle';
 import NavbarButton from '@/components/layouts/navbar/NavbarButton';
 import NavbarToggle from '@/components/layouts/navbar/NavbarToggle';
-import NavbarElement from '@/components/ui/hoc/NavbarElement';
-import { NAVBAR_EXTRAS_COMPONENTS_DESKTOP, NAVBAR_EXTRAS_COMPONENTS_MOBILE } from '@/config/SitewideNavbar/Extras/utils/ComponentsMapping';
-import SITEWIDE_NAVBAR_DROPDOWNS_CONFIG from '@/config/SitewideNavbar/dropdownsConfig';
-import SITEWIDE_NAVBAR_ROUTES, { SITEWIDE_NAVBAR_ROUTES_TITLES } from '@/config/SitewideNavbar/routesImpl';
-import { getClientSideI18n } from '@/i18n/client';
 import getComputedNavData from '@/lib/misc/getComputedNavData';
+import NavbarElement from '@/components/ui/hoc/NavbarElement';
+import { getClientSideI18n } from '@/i18n/client';
+import ROUTES_ROOTS from '##/config/routes';
+import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
-import type { NavbarItems } from '@/types/NavData';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { FunctionComponent, ReactNode } from 'react';
 
 interface SitewideNavbarProps {}
 
@@ -24,7 +25,7 @@ const navbarExtrasForMobileClassNameBase = 'h-[40px]';
 
 const buildNavbarExtrasForDesktop: () => ReactNode[] = () =>
   Object.values(NAVBAR_EXTRAS_COMPONENTS_DESKTOP).map((jsx, index) => (
-    <li className="flex h-fit w-fit p-[2px]" key={`${index}-navbar-extra-desktop`}>
+    <li key={`${index}-navbar-extra-desktop`} className="flex h-fit w-fit p-[2px]">
       {jsx}
     </li>
   ));
@@ -38,9 +39,9 @@ const buildNavbarExtrasForMobile: () => ReactNode[] = () =>
 
 function buildNavbarItems(): NavbarItems {
   const computedNavData = getComputedNavData(SITEWIDE_NAVBAR_ROUTES, SITEWIDE_NAVBAR_ROUTES_TITLES, SITEWIDE_NAVBAR_DROPDOWNS_CONFIG);
-  const navbarItems = computedNavData.map(({ i18nTitle, path, embeddedEntities }) => ({
-    i18nTitle,
-    jsx: <NavbarElement key={`${i18nTitle}-${path}-navbar-btn`} i18nTitle={i18nTitle} path={path} embeddedEntities={embeddedEntities} />
+  const navbarItems = computedNavData.map(({ embeddedEntities, i18nTitle, path }) => ({
+    jsx: <NavbarElement key={`${i18nTitle}-${path}-navbar-btn`} embeddedEntities={embeddedEntities} i18nTitle={i18nTitle} path={path} />,
+    i18nTitle
   }));
   return navbarItems;
 }
@@ -64,8 +65,8 @@ const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
 
   const navbarExtrasClassNameBase = 'gap-4 h-full flex-row flex-nowrap items-center';
   const navbarBrand = (
-    <Link href={ROUTES_ROOTS.WEBSITE} className="transition-[filter] hover:brightness-75">
-      <Image src="/assets/rtm-logo.svg" height={LOGO_SIZE_PX_VALUE} width={LOGO_SIZE_PX_VALUE} alt={logoAlt} priority />
+    <Link className="transition-[filter] hover:brightness-75" href={ROUTES_ROOTS.WEBSITE}>
+      <Image height={LOGO_SIZE_PX_VALUE} src="/assets/rtm-logo.svg" width={LOGO_SIZE_PX_VALUE} alt={logoAlt} priority />
     </Link>
   );
 

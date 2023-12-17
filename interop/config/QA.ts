@@ -1,4 +1,5 @@
 export enum QA_WARNINGS {
+  // eslint-disable-next-line no-unused-vars
   IS_A_FALLBACK = 'is-a-fallback'
 }
 

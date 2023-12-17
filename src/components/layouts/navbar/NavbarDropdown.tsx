@@ -1,29 +1,29 @@
 'use client';
 
-import NavbarDropdownButtonIconStyle from '@/components/config/styles/navbar/NavbarDropdownButtonIconStyle';
+import type { NavbarDropdownElement, EmbeddedEntities } from '@/types/NavData';
+import type { FunctionComponent, RefObject } from 'react';
+
 import NavbarDropdownMenuButtonStyle, {
   NAVBAR_DROPDOWN_MENU_INNER_BUTTONS_CLASSLIST
 } from '@/components/config/styles/navbar/NavbarDropdownMenuButtonStyle';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/DropdownMenu';
+import { DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem, DropdownMenu } from '@/components/ui/DropdownMenu';
+import NavbarDropdownButtonIconStyle from '@/components/config/styles/navbar/NavbarDropdownButtonIconStyle';
+import { getRefCurrentPtr, getLinkTarget } from '@rtm/shared-lib/react';
+import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import { useMediaQuery } from '@react-hook/media-query';
+import { useEffect, useState, useRef } from 'react';
 import { getClientSideI18n } from '@/i18n/client';
 import { hrefMatchesPathname } from '@/lib/str';
 import { getBreakpoint } from '@/lib/tailwind';
-import type { EmbeddedEntities, NavbarDropdownElement } from '@/types/NavData';
-import { ChevronDownIcon } from '@heroicons/react/20/solid';
-import { useMediaQuery } from '@react-hook/media-query';
-import { getLinkTarget, getRefCurrentPtr } from '@rtm/shared-lib/react';
-
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import type { FunctionComponent, RefObject } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 
 interface NavbarButtonProps extends NavbarDropdownElement {}
 
-const { isActiveClassList: navbarDropdownIsActiveClassList, isNotActiveClassList: navbarDropdownIsNotActiveClassList } =
+const { isNotActiveClassList: navbarDropdownIsNotActiveClassList, isActiveClassList: navbarDropdownIsActiveClassList } =
   NavbarDropdownMenuButtonStyle;
 
-const { isActiveClassList: navbarDropdownBtnIconIsActiveClassList, isNotActiveClassList: navbarDropdownBtnIconIsNotActiveClassList } =
+const { isNotActiveClassList: navbarDropdownBtnIconIsNotActiveClassList, isActiveClassList: navbarDropdownBtnIconIsActiveClassList } =
   NavbarDropdownButtonIconStyle;
 
 const menuItemsGenerator = (embeddedEntities: EmbeddedEntities, triggerRef: RefObject<HTMLButtonElement>) => {
@@ -37,13 +37,13 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities, triggerRef: RefO
 
     return (
       <DropdownMenuItem
-        key={`${href}-${title}-navbar-menu-item`}
         className="p-0 dark:bg-opacity-20 dark:text-muted-foreground dark:hover:text-primary-foreground"
-        textValue={title}
+        key={`${href}-${title}-navbar-menu-item`}
         style={{ minWidth }}
+        textValue={title}
         asChild
       >
-        <Link className={NAVBAR_DROPDOWN_MENU_INNER_BUTTONS_CLASSLIST} title={title} href={href} target={target}>
+        <Link className={NAVBAR_DROPDOWN_MENU_INNER_BUTTONS_CLASSLIST} target={target} title={title} href={href}>
           {title}
         </Link>
       </DropdownMenuItem>
@@ -53,7 +53,7 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities, triggerRef: RefO
 
 // {ToDo} Use Navigation Menu instead of this.
 // https://github.com/radix-ui/themes/discussions/139
-const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, path: href, embeddedEntities }) => {
+const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ embeddedEntities, path: href, i18nTitle }) => {
   const currentPathname = usePathname();
   const globalT = getClientSideI18n();
   const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
@@ -73,7 +73,7 @@ const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, path:
   const onOpenChange = (opened: boolean) => setIsOpened(opened);
 
   return (
-    <DropdownMenu open={isOpened} onOpenChange={onOpenChange} withDeepResetOnLgBreakpointEvents>
+    <DropdownMenu withDeepResetOnLgBreakpointEvents onOpenChange={onOpenChange} open={isOpened}>
       <DropdownMenuTrigger ref={triggerRef} asChild>
         <button className={navbarDropdownClassName}>
           {title}

@@ -1,4 +1,4 @@
-import cn from './portable/tailwind/cn';
 import getBreakpoint from './portable/tailwind/getBreakpoint';
+import cn from './portable/tailwind/cn';
 
-export { cn, getBreakpoint };
+export { getBreakpoint, cn };

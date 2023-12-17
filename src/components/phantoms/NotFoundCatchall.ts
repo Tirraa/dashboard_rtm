@@ -1,9 +1,10 @@
 'use client';
 
-import NotFoundTaxonomy from '##/config/taxonomies/notfound';
 import type { NotFoundCatchallParams } from '@/types/Next';
-import { RedirectType, redirect, usePathname } from 'next/navigation';
 import type { FunctionComponent } from 'react';
+
+import { RedirectType, usePathname, redirect } from 'next/navigation';
+import NotFoundTaxonomy from '##/config/taxonomies/notfound';
 
 interface NotFoundCatchallProps extends NotFoundCatchallParams {}
 

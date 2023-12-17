@@ -1,6 +1,6 @@
 type TDiscordConfig = {
-  BOT_INVITE_LINK: string;
   SUPPORT_SERVER_INVITE_LINK: string;
+  BOT_INVITE_LINK: string;
 };
 
 const [CLIENT_ID, PERMISSIONS]: [string, string] = ['1120800430897778700', '8'];

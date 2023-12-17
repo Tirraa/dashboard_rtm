@@ -1,6 +1,7 @@
 import type { PostToBuild } from '@rtm/shared-types/ContentlayerConfig';
 import type { AppPath } from '@rtm/shared-types/Next';
-import { BLOG_POSTS_FOLDER, DEFAULT_LANGUAGE, InvalidArgumentsError, ROUTES_ROOTS, getFlattenedPathWithoutRootFolder } from '../../../unifiedImport';
+
+import { getFlattenedPathWithoutRootFolder, InvalidArgumentsError, BLOG_POSTS_FOLDER, DEFAULT_LANGUAGE, ROUTES_ROOTS } from '../../../unifiedImport';
 
 function buildBlogPostUrl(post: PostToBuild): AppPath {
   const OPTIONAL_LOCALE_PART_INDEX = 2;

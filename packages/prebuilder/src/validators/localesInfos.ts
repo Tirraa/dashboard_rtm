@@ -1,10 +1,12 @@
 import { readdirSync } from 'fs';
 import path from 'path';
-import { LIST_ELEMENT_PREFIX, LOCALES_INFOS_ROOT_KEY, LOCALES_LNG_INFOS_KEY } from '../config';
-import { CRITICAL_ERRORS_STR } from '../config/vocab';
-import { prefixFeedback } from '../lib/feedbacksMerge';
+
+import type { MaybeEmptyErrorsDetectionFeedback, ErrorsDetectionFeedback, Path } from '../types/metadatas';
+
 import retrieveLocaleFileInfosMetadatas from '../metadatas-builders/retrieveLocaleFileInfosMetadatas';
-import type { ErrorsDetectionFeedback, MaybeEmptyErrorsDetectionFeedback, Path } from '../types/metadatas';
+import { LOCALES_INFOS_ROOT_KEY, LOCALES_LNG_INFOS_KEY, LIST_ELEMENT_PREFIX } from '../config';
+import { prefixFeedback } from '../lib/feedbacksMerge';
+import { CRITICAL_ERRORS_STR } from '../config/vocab';
 
 const localesExtension = '.ts';
 const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;

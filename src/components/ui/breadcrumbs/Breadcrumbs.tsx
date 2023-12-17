@@ -1,18 +1,20 @@
 'use client';
 
-import { i18ns } from '##/config/i18n';
-import ROUTES_ROOTS from '##/config/routes';
-import { useScopedI18n } from '@/i18n/client';
-import { getPathParts } from '@/lib/next';
-import { fromKebabCaseToSentenceCase } from '@/lib/str';
-import { buildAbsolutePathFromParts } from '@rtm/shared-lib/str';
+import type { UnstrictScopedT, PagesTitlesKey } from '@rtm/shared-types/I18n';
 import type { CustomCrumbs } from '@rtm/shared-types/Breadcrumbs';
-import type { PagesTitlesKey, UnstrictScopedT } from '@rtm/shared-types/I18n';
-import { usePathname } from 'next/navigation';
 import type { FunctionComponent, ReactNode } from 'react';
-import Crumb from './Crumb';
-import CrumbSeparator from './CrumbSeparator';
+
+import { buildAbsolutePathFromParts } from '@rtm/shared-lib/str';
+import { fromKebabCaseToSentenceCase } from '@/lib/str';
+import { useScopedI18n } from '@/i18n/client';
+import { usePathname } from 'next/navigation';
+import ROUTES_ROOTS from '##/config/routes';
+import { getPathParts } from '@/lib/next';
+import { i18ns } from '##/config/i18n';
+
 import HomepageCrumb from './custom/HomepageCrumb';
+import CrumbSeparator from './CrumbSeparator';
+import Crumb from './Crumb';
 
 interface BreadcrumbsProps {
   withHomepageElement?: boolean;
@@ -49,7 +51,7 @@ function crumbsGenerator(pathParts: string[], withHomepageElement: boolean, scop
     const label = fallbackLabel ?? retrievedVocabFromPathPart;
     const withRescueCtx = fallbackLabel !== undefined;
 
-    return <Crumb label={label} href={href} isLeaf={isLeaf} withRescueCtx={withRescueCtx} />;
+    return <Crumb withRescueCtx={withRescueCtx} isLeaf={isLeaf} label={label} href={href} />;
   }
 
   for (let depth = 0; depth < pathParts.length; depth++) {

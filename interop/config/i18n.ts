@@ -1,21 +1,24 @@
-import type { I18nVocabScope, I18nsBase, LanguageFlag, MakeI18nsBase } from '@rtm/shared-types/I18n';
-import DEFAULT_LANGUAGE_OBJ from '../../src/i18n/locales/fr';
+import type { I18nVocabScope, MakeI18nsBase, LanguageFlag, I18nsBase } from '@rtm/shared-types/I18n';
+
 import getEnumKeys from '../../src/lib/portable/typescript/getEnumKeys';
+import DEFAULT_LANGUAGE_OBJ from '../../src/i18n/locales/fr';
 
 export enum ELanguagesFlag {
+  // eslint-disable-next-line no-unused-vars
   fr,
+  // eslint-disable-next-line no-unused-vars
   en
 }
 
 const _i18nsBase = {
-  auth: 'auth',
   blogCategories: 'blog-categories',
-  dashboard: 'dashboard',
-  infos: '_infos',
-  manualSEO: 'manual-SEO',
-  navbar: 'navbar',
   pagesTitles: 'pages-titles',
-  vocab: 'vocab'
+  manualSEO: 'manual-SEO',
+  dashboard: 'dashboard',
+  navbar: 'navbar',
+  infos: '_infos',
+  vocab: 'vocab',
+  auth: 'auth'
 } as const satisfies I18nsBase;
 
 const i18nsBase: MakeI18nsBase<typeof _i18nsBase> = _i18nsBase;

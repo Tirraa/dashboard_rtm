@@ -1,73 +1,74 @@
-import { expectAssignable, expectNotAssignable, expectType } from 'jest-tsd';
+import { expectNotAssignable, expectAssignable, expectType } from 'jest-tsd';
 import { describe, it } from 'vitest';
-import type { MakeI18nsBase, MakeVocabTargets, MakeVocabTargetsScopes } from '../I18n';
+
+import type { MakeVocabTargetsScopes, MakeVocabTargets, MakeI18nsBase } from '../I18n';
 
 const _ = {};
 
 describe('MakeVocabTargets', () => {
   it('should pass, given a simple object notation', () => {
     const fake = _ as MakeVocabTargets<{
-      hello: {
-        world: 'hello world!';
-      };
       foo: {
         bar: {
           '.bar': 'Hello!';
         };
       };
+      hello: {
+        world: 'hello world!';
+      };
       root: 'root';
     }>;
 
-    expectType<'root' | 'hello.world' | 'foo.bar..bar'>(fake);
+    expectType<'foo.bar..bar' | 'hello.world' | 'root'>(fake);
   });
 
   it('should pass, given a simple dot notation', () => {
     const fake = _ as MakeVocabTargets<{
-      hello: 'Hello';
+      'foo.bar..bar': 'Foo bar bar';
       'hello.world': 'Hello World';
       'foo.bar.bar': 'Foo bar bar';
-      'foo.bar..bar': 'Foo bar bar';
+      hello: 'Hello';
     }>;
 
-    expectType<'hello' | 'hello.world' | 'foo.bar.bar' | 'foo.bar..bar'>(fake);
+    expectType<'foo.bar..bar' | 'hello.world' | 'foo.bar.bar' | 'hello'>(fake);
   });
 
   it('should pass, given an object notation with plural keys', () => {
     const fake = _ as MakeVocabTargets<{
-      'cows#zero': 'No cow';
-      'cows#one': 'A cow';
-      'cows#other': '{count} cows';
-      magic: {
-        'cows#zero': 'No magic cow';
-        'cows#one': 'A magic cow';
-        'cows#other': '{count} magic cows';
-      };
       very: {
         magic: {
+          'cows#other': '{count} magic cows';
           'cows#zero': 'No magic cow';
           'cows#one': 'A magic cow';
-          'cows#other': '{count} magic cows';
         };
       };
+      magic: {
+        'cows#other': '{count} magic cows';
+        'cows#zero': 'No magic cow';
+        'cows#one': 'A magic cow';
+      };
+      'cows#other': '{count} cows';
+      'cows#zero': 'No cow';
+      'cows#one': 'A cow';
     }>;
 
-    expectType<'cows' | 'magic.cows' | 'very.magic.cows'>(fake);
+    expectType<'very.magic.cows' | 'magic.cows' | 'cows'>(fake);
   });
 
   it('should pass, given a dot notation with plural keys', () => {
     const fake = _ as MakeVocabTargets<{
-      'cows#zero': 'No cow';
-      'cows#one': 'A cow';
-      'cows#other': '{count} cows';
-      'magic.cows#zero': 'No magic cow';
-      'magic.cows#one': 'A magic cow';
+      'very.magic.cows#other': '{count} magic cows';
       'magic.cows#other': '{count} magic cows';
       'very.magic.cows#zero': 'No magic cow';
       'very.magic.cows#one': 'A magic cow';
-      'very.magic.cows#other': '{count} magic cows';
+      'magic.cows#zero': 'No magic cow';
+      'magic.cows#one': 'A magic cow';
+      'cows#other': '{count} cows';
+      'cows#zero': 'No cow';
+      'cows#one': 'A cow';
     }>;
 
-    expectType<'cows' | 'magic.cows' | 'very.magic.cows'>(fake);
+    expectType<'very.magic.cows' | 'magic.cows' | 'cows'>(fake);
   });
 });
 
@@ -75,94 +76,91 @@ describe('MakeVocabTargetsScopes', () => {
   it('should pass, given a simple object notation', () => {
     const fake = _ as MakeVocabTargetsScopes<
       MakeVocabTargets<{
-        hello: {
-          world: 'hello world!';
-        };
         foo: {
           bar: {
             '.bar': 'Hello!';
           };
         };
+        hello: {
+          world: 'hello world!';
+        };
         root: 'root';
       }>
     >;
 
-    expectType<'hello' | 'foo' | 'foo.bar' | 'foo.bar.'>(fake);
+    expectType<'foo.bar.' | 'foo.bar' | 'hello' | 'foo'>(fake);
   });
 
   it('should pass, given a simple dot notation', () => {
     const fake = _ as MakeVocabTargetsScopes<
       MakeVocabTargets<{
-        hello: 'Hello';
+        'foo.bar...foo.bar..foo.x.y': 'Same flaw than next-international';
+        'foo.bar..bar': 'Foo bar bar';
         'hello.world': 'Hello World';
         'foo.bar.bar': 'Foo bar bar';
-        'foo.bar..bar': 'Foo bar bar';
-        'foo.bar...foo.bar..foo.x.y': 'Same flaw than next-international';
+        hello: 'Hello';
       }>
     >;
 
     expectType<
+      | 'foo.bar...foo.bar..foo.x'
+      | 'foo.bar...foo.bar..foo'
+      | 'foo.bar...foo.bar.'
+      | 'foo.bar...foo.bar'
+      | 'foo.bar...foo'
+      | 'foo.bar..'
+      | 'foo.bar.'
+      | 'foo.bar'
       | 'hello'
       | 'foo'
-      | 'foo.bar'
-      | 'foo.bar.'
-      | 'foo.bar..'
-      | 'foo.bar...foo'
-      | 'foo.bar...foo.bar'
-      | 'foo.bar...foo.bar.'
-      | 'foo.bar...foo.bar..foo'
-      | 'foo.bar...foo.bar..foo.x'
     >(fake);
   });
 
   it('should pass, given an object notation with plural keys', () => {
     const fake = _ as MakeVocabTargetsScopes<
       MakeVocabTargets<{
-        'cows#zero': 'No cow';
-        'cows#one': 'A cow';
-        'cows#other': '{count} cows';
-        magic: {
-          'cows#zero': 'No magic cow';
-          'cows#one': 'A magic cow';
-          'cows#other': '{count} magic cows';
-        };
         very: {
           magic: {
+            'cows#other': '{count} magic cows';
             'cows#zero': 'No magic cow';
             'cows#one': 'A magic cow';
-            'cows#other': '{count} magic cows';
           };
         };
+        magic: {
+          'cows#other': '{count} magic cows';
+          'cows#zero': 'No magic cow';
+          'cows#one': 'A magic cow';
+        };
+        'cows#other': '{count} cows';
+        'cows#zero': 'No cow';
+        'cows#one': 'A cow';
       }>
     >;
 
-    expectType<'magic' | 'very' | 'very.magic'>(fake);
+    expectType<'very.magic' | 'magic' | 'very'>(fake);
   });
 
   it('should pass, given a dot notation with plural keys', () => {
     const fake = _ as MakeVocabTargetsScopes<
       MakeVocabTargets<{
-        'cows#zero': 'No cow';
-        'cows#one': 'A cow';
-        'cows#other': '{count} cows';
-        'magic.cows#zero': 'No magic cow';
-        'magic.cows#one': 'A magic cow';
+        'very.magic.cows#other': '{count} magic cows';
         'magic.cows#other': '{count} magic cows';
         'very.magic.cows#zero': 'No magic cow';
         'very.magic.cows#one': 'A magic cow';
-        'very.magic.cows#other': '{count} magic cows';
+        'magic.cows#zero': 'No magic cow';
+        'magic.cows#one': 'A magic cow';
+        'cows#other': '{count} cows';
+        'cows#zero': 'No cow';
+        'cows#one': 'A cow';
       }>
     >;
 
-    expectType<'magic' | 'very' | 'very.magic'>(fake);
+    expectType<'very.magic' | 'magic' | 'very'>(fake);
   });
 });
 
 describe('MakeI18nsBase', () => {
   type FakeVocabTypeObjNotation = {
-    foo: {
-      bar: 'bar';
-    };
     etc: {
       a: {
         b: {
@@ -171,12 +169,15 @@ describe('MakeI18nsBase', () => {
       };
     };
     NOT_A_NAMESPACE: "I'm NOT a namespace!";
+    foo: {
+      bar: 'bar';
+    };
   };
 
   type FakeVocabTypeDotNotation = {
-    'foo.bar': 'bar';
-    'etc.a.b.c': 'bar';
     NOT_A_NAMESPACE: "I'm NOT a namespace!";
+    'etc.a.b.c': 'bar';
+    'foo.bar': 'bar';
   };
 
   it('should pass, given an exhaustive I18ns pattern, using object notation', () => {

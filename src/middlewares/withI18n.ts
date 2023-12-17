@@ -1,13 +1,14 @@
-import { DEFAULT_LANGUAGE, LANGUAGES } from '##/config/i18n';
 import type { I18nMiddlewareConfig } from '@rtm/shared-types/I18n';
 import type { MiddlewareFactory } from '@rtm/shared-types/Next';
+import type { NextResponse, NextRequest } from 'next/server';
+
 import { createI18nMiddleware } from 'next-international/middleware';
-import type { NextRequest, NextResponse } from 'next/server';
+import { DEFAULT_LANGUAGE, LANGUAGES } from '##/config/i18n';
 
 const I18N_MIDDLEWARE_CONFIG: I18nMiddlewareConfig = {
-  locales: LANGUAGES,
+  urlMappingStrategy: 'rewriteDefault',
   defaultLocale: DEFAULT_LANGUAGE,
-  urlMappingStrategy: 'rewriteDefault'
+  locales: LANGUAGES
 } as const;
 
 const i18nMiddlewareInstance = createI18nMiddleware(I18N_MIDDLEWARE_CONFIG);

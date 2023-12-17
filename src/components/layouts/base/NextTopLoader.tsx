@@ -1,27 +1,34 @@
 'use client';
 
-import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+
+import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
 
 // A Next.js Top Loading Bar component made using nprogress, works with Next.js 13.
 // https://github.com/TheSGJ/nextjs-toploader
 // https://www.npmjs.com/package/nextjs-toploader
 // Copyright (c) 2023 Shri Ganesh Jha
 
-import nProgress from 'nprogress';
 import * as PropTypes from 'prop-types';
+import nProgress from 'nprogress';
 import * as React from 'react';
 export type NextTopLoaderProps = {
-  /**
-   * Color for the TopLoader.
-   * @default "#29d"
-   */
-  color?: string;
   /**
    * The initial position for the TopLoader in percentage, 0.08 is 8%.
    * @default 0.08
    */
   initialPosition?: number;
+  /**
+   * Defines a shadow for the TopLoader.
+   * @default "0 0 10px ${color},0 0 5px ${color}"
+   * ... Disable it by setting it to `false`
+   */
+  shadow?: string | false;
+  /**
+   * To show spinner or not.
+   * @default true
+   */
+  showSpinner?: boolean;
   /**
    * The increament delay speed in milliseconds.
    * @default 200
@@ -38,38 +45,32 @@ export type NextTopLoaderProps = {
    */
   crawl?: boolean;
   /**
-   * To show spinner or not.
-   * @default true
-   */
-  showSpinner?: boolean;
-  /**
    * Animation settings using easing (a CSS easing string).
    * @default "ease"
    */
   easing?: string;
   /**
+   * Color for the TopLoader.
+   * @default "#29d"
+   */
+  color?: string;
+  /**
    * Animation speed in ms for the TopLoader.
    * @default 200
    */
   speed?: number;
-  /**
-   * Defines a shadow for the TopLoader.
-   * @default "0 0 10px ${color},0 0 5px ${color}"
-   * ... Disable it by setting it to `false`
-   */
-  shadow?: string | false;
 };
 
 const NextTopLoader = ({
-  color: propColor,
   height: propHeight,
-  showSpinner,
-  crawl,
-  crawlSpeed,
+  color: propColor,
   initialPosition,
+  showSpinner,
+  crawlSpeed,
   easing,
-  speed,
-  shadow
+  shadow,
+  crawl,
+  speed
 }: NextTopLoaderProps) => {
   const [isOnMobileOrTablet, setIsOnMobileOrTablet] = React.useState<MaybeNull<boolean>>(null);
 
@@ -99,10 +100,10 @@ const NextTopLoader = ({
   React.useEffect(() => {
     nProgress.configure({
       showSpinner: showSpinner ?? true,
-      trickle: crawl ?? true,
-      trickleSpeed: crawlSpeed ?? 200,
       minimum: initialPosition ?? 0.08,
+      trickleSpeed: crawlSpeed ?? 200,
       easing: easing ?? 'ease',
+      trickle: crawl ?? true,
       speed: speed ?? 200
     });
 
@@ -167,15 +168,15 @@ const NextTopLoader = ({
 };
 
 NextTopLoader.propTypes = {
-  color: PropTypes.string,
-  height: PropTypes.number,
-  showSpinner: PropTypes.bool,
-  crawl: PropTypes.bool,
-  crawlSpeed: PropTypes.number,
+  shadow: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   initialPosition: PropTypes.number,
+  crawlSpeed: PropTypes.number,
+  showSpinner: PropTypes.bool,
+  height: PropTypes.number,
   easing: PropTypes.string,
+  color: PropTypes.string,
   speed: PropTypes.number,
-  shadow: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
+  crawl: PropTypes.bool
 };
 
 export default NextTopLoader;

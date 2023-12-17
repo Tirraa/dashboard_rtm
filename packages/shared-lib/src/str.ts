@@ -1,5 +1,5 @@
 import buildAbsolutePathFromParts from './portable/str/buildAbsolutePathFromParts';
-import buildPageTitle from './portable/str/buildPageTitle';
 import buildPathFromParts from './portable/str/buildPathFromParts';
+import buildPageTitle from './portable/str/buildPageTitle';
 
-export { buildAbsolutePathFromParts, buildPageTitle, buildPathFromParts };
+export { buildAbsolutePathFromParts, buildPathFromParts, buildPageTitle };

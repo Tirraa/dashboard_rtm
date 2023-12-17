@@ -1,10 +1,10 @@
-import type VOCAB_SCHEMA from '@/i18n/locales/schema';
-import type { SHARED_VOCAB_SCHEMA } from '@/i18n/locales/schema';
-import type { getScopedI18n } from '@/i18n/server';
-import type { DeepPathToLiteralKeys, KeySeparator, MakeHomogeneousValuesObjType } from '@rtm/shared-types/CustomUtilityTypes';
-import type { JSONKey, TypedLeafsJSONData } from '@rtm/shared-types/JSON';
-import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
+import type { MakeHomogeneousValuesObjType, DeepPathToLiteralKeys, KeySeparator } from '@rtm/shared-types/CustomUtilityTypes';
+import type { TypedLeafsJSONData, JSONKey } from '@rtm/shared-types/JSON';
 import type { RemovePlural } from '@rtm/shared-types/international-types';
+import type { SHARED_VOCAB_SCHEMA } from '@/i18n/locales/schema';
+import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
+import type VOCAB_SCHEMA from '@/i18n/locales/schema';
+import type { getScopedI18n } from '@/i18n/server';
 
 type AllowedVocabObjValuesTypes = string;
 
@@ -24,7 +24,7 @@ export type MakeVocabTargets<VorVL extends VocabOrVocabLeaf, __CurrentDeepPath e
   : RemovePlural<__CurrentDeepPath>;
 
 export type MakeVocabTargetsScopes<Target extends string> = Target extends `${infer Namespace}${KeySeparator}${infer Tail}`
-  ? Namespace | `${Namespace}${KeySeparator}${MakeVocabTargetsScopes<Tail>}`
+  ? `${Namespace}${KeySeparator}${MakeVocabTargetsScopes<Tail>}` | Namespace
   : DeepPathToLiteralKeys<Target>;
 
 type SharedVocabBase = typeof SHARED_VOCAB_SCHEMA;
@@ -38,9 +38,9 @@ export type I18nVocabScope = MakeVocabTargetsScopes<I18nVocabTarget>;
 export type UnstrictScopedT = Awaited<ReturnType<typeof getScopedI18n<I18nVocabScope>>>;
 
 export type I18nMiddlewareConfig = {
-  locales: LanguageFlag[];
-  defaultLocale: LanguageFlag;
   urlMappingStrategy: 'rewriteDefault' | 'redirect';
+  defaultLocale: LanguageFlag;
+  locales: LanguageFlag[];
 };
 
 type LocalesObjKey = LanguageFlag;
@@ -53,6 +53,7 @@ export type LocalesObjEntity = [LocalesObjKey, NextInternationalLazyLoadFun];
 export type LocalesObj = Record<LocalesObjKey, NextInternationalLazyLoadFun>;
 export type LocalesGetterConfigObjTypeConstraint = Record<LanguageFlag, () => Promise<TypedLeafsJSONData<VocabObjValue>>>;
 
+// eslint-disable-next-line no-unused-vars
 export type ChangeLocaleFun = (language: LanguageFlag) => void;
 
 export type PagesTitlesKey = keyof VocabType['pages-titles'];

@@ -5,12 +5,12 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
   images: {
     domains: ['cdn.discordapp.com']
   },
-  transpilePackages: ['@rtm/shared-lib']
+  transpilePackages: ['@rtm/shared-lib'],
+  reactStrictMode: true,
+  swcMinify: true
 };
 
 module.exports = withBundleAnalyzer(withContentlayer(nextConfig));

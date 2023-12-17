@@ -1,22 +1,23 @@
-import { i18ns } from '##/config/i18n';
-import { getBlogSubcategoriesByCategory } from '@/cache/blog';
-import BUTTON_CONFIG from '@/components/config/styles/buttons';
-import { Button } from '@/components/ui/Button';
-import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
-import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
-import BlogConfig from '@/config/blog';
-import { getServerSideI18n } from '@/i18n/server';
-import { cn } from '@/lib/tailwind';
-import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase } from '@/types/Blog';
-import { buildPathFromParts } from '@rtm/shared-lib/str';
+import type { BlogSubcategoryFromUnknownCategory, BlogCategory, PostBase } from '@/types/Blog';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
-import GithubSlugger from 'github-slugger';
-import Link from 'next/link';
 import type { ReactElement, ReactNode } from 'react';
+
+import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
+import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
+import BUTTON_CONFIG from '@/components/config/styles/buttons';
+import { getBlogSubcategoriesByCategory } from '@/cache/blog';
+import { buildPathFromParts } from '@rtm/shared-lib/str';
+import { getServerSideI18n } from '@/i18n/server';
+import { Button } from '@/components/ui/Button';
+import GithubSlugger from 'github-slugger';
+import { i18ns } from '##/config/i18n';
+import BlogConfig from '@/config/blog';
+import { cn } from '@/lib/tailwind';
+import Link from 'next/link';
 
 const slugger = new GithubSlugger();
 
-async function blogCategoryPageBuilder(posts: PostBase[], category: BlogCategory, language: LanguageFlag): Promise<ReactNode[] | ReactElement> {
+async function blogCategoryPageBuilder(posts: PostBase[], category: BlogCategory, language: LanguageFlag): Promise<ReactElement | ReactNode[]> {
   function buildHistogram() {
     for (const post of posts) {
       const curSubcateg = post.subcategory as BlogSubcategoryFromUnknownCategory;
@@ -32,7 +33,7 @@ async function blogCategoryPageBuilder(posts: PostBase[], category: BlogCategory
   function buildPostsCollectionsSnippets() {
     Object.entries(histogram).forEach(([subcategory, posts2]) => {
       postsCollectionsSnippets[subcategory as BlogSubcategoryFromUnknownCategory] = posts2.map((post) => (
-        <BlogPostPreview key={`${post._raw.flattenedPath}-post-snippet`} post={post} language={language} isNotOnBlogSubcategoryPage />
+        <BlogPostPreview key={`${post._raw.flattenedPath}-post-snippet`} isNotOnBlogSubcategoryPage language={language} post={post} />
       ));
     });
   }
@@ -53,8 +54,8 @@ async function blogCategoryPageBuilder(posts: PostBase[], category: BlogCategory
       const href = buildPathFromParts(category, subcategory);
       const title = (
         <Link
-          href={href}
           className="mb-4 flex h-fit w-fit border-b-[2px] border-transparent leading-none transition-all hover:border-b-[2px] hover:border-inherit hover:pr-2 hover:indent-1 focus:border-b-[2px] focus:border-inherit focus:pr-2 focus:indent-1"
+          href={href}
         >
           <h2 className="mb-1 mt-2">{curSubcategTitle}</h2>
         </Link>
@@ -64,7 +65,7 @@ async function blogCategoryPageBuilder(posts: PostBase[], category: BlogCategory
       if (posts.length > limit) {
         showMoreLink = (
           <div className="flex w-full justify-center">
-            <Button size="lg" className={cn(BUTTON_CONFIG.CLASSNAME, 'mb-6 mt-4 lg:mb-0')} asChild>
+            <Button className={cn(BUTTON_CONFIG.CLASSNAME, 'mb-6 mt-4 lg:mb-0')} size="lg" asChild>
               <Link href={href}>{globalT(`${i18ns.vocab}.see-more`)}</Link>
             </Button>
           </div>
@@ -72,13 +73,13 @@ async function blogCategoryPageBuilder(posts: PostBase[], category: BlogCategory
         posts.pop();
       }
 
-      const sep = <hr key={`${subcategory}-${curSubcategTitle}-sep`} className="color-inherit m-auto my-5 w-36 opacity-50" />;
+      const sep = <hr className="color-inherit m-auto my-5 w-36 opacity-50" key={`${subcategory}-${curSubcategTitle}-sep`} />;
 
       const section = (
         <section
           key={`${subcategory}-${curSubcategTitle}-section`}
-          id={slugger.slug(curSubcategTitle)}
           className="[&>article:not(:last-of-type)]:mb-6"
+          id={slugger.slug(curSubcategTitle)}
         >
           {title}
           {posts}

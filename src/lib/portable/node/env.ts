@@ -2,8 +2,8 @@ import executionContextWarningsVocabGetter from '../../../errors/vocab/warnings/
 
 type TComputedNodeEnv = {
   PROD: boolean;
-  DEV: boolean;
   TEST: boolean;
+  DEV: boolean;
 };
 
 const [NODE_PROD_ENV_NEEDLE, NODE_DEV_ENV_NEEDLE, NODE_TEST_ENV_NEEDLE] = ['prod', 'dev', 'test'];
@@ -31,8 +31,8 @@ if ([devCtx, testCtx, prodCtx, forcedToProd].every((v) => v === false)) {
 
 const ComputedNodeCtx: TComputedNodeEnv = {
   PROD: forcedToProd || !testCtx ? !devCtx : false,
-  DEV: !forcedToProd ? devCtx : false,
-  TEST: !forcedToProd ? testCtx : false
+  TEST: !forcedToProd ? testCtx : false,
+  DEV: !forcedToProd ? devCtx : false
 } as const;
 
 export default ComputedNodeCtx;

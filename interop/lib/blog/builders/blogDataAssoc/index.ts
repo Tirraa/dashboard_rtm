@@ -1,4 +1,5 @@
 import type { BlogDocumentsTypesMetadatas } from '##/config/blog/contentlayerConfigTweakers';
+
 import getBlogDataVariableName from './getBlogDataVariableName';
 
 function blogDataAssocBuilder(documentsTypesMetadatas: BlogDocumentsTypesMetadatas) {

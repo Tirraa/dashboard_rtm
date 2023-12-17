@@ -1,14 +1,16 @@
 import type { FieldDefs } from 'contentlayer/source-files';
-import { expectAssignable, expectNotAssignable } from 'jest-tsd';
+
+import { expectNotAssignable, expectAssignable } from 'jest-tsd';
 import { describe, it } from 'vitest';
+
 import type {
-  ContentLayerDocumentsConfigType,
   DocumentsConfigTypeContentLayerMetadatas,
-  DocumentsFields,
-  MakeAllFields,
-  MakeComputedFields,
+  ContentLayerDocumentsConfigType,
   MakeDocumentsAllFieldsSumType,
   MakeDocumentsTypesSumType,
+  MakeComputedFields,
+  DocumentsFields,
+  MakeAllFields,
   MakeFields
 } from '../ContentlayerConfig';
 
@@ -17,34 +19,34 @@ describe('ContentLayerConfig walkthrough', () => {
   const FAKE_SCHEMA_KEY = 'FakeSchema';
 
   const _FAKE_ALL_FIELDS = {
+    bar: {
+      required: false,
+      type: 'string'
+    },
     foo: {
       type: 'string',
       required: true
-    },
-    bar: {
-      type: 'string',
-      required: false
     }
   } as const satisfies FieldDefs;
 
-  const FAKE_COMPUTED_FIELDS = { foo: { type: 'string', resolve: () => 'FAKE' } } as const;
-  const FAKE_FIELDS = { bar: { type: 'string', required: false } } as const;
+  const FAKE_COMPUTED_FIELDS = { foo: { resolve: () => 'FAKE', type: 'string' } } as const;
+  const FAKE_FIELDS = { bar: { required: false, type: 'string' } } as const;
 
   it('should pass, given the correct FAKE_FIELDS pattern', () =>
     expectAssignable<DocumentsFields<_AllFakeFields, keyof _FakeComputedFields>>(FAKE_FIELDS));
 
   it('should pass, given an invalid FAKE_FIELDS pattern, and expecting the type system to disallow this unhappy path', () => {
     expectNotAssignable<DocumentsFields<_AllFakeFields, keyof _FakeComputedFields>>({
-      foo: { type: 'string', required: true }, // <== Invalid: foo is a computed field
-      bar: { type: 'string', required: false }
+      bar: { required: false, type: 'string' },
+      foo: { type: 'string', required: true } // <== Invalid: foo is a computed field
     } as const);
   });
 
   const FAKE_SCHEMA = {
-    name: 'FakeSchema',
+    fields: _FAKE_ALL_FIELDS,
     filePathPattern: '',
-    contentType: EXT,
-    fields: _FAKE_ALL_FIELDS
+    name: 'FakeSchema',
+    contentType: EXT
   } as const;
 
   it('should pass, given the correct FAKE_SCHEMA pattern', () =>
@@ -52,17 +54,17 @@ describe('ContentLayerConfig walkthrough', () => {
 
   it('should pass, given two invalid FAKE_SCHEMA patterns, and expecting the type system to disallow this unhappy path', () => {
     const INVALID_FAKE_SCHEMA_1 = {
+      fields: { foo: { type: 'string', required: true } }, // <== Invalid: fields is not exhaustive
       name: FAKE_SCHEMA_KEY,
       filePathPattern: '',
-      contentType: EXT,
-      fields: { foo: { type: 'string', required: true } } // <== Invalid: fields is not exhaustive
+      contentType: EXT
     } as const;
 
     const INVALID_FAKE_SCHEMA_2 = {
-      name: '$', // <== Invalid: only the FakeSchemaKey literal is allowed here
+      fields: FAKE_SCHEMA.fields,
       filePathPattern: '',
       contentType: EXT,
-      fields: FAKE_SCHEMA.fields
+      name: '$' // <== Invalid: only the FakeSchemaKey literal is allowed here
     } as const;
 
     expectNotAssignable<ContentLayerDocumentsConfigType<FakeSchemaKey, _AllFakeFields>>(INVALID_FAKE_SCHEMA_1);
@@ -71,12 +73,12 @@ describe('ContentLayerConfig walkthrough', () => {
 
   const FAKE_DOCUMENTS_TYPES_METADATAS = {
     FakePost1: {
-      name: 'FakePost1',
-      filePathPattern: ''
+      filePathPattern: '',
+      name: 'FakePost1'
     },
     FakePost2: {
-      name: 'FakePost2',
-      filePathPattern: ''
+      filePathPattern: '',
+      name: 'FakePost2'
     }
   } as const;
 
@@ -85,14 +87,14 @@ describe('ContentLayerConfig walkthrough', () => {
 
   it('should pass, given two invalid FAKE_SCHEMA patterns, and expecting the type system to disallow this unhappy path', () => {
     const INVALID_FAKE_DOCUMENTS_TYPES_METADATAS = {
+      FakePost2: {
+        filePathPattern: '',
+        name: '$' // <== Invalid: only the FakeDocumentsTypesKeys literals are allowed here
+      },
       // Invalid: not allowed index. Only the FakeDocumentsTypesKeys literals are allowed here
       $: {
-        name: 'FakePost1',
-        filePathPattern: ''
-      },
-      FakePost2: {
-        name: '$', // <== Invalid: only the FakeDocumentsTypesKeys literals are allowed here
-        filePathPattern: ''
+        filePathPattern: '',
+        name: 'FakePost1'
       }
     } as const;
 

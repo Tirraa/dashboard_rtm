@@ -1,20 +1,21 @@
 import type {
-  ComputedField,
   ContentLayerDocumentsConfigType,
-  DocumentsFields,
-  MakeAllFields,
-  MakeComputedFields,
   MakeDocumentsAllFieldsSumType,
   MakeDocumentsTypesSumType,
+  MakeComputedFields,
+  DocumentsFields,
+  ComputedField,
+  MakeAllFields,
   MakeFields,
   TypeName
 } from '@rtm/shared-types/ContentlayerConfig';
-import type { ComputedFields, DocumentContentType, FieldDefs } from 'contentlayer/source-files';
+import type { DocumentContentType, ComputedFields, FieldDefs } from 'contentlayer/source-files';
+
 import {
-  buildBlogPostCategory,
   buildBlogPostLanguageFlag,
-  buildBlogPostSlug,
   buildBlogPostSubcategory,
+  buildBlogPostCategory,
+  buildBlogPostSlug,
   buildBlogPostUrl
 } from '../../lib/blog/builders/computedFields';
 
@@ -23,23 +24,20 @@ export const BLOG_DOCUMENTS_CONTENT_TYPE: DocumentContentType = 'mdx';
 export const BLOG_DOCUMENTS_CONTENT_EXTENSION = 'mdx';
 
 const _ALL_BLOG_FIELDS = {
-  title: {
-    type: 'string',
-    required: true
-  },
-  description: {
-    type: 'string',
-    required: false
+  draft: {
+    type: 'boolean',
+    required: false,
+    default: false
   },
   metadescription: {
     type: 'string',
     required: true
   },
-  date: {
-    type: 'date',
-    required: true
+  description: {
+    required: false,
+    type: 'string'
   },
-  url: {
+  subcategory: {
     type: 'string',
     required: true
   },
@@ -47,7 +45,11 @@ const _ALL_BLOG_FIELDS = {
     type: 'string',
     required: true
   },
-  subcategory: {
+  language: {
+    type: 'string',
+    required: true
+  },
+  title: {
     type: 'string',
     required: true
   },
@@ -55,47 +57,46 @@ const _ALL_BLOG_FIELDS = {
     type: 'string',
     required: true
   },
-  language: {
+  url: {
     type: 'string',
     required: true
   },
-  draft: {
-    type: 'boolean',
-    default: false,
-    required: false
+  date: {
+    required: true,
+    type: 'date'
   }
 } as const satisfies FieldDefs;
 
 /* v8 ignore start */
 export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
-  url: { type: 'string', resolve: (post) => buildBlogPostUrl(post) },
-  language: { type: 'string', resolve: (post) => buildBlogPostLanguageFlag(post) },
-  category: { type: 'string', resolve: (post) => buildBlogPostCategory(post) },
-  subcategory: { type: 'string', resolve: (post) => buildBlogPostSubcategory(post) },
-  slug: { type: 'string', resolve: (post) => buildBlogPostSlug(post) }
+  subcategory: { resolve: (post) => buildBlogPostSubcategory(post), type: 'string' },
+  language: { resolve: (post) => buildBlogPostLanguageFlag(post), type: 'string' },
+  category: { resolve: (post) => buildBlogPostCategory(post), type: 'string' },
+  slug: { resolve: (post) => buildBlogPostSlug(post), type: 'string' },
+  url: { resolve: (post) => buildBlogPostUrl(post), type: 'string' }
 } as const satisfies Partial<Record<keyof _AllBlogFields, ComputedField>> satisfies ComputedFields;
 /* v8 ignore stop */
 
 export const BLOG_DOCUMENTS_FIELDS = {
-  title: { type: 'string', required: true },
+  draft: { type: 'boolean', required: false, default: false },
   metadescription: { type: 'string', required: true },
-  description: { type: 'string', required: false },
-  date: { type: 'date', required: true },
-  draft: { type: 'boolean', required: false, default: false }
+  description: { required: false, type: 'string' },
+  title: { type: 'string', required: true },
+  date: { required: true, type: 'date' }
 } as const satisfies DocumentsFields;
 
 export const BLOG_POST_SCHEMA_CONFIG: ContentLayerDocumentsConfigType<PostSchemaKey> = {
-  name: 'PostSchema',
-  filePathPattern: '',
   contentType: BLOG_DOCUMENTS_CONTENT_EXTENSION,
-  fields: _ALL_BLOG_FIELDS
+  fields: _ALL_BLOG_FIELDS,
+  filePathPattern: '',
+  name: 'PostSchema'
 } as const;
 
 type _AllBlogFields = typeof _ALL_BLOG_FIELDS;
 type _BlogComputedFields = typeof BLOG_DOCUMENTS_COMPUTED_FIELDS;
 type _BlogFields = typeof BLOG_DOCUMENTS_FIELDS;
 
-export type BlogDocumentsTypesKeys = MakeDocumentsTypesSumType<'PatchPost' | 'PatchPostBis' | 'TestingPost'>;
+export type BlogDocumentsTypesKeys = MakeDocumentsTypesSumType<'PatchPostBis' | 'TestingPost' | 'PatchPost'>;
 export type AllBlogFields = MakeAllFields<_AllBlogFields>;
 export type BlogFields = MakeFields<_BlogFields>;
 export type BlogComputedFields = MakeComputedFields<_BlogComputedFields>;
@@ -106,7 +107,7 @@ type PostSchemaKey = 'PostSchema';
 export type BlogDocumentsTypesMetadatas = Record<BlogDocumentsTypesKeys, BlogDocumentsConfigTypeMetadatas<BlogDocumentsTypesKeys>>;
 
 type BlogDocumentsConfigTypeMetadatas<TYPENAME extends TypeName = TypeName> = {
-  name: TYPENAME;
   categoryFolder: CategoryFolder;
+  name: TYPENAME;
 };
 type CategoryFolder = string;

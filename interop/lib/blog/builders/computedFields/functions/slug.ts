@@ -1,5 +1,6 @@
-import type { UnknownBlogSlug } from '@/types/Blog';
 import type { PostToBuild } from '@rtm/shared-types/ContentlayerConfig';
+import type { UnknownBlogSlug } from '@/types/Blog';
+
 import { InvalidArgumentsError } from '../../../unifiedImport';
 
 /**

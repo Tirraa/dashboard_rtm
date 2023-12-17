@@ -1,14 +1,16 @@
-import ROUTES_ROOTS from '##/config/routes';
+import type { BlogPostPageProps } from '@/types/Blog';
+
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
-import type { BlogPostPageProps } from '@/types/Blog';
+import ROUTES_ROOTS from '##/config/routes';
 import { redirect } from 'next/navigation';
+
 import {
-  getBlogPostUnstrict,
-  isValidBlogCategory,
-  isValidBlogCategoryAndSubcategoryPairInAnyLanguage,
   redirectToBlogCategoryAndSubcategoryPairPageUnstrict,
-  redirectToBlogCategoryPage
+  isValidBlogCategoryAndSubcategoryPairInAnyLanguage,
+  redirectToBlogCategoryPage,
+  getBlogPostUnstrict,
+  isValidBlogCategory
 } from '../api';
 
 async function blogPostGuard({ params }: BlogPostPageProps) {

@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+
 import getBreakpoint from '../getBreakpoint';
 
 vi.mock('tailwind.config', async () => {

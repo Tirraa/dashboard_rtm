@@ -1,28 +1,30 @@
 import type { AtomicContentLayerDocumentConfig } from '@rtm/shared-types/ContentlayerConfig';
-import type { DocumentType, DocumentTypeDef } from 'contentlayer/source-files';
-import blogDataAssocBuilder from '../../lib/blog/builders/blogDataAssoc';
+import type { DocumentTypeDef, DocumentType } from 'contentlayer/source-files';
+
 import type { BlogDocumentsTypesMetadatas } from './contentlayerConfigTweakers';
+
 import {
-  BLOG_POSTS_FOLDER,
-  BLOG_POST_SCHEMA_CONFIG,
-  BLOG_DOCUMENTS_CONTENT_EXTENSION as EXT,
   BLOG_DOCUMENTS_COMPUTED_FIELDS as computedFields,
   BLOG_DOCUMENTS_CONTENT_TYPE as contentType,
-  BLOG_DOCUMENTS_FIELDS as fields
+  BLOG_DOCUMENTS_CONTENT_EXTENSION as EXT,
+  BLOG_DOCUMENTS_FIELDS as fields,
+  BLOG_POST_SCHEMA_CONFIG,
+  BLOG_POSTS_FOLDER
 } from './contentlayerConfigTweakers';
+import blogDataAssocBuilder from '../../lib/blog/builders/blogDataAssoc';
 
 const documentsTypesMetadatas: BlogDocumentsTypesMetadatas = {
-  PatchPost: {
-    name: 'PatchPost',
-    categoryFolder: 'patch-notes'
-  },
   PatchPostBis: {
-    name: 'PatchPostBis',
-    categoryFolder: 'patch-notes-bis'
+    categoryFolder: 'patch-notes-bis',
+    name: 'PatchPostBis'
+  },
+  PatchPost: {
+    categoryFolder: 'patch-notes',
+    name: 'PatchPost'
   },
   TestingPost: {
-    name: 'TestingPost',
-    categoryFolder: 'testing'
+    categoryFolder: 'testing',
+    name: 'TestingPost'
   }
 } as const;
 
@@ -35,10 +37,10 @@ const defineDocumentType = (def: () => DocumentTypeDef<string>) =>
 
 const blogDocumentTypes: DocumentType[] = Object.values(documentsTypesMetadatas).reduce(
   (acc, documentTypeMetadatas) => {
-    const { name, categoryFolder } = documentTypeMetadatas;
+    const { categoryFolder, name } = documentTypeMetadatas;
     const filePathPattern = BLOG_POSTS_FOLDER + '/' + categoryFolder + `/**/*.${EXT}`;
     acc.push(
-      defineDocumentType(() => ({ name, filePathPattern, contentType, fields, computedFields }) as const satisfies AtomicContentLayerDocumentConfig)
+      defineDocumentType(() => ({ filePathPattern, computedFields, contentType, fields, name }) as const satisfies AtomicContentLayerDocumentConfig)
     );
     return acc;
   },

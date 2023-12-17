@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import indexOfNthOccurrence from '../indexOfNthOccurrence';
 
 describe('indexOfNthOccurrence', () => {

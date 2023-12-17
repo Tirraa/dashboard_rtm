@@ -1,5 +1,6 @@
-import BlogConfig from '@/config/blog';
 import { describe, expect, it } from 'vitest';
+import BlogConfig from '@/config/blog';
+
 import { getSlicedBlogPostDescription } from '../api';
 
 describe('getSlicedBlogPostDescription', () => {

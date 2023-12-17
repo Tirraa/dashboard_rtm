@@ -1,23 +1,24 @@
 'use client';
 
-import { i18ns } from '##/config/i18n';
-import SidebarCollapseButtonIconStyle, { SIZE_PX_VALUE } from '@/components/config/styles/sidebar/SidebarCollapseButtonIconStyle';
-import SidebarCollapseButtonWrapperStyle from '@/components/config/styles/sidebar/SidebarCollapseButtonWrapperStyle';
-import { useScopedI18n } from '@/i18n/client';
-import { cn } from '@/lib/tailwind';
-import { ArrowSmallDownIcon, ArrowSmallRightIcon } from '@heroicons/react/20/solid';
 import type { FunctionComponent } from 'react';
 
+import SidebarCollapseButtonIconStyle, { SIZE_PX_VALUE } from '@/components/config/styles/sidebar/SidebarCollapseButtonIconStyle';
+import SidebarCollapseButtonWrapperStyle from '@/components/config/styles/sidebar/SidebarCollapseButtonWrapperStyle';
+import { ArrowSmallRightIcon, ArrowSmallDownIcon } from '@heroicons/react/20/solid';
+import { useScopedI18n } from '@/i18n/client';
+import { i18ns } from '##/config/i18n';
+import { cn } from '@/lib/tailwind';
+
 interface DashboardSidebarCollapseButtonProps {
-  isCollapsed: boolean;
   setIsCollapsed: Function;
+  isCollapsed: boolean;
 }
 
-const { isActiveClassList: btnIconIsActiveClassList, isNotActiveClassList: btnIconIsNotActiveClassList } = SidebarCollapseButtonIconStyle;
+const { isNotActiveClassList: btnIconIsNotActiveClassList, isActiveClassList: btnIconIsActiveClassList } = SidebarCollapseButtonIconStyle;
 
-const { isActiveClassList: btnWrapperIsActiveClassList, isNotActiveClassList: btnWrapperIsNotActiveClassList } = SidebarCollapseButtonWrapperStyle;
+const { isNotActiveClassList: btnWrapperIsNotActiveClassList, isActiveClassList: btnWrapperIsActiveClassList } = SidebarCollapseButtonWrapperStyle;
 
-const DashboardSidebarCollapseButton: FunctionComponent<DashboardSidebarCollapseButtonProps> = ({ isCollapsed, setIsCollapsed }) => {
+const DashboardSidebarCollapseButton: FunctionComponent<DashboardSidebarCollapseButtonProps> = ({ setIsCollapsed, isCollapsed }) => {
   const sidebarCollapseBtnIconClassList = isCollapsed ? btnIconIsActiveClassList : btnIconIsNotActiveClassList;
   const sidebarCollapseBtnWrapperClassList = !isCollapsed ? btnWrapperIsActiveClassList : btnWrapperIsNotActiveClassList;
   const sidebarCollapseBtnClassList =
@@ -29,13 +30,13 @@ const DashboardSidebarCollapseButton: FunctionComponent<DashboardSidebarCollapse
   const type = 'button';
 
   return (
-    <div onClick={() => setIsCollapsed(!isCollapsed)} className={sidebarCollapseBtnWrapperClassList}>
-      <button className={cn(sidebarCollapseBtnClassList, 'hidden lg:inline')} aria-label={ariaLabel} aria-expanded={ariaExpanded} type={type}>
-        <ArrowSmallRightIcon width={SIZE_PX_VALUE} height={SIZE_PX_VALUE} className={sidebarCollapseBtnIconClassList} />
+    <div className={sidebarCollapseBtnWrapperClassList} onClick={() => setIsCollapsed(!isCollapsed)}>
+      <button className={cn(sidebarCollapseBtnClassList, 'hidden lg:inline')} aria-expanded={ariaExpanded} aria-label={ariaLabel} type={type}>
+        <ArrowSmallRightIcon className={sidebarCollapseBtnIconClassList} height={SIZE_PX_VALUE} width={SIZE_PX_VALUE} />
       </button>
 
-      <button className={cn(sidebarCollapseBtnClassList, 'lg:hidden')} aria-label={ariaLabel} aria-expanded={ariaExpanded} type={type}>
-        <ArrowSmallDownIcon width={SIZE_PX_VALUE} height={SIZE_PX_VALUE} className={sidebarCollapseBtnIconClassList} />
+      <button className={cn(sidebarCollapseBtnClassList, 'lg:hidden')} aria-expanded={ariaExpanded} aria-label={ariaLabel} type={type}>
+        <ArrowSmallDownIcon className={sidebarCollapseBtnIconClassList} height={SIZE_PX_VALUE} width={SIZE_PX_VALUE} />
       </button>
     </div>
   );

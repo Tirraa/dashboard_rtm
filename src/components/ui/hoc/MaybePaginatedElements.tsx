@@ -1,7 +1,8 @@
 import type { PaginatedElementsProps } from '@/components/ui/PaginatedElements';
-import PaginatedElements from '@/components/ui/PaginatedElements';
-import PaginatedElementsBodyWrapper from '@/components/ui/hoc/PaginatedElementsBodyWrapper';
 import type { FunctionComponent } from 'react';
+
+import PaginatedElementsBodyWrapper from '@/components/ui/hoc/PaginatedElementsBodyWrapper';
+import PaginatedElements from '@/components/ui/PaginatedElements';
 
 interface MaybePaginatedElementsProps extends PaginatedElementsProps {}
 
@@ -13,11 +14,11 @@ export const computePagesAmount = (total: number, perChunk: number) => Math.ceil
  * @extends {PaginatedElements} - WithControls?
  */
 const MaybePaginatedElements: FunctionComponent<MaybePaginatedElementsProps> = ({
-  paginatedElements,
-  elementsPerPage,
+  paginatedElementsBodyWrapperProps,
   paginationButtonsPosition,
   paginationButtonsJustify,
-  paginatedElementsBodyWrapperProps
+  paginatedElements,
+  elementsPerPage
 }) => {
   const pagesAmount = computePagesAmount(paginatedElements.length, elementsPerPage);
 
@@ -27,12 +28,12 @@ const MaybePaginatedElements: FunctionComponent<MaybePaginatedElementsProps> = (
     </PaginatedElementsBodyWrapper>
   ) : (
     <PaginatedElements
-      paginatedElements={paginatedElements}
-      elementsPerPage={elementsPerPage}
+      paginatedElementsBodyWrapperProps={paginatedElementsBodyWrapperProps}
       paginationButtonsPosition={paginationButtonsPosition}
       paginationButtonsJustify={paginationButtonsJustify}
+      paginatedElements={paginatedElements}
+      elementsPerPage={elementsPerPage}
       pagesAmount={pagesAmount}
-      paginatedElementsBodyWrapperProps={paginatedElementsBodyWrapperProps}
     />
   );
 };

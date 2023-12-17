@@ -1,16 +1,17 @@
 'use client';
 
-import Loader from '@/components/ui/Loader';
-import { I18nProviderClient } from '@/i18n/client';
 import type { WithChildren } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
+
+import { I18nProviderClient } from '@/i18n/client';
+import Loader from '@/components/ui/Loader';
 
 export interface I18nProviderProps extends WithChildren {
   locale: string;
 }
 
 const I18nProvider: FunctionComponent<I18nProviderProps> = ({ children, locale }) => (
-  <I18nProviderClient locale={locale} fallback={<Loader />}>
+  <I18nProviderClient fallback={<Loader />} locale={locale}>
     {children}
   </I18nProviderClient>
 );

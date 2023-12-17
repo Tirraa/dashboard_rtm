@@ -1,7 +1,8 @@
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
-import ROUTES_ROOTS from '##/config/routes';
 import { describe, expect, it } from 'vitest';
-import { getPathnameMaybeI18nFlag, getPathnameWithoutI18nFlag } from '../i18n';
+import ROUTES_ROOTS from '##/config/routes';
+
+import { getPathnameWithoutI18nFlag, getPathnameMaybeI18nFlag } from '../i18n';
 
 describe('getPathnameMaybeI18nFlag', () => {
   it('should return empty string or flag, given a pathname without i18n flag and a pathname with an i18n flag', () => {

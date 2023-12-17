@@ -1,82 +1,69 @@
-import blogCategories from '@rtm/generated/blogCategories';
 import type { TypedLeafsJSONData } from '@rtm/shared-types/JSON';
+
+import blogCategories from '@rtm/generated/blogCategories';
 
 const _: NotScanned = '';
 
 export const SHARED_VOCAB_SCHEMA = {
   'pages-titles': {
-    homepage: _,
-    'sign-up': _,
-
-    'patch-notes': _,
-    'discord-bot': _,
-    dashboard: _,
-
     'patch-notes-bis': _,
     'discord-bot-bis': _,
-    'dashboard-bis': _
+
+    'dashboard-bis': _,
+    'patch-notes': _,
+    'discord-bot': _,
+
+    'sign-up': _,
+    dashboard: _,
+    homepage: _
   },
   vocab: {
-    logo: _,
+    breadcrumbs: _,
     brand: _,
-    page: _,
-    breadcrumbs: _
+    logo: _,
+    page: _
   }
 } as const satisfies TypedLeafsJSONData<NotScanned>;
 
 export default {
-  'blog-categories': blogCategories,
-  'pages-titles': SHARED_VOCAB_SCHEMA['pages-titles'],
-
-  _infos: {
-    lng: '__SCANNED_ON_BUILD_FIELD__'
-  },
-
   navbar: {
-    assistance: _,
     'sr-only': {
-      'language-switcher-menu': _,
-      'open-language-switcher-menu': _,
       'close-language-switcher-menu': _,
-      'hamburger-menu': _,
-      'open-hamburger-menu': _,
+      'open-language-switcher-menu': _,
+      'language-switcher-menu': _,
       'close-hamburger-menu': _,
       'switch-to-light-mode': _,
-      'switch-to-dark-mode': _
-    }
+      'open-hamburger-menu': _,
+      'switch-to-dark-mode': _,
+      'hamburger-menu': _
+    },
+    assistance: _
   },
-
-  auth: {
-    login: _,
-    logout: _,
-    signup: _
+  vocab: {
+    ...SHARED_VOCAB_SCHEMA.vocab,
+    'sr-only': {
+      'brand-logo': _
+    },
+    'copy-to-clipboard': _,
+    'invite-the-bot': _,
+    'no-blog-post': _,
+    'brand-short': _,
+    'see-more': _,
+    loading: _,
+    '404': _,
+    prev: _,
+    next: _
   },
 
   dashboard: {
+    'sr-only': {
+      'hide-sidebar': _,
+      'show-sidebar': _
+    },
     'pages-titles': {
       main: _,
       foo: _,
       bar: _
-    },
-    'sr-only': {
-      'hide-sidebar': _,
-      'show-sidebar': _
-    }
-  },
-
-  vocab: {
-    ...SHARED_VOCAB_SCHEMA.vocab,
-    'brand-short': _,
-    'invite-the-bot': _,
-    'no-blog-post': _,
-    '404': _,
-    'see-more': _,
-    loading: _,
-    prev: _,
-    next: _,
-    'copy-to-clipboard': _,
-    'sr-only': {
-      'brand-logo': _
     }
   },
 
@@ -88,7 +75,21 @@ export default {
     signup: {
       'meta-description': _
     }
-  }
+  },
+
+  auth: {
+    logout: _,
+    signup: _,
+    login: _
+  },
+
+  'pages-titles': SHARED_VOCAB_SCHEMA['pages-titles'],
+
+  _infos: {
+    lng: '__SCANNED_ON_BUILD_FIELD__'
+  },
+
+  'blog-categories': blogCategories
 } as const satisfies TypedLeafsJSONData<MaybeScanned>;
 
 type NotScanned = '';

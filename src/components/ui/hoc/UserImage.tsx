@@ -1,12 +1,13 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/Avatar';
-import type { User } from '@rtm/shared-types/Auth';
+import type { FunctionComponent, CSSProperties } from 'react';
 import type { WithClassname } from '@rtm/shared-types/Next';
-import type { CSSProperties, FunctionComponent } from 'react';
+import type { User } from '@rtm/shared-types/Auth';
+
+import { AvatarFallback, AvatarImage, Avatar } from '@/components/ui/Avatar';
 
 interface UserImageProps extends Partial<WithClassname> {
-  user: User;
-  width: number;
   height: number;
+  width: number;
+  user: User;
 }
 
 /**
@@ -14,7 +15,7 @@ interface UserImageProps extends Partial<WithClassname> {
  * @implements {User} image, name
  * @extends {Avatar}
  */
-const UserImage: FunctionComponent<UserImageProps> = ({ user, width: widthValue, height: heightValue, className }) => {
+const UserImage: FunctionComponent<UserImageProps> = ({ height: heightValue, width: widthValue, className, user }) => {
   const src = user?.image ?? '';
   if (!src) return null;
 
@@ -25,7 +26,7 @@ const UserImage: FunctionComponent<UserImageProps> = ({ user, width: widthValue,
 
   return (
     <Avatar className={className} style={style}>
-      <AvatarImage src={src} width={width} height={height} alt={alt} />
+      <AvatarImage height={height} width={width} src={src} alt={alt} />
       <AvatarFallback className="sr-only">{alt}</AvatarFallback>
     </Avatar>
   );

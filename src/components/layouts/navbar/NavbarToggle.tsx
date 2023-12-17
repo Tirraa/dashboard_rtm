@@ -1,15 +1,16 @@
 'use client';
 
-import { i18ns } from '##/config/i18n';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/DropdownMenu';
-import { getClientSideI18n, useScopedI18n } from '@/i18n/client';
-import { getBreakpoint } from '@/lib/tailwind';
 import type { NavbarItems } from '@/types/NavData';
-import { useMediaQuery } from '@react-hook/media-query';
-import { preserveKeyboardNavigation } from '@rtm/shared-lib/html';
-import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import type { FunctionComponent } from 'react';
-import { useEffect, useRef, useState } from 'react';
+
+import { DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem, DropdownMenu } from '@/components/ui/DropdownMenu';
+import { preserveKeyboardNavigation } from '@rtm/shared-lib/html';
+import { getClientSideI18n, useScopedI18n } from '@/i18n/client';
+import { getRefCurrentPtr } from '@rtm/shared-lib/react';
+import { useMediaQuery } from '@react-hook/media-query';
+import { useEffect, useState, useRef } from 'react';
+import { getBreakpoint } from '@/lib/tailwind';
+import { i18ns } from '##/config/i18n';
 
 interface NavbarToggleProps {
   items: NavbarItems;
@@ -21,10 +22,10 @@ const menuItemsGenerator = (items: NavbarItems) => {
   return items.map((item, index) => {
     return (
       <DropdownMenuItem
-        key={`navbar-hamburger-menu-item-${index}`}
-        className="my-1 p-0"
-        textValue={globalT(item.i18nTitle)}
         onClick={(event) => preserveKeyboardNavigation(event.target)}
+        key={`navbar-hamburger-menu-item-${index}`}
+        textValue={globalT(item.i18nTitle)}
+        className="my-1 p-0"
       >
         {item.jsx}
       </DropdownMenuItem>
@@ -55,9 +56,9 @@ const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) => {
     "flex h-full w-full flex-col items-center justify-center text-white transition-opacity before:block before:h-px before:w-6 before:-translate-y-1 before:rotate-0 before:bg-current before:transition-transform before:duration-150 before:content-[''] after:block after:h-px after:w-6 after:translate-y-1 after:rotate-0 after:bg-current after:transition-transform after:duration-150 after:content-[''] data-[pressed=true]:opacity-70 data-[open=true]:before:translate-y-px data-[open=true]:before:rotate-45 data-[open=true]:after:translate-y-0 data-[open=true]:after:-rotate-45";
 
   return (
-    <DropdownMenu open={isOpened} onOpenChange={onOpenChange} withDeepResetOnLgBreakpointEvents>
+    <DropdownMenu withDeepResetOnLgBreakpointEvents onOpenChange={onOpenChange} open={isOpened}>
       <DropdownMenuTrigger aria-label={!isOpened ? scopedT('open-hamburger-menu') : scopedT('close-hamburger-menu')} asChild>
-        <button ref={togglerRef} className={className} />
+        <button className={className} ref={togglerRef} />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="relative min-w-[145px] ltr:right-4 rtl:left-4 dark:border-card" aria-label={scopedT('hamburger-menu')}>

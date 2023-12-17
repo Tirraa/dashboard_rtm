@@ -1,8 +1,10 @@
-import ROUTES_ROOTS from '##/config/routes';
+import type { AppPathAsIs, AppPath } from '@rtm/shared-types/Next';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
-import type { AppPath, AppPathAsIs } from '@rtm/shared-types/Next';
-import isValidLanguageFlag from './portable/i18n/isValidLanguageFlag';
+
+import ROUTES_ROOTS from '##/config/routes';
+
 import indexOfNthOccurrence from './portable/str/indexOfNthOccurrence';
+import isValidLanguageFlag from './portable/i18n/isValidLanguageFlag';
 
 function computePathnameI18nFlagUnstrict(pathname: AppPath, providedEndIndex?: number): string {
   const compute = (pathname: AppPath, endIndex: number) => (endIndex === -1 ? pathname.substring(1) : pathname.substring(1, endIndex));
@@ -23,7 +25,7 @@ export function getPathnameWithoutI18nFlag(pathname: AppPath): AppPathAsIs | App
   return pathnameWithouti18n;
 }
 
-export function getPathnameMaybeI18nFlag(pathname: AppPath): '' | LanguageFlag {
+export function getPathnameMaybeI18nFlag(pathname: AppPath): LanguageFlag | '' {
   const languageFlag = computePathnameI18nFlagUnstrict(pathname);
   if (!isValidLanguageFlag(languageFlag)) return '';
   return languageFlag;

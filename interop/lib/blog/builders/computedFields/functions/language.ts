@@ -1,6 +1,7 @@
 import type { PostToBuild } from '@rtm/shared-types/ContentlayerConfig';
 import type { LanguageFlag } from '@rtm/shared-types/LanguageFlag';
-import { BLOG_POSTS_FOLDER, DEFAULT_LANGUAGE, getFlattenedPathWithoutRootFolder, indexOfNthOccurrence } from '../../../unifiedImport';
+
+import { getFlattenedPathWithoutRootFolder, indexOfNthOccurrence, BLOG_POSTS_FOLDER, DEFAULT_LANGUAGE } from '../../../unifiedImport';
 
 function buildBlogPostLanguageFlagFromStr(flattenedPath: string): LanguageFlag | string {
   const firstSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 1);

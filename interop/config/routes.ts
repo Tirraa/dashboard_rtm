@@ -1,7 +1,8 @@
 import type { AppPath } from '@rtm/shared-types/Next';
+
 import getSlashEnvelope from '../../src/lib/portable/str/getSlashEnvelope';
 
-type RoutesRootsKeys = 'WEBSITE' | 'BLOG' | 'PATCH_NOTES' | 'DASHBOARD';
+type RoutesRootsKeys = 'PATCH_NOTES' | 'DASHBOARD' | 'WEBSITE' | 'BLOG';
 type RoutesRoots = Record<RoutesRootsKeys, AppPath>;
 
 const ROUTES_ROOTS_BASE = {

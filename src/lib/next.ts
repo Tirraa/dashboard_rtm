@@ -1,8 +1,10 @@
-import type { AppPath, MiddlewareFactory } from '@rtm/shared-types/Next';
-import type { NextFont } from 'next/dist/compiled/@next/font';
+import type { MiddlewareFactory, AppPath } from '@rtm/shared-types/Next';
 import type { NextMiddleware, NextRequest } from 'next/server';
+import type { NextFont } from 'next/dist/compiled/@next/font';
+
 import { NextResponse } from 'next/server';
-import { getPathnameMaybeI18nFlag, getPathnameWithoutI18nFlag } from './i18n';
+
+import { getPathnameWithoutI18nFlag, getPathnameMaybeI18nFlag } from './i18n';
 
 export const fcn = (f: NextFont): string => f.className;
 

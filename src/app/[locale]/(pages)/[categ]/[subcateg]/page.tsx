@@ -1,9 +1,10 @@
-import I18nTaxonomy from '##/config/taxonomies/i18n';
+import type { BlogSubcategoryPageProps } from '@/types/Blog';
+
+import { getBlogSubcategoryMetadatas, blogSubcategoryGuard, getBlogStaticParams } from '@/lib/blog/staticGeneration';
 import SubcategoryRelatedBlogPosts from '@/components/pages/blog/SubcategoryRelatedBlogPosts';
 import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
-import { blogSubcategoryGuard, getBlogStaticParams, getBlogSubcategoryMetadatas } from '@/lib/blog/staticGeneration';
-import type { BlogSubcategoryPageProps } from '@/types/Blog';
 import { setStaticParamsLocale } from 'next-international/server';
+import I18nTaxonomy from '##/config/taxonomies/i18n';
 
 export async function generateMetadata({ params }: BlogSubcategoryPageProps) {
   await blogSubcategoryGuard({ params });

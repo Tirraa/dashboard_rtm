@@ -26,7 +26,7 @@ function getFlattenedPathWithoutRootFolder(flattenedPath: string, rootFolderNeed
   if (!flattenedPath.startsWith(expectedFlattenedPathStartStr)) {
     throw new InvalidArgumentsError(
       getFlattenedPathWithoutRootFolder.name,
-      { flattenedPath, rootFolderNeedle },
+      { rootFolderNeedle, flattenedPath },
       `flattenedPath doesn't start with "${expectedFlattenedPathStartStr}". You should change the rootFolderNeedle value. Or maybe you just don't need to use this function?`
     );
   }

@@ -1,14 +1,16 @@
-import { LANGUAGES } from '##/config/i18n';
-import ROUTES_ROOTS from '##/config/routes';
-import { getBlogSubcategoriesByCategory } from '@/cache/blog';
-import BlogConfig from '@/config/blog';
-import type { BlogCategory, BlogSubcategoryFromUnknownCategory, PostBase, StrictBlog, UnknownBlogSlug } from '@/types/Blog';
-import { buildAbsolutePathFromParts } from '@rtm/shared-lib/str';
+import type { BlogSubcategoryFromUnknownCategory, UnknownBlogSlug, BlogCategory, StrictBlog, PostBase } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
-import type { AppPath } from '@rtm/shared-types/Next';
 import type { IsoDateTimeString } from 'contentlayer/core';
+import type { AppPath } from '@rtm/shared-types/Next';
+
+import { buildAbsolutePathFromParts } from '@rtm/shared-lib/str';
+import { getBlogSubcategoriesByCategory } from '@/cache/blog';
+import ROUTES_ROOTS from '##/config/routes';
+import { LANGUAGES } from '##/config/i18n';
 import { redirect } from 'next/navigation';
+import BlogConfig from '@/config/blog';
+
 import { getFormattedDate } from '../str';
 import ComputedBlogCtx from './ctx';
 
@@ -69,7 +71,7 @@ export async function getBlogPostUnstrict(
     postsCollection.find(({ slug: currentPostSlug }) => currentPostSlug === targettedSlug) ?? null;
 
   const getPostWithDisallowedDraftsCtx: () => MaybeNull<PostBase> = () =>
-    postsCollection.find(({ slug: currentPostSlug, draft: currentPostDraft }) => !currentPostDraft && currentPostSlug === targettedSlug) ?? null;
+    postsCollection.find(({ draft: currentPostDraft, slug: currentPostSlug }) => !currentPostDraft && currentPostSlug === targettedSlug) ?? null;
 
   const postsCollection: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(category, subcategory, language);
 
@@ -166,7 +168,7 @@ export function getBlogPostPathWithoutI18nPart({ language, url }: PostBase): App
   return blogPostPathWithoutI18nPart;
 }
 
-export function getSlicedBlogPostDescription(description: string): DescriptionAsIs | CroppedDescription {
+export function getSlicedBlogPostDescription(description: string): CroppedDescription | DescriptionAsIs {
   const takeLimit = BlogConfig.BLOG_POST_PREVIEW_DESCRIPTION_CHARACTERS_LIMIT - 1;
   if (description.length <= takeLimit) return description;
 

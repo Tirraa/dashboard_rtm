@@ -14,7 +14,7 @@ export type MakeHomogeneousValuesObjType<Obj extends object, ObjValuesType> = {
   [K in keyof Obj]: Obj[K] extends object ? MakeHomogeneousValuesObjType<Obj[K], ObjValuesType> : ObjValuesType;
 };
 
-export type JSPrimitives = string | number | boolean | null | undefined;
+export type JSPrimitives = undefined | boolean | string | number | null;
 
 export type KeySeparator = '.';
 
@@ -23,15 +23,17 @@ export type DeepPathToLiteralKeys<DeepPath extends string> = JoinKeys<SplitKeys<
 // * ... https://github.com/microsoft/TypeScript/issues/56080
 export type Tuple<T1, T2 = never> = /*__CAST `never` TO__*/ [] & T2 extends never ? [T1, T1] : [T1, T2];
 
-export type MaybeNull<T> = T | null;
-export type MaybeUndefined<T> = T | undefined;
+export type MaybeNull<T> = null | T;
+export type MaybeUndefined<T> = undefined | T;
 export type MaybeObjectValue<T> = MaybeUndefined<T>;
 export type MaybeSessionUser<T> = MaybeUndefined<T>;
-export type MaybeSessionUserField<T> = MaybeNull<T> | MaybeUndefined<T>;
+export type MaybeSessionUserField<T> = MaybeUndefined<T> | MaybeNull<T>;
 
 // * ... https://github.com/microsoft/TypeScript/issues/56080
 export type CompareFun<T extends Tuple<unknown>, CTX extends unknown[] = never> = /*__CAST `never` TO__*/ Function & CTX extends never
-  ? (x1: T[0], x2: T[1]) => CompareFunReturnValue
-  : (x1: T[0], x2: T[1], ...ctx: [...CTX]) => CompareFunReturnValue;
+  ? // eslint-disable-next-line no-unused-vars
+    (x1: T[0], x2: T[1]) => CompareFunReturnValue
+  : // eslint-disable-next-line no-unused-vars
+    (x1: T[0], x2: T[1], ...ctx: [...CTX]) => CompareFunReturnValue;
 
 type CompareFunReturnValue = number;

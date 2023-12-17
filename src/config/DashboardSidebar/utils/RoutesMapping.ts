@@ -1,4 +1,4 @@
-import type { RoutesDefinition, RoutesTitles, WeaklyBindedReactElements } from '@/types/RoutesMapping';
+import type { WeaklyBindedReactElements, RoutesDefinition, RoutesTitles } from '@/types/RoutesMapping';
 
 export type DashboardRoutesKeys = 'MAIN_PAGE' | 'FOO_PAGE' | 'BAR_PAGE';
 export type DashboardRoutes = RoutesDefinition<DashboardRoutesKeys>;

@@ -1,7 +1,9 @@
 import type { Stats } from 'fs';
-import { readdirSync, statSync } from 'fs';
+
 import { basename, extname, join } from 'path';
-import type { File, Filename, Path } from '../types/metadatas';
+import { readdirSync, statSync } from 'fs';
+
+import type { Filename, File, Path } from '../types/metadatas';
 
 export default function traverseFolder(rootFolder: Path): File[] {
   const filesCollection: File[] = [];

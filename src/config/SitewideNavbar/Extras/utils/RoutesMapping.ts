@@ -1,4 +1,4 @@
 import type { WeaklyBindedReactElements } from '@/types/RoutesMapping';
 
-type NavbarExtrasFeaturesKeys = 'LOGIN' | 'THEME' | 'LANGUAGE';
+type NavbarExtrasFeaturesKeys = 'LANGUAGE' | 'LOGIN' | 'THEME';
 export type NavbarExtrasFeaturesReactElements = WeaklyBindedReactElements<NavbarExtrasFeaturesKeys>;

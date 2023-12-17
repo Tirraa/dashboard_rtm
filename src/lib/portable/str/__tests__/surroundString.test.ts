@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import surroundString from '../surroundString';
 
 describe('surroundString', () => {

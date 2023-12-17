@@ -1,6 +1,7 @@
-import DocumentRoot from '@/components/layouts/base/DocumentRoot';
 import type { LayoutBaseProps } from '@/types/Next';
 import type { FunctionComponent } from 'react';
+
+import DocumentRoot from '@/components/layouts/base/DocumentRoot';
 
 interface HtmlElementProps extends LayoutBaseProps {}
 

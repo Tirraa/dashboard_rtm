@@ -1,14 +1,15 @@
-import { i18ns } from '##/config/i18n';
+import type { BlogCategoryPageProps, BlogCategory, PostBase } from '@/types/Blog';
+import type { FunctionComponent } from 'react';
+
+import blogCategoryPageBuilder from '@/lib/blog/blogCategoryPageBuilder';
+import { getAllBlogPostsByCategory } from '@/lib/blog/api';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
-import BlogConfig from '@/config/blog';
 import { getScopedI18n } from '@/i18n/server';
-import { getAllBlogPostsByCategory } from '@/lib/blog/api';
-import blogCategoryPageBuilder from '@/lib/blog/blogCategoryPageBuilder';
 import ComputedBlogCtx from '@/lib/blog/ctx';
-import type { BlogCategory, BlogCategoryPageProps, PostBase } from '@/types/Blog';
 import { notFound } from 'next/navigation';
-import type { FunctionComponent } from 'react';
+import { i18ns } from '##/config/i18n';
+import BlogConfig from '@/config/blog';
 
 interface CategoryRelatedSubcategoriesAndBlogPostsProps extends BlogCategoryPageProps {}
 
@@ -27,7 +28,7 @@ const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<CategoryRelate
     ComputedBlogCtx.TESTING
       ? postsCollection.filter(({ draft: currentPostDraft }) => !currentPostDraft)
       : postsCollection.filter(
-          ({ draft: currentPostDraft, category: currentPostCategory }) => currentPostCategory !== BlogConfig.TESTING_CATEGORY && !currentPostDraft
+          ({ category: currentPostCategory, draft: currentPostDraft }) => currentPostCategory !== BlogConfig.TESTING_CATEGORY && !currentPostDraft
         );
 
   const postsCollection = await getAllBlogPostsByCategory(category);

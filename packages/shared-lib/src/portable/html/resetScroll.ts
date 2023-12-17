@@ -1,4 +1,5 @@
 import type { RefObject } from 'react';
+
 import getRefCurrentPtr from '../react/getRefCurrentPtr';
 import resetWindowScroll from './resetWindowScroll';
 import scrollToTop from './scrollToTop';

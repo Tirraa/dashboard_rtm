@@ -1,4 +1,5 @@
 import type { IconBaseProps } from 'react-icons';
+
 import type IButtonStyleBase from './IButtonStyleBase';
 
 interface IButtonStyleReactIcon extends IButtonStyleBase {

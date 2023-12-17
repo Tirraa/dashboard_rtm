@@ -1,5 +1,5 @@
-import { APP_PROTECTED_PATHS } from '##/config/auth';
 import { withAuthMiddlewaresChain } from '@/middlewaresChain';
+import { APP_PROTECTED_PATHS } from '##/config/auth';
 
 export const config = { matcher: ['/((?!api|static|_next|.*\\..*).*)'] };
 

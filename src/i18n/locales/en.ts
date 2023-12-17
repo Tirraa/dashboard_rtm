@@ -1,110 +1,101 @@
 import type { SharedVocabType, VocabType } from '@rtm/shared-types/I18n';
-import capitalize from '../../lib/portable/str/capitalize';
+
 import { SHARED_TESTING_BLOG_CATEGORY_METADATAS } from '../lazybones';
+import capitalize from '../../lib/portable/str/capitalize';
 
 const SHARED: SharedVocabType = {
   'pages-titles': {
-    homepage: 'Homepage',
-    'sign-up': 'Sign up',
-
-    'patch-notes': 'Patch Notes',
-    'discord-bot': 'Discord Bot',
-    dashboard: 'Dashboard',
-
     'patch-notes-bis': 'Patch Notes (bis)',
     'discord-bot-bis': 'Discord Bot (bis)',
-    'dashboard-bis': 'Dashboard (bis)'
+
+    'dashboard-bis': 'Dashboard (bis)',
+    'patch-notes': 'Patch Notes',
+    'discord-bot': 'Discord Bot',
+
+    dashboard: 'Dashboard',
+    homepage: 'Homepage',
+    'sign-up': 'Sign up'
   },
   vocab: {
     brand: 'Rust Team Management',
+    breadcrumbs: 'Breadcrumbs',
     logo: 'logo',
-    page: 'page',
-    breadcrumbs: 'Breadcrumbs'
+    page: 'page'
   }
 };
 
 export default {
-  'pages-titles': SHARED['pages-titles'],
-
-  _infos: { lng: 'en' },
-
-  navbar: {
-    assistance: 'Assistance',
-    'sr-only': {
-      'language-switcher-menu': 'Language choice',
-      'open-language-switcher-menu': 'Open language choice menu',
-      'close-language-switcher-menu': 'Close language choice menu',
-      'hamburger-menu': 'Website sections',
-      'open-hamburger-menu': 'Open the navbar menu (website sections)',
-      'close-hamburger-menu': 'Close the navbar menu (website sections)',
-      'switch-to-dark-mode': 'Switch to dark mode',
-      'switch-to-light-mode': 'Switch to light mode'
-    }
-  },
-
-  auth: {
-    login: 'Login',
-    logout: 'Logout',
-    signup: SHARED['pages-titles']['sign-up']
-  },
-
-  dashboard: {
-    'pages-titles': {
-      main: 'Main',
-      foo: 'Foo',
-      bar: 'Bar'
-    },
-    'sr-only': {
-      'hide-sidebar': 'Hide the sidebar',
-      'show-sidebar': 'Show the sidebar'
-    }
-  },
-
   'blog-categories': {
-    'patch-notes': {
-      _title: SHARED['pages-titles']['patch-notes'],
-      '_meta-description': 'Patch Notes Metadescription',
-
-      'discord-bot': {
-        title: SHARED['pages-titles']['discord-bot'],
-        'meta-description': 'Patch-notes -> Discord Bot - Metadescription'
-      },
-      dashboard: {
-        title: SHARED['pages-titles'].dashboard,
-        'meta-description': 'Patch-notes -> Dashboard - Metadescription'
-      }
-    },
-
     'patch-notes-bis': {
-      _title: SHARED['pages-titles']['patch-notes-bis'],
-      '_meta-description': 'Metadescription Patch Notes (bis)',
-
       'discord-bot-bis': {
-        title: SHARED['pages-titles']['discord-bot-bis'],
-        'meta-description': 'Metadescription Patch-notes -> Bot Discord (bis)'
+        'meta-description': 'Metadescription Patch-notes -> Bot Discord (bis)',
+        title: SHARED['pages-titles']['discord-bot-bis']
       },
       'dashboard-bis': {
-        title: SHARED['pages-titles']['dashboard-bis'],
-        'meta-description': 'Metadescription Patch-notes -> Dashboard (bis)'
-      }
+        'meta-description': 'Metadescription Patch-notes -> Dashboard (bis)',
+        title: SHARED['pages-titles']['dashboard-bis']
+      },
+
+      '_meta-description': 'Metadescription Patch Notes (bis)',
+      _title: SHARED['pages-titles']['patch-notes-bis']
+    },
+
+    'patch-notes': {
+      'discord-bot': {
+        'meta-description': 'Patch-notes -> Discord Bot - Metadescription',
+        title: SHARED['pages-titles']['discord-bot']
+      },
+      dashboard: {
+        'meta-description': 'Patch-notes -> Dashboard - Metadescription',
+        title: SHARED['pages-titles'].dashboard
+      },
+
+      '_meta-description': 'Patch Notes Metadescription',
+      _title: SHARED['pages-titles']['patch-notes']
     },
 
     testing: SHARED_TESTING_BLOG_CATEGORY_METADATAS
   },
 
+  navbar: {
+    'sr-only': {
+      'close-hamburger-menu': 'Close the navbar menu (website sections)',
+      'open-hamburger-menu': 'Open the navbar menu (website sections)',
+      'close-language-switcher-menu': 'Close language choice menu',
+      'open-language-switcher-menu': 'Open language choice menu',
+      'switch-to-light-mode': 'Switch to light mode',
+      'switch-to-dark-mode': 'Switch to dark mode',
+      'language-switcher-menu': 'Language choice',
+      'hamburger-menu': 'Website sections'
+    },
+    assistance: 'Assistance'
+  },
+
   vocab: {
     ...SHARED.vocab,
-    'brand-short': 'RTM',
-    'invite-the-bot': 'Invite the bot',
+    'sr-only': {
+      'brand-logo': `${capitalize(SHARED.vocab.brand)}'s ${SHARED.vocab.logo}`
+    },
     'no-blog-post': 'Nobody here but us chickens!',
+    'copy-to-clipboard': 'Copy to clipboard',
+    'invite-the-bot': 'Invite the bot',
     '404': '404 - Page not found!',
     'see-more': 'See more!',
     loading: 'Loading...',
+    'brand-short': 'RTM',
     prev: 'Previous',
-    next: 'Next',
-    'copy-to-clipboard': 'Copy to clipboard',
+    next: 'Next'
+  },
+
+  dashboard: {
     'sr-only': {
-      'brand-logo': `${capitalize(SHARED.vocab.brand)}'s ${SHARED.vocab.logo}`
+      'hide-sidebar': 'Hide the sidebar',
+      'show-sidebar': 'Show the sidebar'
+    },
+    'pages-titles': {
+      main: 'Main',
+      foo: 'Foo',
+      bar: 'Bar'
     }
   },
 
@@ -116,5 +107,15 @@ export default {
     signup: {
       'meta-description': 'Dashboard portal metadescription'
     }
-  }
+  },
+
+  auth: {
+    signup: SHARED['pages-titles']['sign-up'],
+    logout: 'Logout',
+    login: 'Login'
+  },
+
+  'pages-titles': SHARED['pages-titles'],
+
+  _infos: { lng: 'en' }
 } as const satisfies VocabType;

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import compareAlphabetically from '../compareAlphabetically';
 
 describe('compareAlphabetically', () => {

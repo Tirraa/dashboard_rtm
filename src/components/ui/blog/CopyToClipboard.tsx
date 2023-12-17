@@ -1,12 +1,13 @@
 'use client';
 
-import { i18ns } from '##/config/i18n';
-import { getClientSideI18n } from '@/i18n/client';
-import { cn } from '@/lib/tailwind';
-import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import type { WithChildren } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
-import { useRef, useState } from 'react';
+
+import { getRefCurrentPtr } from '@rtm/shared-lib/react';
+import { getClientSideI18n } from '@/i18n/client';
+import { useState, useRef } from 'react';
+import { i18ns } from '##/config/i18n';
+import { cn } from '@/lib/tailwind';
 
 interface CopyToClipboardProps extends WithChildren {}
 
@@ -50,41 +51,41 @@ const CopyToClipboard: FunctionComponent<CopyToClipboardProps> = ({ children }) 
   };
 
   return (
-    <div ref={textInputRef} className="code-block relative" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <div className="code-block relative" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} ref={textInputRef}>
       {
         <button
-          ref={copyBtnRef}
-          aria-label={globalT(`${i18ns.vocab}.copy-to-clipboard`)}
           className={cn('absolute right-2 top-2 h-8 w-8 rounded border-2 bg-gray-700 p-1 transition-[opacity] dark:bg-gray-800', {
-            'opacity-100': isShown(),
-            'opacity-0 delay-200': isHidden(),
             'border-green-400 focus:border-green-400 focus:outline-none': copied,
-            'hover:border-gray-300': !copied
+            'opacity-0 delay-200': isHidden(),
+            'hover:border-gray-300': !copied,
+            'opacity-100': isShown()
           })}
-          onClick={onCopy}
+          aria-label={globalT(`${i18ns.vocab}.copy-to-clipboard`)}
           onFocus={onFocus}
+          ref={copyBtnRef}
+          onClick={onCopy}
           onBlur={onBlur}
         >
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            fill="none"
             className={copied ? 'text-green-400' : 'text-gray-300'}
+            xmlns="http://www.w3.org/2000/svg"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            fill="none"
           >
             {copied ? (
               <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                strokeWidth={2}
               />
             ) : (
               <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                strokeWidth={2}
               />
             )}
           </svg>

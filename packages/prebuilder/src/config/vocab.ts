@@ -1,10 +1,11 @@
 import { ArgError } from 'arg';
+
 import { FLAGS } from '.';
 
 export const CRITICAL_ERRORS_STR = {
   IMPOSSIBLE_TO_START: 'Impossible to start the prebuilder!',
-  INTERRUPTED: 'Interrupted the prebuilder!',
-  FAILED_TO_PASS: 'Failed to pass the prebuild!'
+  FAILED_TO_PASS: 'Failed to pass the prebuild!',
+  INTERRUPTED: 'Interrupted the prebuilder!'
 } as const;
 
 export const PREBUILD_DONE: string = '... Prebuild done.';

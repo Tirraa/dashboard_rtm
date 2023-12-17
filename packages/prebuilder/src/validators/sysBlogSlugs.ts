@@ -1,10 +1,11 @@
-import { LIST_ELEMENT_PREFIX } from '../config';
-import { CRITICAL_ERRORS_STR } from '../config/vocab';
-import { prefixFeedback } from '../lib/feedbacksMerge';
-import getErrorLabelForDefects from '../lib/getErrorLabelForDefects';
-import traverseFolder from '../lib/traverseFolder';
-import type { Filename, MaybeEmptyErrorsDetectionFeedback, Path } from '../types/metadatas';
+import type { MaybeEmptyErrorsDetectionFeedback, Filename, Path } from '../types/metadatas';
+
 import isValidTaxonomy, { NAMING_CONSTRAINTS_MSG } from './taxonomyConvention';
+import getErrorLabelForDefects from '../lib/getErrorLabelForDefects';
+import { prefixFeedback } from '../lib/feedbacksMerge';
+import { CRITICAL_ERRORS_STR } from '../config/vocab';
+import traverseFolder from '../lib/traverseFolder';
+import { LIST_ELEMENT_PREFIX } from '../config';
 
 const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 

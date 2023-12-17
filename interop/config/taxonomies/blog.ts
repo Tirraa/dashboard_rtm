@@ -1,5 +1,6 @@
-import type { BlogCategory, BlogSubcategoryFromUnknownCategory, UnknownBlogSlug } from '@/types/Blog';
+import type { BlogSubcategoryFromUnknownCategory, UnknownBlogSlug, BlogCategory } from '@/types/Blog';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
+
 import type I18nTaxonomy from './i18n';
 
 namespace BlogTaxonomy {
@@ -9,9 +10,9 @@ namespace BlogTaxonomy {
 }
 
 export type TBlogTaxonomy = {
+  [BlogTaxonomy.SUBCATEGORY]: BlogSubcategoryFromUnknownCategory;
   [I18nTaxonomy.LANGUAGE]: LanguageFlag;
   [BlogTaxonomy.CATEGORY]: BlogCategory;
-  [BlogTaxonomy.SUBCATEGORY]: BlogSubcategoryFromUnknownCategory;
   [BlogTaxonomy.SLUG]: UnknownBlogSlug;
 };
 

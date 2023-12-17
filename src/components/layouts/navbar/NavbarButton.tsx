@@ -1,16 +1,17 @@
 'use client';
 
-import NavbarButtonStyle from '@/components/config/styles/navbar/NavbarButtonStyle';
-import { Button } from '@/components/ui/Button';
-import { getClientSideI18n } from '@/i18n/client';
-import { hrefMatchesPathname } from '@/lib/str';
-import { cn } from '@/lib/tailwind';
-import type { AtomicNavDataEntity } from '@/types/NavData';
-import { getLinkTarget } from '@rtm/shared-lib/react';
-import type { AppPath } from '@rtm/shared-types/Next';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
+import type { AtomicNavDataEntity } from '@/types/NavData';
+import type { AppPath } from '@rtm/shared-types/Next';
+
+import NavbarButtonStyle from '@/components/config/styles/navbar/NavbarButtonStyle';
+import { getLinkTarget } from '@rtm/shared-lib/react';
+import { getClientSideI18n } from '@/i18n/client';
+import { Button } from '@/components/ui/Button';
+import { hrefMatchesPathname } from '@/lib/str';
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/tailwind';
+import Link from 'next/link';
 
 type OptionalIcon = { icon?: ReactNode };
 type OptionalPath = { path?: AppPath };
@@ -22,9 +23,9 @@ type RequiredOnClick = Required<OptionalOnClick>;
 interface INavbarButtonProps extends Pick<AtomicNavDataEntity, 'i18nTitle'>, OptionalPath, OptionalOnClick, OptionalIcon {}
 type NavbarButtonProps = INavbarButtonProps & (RequiredOnClick | RequiredPath);
 
-const { isActiveClassList, isNotActiveClassList } = NavbarButtonStyle;
+const { isNotActiveClassList, isActiveClassList } = NavbarButtonStyle;
 
-const ButtonAsIs: FunctionComponent<Pick<NavbarButtonProps, 'i18nTitle' | 'onClick'> & OptionalIcon> = ({ i18nTitle, onClick: onClickFun, icon }) => {
+const ButtonAsIs: FunctionComponent<Pick<NavbarButtonProps, 'i18nTitle' | 'onClick'> & OptionalIcon> = ({ onClick: onClickFun, i18nTitle, icon }) => {
   const globalT = getClientSideI18n();
 
   if (onClickFun) {
@@ -50,7 +51,7 @@ const ButtonAsIs: FunctionComponent<Pick<NavbarButtonProps, 'i18nTitle' | 'onCli
   );
 };
 
-const ButtonAsLink: FunctionComponent<Pick<AtomicNavDataEntity, 'i18nTitle' | 'path'> & OptionalIcon> = ({ i18nTitle, path: href, icon }) => {
+const ButtonAsLink: FunctionComponent<Pick<AtomicNavDataEntity, 'i18nTitle' | 'path'> & OptionalIcon> = ({ path: href, i18nTitle, icon }) => {
   const globalT = getClientSideI18n();
   const currentPathname = usePathname();
   const className = hrefMatchesPathname(href, currentPathname) ? isActiveClassList : isNotActiveClassList;
@@ -58,14 +59,14 @@ const ButtonAsLink: FunctionComponent<Pick<AtomicNavDataEntity, 'i18nTitle' | 'p
 
   if (icon) {
     return (
-      <Link href={href} target={target} className={cn(className, 'flex items-center')}>
+      <Link className={cn(className, 'flex items-center')} target={target} href={href}>
         {icon}
         {globalT(i18nTitle)}
       </Link>
     );
   }
   return (
-    <Link className={className} href={href} target={target}>
+    <Link className={className} target={target} href={href}>
       {globalT(i18nTitle)}
     </Link>
   );
@@ -73,7 +74,7 @@ const ButtonAsLink: FunctionComponent<Pick<AtomicNavDataEntity, 'i18nTitle' | 'p
 
 const NavbarButton: FunctionComponent<NavbarButtonProps> = ({ i18nTitle, onClick, path, icon }) => {
   const generateNavbarButtonWithoutIcon: () => ReactNode = () => {
-    if (onClick) return <ButtonAsIs onClick={onClick} i18nTitle={i18nTitle} />;
+    if (onClick) return <ButtonAsIs i18nTitle={i18nTitle} onClick={onClick} />;
     else if (path) return <ButtonAsLink i18nTitle={i18nTitle} path={path} />;
     return null;
   };

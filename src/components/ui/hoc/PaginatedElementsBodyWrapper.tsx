@@ -1,12 +1,13 @@
-import { cn } from '@/lib/tailwind';
 import type { FlexDirection, FlexJustify, FlexWrap } from '@rtm/shared-types/HTML';
-import type { WithChildren, WithClassname } from '@rtm/shared-types/Next';
+import type { WithClassname, WithChildren } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
+import { cn } from '@/lib/tailwind';
+
 interface PaginatedElementsBodyWrapperPropsBase extends Partial<WithClassname> {
-  flexWrap?: FlexWrap;
   flexDirection?: FlexDirection;
   flexJustify?: FlexJustify;
+  flexWrap?: FlexWrap;
   id?: string;
 }
 
@@ -25,11 +26,11 @@ const PaginatedElementsBodyWrapper: FunctionComponent<IPaginatedElementsBodyWrap
   if (!paginatedElementsBodyWrapperProps) return <>{children}</>;
 
   const {
-    flexWrap: flexWrapValue,
     flexDirection: flexDirectionValue,
     flexJustify: flexJustifyValue,
-    id: idValue,
-    className: classNameValue
+    className: classNameValue,
+    flexWrap: flexWrapValue,
+    id: idValue
   } = paginatedElementsBodyWrapperProps;
 
   const flexWrap = flexWrapValue ?? 'wrap';

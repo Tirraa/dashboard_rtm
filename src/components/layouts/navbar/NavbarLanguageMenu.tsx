@@ -1,23 +1,23 @@
 'use client';
 
-import { LANGUAGES, i18ns } from '##/config/i18n';
-import BUTTON_CONFIG from '@/components/config/styles/buttons';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/DropdownMenu';
-import { useChangeLocale, useCurrentLocale, useScopedI18n } from '@/i18n/client';
-import localesLabels, { localesEmojis } from '@/i18n/localesLabels';
-import { cn } from '@/lib/tailwind';
 import type { ChangeLocaleFun, LanguageFlag } from '@rtm/shared-types/I18n';
 import type { WithIsMobile } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
+
+import { DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem, DropdownMenu } from '@/components/ui/DropdownMenu';
+import { useCurrentLocale, useChangeLocale, useScopedI18n } from '@/i18n/client';
+import localesLabels, { localesEmojis } from '@/i18n/localesLabels';
+import BUTTON_CONFIG from '@/components/config/styles/buttons';
+import { LANGUAGES, i18ns } from '##/config/i18n';
+import { cn } from '@/lib/tailwind';
 import { useState } from 'react';
 
 interface NavbarLanguageMenuProps extends WithIsMobile {}
 
 const dropdownItemsGenerator = (changeLocale: ChangeLocaleFun, currentLocale: LanguageFlag) =>
   LANGUAGES.map((language) => (
-    <DropdownMenuItem key={language} className="relative my-1 px-3 py-2" textValue={localesLabels[language]} asChild>
+    <DropdownMenuItem className="relative my-1 px-3 py-2" textValue={localesLabels[language]} key={language} asChild>
       <button
-        onClick={language !== currentLocale ? () => changeLocale(language) : undefined}
         className={cn(
           BUTTON_CONFIG.CLASSNAME,
           'w-full',
@@ -25,6 +25,7 @@ const dropdownItemsGenerator = (changeLocale: ChangeLocaleFun, currentLocale: La
             ? cn(BUTTON_CONFIG.ACTIVE_CLASSNAME, 'hover:bg-primary hover:text-white focus:bg-primary focus:text-white')
             : cn(BUTTON_CONFIG.NOT_ACTIVE_CLASSNAME, 'text-black')
         )}
+        onClick={language !== currentLocale ? () => changeLocale(language) : undefined}
       >
         <span className="absolute ltr:right-2 rtl:left-2">{localesEmojis[language]}</span>
         <span>{localesLabels[language]}</span>
@@ -40,8 +41,8 @@ const NavbarLanguageMenu: FunctionComponent<NavbarLanguageMenuProps> = ({ isMobi
   const onOpenChange = (opened: boolean) => setOpen(opened);
 
   return (
-    <DropdownMenu open={open} onOpenChange={onOpenChange} withDeepResetOnLgBreakpointEvents>
-      <DropdownMenuTrigger asChild aria-label={!open ? scopedT('open-language-switcher-menu') : scopedT('close-language-switcher-menu')}>
+    <DropdownMenu withDeepResetOnLgBreakpointEvents onOpenChange={onOpenChange} open={open}>
+      <DropdownMenuTrigger aria-label={!open ? scopedT('open-language-switcher-menu') : scopedT('close-language-switcher-menu')} asChild>
         <button className="h-full bg-transparent text-primary-foreground">{localesEmojis[currentLocale]}</button>
       </DropdownMenuTrigger>
       <DropdownMenuContent

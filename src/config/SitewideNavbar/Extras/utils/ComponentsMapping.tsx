@@ -1,16 +1,17 @@
 import NavbarLanguageMenu from '@/components/layouts/navbar/NavbarLanguageMenu';
 import NavbarLoginButton from '@/components/layouts/navbar/NavbarLoginButton';
 import NavbarThemeButton from '@/components/layouts/navbar/NavbarThemeButton';
+
 import type { NavbarExtrasFeaturesReactElements } from './RoutesMapping';
 
 export const NAVBAR_EXTRAS_COMPONENTS_DESKTOP: NavbarExtrasFeaturesReactElements = {
-  THEME: <NavbarThemeButton />,
   LANGUAGE: <NavbarLanguageMenu />,
+  THEME: <NavbarThemeButton />,
   LOGIN: <NavbarLoginButton />
 };
 
 export const NAVBAR_EXTRAS_COMPONENTS_MOBILE: NavbarExtrasFeaturesReactElements = {
-  THEME: <NavbarThemeButton />,
   LANGUAGE: <NavbarLanguageMenu isMobile />,
-  LOGIN: <NavbarLoginButton isMobile />
+  LOGIN: <NavbarLoginButton isMobile />,
+  THEME: <NavbarThemeButton />
 };

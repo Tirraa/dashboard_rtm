@@ -1,5 +1,6 @@
 import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
 import type { AppPath } from '@rtm/shared-types/Next';
+
 import type RoutesKeysUnion from './RoutesKeysUnion';
 
 export interface AtomicNavDataEntity {
@@ -17,7 +18,7 @@ export type NavDataEntities = NavDataEntity[];
 
 export interface NavbarElementProps extends NavDataEntity {}
 
-type NavbarItem = { jsx: JSX.Element; i18nTitle: I18nVocabTarget };
+type NavbarItem = { i18nTitle: I18nVocabTarget; jsx: JSX.Element };
 export type NavbarItems = NavbarItem[];
 
 export type DropdownsConfig<K extends RoutesKeysUnion> = Partial<Record<K, NavDataEntities>>;

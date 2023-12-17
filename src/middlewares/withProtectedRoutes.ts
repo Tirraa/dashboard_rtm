@@ -1,12 +1,13 @@
-import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
-import { getMaybeI18nFlagFromRequest } from '@/lib/next';
-import { getSlashEnvelope } from '@/lib/str';
-import { APP_PROTECTED_PATHS } from '@/middleware';
-import { mainMiddlewaresChain } from '@/middlewaresChain';
-import type { AppPath, MiddlewareFactory } from '@rtm/shared-types/Next';
-import type { NextRequestWithAuth } from 'next-auth/middleware';
-import { withAuth } from 'next-auth/middleware';
 import type { NextFetchEvent, NextMiddleware, NextRequest } from 'next/server';
+import type { MiddlewareFactory, AppPath } from '@rtm/shared-types/Next';
+import type { NextRequestWithAuth } from 'next-auth/middleware';
+
+import { mainMiddlewaresChain } from '@/middlewaresChain';
+import { getMaybeI18nFlagFromRequest } from '@/lib/next';
+import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
+import { APP_PROTECTED_PATHS } from '@/middleware';
+import { withAuth } from 'next-auth/middleware';
+import { getSlashEnvelope } from '@/lib/str';
 
 function authMiddleware(request: NextRequest) {
   const maybeI18nFlag = getMaybeI18nFlagFromRequest(request);

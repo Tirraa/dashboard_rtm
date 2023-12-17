@@ -1,26 +1,28 @@
 'use client';
 
-import ROUTES_ROOTS from '##/config/routes';
-import SidebarButtonStyle from '@/components/config/styles/sidebar/SidebarButtonStyle';
+import type { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMapping';
+import type { FunctionComponent, ReactElement, ReactNode } from 'react';
+import type { AppPath } from '@rtm/shared-types/Next';
+
+import { computeHTMLElementHeight, computeHTMLElementWidth, getDirection } from '@rtm/shared-lib/html';
 import DASHBOARD_ROUTES, { DASHBOARD_ROUTES_TITLES } from '@/config/DashboardSidebar/routesImpl';
 import DASHBOARD_ROUTES_SIDEBAR_COMPONENTS from '@/config/DashboardSidebar/utils/IconsMapping';
-import type { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMapping';
+import SidebarButtonStyle from '@/components/config/styles/sidebar/SidebarButtonStyle';
 import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
-import { hrefMatchesPathname } from '@/lib/str';
-import { cn, getBreakpoint } from '@/lib/tailwind';
-import { useMediaQuery } from '@react-hook/media-query';
-import { computeHTMLElementHeight, computeHTMLElementWidth, getDirection } from '@rtm/shared-lib/html';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
-import type { AppPath } from '@rtm/shared-types/Next';
-import Link from 'next/link';
+import { useMediaQuery } from '@react-hook/media-query';
+import { useEffect, useState, useRef } from 'react';
+import { getBreakpoint, cn } from '@/lib/tailwind';
+import { hrefMatchesPathname } from '@/lib/str';
 import { usePathname } from 'next/navigation';
-import type { FunctionComponent, ReactElement, ReactNode } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import ROUTES_ROOTS from '##/config/routes';
+import Link from 'next/link';
+
 import DashboardSidebarCollapseButton from './DashboardSidebarCollapseButton';
 
 interface DashboardSidebarProps {}
 
-const { isActiveClassList, isNotActiveClassList } = SidebarButtonStyle;
+const { isNotActiveClassList, isActiveClassList } = SidebarButtonStyle;
 
 function sidebarBtnsGenerator(currentPathname: AppPath): ReactNode[] {
   const keys = Object.keys(DASHBOARD_ROUTES_SIDEBAR_COMPONENTS);
@@ -37,7 +39,7 @@ function sidebarBtnsGenerator(currentPathname: AppPath): ReactNode[] {
 
     return (
       <li key={`${k}-sidebar-btn-component`}>
-        <Link title={title} href={href} className={cn('flex w-fit max-w-full flex-col rounded-lg', sidebarButtonClassName)}>
+        <Link className={cn('flex w-fit max-w-full flex-col rounded-lg', sidebarButtonClassName)} title={title} href={href}>
           <span className="sr-only">{title}</span>
           {btnComponent}
         </Link>
@@ -102,8 +104,8 @@ const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => {
   return (
     <>
       <aside
-        ref={sidebarRef}
         className={'z-20 w-full justify-center border-t-[1px] border-muted-foreground bg-black dark:bg-card lg:w-fit lg:border-0'}
+        ref={sidebarRef}
       >
         <nav className="py-4 lg:overflow-y-auto lg:px-[22px]">
           <ul className={cn('flex flex-wrap justify-center gap-2 lg:block')} role="menu">
@@ -111,7 +113,7 @@ const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => {
           </ul>
         </nav>
       </aside>
-      <DashboardSidebarCollapseButton isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+      <DashboardSidebarCollapseButton setIsCollapsed={setIsCollapsed} isCollapsed={isCollapsed} />
     </>
   );
 };

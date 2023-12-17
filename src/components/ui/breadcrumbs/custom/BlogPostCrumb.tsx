@@ -1,4 +1,5 @@
 import type { FunctionComponent } from 'react';
+
 import Crumb from '../Crumb';
 
 interface BlogPostCrumbProps {

@@ -1,18 +1,20 @@
+import type { MaybeObjectValue } from '@rtm/shared-types/CustomUtilityTypes';
+import type { FunctionComponent } from 'react';
+
 import { DATA_QA_WARNING_DOM_KEY, QA_WARNINGS } from '##/config/QA';
 import { cn } from '@/lib/tailwind';
-import type { MaybeObjectValue } from '@rtm/shared-types/CustomUtilityTypes';
 import Link from 'next/link';
-import type { FunctionComponent } from 'react';
+
 import CrumbSeparator from './CrumbSeparator';
 
 interface CrumbProps {
+  withRescueCtx?: boolean;
+  isLeaf?: boolean;
   label: string;
   href: string;
-  isLeaf?: boolean;
-  withRescueCtx?: boolean;
 }
 
-const Crumb: FunctionComponent<CrumbProps> = ({ label, href, isLeaf: maybeIsLeaf, withRescueCtx: maybeWithRescueCtx }) => {
+const Crumb: FunctionComponent<CrumbProps> = ({ withRescueCtx: maybeWithRescueCtx, isLeaf: maybeIsLeaf, label, href }) => {
   const QA_WARNING: MaybeObjectValue<string> = maybeWithRescueCtx ? QA_WARNINGS.IS_A_FALLBACK : undefined;
   const QA_PROPS = { [DATA_QA_WARNING_DOM_KEY]: QA_WARNING };
   const isLeaf = Boolean(maybeIsLeaf);
@@ -21,9 +23,6 @@ const Crumb: FunctionComponent<CrumbProps> = ({ label, href, isLeaf: maybeIsLeaf
     <>
       <Link
         {...QA_PROPS}
-        href={href}
-        aria-current={isLeaf ? 'page' : undefined}
-        aria-disabled={isLeaf ? 'true' : undefined}
         className={cn(
           'duration-250 transition-colors',
           {
@@ -31,6 +30,9 @@ const Crumb: FunctionComponent<CrumbProps> = ({ label, href, isLeaf: maybeIsLeaf
           },
           { 'pointer-events-none font-semibold': isLeaf }
         )}
+        aria-disabled={isLeaf ? 'true' : undefined}
+        aria-current={isLeaf ? 'page' : undefined}
+        href={href}
       >
         {label}
       </Link>

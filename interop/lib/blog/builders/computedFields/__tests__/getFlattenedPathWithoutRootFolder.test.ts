@@ -1,5 +1,6 @@
 import InvalidArgumentsError from '##/errors/InvalidArguments';
 import { describe, expect, it } from 'vitest';
+
 import getFlattenedPathWithoutRootFolder from '../getFlattenedPathWithoutRootFolder';
 
 describe('getFlattenedPathWithoutRootFolder', () => {

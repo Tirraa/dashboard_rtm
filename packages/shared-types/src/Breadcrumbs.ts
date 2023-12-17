@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 
 type CustomCrumb = {
-  depth: number;
   jsx: ReactNode;
+  depth: number;
 };
 
 export type CustomCrumbs = CustomCrumb[];

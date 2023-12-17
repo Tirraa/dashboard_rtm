@@ -1,5 +1,6 @@
-import { LANGUAGES } from '##/config/i18n';
 import { describe, expect, it } from 'vitest';
+import { LANGUAGES } from '##/config/i18n';
+
 import isValidLanguageFlag from '../isValidLanguageFlag';
 
 describe('isValidLanguageFlag', () => {

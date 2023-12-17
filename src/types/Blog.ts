@@ -1,11 +1,12 @@
-import type { DEFAULT_LANGUAGE } from '##/config/i18n';
-import type BlogTaxonomy from '##/config/taxonomies/blog';
-import type { TBlogTaxonomy } from '##/config/taxonomies/blog';
-import type Blog from '@rtm/generated/Blog';
 import type BlogArchitecture from '@rtm/generated/BlogArchitecture';
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
-import type { PostSchema } from 'contentlayer/generated';
 import type { WithClassname } from 'packages/shared-types/src/Next';
+import type { TBlogTaxonomy } from '##/config/taxonomies/blog';
+import type { LanguageFlag } from '@rtm/shared-types/I18n';
+import type BlogTaxonomy from '##/config/taxonomies/blog';
+import type { PostSchema } from 'contentlayer/generated';
+import type { DEFAULT_LANGUAGE } from '##/config/i18n';
+import type Blog from '@rtm/generated/Blog';
+
 import type { I18nParams } from './Next';
 
 type ContentLayerPhantomType = 'type';
@@ -20,8 +21,8 @@ type BlogCategoryPagePropsParams = {
 };
 
 type BlogSubcategoryPagePropsParams = {
-  [BlogTaxonomy.CATEGORY]: BlogCategory;
   [BlogTaxonomy.SUBCATEGORY]: BlogSubcategoryFromUnknownCategory;
+  [BlogTaxonomy.CATEGORY]: BlogCategory;
 };
 
 type BlogPostPagePropsParams = TBlogTaxonomy;
@@ -39,8 +40,8 @@ export interface BlogPostPageProps {
 }
 
 export interface BlogPostProps extends Partial<WithClassname> {
-  post: PostBase;
   language: LanguageFlag;
+  post: PostBase;
 }
 
 type AllPostsGetter = () => Promise<PostBase[]>;

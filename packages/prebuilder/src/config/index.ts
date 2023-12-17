@@ -7,14 +7,14 @@ export const I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = ['title', 'met
 
 /* ⛔ Do NOT edit the code BELOW this line unless you (really) know what you are doing */
 export const FLAGS = {
-  BLOG_POSTS_FOLDER: '--posts-folder',
   I18N_LOCALES_SCHEMA_FILEPATH: '--i18n-locales-schema',
   SKIP_LOCALES_INFOS: '--skip-locales-infos',
+  BLOG_POSTS_FOLDER: '--posts-folder',
   NO_BLOG: '--no-blog',
   NO_I18N: '--no-i18n'
 } as const;
 export const LIST_ELEMENT_PREFIX: string = '\n - ';
-export const TS_MORPH_FORMATTER_SETTINGS = { indentSize: 2, ensureNewLineAtEndOfFile: true };
+export const TS_MORPH_FORMATTER_SETTINGS = { ensureNewLineAtEndOfFile: true, indentSize: 2 };
 
 export const BLOG_POST_FILE_EXT: string = '.mdx';
 export const I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_PREFIX: string = '_';

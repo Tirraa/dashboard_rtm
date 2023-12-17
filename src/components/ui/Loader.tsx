@@ -1,7 +1,8 @@
 'use client';
 
+import type { FunctionComponent, CSSProperties } from 'react';
+
 import LOADER_COLORS from '@/components/config/styles/loader/colors';
-import type { CSSProperties, FunctionComponent } from 'react';
 import { BeatLoader } from 'react-spinners';
 
 interface LoaderProps {
@@ -17,13 +18,13 @@ const Loader: FunctionComponent<LoaderProps> = ({ override: cssOverride } = {}) 
       style={{ backgroundColor: BACKGROUND_COLOR }}
     >
       <BeatLoader
-        color={COLOR}
         cssOverride={cssOverride}
-        margin={4.5}
-        speedMultiplier={1.35}
-        loading={true}
-        aria-label="..."
         className="animate-pulse"
+        speedMultiplier={1.35}
+        aria-label="..."
+        loading={true}
+        color={COLOR}
+        margin={4.5}
       />
     </div>
   );

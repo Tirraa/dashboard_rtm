@@ -1,27 +1,30 @@
 'use client';
 
-import { i18ns } from '##/config/i18n';
+import type { FlexJustify } from '@rtm/shared-types/HTML';
+import type { FunctionComponent, ReactNode } from 'react';
+
+import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/20/solid';
+import { createURLSearchParams, getDirection } from '@rtm/shared-lib/html';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useScopedI18n } from '@/i18n/client';
+import { useEffect, useState } from 'react';
+import { i18ns } from '##/config/i18n';
 import { capitalize } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
-import { createURLSearchParams, getDirection } from '@rtm/shared-lib/html';
-import type { FlexJustify } from '@rtm/shared-types/HTML';
 import dynamic from 'next/dynamic';
-import { useRouter, useSearchParams } from 'next/navigation';
-import type { FunctionComponent, ReactNode } from 'react';
-import { useEffect, useState } from 'react';
-import { computePagesAmount } from './hoc/MaybePaginatedElements';
+
 import type { PaginatedElementsBodyWrapperProps } from './hoc/PaginatedElementsBodyWrapper';
+
 import PaginatedElementsBodyWrapper from './hoc/PaginatedElementsBodyWrapper';
+import { computePagesAmount } from './hoc/MaybePaginatedElements';
 
 const ReactPaginate = dynamic(() => import('react-paginate'), { ssr: false });
 
 export interface PaginatedElementsProps extends PaginatedElementsBodyWrapperProps {
+  paginationButtonsPosition?: 'bottom' | 'top';
+  paginationButtonsJustify?: FlexJustify;
   paginatedElements: ReactNode[];
   elementsPerPage: number;
-  paginationButtonsPosition?: 'top' | 'bottom';
-  paginationButtonsJustify?: FlexJustify;
   pagesAmount?: number;
   pagesRange?: number;
 }
@@ -34,13 +37,13 @@ function initializeCurrentPage(pageFromUrl: number, maxPage: number) {
 }
 
 const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
-  paginatedElements,
-  elementsPerPage,
   paginationButtonsPosition: position,
   paginationButtonsJustify: justify,
+  paginatedElementsBodyWrapperProps,
   pagesAmount: forcedPagesAmount,
   pagesRange: pagesRangeValue,
-  paginatedElementsBodyWrapperProps
+  paginatedElements,
+  elementsPerPage
 }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -76,11 +79,6 @@ const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   const paginationNode = (
     <div className={cn('min-h-[40px] lg:min-h-[32px]', posClassName)}>
       <ReactPaginate
-        forcePage={pageFromUrl - 1}
-        className={cn('flex items-center gap-2', flexJustifyClass)}
-        breakLabel="..."
-        previousAriaLabel={scopedT('prev')}
-        nextAriaLabel={scopedT('next')}
         previousLabel={
           <span className={nextAndPrevIconsClassList}>
             {dir === 'ltr' ? <ChevronLeftIcon className={chevronsClassName} /> : <ChevronRightIcon className={chevronsClassName} />}
@@ -91,15 +89,20 @@ const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
             {dir === 'ltr' ? <ChevronRightIcon className={chevronsClassName} /> : <ChevronLeftIcon className={chevronsClassName} />}
           </span>
         }
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={pagesRange < pagesAmount ? pagesRange : pagesAmount}
-        pageCount={pagesAmount}
-        containerClassName="flex items-center justify-center mt-8 mb-4 select-none"
-        previousLinkClassName={cn('flex items-center justify-center rounded-md', { 'pointer-events-none opacity-50': pageFromUrl <= 1 })}
         nextLinkClassName={cn('flex items-center justify-center rounded-md', { 'pointer-events-none opacity-50': pageFromUrl >= pagesAmount })}
+        previousLinkClassName={cn('flex items-center justify-center rounded-md', { 'pointer-events-none opacity-50': pageFromUrl <= 1 })}
         pageLinkClassName="flex items-center justify-center hover:bg-accent p-2 px-4 lg:p-1 lg:px-3 rounded-md"
-        activeClassName="pointer-events-none bg-accent rounded-md"
         ariaLabelBuilder={(pageNumber) => `${capitalize(scopedT('page'))} ${pageNumber}`}
+        containerClassName="flex items-center justify-center mt-8 mb-4 select-none"
+        pageRangeDisplayed={pagesRange < pagesAmount ? pagesRange : pagesAmount}
+        className={cn('flex items-center gap-2', flexJustifyClass)}
+        activeClassName="pointer-events-none bg-accent rounded-md"
+        previousAriaLabel={scopedT('prev')}
+        nextAriaLabel={scopedT('next')}
+        onPageChange={handlePageClick}
+        forcePage={pageFromUrl - 1}
+        pageCount={pagesAmount}
+        breakLabel="..."
       />
     </div>
   );

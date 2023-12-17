@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import deleteTrailingSlashes from '../deleteTrailingSlashes';
 
 describe('deleteTrailingSlashes', () => {

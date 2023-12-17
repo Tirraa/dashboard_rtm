@@ -1,5 +1,6 @@
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, it } from 'vitest';
+
 import { hrefMatchesPathname } from '../str';
 
 describe('hrefMatchesPathname', () => {

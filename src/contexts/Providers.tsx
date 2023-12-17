@@ -1,8 +1,11 @@
 'use client';
 
-import { SessionProvider } from 'next-auth/react';
 import type { FunctionComponent } from 'react';
+
+import { SessionProvider } from 'next-auth/react';
+
 import type { I18nProviderProps } from './I18nProvider';
+
 import I18nProvider from './I18nProvider';
 import UIProvider from './UIProvider';
 

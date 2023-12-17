@@ -1,5 +1,6 @@
-import { afterAll, beforeEach, describe, expect, it, test, vi } from 'vitest';
+import { beforeEach, afterAll, describe, expect, test, it, vi } from 'vitest';
 import NODE_ENV from 'Ț/setEnv';
+
 import type ComputedNodeCtx from '../env';
 
 const getCtx = async () => (await import('../env')).default as typeof ComputedNodeCtx;

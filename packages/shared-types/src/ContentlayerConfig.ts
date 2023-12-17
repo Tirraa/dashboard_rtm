@@ -1,12 +1,12 @@
 import type {
-  AllBlogFields,
-  BlogComputedFields,
   BlogDocumentsComputedFieldsKeys,
   BlogDocumentsTypesKeys,
+  BlogComputedFields,
+  AllBlogFields,
   BlogFields
 } from '##/config/blog/contentlayerConfigTweakers';
-import type { Document, FieldDefType } from 'contentlayer/core';
-import type { ComputedFields, DocumentContentType, FieldDefs } from 'contentlayer/source-files';
+import type { DocumentContentType, ComputedFields, FieldDefs } from 'contentlayer/source-files';
+import type { FieldDefType, Document } from 'contentlayer/core';
 
 type ContentLayerContentType = { contentType: DocumentContentType };
 
@@ -14,8 +14,8 @@ type FilePathPattern = string;
 export type TypeName = BlogDocumentsTypesKeys;
 
 export type DocumentsConfigTypeContentLayerMetadatas<TYPENAME extends string> = {
-  name: TYPENAME;
   filePathPattern: FilePathPattern;
+  name: TYPENAME;
 };
 
 export type DocumentsConfigType<
@@ -23,8 +23,8 @@ export type DocumentsConfigType<
   __ComputedFields extends ComputedFields = BlogComputedFields,
   __TypeName extends string = TypeName
 > = DocumentsConfigTypeContentLayerMetadatas<__TypeName> & {
-  fields: __Fields;
   computedFields: __ComputedFields;
+  fields: __Fields;
 };
 
 export type DocumentsFields<
@@ -55,6 +55,7 @@ export type PostToBuild = Document;
 
 // * ... Adapter
 export type ComputedField = {
-  type: FieldDefType;
+  // eslint-disable-next-line no-unused-vars
   resolve: (post: PostToBuild) => unknown;
+  type: FieldDefType;
 };

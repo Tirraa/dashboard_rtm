@@ -1,19 +1,20 @@
-import { i18ns } from '##/config/i18n';
-import I18nTaxonomy from '##/config/taxonomies/i18n';
-import { MAIN_CLS } from '@/components/config/styles/main';
-import Homepage from '@/components/pages/Homepage';
-import { getServerSideI18n, getStaticParams } from '@/i18n/server';
-import { cn } from '@/lib/tailwind';
 import type { I18nPageProps } from '@/types/Next';
-import { buildPageTitle } from '@rtm/shared-lib/str';
+
+import { getServerSideI18n, getStaticParams } from '@/i18n/server';
 import { setStaticParamsLocale } from 'next-international/server';
+import { MAIN_CLS } from '@/components/config/styles/main';
+import I18nTaxonomy from '##/config/taxonomies/i18n';
+import { buildPageTitle } from '@rtm/shared-lib/str';
+import Homepage from '@/components/pages/Homepage';
+import { i18ns } from '##/config/i18n';
+import { cn } from '@/lib/tailwind';
 
 export async function generateMetadata() {
   const globalT = await getServerSideI18n();
-  const { vocab, pagesTitles, manualSEO } = i18ns;
+  const { pagesTitles, manualSEO, vocab } = i18ns;
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), globalT(`${pagesTitles}.homepage`), true);
   const description = globalT(`${manualSEO}.homepage.meta-description`);
-  return { title, description };
+  return { description, title };
 }
 
 export function generateStaticParams() {
