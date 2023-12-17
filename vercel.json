@@ -1,4 +1,4 @@
 {
   "installCommand": "pnpm i",
-  "buildCommand": "pnpm vercel-ci-build-command"
+  "buildCommand": "pnpm ci:vercel-build-command"
 }

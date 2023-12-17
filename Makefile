@@ -21,7 +21,7 @@ build:
 	$(PM) build
 
 vercel-ci-build-command:
-	$(PM) vercel-ci-build-command
+	$(PM) ci:vercel-build-command
 
 build-contentlayer:
 	$(PM) contentlayer build
