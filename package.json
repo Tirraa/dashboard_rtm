@@ -26,7 +26,10 @@
     "format": "prettier --log-level warn --write .",
     "ts-prune": "ts-prune --ignore '^.(next|contentlayer|vitest)' | .ts-prune/sanitize.py --quiet",
     "ts-prune-verbose": "ts-prune --ignore '^.(next|contentlayer|vitest)' | .ts-prune/sanitize.py",
-    "vercel-ci-build-command": "pnpm test-before-build && pnpm build && pnpm test-after-build"
+    "vercel-ci-build-command": "pnpm test-before-build && pnpm build && pnpm test-after-build",
+    "ci:lint": "eslint . --max-warnings 0",
+    "ci:typecheck": "tsc --noEmit --pretty",
+    "ci:format-check": "prettier . --check"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
