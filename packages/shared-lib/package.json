@@ -5,9 +5,6 @@
   "license": "MIT",
   "version": "1.0.0",
   "description": "",
-  "files": [
-    "src"
-  ],
   "exports": {
     "./html": "./src/html.ts",
     "./misc": "./src/misc.ts",

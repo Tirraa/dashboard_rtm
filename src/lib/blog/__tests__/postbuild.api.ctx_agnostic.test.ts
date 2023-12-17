@@ -81,26 +81,26 @@ describe('getBlogPostPathWithoutI18nPart', () => {
 });
 
 describe('isValidBlogCategoryAndSubcategoryPairInAnyLanguage', () => {
-  it('should return true, given a valid combination', async () => {
+  it('[POSTBUILD] should return true, given a valid combination', async () => {
     const [category, subcategory] = [BlogConfig.TESTING_CATEGORY, 'fake-subcategory' as const];
     const isValid = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage(category, subcategory);
 
     expect(isValid).toBe(true);
   });
 
-  it('should return false, given an invalid combination (invalid category)', async () => {
+  it('[POSTBUILD] should return false, given an invalid combination (invalid category)', async () => {
     const isValid = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage('_%#@!$£µ' as any, 'fake-subcategory');
 
     expect(isValid).toBe(false);
   });
 
-  it('should return false, given an invalid combination (invalid subcategory)', async () => {
+  it('[POSTBUILD] should return false, given an invalid combination (invalid subcategory)', async () => {
     const isValid = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage(BlogConfig.TESTING_CATEGORY, '_%#@!$£µ' as any);
 
     expect(isValid).toBe(false);
   });
 
-  it('should return false, given an invalid combination (both invalid)', async () => {
+  it('[POSTBUILD] should return false, given an invalid combination (both invalid)', async () => {
     const isValid = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage('_%#@!$£µ' as any, '_%#@!$£µ' as any);
 
     expect(isValid).toBe(false);
