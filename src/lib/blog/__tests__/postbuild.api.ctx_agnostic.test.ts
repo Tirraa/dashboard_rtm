@@ -78,3 +78,9 @@ describe('getBlogPostPathWithoutI18nPart', () => {
     expect(blogPostWithoutI18nPart).toBe('/' + [category, subcategory, targettedSlug].join('/'));
   });
 });
+
+describe("C'est TOUT CASSER", () => {
+  it('should TOUT CASSER', () => {
+    expect(true).toBe(false);
+  });
+});
