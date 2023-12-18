@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { DefaultColors } from 'tailwindcss/types/generated/colors';
 import type { Config } from 'tailwindcss';
 
@@ -104,3 +105,4 @@ const config = {
 } satisfies Config;
 
 export default config;
+/* v8 ignore stop */

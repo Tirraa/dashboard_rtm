@@ -1,3 +1,4 @@
+/* v8 ignore start */
 const { withContentlayer } = require('next-contentlayer');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true'
@@ -14,3 +15,4 @@ const nextConfig = {
 };
 
 module.exports = withBundleAnalyzer(withContentlayer(nextConfig));
+/* v8 ignore stop */

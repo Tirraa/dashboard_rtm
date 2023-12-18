@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import { Inter } from 'next/font/google';
 
 export const fInter = Inter({
@@ -5,3 +6,4 @@ export const fInter = Inter({
   variable: '--font-sans',
   subsets: ['latin']
 });
+/* v8 ignore stop */

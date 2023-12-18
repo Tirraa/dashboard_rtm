@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { Element as hASTElement } from 'hast';
 
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -74,3 +75,4 @@ export default makeSource({
   contentDirPath,
   documentTypes
 });
+/* v8 ignore stop */

@@ -1,3 +1,4 @@
+/* v8 ignore start */
 const DEFAULT_LANGUAGE = require('./interop/config/sitemap/defaultLanguageNextSitemapAdapter');
 const APP_PROTECTED_PATHS = require('./interop/config/sitemap/excludedRoutesPrefixesNextSitemapAdapter');
 
@@ -37,3 +38,4 @@ module.exports = {
 
   siteUrl
 };
+/* v8 ignore stop */

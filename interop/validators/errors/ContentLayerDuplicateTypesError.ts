@@ -1,3 +1,4 @@
+/* v8 ignore start */
 class ContentLayerDuplicateTypesError extends Error {
   constructor(duplicates: unknown[]) {
     super(`[${duplicates.join(', ')}] ${duplicates.length > 1 ? 'are' : 'is'} defined several times.`);
@@ -6,3 +7,4 @@ class ContentLayerDuplicateTypesError extends Error {
 }
 
 export default ContentLayerDuplicateTypesError;
+/* v8 ignore stop */

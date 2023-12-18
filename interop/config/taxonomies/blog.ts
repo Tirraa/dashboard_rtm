@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { BlogSubcategoryFromUnknownCategory, UnknownBlogSlug, BlogCategory } from '@/types/Blog';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 
@@ -17,3 +18,4 @@ export type TBlogTaxonomy = {
 };
 
 export default BlogTaxonomy;
+/* v8 ignore stop */
