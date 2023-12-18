@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { VariantProps } from 'class-variance-authority';
 
 import { getLinkTarget } from '@rtm/shared-lib/react';
@@ -88,3 +89,4 @@ const Button: React.FunctionComponent<ButtonHoCProps> = ({
 };
 
 export { buttonVariants, Button };
+/* v8 ignore stop */

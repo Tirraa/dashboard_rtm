@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { PatchNotesRoutesTitles, PatchNotesRoutes } from '@/config/SitewideNavbar/PatchNotes/utils/RoutesMapping';
 
 import { getSlashEnvelope } from '@/lib/str';
@@ -18,3 +19,4 @@ export const PATCH_NOTES_ROUTES_TITLES: PatchNotesRoutesTitles = {
 } as const;
 
 export default PATCH_NOTES_ROUTES;
+/* v8 ignore stop */

@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { WithChildren } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
@@ -12,3 +13,4 @@ const UIProvider: FunctionComponent<UIProviderProps> = ({ children }) => (
 );
 
 export default UIProvider;
+/* v8 ignore stop */

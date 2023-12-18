@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { CSSProperties } from 'react';
 
 import { DEFAULT_VARIANT_COLOR_SCHEME } from '@/config/themes';
@@ -5,3 +6,4 @@ import { DEFAULT_VARIANT_COLOR_SCHEME } from '@/config/themes';
 export const HTML_STYLE: CSSProperties = {
   colorScheme: DEFAULT_VARIANT_COLOR_SCHEME
 };
+/* v8 ignore stop */

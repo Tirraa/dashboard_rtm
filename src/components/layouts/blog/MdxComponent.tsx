@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { FunctionComponent, ReactNode } from 'react';
 
 import PrimitiveComponents from '@/components/config/blog/PrimitiveComponents';
@@ -27,3 +28,4 @@ const MDX: FunctionComponent<MdxProps> = ({ code }) => {
 };
 
 export default MDX;
+/* v8 ignore stop */

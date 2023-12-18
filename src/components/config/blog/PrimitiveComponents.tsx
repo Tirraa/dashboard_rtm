@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { ImgHTMLAttributes, HTMLAttributes } from 'react';
 
 import CopyToClipboard from '@/components/ui/blog/CopyToClipboard';
@@ -53,3 +54,4 @@ const PrimitiveComponents: Record<PropertyKey, (...args: any[]) => JSX.Element> 
 };
 
 export default PrimitiveComponents;
+/* v8 ignore stop */

@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type IButtonStyleBase from '@/components/config/styles/types/IButtonStyleBase';
 
 import { cn } from '@/lib/tailwind';
@@ -10,3 +11,4 @@ const SidebarCollapseButtonWrapperStyle: IButtonStyleBase = {
 } as const;
 
 export default SidebarCollapseButtonWrapperStyle;
+/* v8 ignore stop */

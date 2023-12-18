@@ -1,3 +1,4 @@
+/* v8 ignore start */
 type SplitKeys<S extends string> = S extends `${infer Head}${KeySeparator}${infer Tail}` ? [Head, ...SplitKeys<Tail>] : [S];
 
 type JoinKeys<T extends string[]> = T extends []
@@ -30,10 +31,11 @@ export type MaybeSessionUser<T> = MaybeUndefined<T>;
 export type MaybeSessionUserField<T> = MaybeUndefined<T> | MaybeNull<T>;
 
 // * ... https://github.com/microsoft/TypeScript/issues/56080
-export type CompareFun<T extends Tuple<unknown>, CTX extends unknown[] = never> = /*__CAST `never` TO__*/ Function & CTX extends never
-  ? // eslint-disable-next-line no-unused-vars
-    (x1: T[0], x2: T[1]) => CompareFunReturnValue
-  : // eslint-disable-next-line no-unused-vars
-    (x1: T[0], x2: T[1], ...ctx: [...CTX]) => CompareFunReturnValue;
+export type CompareFun<T extends Tuple<unknown>, CTX extends unknown[] = never> = /*__CAST `never` TO__*/ Function &
+  CTX extends never /* eslint-disable no-unused-vars */
+  ? (x1: T[0], x2: T[1]) => CompareFunReturnValue
+  : (x1: T[0], x2: T[1], ...ctx: [...CTX]) => CompareFunReturnValue;
+/* eslint-enable no-unused-vars */
 
 type CompareFunReturnValue = number;
+/* v8 ignore stop */

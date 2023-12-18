@@ -1,3 +1,5 @@
+/* v8 ignore start */
+//!\ TESTED VIA JEST-TSD
 import type {
   BlogDocumentsComputedFieldsKeys,
   BlogDocumentsTypesKeys,
@@ -59,3 +61,4 @@ export type ComputedField = {
   resolve: (post: PostToBuild) => unknown;
   type: FieldDefType;
 };
+/* v8 ignore stop */

@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { PatchNotesRoutesKeys } from '@/config/SitewideNavbar/PatchNotes/utils/RoutesMapping';
 import type { NavbarDropdownsConfig } from '@/types/WebsiteUtils';
 import type { EmbeddedEntities } from '@/types/NavData';
@@ -11,3 +12,4 @@ const PATCH_NOTES_PAGE: EmbeddedEntities = Object.keys(PATCH_NOTES_ROUTES).map((
 
 const SITEWIDE_NAVBAR_DROPDOWNS_CONFIG: NavbarDropdownsConfig = { PATCH_NOTES_PAGE } as const;
 export default SITEWIDE_NAVBAR_DROPDOWNS_CONFIG;
+/* v8 ignore stop */

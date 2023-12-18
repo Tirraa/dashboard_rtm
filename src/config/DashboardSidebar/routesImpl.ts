@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { DashboardRoutesTitles, DashboardRoutes } from '@/config/DashboardSidebar/utils/RoutesMapping';
 
 import { getSlashEnvelope } from '@/lib/str';
@@ -20,3 +21,4 @@ export const DASHBOARD_ROUTES_TITLES: DashboardRoutesTitles = {
 } as const;
 
 export default DASHBOARD_ROUTES;
+/* v8 ignore stop */

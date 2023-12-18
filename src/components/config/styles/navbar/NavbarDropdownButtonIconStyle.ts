@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type IButtonStyleBase from '@/components/config/styles/types/IButtonStyleBase';
 
 import { cn } from '@/lib/tailwind';
@@ -10,3 +11,4 @@ const NavbarDropdownButtonIconStyle: IButtonStyleBase = {
 } as const;
 
 export default NavbarDropdownButtonIconStyle;
+/* v8 ignore stop */

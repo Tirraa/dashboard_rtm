@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { ReactNode } from 'react';
 
 type CustomCrumb = {
@@ -6,3 +7,4 @@ type CustomCrumb = {
 };
 
 export type CustomCrumbs = CustomCrumb[];
+/* v8 ignore stop */

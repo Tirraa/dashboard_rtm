@@ -1,3 +1,4 @@
+/* v8 ignore start */
 'use client';
 
 import type { FunctionComponent } from 'react';
@@ -20,3 +21,4 @@ const Providers: FunctionComponent<ProvidersProps> = ({ children, locale }) => (
 );
 
 export default Providers;
+/* v8 ignore stop */

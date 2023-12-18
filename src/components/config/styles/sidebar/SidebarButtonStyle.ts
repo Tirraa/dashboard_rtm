@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type IButtonStyleReactIcon from '@/components/config/styles/types/IButtonStyleReactIcon';
 
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
@@ -13,3 +14,4 @@ const SidebarButtonStyle: IButtonStyleReactIcon = {
 } as const;
 
 export default SidebarButtonStyle;
+/* v8 ignore stop */

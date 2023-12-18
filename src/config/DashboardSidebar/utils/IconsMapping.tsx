@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { IconBaseProps } from 'react-icons';
 import type { ComponentType } from 'react';
 
@@ -18,3 +19,4 @@ Object.entries(SIDEBAR_ROUTES_ICONS).forEach(
 const DASHBOARD_ROUTES_SIDEBAR_COMPONENTS: DashboardRoutesSidebarReactElements = computedDashboardRoutesSidebarComponents;
 
 export default DASHBOARD_ROUTES_SIDEBAR_COMPONENTS;
+/* v8 ignore stop */

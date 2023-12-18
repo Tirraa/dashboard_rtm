@@ -1,3 +1,4 @@
+/* v8 ignore start */
 type TLoaderConfig = {
   BACKGROUND_COLOR: string;
   COLOR: string;
@@ -12,3 +13,4 @@ const LOADER_CONFIG: TLoaderConfig = {
 } as const;
 
 export default LOADER_CONFIG;
+/* v8 ignore stop */

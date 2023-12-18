@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import preserveKeyboardNavigation from './portable/html/preserveKeyboardNavigation';
 import computeHTMLElementHeight from './portable/html/computeHTMLElementHeight';
 import computeHTMLElementWidth from './portable/html/computeHTMLElementWidth';
@@ -17,3 +18,4 @@ export {
   resetScroll,
   scrollToTop
 };
+/* v8 ignore stop */

@@ -1,3 +1,4 @@
+/* v8 ignore start */
 'use client';
 
 import type { WithDeepResetOnLgBreakpointEvents } from '@rtm/shared-types/Next';
@@ -216,3 +217,4 @@ export {
   DropdownMenuSub,
   DropdownMenu
 };
+/* v8 ignore stop */

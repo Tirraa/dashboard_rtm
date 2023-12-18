@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { MaybeSessionUserField, MaybeSessionUser } from '@rtm/shared-types/CustomUtilityTypes';
 
 export type User = MaybeSessionUser<{
@@ -5,3 +6,4 @@ export type User = MaybeSessionUser<{
   image?: MaybeSessionUserField<string>;
   name?: MaybeSessionUserField<string>;
 }>;
+/* v8 ignore stop */

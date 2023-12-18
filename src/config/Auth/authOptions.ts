@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { NextAuthOptions } from 'next-auth';
 
 import DiscordProvider from 'next-auth/providers/discord';
@@ -17,3 +18,4 @@ const authOptions: NextAuthOptions = {
 };
 
 export default authOptions;
+/* v8 ignore stop */

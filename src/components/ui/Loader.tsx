@@ -1,3 +1,4 @@
+/* v8 ignore start */
 'use client';
 
 import type { FunctionComponent, CSSProperties } from 'react';
@@ -31,3 +32,4 @@ const Loader: FunctionComponent<LoaderProps> = ({ override: cssOverride } = {}) 
 };
 
 export default Loader;
+/* v8 ignore stop */

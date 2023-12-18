@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { LanguageLabels } from '@rtm/shared-types/I18n';
 
 const localesLabels: LanguageLabels = {
@@ -11,3 +12,4 @@ export const localesEmojis: LanguageLabels = {
 } as const;
 
 export default localesLabels;
+/* v8 ignore stop */

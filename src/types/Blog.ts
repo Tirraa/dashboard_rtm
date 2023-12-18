@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type BlogArchitecture from '@rtm/generated/BlogArchitecture';
 import type { WithClassname } from 'packages/shared-types/src/Next';
 import type { TBlogTaxonomy } from '##/config/taxonomies/blog';
@@ -59,3 +60,4 @@ export type StrictBlog = {
     };
   };
 };
+/* v8 ignore stop */

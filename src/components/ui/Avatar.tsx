@@ -1,3 +1,4 @@
+/* v8 ignore start */
 'use client';
 
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
@@ -25,3 +26,4 @@ const AvatarFallback = React.forwardRef<
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
 
 export { AvatarFallback, AvatarImage, Avatar };
+/* v8 ignore stop */

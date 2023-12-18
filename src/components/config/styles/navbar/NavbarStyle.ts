@@ -1,3 +1,4 @@
+/* v8 ignore start */
 type TNavbarStyle = {
   LOGO_SIZE_PX_VALUE: number;
 };
@@ -7,3 +8,4 @@ const NAVBAR_STYLE: TNavbarStyle = {
 } as const;
 
 export default NAVBAR_STYLE;
+/* v8 ignore stop */
