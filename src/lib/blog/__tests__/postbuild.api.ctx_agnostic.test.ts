@@ -14,7 +14,7 @@ import {
 } from '../api';
 
 describe('getPostStrict', () => {
-  it('[POSTBUILD] should always return a valid post', async () => {
+  it('should always return a valid post', async () => {
     const [category, subcategory, targettedSlug] = [BlogConfig.TESTING_CATEGORY, 'fake-subcategory' as const, 'fake-post-01' as const];
     const language = DEFAULT_LANGUAGE;
     const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as PostBase;
@@ -28,13 +28,13 @@ describe('getPostStrict', () => {
 });
 
 describe('getBlogPostFormattedDate', () => {
-  it('[POSTBUILD] should return date without time, given valid ISO Date String with null timestamp', () => {
+  it('should return date without time, given valid ISO Date String with null timestamp', () => {
     expect(getBlogPostFormattedDate('fr' as any, '2021-12-24T00:00:00.000Z')).toBe('Vendredi 24 décembre 2021');
   });
 });
 
 describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict', () => {
-  it("[POSTBUILD] should return 4 posts, given the fake language 'posts'", async () => {
+  it("should return 4 posts, given the fake language 'posts'", async () => {
     const postsCollection = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict(
       BlogConfig.TESTING_CATEGORY,
       'fake-subcategory',
@@ -43,7 +43,7 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict', () => {
     expect(postsCollection.length).toBe(4);
   });
 
-  it('[POSTBUILD] should return 3 posts, with the default language', async () => {
+  it('should return 3 posts, with the default language', async () => {
     const postsCollection = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict(
       BlogConfig.TESTING_CATEGORY,
       'fake-subcategory',
@@ -55,19 +55,19 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict', () => {
 });
 
 describe('isValidBlogCategoryAndSubcategoryPair', () => {
-  it('[POSTBUILD] should be true for valid combinations', async () => {
+  it('should be true for valid combinations', async () => {
     const isValid = await isValidBlogCategoryAndSubcategoryPair(BlogConfig.TESTING_CATEGORY, 'fake-subcategory', 'drafts' as any);
     expect(isValid).toBe(true);
   });
 
-  it('[POSTBUILD] should be false for invalid combinations', async () => {
+  it('should be false for invalid combinations', async () => {
     const isValid = await isValidBlogCategoryAndSubcategoryPair('__HELLO##W@RLD' as any, 'fake-subcategory', 'drafts' as any);
     expect(isValid).toBe(false);
   });
 });
 
 describe('getBlogPostPathWithoutI18nPart', () => {
-  it('[POSTBUILD] should return the path without its language part', async () => {
+  it('should return the path without its language part', async () => {
     const [category, subcategory, language, targettedSlug] = [
       BlogConfig.TESTING_CATEGORY,
       'fake-subcategory' as const,
@@ -83,26 +83,26 @@ describe('getBlogPostPathWithoutI18nPart', () => {
 });
 
 describe('isValidBlogCategoryAndSubcategoryPairInAnyLanguage', () => {
-  it('[POSTBUILD] should return true, given a valid combination', async () => {
+  it('should return true, given a valid combination', async () => {
     const [category, subcategory] = [BlogConfig.TESTING_CATEGORY, 'fake-subcategory' as const];
     const isValid = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage(category, subcategory);
 
     expect(isValid).toBe(true);
   });
 
-  it('[POSTBUILD] should return false, given an invalid combination (invalid category)', async () => {
+  it('should return false, given an invalid combination (invalid category)', async () => {
     const isValid = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage('_%#@!$£µ' as any, 'fake-subcategory');
 
     expect(isValid).toBe(false);
   });
 
-  it('[POSTBUILD] should return false, given an invalid combination (invalid subcategory)', async () => {
+  it('should return false, given an invalid combination (invalid subcategory)', async () => {
     const isValid = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage(BlogConfig.TESTING_CATEGORY, '_%#@!$£µ' as any);
 
     expect(isValid).toBe(false);
   });
 
-  it('[POSTBUILD] should return false, given an invalid combination (both invalid)', async () => {
+  it('should return false, given an invalid combination (both invalid)', async () => {
     const isValid = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage('_%#@!$£µ' as any, '_%#@!$£µ' as any);
 
     expect(isValid).toBe(false);

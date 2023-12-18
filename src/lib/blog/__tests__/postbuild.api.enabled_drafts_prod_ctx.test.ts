@@ -20,7 +20,7 @@ vi.mock('@/config/blog', async (orgImport) => {
 });
 
 describe('getPostStrict', () => {
-  it('[POSTBUILD] should always return a valid post when picking a non-draft post in an authorized drafts CTX', async () => {
+  it('should always return a valid post when picking a non-draft post in an authorized drafts CTX', async () => {
     const [category, subcategory, targettedSlug] = [BlogConfig.TESTING_CATEGORY, 'fake-subcategory' as const, 'fake-post-01' as const];
     const language = DEFAULT_LANGUAGE;
     const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as PostBase;
@@ -32,7 +32,7 @@ describe('getPostStrict', () => {
     expect(post.url).toBe(`/${language}/${category}/${subcategory}/${targettedSlug}`);
   });
 
-  it('[POSTBUILD] should always return a valid post when picking a draft post in an authorized drafts CTX', async () => {
+  it('should always return a valid post when picking a draft post in an authorized drafts CTX', async () => {
     const [category, subcategory, language, targettedSlug] = [
       BlogConfig.TESTING_CATEGORY,
       'fake-subcategory' as const,

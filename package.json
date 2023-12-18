@@ -7,6 +7,9 @@
   ],
   "license": "MIT",
   "private": true,
+  "imports": {
+    "#tailwind.config": "./tailwind.config.ts"
+  },
   "scripts": {
     "prebuild": "cross-env BLOG_POSTS_FOLDER=./posts I18N_LOCALES_SCHEMA=./src/i18n/locales/schema.ts pnpm --filter @rtm/prebuilder start",
     "build": "next build",
@@ -14,7 +17,7 @@
     "dev": "next dev",
     "start": "next start",
     "lint": "next lint",
-    "test-before-build": "vitest --run -t '^((?!\\[POSTBUILD\\]).)*$'",
+    "test-before-build": "vitest --run prebuild",
     "test-after-build": "vitest --run postbuild",
     "pretest": "next build",
     "test": "vitest --run",
@@ -97,6 +100,7 @@
     "eslint-plugin-only-error": "^1.0.2",
     "eslint-plugin-perfectionist": "^2.5.0",
     "eslint-plugin-unused-imports": "^3.0.0",
+    "happy-dom": "^12.10.3",
     "husky": "^8.0.3",
     "lint-staged": "^15.0.2",
     "madge": "^6.1.0",

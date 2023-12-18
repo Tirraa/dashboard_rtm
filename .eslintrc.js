@@ -20,7 +20,7 @@ module.exports = {
       rules: {
         'import/no-extraneous-dependencies': [ERROR, { devDependencies: true }]
       },
-      files: ['vitest.config.ts', '*.test.ts', '*.test-d.ts', '*Adapter.js']
+      files: ['vitest.config.js', '*.test.ts', '*.test-d.ts', '*Adapter.js']
     }
   ],
 

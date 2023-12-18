@@ -20,7 +20,7 @@ vi.mock('@/config/blog', async (orgImport) => {
 });
 
 describe('blogSubcategoryShouldTriggerNotFound', () => {
-  it('[POSTBUILD] should return false only when the list is not empty', async () => {
+  it('should return false only when the list is not empty', async () => {
     const [category, subcategory, targettedSlug] = [BlogConfig.TESTING_CATEGORY, 'fake-subcategory' as const, 'fake-post-01' as const];
     const language = DEFAULT_LANGUAGE;
     const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as PostBase;
