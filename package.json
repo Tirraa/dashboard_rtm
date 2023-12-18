@@ -7,9 +7,6 @@
   ],
   "license": "MIT",
   "private": true,
-  "imports": {
-    "#tailwind.config": "./tailwind.config.ts"
-  },
   "scripts": {
     "prebuild": "cross-env BLOG_POSTS_FOLDER=./posts I18N_LOCALES_SCHEMA=./src/i18n/locales/schema.ts pnpm --filter @rtm/prebuilder start",
     "build": "next build",
@@ -32,7 +29,8 @@
     "ci:vercel-build-command": "pnpm test-before-build && pnpm build && pnpm test-after-build",
     "ci:lint": "eslint . --max-warnings 0",
     "ci:typecheck": "tsc --noEmit --pretty",
-    "ci:format-check": "prettier . --check"
+    "ci:format-check": "prettier . --check",
+    "vitest:ui": "vitest --ui"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
@@ -78,6 +76,8 @@
   "devDependencies": {
     "@commitlint/config-conventional": "^18.1.0",
     "@commitlint/cz-commitlint": "^18.2.0",
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^14.1.2",
     "@transloadit/ts-fly": "^0.1.4",
     "@tsd/typescript": "^5.3.2",
     "@types/hast": "^3.0.2",
@@ -89,7 +89,9 @@
     "@types/react-dom": "18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
+    "@vitejs/plugin-react": "^4.2.1",
     "@vitest/coverage-v8": "^0.34.6",
+    "@vitest/ui": "^1.0.4",
     "autoprefixer": "10.4.15",
     "commitizen": "^4.3.0",
     "cross-env": "^7.0.3",

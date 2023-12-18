@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { getBreakpoint } from '../../../tailwind';
 
-vi.mock('#tailwind.config', async () => {
+vi.mock('tailwind.config', async () => {
   return {
     default: {
       theme: {
@@ -26,4 +26,4 @@ describe('getBreakpoint', () => {
   });
 });
 
-vi.doUnmock('#tailwind.config');
+vi.doUnmock('tailwind.config');
