@@ -1,4 +1,4 @@
-import type { BlogPostPageProps, BlogPostProps, PostBase } from '@/types/Blog';
+import type { BlogPostPageProps, BlogPostProps, TBlogPost } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { WithClassname } from 'packages/shared-types/src/Next';
 import type { FunctionComponent } from 'react';
@@ -36,7 +36,7 @@ const BlogPost: FunctionComponent<_BlogPostPageProps> = async ({ className: clas
 
   const slug = params[BlogTaxonomy.SLUG];
 
-  const post: MaybeNull<PostBase> = await getBlogPostUnstrict(category, subcategory, slug, language);
+  const post: MaybeNull<TBlogPost> = await getBlogPostUnstrict(category, subcategory, slug, language);
   if (!post) notFound();
 
   return <BlogPostInner className={classNameValue} language={language} post={post} />;

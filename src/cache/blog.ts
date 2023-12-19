@@ -1,4 +1,4 @@
-import type { BlogSubcategoryFromUnknownCategory, BlogCategory, PostBase } from '@/types/Blog';
+import type { BlogSubcategoryFromUnknownCategory, BlogCategory, TBlogPost } from '@/types/Blog';
 import type { MaybeNull } from 'packages/shared-types/src/CustomUtilityTypes';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 
@@ -13,7 +13,7 @@ namespace BlogCache {
 }
 
 async function buildSubcategoriesSet(category: BlogCategory, language: LanguageFlag): Promise<Set<BlogSubcategoryFromUnknownCategory>> {
-  const relatedPosts: MaybeNull<PostBase[]> = await getAllBlogPostsByCategoryAndLanguage(category, language);
+  const relatedPosts: MaybeNull<TBlogPost[]> = await getAllBlogPostsByCategoryAndLanguage(category, language);
   const subcategoriesSet = new Set<BlogSubcategoryFromUnknownCategory>();
 
   if (relatedPosts === null) {

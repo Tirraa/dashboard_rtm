@@ -6,7 +6,7 @@ import type {
   BlogStaticParams,
   UnknownBlogSlug,
   BlogCategory,
-  PostBase
+  TBlogPost
 } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 
@@ -38,7 +38,7 @@ export async function getBlogStaticParams(): Promise<BlogStaticParams[]> {
       for (const subcateg of curSubcategs) {
         const subcategory = subcateg as BlogSubcategoryFromUnknownCategory;
 
-        const relatedPosts: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(category, subcategory, language);
+        const relatedPosts: TBlogPost[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(category, subcategory, language);
 
         for (const post of relatedPosts) {
           const slug = post.slug as UnknownBlogSlug;
@@ -90,15 +90,15 @@ export async function getBlogPostMetadatas({ params }: BlogPostPageProps) {
 
   const slug = params[BlogTaxonomy.SLUG];
   const language = params[I18nTaxonomy.LANGUAGE];
-  const post: MaybeNull<PostBase> = await getBlogPostUnstrict(category, subcategory, slug, language);
+  const post: MaybeNull<TBlogPost> = await getBlogPostUnstrict(category, subcategory, slug, language);
 
   const globalT = await getServerSideI18n();
-  const currentPost = post as PostBase;
+  const currentPost = post as TBlogPost;
 
   if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory, language)) return {};
 
   const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), currentPost.title);
-  const { metadescription: description } = post as PostBase;
+  const { metadescription: description } = post as TBlogPost;
   return { description, title };
 }
 

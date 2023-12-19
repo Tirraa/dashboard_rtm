@@ -1,5 +1,5 @@
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
-import type { BlogPostPageProps, PostBase } from '@/types/Blog';
+import type { BlogPostPageProps, TBlogPost } from '@/types/Blog';
 
 import { getBlogPostMetadatas, getBlogStaticParams, blogPostGuard } from '@/lib/blog/staticGeneration';
 import BlogPostCrumb from '@/components/ui/breadcrumbs/custom/BlogPostCrumb';
@@ -32,7 +32,7 @@ export default async function Page({ params }: BlogPostPageProps) {
   const subcategory = params[BlogTaxonomy.SUBCATEGORY];
   const slug = params[BlogTaxonomy.SLUG];
 
-  const post: MaybeNull<PostBase> = await getBlogPostUnstrict(category, subcategory, slug, language);
+  const post: MaybeNull<TBlogPost> = await getBlogPostUnstrict(category, subcategory, slug, language);
   if (!post) notFound();
 
   const MIN_DEPTH = 3;

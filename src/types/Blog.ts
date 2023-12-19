@@ -11,7 +11,7 @@ import type Blog from '@rtm/generated/Blog';
 import type { I18nParams } from './Next';
 
 type ContentLayerPhantomType = 'type';
-export type PostBase = Omit<PostSchema, ContentLayerPhantomType>;
+export type TBlogPost = Omit<PostSchema, ContentLayerPhantomType>;
 
 export type BlogCategory = keyof BlogArchitecture;
 export type BlogSubcategoryFromUnknownCategory = BlogArchitecture[BlogCategory];
@@ -42,10 +42,10 @@ export interface BlogPostPageProps {
 
 export interface BlogPostProps extends Partial<WithClassname> {
   language: LanguageFlag;
-  post: PostBase;
+  post: TBlogPost;
 }
 
-type AllPostsGetter = () => Promise<PostBase[]>;
+type AllPostsGetter = () => Promise<TBlogPost[]>;
 export type PostsCollectionAssoc = Record<BlogCategory, AllPostsGetter>;
 
 type BlogStaticParamsValue = string;

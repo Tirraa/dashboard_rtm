@@ -1,4 +1,4 @@
-import type { BlogSubcategoryPageProps, PostBase } from '@/types/Blog';
+import type { BlogSubcategoryPageProps, TBlogPost } from '@/types/Blog';
 import type { FunctionComponent } from 'react';
 
 import {
@@ -29,7 +29,7 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
 
   const scopedT = await getScopedI18n(i18ns.blogCategories);
 
-  const postsCollection: PostBase[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(category, subcategory, language);
+  const postsCollection: TBlogPost[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(category, subcategory, language);
 
   if (blogSubcategoryShouldTriggerNotFound(postsCollection)) notFound();
   else if (postsCollection.length === 0) return <BlogPostsNotFound />;

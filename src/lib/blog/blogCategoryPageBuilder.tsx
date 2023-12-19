@@ -1,4 +1,4 @@
-import type { BlogSubcategoryFromUnknownCategory, BlogCategory, PostBase } from '@/types/Blog';
+import type { BlogSubcategoryFromUnknownCategory, BlogCategory, TBlogPost } from '@/types/Blog';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { ReactElement, ReactNode } from 'react';
 
@@ -17,7 +17,7 @@ import Link from 'next/link';
 
 const slugger = new GithubSlugger();
 
-async function blogCategoryPageBuilder(posts: PostBase[], category: BlogCategory, language: LanguageFlag): Promise<ReactElement | ReactNode[]> {
+async function blogCategoryPageBuilder(posts: TBlogPost[], category: BlogCategory, language: LanguageFlag): Promise<ReactElement | ReactNode[]> {
   function buildHistogram() {
     for (const post of posts) {
       const curSubcateg = post.subcategory as BlogSubcategoryFromUnknownCategory;
@@ -111,7 +111,7 @@ async function blogCategoryPageBuilder(posts: PostBase[], category: BlogCategory
   );
 
   const [histogram, postsCollectionsSnippets] = [
-    Object.fromEntries(entries) as Record<BlogSubcategoryFromUnknownCategory, PostBase[]>,
+    Object.fromEntries(entries) as Record<BlogSubcategoryFromUnknownCategory, TBlogPost[]>,
     Object.fromEntries(sortedEntries) as Record<BlogSubcategoryFromUnknownCategory, ReactNode[]>
   ];
   const limit = BlogConfig.DISPLAYED_BLOG_POSTS_PER_SUBCATEGORY_ON_BLOG_CATEGORY_PAGE_LIMIT;

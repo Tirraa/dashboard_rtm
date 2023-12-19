@@ -1,5 +1,5 @@
 import type { TBlogConfig } from '@/config/blog';
-import type { PostBase } from '@/types/Blog';
+import type { TBlogPost } from '@/types/Blog';
 
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, it, vi } from 'vitest';
@@ -23,7 +23,7 @@ describe('getPostStrict', () => {
   it('should always return a valid post when picking a non-draft post in an authorized drafts CTX', async () => {
     const [category, subcategory, targettedSlug] = [BlogConfig.TESTING_CATEGORY, 'fake-subcategory' as const, 'fake-post-01' as const];
     const language = DEFAULT_LANGUAGE;
-    const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as PostBase;
+    const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as TBlogPost;
 
     expect(post.category).toBe(category);
     expect(post.subcategory).toBe(subcategory);
@@ -39,7 +39,7 @@ describe('getPostStrict', () => {
       'drafts' as const,
       'fake-draft-01' as const
     ];
-    const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as PostBase;
+    const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as TBlogPost;
 
     expect(post.category).toBe(category);
     expect(post.subcategory).toBe(subcategory);

@@ -1,4 +1,4 @@
-import type { PostBase } from '@/types/Blog';
+import type { TBlogPost } from '@/types/Blog';
 
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, it } from 'vitest';
@@ -17,7 +17,7 @@ describe('getPostStrict', () => {
   it('should always return a valid post', async () => {
     const [category, subcategory, targettedSlug] = [BlogConfig.TESTING_CATEGORY, 'fake-subcategory' as const, 'fake-post-01' as const];
     const language = DEFAULT_LANGUAGE;
-    const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as PostBase;
+    const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as TBlogPost;
 
     expect(post.category).toBe(category);
     expect(post.subcategory).toBe(subcategory);
@@ -75,7 +75,7 @@ describe('getBlogPostPathWithoutI18nPart', () => {
       'fake-post-03' as const
     ];
 
-    const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as PostBase;
+    const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as TBlogPost;
     const blogPostWithoutI18nPart = getBlogPostPathWithoutI18nPart(post);
 
     expect(blogPostWithoutI18nPart).toBe('/' + [category, subcategory, targettedSlug].join('/'));

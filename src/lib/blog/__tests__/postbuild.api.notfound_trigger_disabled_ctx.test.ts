@@ -1,5 +1,5 @@
 import type { TBlogConfig } from '@/config/blog';
-import type { PostBase } from '@/types/Blog';
+import type { TBlogPost } from '@/types/Blog';
 
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, it, vi } from 'vitest';
@@ -23,7 +23,7 @@ describe('blogSubcategoryShouldTriggerNotFound', () => {
   it('should return false only when the list is not empty', async () => {
     const [category, subcategory, targettedSlug] = [BlogConfig.TESTING_CATEGORY, 'fake-subcategory' as const, 'fake-post-01' as const];
     const language = DEFAULT_LANGUAGE;
-    const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as PostBase;
+    const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as TBlogPost;
 
     expect(blogSubcategoryShouldTriggerNotFound([])).toBe(true);
     expect(blogSubcategoryShouldTriggerNotFound([post])).toBe(false);
