@@ -105,7 +105,6 @@
     "happy-dom": "^12.10.3",
     "husky": "^8.0.3",
     "lint-staged": "^15.0.2",
-    "madge": "^6.1.0",
     "next-sitemap": "^4.2.3",
     "postcss": "^8.4.31",
     "prettier": "^3.0.3",

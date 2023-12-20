@@ -1,4 +1,3 @@
-import { existsSync, statSync } from 'fs';
 import arg from 'arg';
 
 import {
@@ -13,6 +12,8 @@ import {
 import ArgumentsValidatorError from '../errors/ArgumentsValidatorError';
 import { prefixFeedback } from '../lib/feedbacksMerge';
 import { FLAGS as OPTIONS } from '../config';
+
+const fs = require('fs');
 
 const { IMPOSSIBLE_TO_START: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
@@ -75,9 +76,14 @@ function crashIfFilesDoesNotExist({ ...args }) {
   function checkI18n() {
     if (NO_I18N) return;
 
-    const i18nDefaultLocaleFileExists = existsSync(I18N_LOCALES_SCHEMA_FILEPATH);
+    const i18nDefaultLocaleFileExists = fs.existsSync(I18N_LOCALES_SCHEMA_FILEPATH);
     if (!i18nDefaultLocaleFileExists) {
       throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + "Can't open the i18n locale schema file!" + '\n' + DISABLE_I18N_ANALYSIS_ADVICE);
+    }
+
+    const localesSchemaIsAFile = fs.statSync(I18N_LOCALES_SCHEMA_FILEPATH).isFile();
+    if (!localesSchemaIsAFile) {
+      throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + 'The locale schema you indicated is NOT a file!' + '\n' + DISABLE_I18N_ANALYSIS_ADVICE);
     }
   }
 
@@ -86,12 +92,12 @@ function crashIfFilesDoesNotExist({ ...args }) {
 
     const ADVICE = DISABLE_BLOG_ANALYSIS_ADVICE;
 
-    const postsFolderExists = existsSync(BLOG_POSTS_FOLDER);
+    const postsFolderExists = fs.existsSync(BLOG_POSTS_FOLDER);
     if (!postsFolderExists) {
       throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + "Can't open the posts folder!" + '\n' + ADVICE);
     }
 
-    const postsFolderIsDirectory = statSync(BLOG_POSTS_FOLDER).isDirectory();
+    const postsFolderIsDirectory = fs.statSync(BLOG_POSTS_FOLDER).isDirectory();
     if (!postsFolderIsDirectory) {
       throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + 'The posts folder you indicated is NOT a directory!' + '\n' + ADVICE);
     }

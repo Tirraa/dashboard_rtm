@@ -1,3 +1,4 @@
+/* v8 ignore start */
 'use client';
 
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
@@ -180,3 +181,4 @@ NextTopLoader.propTypes = {
 };
 
 export default NextTopLoader;
+/* v8 ignore stop */

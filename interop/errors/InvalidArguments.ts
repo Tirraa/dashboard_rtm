@@ -2,7 +2,7 @@ import endsWithChars from '../../src/lib/portable/str/endsWithChar';
 
 export const PUNCTUATION = '.?!';
 
-export class InvalidArgumentsError extends Error {
+class InvalidArgumentsError extends Error {
   constructor(method: string, args: object, hint: string = '') {
     const _hint = hint.trim();
     const message =

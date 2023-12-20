@@ -1,5 +1,5 @@
 import { beforeEach, afterAll, describe, expect, test, it, vi } from 'vitest';
-import NODE_ENV from 'Ț/setEnv';
+import NODE_ENV from '𝕍/setEnv';
 
 import type ComputedNodeCtx from '../env';
 

@@ -1,3 +1,4 @@
+/* v8 ignore start */
 type TDiscordConfig = {
   SUPPORT_SERVER_INVITE_LINK: string;
   BOT_INVITE_LINK: string;
@@ -10,3 +11,4 @@ const DISCORD_CONFIG: TDiscordConfig = {
 } as const;
 
 export default DISCORD_CONFIG;
+/* v8 ignore stop */

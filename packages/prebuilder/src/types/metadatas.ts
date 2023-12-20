@@ -1,3 +1,4 @@
+/* v8 ignore start */
 export type BlogSubcategory = string;
 export type BlogCategory = string;
 export type BlogSlug = string;
@@ -20,3 +21,4 @@ export type File = {
 
 export type Path = string;
 export type Filename = string;
+/* v8 ignore stop */

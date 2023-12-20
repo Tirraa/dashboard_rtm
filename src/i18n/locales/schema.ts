@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { TypedLeafsJSONData } from '@rtm/shared-types/JSON';
 
 import blogCategories from '@rtm/generated/blogCategories';
@@ -95,3 +96,4 @@ export default {
 type NotScanned = '';
 type Scanned = '__SCANNED_ON_BUILD_FIELD__';
 type MaybeScanned = NotScanned | Scanned;
+/* v8 ignore stop */

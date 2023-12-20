@@ -1,3 +1,4 @@
+/* v8 ignore start */
 class ArgumentsValidatorError extends Error {
   constructor(message: string) {
     super(message);
@@ -6,3 +7,4 @@ class ArgumentsValidatorError extends Error {
 }
 
 export default ArgumentsValidatorError;
+/* v8 ignore stop */

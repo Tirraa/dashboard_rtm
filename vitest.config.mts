@@ -24,7 +24,7 @@ export default defineConfig({
       'contentlayer/generated': resolve(__dirname, './.contentlayer/generated'),
       '@rtm/generated': resolve(__dirname, './.rtm-generated'),
       '##': resolve(__dirname, './interop'),
-      Ț: resolve(__dirname, './.vitest'),
+      '𝕍': resolve(__dirname, './.vitest'),
       '@': resolve(__dirname, './src')
     }
   }

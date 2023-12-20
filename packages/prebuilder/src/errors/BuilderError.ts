@@ -1,3 +1,4 @@
+/* v8 ignore start */
 class BuilderError extends Error {
   constructor(message: string) {
     super(message);
@@ -6,3 +7,4 @@ class BuilderError extends Error {
 }
 
 export default BuilderError;
+/* v8 ignore stop */

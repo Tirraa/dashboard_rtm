@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { InvalidArgumentsError, PUNCTUATION } from '../InvalidArguments';
+import InvalidArgumentsError, { PUNCTUATION } from '../InvalidArguments';
 
 const FAKE_FUNCTION_NAME = 'FAKE_FUNCTION';
 const FAKE_ARG = 'FAKE';

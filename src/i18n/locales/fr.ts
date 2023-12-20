@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { SharedVocabType, VocabType } from '@rtm/shared-types/I18n';
 
 import { SHARED_TESTING_BLOG_CATEGORY_METADATAS } from '../lazybones';
@@ -119,3 +120,4 @@ export default {
 
   _infos: { lng: 'fr' }
 } as const satisfies VocabType;
+/* v8 ignore stop */

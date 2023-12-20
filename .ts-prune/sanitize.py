@@ -117,14 +117,12 @@ def analyze() -> PrintSideEffect:
                 print()
             if issues_count == 0:
                 print("SUCCESS: No ts-prune errors")
-                print_benchmark(TIMER_PIPELINE_START, TIMER_SANITIZING_START)
             else:
                 # pylint: disable-next=global-statement
                 global __errno
                 __errno = 1
                 w = "issues" if issues_count > 1 else "issue"
                 print(f"FAILURE: Found {issues_count} unknown {w}.")
-                print_benchmark(TIMER_PIPELINE_START, TIMER_SANITIZING_START)
 
         def print_notes() -> PrintSideEffect:
             """Report"""
@@ -137,7 +135,7 @@ def analyze() -> PrintSideEffect:
                 w = "them" if _c > 1 else "it"
                 print(f"(Use the 'ts-prune-verbose' script to log {w})", file=sys.stderr)
 
-        # pylint: disable-next=multiple-statements
-        print_issues(); print_outdated_artifact(); print_brief(); print_notes(); sys.exit(__errno)
+        # pylint: disable-next=[multiple-statements,line-too-long]
+        print_issues(); print_outdated_artifact(); print_brief(); print_benchmark(TIMER_PIPELINE_START, TIMER_SANITIZING_START); print_notes(); sys.exit(__errno)
     make_reports()
 analyze()

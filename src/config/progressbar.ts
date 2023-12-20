@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { NextTopLoaderProps } from '@/components/layouts/base/NextTopLoader';
 
 const PROGRESSBAR_CONFIG: NextTopLoaderProps = {
@@ -10,3 +11,4 @@ const PROGRESSBAR_CONFIG: NextTopLoaderProps = {
 } as const;
 
 export default PROGRESSBAR_CONFIG;
+/* v8 ignore stop */

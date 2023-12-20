@@ -1,3 +1,4 @@
+/* v8 ignore start */
 class FeedbackError extends Error {
   constructor(message: string) {
     super(message);
@@ -6,3 +7,4 @@ class FeedbackError extends Error {
 }
 
 export default FeedbackError;
+/* v8 ignore stop */

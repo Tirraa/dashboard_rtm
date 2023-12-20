@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import NavbarLanguageMenu from '@/components/layouts/navbar/NavbarLanguageMenu';
 import NavbarLoginButton from '@/components/layouts/navbar/NavbarLoginButton';
 import NavbarThemeButton from '@/components/layouts/navbar/NavbarThemeButton';
@@ -15,3 +16,4 @@ export const NAVBAR_EXTRAS_COMPONENTS_MOBILE: NavbarExtrasFeaturesReactElements 
   LOGIN: <NavbarLoginButton isMobile />,
   THEME: <NavbarThemeButton />
 };
+/* v8 ignore stop */
