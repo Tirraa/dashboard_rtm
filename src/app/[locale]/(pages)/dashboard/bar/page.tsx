@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import DashboardBarPage from '@/components/pages/dashboard/bar';
 import { buildPageTitle } from '@rtm/shared-lib/str';
 import { getServerSideI18n } from '@/i18n/server';
@@ -13,3 +14,4 @@ export async function generateMetadata() {
 export default function Page() {
   return <DashboardBarPage />;
 }
+/* v8 ignore stop */

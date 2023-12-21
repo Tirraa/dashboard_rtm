@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import { ArgError } from 'arg';
 import path from 'path';
 
@@ -91,3 +92,4 @@ function processStaticAnalysis() {
 }
 
 processStaticAnalysis();
+/* v8 ignore stop */

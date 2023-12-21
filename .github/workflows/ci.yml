@@ -30,8 +30,8 @@ jobs:
         with:
           node-version: 20
           cache: 'pnpm'
-      - name: Initialize project
-        run: make initialize
+      - name: Install project
+        run: make install
       - name: Run ESLint
         run: make ci:lint
   typecheck:

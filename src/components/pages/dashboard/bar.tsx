@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { FunctionComponent } from 'react';
 
 import ROUTES_ROOTS from '##/config/routes';
@@ -83,3 +84,4 @@ const DashboardBarPage: FunctionComponent<DashboardBarPageProps> = () => {
 };
 
 export default DashboardBarPage;
+/* v8 ignore stop */

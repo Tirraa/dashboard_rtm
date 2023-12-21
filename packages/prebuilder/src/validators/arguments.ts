@@ -13,6 +13,7 @@ import ArgumentsValidatorError from '../errors/ArgumentsValidatorError';
 import { prefixFeedback } from '../lib/feedbacksMerge';
 import { FLAGS as OPTIONS } from '../config';
 
+// https://github.com/vitest-dev/vitest/discussions/2484
 const fs = require('fs');
 
 const { IMPOSSIBLE_TO_START: ERROR_PREFIX } = CRITICAL_ERRORS_STR;

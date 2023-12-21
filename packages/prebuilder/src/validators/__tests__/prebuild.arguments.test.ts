@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import ArgumentsValidatorError from '../../errors/ArgumentsValidatorError';

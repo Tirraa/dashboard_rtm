@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { BlogPostPageProps, TBlogPost } from '@/types/Blog';
 
@@ -57,3 +58,4 @@ export default async function Page({ params }: BlogPostPageProps) {
     </>
   );
 }
+/* v8 ignore stop */

@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { I18nParams } from '@/types/Next';
 
 import PagesHtmlElement from '@/components/layouts/base/PagesHtmlElement';
@@ -27,3 +28,4 @@ export default async function NotFoundPage() {
     </PagesHtmlElement>
   );
 }
+/* v8 ignore stop */

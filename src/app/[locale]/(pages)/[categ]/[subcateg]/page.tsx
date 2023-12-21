@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { BlogSubcategoryPageProps } from '@/types/Blog';
 
 import { getBlogSubcategoryMetadatas, blogSubcategoryGuard, getBlogStaticParams } from '@/lib/blog/staticGeneration';
@@ -28,3 +29,4 @@ export default function Page({ params }: BlogSubcategoryPageProps) {
     </div>
   );
 }
+/* v8 ignore stop */

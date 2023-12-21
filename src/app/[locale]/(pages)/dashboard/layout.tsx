@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { LayoutBaseProps } from '@/types/Next';
 
 import DashboardLayoutClient from '@/components/layouts/dashboard/DashboardLayoutClient';
@@ -17,3 +18,4 @@ export default async function DashboardLayout({ children, params }: DashboardLay
 
   return <DashboardLayoutClient>{children}</DashboardLayoutClient>;
 }
+/* v8 ignore stop */

@@ -23,6 +23,7 @@ export default defineConfig({
       'tailwind.config': resolve(__dirname, './tailwind.config.ts'),
       'contentlayer/generated': resolve(__dirname, './.contentlayer/generated'),
       '@rtm/generated': resolve(__dirname, './.rtm-generated'),
+      '@rtm/prebuilder': resolve(__dirname, './packages/prebuilder/src'),
       '##': resolve(__dirname, './interop'),
       '𝕍': resolve(__dirname, './.vitest'),
       '@': resolve(__dirname, './src')

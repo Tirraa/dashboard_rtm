@@ -1,26 +1,27 @@
 import type { Stats } from 'fs';
 
-import { basename, extname, join } from 'path';
-import { readdirSync, statSync } from 'fs';
-
 import type { Filename, File, Path } from '../types/metadatas';
+
+// https://github.com/vitest-dev/vitest/discussions/2484
+const path = require('path');
+const fs = require('fs');
 
 export default function traverseFolder(rootFolder: Path): File[] {
   const filesCollection: File[] = [];
 
   function traverse(currentFolder: Path, currentDeepPath: Path = currentFolder): void {
-    const currentFolderFiles: Filename[] = readdirSync(currentFolder);
+    const currentFolderFiles: Filename[] = fs.readdirSync(currentFolder);
 
     for (const currentFilename of currentFolderFiles) {
-      const filepath: Path = join(currentFolder, currentFilename);
-      const stat: Stats = statSync(filepath);
+      const filepath: Path = path.join(currentFolder, currentFilename);
+      const stat: Stats = fs.statSync(filepath);
 
       if (stat.isDirectory()) {
-        traverse(filepath, join(currentDeepPath, currentFilename));
+        traverse(filepath, path.join(currentDeepPath, currentFilename));
         continue;
       }
 
-      const filename = basename(currentFilename, extname(currentFilename));
+      const filename = path.basename(currentFilename, path.extname(currentFilename));
       const fileDirectory = currentDeepPath;
 
       filesCollection.push({ fileDirectory, filename });

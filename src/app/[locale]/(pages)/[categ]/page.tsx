@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { BlogCategoryPageProps } from '@/types/Blog';
 
 import CategoryRelatedSubcategoriesAndBlogPosts from '@/components/pages/blog/CategoryRelatedSubcategoriesAndBlogPosts';
@@ -29,3 +30,4 @@ export default function Page({ params }: BlogCategoryPageProps) {
     </div>
   );
 }
+/* v8 ignore stop */

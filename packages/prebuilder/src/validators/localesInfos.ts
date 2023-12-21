@@ -1,12 +1,13 @@
-import { readdirSync } from 'fs';
-import path from 'path';
-
 import type { MaybeEmptyErrorsDetectionFeedback, ErrorsDetectionFeedback, Path } from '../types/metadatas';
 
 import retrieveLocaleFileInfosMetadatas from '../metadatas-builders/retrieveLocaleFileInfosMetadatas';
 import { LOCALES_INFOS_ROOT_KEY, LOCALES_LNG_INFOS_KEY, LIST_ELEMENT_PREFIX } from '../config';
 import { prefixFeedback } from '../lib/feedbacksMerge';
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
+
+// https://github.com/vitest-dev/vitest/discussions/2484
+const fs = require('fs');
+const path = require('path');
 
 const localesExtension = '.ts';
 const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
@@ -33,13 +34,13 @@ function localeFileInfosValidator(localeFilePath: string): MaybeEmptyErrorsDetec
 /**
  * @throws {BuilderError}
  */
-function localesInfosValidator(localesFolder: string, i18nSchemaFilePath: Path): MaybeEmptyErrorsDetectionFeedback {
+export default function localesInfosValidator(localesFolder: string, i18nSchemaFilePath: Path): MaybeEmptyErrorsDetectionFeedback {
   const ERROR_PREFIX_TAIL = `(locales files infos)`;
   let feedback: ErrorsDetectionFeedback = '';
 
-  const files: string[] = readdirSync(localesFolder).filter(
-    (file) => path.extname(file) === '.ts' && path.basename(file) !== path.basename(i18nSchemaFilePath)
-  );
+  const files: string[] = fs
+    .readdirSync(localesFolder)
+    .filter((file: string) => path.extname(file) === '.ts' && path.basename(file) !== path.basename(i18nSchemaFilePath));
   const fullFilesPaths = files.map((filename) => [localesFolder, filename].join('/'));
   const localeFileInfosValidatorFeedbacks = [];
 
@@ -70,5 +71,3 @@ function localesInfosValidator(localesFolder: string, i18nSchemaFilePath: Path):
   feedback = prefixFeedback(feedback, ERROR_PREFIX + ' ' + ERROR_PREFIX_TAIL);
   return feedback;
 }
-
-export default localesInfosValidator;
