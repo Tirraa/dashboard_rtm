@@ -15,7 +15,7 @@ import validateContentLayerConfig from './interop/validators/contentLayer';
 import blogDocumentTypes from './interop/config/blog/documentTypes';
 import addClassname from './interop/lib/misc/addClassname';
 
-const contentDirPath = '.';
+const contentDirPath = './content';
 const contentDirInclude = [BLOG_POSTS_FOLDER];
 const documentTypes = blogDocumentTypes;
 

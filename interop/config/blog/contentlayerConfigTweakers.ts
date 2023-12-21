@@ -19,7 +19,7 @@ import {
   buildBlogPostUrl
 } from '../../lib/blog/builders/computedFields';
 
-export const BLOG_POSTS_FOLDER = 'posts';
+export const BLOG_POSTS_FOLDER = 'blog';
 export const BLOG_DOCUMENTS_CONTENT_TYPE: DocumentContentType = 'mdx';
 export const BLOG_DOCUMENTS_CONTENT_EXTENSION = 'mdx';
 
