@@ -15,7 +15,7 @@ const FEATURE_RELIES_ON_ANOTHER_FEATURE_NEEDLE = 'feature relies on'.toLocaleLow
 
 const VALID_BLOG_POSTS_FOLDER = './packages/prebuilder/src/validators/__tests__/fake_posts_folders/valid_fake_posts_folder';
 
-const INVALID_BLOG_POSTS_FOLDER_NOT_A_DIR = './packages/prebuilder/src/validators/__tests__/fake_posts_folders/invalid_fake_posts_folder.txt';
+const INVALID_BLOG_POSTS_FOLDER_NOT_A_DIR = './packages/prebuilder/src/validators/__tests__/fake_posts_folders/invalid_fake_posts_folder.FAKE_EXT';
 
 const VALID_I18N_LOCALES_SCHEMA_FILEPATH = './packages/prebuilder/src/validators/__tests__/fake_locales/valid_fake_locales/schema.ts';
 

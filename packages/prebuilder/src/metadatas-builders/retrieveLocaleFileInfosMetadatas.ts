@@ -1,5 +1,3 @@
-// {ToDo} Write a unit test for this
-
 import type { I18nJSONPart } from '../types/metadatas';
 
 import getRawDataFromBracesDeclaration from '../lib/getRawDataFromBracesDeclaration';

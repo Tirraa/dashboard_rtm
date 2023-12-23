@@ -19,9 +19,9 @@ const INVALID_I18N_LOCALES_SCHEMA_FILEPATH_SEVERAL_LNG_FIELD_MISMATCH =
   './packages/prebuilder/src/validators/__tests__/fake_locales/invalid_fake_locales_several_lng_field_mismatch/schema.ts';
 
 const INVALID_LOCALES_FOLDER_MISSING_LOCALE_CODE =
-  './packages/prebuilder/src/validators/__tests__/fake_locales/invalid_fake_locales_missing_locale_code';
+  './packages/prebuilder/src/validators/__tests__/fake_locales/invalid_fake_locales_missing_locale_infos';
 const INVALID_I18N_LOCALES_SCHEMA_FILEPATH_MISSING_LOCALE_CODE =
-  './packages/prebuilder/src/validators/__tests__/fake_locales/invalid_fake_locales_missing_locale_code/schema.ts';
+  './packages/prebuilder/src/validators/__tests__/fake_locales/invalid_fake_locales_missing_locale_infos/schema.ts';
 
 const INVALID_LOCALES_FOLDER_EMPTY_LNG_FIELD = './packages/prebuilder/src/validators/__tests__/fake_locales/invalid_fake_locales_empty_lng_field';
 const INVALID_I18N_LOCALES_SCHEMA_FILEPATH_EMPTY_LNG_FIELD =
@@ -69,7 +69,7 @@ describe('localesInfosValidator', () => {
     );
   });
 
-  it('should produce an error feedback, given invalid locales folder (invalid locale code in invalid_it.ts)', () => {
+  it('should produce an error feedback, given invalid locales folder (invalid locale code)', () => {
     const feedback = localesInfosValidator(INVALID_LOCALES_FOLDER, INVALID_I18N_LOCALES_SCHEMA_FILEPATH);
     expect(feedback).not.toBe(EMPTY_FEEDBACK);
   });
@@ -82,7 +82,7 @@ describe('localesInfosValidator', () => {
     expect(feedback).not.toBe(EMPTY_FEEDBACK);
   });
 
-  it("should produce error feedback, given it.ts's _infos obj has an empty lng field", () => {
+  it('should produce error feedback, given one _infos obj has an empty lng field', () => {
     const feedback = localesInfosValidator(INVALID_LOCALES_FOLDER_EMPTY_LNG_FIELD, INVALID_I18N_LOCALES_SCHEMA_FILEPATH_EMPTY_LNG_FIELD);
     expect(feedback).not.toBe(EMPTY_FEEDBACK);
   });

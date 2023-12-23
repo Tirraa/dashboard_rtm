@@ -1,13 +1,14 @@
-import { basename, extname } from 'path';
-import { readdirSync } from 'fs';
-
 import type { CategoriesMetadatasEntity, CategoriesMetadatas, BlogSlug } from '../types/metadatas';
 
 import { BLOG_ARCHITECTURE_METADATAS_DEFAULT_LANGUAGE_KEY as DEFAULT_LANGUAGE_KEY, BLOG_POST_FILE_EXT } from '../config';
 
+// https://github.com/vitest-dev/vitest/discussions/2484
+const path = require('path');
+const fs = require('fs');
+
 function getSlug(filename: string): BlogSlug | null {
-  const ext = extname(filename);
-  if (ext === BLOG_POST_FILE_EXT) return basename(filename, extname(filename));
+  const ext = path.extname(filename);
+  if (ext === BLOG_POST_FILE_EXT) return path.basename(filename, path.extname(filename));
   return null;
 }
 
@@ -17,23 +18,23 @@ function getSlug(filename: string): BlogSlug | null {
 function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): CategoriesMetadatas {
   const metadatas: CategoriesMetadatas = {};
 
-  const maybeCategories = readdirSync(postsFolder, { withFileTypes: true });
+  const maybeCategories = fs.readdirSync(postsFolder, { withFileTypes: true });
   for (const maybeCategory of maybeCategories) {
     if (!maybeCategory.isDirectory()) continue;
 
     const category = maybeCategory.name;
-    const maybeSubcategories = readdirSync([maybeCategory.path, maybeCategory.name].join('/'), { withFileTypes: true });
+    const maybeSubcategories = fs.readdirSync([maybeCategory.path, maybeCategory.name].join('/'), { withFileTypes: true });
     const subcategoriesMetadatas = {} as CategoriesMetadatasEntity;
 
     for (const maybeSubcategory of maybeSubcategories) {
       if (!maybeSubcategory.isDirectory()) continue;
       const subcategory = maybeSubcategory.name;
 
-      const languagesOrPosts = readdirSync([maybeSubcategory.path, maybeSubcategory.name].join('/'), { withFileTypes: true });
+      const languagesOrPosts = fs.readdirSync([maybeSubcategory.path, maybeSubcategory.name].join('/'), { withFileTypes: true });
 
       for (const maybeLanguage of languagesOrPosts) {
         if (maybeLanguage.isDirectory()) {
-          const posts = readdirSync([maybeLanguage.path, maybeLanguage.name].join('/'), { withFileTypes: true });
+          const posts = fs.readdirSync([maybeLanguage.path, maybeLanguage.name].join('/'), { withFileTypes: true });
           for (const post of posts) {
             const filename = post.name;
             const slug = getSlug(filename);

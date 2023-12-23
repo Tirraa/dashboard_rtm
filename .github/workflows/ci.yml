@@ -14,8 +14,8 @@ jobs:
         with:
           node-version: 20
           cache: 'pnpm'
-      - name: Initialize project
-        run: make initialize
+      - name: Install project
+        run: make install
       - name: Formatcheck
         run: make ci:format-check
   lint:
@@ -78,8 +78,8 @@ jobs:
         with:
           node-version: 20
           cache: 'pnpm'
-      - name: Initialize project
-        run: make initialize
+      - name: Install project
+        run: make install
       - name: Build
         run: make
   test-after-build:
@@ -94,9 +94,35 @@ jobs:
         with:
           node-version: 20
           cache: 'pnpm'
-      - name: Initialize project
-        run: make initialize
+      - name: Install project
+        run: make install
       - name: Build
         run: make
       - name: Tests (after build)
         run: make test-after-build
+  ts-prune:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Use Python 3.10.12
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.10.12
+      - name: Backup old symbolic link
+        run: sudo cp /usr/bin/python3 /usr/bin/python3.bak
+      - name: Force symbolic link to Python 3.10.12
+        run: sudo ln -sf /opt/hostedtoolcache/Python/3.10.12/x64/bin/python3 /usr/bin/python3
+      - name: Use Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install project
+        run: make install
+      - name: Run ts-prune
+        run: make ts-prune-verbose
+      - name: Restore old symbolic link
+        run: sudo rm -f /usr/bin/python3 && sudo mv /usr/bin/python3.bak /usr/bin/python3
