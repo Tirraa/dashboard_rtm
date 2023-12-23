@@ -1,4 +1,4 @@
-import type { BlogSubcategoryFromUnknownCategory, BlogCategory, TBlogPost } from '@/types/Blog';
+import type { BlogCategoriesAndSubcategoriesAssoc, BlogSubcategoryFromUnknownCategory, BlogCategory, TBlogPost } from '@/types/Blog';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { ReactElement, ReactNode } from 'react';
 
@@ -49,8 +49,8 @@ async function blogCategoryPageBuilder(posts: TBlogPost[], category: BlogCategor
       counter += 1;
       isLast = counter >= max;
       if (posts.length === 0) continue;
-      // @ts-expect-error - [i18n] this will NEVER be typesafe, so protect it by design
-      const curSubcategTitle = globalT(`${i18ns.blogCategories}.${category}.${subcategory}.title`);
+      const narrowedCategoryAndSubcategoryAssoc = `${category}.${subcategory}` as BlogCategoriesAndSubcategoriesAssoc;
+      const curSubcategTitle = globalT(`${i18ns.blogCategories}.${narrowedCategoryAndSubcategoryAssoc}.title`);
       const href = buildPathFromParts(category, subcategory);
       const title = (
         <Link
@@ -97,15 +97,13 @@ async function blogCategoryPageBuilder(posts: TBlogPost[], category: BlogCategor
 
   const globalT = await getServerSideI18n();
   const subcategs: BlogSubcategoryFromUnknownCategory[] = await getBlogSubcategoriesByCategory(category, language);
-  const entries = subcategs.map((subcateg) => [subcateg, []]);
+  const entries: [BlogSubcategoryFromUnknownCategory, unknown[]][] = subcategs.map((subcateg) => [subcateg, []]);
   const { pagesTitles } = i18ns;
 
-  const sortedEntries = entries.sort((entry1, entry2) =>
+  const sortedEntries = entries.sort(([entry1], [entry2]) =>
     BlogConfig.DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_SUBCATEGORIES_ON_BLOG_CATEGORY_PAGE(
-      // @ts-expect-error - [i18n] this will NEVER be typesafe, so protect it by design
-      globalT(`${pagesTitles}.${entry1[0]}`),
-      // @ts-expect-error - [i18n] this will NEVER be typesafe, so protect it by design
-      globalT(`${pagesTitles}.${entry2[0]}`),
+      globalT(`${pagesTitles}.${entry1}`),
+      globalT(`${pagesTitles}.${entry2}`),
       language
     )
   );

@@ -7,6 +7,7 @@ const _: NotScanned = '';
 
 export const SHARED_VOCAB_SCHEMA = {
   'pages-titles': {
+    'fake-subcategory': _,
     'patch-notes-bis': _,
     'discord-bot-bis': _,
 

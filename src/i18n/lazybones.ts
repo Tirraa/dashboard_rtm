@@ -11,4 +11,8 @@ export const SHARED_TESTING_BLOG_CATEGORY_METADATAS = {
   _title: _
 } as const satisfies TypedLeafsJSONData<VocabObjValue>;
 
+export const SHARED_TESTING_BLOG_SUBCATEGORIES_PAGES_TITLES = {
+  'fake-subcategory': _
+} as const satisfies TypedLeafsJSONData<VocabObjValue>;
+
 type EmptyString = '';

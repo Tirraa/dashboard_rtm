@@ -1,4 +1,5 @@
 /* v8 ignore start */
+import type { KeySeparator } from '@rtm/shared-types/CustomUtilityTypes';
 import type BlogArchitecture from '@rtm/generated/BlogArchitecture';
 import type { WithClassname } from 'packages/shared-types/src/Next';
 import type { TBlogTaxonomy } from '##/config/taxonomies/blog';
@@ -44,6 +45,10 @@ export interface BlogPostProps extends Partial<WithClassname> {
   language: LanguageFlag;
   post: TBlogPost;
 }
+
+export type BlogCategoriesAndSubcategoriesAssoc = {
+  [__BlogCategory in keyof BlogArchitecture]: `${__BlogCategory}${KeySeparator}${BlogArchitecture[__BlogCategory]}`;
+}[keyof BlogArchitecture];
 
 type AllPostsGetter = () => Promise<TBlogPost[]>;
 export type PostsCollectionAssoc = Record<BlogCategory, AllPostsGetter>;

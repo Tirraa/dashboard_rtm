@@ -1,7 +1,7 @@
 /* ⚙️ Tweakers - SAFE */
 export const MAX_TAXONOMY_LEN: number = 34;
 
-/* ⚠️ Tweakers - UNSAFE (review `@ts-expect-error - [i18n]` before tweaking this) */
+/* ⚠️ Tweakers - UNSAFE (type checked: will break the build if invalid) */
 export const I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = ['title', 'meta-description'];
 export const I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = ['title', 'meta-description'];
 

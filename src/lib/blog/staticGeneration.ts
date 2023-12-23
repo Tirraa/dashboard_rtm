@@ -1,4 +1,5 @@
 import type {
+  BlogCategoriesAndSubcategoriesAssoc,
   BlogSubcategoryFromUnknownCategory,
   BlogSubcategoryPageProps,
   BlogCategoryPageProps,
@@ -77,10 +78,9 @@ export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPag
 
   const globalT = await getServerSideI18n();
   const { blogCategories, vocab } = i18ns;
-  // @ts-expect-error - [i18n] this will NEVER be typesafe, so protect it by design
-  const title = buildPageTitle(globalT(`${vocab}.brand-short`), globalT(`${blogCategories}.${category}.${subcategory}.title`));
-  // @ts-expect-error - [i18n] this will NEVER be typesafe, so protect it by design
-  const description = globalT(`${blogCategories}.${category}.${subcategory}.meta-description`);
+  const narrowedCategoryAndSubcategoryAssoc = `${category}.${subcategory}` as BlogCategoriesAndSubcategoriesAssoc;
+  const title = buildPageTitle(globalT(`${vocab}.brand-short`), globalT(`${blogCategories}.${narrowedCategoryAndSubcategoryAssoc}.title`));
+  const description = globalT(`${blogCategories}.${narrowedCategoryAndSubcategoryAssoc}.meta-description`);
   return { description, title };
 }
 

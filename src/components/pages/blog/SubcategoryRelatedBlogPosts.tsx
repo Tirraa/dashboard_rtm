@@ -1,4 +1,4 @@
-import type { BlogSubcategoryPageProps, TBlogPost } from '@/types/Blog';
+import type { BlogCategoriesAndSubcategoriesAssoc, BlogSubcategoryPageProps, TBlogPost } from '@/types/Blog';
 import type { FunctionComponent } from 'react';
 
 import {
@@ -33,8 +33,12 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
 
   if (blogSubcategoryShouldTriggerNotFound(postsCollection)) notFound();
   else if (postsCollection.length === 0) return <BlogPostsNotFound />;
-  // @ts-expect-error - [i18n] this will NEVER be typesafe, so protect it by design
-  const [title, curSubcategTitle] = [scopedT(`${category}.${subcategory}.title`), scopedT(`${category}.${subcategory}.title`)];
+
+  const narrowedCategoryAndSubcategoryAssoc = `${category}.${subcategory}` as BlogCategoriesAndSubcategoriesAssoc;
+  const [title, curSubcategTitle] = [
+    scopedT(`${narrowedCategoryAndSubcategoryAssoc}.title`),
+    scopedT(`${narrowedCategoryAndSubcategoryAssoc}.title`)
+  ];
 
   const paginatedElements = postsCollection
     .sort((post1, post2) =>
