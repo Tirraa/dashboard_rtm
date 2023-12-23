@@ -3,7 +3,7 @@ import { readdirSync } from 'fs';
 
 import type { CategoriesMetadatasEntity, CategoriesMetadatas, BlogSlug } from '../types/metadatas';
 
-import { BLOG_ARCHITECTURE_METADATAS_DEFAULT_LANGUAGE_KEY as DEFAULT_LANGUAGE_KEY, BLOG_POST_FILE_EXT, FLAGS } from '../config';
+import { BLOG_ARCHITECTURE_METADATAS_DEFAULT_LANGUAGE_KEY as DEFAULT_LANGUAGE_KEY, BLOG_POST_FILE_EXT } from '../config';
 
 function getSlug(filename: string): BlogSlug | null {
   const ext = extname(filename);
@@ -62,9 +62,8 @@ function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): Categorie
   return metadatas;
 }
 
-export default function getBlogArchitectureMetadatas({ ...args }): CategoriesMetadatas {
-  const { [FLAGS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER } = args;
-  const blogArchitectureSysMetadata = buildCategoriesMetadatasFromPostsFolder(BLOG_POSTS_FOLDER);
+export default function getBlogArchitectureMetadatas(postsFolder: string): CategoriesMetadatas {
+  const blogArchitectureSysMetadata = buildCategoriesMetadatasFromPostsFolder(postsFolder);
 
   return blogArchitectureSysMetadata;
 }

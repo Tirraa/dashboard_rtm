@@ -66,7 +66,7 @@ function processStaticAnalysis() {
     );
     if (feedbacks) throw new FeedbackError(feedbacks);
 
-    const blogArchitecture = getBlogArchitectureMetadatas(retrievedValuesFromArgs);
+    const blogArchitecture = getBlogArchitectureMetadatas(BLOG_POSTS_FOLDER);
 
     generateBlogArchitectureType(blogArchitecture);
     generateI18nBlogCategories(blogArchitecture);
