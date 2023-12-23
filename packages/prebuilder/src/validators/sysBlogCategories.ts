@@ -1,5 +1,3 @@
-import { readdirSync } from 'fs';
-
 import type { MaybeEmptyErrorsDetectionFeedback } from '../types/metadatas';
 
 import isValidTaxonomy, { NAMING_CONSTRAINTS_MSG } from './taxonomyConvention';
@@ -10,11 +8,14 @@ import { LIST_ELEMENT_PREFIX } from '../config';
 
 const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
-function sysBlogCategoriesValidator(postsFolder: string): MaybeEmptyErrorsDetectionFeedback {
+// https://github.com/vitest-dev/vitest/discussions/2484
+const fs = require('fs');
+
+export default function sysBlogCategoriesValidator(postsFolder: string): MaybeEmptyErrorsDetectionFeedback {
   let feedback = '';
 
   const categoriesWithDefects = [];
-  const maybeCategories = readdirSync(postsFolder, { withFileTypes: true });
+  const maybeCategories = fs.readdirSync(postsFolder, { withFileTypes: true });
 
   for (const maybeCategory of maybeCategories) {
     if (!maybeCategory.isDirectory()) continue;
@@ -27,13 +28,11 @@ function sysBlogCategoriesValidator(postsFolder: string): MaybeEmptyErrorsDetect
   if (categoriesWithDefects.length > 0) {
     feedback += getErrorLabelForDefects(
       categoriesWithDefects,
-      `Incorrect category: ${categoriesWithDefects}` + '\n' + NAMING_CONSTRAINTS_MSG + '\n',
-      `Incorrect categories: ${LIST_ELEMENT_PREFIX}${categoriesWithDefects.join(LIST_ELEMENT_PREFIX)}` + '\n' + NAMING_CONSTRAINTS_MSG + '\n'
+      `Invalid category: ${categoriesWithDefects}` + '\n' + NAMING_CONSTRAINTS_MSG + '\n',
+      `Invalid categories: ${LIST_ELEMENT_PREFIX}${categoriesWithDefects.join(LIST_ELEMENT_PREFIX)}` + '\n' + NAMING_CONSTRAINTS_MSG + '\n'
     );
   }
 
   feedback = prefixFeedback(feedback, ERROR_PREFIX + '\n');
   return feedback;
 }
-
-export default sysBlogCategoriesValidator;

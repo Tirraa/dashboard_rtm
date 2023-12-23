@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { LayoutBaseProps } from '@/types/Next';
 
 import LandingPagesHtmlElement from '@/components/layouts/base/LandingPagesHtmlElement';
@@ -5,3 +6,4 @@ import LandingPagesHtmlElement from '@/components/layouts/base/LandingPagesHtmlE
 export default function RootLayout({ children, params }: LayoutBaseProps) {
   return <LandingPagesHtmlElement params={params}>{children}</LandingPagesHtmlElement>;
 }
+/* v8 ignore stop */

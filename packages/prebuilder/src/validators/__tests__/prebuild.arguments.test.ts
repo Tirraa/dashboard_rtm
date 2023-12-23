@@ -6,6 +6,7 @@ import parseArguments from '../arguments';
 import { FLAGS } from '../../config';
 
 const INVALID_PATH = './bless/the/draco/these/rounds/holy/sorry/bout/your/luck';
+
 const NOT_A_DIRECTORY_NEEDLE = 'NOT a directory'.toLowerCase();
 const NOT_A_FILE_NEEDLE = 'NOT a file'.toLowerCase();
 const CANT_OPEN_NEEDLE = "Can't open".toLowerCase();
@@ -13,7 +14,7 @@ const CANT_USE_NEEDLE = "can't use".toLocaleLowerCase();
 const CANT_OMIT_NEEDLE = "can't omit".toLocaleLowerCase();
 const FEATURE_RELIES_ON_ANOTHER_FEATURE_NEEDLE = 'feature relies on'.toLocaleLowerCase();
 
-const VALID_BLOG_POSTS_FOLDER = './packages/prebuilder/src/validators/__tests__/fake_posts_folders/valid_fake_posts_folder';
+const VALID_BLOG_POSTS_FOLDER = './packages/prebuilder/src/validators/__tests__/fake_posts_folders/phony_valid_fake_posts_folder';
 
 const INVALID_BLOG_POSTS_FOLDER_NOT_A_DIR = './packages/prebuilder/src/validators/__tests__/fake_posts_folders/invalid_fake_posts_folder.FAKE_EXT';
 

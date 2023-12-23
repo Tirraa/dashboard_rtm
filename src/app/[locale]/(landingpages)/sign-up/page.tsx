@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { I18nPageProps } from '@/types/Next';
 
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
@@ -31,3 +32,4 @@ export default async function Page({ params }: I18nPageProps) {
 
   return <SignupButton />;
 }
+/* v8 ignore stop */

@@ -9,7 +9,7 @@ import { LIST_ELEMENT_PREFIX } from '../config';
 
 const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
-function sysBlogSlugsValidator(postsFolder: string): MaybeEmptyErrorsDetectionFeedback {
+export default function sysBlogSlugsValidator(postsFolder: string): MaybeEmptyErrorsDetectionFeedback {
   let feedback = '';
 
   const foldersWithDefects: Record<Path, Filename[]> = {};
@@ -28,8 +28,8 @@ function sysBlogSlugsValidator(postsFolder: string): MaybeEmptyErrorsDetectionFe
 
     feedback += getErrorLabelForDefects(
       defects,
-      `Incorrect filename in the '${folderWithDefects}' folder: ${defects}` + '\n' + NAMING_CONSTRAINTS_MSG + '\n',
-      `Incorrect filenames in the '${folderWithDefects}' folder: ${LIST_ELEMENT_PREFIX}${defects.join(LIST_ELEMENT_PREFIX)}` +
+      `Invalid slug in the '${folderWithDefects}' folder: ${defects}` + '\n' + NAMING_CONSTRAINTS_MSG + '\n',
+      `Invalid slugs in the '${folderWithDefects}' folder: ${LIST_ELEMENT_PREFIX}${defects.join(LIST_ELEMENT_PREFIX)}` +
         '\n' +
         NAMING_CONSTRAINTS_MSG +
         '\n'
@@ -38,5 +38,3 @@ function sysBlogSlugsValidator(postsFolder: string): MaybeEmptyErrorsDetectionFe
   feedback = prefixFeedback(feedback, ERROR_PREFIX + '\n');
   return feedback;
 }
-
-export default sysBlogSlugsValidator;
