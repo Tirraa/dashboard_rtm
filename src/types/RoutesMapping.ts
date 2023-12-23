@@ -7,5 +7,6 @@ import type RoutesKeysUnion from './RoutesKeysUnion';
 
 export type RoutesDefinition<RoutesKeys extends RoutesKeysUnion> = Record<RoutesKeys, AppPath>;
 export type RoutesTitles<RoutesKeys extends RoutesKeysUnion> = Record<RoutesKeys, I18nVocabTarget>;
-export type WeaklyBindedReactElements<K extends string> = Record<K, ReactElement>;
+export type StronglyBindedReactElements<K extends RoutesKeysUnion> = Record<K, ReactElement>;
+export type WeaklyBindedReactElements<K extends PropertyKey> = Record<K, ReactElement>;
 /* v8 ignore stop */
