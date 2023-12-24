@@ -1,9 +1,39 @@
 /* v8 ignore start */
-import type { NextAuthOptions } from 'next-auth';
+import type { NextAuthOptions, Session } from 'next-auth';
 
 import DiscordProvider from 'next-auth/providers/discord';
 
 const authOptions: NextAuthOptions = {
+  callbacks: {
+    async session({ session, token }) {
+      try {
+        const BOT_TOKEN = process.env.DISCORD_BOT_TOKEN;
+        if (!BOT_TOKEN) return session;
+
+        const { sub: t_id } = token;
+
+        // {ToDo} Cache fresh avatar URL w/ Bento Cache to optimize those stupid fetchs (better call J-R44)
+        const freshProfile = await (
+          await fetch(`https://discord.com/api/v10/users/${t_id}`, {
+            headers: {
+              Authorization: `Bot ${BOT_TOKEN}`
+            },
+            method: 'GET'
+          })
+        ).json();
+
+        const { avatar: f_avatar, id: f_id } = freshProfile;
+        const format = f_avatar.startsWith('a_') ? 'gif' : 'png';
+
+        return {
+          user: { ...session.user, image: `https://cdn.discordapp.com/avatars/${f_id}/${f_avatar}.${format}` },
+          expires: session.expires
+        } satisfies Session;
+      } catch {}
+      return session;
+    }
+  },
+
   providers: [
     DiscordProvider({
       authorization: 'https://discord.com/api/oauth2/authorize?scope=guilds+identify',
