@@ -11,6 +11,7 @@ const authOptions: NextAuthOptions = {
         if (!BOT_TOKEN) return session;
 
         const { sub: t_id } = token;
+        if (!t_id) return session;
 
         // {ToDo} Cache fresh avatar URL w/ Bento Cache to optimize those stupid fetchs (better call J-R44)
         const freshProfile = await (
@@ -23,6 +24,8 @@ const authOptions: NextAuthOptions = {
         ).json();
 
         const { avatar: f_avatar, id: f_id } = freshProfile;
+        if (!f_avatar || !f_id) return session;
+
         const format = f_avatar.startsWith('a_') ? 'gif' : 'png';
 
         return {
