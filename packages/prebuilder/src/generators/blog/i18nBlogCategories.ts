@@ -22,24 +22,28 @@ const PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS = I18N_CATEGORIES_REQUIRED_
 type BlogCategoriesSchemaSubcategoryEntity = Record<string, unknown>;
 type BlogCategoriesSchema = Record<string, BlogCategoriesSchemaSubcategoryEntity>;
 
-function generateSchema(blogArchitecture: CategoriesMetadatas) {
+function generateSchema(
+  blogArchitecture: CategoriesMetadatas,
+  __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS: string[],
+  __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS: string[]
+) {
   const schema = {} as BlogCategoriesSchema;
 
   for (const category in blogArchitecture) {
     const subcategories = blogArchitecture[category];
 
     schema[category] = {};
-    for (const extraField of PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS) {
+    for (const extraField of __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS) {
       schema[category][extraField] = emptyString;
     }
 
     Object.keys(subcategories).forEach((subcategory) => {
-      if (I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS.length <= 0) {
+      if (__I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS.length <= 0) {
         schema[category][subcategory] = emptyString;
         return;
       }
       const obj = {} as BlogCategoriesSchemaSubcategoryEntity;
-      for (const extraField of I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS) {
+      for (const extraField of __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS) {
         obj[extraField] = emptyString;
       }
       schema[category][subcategory] = obj;
@@ -49,15 +53,15 @@ function generateSchema(blogArchitecture: CategoriesMetadatas) {
   return schema;
 }
 
-function generateTrailingTrivia() {
+function generateTrailingTrivia(__PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS: string[], __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS: string[]) {
   const CategoriesMetadatasBaseProps = 'Record<string, SubcategoriesMetadatas>';
 
   const CategoriesMetadatas =
     'type CategoriesMetadatas =' +
     ' ' +
-    (PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS.length > 0
+    (__PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS.length > 0
       ? [
-          `Record<${PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS.map((field) => `'${field}'`).join(' | ')}, EmptyString>`,
+          `Record<${__PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS.map((field) => `'${field}'`).join(' | ')}, EmptyString>`,
           CategoriesMetadatasBaseProps
         ].join(' | ')
       : CategoriesMetadatasBaseProps);
@@ -65,8 +69,8 @@ function generateTrailingTrivia() {
   const SubcategoriesMetadatas =
     'type SubcategoriesMetadatas =' +
     ' ' +
-    (I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS.length > 0
-      ? `Record<${I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS.map((field) => `'${field}'`).join(' | ')}, EmptyString>`
+    (__I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS.length > 0
+      ? `Record<${__I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS.map((field) => `'${field}'`).join(' | ')}, EmptyString>`
       : 'EmptyString');
 
   return [
@@ -77,16 +81,26 @@ function generateTrailingTrivia() {
   ].join('\n');
 }
 
-export default function generateI18nBlogCategories(blogArchitecture: CategoriesMetadatas) {
+export default function generateI18nBlogCategories(
+  blogArchitecture: CategoriesMetadatas,
+  __BLOG_CATEGORIES_CONST_STR: string = BLOG_CATEGORIES_CONST_STR,
+  __TARGET_FOLDER: string = GENERATIONS_TARGET_FOLDER,
+  __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS,
+  __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS
+) {
   const project = new Project();
 
   const initializerWriterFunction: WriterFunction = Writers.assertion(
-    JSON.stringify(generateSchema(blogArchitecture), null, 2).replace(/""|''|``/g, '_'),
+    JSON.stringify(
+      generateSchema(blogArchitecture, __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS, __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS),
+      null,
+      2
+    ).replace(/""|''|``/g, '_'),
     'const satisfies BlogCategoriesArtifact;\n'
   );
 
   const sourceFile = project.createSourceFile(
-    `${GENERATIONS_TARGET_FOLDER}/${BLOG_CATEGORIES_CONST_STR}.ts`,
+    `${__TARGET_FOLDER}/${__BLOG_CATEGORIES_CONST_STR}.ts`,
     {
       statements: [
         {
@@ -103,9 +117,9 @@ export default function generateI18nBlogCategories(blogArchitecture: CategoriesM
         {
           declarations: [
             {
-              trailingTrivia: generateTrailingTrivia(),
+              trailingTrivia: generateTrailingTrivia(__PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS, __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS),
               initializer: initializerWriterFunction,
-              name: BLOG_CATEGORIES_CONST_STR
+              name: __BLOG_CATEGORIES_CONST_STR
             }
           ],
           declarationKind: VariableDeclarationKind.Const,
@@ -120,7 +134,7 @@ export default function generateI18nBlogCategories(blogArchitecture: CategoriesM
 
   sourceFile.insertText(0, AUTOGENERATED_CODE_COMMENT_STR);
 
-  sourceFile.insertText(oldTextLength + AUTOGENERATED_CODE_COMMENT_STR.length, `export default ${BLOG_CATEGORIES_CONST_STR};`);
+  sourceFile.insertText(oldTextLength + AUTOGENERATED_CODE_COMMENT_STR.length, `export default ${__BLOG_CATEGORIES_CONST_STR};`);
   sourceFile.formatText(TS_MORPH_FORMATTER_SETTINGS);
   sourceFile.saveSync();
 }
