@@ -13,10 +13,10 @@ describe('getFlattenedPathWithoutRootFolder', () => {
   });
 
   it('should throw, given invalid inputs', () => {
-    expect(() => getFlattenedPathWithoutRootFolder('posts/lang/category/subcategory/slug', 'invalidNeedle')).toThrow(InvalidArgumentsError);
+    expect(() => getFlattenedPathWithoutRootFolder('posts/lang/category/subcategory/slug', 'invalidNeedle')).toThrowError(InvalidArgumentsError);
 
-    expect(() => getFlattenedPathWithoutRootFolder(POSTS_FOLDER)).toThrow(InvalidArgumentsError);
+    expect(() => getFlattenedPathWithoutRootFolder(POSTS_FOLDER)).toThrowError(InvalidArgumentsError);
 
-    expect(() => getFlattenedPathWithoutRootFolder(POSTS_FOLDER + '/')).toThrow(InvalidArgumentsError);
+    expect(() => getFlattenedPathWithoutRootFolder(POSTS_FOLDER + '/')).toThrowError(InvalidArgumentsError);
   });
 });

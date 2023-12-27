@@ -12,6 +12,6 @@ describe('countCharacter', () => {
   it('should throw, given char is not a char but a string', () => {
     expect(() => {
       countCharacter('aa    bbqsklqjdkqjdkqjd   aa   qlj,dqkdjqkdjkbb', 'asqdqd');
-    }).toThrow(InvalidArgumentsError);
+    }).toThrowError(InvalidArgumentsError);
   });
 });

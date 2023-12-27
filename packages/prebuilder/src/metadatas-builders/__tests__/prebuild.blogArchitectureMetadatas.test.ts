@@ -9,6 +9,8 @@ const VALID_BLOG_POSTS_FOLDER_PATH = './packages/prebuilder/src/metadatas-builde
 
 describe('getBlogArchitectureMetadatas', () => {
   it('should throw ENOENT, given invalid path', () => {
+    expect.assertions(1);
+
     try {
       getBlogArchitectureMetadatas(INVALID_PATH);
     } catch (e) {

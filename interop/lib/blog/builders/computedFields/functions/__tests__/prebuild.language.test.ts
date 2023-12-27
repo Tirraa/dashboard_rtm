@@ -63,7 +63,7 @@ describe('language', () => {
         },
         _id: '_'
       })
-    ).toThrow(InvalidArgumentsError);
+    ).toThrowError(InvalidArgumentsError);
 
     expect(() =>
       buildBlogPostLanguageFlag({
@@ -72,7 +72,7 @@ describe('language', () => {
         },
         _id: '_'
       })
-    ).toThrow(InvalidArgumentsError);
+    ).toThrowError(InvalidArgumentsError);
 
     expect(() =>
       buildBlogPostLanguageFlag({
@@ -81,6 +81,6 @@ describe('language', () => {
         },
         _id: '_'
       })
-    ).toThrow(InvalidArgumentsError);
+    ).toThrowError(InvalidArgumentsError);
   });
 });

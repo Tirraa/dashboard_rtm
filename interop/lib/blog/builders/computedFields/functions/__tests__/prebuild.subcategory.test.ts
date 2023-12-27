@@ -33,7 +33,7 @@ describe('subcategory', () => {
         },
         _id: '_'
       })
-    ).toThrow(InvalidArgumentsError);
+    ).toThrowError(InvalidArgumentsError);
 
     expect(() =>
       buildBlogPostSubcategory({
@@ -42,7 +42,7 @@ describe('subcategory', () => {
         },
         _id: '_'
       })
-    ).toThrow(InvalidArgumentsError);
+    ).toThrowError(InvalidArgumentsError);
 
     expect(() =>
       buildBlogPostSubcategory({
@@ -51,7 +51,7 @@ describe('subcategory', () => {
         },
         _id: '_'
       })
-    ).toThrow(InvalidArgumentsError);
+    ).toThrowError(InvalidArgumentsError);
   });
 
   it('should be fault tolerant', () => {

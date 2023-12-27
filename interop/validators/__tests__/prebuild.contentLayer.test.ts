@@ -11,7 +11,7 @@ describe('validateContentLayerConfig', () => {
         { def: () => ({ name: 'duplicate' }), type: 'document' },
         { def: () => ({ name: 'notDuplicate' }), type: 'document' }
       ])
-    ).toThrow(ContentLayerDuplicateTypesError);
+    ).toThrowError(ContentLayerDuplicateTypesError);
   });
 
   it('should not throw, given invalid config, containing duplicates', () => {
@@ -21,6 +21,6 @@ describe('validateContentLayerConfig', () => {
         { def: () => ({ name: 'b' }), type: 'document' },
         { def: () => ({ name: 'c' }), type: 'document' }
       ])
-    ).not.toThrow(ContentLayerDuplicateTypesError);
+    ).not.toThrowError(ContentLayerDuplicateTypesError);
   });
 });

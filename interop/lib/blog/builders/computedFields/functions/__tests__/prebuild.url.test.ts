@@ -66,7 +66,7 @@ describe('url', () => {
         },
         _id: '_'
       })
-    ).toThrow(InvalidArgumentsError);
+    ).toThrowError(InvalidArgumentsError);
 
     expect(() =>
       buildBlogPostUrl({
@@ -75,7 +75,7 @@ describe('url', () => {
         },
         _id: '_'
       })
-    ).toThrow(InvalidArgumentsError);
+    ).toThrowError(InvalidArgumentsError);
 
     expect(() =>
       buildBlogPostUrl({
@@ -84,7 +84,7 @@ describe('url', () => {
         },
         _id: '_'
       })
-    ).toThrow(InvalidArgumentsError);
+    ).toThrowError(InvalidArgumentsError);
 
     expect(() =>
       buildBlogPostUrl({
@@ -93,7 +93,7 @@ describe('url', () => {
         },
         _id: '_'
       })
-    ).toThrow(InvalidArgumentsError);
+    ).toThrowError(InvalidArgumentsError);
 
     expect(() =>
       buildBlogPostUrl({
@@ -102,6 +102,6 @@ describe('url', () => {
         },
         _id: '_'
       })
-    ).toThrow(InvalidArgumentsError);
+    ).toThrowError(InvalidArgumentsError);
   });
 });

@@ -22,7 +22,8 @@ describe('getBreakpoint', () => {
   });
 
   it('should return NaN for an invalid breakpoint', () => {
-    expect(getBreakpoint('foo' as any)).toBeNaN();
+    // @ts-expect-error
+    expect(getBreakpoint('foo')).toBeNaN();
   });
 });
 

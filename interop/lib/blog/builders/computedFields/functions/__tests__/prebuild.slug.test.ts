@@ -33,7 +33,7 @@ describe('slug', () => {
         },
         _id: '_'
       })
-    ).toThrow(InvalidArgumentsError);
+    ).toThrowError(InvalidArgumentsError);
 
     expect(() =>
       buildBlogPostSlug({
@@ -42,7 +42,7 @@ describe('slug', () => {
         },
         _id: '_'
       })
-    ).toThrow(InvalidArgumentsError);
+    ).toThrowError(InvalidArgumentsError);
   });
 
   it('should be fault tolerant', () => {

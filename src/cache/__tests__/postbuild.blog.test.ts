@@ -5,7 +5,8 @@ import { getBlogSubcategoriesByCategory } from '../blog';
 
 describe('getBlogSubcategoriesByCategory', () => {
   it('should return an empty array, given an invalid category', async () => {
-    const emptyList = await getBlogSubcategoriesByCategory('_$!@^£µ§#' as any, DEFAULT_LANGUAGE);
+    // @ts-expect-error
+    const emptyList = await getBlogSubcategoriesByCategory('_$!@^£µ§#', DEFAULT_LANGUAGE);
     expect(emptyList).toStrictEqual([]);
   });
 });

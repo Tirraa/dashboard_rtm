@@ -19,6 +19,8 @@ describe('traverseFolder', () => {
   });
 
   it('should throw ENOENT, given invalid path', () => {
+    expect.assertions(1);
+
     try {
       traverseFolder(INVALID_PATH);
     } catch (e) {

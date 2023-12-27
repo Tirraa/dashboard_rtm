@@ -21,6 +21,8 @@ const EMPTY_FEEDBACK = '';
 
 describe('sysBlogCategoriesValidator', () => {
   it('should throw ENOENT, given invalid path', () => {
+    expect.assertions(1);
+
     try {
       sysBlogCategoriesValidator(INVALID_PATH);
     } catch (e) {

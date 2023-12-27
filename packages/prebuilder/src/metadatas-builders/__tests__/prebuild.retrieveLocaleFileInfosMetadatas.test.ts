@@ -15,6 +15,8 @@ const INVALID_I18N_LOCALE_FILEPATH_EMPTY_INFOS =
 
 describe('retrieveLocaleFileInfosMetadatas', () => {
   it('should throw ENOENT, given invalid locale filepath', () => {
+    expect.assertions(1);
+
     try {
       retrieveLocaleFileInfosMetadatas(INVALID_PATH);
     } catch (e) {
@@ -28,11 +30,11 @@ describe('retrieveLocaleFileInfosMetadatas', () => {
   });
 
   it('should throw, given an invalid locale filepath (not evaluable)', () => {
-    expect(() => retrieveLocaleFileInfosMetadatas(INVALID_I18N_LOCALE_FILEPATH_NOT_EVALUABLE)).toThrow(BuilderError);
+    expect(() => retrieveLocaleFileInfosMetadatas(INVALID_I18N_LOCALE_FILEPATH_NOT_EVALUABLE)).toThrowError(BuilderError);
   });
 
   it('should throw, given an invalid locale filepath (empty infos)', () => {
-    expect(() => retrieveLocaleFileInfosMetadatas(INVALID_I18N_LOCALE_FILEPATH_EMPTY_INFOS)).toThrow(BuilderError);
+    expect(() => retrieveLocaleFileInfosMetadatas(INVALID_I18N_LOCALE_FILEPATH_EMPTY_INFOS)).toThrowError(BuilderError);
   });
 
   it('should return a valid object, given a valid locale filepath', () => {

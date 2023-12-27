@@ -36,6 +36,8 @@ describe('localesInfosValidator', () => {
   });
 
   it('should throw ENOENT, given invalid localesFolder', () => {
+    expect.assertions(2);
+
     try {
       localesInfosValidator(INVALID_PATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH);
     } catch (e) {
@@ -60,13 +62,13 @@ describe('localesInfosValidator', () => {
   });
 
   it('should throw BuilderError, given invalid i18nSchemaFilePath', () => {
-    expect(() => localesInfosValidator(VALID_LOCALES_FOLDER, INVALID_PATH)).toThrow(BuilderError);
+    expect(() => localesInfosValidator(VALID_LOCALES_FOLDER, INVALID_PATH)).toThrowError(BuilderError);
   });
 
   it('should throw, given invalid locales folder (missing locale infos in it.ts)', () => {
-    expect(() => localesInfosValidator(INVALID_LOCALES_FOLDER_MISSING_LOCALE_CODE, INVALID_I18N_LOCALES_SCHEMA_FILEPATH_MISSING_LOCALE_CODE)).toThrow(
-      BuilderError
-    );
+    expect(() =>
+      localesInfosValidator(INVALID_LOCALES_FOLDER_MISSING_LOCALE_CODE, INVALID_I18N_LOCALES_SCHEMA_FILEPATH_MISSING_LOCALE_CODE)
+    ).toThrowError(BuilderError);
   });
 
   it('should produce an error feedback, given invalid locales folder (invalid locale code)', () => {

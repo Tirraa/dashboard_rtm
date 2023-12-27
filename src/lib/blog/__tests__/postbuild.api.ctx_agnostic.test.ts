@@ -102,13 +102,15 @@ describe('isValidBlogCategoryAndSubcategoryPairInAnyLanguage', () => {
   });
 
   it('should return false, given an invalid combination (invalid subcategory)', async () => {
-    const isValid = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage(BlogConfig.TESTING_CATEGORY, '_%#@!$£µ' as any);
+    // @ts-expect-error
+    const isValid = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage(BlogConfig.TESTING_CATEGORY, '_%#@!$£µ');
 
     expect(isValid).toBe(false);
   });
 
   it('should return false, given an invalid combination (both invalid)', async () => {
-    const isValid = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage('_%#@!$£µ' as any, '_%#@!$£µ' as any);
+    // @ts-expect-error
+    const isValid = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage('_%#@!$£µ', '_%#@!$£µ');
 
     expect(isValid).toBe(false);
   });

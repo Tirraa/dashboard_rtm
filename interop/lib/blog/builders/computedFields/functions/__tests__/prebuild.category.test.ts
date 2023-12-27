@@ -33,7 +33,7 @@ describe('category', () => {
         },
         _id: '_'
       })
-    ).toThrow(InvalidArgumentsError);
+    ).toThrowError(InvalidArgumentsError);
 
     expect(() =>
       buildBlogPostCategory({
@@ -42,7 +42,7 @@ describe('category', () => {
         },
         _id: '_'
       })
-    ).toThrow(InvalidArgumentsError);
+    ).toThrowError(InvalidArgumentsError);
 
     expect(() =>
       buildBlogPostCategory({
@@ -51,6 +51,6 @@ describe('category', () => {
         },
         _id: '_'
       })
-    ).toThrow(InvalidArgumentsError);
+    ).toThrowError(InvalidArgumentsError);
   });
 });
