@@ -16,7 +16,7 @@ export default defineConfig({
       reporter: ['html', 'text']
     },
     environment: 'happy-dom',
-    globals: true
+    globals: true // * ... Hackish: only used to force Jest-tsd compatibility
   },
   resolve: {
     alias: {

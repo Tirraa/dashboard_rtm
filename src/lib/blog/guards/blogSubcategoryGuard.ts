@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 
 import { isValidBlogCategoryAndSubcategoryPairInAnyLanguage, redirectToBlogCategoryPage, isValidBlogCategory } from '../api';
 
-async function blogSubcategoryGuard({ params }: BlogSubcategoryPageProps) {
+export default async function blogSubcategoryGuard({ params }: BlogSubcategoryPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];
 
   const validCategory = isValidBlogCategory(category);
@@ -18,5 +18,3 @@ async function blogSubcategoryGuard({ params }: BlogSubcategoryPageProps) {
   const validCombination: boolean = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage(category, subcategory);
   if (!validCombination) redirectToBlogCategoryPage(category);
 }
-
-export default blogSubcategoryGuard;

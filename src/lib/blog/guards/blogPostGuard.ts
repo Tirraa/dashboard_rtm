@@ -13,7 +13,7 @@ import {
   isValidBlogCategory
 } from '../api';
 
-async function blogPostGuard({ params }: BlogPostPageProps) {
+export default async function blogPostGuard({ params }: BlogPostPageProps) {
   const category = params[BlogTaxonomy.CATEGORY];
   const subcategory = params[BlogTaxonomy.SUBCATEGORY];
 
@@ -32,5 +32,3 @@ async function blogPostGuard({ params }: BlogPostPageProps) {
     redirect(ROUTES_ROOTS.WEBSITE + category);
   }
 }
-
-export default blogPostGuard;
