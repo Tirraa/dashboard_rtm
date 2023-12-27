@@ -1,63 +1,31 @@
 import type {
   BlogCategoriesAndSubcategoriesAssoc,
-  BlogSubcategoryFromUnknownCategory,
   BlogSubcategoryPageProps,
   BlogCategoryPageProps,
   BlogPostPageProps,
   BlogStaticParams,
-  UnknownBlogSlug,
-  BlogCategory,
   TBlogPost
 } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 
-import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { buildPageTitle } from '@rtm/shared-lib/str';
-import { LANGUAGES, i18ns } from '##/config/i18n';
 import { getServerSideI18n } from '@/i18n/server';
+import { i18ns } from '##/config/i18n';
 
-import {
-  getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict,
-  isValidBlogCategoryAndSubcategoryPair,
-  getAllBlogCategories,
-  getBlogPostUnstrict
-} from './api';
+import { isValidBlogCategoryAndSubcategoryPair, getBlogPostUnstrict } from './api';
 import blogSubcategoryGuard from './guards/blogSubcategoryGuard';
+import doGetBlogStaticParams from './static/getBlogStaticParams';
+import blogCategoryGuard from './guards/blogCategoryGuard';
 import blogPostGuard from './guards/blogPostGuard';
 
+/* v8 ignore start */
 export async function getBlogStaticParams(): Promise<BlogStaticParams[]> {
-  const blogStaticParams: BlogStaticParams[] = [];
-  const blogCategories = getAllBlogCategories();
-
-  for (const language of LANGUAGES) {
-    for (const categ of blogCategories) {
-      const category = categ as BlogCategory;
-      const curSubcategs: BlogSubcategoryFromUnknownCategory[] = await getBlogSubcategoriesByCategory(category, language);
-
-      for (const subcateg of curSubcategs) {
-        const subcategory = subcateg as BlogSubcategoryFromUnknownCategory;
-
-        const relatedPosts: TBlogPost[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(category, subcategory, language);
-
-        for (const post of relatedPosts) {
-          const slug = post.slug as UnknownBlogSlug;
-
-          const entity: BlogStaticParams = {
-            [BlogTaxonomy.SUBCATEGORY]: subcategory,
-            [I18nTaxonomy.LANGUAGE]: language,
-            [BlogTaxonomy.CATEGORY]: category,
-            [BlogTaxonomy.SLUG]: slug
-          };
-          blogStaticParams.push(entity);
-        }
-      }
-    }
-  }
-
+  const blogStaticParams = await doGetBlogStaticParams();
   return blogStaticParams;
 }
+/* v8 ignore stop */
 
 export async function getBlogCategoryMetadatas({ params }: BlogCategoryPageProps) {
   const globalT = await getServerSideI18n();
@@ -102,4 +70,4 @@ export async function getBlogPostMetadatas({ params }: BlogPostPageProps) {
   return { description, title };
 }
 
-export { blogSubcategoryGuard, blogPostGuard };
+export { blogSubcategoryGuard, blogCategoryGuard, blogPostGuard };

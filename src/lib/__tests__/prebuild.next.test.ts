@@ -6,7 +6,7 @@ import { describe, expect, it } from 'vitest';
 
 import { stackMiddlewares, getPathParts } from '../next';
 
-const withHeaders: MiddlewareFactory = (next: NextMiddleware) => {
+const fakeMiddleware: MiddlewareFactory = (next: NextMiddleware) => {
   return async (request: NextRequest, _next: NextFetchEvent) => {
     const res = await next(request, _next);
     return res;
@@ -31,9 +31,9 @@ describe('stackMiddlewares', () => {
     expect(foo).toBeInstanceOf(Function);
     const bar = stackMiddlewares([]);
     expect(bar).toBeInstanceOf(Function);
-    const foo2 = stackMiddlewares([withHeaders]);
+    const foo2 = stackMiddlewares([fakeMiddleware]);
     expect(foo2).toBeInstanceOf(Function);
-    const bar2 = stackMiddlewares([withHeaders, withHeaders]);
+    const bar2 = stackMiddlewares([fakeMiddleware, fakeMiddleware]);
     expect(bar2).toBeInstanceOf(Function);
   });
 });

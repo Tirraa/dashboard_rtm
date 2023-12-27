@@ -1,3 +1,4 @@
+/* v8 ignore start */
 'use client';
 
 import type { LayoutMinimalProps } from '@rtm/shared-types/Next';
@@ -35,3 +36,4 @@ const DashboardLayoutClient: FunctionComponent<DashboardLayoutClientProps> = ({ 
 };
 
 export default DashboardLayoutClient;
+/* v8 ignore stop */

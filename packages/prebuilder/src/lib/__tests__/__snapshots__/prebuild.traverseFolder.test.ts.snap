@@ -1,0 +1,116 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`traverseFolder > should return an arborescence, given a valid RootFolder (full) 1`] = `
+[
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz",
+    "filename": "file1",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz",
+    "filename": "file2",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz",
+    "filename": "file3",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz/foo",
+    "filename": "file1",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar",
+    "filename": "file1",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar",
+    "filename": "file2",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/baz/bar",
+    "filename": "file1",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/baz/bar/foo",
+    "filename": "file1",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/baz/bar/foo",
+    "filename": "file2",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/baz",
+    "filename": "file1",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/baz",
+    "filename": "file2",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/baz",
+    "filename": "file3",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/foo/baz/bar",
+    "filename": "file1",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/foo/baz/bar",
+    "filename": "file2",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/foo/baz",
+    "filename": "file1",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/foo",
+    "filename": "file1",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/foo",
+    "filename": "file2",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/foo",
+    "filename": "file3",
+  },
+]
+`;
+
+exports[`traverseFolder > should return an arborescence, given a valid RootFolder (partial 2) 1`] = `
+[
+  {
+    "fileDirectory": "./packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz/foo",
+    "filename": "file1",
+  },
+]
+`;
+
+exports[`traverseFolder > should return an arborescence, given a valid RootFolder (partial) 1`] = `
+[
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz",
+    "filename": "file1",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz",
+    "filename": "file2",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz",
+    "filename": "file3",
+  },
+  {
+    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz/foo",
+    "filename": "file1",
+  },
+  {
+    "fileDirectory": "./packages/prebuilder/src/lib/__tests__/fakeDirectory/bar",
+    "filename": "file1",
+  },
+  {
+    "fileDirectory": "./packages/prebuilder/src/lib/__tests__/fakeDirectory/bar",
+    "filename": "file2",
+  },
+]
+`;

@@ -1,3 +1,4 @@
+import type { TFakeLanguage } from '𝕍/testingBlogCategoryFakeLanguages';
 import type { TBlogPost } from '@/types/Blog';
 
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
@@ -38,7 +39,7 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict', () => {
     const postsCollection = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict(
       BlogConfig.TESTING_CATEGORY,
       'fake-subcategory',
-      'posts'
+      'posts' satisfies TFakeLanguage
     );
     expect(postsCollection.length).toBe(4);
   });
@@ -56,12 +57,16 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict', () => {
 
 describe('isValidBlogCategoryAndSubcategoryPair', () => {
   it('should be true for valid combinations', async () => {
-    const isValid = await isValidBlogCategoryAndSubcategoryPair(BlogConfig.TESTING_CATEGORY, 'fake-subcategory', 'drafts' as any);
+    const isValid = await isValidBlogCategoryAndSubcategoryPair(
+      BlogConfig.TESTING_CATEGORY,
+      'fake-subcategory',
+      'drafts' satisfies TFakeLanguage as any
+    );
     expect(isValid).toBe(true);
   });
 
   it('should be false for invalid combinations', async () => {
-    const isValid = await isValidBlogCategoryAndSubcategoryPair('__HELLO##W@RLD' as any, 'fake-subcategory', 'drafts' as any);
+    const isValid = await isValidBlogCategoryAndSubcategoryPair('__HELLO##W@RLD' as any, 'fake-subcategory', 'drafts' satisfies TFakeLanguage as any);
     expect(isValid).toBe(false);
   });
 });
@@ -71,7 +76,7 @@ describe('getBlogPostPathWithoutI18nPart', () => {
     const [category, subcategory, language, targettedSlug] = [
       BlogConfig.TESTING_CATEGORY,
       'fake-subcategory' as const,
-      'posts' as const,
+      'posts' as const satisfies TFakeLanguage,
       'fake-post-03' as const
     ];
 
