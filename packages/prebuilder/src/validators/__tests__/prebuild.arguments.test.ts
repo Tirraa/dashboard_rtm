@@ -7,6 +7,7 @@ import { FLAGS } from '../../config';
 
 const INVALID_PATH = './bless/the/draco/these/rounds/holy/sorry/bout/your/luck';
 
+// {ToDo} Rewrite this when https://github.com/Tirraa/dashboard_rtm/issues/16 will be solved.
 const NOT_A_DIRECTORY_NEEDLE = 'NOT a directory'.toLowerCase();
 const NOT_A_FILE_NEEDLE = 'NOT a file'.toLowerCase();
 const CANT_OPEN_NEEDLE = "Can't open".toLowerCase();

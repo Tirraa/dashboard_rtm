@@ -14,6 +14,7 @@ const authOptions: NextAuthOptions = {
         if (!t_id) return session;
 
         // {ToDo} Cache fresh avatar URL w/ Bento Cache to optimize those stupid fetchs (better call J-R44)
+        // https://github.com/Tirraa/dashboard_rtm/issues/66
         const freshProfile = await (
           await fetch(`https://discord.com/api/v10/users/${t_id}`, {
             headers: {

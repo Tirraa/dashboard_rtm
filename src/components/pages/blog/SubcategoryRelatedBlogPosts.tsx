@@ -49,7 +49,7 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
   return (
     <section id={slugger.slug(curSubcategTitle)} className="w-full">
       <h1 className="mb-2 ltr:text-left rtl:text-right">{title}</h1>
-      {/* {ToDo} Use shadcn/ui Data Table? */}
+      {/* {ToDo} https://github.com/Tirraa/dashboard_rtm/issues/41 */}
       <MaybePaginatedElements
         elementsPerPage={BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT}
         paginatedElementsBodyWrapperProps={{ className: '[&>article:not(:last-of-type)]:mb-6' }}

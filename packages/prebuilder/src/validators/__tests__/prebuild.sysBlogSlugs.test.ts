@@ -13,6 +13,7 @@ const INVALID_BLOG_POSTS_FOLDER_CONTAINING_ONE_INVALID_BLOG_SLUG =
 const INVALID_BLOG_POSTS_FOLDER_CONTAINING_SEVERAL_INVALID_BLOG_SLUGS =
   './packages/prebuilder/src/validators/__tests__/fake_posts_folders/invalid_fake_posts_folder_several_invalid_blog_slugs';
 
+// {ToDo} Rewrite this when https://github.com/Tirraa/dashboard_rtm/issues/16 will be solved.
 const INVALID_SLUG_NEEDLE = 'Invalid slug'.toLowerCase();
 const INVALID_SLUGS_NEEDLE = 'Invalid slugs'.toLowerCase();
 
