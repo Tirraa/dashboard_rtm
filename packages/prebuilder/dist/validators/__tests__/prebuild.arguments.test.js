@@ -1,0 +1,349 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+// eslint-disable-next-line import/no-extraneous-dependencies
+const vitest_1 = require("vitest");
+const ArgumentsValidatorError_1 = __importDefault(require("../../errors/ArgumentsValidatorError"));
+const arguments_1 = __importDefault(require("../arguments"));
+const config_1 = require("../../config");
+const INVALID_PATH = './bless/the/draco/these/rounds/holy/sorry/bout/your/luck';
+// {ToDo} Rewrite this when https://github.com/Tirraa/dashboard_rtm/issues/16 will be solved.
+const NOT_A_DIRECTORY_NEEDLE = 'NOT a directory'.toLowerCase();
+const NOT_A_FILE_NEEDLE = 'NOT a file'.toLowerCase();
+const CANT_OPEN_NEEDLE = "Can't open".toLowerCase();
+const CANT_USE_NEEDLE = "can't use".toLocaleLowerCase();
+const CANT_OMIT_NEEDLE = "can't omit".toLocaleLowerCase();
+const FEATURE_RELIES_ON_ANOTHER_FEATURE_NEEDLE = 'feature relies on'.toLocaleLowerCase();
+const VALID_BLOG_POSTS_FOLDER = './packages/prebuilder/src/validators/__tests__/fake_posts_folders/phony_valid_fake_posts_folder';
+const INVALID_BLOG_POSTS_FOLDER_NOT_A_DIR = './packages/prebuilder/src/validators/__tests__/fake_posts_folders/invalid_fake_posts_folder.FAKE_EXT';
+const VALID_I18N_LOCALES_SCHEMA_FILEPATH = './packages/prebuilder/src/validators/__tests__/fake_locales/valid_fake_locales/schema.ts';
+const INVALID_I18N_LOCALES_SCHEMA_FILEPATH_NOT_A_FILE = './packages/prebuilder/src/validators/__tests__/fake_locales/invalid_fake_locales_schema_dir/schema.ts';
+(0, vitest_1.describe)('parseArguments unhappy paths (sys)', () => {
+    (0, vitest_1.afterEach)(() => {
+        vitest_1.vi.restoreAllMocks();
+    });
+    (0, vitest_1.it)('should throw, given unknown args', () => {
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        argvSpy.mockReturnValue(['_', '_', '--__unknown_arg1', 'foo', '--_unknown_arg2', 'bar']);
+        (0, vitest_1.expect)(() => (0, arguments_1.default)()).toThrowError(ArgumentsValidatorError_1.default);
+    });
+    (0, vitest_1.it)('should throw, given valid args schema, but invalid posts folder path (not a directory)', () => {
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.BLOG_POSTS_FOLDER, INVALID_BLOG_POSTS_FOLDER_NOT_A_DIR,
+            config_1.FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH
+        ]);
+        (0, vitest_1.expect)(() => (0, arguments_1.default)()).toThrowError(ArgumentsValidatorError_1.default);
+    });
+    (0, vitest_1.it)('should throw, given valid args schema, but invalid posts folder path (not a directory) (2)', () => {
+        vitest_1.expect.assertions(1);
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.BLOG_POSTS_FOLDER, INVALID_BLOG_POSTS_FOLDER_NOT_A_DIR,
+            config_1.FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH
+        ]);
+        try {
+            (0, arguments_1.default)();
+        }
+        catch (e) {
+            const interceptedError = e;
+            (0, vitest_1.expect)(interceptedError.message.toLowerCase().includes(NOT_A_DIRECTORY_NEEDLE)).toBe(true);
+        }
+    });
+    (0, vitest_1.it)('should throw, given valid args schema, but invalid schema path (not a file)', () => {
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
+            config_1.FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, INVALID_I18N_LOCALES_SCHEMA_FILEPATH_NOT_A_FILE
+        ]);
+        (0, vitest_1.expect)(() => (0, arguments_1.default)()).toThrowError(ArgumentsValidatorError_1.default);
+    });
+    (0, vitest_1.it)('should throw, given valid args schema, but invalid schema path (not a file) (2)', () => {
+        vitest_1.expect.assertions(1);
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
+            config_1.FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, INVALID_I18N_LOCALES_SCHEMA_FILEPATH_NOT_A_FILE
+        ]);
+        try {
+            (0, arguments_1.default)();
+        }
+        catch (e) {
+            const interceptedError = e;
+            (0, vitest_1.expect)(interceptedError.message.toLowerCase().includes(NOT_A_FILE_NEEDLE)).toBe(true);
+        }
+    });
+    (0, vitest_1.it)('should throw, given valid args schema, but both invalid posts folder path & invalid schema path (not a directory, not a file)', () => {
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.BLOG_POSTS_FOLDER, INVALID_BLOG_POSTS_FOLDER_NOT_A_DIR,
+            config_1.FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, INVALID_I18N_LOCALES_SCHEMA_FILEPATH_NOT_A_FILE
+        ]);
+        (0, vitest_1.expect)(() => (0, arguments_1.default)()).toThrowError(ArgumentsValidatorError_1.default);
+    });
+    (0, vitest_1.it)("should throw, given valid args schema, but invalid posts folder path (can't open)", () => {
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.BLOG_POSTS_FOLDER, INVALID_PATH,
+            config_1.FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH
+        ]);
+        (0, vitest_1.expect)(() => (0, arguments_1.default)()).toThrowError(ArgumentsValidatorError_1.default);
+    });
+    (0, vitest_1.it)("should throw, given valid args schema, but invalid posts folder path (can't open) (2)", () => {
+        vitest_1.expect.assertions(1);
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.BLOG_POSTS_FOLDER, INVALID_PATH,
+            config_1.FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH
+        ]);
+        try {
+            (0, arguments_1.default)();
+        }
+        catch (e) {
+            const interceptedError = e;
+            (0, vitest_1.expect)(interceptedError.message.toLowerCase().includes(CANT_OPEN_NEEDLE)).toBe(true);
+        }
+    });
+    (0, vitest_1.it)("should throw, given valid args schema, but invalid schema path (can't open)", () => {
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
+            config_1.FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, INVALID_PATH
+        ]);
+        (0, vitest_1.expect)(() => (0, arguments_1.default)()).toThrowError(ArgumentsValidatorError_1.default);
+    });
+    (0, vitest_1.it)("should throw, given valid args schema, but invalid schema path (can't open) (2)", () => {
+        vitest_1.expect.assertions(1);
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
+            config_1.FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, INVALID_PATH
+        ]);
+        try {
+            (0, arguments_1.default)();
+        }
+        catch (e) {
+            const interceptedError = e;
+            (0, vitest_1.expect)(interceptedError.message.toLowerCase().includes(CANT_OPEN_NEEDLE)).toBe(true);
+        }
+    });
+    (0, vitest_1.it)("should throw, given valid args schema, but both invalid posts folder path & invalid schema path (can't open)", () => {
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        argvSpy.mockReturnValue(['_', '_', config_1.FLAGS.BLOG_POSTS_FOLDER, INVALID_PATH, config_1.FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, INVALID_PATH]);
+        (0, vitest_1.expect)(() => (0, arguments_1.default)()).toThrowError(ArgumentsValidatorError_1.default);
+    });
+});
+(0, vitest_1.describe)('parseArguments unhappy paths (invalid args combinators: both disabling and calling a tool)', () => {
+    (0, vitest_1.afterEach)(() => {
+        vitest_1.vi.restoreAllMocks();
+    });
+    (0, vitest_1.it)('should throw, given conflicting args (both any blog option & no blog option)', () => {
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH,
+            config_1.FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
+            config_1.FLAGS.NO_BLOG
+        ]);
+        (0, vitest_1.expect)(() => (0, arguments_1.default)()).toThrowError(ArgumentsValidatorError_1.default);
+    });
+    (0, vitest_1.it)('should throw, given conflicting args (both any blog option & no blog option) (2)', () => {
+        vitest_1.expect.assertions(1);
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH,
+            config_1.FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
+            config_1.FLAGS.NO_BLOG
+        ]);
+        try {
+            (0, arguments_1.default)();
+        }
+        catch (e) {
+            const interceptedError = e;
+            (0, vitest_1.expect)(interceptedError.message.toLowerCase().includes(CANT_USE_NEEDLE)).toBe(true);
+        }
+    });
+    (0, vitest_1.it)('should throw, given conflicting args (both any i18n option & no i18n option)', () => {
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH,
+            config_1.FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
+            config_1.FLAGS.NO_I18N
+        ]);
+        (0, vitest_1.expect)(() => (0, arguments_1.default)()).toThrowError(ArgumentsValidatorError_1.default);
+    });
+    (0, vitest_1.it)('should throw, given conflicting args (both any i18n option & no i18n option) (2)', () => {
+        vitest_1.expect.assertions(1);
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH,
+            config_1.FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
+            config_1.FLAGS.NO_I18N
+        ]);
+        try {
+            (0, arguments_1.default)();
+        }
+        catch (e) {
+            const interceptedError = e;
+            (0, vitest_1.expect)(interceptedError.message.toLowerCase().includes(CANT_USE_NEEDLE)).toBe(true);
+        }
+    });
+    (0, vitest_1.it)('should throw, given conflicting args (omitting i18n locales schema filepath option without no i18n option)', () => {
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            VALID_I18N_LOCALES_SCHEMA_FILEPATH,
+            config_1.FLAGS.NO_BLOG
+        ]);
+        (0, vitest_1.expect)(() => (0, arguments_1.default)()).toThrowError(ArgumentsValidatorError_1.default);
+    });
+    (0, vitest_1.it)('should throw, given conflicting args (omitting i18n locales schema filepath option without no i18n option) (2)', () => {
+        vitest_1.expect.assertions(1);
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            VALID_I18N_LOCALES_SCHEMA_FILEPATH,
+            config_1.FLAGS.NO_BLOG
+        ]);
+        try {
+            (0, arguments_1.default)();
+        }
+        catch (e) {
+            const interceptedError = e;
+            (0, vitest_1.expect)(interceptedError.message.toLowerCase().includes(CANT_OMIT_NEEDLE)).toBe(true);
+        }
+    });
+    (0, vitest_1.it)('should throw, given conflicting args (both any blog option & no blog option)', () => {
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH,
+            config_1.FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
+            config_1.FLAGS.NO_BLOG
+        ]);
+        (0, vitest_1.expect)(() => (0, arguments_1.default)()).toThrowError(ArgumentsValidatorError_1.default);
+    });
+    (0, vitest_1.it)('should throw, given conflicting args (both any blog option & no blog option) (2)', () => {
+        vitest_1.expect.assertions(1);
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH,
+            config_1.FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
+            config_1.FLAGS.NO_BLOG
+        ]);
+        try {
+            (0, arguments_1.default)();
+        }
+        catch (e) {
+            const interceptedError = e;
+            (0, vitest_1.expect)(interceptedError.message.toLowerCase().includes(CANT_USE_NEEDLE)).toBe(true);
+        }
+    });
+});
+(0, vitest_1.describe)('parseArguments unhappy paths (invalid args combinators: breaking dependencies)', () => {
+    (0, vitest_1.afterEach)(() => {
+        vitest_1.vi.restoreAllMocks();
+    });
+    (0, vitest_1.it)('should throw, given conflicting args (both any blog option & no i18n option)', () => {
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH,
+            config_1.FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
+            config_1.FLAGS.NO_BLOG
+        ]);
+        (0, vitest_1.expect)(() => (0, arguments_1.default)()).toThrowError(ArgumentsValidatorError_1.default);
+    });
+    (0, vitest_1.it)('should throw, given conflicting args (both any blog option & no i18n option) (2)', () => {
+        vitest_1.expect.assertions(1);
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH,
+            config_1.FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
+            config_1.FLAGS.NO_BLOG
+        ]);
+        try {
+            (0, arguments_1.default)();
+        }
+        catch (e) {
+            const interceptedError = e;
+            (0, vitest_1.expect)(interceptedError.message.toLowerCase().includes(CANT_USE_NEEDLE)).toBe(true);
+        }
+    });
+    (0, vitest_1.it)('should throw, given conflicting args (both any i18n option & no i18n option)', () => {
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
+            config_1.FLAGS.NO_I18N
+        ]);
+        (0, vitest_1.expect)(() => (0, arguments_1.default)()).toThrowError(ArgumentsValidatorError_1.default);
+    });
+    (0, vitest_1.it)('should throw, given conflicting args (both any i18n option & no i18n option) (2)', () => {
+        vitest_1.expect.assertions(1);
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
+            config_1.FLAGS.NO_I18N
+        ]);
+        try {
+            (0, arguments_1.default)();
+        }
+        catch (e) {
+            const interceptedError = e;
+            (0, vitest_1.expect)(interceptedError.message.toLowerCase().includes(FEATURE_RELIES_ON_ANOTHER_FEATURE_NEEDLE)).toBe(true);
+        }
+    });
+});
+(0, vitest_1.describe)('parseArguments vacuous path (disabling all tools)', () => {
+    (0, vitest_1.afterEach)(() => {
+        vitest_1.vi.restoreAllMocks();
+    });
+    (0, vitest_1.it)('should pass, disabling all tools', () => {
+        const argvSpy = vitest_1.vi.spyOn(process, 'argv', 'get');
+        // prettier-ignore
+        argvSpy.mockReturnValue([
+            '_', '_',
+            config_1.FLAGS.NO_BLOG, config_1.FLAGS.NO_I18N
+        ]);
+        (0, vitest_1.expect)(() => (0, arguments_1.default)()).not.toThrowError(ArgumentsValidatorError_1.default);
+    });
+});

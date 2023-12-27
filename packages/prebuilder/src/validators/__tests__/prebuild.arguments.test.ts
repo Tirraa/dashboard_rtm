@@ -37,6 +37,8 @@ describe('parseArguments unhappy paths (sys)', () => {
   });
 
   it('should throw, given valid args schema, but invalid posts folder path (not a directory)', () => {
+    expect.assertions(2);
+
     const argvSpy = vi.spyOn(process, 'argv', 'get');
     // prettier-ignore
     argvSpy.mockReturnValue([
@@ -46,19 +48,6 @@ describe('parseArguments unhappy paths (sys)', () => {
     ]);
 
     expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
-  });
-
-  it('should throw, given valid args schema, but invalid posts folder path (not a directory) (2)', () => {
-    expect.assertions(1);
-
-    const argvSpy = vi.spyOn(process, 'argv', 'get');
-    // prettier-ignore
-    argvSpy.mockReturnValue([
-      '_', '_',
-      FLAGS.BLOG_POSTS_FOLDER, INVALID_BLOG_POSTS_FOLDER_NOT_A_DIR,
-      FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH
-    ]);
-
     try {
       parseArguments();
     } catch (e) {
@@ -68,6 +57,8 @@ describe('parseArguments unhappy paths (sys)', () => {
   });
 
   it('should throw, given valid args schema, but invalid schema path (not a file)', () => {
+    expect.assertions(2);
+
     const argvSpy = vi.spyOn(process, 'argv', 'get');
     // prettier-ignore
     argvSpy.mockReturnValue([
@@ -77,18 +68,6 @@ describe('parseArguments unhappy paths (sys)', () => {
     ]);
 
     expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
-  });
-
-  it('should throw, given valid args schema, but invalid schema path (not a file) (2)', () => {
-    expect.assertions(1);
-
-    const argvSpy = vi.spyOn(process, 'argv', 'get');
-    // prettier-ignore
-    argvSpy.mockReturnValue([
-      '_', '_',
-      FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
-      FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, INVALID_I18N_LOCALES_SCHEMA_FILEPATH_NOT_A_FILE
-    ]);
 
     try {
       parseArguments();
@@ -111,6 +90,8 @@ describe('parseArguments unhappy paths (sys)', () => {
   });
 
   it("should throw, given valid args schema, but invalid posts folder path (can't open)", () => {
+    expect.assertions(2);
+
     const argvSpy = vi.spyOn(process, 'argv', 'get');
     // prettier-ignore
     argvSpy.mockReturnValue([
@@ -120,18 +101,6 @@ describe('parseArguments unhappy paths (sys)', () => {
     ]);
 
     expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
-  });
-
-  it("should throw, given valid args schema, but invalid posts folder path (can't open) (2)", () => {
-    expect.assertions(1);
-
-    const argvSpy = vi.spyOn(process, 'argv', 'get');
-    // prettier-ignore
-    argvSpy.mockReturnValue([
-      '_', '_',
-      FLAGS.BLOG_POSTS_FOLDER, INVALID_PATH,
-      FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH
-    ]);
 
     try {
       parseArguments();
@@ -142,6 +111,8 @@ describe('parseArguments unhappy paths (sys)', () => {
   });
 
   it("should throw, given valid args schema, but invalid schema path (can't open)", () => {
+    expect.assertions(2);
+
     const argvSpy = vi.spyOn(process, 'argv', 'get');
     // prettier-ignore
     argvSpy.mockReturnValue([
@@ -151,18 +122,6 @@ describe('parseArguments unhappy paths (sys)', () => {
     ]);
 
     expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
-  });
-
-  it("should throw, given valid args schema, but invalid schema path (can't open) (2)", () => {
-    expect.assertions(1);
-
-    const argvSpy = vi.spyOn(process, 'argv', 'get');
-    // prettier-ignore
-    argvSpy.mockReturnValue([
-      '_', '_',
-      FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
-      FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, INVALID_PATH
-    ]);
 
     try {
       parseArguments();
@@ -186,6 +145,8 @@ describe('parseArguments unhappy paths (invalid args combinators: both disabling
   });
 
   it('should throw, given conflicting args (both any blog option & no blog option)', () => {
+    expect.assertions(2);
+
     const argvSpy = vi.spyOn(process, 'argv', 'get');
     // prettier-ignore
     argvSpy.mockReturnValue([
@@ -196,19 +157,6 @@ describe('parseArguments unhappy paths (invalid args combinators: both disabling
     ]);
 
     expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
-  });
-
-  it('should throw, given conflicting args (both any blog option & no blog option) (2)', () => {
-    expect.assertions(1);
-
-    const argvSpy = vi.spyOn(process, 'argv', 'get');
-    // prettier-ignore
-    argvSpy.mockReturnValue([
-      '_', '_',
-      FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH,
-      FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
-      FLAGS.NO_BLOG
-    ]);
 
     try {
       parseArguments();
@@ -219,6 +167,8 @@ describe('parseArguments unhappy paths (invalid args combinators: both disabling
   });
 
   it('should throw, given conflicting args (both any i18n option & no i18n option)', () => {
+    expect.assertions(2);
+
     const argvSpy = vi.spyOn(process, 'argv', 'get');
     // prettier-ignore
     argvSpy.mockReturnValue([
@@ -229,19 +179,6 @@ describe('parseArguments unhappy paths (invalid args combinators: both disabling
     ]);
 
     expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
-  });
-
-  it('should throw, given conflicting args (both any i18n option & no i18n option) (2)', () => {
-    expect.assertions(1);
-
-    const argvSpy = vi.spyOn(process, 'argv', 'get');
-    // prettier-ignore
-    argvSpy.mockReturnValue([
-      '_', '_',
-      FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH,
-      FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
-      FLAGS.NO_I18N
-    ]);
 
     try {
       parseArguments();
@@ -252,6 +189,8 @@ describe('parseArguments unhappy paths (invalid args combinators: both disabling
   });
 
   it('should throw, given conflicting args (omitting i18n locales schema filepath option without no i18n option)', () => {
+    expect.assertions(2);
+
     const argvSpy = vi.spyOn(process, 'argv', 'get');
     // prettier-ignore
     argvSpy.mockReturnValue([
@@ -261,18 +200,6 @@ describe('parseArguments unhappy paths (invalid args combinators: both disabling
     ]);
 
     expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
-  });
-
-  it('should throw, given conflicting args (omitting i18n locales schema filepath option without no i18n option) (2)', () => {
-    expect.assertions(1);
-
-    const argvSpy = vi.spyOn(process, 'argv', 'get');
-    // prettier-ignore
-    argvSpy.mockReturnValue([
-      '_', '_',
-       VALID_I18N_LOCALES_SCHEMA_FILEPATH,
-       FLAGS.NO_BLOG
-    ]);
 
     try {
       parseArguments();
@@ -283,6 +210,8 @@ describe('parseArguments unhappy paths (invalid args combinators: both disabling
   });
 
   it('should throw, given conflicting args (both any blog option & no blog option)', () => {
+    expect.assertions(2);
+
     const argvSpy = vi.spyOn(process, 'argv', 'get');
     // prettier-ignore
     argvSpy.mockReturnValue([
@@ -293,19 +222,6 @@ describe('parseArguments unhappy paths (invalid args combinators: both disabling
     ]);
 
     expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
-  });
-
-  it('should throw, given conflicting args (both any blog option & no blog option) (2)', () => {
-    expect.assertions(1);
-
-    const argvSpy = vi.spyOn(process, 'argv', 'get');
-    // prettier-ignore
-    argvSpy.mockReturnValue([
-      '_', '_',
-      FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH,
-      FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
-      FLAGS.NO_BLOG
-    ]);
 
     try {
       parseArguments();
@@ -322,6 +238,8 @@ describe('parseArguments unhappy paths (invalid args combinators: breaking depen
   });
 
   it('should throw, given conflicting args (both any blog option & no i18n option)', () => {
+    expect.assertions(2);
+
     const argvSpy = vi.spyOn(process, 'argv', 'get');
     // prettier-ignore
     argvSpy.mockReturnValue([
@@ -332,19 +250,6 @@ describe('parseArguments unhappy paths (invalid args combinators: breaking depen
     ]);
 
     expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
-  });
-
-  it('should throw, given conflicting args (both any blog option & no i18n option) (2)', () => {
-    expect.assertions(1);
-
-    const argvSpy = vi.spyOn(process, 'argv', 'get');
-    // prettier-ignore
-    argvSpy.mockReturnValue([
-      '_', '_',
-      FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH,
-      FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
-      FLAGS.NO_BLOG
-    ]);
 
     try {
       parseArguments();
@@ -355,6 +260,8 @@ describe('parseArguments unhappy paths (invalid args combinators: breaking depen
   });
 
   it('should throw, given conflicting args (both any i18n option & no i18n option)', () => {
+    expect.assertions(2);
+
     const argvSpy = vi.spyOn(process, 'argv', 'get');
     // prettier-ignore
     argvSpy.mockReturnValue([
@@ -364,18 +271,6 @@ describe('parseArguments unhappy paths (invalid args combinators: breaking depen
     ]);
 
     expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
-  });
-
-  it('should throw, given conflicting args (both any i18n option & no i18n option) (2)', () => {
-    expect.assertions(1);
-
-    const argvSpy = vi.spyOn(process, 'argv', 'get');
-    // prettier-ignore
-    argvSpy.mockReturnValue([
-      '_', '_',
-      FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
-      FLAGS.NO_I18N
-    ]);
 
     try {
       parseArguments();

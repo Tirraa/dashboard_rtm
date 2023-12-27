@@ -1,8 +1,8 @@
 import { isNotFoundError } from 'next/dist/client/components/not-found';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import BlogTaxonomy from '##/config/taxonomies/blog';
-import { describe, expect, it, vi } from 'vitest';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
+import { describe, expect, it } from 'vitest';
 import BlogConfig from '@/config/blog';
 
 import blogCategoryGuard from '../blogCategoryGuard';
@@ -19,8 +19,8 @@ describe('blogCategoryGuard', () => {
           [I18nTaxonomy.LANGUAGE]: DEFAULT_LANGUAGE
         }
       });
-    } catch (e) {
-      expect(isNotFoundError(e)).toBe(true);
+    } catch (interceptedError) {
+      expect(isNotFoundError(interceptedError)).toBe(true);
     }
   });
 
@@ -36,5 +36,3 @@ describe('blogCategoryGuard', () => {
     ).not.toThrow();
   });
 });
-
-vi.doUnmock('next/navigation');
