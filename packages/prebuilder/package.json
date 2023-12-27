@@ -6,7 +6,7 @@
   "version": "1.0.0",
   "description": "GustaveWPM's NextJS Dashboard codebase internal prebuilder",
   "scripts": {
-    "start": "tsc --build && cross-env node dist/main.js --posts-folder $BLOG_POSTS_FOLDER --i18n-locales-schema $I18N_LOCALES_SCHEMA"
+    "start": "tsc --build && node dist/main.js"
   },
   "devDependencies": {
     "typescript": "^5.3.0"

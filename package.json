@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "prebuild": "cross-env BLOG_POSTS_FOLDER=./content/blog I18N_LOCALES_SCHEMA=./src/i18n/locales/schema.ts pnpm --filter @rtm/prebuilder start",
+    "prebuild": "pnpm --filter @rtm/prebuilder start --blog-posts-folder ./content/blog --i18n-locales-schema ./src/i18n/locales/schema.ts",
     "build": "next build",
     "postbuild": "next-sitemap",
     "dev": "next dev",
@@ -94,7 +94,6 @@
     "@vitest/ui": "^1.0.4",
     "autoprefixer": "10.4.15",
     "commitizen": "^4.3.0",
-    "cross-env": "^7.0.3",
     "editorconfig": "^2.0.0",
     "eslint": "^8.47.0",
     "eslint-config-next": "^13.5.3",

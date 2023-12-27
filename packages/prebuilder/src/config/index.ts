@@ -9,7 +9,7 @@ export const I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = ['title', 'met
 export const FLAGS = {
   I18N_LOCALES_SCHEMA_FILEPATH: '--i18n-locales-schema',
   SKIP_LOCALES_INFOS: '--skip-locales-infos',
-  BLOG_POSTS_FOLDER: '--posts-folder',
+  BLOG_POSTS_FOLDER: '--blog-posts-folder',
   NO_BLOG: '--no-blog',
   NO_I18N: '--no-i18n'
 } as const;
