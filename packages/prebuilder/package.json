@@ -15,5 +15,5 @@
     "arg": "^5.0.2",
     "ts-morph": "21.0.1"
   },
-  "packageManager": "^pnpm@8.12.0"
+  "packageManager": "^pnpm@8.13.1"
 }
