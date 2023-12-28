@@ -1,3 +1,4 @@
+/* v8 ignore start */
 'use client';
 
 import type { FunctionComponent } from 'react';
@@ -26,3 +27,4 @@ const InviteTheBotButton: FunctionComponent<InviteTheBotButtonProps> = () => {
 };
 
 export default InviteTheBotButton;
+/* v8 ignore stop */

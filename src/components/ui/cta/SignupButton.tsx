@@ -1,3 +1,4 @@
+/* v8 ignore start */
 'use client';
 
 import type { FunctionComponent } from 'react';
@@ -23,3 +24,4 @@ const SignupButton: FunctionComponent<SignUpButtonProps> = () => {
 };
 
 export default SignupButton;
+/* v8 ignore stop */

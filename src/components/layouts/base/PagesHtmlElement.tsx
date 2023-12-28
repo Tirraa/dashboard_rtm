@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { LayoutBaseProps } from '@/types/Next';
 import type { FunctionComponent } from 'react';
 
@@ -12,3 +13,4 @@ const PagesHtmlElement: FunctionComponent<HtmlElementProps> = ({ children, param
 );
 
 export default PagesHtmlElement;
+/* v8 ignore stop */

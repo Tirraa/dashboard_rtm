@@ -7,7 +7,7 @@ import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, it, vi } from 'vitest';
 import BlogConfig from '@/config/blog';
 
-import { getBlogPostStrict } from '../api';
+import { getBlogPostUnstrict, getBlogPostStrict } from '../api';
 
 vi.mock('@/config/blog', async (orgImport) => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -48,6 +48,13 @@ describe('getPostStrict', () => {
     expect(post.slug).toBe(targettedSlug);
     expect(post.language).toBe(language);
     expect(post.url).toBe(`/${language}/${category}/${subcategory}/${targettedSlug}`);
+  });
+});
+
+describe('getBlogPostUnstrict', () => {
+  it('should return null, given invalid slug', async () => {
+    const posts = await getBlogPostUnstrict(BlogConfig.TESTING_CATEGORY, TESTING_BLOG_FAKE_SUBCATEGORY, '__INVALID_SLUG__', DEFAULT_LANGUAGE);
+    expect(posts).toBe(null);
   });
 });
 

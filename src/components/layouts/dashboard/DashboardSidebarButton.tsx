@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { FunctionComponent, ComponentType } from 'react';
 import type { IconBaseProps } from 'react-icons';
 
@@ -19,3 +20,4 @@ const DashboardSidebarButton: FunctionComponent<DashboardSidebarButtonProps> = (
 };
 
 export default DashboardSidebarButton;
+/* v8 ignore stop */

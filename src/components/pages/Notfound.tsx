@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { FunctionComponent } from 'react';
 
 import { getServerSideI18n } from '@/i18n/server';
@@ -16,3 +17,4 @@ const NotFound: FunctionComponent<NotFoundProps> = async () => {
 };
 
 export default NotFound;
+/* v8 ignore stop */

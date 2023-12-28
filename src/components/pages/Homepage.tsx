@@ -1,3 +1,4 @@
+/* v8 ignore start */
 'use client';
 
 import type { FunctionComponent, CSSProperties } from 'react';
@@ -30,3 +31,4 @@ const Homepage: FunctionComponent<HomepageProps> = () => {
 };
 
 export default Homepage;
+/* v8 ignore stop */

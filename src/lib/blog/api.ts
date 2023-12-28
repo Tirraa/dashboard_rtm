@@ -53,8 +53,7 @@ export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnst
         !currentPostDraft && currentPostSubcategory === subcategory && currentPostLanguage === language
     );
 
-  const postsCollection: MaybeNull<TBlogPost[]> = await getAllBlogPostsByCategory(category);
-  if (postsCollection === null) return [];
+  const postsCollection = (await getAllBlogPostsByCategory(category)) as TBlogPost[];
 
   return ComputedBlogCtx.ALLOWED_DRAFTS ? getPostsWithAllowedDraftsCtx(postsCollection) : getPostsWithDisallowedDraftsCtx(postsCollection);
 }

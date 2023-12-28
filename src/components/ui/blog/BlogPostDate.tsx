@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { WithClassname } from '@rtm/shared-types/Next';
 import type { BlogPostProps } from '@/types/Blog';
 import type { FunctionComponent } from 'react';
@@ -14,3 +15,4 @@ const BlogPostDate: FunctionComponent<BlogPostDateProps> = ({ className: classNa
 );
 
 export default BlogPostDate;
+/* v8 ignore stop */

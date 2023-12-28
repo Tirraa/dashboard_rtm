@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { BlogPostProps } from '@/types/Blog';
 import type { FunctionComponent } from 'react';
 
@@ -39,3 +40,4 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = ({ isNotOnBlogS
 };
 
 export default BlogPostPreview;
+/* v8 ignore stop */

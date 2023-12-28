@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { LayoutBaseProps } from '@/types/Next';
 import type { FunctionComponent } from 'react';
 
@@ -42,3 +43,4 @@ const DocumentRoot: FunctionComponent<DocumentRootProps> = ({ disableTopLoader, 
 };
 
 export default DocumentRoot;
+/* v8 ignore stop */

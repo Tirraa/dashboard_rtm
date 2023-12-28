@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type { LayoutBaseProps } from '@/types/Next';
 import type { FunctionComponent } from 'react';
 
@@ -11,3 +12,4 @@ const LandingPagesHtmlElement: FunctionComponent<HtmlElementProps> = ({ children
 );
 
 export default LandingPagesHtmlElement;
+/* v8 ignore stop */

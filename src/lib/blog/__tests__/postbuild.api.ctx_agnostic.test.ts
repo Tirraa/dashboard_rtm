@@ -7,6 +7,7 @@ import { describe, expect, it } from 'vitest';
 import BlogConfig from '@/config/blog';
 
 import {
+  getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict,
   getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict,
   isValidBlogCategoryAndSubcategoryPairInAnyLanguage,
   isValidBlogCategoryAndSubcategoryPair,
@@ -66,13 +67,42 @@ describe('isValidBlogCategoryAndSubcategoryPair', () => {
     expect(isValid).toBe(true);
   });
 
-  it('should be false for invalid combinations', async () => {
+  it('should be false for invalid combinations, given invalid category', async () => {
     const isValid = await isValidBlogCategoryAndSubcategoryPair(
-      '__HELLO##W@RLD' as any,
+      // @ts-expect-error
+      '__INVALID_CATEGORY__',
       TESTING_BLOG_FAKE_SUBCATEGORY,
-      'drafts' satisfies TFakeLanguage as any
+      'drafts' satisfies TFakeLanguage
     );
     expect(isValid).toBe(false);
+  });
+
+  it('should be false for invalid combinations, given invalid subcategory', async () => {
+    const isValid = await isValidBlogCategoryAndSubcategoryPair(
+      BlogConfig.TESTING_CATEGORY,
+      // @ts-expect-error
+      '__INVALID_SUBCATEGORY__',
+      'drafts' satisfies TFakeLanguage
+    );
+    expect(isValid).toBe(false);
+  });
+
+  it('should be false for invalid combinations, given invalid category and subcategory', async () => {
+    const isValid = await isValidBlogCategoryAndSubcategoryPair(
+      // @ts-expect-error
+      '__INVALID_CATEGORY__',
+      '__INVALID_SUBCATEGORY__',
+      'drafts' satisfies TFakeLanguage
+    );
+    expect(isValid).toBe(false);
+  });
+});
+
+describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict', () => {
+  it('should return empty list, given invalid combination', async () => {
+    // @ts-expect-error
+    const posts = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict('testing', '__INVALID_SUBCATEGORY__', DEFAULT_LANGUAGE);
+    expect(posts).toStrictEqual([]);
   });
 });
 
@@ -100,22 +130,23 @@ describe('isValidBlogCategoryAndSubcategoryPairInAnyLanguage', () => {
     expect(isValid).toBe(true);
   });
 
-  it('should return false, given an invalid combination (invalid category)', async () => {
-    const isValid = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage('_%#@!$£µ' as any, TESTING_BLOG_FAKE_SUBCATEGORY);
+  it('should return false, given an invalid category', async () => {
+    // @ts-expect-error
+    const isValid = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage('__INVALID_CATEGORY__', TESTING_BLOG_FAKE_SUBCATEGORY);
 
     expect(isValid).toBe(false);
   });
 
-  it('should return false, given an invalid combination (invalid subcategory)', async () => {
+  it('should return false, given an invalid subcategory', async () => {
     // @ts-expect-error
-    const isValid = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage(BlogConfig.TESTING_CATEGORY, '_%#@!$£µ');
+    const isValid = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage(BlogConfig.TESTING_CATEGORY, '__INVALID_SUBCATEGORY__');
 
     expect(isValid).toBe(false);
   });
 
-  it('should return false, given an invalid combination (both invalid)', async () => {
+  it('should return false, given an invalid category and subcategory', async () => {
     // @ts-expect-error
-    const isValid = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage('_%#@!$£µ', '_%#@!$£µ');
+    const isValid = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage('__INVALID_CATEGORY__', '__INVALID_SUBCATEGORY__');
 
     expect(isValid).toBe(false);
   });

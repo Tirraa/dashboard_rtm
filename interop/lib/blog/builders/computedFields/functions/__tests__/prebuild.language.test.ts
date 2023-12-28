@@ -4,12 +4,11 @@ import { LANGUAGES } from '##/config/i18n';
 
 import buildBlogPostLanguageFlag from '../language';
 
-describe('language', () => {
+describe('buildBlogPostLanguageFlag', () => {
   const PREFIX = '$';
-  const FIRST_LANG = LANGUAGES[0];
   let prefixAcc = PREFIX;
-  while (LANGUAGES.includes((prefixAcc + FIRST_LANG) as any)) prefixAcc += PREFIX;
-  const invalidLanguage = prefixAcc + FIRST_LANG;
+  while (LANGUAGES.includes((prefixAcc + DEFAULT_LANGUAGE) as any)) prefixAcc += PREFIX;
+  const invalidLanguage = prefixAcc + DEFAULT_LANGUAGE;
 
   it('should be fault tolerant, given an invalid language in the flattenedPath', () => {
     expect(
