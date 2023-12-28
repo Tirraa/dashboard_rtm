@@ -3,23 +3,23 @@ import { describe, expect, it } from 'vitest';
 
 import generateBlogArchitectureType from '../blogArchitectureType';
 
-const fs = require('fs');
+const fs = require('fs/promises');
 
 const __TARGET_FOLDER_ROOT = './packages/prebuilder/src/generators/blog/__tests__/FAKE_CODEGEN';
 const __TARGET_FOLDER = __TARGET_FOLDER_ROOT + '/' + 'BLOG_ARCHITECTURE_TYPE';
 
 describe('generateBlogArchitectureType', () => {
-  it('should match snapshot', () => {
+  it('should match snapshot', async () => {
     const targetFile = 'FAKE_EMPTY_BLOG_ARCHITECTURE_TYPE';
-    generateBlogArchitectureType({}, targetFile, __TARGET_FOLDER);
+    await generateBlogArchitectureType({}, targetFile, __TARGET_FOLDER);
 
-    const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 
-  it('should match snapshot', () => {
+  it('should match snapshot', async () => {
     const targetFile = 'FAKE_BLOG_ARCHITECTURE_TYPE';
-    generateBlogArchitectureType(
+    await generateBlogArchitectureType(
       {
         'fake-category-one': {
           'fake-subcategory-one': {
@@ -45,7 +45,7 @@ describe('generateBlogArchitectureType', () => {
       __TARGET_FOLDER
     );
 
-    const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 });

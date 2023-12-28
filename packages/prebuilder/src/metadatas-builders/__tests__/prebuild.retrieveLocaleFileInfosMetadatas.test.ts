@@ -14,11 +14,11 @@ const INVALID_I18N_LOCALE_FILEPATH_EMPTY_INFOS =
   './packages/prebuilder/src/metadatas-builders/__tests__/fake_locales/baz_invalid_locales_empty_infos.ts';
 
 describe('retrieveLocaleFileInfosMetadatas', () => {
-  it('should throw ENOENT, given invalid locale filepath', () => {
+  it('should throw ENOENT, given invalid locale filepath', async () => {
     expect.assertions(1);
 
     try {
-      retrieveLocaleFileInfosMetadatas(INVALID_PATH);
+      await retrieveLocaleFileInfosMetadatas(INVALID_PATH);
     } catch (e) {
       const interceptedError = e as Error;
       if ('code' in interceptedError) {
@@ -29,16 +29,16 @@ describe('retrieveLocaleFileInfosMetadatas', () => {
     }
   });
 
-  it('should throw, given an invalid locale filepath (not evaluable)', () => {
-    expect(() => retrieveLocaleFileInfosMetadatas(INVALID_I18N_LOCALE_FILEPATH_NOT_EVALUABLE)).toThrowError(BuilderError);
+  it('should throw, given an invalid locale filepath (not evaluable)', async () => {
+    await expect(retrieveLocaleFileInfosMetadatas(INVALID_I18N_LOCALE_FILEPATH_NOT_EVALUABLE)).rejects.toThrowError(BuilderError);
   });
 
-  it('should throw, given an invalid locale filepath (empty infos)', () => {
-    expect(() => retrieveLocaleFileInfosMetadatas(INVALID_I18N_LOCALE_FILEPATH_EMPTY_INFOS)).toThrowError(BuilderError);
+  it('should throw, given an invalid locale filepath (empty infos)', async () => {
+    await expect(retrieveLocaleFileInfosMetadatas(INVALID_I18N_LOCALE_FILEPATH_EMPTY_INFOS)).rejects.toThrowError(BuilderError);
   });
 
-  it('should return a valid object, given a valid locale filepath', () => {
-    const retrievedData = retrieveLocaleFileInfosMetadatas(VALID_I18N_LOCALE_FILEPATH);
+  it('should return a valid object, given a valid locale filepath', async () => {
+    const retrievedData = await retrieveLocaleFileInfosMetadatas(VALID_I18N_LOCALE_FILEPATH);
     expect(retrievedData).toStrictEqual({ lng: 'NOT testing localesInfosValidator here! Only testing retrieveLocaleFilesInfosMetadatas!' });
   });
 });

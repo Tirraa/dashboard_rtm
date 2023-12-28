@@ -30,16 +30,16 @@ const INVALID_I18N_LOCALES_SCHEMA_FILEPATH_EMPTY_LNG_FIELD =
 const EMPTY_FEEDBACK = '';
 
 describe('localesInfosValidator', () => {
-  it('should not produce error feedback, given valid inputs', () => {
-    const feedback = localesInfosValidator(VALID_LOCALES_FOLDER, VALID_I18N_LOCALES_SCHEMA_FILEPATH);
+  it('should not produce error feedback, given valid inputs', async () => {
+    const feedback = await localesInfosValidator(VALID_LOCALES_FOLDER, VALID_I18N_LOCALES_SCHEMA_FILEPATH);
     expect(feedback).toBe(EMPTY_FEEDBACK);
   });
 
-  it('should throw ENOENT, given invalid localesFolder', () => {
+  it('should throw ENOENT, given invalid localesFolder', async () => {
     expect.assertions(2);
 
     try {
-      localesInfosValidator(INVALID_PATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH);
+      await localesInfosValidator(INVALID_PATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH);
     } catch (e) {
       const interceptedError = e as Error;
       if ('code' in interceptedError) {
@@ -50,7 +50,7 @@ describe('localesInfosValidator', () => {
     }
 
     try {
-      localesInfosValidator(INVALID_PATH, INVALID_PATH);
+      await localesInfosValidator(INVALID_PATH, INVALID_PATH);
     } catch (e) {
       const interceptedError = e as Error;
       if ('code' in interceptedError) {
@@ -61,31 +61,31 @@ describe('localesInfosValidator', () => {
     }
   });
 
-  it('should throw BuilderError, given invalid i18nSchemaFilePath', () => {
-    expect(() => localesInfosValidator(VALID_LOCALES_FOLDER, INVALID_PATH)).toThrowError(BuilderError);
+  it('should throw BuilderError, given invalid i18nSchemaFilePath', async () => {
+    await expect(localesInfosValidator(VALID_LOCALES_FOLDER, INVALID_PATH)).rejects.toThrowError(BuilderError);
   });
 
-  it('should throw, given invalid locales folder (missing locale infos in it.ts)', () => {
-    expect(() =>
+  it('should throw, given invalid locales folder (missing locale infos in it.ts)', async () => {
+    await expect(
       localesInfosValidator(INVALID_LOCALES_FOLDER_MISSING_LOCALE_CODE, INVALID_I18N_LOCALES_SCHEMA_FILEPATH_MISSING_LOCALE_CODE)
-    ).toThrowError(BuilderError);
+    ).rejects.toThrowError(BuilderError);
   });
 
-  it('should produce an error feedback, given invalid locales folder (invalid locale code)', () => {
-    const feedback = localesInfosValidator(INVALID_LOCALES_FOLDER, INVALID_I18N_LOCALES_SCHEMA_FILEPATH);
+  it('should produce an error feedback, given invalid locales folder (invalid locale code)', async () => {
+    const feedback = await localesInfosValidator(INVALID_LOCALES_FOLDER, INVALID_I18N_LOCALES_SCHEMA_FILEPATH);
     expect(feedback).not.toBe(EMPTY_FEEDBACK);
   });
 
-  it('should produce an error feedback, given invalid locales folder with several issues (invalid locale code in both invalid_it.ts and invalid_fr.ts)', () => {
-    const feedback = localesInfosValidator(
+  it('should produce an error feedback, given invalid locales folder with several issues (invalid locale code in both invalid_it.ts and invalid_fr.ts)', async () => {
+    const feedback = await localesInfosValidator(
       INVALID_LOCALES_FOLDER_SEVERAL_LNG_FIELD_MISMATCH,
       INVALID_I18N_LOCALES_SCHEMA_FILEPATH_SEVERAL_LNG_FIELD_MISMATCH
     );
     expect(feedback).not.toBe(EMPTY_FEEDBACK);
   });
 
-  it('should produce error feedback, given one _infos obj has an empty lng field', () => {
-    const feedback = localesInfosValidator(INVALID_LOCALES_FOLDER_EMPTY_LNG_FIELD, INVALID_I18N_LOCALES_SCHEMA_FILEPATH_EMPTY_LNG_FIELD);
+  it('should produce error feedback, given one _infos obj has an empty lng field', async () => {
+    const feedback = await localesInfosValidator(INVALID_LOCALES_FOLDER_EMPTY_LNG_FIELD, INVALID_I18N_LOCALES_SCHEMA_FILEPATH_EMPTY_LNG_FIELD);
     expect(feedback).not.toBe(EMPTY_FEEDBACK);
   });
 });

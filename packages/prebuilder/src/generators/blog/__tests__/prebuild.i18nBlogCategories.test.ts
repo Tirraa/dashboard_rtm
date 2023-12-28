@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import generateI18nBlogCategories from '../i18nBlogCategories';
 
-const fs = require('fs');
+const fs = require('fs/promises');
 
 const __TARGET_FOLDER_ROOT = './packages/prebuilder/src/generators/blog/__tests__/FAKE_CODEGEN';
 const __TARGET_FOLDER = __TARGET_FOLDER_ROOT + '/' + 'I18N_BLOG_CATEGORIES';
@@ -68,129 +68,129 @@ const FAKE_METADATAS_B = {
 };
 
 describe('generateI18nBlogCategories', () => {
-  it('should match snapshot', () => {
+  it('should match snapshot', async () => {
     const targetFile = 'FAKE_EMPTY_BLOG_CATEGORIES_MIN';
 
-    generateI18nBlogCategories(
+    await generateI18nBlogCategories(
       EMPTY_METADATAS,
       targetFile,
       __TARGET_FOLDER,
       __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_MIN,
       __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_MIN
     );
-    const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 
-  it('should match snapshot', () => {
+  it('should match snapshot', async () => {
     const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_MIN_FAKE_METADATAS_A';
 
-    generateI18nBlogCategories(
+    await generateI18nBlogCategories(
       FAKE_METADATAS_A,
       targetFile,
       __TARGET_FOLDER,
       __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_MIN,
       __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_MIN
     );
-    const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 
-  it('should match snapshot', () => {
+  it('should match snapshot', async () => {
     const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_MIN_FAKE_METADATAS_B';
 
-    generateI18nBlogCategories(
+    await generateI18nBlogCategories(
       FAKE_METADATAS_B,
       targetFile,
       __TARGET_FOLDER,
       __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_MIN,
       __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_MIN
     );
-    const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 
-  it('should match snapshot', () => {
+  it('should match snapshot', async () => {
     const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_EMPTY_EXTRAS_FAKE_METADATAS_A';
 
-    generateI18nBlogCategories(
+    await generateI18nBlogCategories(
       FAKE_METADATAS_A,
       targetFile,
       __TARGET_FOLDER,
       __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_EMPTY,
       __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_EMPTY
     );
-    const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 
-  it('should match snapshot', () => {
+  it('should match snapshot', async () => {
     const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_EMPTY_EXTRAS_FAKE_METADATAS_B';
 
-    generateI18nBlogCategories(
+    await generateI18nBlogCategories(
       FAKE_METADATAS_B,
       targetFile,
       __TARGET_FOLDER,
       __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_EMPTY,
       __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_EMPTY
     );
-    const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 
-  it('should match snapshot', () => {
+  it('should match snapshot', async () => {
     const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_ONES_EXTRAS_FAKE_METADATAS_A';
 
-    generateI18nBlogCategories(
+    await generateI18nBlogCategories(
       FAKE_METADATAS_A,
       targetFile,
       __TARGET_FOLDER,
       __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_ONE,
       __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_ONE
     );
-    const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 
-  it('should match snapshot', () => {
+  it('should match snapshot', async () => {
     const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_ONES_EXTRAS_FAKE_METADATAS_B';
 
-    generateI18nBlogCategories(
+    await generateI18nBlogCategories(
       FAKE_METADATAS_B,
       targetFile,
       __TARGET_FOLDER,
       __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_ONE,
       __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_ONE
     );
-    const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 
-  it('should match snapshot', () => {
+  it('should match snapshot', async () => {
     const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_THREES_EXTRAS_FAKE_METADATAS_A';
 
-    generateI18nBlogCategories(
+    await generateI18nBlogCategories(
       FAKE_METADATAS_A,
       targetFile,
       __TARGET_FOLDER,
       __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_THREE,
       __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_THREE
     );
-    const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 
-  it('should match snapshot', () => {
+  it('should match snapshot', async () => {
     const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_THREES_EXTRAS_FAKE_METADATAS_B';
 
-    generateI18nBlogCategories(
+    await generateI18nBlogCategories(
       FAKE_METADATAS_B,
       targetFile,
       __TARGET_FOLDER,
       __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_THREE,
       __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_THREE
     );
-    const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 });

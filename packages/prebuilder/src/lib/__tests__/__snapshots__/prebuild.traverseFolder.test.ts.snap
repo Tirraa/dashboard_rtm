@@ -3,76 +3,76 @@
 exports[`traverseFolder > should return an arborescence, given a valid RootFolder (full) 1`] = `
 [
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz",
-    "filename": "file1",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz",
+    "name": "file1",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz",
-    "filename": "file2",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz",
+    "name": "file2",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz",
-    "filename": "file3",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz",
+    "name": "file3",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz/foo",
-    "filename": "file1",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz/foo",
+    "name": "file1",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar",
-    "filename": "file1",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar",
+    "name": "file1",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar",
-    "filename": "file2",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar",
+    "name": "file2",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/baz/bar",
-    "filename": "file1",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/baz/bar",
+    "name": "file1",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/baz/bar/foo",
-    "filename": "file1",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/baz/bar/foo",
+    "name": "file1",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/baz/bar/foo",
-    "filename": "file2",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/baz/bar/foo",
+    "name": "file2",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/baz",
-    "filename": "file1",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/baz",
+    "name": "file1",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/baz",
-    "filename": "file2",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/baz",
+    "name": "file2",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/baz",
-    "filename": "file3",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/baz",
+    "name": "file3",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/foo/baz/bar",
-    "filename": "file1",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/foo/baz/bar",
+    "name": "file1",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/foo/baz/bar",
-    "filename": "file2",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/foo/baz/bar",
+    "name": "file2",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/foo/baz",
-    "filename": "file1",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/foo/baz",
+    "name": "file1",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/foo",
-    "filename": "file1",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/foo",
+    "name": "file1",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/foo",
-    "filename": "file2",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/foo",
+    "name": "file2",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/foo",
-    "filename": "file3",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/foo",
+    "name": "file3",
   },
 ]
 `;
@@ -80,8 +80,8 @@ exports[`traverseFolder > should return an arborescence, given a valid RootFolde
 exports[`traverseFolder > should return an arborescence, given a valid RootFolder (partial 2) 1`] = `
 [
   {
-    "fileDirectory": "./packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz/foo",
-    "filename": "file1",
+    "directory": "./packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz/foo",
+    "name": "file1",
   },
 ]
 `;
@@ -89,28 +89,28 @@ exports[`traverseFolder > should return an arborescence, given a valid RootFolde
 exports[`traverseFolder > should return an arborescence, given a valid RootFolder (partial) 1`] = `
 [
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz",
-    "filename": "file1",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz",
+    "name": "file1",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz",
-    "filename": "file2",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz",
+    "name": "file2",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz",
-    "filename": "file3",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz",
+    "name": "file3",
   },
   {
-    "fileDirectory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz/foo",
-    "filename": "file1",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz/foo",
+    "name": "file1",
   },
   {
-    "fileDirectory": "./packages/prebuilder/src/lib/__tests__/fakeDirectory/bar",
-    "filename": "file1",
+    "directory": "./packages/prebuilder/src/lib/__tests__/fakeDirectory/bar",
+    "name": "file1",
   },
   {
-    "fileDirectory": "./packages/prebuilder/src/lib/__tests__/fakeDirectory/bar",
-    "filename": "file2",
+    "directory": "./packages/prebuilder/src/lib/__tests__/fakeDirectory/bar",
+    "name": "file2",
   },
 ]
 `;

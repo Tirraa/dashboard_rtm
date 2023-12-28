@@ -4,7 +4,7 @@ import { BLOG_ARCHITECTURE_METADATAS_DEFAULT_LANGUAGE_KEY as DEFAULT_LANGUAGE_KE
 
 // https://github.com/vitest-dev/vitest/discussions/2484
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs/promises');
 
 function getSlug(filename: string): BlogSlug | null {
   const ext = path.extname(filename);
@@ -15,26 +15,26 @@ function getSlug(filename: string): BlogSlug | null {
 /**
  * @throws {BuilderError}
  */
-function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): CategoriesMetadatas {
+async function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): Promise<CategoriesMetadatas> {
   const metadatas: CategoriesMetadatas = {};
 
-  const maybeCategories = fs.readdirSync(postsFolder, { withFileTypes: true });
+  const maybeCategories = await fs.readdir(postsFolder, { withFileTypes: true });
   for (const maybeCategory of maybeCategories) {
     if (!maybeCategory.isDirectory()) continue;
 
     const category = maybeCategory.name;
-    const maybeSubcategories = fs.readdirSync([maybeCategory.path, maybeCategory.name].join('/'), { withFileTypes: true });
+    const maybeSubcategories = await fs.readdir([maybeCategory.path, maybeCategory.name].join('/'), { withFileTypes: true });
     const subcategoriesMetadatas = {} as CategoriesMetadatasEntity;
 
     for (const maybeSubcategory of maybeSubcategories) {
       if (!maybeSubcategory.isDirectory()) continue;
       const subcategory = maybeSubcategory.name;
 
-      const languagesOrPosts = fs.readdirSync([maybeSubcategory.path, maybeSubcategory.name].join('/'), { withFileTypes: true });
+      const languagesOrPosts = await fs.readdir([maybeSubcategory.path, maybeSubcategory.name].join('/'), { withFileTypes: true });
 
       for (const maybeLanguage of languagesOrPosts) {
         if (maybeLanguage.isDirectory()) {
-          const posts = fs.readdirSync([maybeLanguage.path, maybeLanguage.name].join('/'), { withFileTypes: true });
+          const posts = await fs.readdir([maybeLanguage.path, maybeLanguage.name].join('/'), { withFileTypes: true });
           for (const post of posts) {
             const filename = post.name;
             const slug = getSlug(filename);
@@ -63,8 +63,8 @@ function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): Categorie
   return metadatas;
 }
 
-export default function getBlogArchitectureMetadatas(postsFolder: string): CategoriesMetadatas {
-  const blogArchitectureSysMetadata = buildCategoriesMetadatasFromPostsFolder(postsFolder);
+export default async function getBlogArchitectureMetadatas(postsFolder: string): Promise<CategoriesMetadatas> {
+  const blogArchitectureSysMetadata = await buildCategoriesMetadatasFromPostsFolder(postsFolder);
 
   return blogArchitectureSysMetadata;
 }

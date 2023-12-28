@@ -1,5 +1,7 @@
 import arg from 'arg';
 
+import type { Path } from '../types/metadatas';
+
 import {
   DISABLE_BLOG_ANALYSIS_ADVICE,
   DISABLE_I18N_ANALYSIS_ADVICE,
@@ -14,7 +16,7 @@ import { prefixFeedback } from '../lib/feedbacksMerge';
 import { FLAGS as OPTIONS } from '../config';
 
 // https://github.com/vitest-dev/vitest/discussions/2484
-const fs = require('fs');
+const fs = require('fs/promises');
 
 const { IMPOSSIBLE_TO_START: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
@@ -63,10 +65,19 @@ function crashIfArgumentsAreInvalid({ ...args }) {
   throw new ArgumentsValidatorError(prefixFeedback(feedback, ERROR_PREFIX + '\n'));
 }
 
+async function fileExists(path: Path) {
+  try {
+    await fs.access(path);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 /**
  * @throws {ArgumentsValidatorError}
  */
-function crashIfFilesDoesNotExist({ ...args }) {
+async function crashIfFilesDoesNotExist({ ...args }) {
   const {
     [OPTIONS.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
     [OPTIONS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
@@ -74,41 +85,42 @@ function crashIfFilesDoesNotExist({ ...args }) {
     [OPTIONS.NO_I18N]: NO_I18N
   } = args;
 
-  function checkI18n() {
+  async function checkI18n() {
     if (NO_I18N) return;
 
-    const i18nDefaultLocaleFileExists = fs.existsSync(I18N_LOCALES_SCHEMA_FILEPATH);
+    const i18nDefaultLocaleFileExists = await fileExists(I18N_LOCALES_SCHEMA_FILEPATH);
     if (!i18nDefaultLocaleFileExists) {
       throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + "Can't open the i18n locale schema file!" + '\n' + DISABLE_I18N_ANALYSIS_ADVICE);
     }
 
-    const localesSchemaIsAFile = fs.statSync(I18N_LOCALES_SCHEMA_FILEPATH).isFile();
+    const i18nLocalesSchemaStat = await fs.stat(I18N_LOCALES_SCHEMA_FILEPATH);
+    const localesSchemaIsAFile = i18nLocalesSchemaStat.isFile();
     if (!localesSchemaIsAFile) {
       throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + 'The locale schema you indicated is NOT a file!' + '\n' + DISABLE_I18N_ANALYSIS_ADVICE);
     }
   }
 
-  function checkBlog() {
+  async function checkBlog() {
     if (NO_BLOG) return;
 
     const ADVICE = DISABLE_BLOG_ANALYSIS_ADVICE;
 
-    const postsFolderExists = fs.existsSync(BLOG_POSTS_FOLDER);
+    const postsFolderExists = await fileExists(BLOG_POSTS_FOLDER);
     if (!postsFolderExists) {
       throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + "Can't open the posts folder!" + '\n' + ADVICE);
     }
 
-    const postsFolderIsDirectory = fs.statSync(BLOG_POSTS_FOLDER).isDirectory();
+    const postsFolderStat = await fs.stat(BLOG_POSTS_FOLDER);
+    const postsFolderIsDirectory = postsFolderStat.isDirectory();
     if (!postsFolderIsDirectory) {
       throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + 'The posts folder you indicated is NOT a directory!' + '\n' + ADVICE);
     }
   }
 
-  checkI18n();
-  checkBlog();
+  await Promise.all([checkI18n(), checkBlog()]);
 }
 
-function parseArguments() {
+async function parseArguments() {
   const args = arg(
     {
       [OPTIONS.I18N_LOCALES_SCHEMA_FILEPATH]: String,
@@ -121,7 +133,7 @@ function parseArguments() {
   );
 
   crashIfArgumentsAreInvalid(args);
-  crashIfFilesDoesNotExist(args);
+  await crashIfFilesDoesNotExist(args);
   return args;
 }
 

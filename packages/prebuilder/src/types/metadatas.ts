@@ -15,8 +15,8 @@ export type ErrorsDetectionFeedback = string;
 export type MaybeEmptyErrorsDetectionFeedback = ErrorsDetectionFeedback | '';
 
 export type File = {
-  fileDirectory: string;
-  filename: string;
+  directory: string;
+  name: string;
 };
 
 export type Path = string;

@@ -9,14 +9,14 @@ import { objInnerToObj } from '../lib/etc';
 const { INTERRUPTED: ERROR_SUFFIX } = CRITICAL_ERRORS_STR;
 
 // https://github.com/vitest-dev/vitest/discussions/2484
-const fs = require('fs');
+const fs = require('fs/promises');
 
 /**
  * @throws {BuilderError}
  */
-function buildLocaleFileMetadatasFromLocaleFile(localeFilePath: string): I18nJSONPart {
+async function buildLocaleFileMetadatasFromLocaleFile(localeFilePath: string): Promise<I18nJSONPart> {
   const error = new BuilderError(`Couldn't extract the content of the '${LOCALES_INFOS_ROOT_KEY}' i18n section!` + ' ' + ERROR_SUFFIX + '\n');
-  const localeFileContent = fs.readFileSync(localeFilePath, 'utf8');
+  const localeFileContent = await fs.readFile(localeFilePath, 'utf8');
   const startIndex = localeFileContent.indexOf(LOCALES_INFOS_OBJ_NEEDLE);
 
   const localeInfosInner = getRawDataFromBracesDeclaration(localeFileContent, startIndex);
@@ -29,7 +29,7 @@ function buildLocaleFileMetadatasFromLocaleFile(localeFilePath: string): I18nJSO
   }
 }
 
-export default function retrieveLocaleFileInfosMetadatas(localeFilePath: string): I18nJSONPart {
-  const localeFileInfos = buildLocaleFileMetadatasFromLocaleFile(localeFilePath);
+export default async function retrieveLocaleFileInfosMetadatas(localeFilePath: string): Promise<I18nJSONPart> {
+  const localeFileInfos = await buildLocaleFileMetadatasFromLocaleFile(localeFilePath);
   return localeFileInfos;
 }

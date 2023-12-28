@@ -29,11 +29,11 @@ const printPrebuilderDoneMsg = () => console.log(PREBUILD_DONE);
 /**
  * @throws {FeedbackError}
  */
-function processStaticAnalysis() {
+async function processStaticAnalysis() {
   moveToRoot();
 
   try {
-    const retrievedValuesFromArgs = parseArguments();
+    const retrievedValuesFromArgs = await parseArguments();
     const {
       [ARGV.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
       [ARGV.SKIP_LOCALES_INFOS]: SKIP_LOCALES_INFOS,
@@ -45,7 +45,7 @@ function processStaticAnalysis() {
     let localesValidatorFeedback: MaybeEmptyErrorsDetectionFeedback = '';
     if (!SKIP_LOCALES_INFOS && !NO_I18N) {
       const localesFolder = path.dirname(I18N_LOCALES_SCHEMA_FILEPATH);
-      localesValidatorFeedback = localesInfosValidator(localesFolder, I18N_LOCALES_SCHEMA_FILEPATH);
+      localesValidatorFeedback = await localesInfosValidator(localesFolder, I18N_LOCALES_SCHEMA_FILEPATH);
     }
 
     if (NO_BLOG) {
@@ -54,9 +54,11 @@ function processStaticAnalysis() {
       return;
     }
 
-    const sysBlogCategoriesValidatorFeedback = sysBlogCategoriesValidator(BLOG_POSTS_FOLDER);
-    const sysBlogSubcategoriesValidatorFeedback = sysBlogSubcategoriesValidator(BLOG_POSTS_FOLDER);
-    const sysBlogSlugsValidatorFeedback = sysBlogSlugsValidator(BLOG_POSTS_FOLDER);
+    const [sysBlogCategoriesValidatorFeedback, sysBlogSubcategoriesValidatorFeedback, sysBlogSlugsValidatorFeedback] = await Promise.all([
+      sysBlogCategoriesValidator(BLOG_POSTS_FOLDER),
+      sysBlogSubcategoriesValidator(BLOG_POSTS_FOLDER),
+      sysBlogSlugsValidator(BLOG_POSTS_FOLDER)
+    ]);
 
     const feedbacks = foldFeedbacks(
       sysBlogCategoriesValidatorFeedback,
@@ -66,11 +68,13 @@ function processStaticAnalysis() {
     );
     if (feedbacks) throw new FeedbackError(feedbacks);
 
-    const blogArchitecture = getBlogArchitectureMetadatas(BLOG_POSTS_FOLDER);
+    const blogArchitecture = await getBlogArchitectureMetadatas(BLOG_POSTS_FOLDER);
 
-    generateBlogArchitectureType(blogArchitecture);
-    generateI18nBlogCategories(blogArchitecture);
-    generateBlogType(blogArchitecture);
+    await Promise.all([
+      generateBlogArchitectureType(blogArchitecture),
+      generateI18nBlogCategories(blogArchitecture),
+      generateBlogType(blogArchitecture)
+    ]);
 
     printPrebuilderDoneMsg();
   } catch (error) {

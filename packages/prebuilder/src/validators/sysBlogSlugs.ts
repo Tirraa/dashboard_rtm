@@ -9,17 +9,17 @@ import { LIST_ELEMENT_PREFIX } from '../config';
 
 const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
-export default function sysBlogSlugsValidator(postsFolder: string): MaybeEmptyErrorsDetectionFeedback {
+export default async function sysBlogSlugsValidator(postsFolder: string): Promise<MaybeEmptyErrorsDetectionFeedback> {
   let feedback = '';
 
   const foldersWithDefects: Record<Path, Filename[]> = {};
-  const filesCollection = traverseFolder(postsFolder);
+  const filesCollection = await traverseFolder(postsFolder);
 
   for (const file of filesCollection) {
-    const slug = file.filename;
+    const slug = file.name;
     if (!isValidTaxonomy(slug)) {
-      if (!foldersWithDefects[file.fileDirectory]) foldersWithDefects[file.fileDirectory] = [];
-      foldersWithDefects[file.fileDirectory].push(slug);
+      if (!foldersWithDefects[file.directory]) foldersWithDefects[file.directory] = [];
+      foldersWithDefects[file.directory].push(slug);
     }
   }
 

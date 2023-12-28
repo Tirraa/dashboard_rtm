@@ -6,16 +6,16 @@ import { prefixFeedback } from '../lib/feedbacksMerge';
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
 
 // https://github.com/vitest-dev/vitest/discussions/2484
-const fs = require('fs');
+const fs = require('fs/promises');
 const path = require('path');
 
 const localesExtension = '.ts';
 const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
-function localeFileInfosValidator(localeFilePath: string): MaybeEmptyErrorsDetectionFeedback {
+async function localeFileInfosValidator(localeFilePath: string): Promise<MaybeEmptyErrorsDetectionFeedback> {
   let feedback: ErrorsDetectionFeedback = '';
 
-  const localeMetadatas = retrieveLocaleFileInfosMetadatas(localeFilePath);
+  const localeMetadatas = await retrieveLocaleFileInfosMetadatas(localeFilePath);
   const expectedLocaleCode = path.basename(localeFilePath, localesExtension);
   const localeCode = localeMetadatas[LOCALES_LNG_INFOS_KEY];
 
@@ -34,19 +34,18 @@ function localeFileInfosValidator(localeFilePath: string): MaybeEmptyErrorsDetec
 /**
  * @throws {BuilderError}
  */
-export default function localesInfosValidator(localesFolder: string, i18nSchemaFilePath: Path): MaybeEmptyErrorsDetectionFeedback {
+export default async function localesInfosValidator(localesFolder: string, i18nSchemaFilePath: Path): Promise<MaybeEmptyErrorsDetectionFeedback> {
   const ERROR_PREFIX_TAIL = `(locales files infos)`;
   let feedback: ErrorsDetectionFeedback = '';
 
-  const files: string[] = fs
-    .readdirSync(localesFolder)
-    .filter((file: string) => path.extname(file) === '.ts' && path.basename(file) !== path.basename(i18nSchemaFilePath));
-  const fullFilesPaths = files.map((filename) => [localesFolder, filename].join('/'));
+  const files: string[] = await fs.readdir(localesFolder);
+  const filteredFiles = files.filter((file: string) => path.extname(file) === '.ts' && path.basename(file) !== path.basename(i18nSchemaFilePath));
+  const fullFilesPaths = filteredFiles.map((filename) => [localesFolder, filename].join('/'));
   const localeFileInfosValidatorFeedbacks = [];
 
   for (const currentFile of fullFilesPaths) {
     try {
-      const currentFeedback = localeFileInfosValidator(currentFile);
+      const currentFeedback = await localeFileInfosValidator(currentFile);
       if (currentFeedback) localeFileInfosValidatorFeedbacks.push(currentFeedback);
     } catch (error) {
       throw error;

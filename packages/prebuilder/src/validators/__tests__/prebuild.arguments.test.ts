@@ -29,14 +29,14 @@ describe('parseArguments unhappy paths (sys)', () => {
     vi.restoreAllMocks();
   });
 
-  it('should throw, given unknown args', () => {
+  it('should throw, given unknown args', async () => {
     const argvSpy = vi.spyOn(process, 'argv', 'get');
     argvSpy.mockReturnValue(['_', '_', '--__unknown_arg1', 'foo', '--_unknown_arg2', 'bar']);
 
-    expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
+    await expect(parseArguments()).rejects.toThrowError(ArgumentsValidatorError);
   });
 
-  it('should throw, given valid args schema, but invalid posts folder path (not a directory)', () => {
+  it('should throw, given valid args schema, but invalid posts folder path (not a directory)', async () => {
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -47,16 +47,16 @@ describe('parseArguments unhappy paths (sys)', () => {
       FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH
     ]);
 
-    expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
+    await expect(parseArguments()).rejects.toThrowError(ArgumentsValidatorError);
     try {
-      parseArguments();
+      await parseArguments();
     } catch (e) {
       const interceptedError = e as Error;
       expect(interceptedError.message.toLowerCase().includes(NOT_A_DIRECTORY_NEEDLE)).toBe(true);
     }
   });
 
-  it('should throw, given valid args schema, but invalid schema path (not a file)', () => {
+  it('should throw, given valid args schema, but invalid schema path (not a file)', async () => {
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -67,17 +67,17 @@ describe('parseArguments unhappy paths (sys)', () => {
       FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, INVALID_I18N_LOCALES_SCHEMA_FILEPATH_NOT_A_FILE
     ]);
 
-    expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
+    await expect(parseArguments()).rejects.toThrowError(ArgumentsValidatorError);
 
     try {
-      parseArguments();
+      await parseArguments();
     } catch (e) {
       const interceptedError = e as Error;
       expect(interceptedError.message.toLowerCase().includes(NOT_A_FILE_NEEDLE)).toBe(true);
     }
   });
 
-  it('should throw, given valid args schema, but both invalid posts folder path & invalid schema path (not a directory, not a file)', () => {
+  it('should throw, given valid args schema, but both invalid posts folder path & invalid schema path (not a directory, not a file)', async () => {
     const argvSpy = vi.spyOn(process, 'argv', 'get');
     // prettier-ignore
     argvSpy.mockReturnValue([
@@ -86,10 +86,10 @@ describe('parseArguments unhappy paths (sys)', () => {
       FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, INVALID_I18N_LOCALES_SCHEMA_FILEPATH_NOT_A_FILE
     ]);
 
-    expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
+    await expect(parseArguments()).rejects.toThrowError(ArgumentsValidatorError);
   });
 
-  it("should throw, given valid args schema, but invalid posts folder path (can't open)", () => {
+  it("should throw, given valid args schema, but invalid posts folder path (can't open)", async () => {
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -100,17 +100,17 @@ describe('parseArguments unhappy paths (sys)', () => {
       FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH
     ]);
 
-    expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
+    await expect(parseArguments()).rejects.toThrowError(ArgumentsValidatorError);
 
     try {
-      parseArguments();
+      await parseArguments();
     } catch (e) {
       const interceptedError = e as Error;
       expect(interceptedError.message.toLowerCase().includes(CANT_OPEN_NEEDLE)).toBe(true);
     }
   });
 
-  it("should throw, given valid args schema, but invalid schema path (can't open)", () => {
+  it("should throw, given valid args schema, but invalid schema path (can't open)", async () => {
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -121,21 +121,21 @@ describe('parseArguments unhappy paths (sys)', () => {
       FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, INVALID_PATH
     ]);
 
-    expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
+    await expect(parseArguments()).rejects.toThrowError(ArgumentsValidatorError);
 
     try {
-      parseArguments();
+      await parseArguments();
     } catch (e) {
       const interceptedError = e as Error;
       expect(interceptedError.message.toLowerCase().includes(CANT_OPEN_NEEDLE)).toBe(true);
     }
   });
 
-  it("should throw, given valid args schema, but both invalid posts folder path & invalid schema path (can't open)", () => {
+  it("should throw, given valid args schema, but both invalid posts folder path & invalid schema path (can't open)", async () => {
     const argvSpy = vi.spyOn(process, 'argv', 'get');
     argvSpy.mockReturnValue(['_', '_', FLAGS.BLOG_POSTS_FOLDER, INVALID_PATH, FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, INVALID_PATH]);
 
-    expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
+    await expect(parseArguments()).rejects.toThrowError(ArgumentsValidatorError);
   });
 });
 
@@ -144,7 +144,7 @@ describe('parseArguments unhappy paths (invalid args combinators: both disabling
     vi.restoreAllMocks();
   });
 
-  it('should throw, given conflicting args (both any blog option & no blog option)', () => {
+  it('should throw, given conflicting args (both any blog option & no blog option)', async () => {
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -156,17 +156,17 @@ describe('parseArguments unhappy paths (invalid args combinators: both disabling
       FLAGS.NO_BLOG
     ]);
 
-    expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
+    await expect(parseArguments()).rejects.toThrowError(ArgumentsValidatorError);
 
     try {
-      parseArguments();
+      await parseArguments();
     } catch (e) {
       const interceptedError = e as Error;
       expect(interceptedError.message.toLowerCase().includes(CANT_USE_NEEDLE)).toBe(true);
     }
   });
 
-  it('should throw, given conflicting args (both any i18n option & no i18n option)', () => {
+  it('should throw, given conflicting args (both any i18n option & no i18n option)', async () => {
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -178,17 +178,17 @@ describe('parseArguments unhappy paths (invalid args combinators: both disabling
       FLAGS.NO_I18N
     ]);
 
-    expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
+    await expect(parseArguments()).rejects.toThrowError(ArgumentsValidatorError);
 
     try {
-      parseArguments();
+      await parseArguments();
     } catch (e) {
       const interceptedError = e as Error;
       expect(interceptedError.message.toLowerCase().includes(CANT_USE_NEEDLE)).toBe(true);
     }
   });
 
-  it('should throw, given conflicting args (omitting i18n locales schema filepath option without no i18n option)', () => {
+  it('should throw, given conflicting args (omitting i18n locales schema filepath option without no i18n option)', async () => {
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -199,17 +199,17 @@ describe('parseArguments unhappy paths (invalid args combinators: both disabling
        FLAGS.NO_BLOG
     ]);
 
-    expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
+    await expect(parseArguments()).rejects.toThrowError(ArgumentsValidatorError);
 
     try {
-      parseArguments();
+      await parseArguments();
     } catch (e) {
       const interceptedError = e as Error;
       expect(interceptedError.message.toLowerCase().includes(CANT_OMIT_NEEDLE)).toBe(true);
     }
   });
 
-  it('should throw, given conflicting args (both any blog option & no blog option)', () => {
+  it('should throw, given conflicting args (both any blog option & no blog option)', async () => {
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -221,10 +221,10 @@ describe('parseArguments unhappy paths (invalid args combinators: both disabling
       FLAGS.NO_BLOG
     ]);
 
-    expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
+    await expect(parseArguments()).rejects.toThrowError(ArgumentsValidatorError);
 
     try {
-      parseArguments();
+      await parseArguments();
     } catch (e) {
       const interceptedError = e as Error;
       expect(interceptedError.message.toLowerCase().includes(CANT_USE_NEEDLE)).toBe(true);
@@ -237,7 +237,7 @@ describe('parseArguments unhappy paths (invalid args combinators: breaking depen
     vi.restoreAllMocks();
   });
 
-  it('should throw, given conflicting args (both any blog option & no i18n option)', () => {
+  it('should throw, given conflicting args (both any blog option & no i18n option)', async () => {
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -249,17 +249,17 @@ describe('parseArguments unhappy paths (invalid args combinators: breaking depen
       FLAGS.NO_BLOG
     ]);
 
-    expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
+    await expect(parseArguments()).rejects.toThrowError(ArgumentsValidatorError);
 
     try {
-      parseArguments();
+      await parseArguments();
     } catch (e) {
       const interceptedError = e as Error;
       expect(interceptedError.message.toLowerCase().includes(CANT_USE_NEEDLE)).toBe(true);
     }
   });
 
-  it('should throw, given conflicting args (both any i18n option & no i18n option)', () => {
+  it('should throw, given conflicting args (both any i18n option & no i18n option)', async () => {
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -270,10 +270,10 @@ describe('parseArguments unhappy paths (invalid args combinators: breaking depen
       FLAGS.NO_I18N
     ]);
 
-    expect(() => parseArguments()).toThrowError(ArgumentsValidatorError);
+    await expect(parseArguments()).rejects.toThrowError(ArgumentsValidatorError);
 
     try {
-      parseArguments();
+      await parseArguments();
     } catch (e) {
       const interceptedError = e as Error;
       expect(interceptedError.message.toLowerCase().includes(FEATURE_RELIES_ON_ANOTHER_FEATURE_NEEDLE)).toBe(true);
@@ -286,7 +286,7 @@ describe('parseArguments vacuous path (disabling all tools)', () => {
     vi.restoreAllMocks();
   });
 
-  it('should pass, disabling all tools', () => {
+  it('should pass, disabling all tools', async () => {
     const argvSpy = vi.spyOn(process, 'argv', 'get');
     // prettier-ignore
     argvSpy.mockReturnValue([
@@ -294,6 +294,6 @@ describe('parseArguments vacuous path (disabling all tools)', () => {
       FLAGS.NO_BLOG, FLAGS.NO_I18N
     ]);
 
-    expect(() => parseArguments()).not.toThrowError(ArgumentsValidatorError);
+    await expect(parseArguments()).resolves.not.toThrowError(ArgumentsValidatorError);
   });
 });

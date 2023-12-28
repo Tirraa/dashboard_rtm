@@ -9,13 +9,13 @@ import { LIST_ELEMENT_PREFIX } from '../config';
 const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
 // https://github.com/vitest-dev/vitest/discussions/2484
-const fs = require('fs');
+const fs = require('fs/promises');
 
-export default function sysBlogCategoriesValidator(postsFolder: string): MaybeEmptyErrorsDetectionFeedback {
+export default async function sysBlogCategoriesValidator(postsFolder: string): Promise<MaybeEmptyErrorsDetectionFeedback> {
   let feedback = '';
 
   const categoriesWithDefects = [];
-  const maybeCategories = fs.readdirSync(postsFolder, { withFileTypes: true });
+  const maybeCategories = await fs.readdir(postsFolder, { withFileTypes: true });
 
   for (const maybeCategory of maybeCategories) {
     if (!maybeCategory.isDirectory()) continue;
