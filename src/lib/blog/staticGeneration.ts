@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import type {
   BlogCategoriesAndSubcategoriesAssoc,
   BlogSubcategoryPageProps,
@@ -20,12 +21,10 @@ import doGetBlogStaticParams from './static/getBlogStaticParams';
 import blogCategoryGuard from './guards/blogCategoryGuard';
 import blogPostGuard from './guards/blogPostGuard';
 
-/* v8 ignore start */
 export async function getBlogStaticParams(): Promise<BlogStaticParams[]> {
   const blogStaticParams = await doGetBlogStaticParams();
   return blogStaticParams;
 }
-/* v8 ignore stop */
 
 export async function getBlogCategoryMetadatas({ params }: BlogCategoryPageProps) {
   const globalT = await getServerSideI18n();
@@ -71,3 +70,4 @@ export async function getBlogPostMetadatas({ params }: BlogPostPageProps) {
 }
 
 export { blogSubcategoryGuard, blogCategoryGuard, blogPostGuard };
+/* v8 ignore stop */

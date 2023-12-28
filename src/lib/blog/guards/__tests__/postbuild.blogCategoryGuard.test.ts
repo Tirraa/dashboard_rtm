@@ -8,6 +8,18 @@ import BlogConfig from '@/config/blog';
 import blogCategoryGuard from '../blogCategoryGuard';
 
 describe('blogCategoryGuard', () => {
+  it('should not throw not found error, given valid category', () => {
+    expect(
+      async () =>
+        await blogCategoryGuard({
+          params: {
+            [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
+            [I18nTaxonomy.LANGUAGE]: DEFAULT_LANGUAGE
+          }
+        })
+    ).not.toThrow();
+  });
+
   it('should throw not found error, given invalid category', async () => {
     expect.assertions(1);
 
@@ -22,17 +34,5 @@ describe('blogCategoryGuard', () => {
     } catch (interceptedError) {
       expect(isNotFoundError(interceptedError)).toBe(true);
     }
-  });
-
-  it('should not throw not found error, given valid category', () => {
-    expect(
-      async () =>
-        await blogCategoryGuard({
-          params: {
-            [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
-            [I18nTaxonomy.LANGUAGE]: DEFAULT_LANGUAGE
-          }
-        })
-    ).not.toThrow();
   });
 });

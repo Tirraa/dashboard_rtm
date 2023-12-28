@@ -1,6 +1,7 @@
 import type { TBlogConfig } from '@/config/blog';
 import type { TBlogPost } from '@/types/Blog';
 
+import { TESTING_BLOG_FAKE_SUBCATEGORY } from '𝕍/testingBlogCategoryDatas';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, it, vi } from 'vitest';
 import BlogConfig from '@/config/blog';
@@ -21,7 +22,7 @@ vi.mock('@/config/blog', async (orgImport) => {
 
 describe('blogSubcategoryShouldTriggerNotFound', () => {
   it('should return false only when the list is not empty', async () => {
-    const [category, subcategory, targettedSlug] = [BlogConfig.TESTING_CATEGORY, 'fake-subcategory' as const, 'fake-post-01' as const];
+    const [category, subcategory, targettedSlug] = [BlogConfig.TESTING_CATEGORY, TESTING_BLOG_FAKE_SUBCATEGORY, 'fake-post-01' as const];
     const language = DEFAULT_LANGUAGE;
     const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as TBlogPost;
 
