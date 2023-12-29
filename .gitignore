@@ -15,6 +15,12 @@ public/sitemap.xml
 .contentlayer
 .rtm-generated
 
+# stryker temp files
+.stryker-tmp
+
+# stryker reports
+reports
+
 # dependencies
 node_modules
 .pnp
