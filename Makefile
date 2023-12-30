@@ -1,4 +1,4 @@
-.PHONY: all install build prebuild test mutations-tests vercel-ci-build-command build-contentlayer initialize clean-codegen clean fclean re re-using-pm-cache re-using-next-cache simulate-deploy simulate-deploy-discarding-build-cache
+.PHONY: all install build prebuild test coverage mutations-tests vercel-ci-build-command build-contentlayer prebuild-rtm initialize clean-codegen clean fclean re re-using-pm-cache re-using-next-cache simulate-deploy simulate-deploy-discarding-build-cache
 
 MAKEFLAGS += --silent
 
@@ -50,6 +50,10 @@ test: initialize
 	$(PM) test:run
 
 # @Override
+coverage: initialize
+	$(PM) coverage
+
+# @Override
 mutations-tests: clean-codegen initialize
 	$(PM) mutations-tests:run
 
@@ -61,6 +65,10 @@ vercel-ci-build-command:
 build-contentlayer:
 	$(PM) contentlayer build
 	echo "^ DON'T WORRY if you see a stupid error: https://github.com/contentlayerdev/contentlayer/issues/495"
+
+# @Alias
+prebuild-rtm:
+	$(PM) prebuild
 
 #------------------
 # **** II. 2) DSL

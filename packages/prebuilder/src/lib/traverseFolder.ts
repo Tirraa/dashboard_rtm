@@ -1,35 +1,33 @@
 import type { Stats } from 'fs';
 
 import type { Filename, File, Path } from '../types/metadatas';
-import type { Thunks } from '../types/lazyEvaluation';
+import type { Thunks, Thunk } from '../types/lazyEvaluation';
+
+type ArborescencePromise = Promise<File[] | File>;
 
 // https://github.com/vitest-dev/vitest/discussions/2484
 const path = require('path');
 const fs = require('fs/promises');
 
-async function execute(thunks: Thunks<Promise<File[]>>): Promise<File[]> {
-  const filesMetadatas = await Promise.all(thunks.map((thunk) => thunk()));
-  return filesMetadatas.flat();
-}
-
-async function makeThunks(currentFolder: Path, currentDeepPath: Path = currentFolder): Promise<Thunks<Promise<File[]>>> {
-  const files = await fs.readdir(currentFolder);
-  const thunks = files.map(async (currentFilename: Filename) => {
+async function makeThunks(currentFolder: Path, __currentDeepPath: Path = currentFolder): Promise<Thunks<ArborescencePromise>> {
+  const files: Filename[] = await fs.readdir(currentFolder);
+  const thunks: Thunks<ArborescencePromise> = files.map((currentFilename: Filename) => {
     const maybeFilepath: Path = path.join(currentFolder, currentFilename);
-    const filepathStats: Stats = await fs.stat(maybeFilepath);
-
-    return filepathStats.isDirectory()
-      ? async () => {
-          const nestedThunks = await makeThunks(maybeFilepath, path.join(currentDeepPath, currentFilename));
-          return execute(nestedThunks);
-        }
-      : async () => [{ name: path.basename(currentFilename, path.extname(currentFilename)), directory: currentDeepPath }];
+    const thunk: Thunk<ArborescencePromise> = async () => {
+      const filepathStats: Stats = await fs.stat(maybeFilepath);
+      return filepathStats.isDirectory()
+        ? execute(makeThunks(maybeFilepath, path.join(__currentDeepPath, currentFilename)))
+        : ({ directory: __currentDeepPath, name: currentFilename } satisfies File);
+    };
+    return thunk;
   });
 
   return Promise.all(thunks);
 }
 
-export default async function traverseFolder(rootFolder: Path): Promise<File[]> {
-  const thunks = await makeThunks(rootFolder);
-  return execute(thunks);
-}
+const execute = async (thunks: Promise<Thunks<ArborescencePromise>>): Promise<File[]> =>
+  (await Promise.all((await thunks).map((thunk) => thunk()))).flat();
+
+const traverseFolder = async (rootFolder: Path): Promise<File[]> => execute(makeThunks(rootFolder));
+
+export default traverseFolder;
