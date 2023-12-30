@@ -10,6 +10,8 @@ export default async function blogSubcategoryGuard({ params }: BlogSubcategoryPa
   const category = params[BlogTaxonomy.CATEGORY];
 
   const validCategory = isValidBlogCategory(category);
+  // Stryker Workaround 1. Mutant will be killed with `= true` as expected, but `= false` mutant is pointless.
+  // Stryker disable next-line ConditionalExpression
   const categServedAtRoot = ROUTES_ROOTS.WEBSITE + category === ROUTES_ROOTS.BLOG + category;
   if (!validCategory && !categServedAtRoot) redirect(ROUTES_ROOTS.WEBSITE + category);
 

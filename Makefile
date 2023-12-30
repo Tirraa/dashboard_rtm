@@ -6,17 +6,17 @@ MAKEFLAGS += --silent
 # § I. CONFIG
 #==============
 
-PM = pnpm
+PM := pnpm
 
-CONTENTLAYER_GENERATED_CODE = .contentlayer
-RTM_GENERATED_CODE = .rtm-generated
-NEXT_GENERATED_CODE = .next
+CONTENTLAYER_GENERATED_CODE := .contentlayer
+RTM_GENERATED_CODE := .rtm-generated
+NEXT_GENERATED_CODE := .next
 
-COVERAGE_GENERATED_REPORT = coverage
-STRYKER_GENERATED_REPORT = reports
+COVERAGE_GENERATED_REPORT := coverage
+STRYKER_GENERATED_REPORT := reports
 
-ENV_EXAMPLE = .env_example
-ENV_FILE = .env
+ENV_EXAMPLE := .env_example
+ENV_FILE := .env
 
 #=================
 # § II. COMMANDS

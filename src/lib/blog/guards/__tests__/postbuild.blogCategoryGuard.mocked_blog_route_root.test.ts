@@ -3,13 +3,26 @@ import { isRedirectError } from 'next/dist/client/components/redirect';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
+import { describe, expect, it, vi } from 'vitest';
 import { indexOfNthOccurrence } from '@/lib/str';
-import { describe, expect, it } from 'vitest';
+import ROUTES_ROOTS from '##/config/routes';
 import BlogConfig from '@/config/blog';
 
 import blogPostGuard from '../blogPostGuard';
 
 const getUrlFromDigest = (digest: string): string => digest.substring(indexOfNthOccurrence(digest, ';', 2) + 1, indexOfNthOccurrence(digest, ';', 3));
+
+vi.mock('##/config/routes', async (orgImport) => {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+  const mod = await orgImport<typeof import('##/config/routes')>();
+
+  return {
+    default: {
+      ...mod.default,
+      BLOG: '/blog/'
+    }
+  } satisfies typeof mod;
+});
 
 describe('blogPostGuard', () => {
   it('should not throw, given valid input', async () => {
@@ -40,7 +53,7 @@ describe('blogPostGuard', () => {
     } catch (interceptedError) {
       expect(isRedirectError(interceptedError)).toBe(true);
       const URLFromDigest = getUrlFromDigest((interceptedError as any).digest);
-      expect(URLFromDigest).toBe('/' + BlogConfig.TESTING_CATEGORY + '/' + TESTING_BLOG_FAKE_SUBCATEGORY);
+      expect(URLFromDigest).toBe(ROUTES_ROOTS.BLOG + BlogConfig.TESTING_CATEGORY + '/' + TESTING_BLOG_FAKE_SUBCATEGORY);
     }
   });
 
@@ -60,7 +73,7 @@ describe('blogPostGuard', () => {
     } catch (interceptedError) {
       expect(isRedirectError(interceptedError)).toBe(true);
       const URLFromDigest = getUrlFromDigest((interceptedError as any).digest);
-      expect(URLFromDigest).toBe('/' + BlogConfig.TESTING_CATEGORY);
+      expect(URLFromDigest).toBe(ROUTES_ROOTS.BLOG + BlogConfig.TESTING_CATEGORY);
     }
   });
 
@@ -101,7 +114,7 @@ describe('blogPostGuard', () => {
     } catch (interceptedError) {
       expect(isRedirectError(interceptedError)).toBe(true);
       const URLFromDigest = getUrlFromDigest((interceptedError as any).digest);
-      expect(URLFromDigest).toBe('/' + BlogConfig.TESTING_CATEGORY);
+      expect(URLFromDigest).toBe(ROUTES_ROOTS.BLOG + BlogConfig.TESTING_CATEGORY);
     }
   });
 
@@ -148,3 +161,5 @@ describe('blogPostGuard', () => {
     }
   });
 });
+
+vi.doUnmock('##/config/routes');

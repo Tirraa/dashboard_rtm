@@ -7,6 +7,7 @@ describe('fromKebabCaseToSentenceCase', () => {
     expect(fromKebabCaseToSentenceCase('foo')).toBe('Foo');
     expect(fromKebabCaseToSentenceCase('foo-bar')).toBe('Foo bar');
     expect(fromKebabCaseToSentenceCase('foo-bar-foo')).toBe('Foo bar foo');
+    expect(fromKebabCaseToSentenceCase('foo--bar---foo')).toBe('Foo bar foo');
   });
 
   it('should return only capitalized strings, given not kebab-case strings', () => {

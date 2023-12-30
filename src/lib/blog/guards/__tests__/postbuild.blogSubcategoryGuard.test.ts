@@ -13,16 +13,15 @@ const getUrlFromDigest = (digest: string): string => digest.substring(indexOfNth
 
 describe('blogSubcategoryGuard', () => {
   it('should not throw redirect error, given valid category and subcategory', async () => {
-    expect(
-      async () =>
-        await blogSubcategoryGuard({
-          params: {
-            [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
-            [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
-            [I18nTaxonomy.LANGUAGE]: DEFAULT_LANGUAGE
-          }
-        })
-    ).not.toThrow();
+    await expect(
+      blogSubcategoryGuard({
+        params: {
+          [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
+          [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
+          [I18nTaxonomy.LANGUAGE]: DEFAULT_LANGUAGE
+        }
+      })
+    ).resolves.not.toThrow();
   });
 
   it('should throw redirect error, given invalid category and subcategory', async () => {

@@ -26,16 +26,35 @@ vi.mock('##/config/routes', async (orgImport) => {
 
 describe('blogSubcategoryGuard', () => {
   it('should not throw redirect error, given valid category and subcategory', async () => {
-    expect(
-      async () =>
-        await blogSubcategoryGuard({
-          params: {
-            [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
-            [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
-            [I18nTaxonomy.LANGUAGE]: DEFAULT_LANGUAGE
-          }
-        })
-    ).not.toThrow();
+    await expect(
+      blogSubcategoryGuard({
+        params: {
+          [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
+          [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
+          [I18nTaxonomy.LANGUAGE]: DEFAULT_LANGUAGE
+        }
+      })
+    ).resolves.not.toThrow();
+  });
+
+  it('should throw redirect error, given invalid category and valid subcategory', async () => {
+    expect.assertions(2);
+
+    const category = '__INVALID_CATEGORY__';
+    try {
+      await blogSubcategoryGuard({
+        params: {
+          [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
+          [I18nTaxonomy.LANGUAGE]: DEFAULT_LANGUAGE,
+          // @ts-expect-error
+          [BlogTaxonomy.CATEGORY]: category
+        }
+      });
+    } catch (interceptedError) {
+      expect(isRedirectError(interceptedError)).toBe(true);
+      const URLFromDigest = getUrlFromDigest((interceptedError as any).digest);
+      expect(URLFromDigest).toBe('/' + category);
+    }
   });
 
   it('should throw redirect error, given invalid category and subcategory', async () => {

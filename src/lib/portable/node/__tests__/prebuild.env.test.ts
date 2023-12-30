@@ -32,7 +32,7 @@ describe('ComputedNodeCtx', () => {
 
   it('should have all values to false, except DEV', async () => {
     // @ts-expect-error
-    process.env.NODE_ENV = 'dev';
+    process.env.NODE_ENV = 'development';
     const ctx = await getCtx();
 
     Object.keys(ctx).forEach((k) => {
@@ -44,7 +44,7 @@ describe('ComputedNodeCtx', () => {
 
   it('should have all values to false, except PROD', async () => {
     // @ts-expect-error
-    process.env.NODE_ENV = 'prod';
+    process.env.NODE_ENV = 'production';
     const ctx = await getCtx();
 
     Object.keys(ctx).forEach((k) => {
