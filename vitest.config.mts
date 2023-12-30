@@ -11,7 +11,7 @@ export default defineConfig({
   test: {
     include: [...configDefaults.include, '**/?(*.){test,spec}.?(c|m)[jt]s?(x)'],
     setupFiles: ['./.vitest/setEnv.ts', './.vitest/jestDOM.ts'],
-    exclude: [...configDefaults.exclude, 'node_modules'],
+    exclude: [...configDefaults.exclude, 'node_modules', '.stryker-tmp'],
     coverage: {
       reporter: ['html', 'text']
     },

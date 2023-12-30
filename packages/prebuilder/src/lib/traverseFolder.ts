@@ -7,12 +7,12 @@ import type { Thunks } from '../types/lazyEvaluation';
 const path = require('path');
 const fs = require('fs/promises');
 
-const execute = async (thunks: Thunks<Promise<File[]>>): Promise<File[]> => {
+async function execute(thunks: Thunks<Promise<File[]>>): Promise<File[]> {
   const filesMetadatas = await Promise.all(thunks.map((thunk) => thunk()));
   return filesMetadatas.flat();
-};
+}
 
-const makeThunks = async (currentFolder: Path, currentDeepPath: Path = currentFolder): Promise<Thunks<Promise<File[]>>> => {
+async function makeThunks(currentFolder: Path, currentDeepPath: Path = currentFolder): Promise<Thunks<Promise<File[]>>> {
   const files = await fs.readdir(currentFolder);
   const thunks = files.map(async (currentFilename: Filename) => {
     const maybeFilepath: Path = path.join(currentFolder, currentFilename);
@@ -27,11 +27,9 @@ const makeThunks = async (currentFolder: Path, currentDeepPath: Path = currentFo
   });
 
   return Promise.all(thunks);
-};
+}
 
-export const traverseFolder = async (rootFolder: Path): Promise<File[]> => {
+export default async function traverseFolder(rootFolder: Path): Promise<File[]> {
   const thunks = await makeThunks(rootFolder);
   return execute(thunks);
-};
-
-export default traverseFolder;
+}

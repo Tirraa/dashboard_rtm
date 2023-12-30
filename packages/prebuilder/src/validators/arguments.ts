@@ -13,7 +13,7 @@ import {
 } from '../config/vocab';
 import ArgumentsValidatorError from '../errors/ArgumentsValidatorError';
 import { prefixFeedback } from '../lib/feedbacksMerge';
-import { FLAGS as OPTIONS } from '../config';
+import { FLAGS } from '../config';
 
 // https://github.com/vitest-dev/vitest/discussions/2484
 const fs = require('fs/promises');
@@ -25,10 +25,10 @@ const { IMPOSSIBLE_TO_START: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
  */
 function crashIfArgumentsAreInvalid({ ...args }) {
   const {
-    [OPTIONS.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
-    [OPTIONS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
-    [OPTIONS.NO_BLOG]: NO_BLOG,
-    [OPTIONS.NO_I18N]: NO_I18N,
+    [FLAGS.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
+    [FLAGS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
+    [FLAGS.NO_BLOG]: NO_BLOG,
+    [FLAGS.NO_I18N]: NO_I18N,
     _: UNKNOWN_OPTIONS
   } = args;
 
@@ -41,21 +41,21 @@ function crashIfArgumentsAreInvalid({ ...args }) {
   const P = ARG_ERROR_PREFIX + UNKNOWN_OPTIONS_PREFIX;
   const P2 = ARG_ERROR_PREFIX + WRONG_OPTIONS_PREFIX;
 
-  let feedback = unknownOptions ? P + UNKNOWN_OPTIONS.join(', ') + '\n' + KNOWN_OPTIONS_PREFIX + Object.values(OPTIONS).join(', ') : '';
+  let feedback = unknownOptions ? P + UNKNOWN_OPTIONS.join(', ') + '\n' + KNOWN_OPTIONS_PREFIX + Object.values(FLAGS).join(', ') : '';
   if (invalidBlogOptions) {
-    feedback += P2 + `you must use the ${OPTIONS.BLOG_POSTS_FOLDER} option unless you are using the ${OPTIONS.NO_BLOG} option.`;
+    feedback += P2 + `you must use the ${FLAGS.BLOG_POSTS_FOLDER} option unless you are using the ${FLAGS.NO_BLOG} option.`;
   } else if (invalidI18nOptions) {
-    feedback += P2 + `you can't omit the ${OPTIONS.I18N_LOCALES_SCHEMA_FILEPATH} option if you don't use the ${OPTIONS.NO_I18N} option.`;
+    feedback += P2 + `you can't omit the ${FLAGS.I18N_LOCALES_SCHEMA_FILEPATH} option if you don't use the ${FLAGS.NO_I18N} option.`;
   } else if (wrongUseOfNoBlogOption) {
-    feedback += P2 + `you can't use the ${OPTIONS.NO_BLOG} option if you use blog related options.`;
+    feedback += P2 + `you can't use the ${FLAGS.NO_BLOG} option if you use blog related options.`;
   } else if (wrongUseOfNoI18nOption) {
-    feedback += P2 + `you can't use the ${OPTIONS.NO_I18N} option if you use i18n related options.`;
+    feedback += P2 + `you can't use the ${FLAGS.NO_I18N} option if you use i18n related options.`;
   } else if (breakingBlogDependencyToI18n) {
     feedback +=
       P2 +
-      `you can't use both the ${OPTIONS.NO_I18N} option and blog related options: the blog feature relies on i18n.` +
+      `you can't use both the ${FLAGS.NO_I18N} option and blog related options: the blog feature relies on i18n.` +
       '\n' +
-      `Maybe you want to use the ${OPTIONS.NO_I18N} and ${OPTIONS.NO_BLOG} options?`;
+      `Maybe you want to use the ${FLAGS.NO_I18N} and ${FLAGS.NO_BLOG} options?`;
   }
 
   if (!feedback) return;
@@ -79,10 +79,10 @@ async function fileExists(path: Path) {
  */
 async function crashIfFilesDoesNotExist({ ...args }) {
   const {
-    [OPTIONS.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
-    [OPTIONS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
-    [OPTIONS.NO_BLOG]: NO_BLOG,
-    [OPTIONS.NO_I18N]: NO_I18N
+    [FLAGS.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
+    [FLAGS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
+    [FLAGS.NO_BLOG]: NO_BLOG,
+    [FLAGS.NO_I18N]: NO_I18N
   } = args;
 
   async function checkI18n() {
@@ -120,14 +120,14 @@ async function crashIfFilesDoesNotExist({ ...args }) {
   await Promise.all([checkI18n(), checkBlog()]);
 }
 
-async function parseArguments() {
+export default async function parseArguments() {
   const args = arg(
     {
-      [OPTIONS.I18N_LOCALES_SCHEMA_FILEPATH]: String,
-      [OPTIONS.SKIP_LOCALES_INFOS]: Boolean,
-      [OPTIONS.BLOG_POSTS_FOLDER]: String,
-      [OPTIONS.NO_BLOG]: Boolean,
-      [OPTIONS.NO_I18N]: Boolean
+      [FLAGS.I18N_LOCALES_SCHEMA_FILEPATH]: String,
+      [FLAGS.SKIP_LOCALES_INFOS]: Boolean,
+      [FLAGS.BLOG_POSTS_FOLDER]: String,
+      [FLAGS.NO_BLOG]: Boolean,
+      [FLAGS.NO_I18N]: Boolean
     },
     { permissive: true }
   );
@@ -136,5 +136,3 @@ async function parseArguments() {
   await crashIfFilesDoesNotExist(args);
   return args;
 }
-
-export default parseArguments;

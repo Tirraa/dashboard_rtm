@@ -10,6 +10,7 @@ const config = {
     dir: '.'
   },
   tsconfigFile: 'tsconfig.json',
+  ignorePatterns: ['.next'], // {ToDo} Remove this line when this will be released: https://github.com/stryker-mutator/stryker-js/issues/4571
   checkers: ['typescript'],
   testRunner: 'vitest',
   timeoutMS: 300_000,

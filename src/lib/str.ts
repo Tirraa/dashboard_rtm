@@ -17,6 +17,8 @@ export function hrefMatchesPathname(href: AppPath, pathname: AppPath, root: AppP
   const _href = getSlashEnvelope(href);
   const _root = getSlashEnvelope(root);
 
+  // Stryker Workaround 1. Tautology is pointless.
+  // Stryker disable next-line ConditionalExpression
   if (pathnameWithoutI18n === _href) return true;
   if (_href !== _root && pathnameWithoutI18n.startsWith(_href)) return true;
   return false;

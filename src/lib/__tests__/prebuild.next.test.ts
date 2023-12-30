@@ -81,7 +81,7 @@ describe('stackMiddlewares', () => {
     const stackedMiddleware = stackMiddlewares([middleware1, middleware2]);
     stackedMiddleware(fakeRequest, fakeEvent);
 
-    expect(order).toEqual([1, 2]);
+    expect(order).toStrictEqual([1, 2]);
   });
 
   it('properly propagates request and event through middlewares', async () => {

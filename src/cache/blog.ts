@@ -30,12 +30,14 @@ async function populateSubcategoriesCollectionCache(category: BlogCategory, lang
 }
 
 async function subcategoriesByCategoryGetter(category: BlogCategory, language: LanguageFlag) {
-  // Stryker disable next-line BooleanLiteral
+  // Stryker Workaround 1. Mutant will be killed with `if (false)` as expected, but `if (true)` mutant is pointless.
+  // Stryker disable next-line ConditionalExpression
   if (BlogCache.subcategoriesCollection[language] === undefined) {
     BlogCache.subcategoriesCollection[language] = {} as Record<BlogCategory, BlogSubcategoryFromUnknownCategory[]>;
   }
 
-  // Stryker disable next-line BooleanLiteral
+  // Idem (see Stryker Workaround 1).
+  // Stryker disable next-line ConditionalExpression
   if (BlogCache.subcategoriesCollection[language][category] === undefined) await populateSubcategoriesCollectionCache(category, language);
   return BlogCache.subcategoriesCollection[language][category];
 }
