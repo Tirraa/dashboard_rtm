@@ -25,7 +25,7 @@ const SHARED: SharedVocabType = {
     logo: 'logo',
     page: 'page'
   }
-};
+} as const;
 
 export default {
   'blog-categories': {

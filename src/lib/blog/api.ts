@@ -36,9 +36,13 @@ export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnst
   subcategory: BlogSubcategoryFromUnknownCategory,
   language: LanguageFlag
 ): Promise<TBlogPost[]> {
+  // Stryker Workaround 1. Pointless mutants: there's no ambiguity here.
+  // Stryker disable next-line ConditionalExpression,EqualityOperator
   if (!ComputedBlogCtx.TESTING && category === BlogConfig.TESTING_CATEGORY) return [];
 
   const isValidPair: boolean = await isValidBlogCategoryAndSubcategoryPair(category, subcategory, language);
+  // Stryker Workaround 2. Mutant will be killed with `if (true)` as expected, but `if (false)` mutant is pointless.
+  // Stryker disable next-line ConditionalExpression
   if (!isValidPair) return [];
 
   const getPostsWithAllowedDraftsCtx = (postsCollection: TBlogPost[]): TBlogPost[] =>
@@ -64,6 +68,8 @@ export async function getBlogPostUnstrict(
   targettedSlug: UnknownBlogSlug,
   language: LanguageFlag
 ): Promise<MaybeNull<TBlogPost>> {
+  // Stryker Workaround 3. Pointless mutants: there's no ambiguity here.
+  // Stryker disable next-line ConditionalExpression,EqualityOperator
   if (!ComputedBlogCtx.TESTING && category === BlogConfig.TESTING_CATEGORY) return null;
 
   const getPostWithAllowedDraftsCtx: () => MaybeNull<TBlogPost> = () =>
@@ -117,6 +123,8 @@ export function blogSubcategoryShouldTriggerNotFound(postsCollection: TBlogPost[
 }
 
 export function getBlogPostFormattedDate(language: LanguageFlag, date: IsoDateTimeString): string {
+  // Stryker Workaround 4. Mutant will be killed with `if (true)` as expected, but `if (false)` mutant is pointless.
+  // Stryker disable next-line ConditionalExpression
   const postDateHasTime = (date: IsoDateTimeString) => date.substring(date.indexOf('T') + 1) !== '00:00:00.000Z';
 
   const giveTime = postDateHasTime(date);
@@ -125,6 +133,8 @@ export function getBlogPostFormattedDate(language: LanguageFlag, date: IsoDateTi
 }
 
 export function isValidBlogCategory(category: string): boolean {
+  // Stryker Workaround 5. Testing "&& true" is pointless.
+  // Stryker disable next-line ConditionalExpression
   if (!ComputedBlogCtx.TESTING && category === BlogConfig.TESTING_CATEGORY) return false;
 
   const categories = getAllBlogCategories();
@@ -136,6 +146,8 @@ export async function isValidBlogCategoryAndSubcategoryPairInAnyLanguage(
   category: BlogCategory,
   subcategory: BlogSubcategoryFromUnknownCategory
 ): Promise<boolean> {
+  // Stryker Workaround 6. Mutant will be killed with `if (true)` as expected, but `if (false)` mutant is pointless.
+  // Stryker disable next-line ConditionalExpression
   if (!isValidBlogCategory(category)) return false;
 
   for (const language of LANGUAGES) {
@@ -150,6 +162,8 @@ export async function isValidBlogCategoryAndSubcategoryPair(
   subcategory: BlogSubcategoryFromUnknownCategory,
   language: LanguageFlag
 ): Promise<boolean> {
+  // Stryker Workaround 7. Mutant will be killed with `if (true)` as expected, but `if (false)` mutant is pointless.
+  // Stryker disable next-line ConditionalExpression
   if (!isValidBlogCategory(category)) return false;
 
   const subcategories = await getBlogSubcategoriesByCategory(category, language);

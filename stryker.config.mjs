@@ -1,7 +1,11 @@
 // @ts-check
+
+const SOON_OBSOLETE_IGNORE_PATTERNS = ['.next']; // {ToDo} Remove me when this will be released: https://github.com/stryker-mutator/stryker-js/issues/4571
+
 /** @type {import('@stryker-mutator/api/core').PartialStrykerOptions} */
 const config = {
   plugins: ['@stryker-mutator/vitest-runner', '@stryker-mutator/typescript-checker'],
+  ignorePatterns: [...SOON_OBSOLETE_IGNORE_PATTERNS, 'prebuilder-dist'],
   typescriptChecker: {
     prioritizePerformanceOverAccuracy: false
   },
@@ -10,7 +14,6 @@ const config = {
     dir: '.'
   },
   tsconfigFile: 'tsconfig.json',
-  ignorePatterns: ['.next'], // {ToDo} Remove this line when this will be released: https://github.com/stryker-mutator/stryker-js/issues/4571
   checkers: ['typescript'],
   testRunner: 'vitest',
   timeoutMS: 300_000,

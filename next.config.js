@@ -1,3 +1,5 @@
+// @ts-check
+
 /* v8 ignore start */
 // Stryker disable all
 const { withContentlayer } = require('next-contentlayer');

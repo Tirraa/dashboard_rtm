@@ -1,3 +1,5 @@
+// @ts-check
+
 /* v8 ignore start */
 // Stryker disable all
 const DEFAULT_LANGUAGE = require('./interop/config/sitemap/defaultLanguageNextSitemapAdapter');
