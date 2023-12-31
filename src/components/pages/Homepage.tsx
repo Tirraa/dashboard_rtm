@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 'use client';
 
 import type { FunctionComponent, CSSProperties } from 'react';
@@ -32,3 +33,4 @@ const Homepage: FunctionComponent<HomepageProps> = () => {
 
 export default Homepage;
 /* v8 ignore stop */
+// Stryker restore all

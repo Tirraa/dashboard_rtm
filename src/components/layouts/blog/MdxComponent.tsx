@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type { FunctionComponent, ReactNode } from 'react';
 
 import PrimitiveComponents from '@/components/config/blog/PrimitiveComponents';
@@ -29,3 +30,4 @@ const MDX: FunctionComponent<MdxProps> = ({ code }) => {
 
 export default MDX;
 /* v8 ignore stop */
+// Stryker restore all

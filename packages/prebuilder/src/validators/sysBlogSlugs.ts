@@ -1,4 +1,4 @@
-import type { MaybeEmptyErrorsDetectionFeedback, Filename, Path } from '../types/metadatas';
+import type { MaybeEmptyErrorsDetectionFeedback, Filename, Path } from '../types/Metadatas';
 
 import isValidTaxonomy, { NAMING_CONSTRAINTS_MSG } from './taxonomyConvention';
 import getErrorLabelForDefects from '../lib/getErrorLabelForDefects';

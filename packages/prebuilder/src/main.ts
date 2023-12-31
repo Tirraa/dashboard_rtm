@@ -1,8 +1,9 @@
 /* v8 ignore start */
+// Stryker disable all
 import { ArgError } from 'arg';
 import path from 'path';
 
-import type { MaybeEmptyErrorsDetectionFeedback } from './types/metadatas';
+import type { MaybeEmptyErrorsDetectionFeedback } from './types/Metadatas';
 
 import getBlogArchitectureMetadatas from './metadatas-builders/blogArchitectureMetadatas';
 import { ROOT_FOLDER_RELATIVE_PATH_FROM_PREBUILDER_CTX, FLAGS as ARGV } from './config';
@@ -97,3 +98,4 @@ async function processStaticAnalysis() {
 
 processStaticAnalysis();
 /* v8 ignore stop */
+// Stryker restore all

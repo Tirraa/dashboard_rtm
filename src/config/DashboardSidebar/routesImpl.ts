@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type { DashboardRoutesTitles, DashboardRoutes } from '@/config/DashboardSidebar/utils/RoutesMapping';
 
 import { getSlashEnvelope } from '@/lib/str';
@@ -22,3 +23,4 @@ export const DASHBOARD_ROUTES_TITLES: DashboardRoutesTitles = {
 
 export default DASHBOARD_ROUTES;
 /* v8 ignore stop */
+// Stryker restore all

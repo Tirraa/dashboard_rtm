@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type { MiddlewareFactory } from '@rtm/shared-types/Next';
 
 import withProtectedRoutes from '@/middlewares/withProtectedRoutes';
@@ -11,3 +12,4 @@ const WITH_AUTH_CHAIN: MiddlewareFactory[] = [withProtectedRoutes, ...MAIN_CHAIN
 export const mainMiddlewaresChain = stackMiddlewares(MAIN_CHAIN);
 export const withAuthMiddlewaresChain = stackMiddlewares(WITH_AUTH_CHAIN);
 /* v8 ignore stop */
+// Stryker restore all

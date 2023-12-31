@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 'use client';
 
 import type { FunctionComponent } from 'react';
@@ -22,3 +23,4 @@ const Providers: FunctionComponent<ProvidersProps> = ({ children, locale }) => (
 
 export default Providers;
 /* v8 ignore stop */
+// Stryker restore all

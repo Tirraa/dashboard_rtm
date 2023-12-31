@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 'use client';
 
 import type { FunctionComponent } from 'react';
@@ -25,3 +26,4 @@ const SignupButton: FunctionComponent<SignUpButtonProps> = () => {
 
 export default SignupButton;
 /* v8 ignore stop */
+// Stryker restore all

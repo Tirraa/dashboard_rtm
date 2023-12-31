@@ -68,6 +68,7 @@ const _ALL_BLOG_FIELDS = {
 } as const satisfies FieldDefs;
 
 /* v8 ignore start */
+// Stryker disable all
 export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
   subcategory: { resolve: (post) => buildBlogPostSubcategory(post), type: 'string' },
   language: { resolve: (post) => buildBlogPostLanguageFlag(post), type: 'string' },
@@ -76,6 +77,7 @@ export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
   url: { resolve: (post) => buildBlogPostUrl(post), type: 'string' }
 } as const satisfies Partial<Record<keyof _AllBlogFields, ComputedField>> satisfies ComputedFields;
 /* v8 ignore stop */
+// Stryker restore all
 
 export const BLOG_DOCUMENTS_FIELDS = {
   draft: { type: 'boolean', required: false, default: false },

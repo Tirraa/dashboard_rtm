@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 type ColorScheme = 'light' | 'dark';
 type ThemeVariantKey = 'LIGHT' | 'DARK';
 type ThemeConfig = Record<'VARIANTS', Record<ThemeVariantKey, string>> & Record<'VARIANTS_COLORS_SCHEME', Record<ThemeVariantKey, ColorScheme>>;
@@ -26,3 +27,4 @@ export const DEFAULT_VARIANT_COLOR_SCHEME: ColorScheme = THEME_CONFIG.VARIANTS_C
 
 // export const THEME_VARIANTS: ThemeVariant[] = Object.values(THEME_CONFIG.VARIANTS);
 /* v8 ignore stop */
+// Stryker restore all

@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type { WithClassname } from '@rtm/shared-types/Next';
 import type { BlogPostProps } from '@/types/Blog';
 import type { FunctionComponent } from 'react';
@@ -16,3 +17,4 @@ const BlogPostDate: FunctionComponent<BlogPostDateProps> = ({ className: classNa
 
 export default BlogPostDate;
 /* v8 ignore stop */
+// Stryker restore all

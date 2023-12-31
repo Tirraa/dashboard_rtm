@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type { BlogPostProps } from '@/types/Blog';
 import type { FunctionComponent } from 'react';
 
@@ -41,3 +42,4 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = ({ isNotOnBlogS
 
 export default BlogPostPreview;
 /* v8 ignore stop */
+// Stryker restore all

@@ -2,7 +2,7 @@ import type { WriterFunction } from 'ts-morph';
 
 import { VariableDeclarationKind, StructureKind, Project, Writers } from 'ts-morph';
 
-import type { CategoriesMetadatas } from '../../types/metadatas';
+import type { CategoriesMetadatas } from '../../types/Metadatas';
 
 import {
   I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_PREFIX,

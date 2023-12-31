@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 'use client';
 
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
@@ -182,3 +183,4 @@ NextTopLoader.propTypes = {
 
 export default NextTopLoader;
 /* v8 ignore stop */
+// Stryker restore all

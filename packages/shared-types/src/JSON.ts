@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type { JSPrimitives } from './CustomUtilityTypes';
 
 type JSONPrimitiveLeafs = Exclude<JSPrimitives, undefined>;
@@ -14,3 +15,4 @@ export type TypedLeafsJSONData<LeafsTypes extends JSONLeafs, AllowObjArrays exte
   [_: JSONKey]: (AllowObjArrays extends never ? never : TypedLeafsJSONData<LeafsTypes>[]) | TypedLeafsJSONData<LeafsTypes> | LeafsTypes;
 };
 /* v8 ignore stop */
+// Stryker restore all

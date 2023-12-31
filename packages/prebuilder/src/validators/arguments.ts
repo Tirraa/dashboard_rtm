@@ -1,6 +1,6 @@
 import arg from 'arg';
 
-import type { Path } from '../types/metadatas';
+import type { Path } from '../types/Metadatas';
 
 import {
   DISABLE_BLOG_ANALYSIS_ADVICE,

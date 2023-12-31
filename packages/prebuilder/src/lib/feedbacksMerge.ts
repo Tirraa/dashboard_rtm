@@ -1,4 +1,4 @@
-import type { MaybeEmptyErrorsDetectionFeedback } from '../types/metadatas';
+import type { MaybeEmptyErrorsDetectionFeedback } from '../types/Metadatas';
 
 export const prefixFeedback = (feedback: MaybeEmptyErrorsDetectionFeedback, prefix: string): MaybeEmptyErrorsDetectionFeedback =>
   feedback ? prefix + feedback : '';

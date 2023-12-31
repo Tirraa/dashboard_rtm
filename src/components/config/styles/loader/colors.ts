@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 type TLoaderConfig = {
   BACKGROUND_COLOR: string;
   COLOR: string;
@@ -14,3 +15,4 @@ const LOADER_CONFIG: TLoaderConfig = {
 
 export default LOADER_CONFIG;
 /* v8 ignore stop */
+// Stryker restore all

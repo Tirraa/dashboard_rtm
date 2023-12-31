@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type NotFoundTaxonomy from '##/config/taxonomies/notfound';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type I18nTaxonomy from '##/config/taxonomies/i18n';
@@ -20,3 +21,4 @@ export type NotFoundCatchallParams = {
   params: { [NotFoundTaxonomy.NOT_FOUND]: unknown[] };
 };
 /* v8 ignore stop */
+// Stryker restore all

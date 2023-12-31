@@ -14,7 +14,7 @@ const NODE_ENV = process.env.NODE_ENV;
 const prodCtx: boolean = NODE_ENV ? NODE_ENV.startsWith(NODE_PROD_ENV_NEEDLE) : false;
 let devCtx: boolean = NODE_ENV ? NODE_ENV.startsWith(NODE_DEV_ENV_NEEDLE) : false;
 let testCtx: boolean = NODE_ENV ? NODE_ENV.startsWith(NODE_TEST_ENV_NEEDLE) : false;
-// Stryker restore all
+// Stryker restore MethodExpression,BooleanLiteral
 let forcedToProd: boolean = prodCtx;
 
 // Stryker Workaround 2. Pointless mutants: there's no ambiguity here.

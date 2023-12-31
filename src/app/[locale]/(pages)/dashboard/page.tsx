@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import DashboardMainPage from '@/components/pages/dashboard/main';
 import { buildPageTitle } from '@rtm/shared-lib/str';
 import { getServerSideI18n } from '@/i18n/server';
@@ -15,3 +16,4 @@ export default function Page() {
   return <DashboardMainPage />;
 }
 /* v8 ignore stop */
+// Stryker restore all

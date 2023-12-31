@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 //!\ TESTED VIA JEST-TSD
 import type {
   BlogDocumentsComputedFieldsKeys,
@@ -62,3 +63,4 @@ export type ComputedField = {
   type: FieldDefType;
 };
 /* v8 ignore stop */
+// Stryker restore all

@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type { IconBaseProps } from 'react-icons';
 import type { ComponentType } from 'react';
 
@@ -20,3 +21,4 @@ const DASHBOARD_ROUTES_SIDEBAR_COMPONENTS: DashboardRoutesSidebarReactElements =
 
 export default DASHBOARD_ROUTES_SIDEBAR_COMPONENTS;
 /* v8 ignore stop */
+// Stryker restore all

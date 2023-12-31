@@ -1,4 +1,4 @@
-import type { CategoriesMetadatasEntity, CategoriesMetadatas, BlogSlug } from '../types/metadatas';
+import type { CategoriesMetadatasEntity, CategoriesMetadatas, BlogSlug } from '../types/Metadatas';
 
 import { BLOG_ARCHITECTURE_METADATAS_DEFAULT_LANGUAGE_KEY as DEFAULT_LANGUAGE_KEY, BLOG_POST_FILE_EXT } from '../config';
 

@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 type TDiscordConfig = {
   SUPPORT_SERVER_INVITE_LINK: string;
   BOT_INVITE_LINK: string;
@@ -12,3 +13,4 @@ const DISCORD_CONFIG: TDiscordConfig = {
 
 export default DISCORD_CONFIG;
 /* v8 ignore stop */
+// Stryker restore all

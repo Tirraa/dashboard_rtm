@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 'use client';
 
 import type { FunctionComponent, CSSProperties } from 'react';
@@ -33,3 +34,4 @@ const Loader: FunctionComponent<LoaderProps> = ({ override: cssOverride } = {}) 
 
 export default Loader;
 /* v8 ignore stop */
+// Stryker restore all

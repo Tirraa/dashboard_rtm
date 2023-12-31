@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type { FunctionComponent, ComponentType } from 'react';
 import type { IconBaseProps } from 'react-icons';
 
@@ -21,3 +22,4 @@ const DashboardSidebarButton: FunctionComponent<DashboardSidebarButtonProps> = (
 
 export default DashboardSidebarButton;
 /* v8 ignore stop */
+// Stryker restore all

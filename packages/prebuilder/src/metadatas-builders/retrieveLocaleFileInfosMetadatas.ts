@@ -1,4 +1,4 @@
-import type { I18nJSONPart } from '../types/metadatas';
+import type { I18nJSONPart } from '../types/Metadatas';
 
 import getRawDataFromBracesDeclaration from '../lib/getRawDataFromBracesDeclaration';
 import { LOCALES_INFOS_OBJ_NEEDLE, LOCALES_INFOS_ROOT_KEY } from '../config';

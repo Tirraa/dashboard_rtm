@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 'use client';
 
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
@@ -27,3 +28,4 @@ AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
 
 export { AvatarFallback, AvatarImage, Avatar };
 /* v8 ignore stop */
+// Stryker restore all

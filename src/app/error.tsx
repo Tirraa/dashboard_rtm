@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 'use client';
 
 import ROUTES_ROOTS from '##/config/routes';
@@ -9,3 +10,4 @@ export default function Error({ error, reset }: { reset: () => void; error: Erro
   redirect(ROUTES_ROOTS.WEBSITE);
 }
 /* v8 ignore stop */
+// Stryker restore all

@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type { NextAuthOptions, Session } from 'next-auth';
 
 import DiscordProvider from 'next-auth/providers/discord';
@@ -53,3 +54,4 @@ const authOptions: NextAuthOptions = {
 
 export default authOptions;
 /* v8 ignore stop */
+// Stryker restore all

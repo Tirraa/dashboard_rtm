@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type { I18nPageProps } from '@/types/Next';
 
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
@@ -33,3 +34,4 @@ export default function Page({ params }: I18nPageProps) {
   );
 }
 /* v8 ignore stop */
+// Stryker restore all

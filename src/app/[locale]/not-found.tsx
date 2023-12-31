@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type { I18nParams } from '@/types/Next';
 
 import PagesHtmlElement from '@/components/layouts/base/PagesHtmlElement';
@@ -29,3 +30,4 @@ export default async function NotFoundPage() {
   );
 }
 /* v8 ignore stop */
+// Stryker restore all

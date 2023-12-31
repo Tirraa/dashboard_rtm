@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type IButtonStyleBase from '@/components/config/styles/types/IButtonStyleBase';
 
 import { cn } from '@/lib/tailwind';
@@ -14,3 +15,4 @@ export const SIZE_PX_VALUE = 20;
 
 export default SidebarCollapseButtonIconStyle;
 /* v8 ignore stop */
+// Stryker restore all

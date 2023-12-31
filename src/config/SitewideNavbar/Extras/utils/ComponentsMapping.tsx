@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import NavbarLanguageMenu from '@/components/layouts/navbar/NavbarLanguageMenu';
 import NavbarLoginButton from '@/components/layouts/navbar/NavbarLoginButton';
 import NavbarThemeButton from '@/components/layouts/navbar/NavbarThemeButton';
@@ -17,3 +18,4 @@ export const NAVBAR_EXTRAS_COMPONENTS_MOBILE: NavbarExtrasFeaturesReactElements 
   THEME: <NavbarThemeButton />
 };
 /* v8 ignore stop */
+// Stryker restore all

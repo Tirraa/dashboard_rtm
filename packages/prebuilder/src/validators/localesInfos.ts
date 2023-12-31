@@ -1,4 +1,4 @@
-import type { MaybeEmptyErrorsDetectionFeedback, ErrorsDetectionFeedback, Path } from '../types/metadatas';
+import type { MaybeEmptyErrorsDetectionFeedback, ErrorsDetectionFeedback, Path } from '../types/Metadatas';
 
 import retrieveLocaleFileInfosMetadatas from '../metadatas-builders/retrieveLocaleFileInfosMetadatas';
 import { LOCALES_INFOS_ROOT_KEY, LOCALES_LNG_INFOS_KEY, LIST_ELEMENT_PREFIX } from '../config';

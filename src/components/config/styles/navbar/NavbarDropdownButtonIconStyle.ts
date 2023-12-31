@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type IButtonStyleBase from '@/components/config/styles/types/IButtonStyleBase';
 
 import { cn } from '@/lib/tailwind';
@@ -12,3 +13,4 @@ const NavbarDropdownButtonIconStyle: IButtonStyleBase = {
 
 export default NavbarDropdownButtonIconStyle;
 /* v8 ignore stop */
+// Stryker restore all

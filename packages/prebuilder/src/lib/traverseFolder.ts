@@ -1,7 +1,7 @@
 import type { Stats } from 'fs';
 
-import type { Filename, File, Path } from '../types/metadatas';
-import type { Thunks, Thunk } from '../types/lazyEvaluation';
+import type { Filename, File, Path } from '../types/Metadatas';
+import type { Thunks, Thunk } from '../types/LazyEvaluation';
 
 type ArborescenceFragmentPromise = Promise<File[] | File>;
 

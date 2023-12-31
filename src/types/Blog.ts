@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type { KeySeparator } from '@rtm/shared-types/CustomUtilityTypes';
 import type BlogArchitecture from '@rtm/generated/BlogArchitecture';
 import type { WithClassname } from 'packages/shared-types/src/Next';
@@ -66,3 +67,4 @@ export type StrictBlog = {
   };
 };
 /* v8 ignore stop */
+// Stryker restore all

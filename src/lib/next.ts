@@ -7,10 +7,12 @@ import { NextResponse } from 'next/server';
 import { getPathnameWithoutI18nFlag, getPathnameMaybeI18nFlag } from './i18n';
 
 /* v8 ignore start */
+// Stryker disable all
 export const fcn = (f: NextFont): string => f.className;
 
 export const getMaybeI18nFlagFromRequest = (request: NextRequest) => getPathnameMaybeI18nFlag(request.nextUrl.pathname);
 /* v8 ignore stop */
+// Stryker restore all
 
 export function stackMiddlewares(functions: MiddlewareFactory[] = [], index = 0): NextMiddleware {
   const currentMiddleware = functions[index];

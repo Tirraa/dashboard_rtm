@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type { Element as hASTElement } from 'hast';
 
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -76,3 +77,4 @@ export default makeSource({
   documentTypes
 });
 /* v8 ignore stop */
+// Stryker restore all

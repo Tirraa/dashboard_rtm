@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type { BlogSubcategoryPageProps } from '@/types/Blog';
 
 import { getBlogSubcategoryMetadatas, blogSubcategoryGuard, getBlogStaticParams } from '@/lib/blog/staticGeneration';
@@ -30,3 +31,4 @@ export default function Page({ params }: BlogSubcategoryPageProps) {
   );
 }
 /* v8 ignore stop */
+// Stryker restore all

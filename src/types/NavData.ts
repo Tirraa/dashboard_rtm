@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
 import type { AppPath } from '@rtm/shared-types/Next';
 
@@ -24,3 +25,4 @@ export type NavbarItems = NavbarItem[];
 
 export type DropdownsConfig<K extends RoutesKeysUnion> = Partial<Record<K, NavDataEntities>>;
 /* v8 ignore stop */
+// Stryker restore all

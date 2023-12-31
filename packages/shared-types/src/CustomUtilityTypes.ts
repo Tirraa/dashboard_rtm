@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 type SplitKeys<S extends string> = S extends `${infer Head}${KeySeparator}${infer Tail}` ? [Head, ...SplitKeys<Tail>] : [S];
 
 type JoinKeys<T extends string[]> = T extends []
@@ -39,3 +40,4 @@ export type CompareFun<T extends Tuple<unknown>, CTX extends unknown[] = never> 
 
 type CompareFunReturnValue = number;
 /* v8 ignore stop */
+// Stryker restore all

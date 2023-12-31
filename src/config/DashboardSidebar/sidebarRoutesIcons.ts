@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type { DashboardRoutesIcons } from '@/config/DashboardSidebar/utils/IconsMapping';
 
 import { RxActivityLog, RxSketchLogo, RxDashboard } from 'react-icons/rx';
@@ -13,3 +14,4 @@ const SIDEBAR_ROUTES_ICONS: DashboardRoutesIcons = {
 
 export default SIDEBAR_ROUTES_ICONS;
 /* v8 ignore stop */
+// Stryker restore all

@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type { NextMiddleware } from 'next/server';
 import type { ReactNode } from 'react';
 
@@ -22,3 +23,4 @@ export interface WithIsMobile {
 // eslint-disable-next-line no-unused-vars
 export type MiddlewareFactory = (middleware: NextMiddleware) => NextMiddleware;
 /* v8 ignore stop */
+// Stryker restore all

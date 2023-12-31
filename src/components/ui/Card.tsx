@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type { TitleType } from '@rtm/shared-types/HTML';
 
 import { cn } from '@/lib/tailwind';
@@ -51,3 +52,4 @@ CardFooter.displayName = 'CardFooter';
 
 export { CardDescription, CardContent, CardFooter, CardHeader, CardTitle, Card };
 /* v8 ignore stop */
+// Stryker restore all

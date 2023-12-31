@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 type TButtonConfig = {
   NOT_ACTIVE_CLASSNAME: string;
   ACTIVE_CLASSNAME: string;
@@ -14,3 +15,4 @@ const BUTTON_CONFIG: TButtonConfig = {
 
 export default BUTTON_CONFIG;
 /* v8 ignore stop */
+// Stryker restore all

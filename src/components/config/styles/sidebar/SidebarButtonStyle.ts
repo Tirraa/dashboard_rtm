@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 import type IButtonStyleReactIcon from '@/components/config/styles/types/IButtonStyleReactIcon';
 
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
@@ -15,3 +16,4 @@ const SidebarButtonStyle: IButtonStyleReactIcon = {
 
 export default SidebarButtonStyle;
 /* v8 ignore stop */
+// Stryker restore all

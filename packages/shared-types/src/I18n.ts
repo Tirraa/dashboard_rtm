@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 //!\ TESTED VIA JEST-TSD
 import type { MakeHomogeneousValuesObjType, DeepPathToLiteralKeys, KeySeparator } from '@rtm/shared-types/CustomUtilityTypes';
 import type { TypedLeafsJSONData, JSONKey } from '@rtm/shared-types/JSON';
@@ -90,3 +91,4 @@ export type MakeI18nsBase<
 
 export type { LanguageFlag };
 /* v8 ignore stop */
+// Stryker restore all

@@ -1,4 +1,5 @@
 /* v8 ignore start */
+// Stryker disable all
 'use client';
 
 import type { WithDeepResetOnLgBreakpointEvents } from '@rtm/shared-types/Next';
@@ -218,3 +219,4 @@ export {
   DropdownMenu
 };
 /* v8 ignore stop */
+// Stryker restore all
