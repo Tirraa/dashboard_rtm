@@ -37,17 +37,17 @@ function generateSchema(
       schema[category][extraField] = emptyString;
     }
 
-    Object.keys(subcategories).forEach((subcategory) => {
+    for (const subcategory of Object.keys(subcategories)) {
       if (__I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS.length <= 0) {
         schema[category][subcategory] = emptyString;
-        return;
+        continue;
       }
       const obj = {} as BlogCategoriesSchemaSubcategoryEntity;
       for (const extraField of __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS) {
         obj[extraField] = emptyString;
       }
       schema[category][subcategory] = obj;
-    });
+    }
   }
 
   return schema;

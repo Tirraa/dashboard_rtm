@@ -23,11 +23,11 @@ describe('ComputedNodeCtx', () => {
   it('should have all values to false, except TEST', async () => {
     const ctx = await getCtx();
 
-    Object.keys(ctx).forEach((k) => {
+    for (const k of Object.keys(ctx)) {
       const k2 = k as keyof typeof ctx;
       if (k2 === 'TEST') expect(ctx[k2]).toBe(true);
       else expect(ctx[k2]).toBe(false);
-    });
+    }
   });
 
   it('should have all values to false, except DEV', async () => {
@@ -35,11 +35,11 @@ describe('ComputedNodeCtx', () => {
     process.env.NODE_ENV = 'development';
     const ctx = await getCtx();
 
-    Object.keys(ctx).forEach((k) => {
+    for (const k of Object.keys(ctx)) {
       const k2 = k as keyof typeof ctx;
       if (k2 === 'DEV') expect(ctx[k2]).toBe(true);
       else expect(ctx[k2]).toBe(false);
-    });
+    }
   });
 
   it('should have all values to false, except PROD', async () => {
@@ -47,11 +47,11 @@ describe('ComputedNodeCtx', () => {
     process.env.NODE_ENV = 'production';
     const ctx = await getCtx();
 
-    Object.keys(ctx).forEach((k) => {
+    for (const k of Object.keys(ctx)) {
       const k2 = k as keyof typeof ctx;
       if (k2 === 'PROD') expect(ctx[k2]).toBe(true);
       else expect(ctx[k2]).toBe(false);
-    });
+    }
   });
 
   it('should fallback on PROD, given an unknown NODE_ENV value', async () => {
@@ -59,11 +59,11 @@ describe('ComputedNodeCtx', () => {
     process.env.NODE_ENV = '$';
     const ctx = await getCtx();
 
-    Object.keys(ctx).forEach((k) => {
+    for (const k of Object.keys(ctx)) {
       const k2 = k as keyof typeof ctx;
       if (k2 === 'PROD') expect(ctx[k2]).toBe(true);
       else expect(ctx[k2]).toBe(false);
-    });
+    }
   });
 
   it('should fallback on PROD, given an undefined NODE_ENV value', async () => {
@@ -71,11 +71,11 @@ describe('ComputedNodeCtx', () => {
     process.env.NODE_ENV = undefined;
     const ctx = await getCtx();
 
-    Object.keys(ctx).forEach((k) => {
+    for (const k of Object.keys(ctx)) {
       const k2 = k as keyof typeof ctx;
       if (k2 === 'PROD') expect(ctx[k2]).toBe(true);
       else expect(ctx[k2]).toBe(false);
-    });
+    }
   });
 
   test('NODE_ENV value should be reset', () => expect(process.env.NODE_ENV).toBe(NODE_ENV));
