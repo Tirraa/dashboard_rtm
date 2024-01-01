@@ -56,7 +56,6 @@ export type LocalesObjEntity = [LocalesObjKey, NextInternationalLazyLoadFun];
 export type LocalesObj = Record<LocalesObjKey, NextInternationalLazyLoadFun>;
 export type LocalesGetterConfigObjTypeConstraint = Record<LanguageFlag, () => Promise<TypedLeafsJSONData<VocabObjValue>>>;
 
-// eslint-disable-next-line no-unused-vars
 export type ChangeLocaleFun = (language: LanguageFlag) => void;
 
 export type PagesTitlesKey = keyof VocabType['pages-titles'];
@@ -64,7 +63,7 @@ export type PagesTitlesKey = keyof VocabType['pages-titles'];
 type NamespacesKeys<__VocabType extends UnknownVocabObj = VocabType> = {
   [K in keyof __VocabType]-?: __VocabType[K] extends UnknownVocabObj
     ? K
-    : // eslint-disable-next-line no-unused-vars
+    : // eslint-disable-next-line @typescript-eslint/no-unused-vars
       K extends `${infer Namespace}${KeySeparator}${infer _}`
       ? Namespace
       : never;

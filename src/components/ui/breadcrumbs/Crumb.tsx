@@ -15,6 +15,7 @@ interface CrumbProps {
 }
 
 const Crumb: FunctionComponent<CrumbProps> = ({ withRescueCtx: maybeWithRescueCtx, isLeaf: maybeIsLeaf, label, href }) => {
+  // {ToDo} Invalidate build when Rescue CTX with a console.warn
   const QA_WARNING: MaybeObjectValue<string> = maybeWithRescueCtx ? QA_WARNINGS.IS_A_FALLBACK : undefined;
   const QA_PROPS = { [DATA_QA_WARNING_DOM_KEY]: QA_WARNING };
   const isLeaf = Boolean(maybeIsLeaf);

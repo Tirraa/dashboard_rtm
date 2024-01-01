@@ -1,18 +1,19 @@
 const [_OFF, _WARN, _ERROR] = [0, 1, 2];
-const [, , ERROR] = [_OFF, _WARN, _ERROR];
+const [OFF, , ERROR] = [_OFF, _WARN, _ERROR];
 
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   rules: {
+    '@typescript-eslint/no-unused-vars': [ERROR, { ignoreRestSiblings: false, args: 'after-used', vars: 'all' }],
     '@typescript-eslint/consistent-type-imports': [ERROR, { fixStyle: 'separate-type-imports' }],
-    'no-unused-vars': [ERROR, { ignoreRestSiblings: false, args: 'after-used', vars: 'all' }],
     'import/no-extraneous-dependencies': [ERROR, { devDependencies: false }],
-
     'import/consistent-type-specifier-style': [ERROR, 'prefer-top-level'],
 
     'unused-imports/no-unused-imports': ERROR,
+
     'import/no-duplicates': ERROR,
-    'no-unreachable': [ERROR],
+    'no-unreachable': ERROR,
+    'no-unused-vars': OFF,
     'import/first': ERROR
   },
   overrides: [
