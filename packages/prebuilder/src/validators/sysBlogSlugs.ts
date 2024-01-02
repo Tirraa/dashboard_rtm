@@ -1,11 +1,11 @@
 import type { MaybeEmptyErrorsDetectionFeedback, Filename, Path } from '../types/Metadatas';
 
 import isValidTaxonomy, { NAMING_CONSTRAINTS_MSG } from './taxonomyConvention';
+import traverseAndMapFilepaths from '../lib/traverseAndMapFilepaths';
 import getErrorLabelForDefects from '../lib/getErrorLabelForDefects';
 import { LIST_ELEMENT_PREFIX, BLOG_POST_FILE_EXT } from '../config';
 import { prefixFeedback } from '../lib/feedbacksMerge';
 import { CRITICAL_ERRORS_STR } from '../config/vocab';
-import traverseFolder from '../lib/traverseFolder';
 
 const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
 
@@ -13,7 +13,7 @@ export default async function sysBlogSlugsValidator(postsFolder: string): Promis
   let feedback = '';
 
   const foldersWithDefects: Record<Path, Filename[]> = {};
-  const filesCollection = await traverseFolder(postsFolder);
+  const filesCollection = await traverseAndMapFilepaths(postsFolder);
 
   for (const file of filesCollection) {
     const maybeSlug = file.name;
