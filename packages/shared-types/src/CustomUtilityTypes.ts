@@ -32,11 +32,9 @@ export type MaybeSessionUser<T> = MaybeUndefined<T>;
 export type MaybeSessionUserField<T> = MaybeUndefined<T> | MaybeNull<T>;
 
 // * ... https://github.com/microsoft/TypeScript/issues/56080
-export type CompareFun<T extends Tuple<unknown>, CTX extends unknown[] = never> = /*__CAST `never` TO__*/ Function &
-  CTX extends never /* eslint-disable no-unused-vars */
+export type CompareFun<T extends Tuple<unknown>, CTX extends unknown[] = never> = /*__CAST `never` TO__*/ Function & CTX extends never
   ? (x1: T[0], x2: T[1]) => CompareFunReturnValue
   : (x1: T[0], x2: T[1], ...ctx: [...CTX]) => CompareFunReturnValue;
-/* eslint-enable no-unused-vars */
 
 type CompareFunReturnValue = number;
 /* v8 ignore stop */

@@ -52,9 +52,6 @@ importers:
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
-      hastscript:
-        specifier: ^8.0.0
-        version: 8.0.0
       inflection:
         specifier: ^2.0.1
         version: 2.0.1
@@ -5206,12 +5203,6 @@ packages:
       '@types/hast': 2.3.8
     dev: false
 
-  /hast-util-parse-selector@4.0.0:
-    resolution: { integrity: sha512-wkQCkSYoOGCRKERFWcxMVMOcYE2K1AaNLU8DXS9arxnLOUEWbOXKXiJUNzEpqZ3JOKpnha3jkFrumEjVliDe7A== }
-    dependencies:
-      '@types/hast': 3.0.3
-    dev: false
-
   /hast-util-raw@7.2.3:
     resolution: { integrity: sha512-RujVQfVsOrxzPOPSzZFiwofMArbQke6DJjnFfceiEbFh7S05CbPt0cYN+A5YeD3pso0JQk6O1aHBnx9+Pm2uqg== }
     dependencies:
@@ -5299,16 +5290,6 @@ packages:
       '@types/hast': 2.3.8
       comma-separated-tokens: 2.0.3
       hast-util-parse-selector: 3.1.1
-      property-information: 6.4.0
-      space-separated-tokens: 2.0.2
-    dev: false
-
-  /hastscript@8.0.0:
-    resolution: { integrity: sha512-dMOtzCEd3ABUeSIISmrETiKuyydk1w0pa+gE/uormcTpSYuaNJPbX1NU3JLyscSLjwAQM8bWMhhIlnCqnRvDTw== }
-    dependencies:
-      '@types/hast': 3.0.3
-      comma-separated-tokens: 2.0.3
-      hast-util-parse-selector: 4.0.0
       property-information: 6.4.0
       space-separated-tokens: 2.0.2
     dev: false
