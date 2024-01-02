@@ -12,10 +12,9 @@ if sys.stdin.isatty() or __name__ != "__main__":
 import os
 import re
 import time
-from typing import Tuple
-# pylint: disable-next=too-few-public-methods
-class PrintSideEffect:
-    """Effect"""
+from typing import Tuple, TypeAlias
+
+PrintSideEffect: TypeAlias = type(None)
 
 TIMER_PIPELINE_START: float = time.monotonic()
 TSPRUNE_OUTPUT: str = sys.stdin.read()
