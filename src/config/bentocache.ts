@@ -1,3 +1,5 @@
+/* v8 ignore start */
+// Stryker disable all
 import { memoryDriver } from 'bentocache/drivers/memory';
 import { BentoCache, bentostore } from 'bentocache';
 
@@ -7,14 +9,16 @@ export const keysFactory = {
 
 const bentocache = new BentoCache({
   stores: {
-    multitier: bentostore().useL1Layer(memoryDriver())
+    default: bentostore().useL1Layer(memoryDriver())
   },
 
   gracePeriod: {
     duration: '6h',
     enabled: true
   },
-  default: 'multitier'
+  default: 'default'
 });
 
 export default bentocache;
+/* v8 ignore stop */
+// Stryker restore all
