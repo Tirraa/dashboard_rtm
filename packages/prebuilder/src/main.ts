@@ -31,6 +31,8 @@ const printPrebuilderDoneMsg = () => console.log(PREBUILD_DONE);
  * @throws {FeedbackError}
  */
 async function processStaticAnalysis() {
+  const startTime = performance.now();
+
   moveToRoot();
 
   try {
@@ -78,6 +80,9 @@ async function processStaticAnalysis() {
     ]);
 
     printPrebuilderDoneMsg();
+    const endTime = performance.now();
+    const elapsedTime = ((endTime - startTime) / 1000).toFixed(5);
+    console.log(`Done in: ~${elapsedTime}s`);
   } catch (error) {
     const isErrorHandled = HANDLED_ERRORS_TYPES.some((errorType) => error instanceof errorType);
 

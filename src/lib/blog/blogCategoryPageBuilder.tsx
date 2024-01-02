@@ -46,7 +46,7 @@ async function blogCategoryPageBuilder(posts: TBlogPost[], category: BlogCategor
     const max = Object.entries(postsCollectionsSnippets).length;
     let counter = 0;
     for (const [subcategory, posts] of Object.entries(postsCollectionsSnippets)) {
-      counter += 1;
+      ++counter;
       isLast = counter >= max;
       if (posts.length === 0) continue;
       const narrowedCategoryAndSubcategoryAssoc = `${category}.${subcategory}` as BlogCategoriesAndSubcategoriesAssoc;

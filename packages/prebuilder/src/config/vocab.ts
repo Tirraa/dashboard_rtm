@@ -8,7 +8,7 @@ export const CRITICAL_ERRORS_STR = {
   INTERRUPTED: 'Interrupted the prebuilder!'
 } as const;
 
-export const PREBUILD_DONE: string = '... Prebuild done.';
+export const PREBUILD_DONE: string = '... Prebuilder taxonomy validation and codegen done.';
 
 export const DOC_URL: string = 'https://github.com/Tirraa/dashboard_rtm/tree/main/doc';
 export const BUGTRACKER_URL: string = 'https://github.com/Tirraa/dashboard_rtm/issues';

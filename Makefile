@@ -75,7 +75,7 @@ prebuild-rtm:
 #------------------
 
 initialize: install prebuild
-	cp --no-clobber $(ENV_EXAMPLE) $(ENV_FILE)
+	[ -e "$(ENV_FILE)" ] || cp "$(ENV_EXAMPLE)" "$(ENV_FILE)"
 
 clean-codegen:
 	rm -rf $(NEXT_GENERATED_CODE) $(CONTENTLAYER_GENERATED_CODE) $(RTM_GENERATED_CODE)

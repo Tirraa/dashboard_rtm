@@ -16,18 +16,17 @@ async function makeThunks(currentFolder: Path, __currentDeepPath: Path = current
     const thunk: Thunk<ArborescenceFragmentPromise> = async () => {
       const filepathStats: Stats = await fs.stat(maybeFilepath);
       return filepathStats.isDirectory()
-        ? execute(makeThunks(maybeFilepath, path.join(__currentDeepPath, currentFilename)))
+        ? execute(await makeThunks(maybeFilepath, path.join(__currentDeepPath, currentFilename)))
         : ({ directory: __currentDeepPath, name: currentFilename } satisfies File);
     };
     return thunk;
   });
 
-  return Promise.all(thunks);
+  return thunks;
 }
 
-const execute = async (thunks: Promise<Thunks<ArborescenceFragmentPromise>>): Promise<File[]> =>
-  (await Promise.all((await thunks).map((thunk) => thunk()))).flat();
+const execute = async (thunks: Thunks<ArborescenceFragmentPromise>): Promise<File[]> => (await Promise.all(thunks.map((thunk) => thunk()))).flat();
 
-const traverseAndMapFilepaths = async (rootFolder: Path): Promise<File[]> => execute(makeThunks(rootFolder));
+const traverseAndMapFilepaths = async (rootFolder: Path): Promise<File[]> => execute(await makeThunks(rootFolder));
 
 export default traverseAndMapFilepaths;

@@ -10,9 +10,9 @@ export default function getRawDataFromBracesDeclaration(fileContent: string, sta
 
     if (currentChar === '{') {
       if (openBracesDepth === 0) rawDataStartIndex = i + 1;
-      openBracesDepth += 1;
+      ++openBracesDepth;
     } else if (currentChar === '}') {
-      openBracesDepth -= 1;
+      --openBracesDepth;
       if (openBracesDepth === 0) {
         rawDataEndIndex = i;
         break;
