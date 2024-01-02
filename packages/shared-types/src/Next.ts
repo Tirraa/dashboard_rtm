@@ -20,7 +20,6 @@ export interface WithIsMobile {
   isMobile?: boolean;
 }
 
-// eslint-disable-next-line no-unused-vars
 export type MiddlewareFactory = (middleware: NextMiddleware) => NextMiddleware;
 /* v8 ignore stop */
 // Stryker restore all

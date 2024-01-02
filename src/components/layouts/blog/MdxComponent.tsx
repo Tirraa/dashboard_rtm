@@ -7,7 +7,6 @@ import NextComponents from '@/components/config/blog/NextComponents';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import CTAs from '@/components/config/blog/CTAs';
 
-// eslint-disable-next-line no-unused-vars
 const components: Record<PropertyKey, (...args: any[]) => JSX.Element | ReactNode> = {
   ...PrimitiveComponents,
   ...NextComponents,

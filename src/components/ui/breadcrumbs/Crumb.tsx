@@ -15,10 +15,15 @@ interface CrumbProps {
 }
 
 const Crumb: FunctionComponent<CrumbProps> = ({ withRescueCtx: maybeWithRescueCtx, isLeaf: maybeIsLeaf, label, href }) => {
-  // {ToDo} Invalidate build when Rescue CTX with a console.warn
   const QA_WARNING: MaybeObjectValue<string> = maybeWithRescueCtx ? QA_WARNINGS.IS_A_FALLBACK : undefined;
   const QA_PROPS = { [DATA_QA_WARNING_DOM_KEY]: QA_WARNING };
   const isLeaf = Boolean(maybeIsLeaf);
+
+  if (QA_WARNING) {
+    console.warn(
+      `Crumb with label '${label}' got rescued! The fallback generated is poorly featured. For instance: you may have internationalization issues.`
+    );
+  }
 
   return (
     <>

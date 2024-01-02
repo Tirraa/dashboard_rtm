@@ -7,7 +7,6 @@ import defaultTheme, { fontFamily } from 'tailwindcss/defaultTheme';
 import TailwindCSSAnimate from 'tailwindcss-animate';
 import colors from 'tailwindcss/colors';
 
-// eslint-disable-next-line no-unused-vars
 type Colors = { [_ in keyof DefaultColors]: Record<PropertyKey, string> | string };
 
 const REHYPE_AUTOLINK_HEADINGS_SAFELIST = ['mr-1'];

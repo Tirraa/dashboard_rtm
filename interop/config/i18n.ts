@@ -3,12 +3,10 @@ import type { I18nVocabScope, MakeI18nsBase, LanguageFlag, I18nsBase } from '@rt
 import getEnumKeys from '../../src/lib/portable/typescript/getEnumKeys';
 import DEFAULT_LANGUAGE_OBJ from '../../src/i18n/locales/fr';
 
-/* eslint-disable no-unused-vars */
 export enum ELanguagesFlag {
   fr,
   en
 }
-/* eslint-enable no-unused-vars */
 
 const _i18nsBase = {
   blogCategories: 'blog-categories',

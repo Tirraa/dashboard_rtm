@@ -5,7 +5,6 @@ import type { ImgHTMLAttributes, HTMLAttributes } from 'react';
 import CopyToClipboard from '@/components/ui/blog/CopyToClipboard';
 import { cn } from '@/lib/tailwind';
 
-// eslint-disable-next-line no-unused-vars
 const PrimitiveComponents: Record<PropertyKey, (...args: any[]) => JSX.Element> = {
   img: ({ className, alt, ...props }: ImgHTMLAttributes<HTMLImageElement>) => (
     // eslint-disable-next-line @next/next/no-img-element

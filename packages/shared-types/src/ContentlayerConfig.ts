@@ -58,7 +58,6 @@ export type PostToBuild = Document;
 
 // * ... Adapter
 export type ComputedField = {
-  // eslint-disable-next-line no-unused-vars
   resolve: (post: PostToBuild) => unknown;
   type: FieldDefType;
 };
