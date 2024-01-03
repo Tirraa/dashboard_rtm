@@ -10,14 +10,14 @@ describe('endsWithChar', () => {
     expect(endsWithChars('foo bar cba', endChars)).toBe(true);
   });
 
-  it('should return false given strings not ending with endChars', () => {
+  it('should return false, given strings not ending with endChars', () => {
     const endChars = '$';
     expect(endsWithChars('foo bar abc', endChars)).toBe(false);
     expect(endsWithChars('foo bar acb', endChars)).toBe(false);
     expect(endsWithChars('foo bar cba', endChars)).toBe(false);
   });
 
-  it('should return false given endChars is empty', () => {
+  it('should return false, given endChars is empty', () => {
     const endChars = '';
     expect(endsWithChars('foo bar abc', endChars)).toBe(false);
     expect(endsWithChars('foo bar acb', endChars)).toBe(false);

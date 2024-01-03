@@ -41,6 +41,8 @@ function crashIfArgumentsAreInvalid({ ...args }) {
   const P = ARG_ERROR_PREFIX + UNKNOWN_OPTIONS_PREFIX;
   const P2 = ARG_ERROR_PREFIX + WRONG_OPTIONS_PREFIX;
 
+  // {ToDo} Why else if? I bet we should accumulate all the feedbacks and finally display them all here too.
+  // Anyway, this part of the code is horrible and must be refactored.
   let feedback = unknownOptions ? P + UNKNOWN_OPTIONS.join(', ') + '\n' + KNOWN_OPTIONS_PREFIX + Object.values(FLAGS).join(', ') : '';
   if (invalidBlogOptions) {
     feedback += P2 + `you must use the ${FLAGS.BLOG_POSTS_FOLDER} option unless you are using the ${FLAGS.NO_BLOG} option.`;
@@ -126,6 +128,7 @@ export default async function parseArguments() {
       [FLAGS.I18N_LOCALES_SCHEMA_FILEPATH]: String,
       [FLAGS.SKIP_LOCALES_INFOS]: Boolean,
       [FLAGS.BLOG_POSTS_FOLDER]: String,
+      [FLAGS.SKIP_BENCHMARKS]: Boolean,
       [FLAGS.NO_BLOG]: Boolean,
       [FLAGS.NO_I18N]: Boolean
     },

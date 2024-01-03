@@ -6,7 +6,7 @@ import { MAX_TAXONOMY_LEN } from '../../config';
 
 describe('isValidTaxonomy', () => {
   it('should return false, given invalid taxonomies', () => {
-    const tooLong = 'a'.repeat(MAX_TAXONOMY_LEN + 1);
+    const tooLong = 'w'.repeat(MAX_TAXONOMY_LEN + 1);
 
     expect(isValidTaxonomy('_$!§%&/()=?')).toBe(false);
     expect(isValidTaxonomy('0_$!§%&/()=?')).toBe(false);

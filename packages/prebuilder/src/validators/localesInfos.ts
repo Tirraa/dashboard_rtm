@@ -35,7 +35,7 @@ async function localeFileInfosValidator(localeFilePath: string): Promise<MaybeEm
  * @throws {BuilderError}
  */
 export default async function localesInfosValidator(localesFolder: string, i18nSchemaFilePath: Path): Promise<MaybeEmptyErrorsDetectionFeedback> {
-  const ERROR_PREFIX_TAIL = `(locales files infos)`;
+  const ERROR_PREFIX_TAIL = '(locales files infos)';
   let feedback: ErrorsDetectionFeedback = '';
 
   const files: string[] = await fs.readdir(localesFolder);

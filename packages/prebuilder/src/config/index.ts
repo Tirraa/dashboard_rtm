@@ -10,6 +10,7 @@ export const FLAGS = {
   I18N_LOCALES_SCHEMA_FILEPATH: '--i18n-locales-schema',
   SKIP_LOCALES_INFOS: '--skip-locales-infos',
   BLOG_POSTS_FOLDER: '--blog-posts-folder',
+  SKIP_BENCHMARKS: '--skip-benchmarks',
   NO_BLOG: '--no-blog',
   NO_I18N: '--no-i18n'
 } as const;

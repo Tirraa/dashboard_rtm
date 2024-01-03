@@ -22,7 +22,7 @@ export type KeySeparator = '.';
 
 export type DeepPathToLiteralKeys<DeepPath extends string> = JoinKeys<SplitKeys<DeepPath>>;
 
-// * ... https://github.com/microsoft/TypeScript/issues/56080
+// https://github.com/microsoft/TypeScript/issues/56080
 export type Tuple<T1, T2 = never> = /*__CAST `never` TO__*/ [] & T2 extends never ? [T1, T1] : [T1, T2];
 
 export type MaybeNull<T> = null | T;
@@ -31,7 +31,7 @@ export type MaybeObjectValue<T> = MaybeUndefined<T>;
 export type MaybeSessionUser<T> = MaybeUndefined<T>;
 export type MaybeSessionUserField<T> = MaybeUndefined<T> | MaybeNull<T>;
 
-// * ... https://github.com/microsoft/TypeScript/issues/56080
+// https://github.com/microsoft/TypeScript/issues/56080
 export type CompareFun<T extends Tuple<unknown>, CTX extends unknown[] = never> = /*__CAST `never` TO__*/ Function & CTX extends never
   ? (x1: T[0], x2: T[1]) => CompareFunReturnValue
   : (x1: T[0], x2: T[1], ...ctx: [...CTX]) => CompareFunReturnValue;

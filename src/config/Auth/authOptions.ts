@@ -1,4 +1,4 @@
-import type { MaybeNull } from 'packages/shared-types/src/CustomUtilityTypes';
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { NextAuthOptions, Session } from 'next-auth';
 import type { IDiscordApi } from '@/meta/discordapi';
 import type { JWT } from 'next-auth/jwt';

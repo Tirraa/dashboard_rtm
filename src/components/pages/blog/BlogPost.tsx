@@ -1,6 +1,6 @@
 import type { BlogPostPageProps, BlogPostProps, TBlogPost } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
-import type { WithClassname } from 'packages/shared-types/src/Next';
+import type { WithClassname } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
 import { isValidBlogCategoryAndSubcategoryPair, getBlogPostUnstrict } from '@/lib/blog/api';
