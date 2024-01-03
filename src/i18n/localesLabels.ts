@@ -13,5 +13,5 @@ export const localesEmojis: LanguageLabels = {
 } as const;
 
 export default localesLabels;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

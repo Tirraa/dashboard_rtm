@@ -17,5 +17,5 @@ export const NAVBAR_EXTRAS_COMPONENTS_MOBILE: NavbarExtrasFeaturesReactElements 
   LOGIN: <NavbarLoginButton isMobile />,
   THEME: <NavbarThemeButton />
 };
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

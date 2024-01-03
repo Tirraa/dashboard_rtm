@@ -51,5 +51,5 @@ const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
 CardFooter.displayName = 'CardFooter';
 
 export { CardDescription, CardContent, CardFooter, CardHeader, CardTitle, Card };
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

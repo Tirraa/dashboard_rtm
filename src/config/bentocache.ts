@@ -20,5 +20,5 @@ const bentocache = new BentoCache({
 });
 
 export default bentocache;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

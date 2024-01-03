@@ -28,5 +28,5 @@ const InviteTheBotButton: FunctionComponent<InviteTheBotButtonProps> = () => {
 };
 
 export default InviteTheBotButton;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

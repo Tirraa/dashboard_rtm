@@ -9,5 +9,5 @@ import { redirect } from 'next/navigation';
 export default function Error({ error, reset }: { reset: () => void; error: Error }) {
   redirect(ROUTES_ROOTS.WEBSITE);
 }
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

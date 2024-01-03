@@ -18,5 +18,5 @@ const NotFound: FunctionComponent<NotFoundProps> = async () => {
 };
 
 export default NotFound;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

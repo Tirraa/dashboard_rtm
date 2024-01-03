@@ -24,5 +24,5 @@ type NavbarItem = { i18nTitle: I18nVocabTarget; jsx: JSX.Element };
 export type NavbarItems = NavbarItem[];
 
 export type DropdownsConfig<K extends RoutesKeysUnion> = Partial<Record<K, NavDataEntities>>;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

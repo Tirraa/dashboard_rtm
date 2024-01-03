@@ -37,5 +37,5 @@ export type CompareFun<T extends Tuple<unknown>, CTX extends unknown[] = never> 
   : (x1: T[0], x2: T[1], ...ctx: [...CTX]) => CompareFunReturnValue;
 
 type CompareFunReturnValue = number;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

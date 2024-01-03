@@ -17,5 +17,5 @@ const DashboardFooPage: FunctionComponent<DashboardFooPageProps> = () => {
 };
 
 export default DashboardFooPage;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

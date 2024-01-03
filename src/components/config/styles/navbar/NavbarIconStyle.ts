@@ -9,5 +9,5 @@ const NAVBAR_ICON_STYLE: TNavbarIconStyle = {
 } as const;
 
 export default NAVBAR_ICON_STYLE;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

@@ -105,5 +105,5 @@ const config = {
 } satisfies Config;
 
 export default config;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

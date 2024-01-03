@@ -35,5 +35,5 @@ const UserImage: FunctionComponent<UserImageProps> = ({ height: heightValue, wid
 };
 
 export default UserImage;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

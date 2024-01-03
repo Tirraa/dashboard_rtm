@@ -8,5 +8,5 @@ class FeedbackError extends Error {
 }
 
 export default FeedbackError;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

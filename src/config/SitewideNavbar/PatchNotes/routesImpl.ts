@@ -24,5 +24,5 @@ export const PATCH_NOTES_ROUTES_TITLES: PatchNotesRoutesTitles = {
 /* eslint-enable perfectionist/sort-objects */
 
 export default PATCH_NOTES_ROUTES;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

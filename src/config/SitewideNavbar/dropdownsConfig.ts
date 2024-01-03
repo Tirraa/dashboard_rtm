@@ -13,5 +13,5 @@ const PATCH_NOTES_PAGE: EmbeddedEntities = Object.keys(PATCH_NOTES_ROUTES).map((
 
 const SITEWIDE_NAVBAR_DROPDOWNS_CONFIG: NavbarDropdownsConfig = { PATCH_NOTES_PAGE } as const;
 export default SITEWIDE_NAVBAR_DROPDOWNS_CONFIG;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

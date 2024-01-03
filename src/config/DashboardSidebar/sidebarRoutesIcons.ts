@@ -13,5 +13,5 @@ const SIDEBAR_ROUTES_ICONS: DashboardRoutesIcons = {
 /* eslint-enable perfectionist/sort-objects */
 
 export default SIDEBAR_ROUTES_ICONS;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

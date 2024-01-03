@@ -8,5 +8,5 @@ class ContentLayerDuplicateTypesError extends Error {
 }
 
 export default ContentLayerDuplicateTypesError;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

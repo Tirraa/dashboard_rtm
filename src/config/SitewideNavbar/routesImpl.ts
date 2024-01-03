@@ -29,5 +29,5 @@ export const SITEWIDE_NAVBAR_ROUTES_TITLES: SitewideNavbarRoutesTitles = {
 /* eslint-enable perfectionist/sort-objects */
 
 export default SITEWIDE_NAVBAR_ROUTES;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

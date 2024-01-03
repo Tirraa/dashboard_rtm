@@ -20,5 +20,5 @@ export interface LayoutBaseProps extends I18nPageProps {
 export type NotFoundCatchallParams = {
   params: { [NotFoundTaxonomy.NOT_FOUND]: unknown[] };
 };
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

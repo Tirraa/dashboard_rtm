@@ -9,5 +9,5 @@ const NAVBAR_STYLE: TNavbarStyle = {
 } as const;
 
 export default NAVBAR_STYLE;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

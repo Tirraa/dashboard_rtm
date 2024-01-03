@@ -19,5 +19,5 @@ export type TBlogTaxonomy = {
 };
 
 export default BlogTaxonomy;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

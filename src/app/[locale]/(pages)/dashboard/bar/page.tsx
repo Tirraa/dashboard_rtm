@@ -15,5 +15,5 @@ export async function generateMetadata() {
 export default function Page() {
   return <DashboardBarPage />;
 }
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

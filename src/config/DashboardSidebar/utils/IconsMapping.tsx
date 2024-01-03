@@ -20,5 +20,5 @@ Object.entries(SIDEBAR_ROUTES_ICONS).forEach(
 const DASHBOARD_ROUTES_SIDEBAR_COMPONENTS: DashboardRoutesSidebarReactElements = computedDashboardRoutesSidebarComponents;
 
 export default DASHBOARD_ROUTES_SIDEBAR_COMPONENTS;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

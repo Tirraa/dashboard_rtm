@@ -8,5 +8,5 @@ export type FlexWrap = 'wrap-reverse' | 'nowrap' | 'wrap';
 export type Direction = 'rtl' | 'ltr';
 export type TitleType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 export type AnchorTarget = EAnchorTargetFrameName | '_parent' | '_blank' | '_self' | '_top';
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

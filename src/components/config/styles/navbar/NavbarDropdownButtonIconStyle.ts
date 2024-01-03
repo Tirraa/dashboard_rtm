@@ -12,5 +12,5 @@ const NavbarDropdownButtonIconStyle: IButtonStyleBase = {
 } as const;
 
 export default NavbarDropdownButtonIconStyle;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

@@ -5,5 +5,5 @@ import type { SitewideNavbarRoutesKeys } from '@/config/SitewideNavbar/utils/Rou
 import type { DropdownsConfig } from './NavData';
 
 export type NavbarDropdownsConfig = DropdownsConfig<SitewideNavbarRoutesKeys>;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

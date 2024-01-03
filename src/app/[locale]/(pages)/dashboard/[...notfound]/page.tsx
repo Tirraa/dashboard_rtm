@@ -9,5 +9,5 @@ import NotFoundCatchall from '@/components/phantoms/NotFoundCatchall';
 export default function Page({ params }: NotFoundCatchallParams) {
   NotFoundCatchall({ params });
 }
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

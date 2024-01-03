@@ -44,5 +44,5 @@ const DocumentRoot: FunctionComponent<DocumentRootProps> = ({ disableTopLoader, 
 };
 
 export default DocumentRoot;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

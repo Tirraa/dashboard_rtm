@@ -12,5 +12,5 @@ const DISCORD_CONFIG: TDiscordConfig = {
 } as const;
 
 export default DISCORD_CONFIG;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

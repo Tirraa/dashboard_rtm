@@ -29,5 +29,5 @@ export default async function NotFoundPage() {
     </PagesHtmlElement>
   );
 }
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

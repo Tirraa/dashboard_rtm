@@ -14,5 +14,5 @@ const SidebarCollapseButtonIconStyle: IButtonStyleBase = {
 export const SIZE_PX_VALUE = 20;
 
 export default SidebarCollapseButtonIconStyle;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

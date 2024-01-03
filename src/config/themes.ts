@@ -26,5 +26,5 @@ export const DEFAULT_VARIANT: ThemeVariant = DEFAULT_LIGHT_VARIANT;
 export const DEFAULT_VARIANT_COLOR_SCHEME: ColorScheme = THEME_CONFIG.VARIANTS_COLORS_SCHEME[DEFAULT_VARIANT_KEY];
 
 // export const THEME_VARIANTS: ThemeVariant[] = Object.values(THEME_CONFIG.VARIANTS);
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

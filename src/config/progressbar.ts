@@ -12,5 +12,5 @@ const PROGRESSBAR_CONFIG: NextTopLoaderProps = {
 } as const;
 
 export default PROGRESSBAR_CONFIG;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

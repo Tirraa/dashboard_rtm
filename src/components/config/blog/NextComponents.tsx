@@ -8,5 +8,5 @@ const NextComponents: Record<PropertyKey, (...args: any[]) => JSX.Element> = {
 };
 
 export default NextComponents;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

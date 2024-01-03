@@ -98,5 +98,5 @@ export default {
 type NotScanned = '';
 type Scanned = '__SCANNED_ON_BUILD_FIELD__';
 type MaybeScanned = NotScanned | Scanned;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

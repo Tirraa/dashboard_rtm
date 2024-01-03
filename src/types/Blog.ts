@@ -66,5 +66,5 @@ export type StrictBlog = {
     };
   };
 };
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

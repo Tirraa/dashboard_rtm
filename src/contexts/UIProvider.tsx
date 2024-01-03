@@ -14,5 +14,5 @@ const UIProvider: FunctionComponent<UIProviderProps> = ({ children }) => (
 );
 
 export default UIProvider;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

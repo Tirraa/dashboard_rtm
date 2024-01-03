@@ -1,3 +1,5 @@
+/* v8 ignore start */
+// Stryker disable all
 // @ts-check
 
 const SOON_OBSOLETE_IGNORE_PATTERNS = ['.next']; // {ToDo} Remove me when this will be released: https://github.com/stryker-mutator/stryker-js/issues/4571
@@ -20,3 +22,5 @@ const config = {
   incremental: true
 };
 export default config;
+// Stryker restore all
+/* v8 ignore stop */

@@ -8,5 +8,5 @@ import { cn } from '@/lib/tailwind';
 export default function BlogLayout({ children }: LayoutMinimalProps) {
   return <main className={cn('w-full flex-1', MAIN_CLS)}>{children}</main>;
 }
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

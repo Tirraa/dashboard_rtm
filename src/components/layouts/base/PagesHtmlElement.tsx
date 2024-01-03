@@ -14,5 +14,5 @@ const PagesHtmlElement: FunctionComponent<HtmlElementProps> = ({ children, param
 );
 
 export default PagesHtmlElement;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

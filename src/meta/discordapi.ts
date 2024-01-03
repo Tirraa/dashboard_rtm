@@ -28,5 +28,5 @@ class DiscordApi implements IDiscordApi {
 
 const DISCORD_API = new DiscordApi();
 export default DISCORD_API;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

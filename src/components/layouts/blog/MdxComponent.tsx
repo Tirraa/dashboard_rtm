@@ -28,5 +28,5 @@ const MDX: FunctionComponent<MdxProps> = ({ code }) => {
 };
 
 export default MDX;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

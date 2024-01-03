@@ -12,5 +12,5 @@ const SidebarCollapseButtonWrapperStyle: IButtonStyleBase = {
 } as const;
 
 export default SidebarCollapseButtonWrapperStyle;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

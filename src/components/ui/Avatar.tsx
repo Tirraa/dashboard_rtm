@@ -27,5 +27,5 @@ const AvatarFallback = React.forwardRef<
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
 
 export { AvatarFallback, AvatarImage, Avatar };
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

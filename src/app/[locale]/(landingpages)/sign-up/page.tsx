@@ -33,5 +33,5 @@ export default async function Page({ params }: I18nPageProps) {
 
   return <SignupButton />;
 }
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

@@ -5,5 +5,5 @@ const ELEMENTS_ID = {
 } as const;
 
 export default ELEMENTS_ID;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

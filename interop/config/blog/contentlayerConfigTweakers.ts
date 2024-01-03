@@ -76,8 +76,8 @@ export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
   slug: { resolve: (post) => buildBlogPostSlug(post), type: 'string' },
   url: { resolve: (post) => buildBlogPostUrl(post), type: 'string' }
 } as const satisfies Partial<Record<keyof _AllBlogFields, ComputedField>> satisfies ComputedFields;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */
 
 export const BLOG_DOCUMENTS_FIELDS = {
   draft: { type: 'boolean', required: false, default: false },

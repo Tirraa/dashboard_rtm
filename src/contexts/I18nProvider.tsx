@@ -19,5 +19,5 @@ const I18nProvider: FunctionComponent<I18nProviderProps> = ({ children, locale }
 );
 
 export default I18nProvider;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

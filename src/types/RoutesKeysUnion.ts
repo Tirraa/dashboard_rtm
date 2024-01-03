@@ -7,5 +7,5 @@ import type { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/Routes
 type RoutesKeysUnion = SitewideNavbarRoutesKeys | PatchNotesRoutesKeys | DashboardRoutesKeys;
 
 export default RoutesKeysUnion;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

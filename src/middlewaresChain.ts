@@ -11,5 +11,5 @@ const WITH_AUTH_CHAIN: MiddlewareFactory[] = [withProtectedRoutes, ...MAIN_CHAIN
 
 export const mainMiddlewaresChain = stackMiddlewares(MAIN_CHAIN);
 export const withAuthMiddlewaresChain = stackMiddlewares(WITH_AUTH_CHAIN);
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

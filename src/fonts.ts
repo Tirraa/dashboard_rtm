@@ -7,5 +7,5 @@ export const fInter = Inter({
   variable: '--font-sans',
   subsets: ['latin']
 });
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

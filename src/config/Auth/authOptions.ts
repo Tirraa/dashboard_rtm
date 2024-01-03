@@ -4,12 +4,12 @@ import type { IDiscordApi } from '@/meta/discordapi';
 import type { JWT } from 'next-auth/jwt';
 
 import DiscordProvider from 'next-auth/providers/discord';
-import __discordApi from '@/meta/discordapi';
+import discordApi from '@/meta/discordapi';
 
 import bentocache, { keysFactory } from '../bentocache';
 
-export async function getDiscordProfilePicture(sub: string, discordApi: IDiscordApi): Promise<MaybeNull<string>> {
-  const freshProfile = await discordApi.getFreshProfile(sub);
+export async function getDiscordProfilePicture(sub: string, __discordApi: IDiscordApi): Promise<MaybeNull<string>> {
+  const freshProfile = await __discordApi.getFreshProfile(sub);
 
   const { epicFail, avatar, id } = freshProfile;
   if (!avatar || !id) return null;
@@ -21,7 +21,7 @@ export async function getDiscordProfilePicture(sub: string, discordApi: IDiscord
   return imageURL;
 }
 
-export async function getSession(session: Session, token: JWT, discordApi: IDiscordApi = __discordApi) {
+export async function getSession(session: Session, token: JWT, __discordApi: IDiscordApi = discordApi) {
   const BOT_TOKEN = process.env.DISCORD_BOT_TOKEN;
   if (!BOT_TOKEN) return session;
 
@@ -30,7 +30,7 @@ export async function getSession(session: Session, token: JWT, discordApi: IDisc
 
   // Stryker Workaround 1. Empty object mutant is pointless.
   // Stryker disable next-line ObjectLiteral
-  const imageURL = await bentocache.getOrSet(keysFactory.discordProfilePicture(id), () => getDiscordProfilePicture(id, discordApi), { ttl: '11m' }); // TTL: https://discord.com/developers/docs/topics/rate-limits#invalid-request-limit-aka-cloudflare-bans
+  const imageURL = await bentocache.getOrSet(keysFactory.discordProfilePicture(id), () => getDiscordProfilePicture(id, __discordApi), { ttl: '11m' }); // TTL: https://discord.com/developers/docs/topics/rate-limits#invalid-request-limit-aka-cloudflare-bans
 
   if (imageURL === null) return session;
 
@@ -63,5 +63,5 @@ const authOptions: NextAuthOptions = {
 };
 
 export default authOptions;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

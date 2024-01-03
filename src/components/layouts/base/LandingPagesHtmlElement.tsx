@@ -13,5 +13,5 @@ const LandingPagesHtmlElement: FunctionComponent<HtmlElementProps> = ({ children
 );
 
 export default LandingPagesHtmlElement;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

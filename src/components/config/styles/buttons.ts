@@ -14,5 +14,5 @@ const BUTTON_CONFIG: TButtonConfig = {
 } as const;
 
 export default BUTTON_CONFIG;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

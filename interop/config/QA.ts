@@ -5,5 +5,5 @@ export enum QA_WARNINGS {
 }
 
 export const DATA_QA_WARNING_DOM_KEY = 'data-qa-warning';
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

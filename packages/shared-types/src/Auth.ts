@@ -7,5 +7,5 @@ export type User = MaybeSessionUser<{
   image?: MaybeSessionUserField<string>;
   name?: MaybeSessionUserField<string>;
 }>;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

@@ -10,5 +10,5 @@ const GENERATED_LOCALES_OBJ = Object.fromEntries(
 ) as LocalesObj satisfies LocalesGetterConfigObjTypeConstraint;
 
 export default GENERATED_LOCALES_OBJ;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

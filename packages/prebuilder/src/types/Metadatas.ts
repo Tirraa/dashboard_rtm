@@ -22,5 +22,5 @@ export type File = {
 
 export type Path = string;
 export type Filename = string;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

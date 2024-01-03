@@ -8,5 +8,5 @@ import { cn } from '@/lib/tailwind';
 export default function SignUpLayout({ children }: LayoutMinimalProps) {
   return <main className={cn('flex flex-1 items-center justify-center', MAIN_CLS)}>{children}</main>;
 }
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

@@ -7,5 +7,5 @@ import '@/app/globals.css';
 export default function PhantomLayout({ children }: LayoutMinimalProps) {
   return children;
 }
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

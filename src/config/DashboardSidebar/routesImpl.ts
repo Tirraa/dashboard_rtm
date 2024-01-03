@@ -22,5 +22,5 @@ export const DASHBOARD_ROUTES_TITLES: DashboardRoutesTitles = {
 } as const;
 
 export default DASHBOARD_ROUTES;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

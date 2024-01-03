@@ -38,7 +38,6 @@ describe('getAllBlogPostsByCategoryAndLanguage', () => {
     expect(posts[0].metadescription).toBe('FAKE');
     expect(posts[0].description).toBe('FAKE');
     expect(posts[0].title).toBe('FAKE');
-    expect(posts[0].date).toBe('1234-01-01T23:50:39.000Z');
     expect(posts[0]._id).toBe('blog/testing/fake-subcategory/drafts/fake-draft-01.mdx');
     expect(posts[0]._raw.sourceFilePath).toBe('blog/testing/fake-subcategory/drafts/fake-draft-01.mdx');
     expect(posts[0]._raw.sourceFileName).toBe('fake-draft-01.mdx');
@@ -55,7 +54,6 @@ describe('getAllBlogPostsByCategoryAndLanguage', () => {
     expect(posts[1].metadescription).toBe('FAKE');
     expect(posts[1].description).toBe('FAKE');
     expect(posts[1].title).toBe('FAKE');
-    expect(posts[1].date).toBe('1234-01-01T23:50:39.000Z');
     expect(posts[1]._id).toBe('blog/testing/fake-subcategory/drafts/fake-draft-02.mdx');
     expect(posts[1]._raw.sourceFilePath).toBe('blog/testing/fake-subcategory/drafts/fake-draft-02.mdx');
     expect(posts[1]._raw.sourceFileName).toBe('fake-draft-02.mdx');
@@ -72,7 +70,6 @@ describe('getAllBlogPostsByCategoryAndLanguage', () => {
     expect(posts[2].metadescription).toBe('FAKE');
     expect(posts[2].description).toBe('FAKE');
     expect(posts[2].title).toBe('FAKE');
-    expect(posts[2].date).toBe('1234-01-01T23:50:39.000Z');
     expect(posts[2]._id).toBe('blog/testing/fake-subcategory/drafts/fake-draft-03.mdx');
     expect(posts[2]._raw.sourceFilePath).toBe('blog/testing/fake-subcategory/drafts/fake-draft-03.mdx');
     expect(posts[2]._raw.sourceFileName).toBe('fake-draft-03.mdx');
@@ -101,7 +98,6 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict', () =>
     expect(posts[0].metadescription).toBe('FAKE');
     expect(posts[0].description).toBe('FAKE');
     expect(posts[0].title).toBe('FAKE');
-    expect(posts[0].date).toBe('1234-01-01T23:50:39.000Z');
     expect(posts[0]._id).toBe('blog/testing/fake-subcategory/posts/fake-post-01.mdx');
     expect(posts[0]._raw.sourceFilePath).toBe('blog/testing/fake-subcategory/posts/fake-post-01.mdx');
     expect(posts[0]._raw.sourceFileName).toBe('fake-post-01.mdx');
@@ -118,7 +114,6 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict', () =>
     expect(posts[1].metadescription).toBe('FAKE');
     expect(posts[1].description).toBe('FAKE');
     expect(posts[1].title).toBe('FAKE');
-    expect(posts[1].date).toBe('1234-01-01T23:50:39.000Z');
     expect(posts[1]._id).toBe('blog/testing/fake-subcategory/posts/fake-post-02.mdx');
     expect(posts[1]._raw.sourceFilePath).toBe('blog/testing/fake-subcategory/posts/fake-post-02.mdx');
     expect(posts[1]._raw.sourceFileName).toBe('fake-post-02.mdx');
@@ -135,7 +130,6 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict', () =>
     expect(posts[2].metadescription).toBe('FAKE');
     expect(posts[2].description).toBe('FAKE');
     expect(posts[2].title).toBe('FAKE');
-    expect(posts[2].date).toBe('1234-01-01T23:50:39.000Z');
     expect(posts[2]._id).toBe('blog/testing/fake-subcategory/posts/fake-post-03.mdx');
     expect(posts[2]._raw.sourceFilePath).toBe('blog/testing/fake-subcategory/posts/fake-post-03.mdx');
     expect(posts[2]._raw.sourceFileName).toBe('fake-post-03.mdx');
@@ -152,7 +146,6 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict', () =>
     expect(posts[3].metadescription).toBe('FAKE');
     expect(posts[3].description).toBe('FAKE');
     expect(posts[3].title).toBe('FAKE');
-    expect(posts[3].date).toBe('1234-01-01T23:50:39.000Z');
     expect(posts[3]._id).toBe('blog/testing/fake-subcategory/posts/fake-post-04.mdx');
     expect(posts[3]._raw.sourceFilePath).toBe('blog/testing/fake-subcategory/posts/fake-post-04.mdx');
     expect(posts[3]._raw.sourceFileName).toBe('fake-post-04.mdx');

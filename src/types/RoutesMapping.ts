@@ -10,5 +10,5 @@ export type RoutesDefinition<RoutesKeys extends RoutesKeysUnion> = Record<Routes
 export type RoutesTitles<RoutesKeys extends RoutesKeysUnion> = Record<RoutesKeys, I18nVocabTarget>;
 export type StronglyBindedReactElements<K extends RoutesKeysUnion> = Record<K, ReactElement>;
 export type WeaklyBindedReactElements<K extends PropertyKey> = Record<K, ReactElement>;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

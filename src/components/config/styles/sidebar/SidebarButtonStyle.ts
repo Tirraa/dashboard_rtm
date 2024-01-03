@@ -15,5 +15,5 @@ const SidebarButtonStyle: IButtonStyleReactIcon = {
 } as const;
 
 export default SidebarButtonStyle;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

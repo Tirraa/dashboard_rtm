@@ -5,5 +5,5 @@ namespace I18nTaxonomy {
 }
 
 export default I18nTaxonomy;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

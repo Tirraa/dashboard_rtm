@@ -16,5 +16,5 @@ const BlogPostDate: FunctionComponent<BlogPostDateProps> = ({ className: classNa
 );
 
 export default BlogPostDate;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

@@ -34,5 +34,5 @@ const withProtectedRoutes: MiddlewareFactory = (next: NextMiddleware) => async (
 };
 
 export default withProtectedRoutes;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

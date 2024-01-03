@@ -21,5 +21,5 @@ export interface WithIsMobile {
 }
 
 export type MiddlewareFactory = (middleware: NextMiddleware) => NextMiddleware;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

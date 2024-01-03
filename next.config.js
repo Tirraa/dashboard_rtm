@@ -1,6 +1,6 @@
+/* v8 ignore start */
 // @ts-check
 
-/* v8 ignore start */
 // Stryker disable all
 const { withContentlayer } = require('next-contentlayer');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -18,5 +18,5 @@ const nextConfig = {
 };
 
 module.exports = withBundleAnalyzer(withContentlayer(nextConfig));
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

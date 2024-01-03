@@ -69,5 +69,5 @@ const PrimitiveComponents: Record<PropertyKey, (...args: any[]) => JSX.Element> 
 };
 
 export default PrimitiveComponents;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

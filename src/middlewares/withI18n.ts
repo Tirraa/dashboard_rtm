@@ -20,5 +20,5 @@ const i18nMiddleware = (request: NextRequest): NextResponse => i18nMiddlewareIns
 const withI18n: MiddlewareFactory = () => async (request: NextRequest) => i18nMiddleware(request);
 
 export default withI18n;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

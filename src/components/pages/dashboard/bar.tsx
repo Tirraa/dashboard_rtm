@@ -85,5 +85,5 @@ const DashboardBarPage: FunctionComponent<DashboardBarPageProps> = () => {
 };
 
 export default DashboardBarPage;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

@@ -8,5 +8,5 @@ interface IButtonStyleBase extends IStyleBase {
 }
 
 export default IButtonStyleBase;
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */

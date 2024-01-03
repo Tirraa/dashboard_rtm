@@ -61,5 +61,5 @@ export type ComputedField = {
   resolve: (post: PostToBuild) => unknown;
   type: FieldDefType;
 };
-/* v8 ignore stop */
 // Stryker restore all
+/* v8 ignore stop */
