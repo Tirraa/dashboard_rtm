@@ -57,12 +57,11 @@ function printPrebuildReport({
   const computeDelay = (maybeStart: MaybeUndefined<number>, maybeEnd: MaybeUndefined<number>) =>
     maybeStart === undefined || maybeEnd === undefined ? IGNORED : (Math.abs(maybeEnd - maybeStart) / 1e3).toFixed(BENCHMARK_ACCURACY);
 
-  const globalEndTime = performance.now();
   const [localesElapsedTime, taxonomyElapsedTime, codegenElapsedTime, totalGlobalElapsedTime] = [
     computeDelay(localesCheckersStartTime, localesCheckersEndTime),
     computeDelay(taxonomyCheckersStartTime, taxonomyCheckersEndTime),
     computeDelay(codegenStartTime, codegenEndTime),
-    computeDelay(globalStartTime, globalEndTime)
+    computeDelay(globalStartTime, performance.now())
   ];
 
   (
