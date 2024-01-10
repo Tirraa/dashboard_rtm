@@ -1,18 +1,21 @@
 /* v8 ignore start */
 // Stryker disable all
+import formatMessage from './config/formatMessage';
+
+/* eslint-disable perfectionist/sort-imports */
 import type { MaybeUndefined, Tuple } from '@rtm/shared-types/CustomUtilityTypes';
 
 import { ArgError } from 'arg';
 import path from 'path';
 
 import type { MaybeEmptyErrorsDetectionFeedback } from './types/Metadatas';
+import type { VocabKey } from './config/translations';
 
+import { ROOT_FOLDER_RELATIVE_PATH_FROM_PREBUILDER_CTX, FLAGS } from './config';
 import getBlogArchitectureMetadatas from './metadatas-builders/blogArchitectureMetadatas';
 import generateBlogArchitectureType from './generators/blog/blogArchitectureType';
-import { ROOT_FOLDER_RELATIVE_PATH_FROM_PREBUILDER_CTX, FLAGS } from './config';
 import generateI18nBlogCategories from './generators/blog/i18nBlogCategories';
 import sysBlogSubcategoriesValidator from './validators/sysBlogSubcategories';
-import { BUGTRACKER_URL, PREBUILD_DONE, DOC_URL } from './config/vocab';
 import sysBlogCategoriesValidator from './validators/sysBlogCategories';
 import ArgumentsValidatorError from './errors/ArgumentsValidatorError';
 import localesInfosValidator from './validators/localesInfos';
@@ -22,6 +25,7 @@ import { foldFeedbacks } from './lib/feedbacksMerge';
 import parseArguments from './validators/arguments';
 import FeedbackError from './errors/FeedbackError';
 import BuilderError from './errors/BuilderError';
+/* eslint-enable perfectionist/sort-imports */
 
 const BENCHMARK_ACCURACY = 5;
 
@@ -30,7 +34,7 @@ const HANDLED_ERRORS_TYPES = [FeedbackError, BuilderError, ArgumentsValidatorErr
 const moveToRoot = () => process.chdir(path.join(__dirname, ROOT_FOLDER_RELATIVE_PATH_FROM_PREBUILDER_CTX));
 
 function printPrebuilderDoneMsg(sideEffectAtExit?: () => void) {
-  console.log(PREBUILD_DONE);
+  console.log(formatMessage('prebuildDone' satisfies VocabKey));
   if (typeof sideEffectAtExit === 'function') sideEffectAtExit();
 }
 
@@ -51,7 +55,6 @@ function printPrebuildReport({
   globalStartTime: number;
   codegenEndTime: number;
 }>) {
-  const TIME_UNIT = 's';
   const IGNORED = -1 as const;
 
   const computeDelay = (maybeStart: MaybeUndefined<number>, maybeEnd: MaybeUndefined<number>) =>
@@ -66,14 +69,14 @@ function printPrebuildReport({
 
   (
     [
-      ['Validated locales infos in:', localesElapsedTime],
-      ['Validated taxonomy in:', taxonomyElapsedTime],
-      ['Generated code in:', codegenElapsedTime],
-      ['Total execution time:', totalGlobalElapsedTime]
-    ] satisfies Tuple<string, typeof IGNORED | string>[]
-  ).forEach(([label, value]) => {
-    if (value === IGNORED) return;
-    console.log(label + ' ' + '~' + value + TIME_UNIT);
+      ['validatedLocalesInfosBenchmark', localesElapsedTime],
+      ['validatedTaxonomyBenchmark', taxonomyElapsedTime],
+      ['codegenBenchmark', codegenElapsedTime],
+      ['totalExecutionTimeBenchmark', totalGlobalElapsedTime]
+    ] satisfies Tuple<VocabKey, typeof IGNORED | string>[]
+  ).forEach(([label, duration]) => {
+    if (duration === IGNORED) return;
+    console.log(formatMessage(label satisfies VocabKey, { duration }));
   });
 }
 
@@ -95,7 +98,7 @@ async function processPrebuild() {
       [FLAGS.NO_I18N]: NO_I18N,
       [FLAGS.NO_BLOG]: NO_BLOG
     } = retrievedValuesFromArgs as Required<typeof retrievedValuesFromArgs>;
-    const NO_CONTENTLAYER_RELATED_FEATURES = NO_BLOG;
+    const NO_CONTENTLAYER_RELATED_FEATURES = NO_BLOG; // {ToDo} && NO_LANDING_PAGES && NO_PAGES && ...;
 
     let [localesCheckersStartTime, taxonomyCheckersStartTime, taxonomyCheckersEndTime, codegenStartTime, codegenEndTime]: MaybeUndefined<number>[] =
       [];
@@ -166,7 +169,7 @@ async function processPrebuild() {
         console.error(msg);
       }
     } else {
-      console.error('Unhandled error!' + '\n' + error + '\n\n' + `RTFM: ${DOC_URL}` + '\n' + `Bugtracker: ${BUGTRACKER_URL}` + '\n');
+      console.error(formatMessage('unhandledError' satisfies VocabKey, { error }));
     }
 
     process.exit(1);

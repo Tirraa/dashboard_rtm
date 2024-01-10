@@ -1,16 +1,17 @@
 import type { MaybeEmptyErrorsDetectionFeedback, ErrorsDetectionFeedback, Path } from '../types/Metadatas';
+import type { VocabKey } from '../config/translations';
 
 import retrieveLocaleFileInfosMetadatas from '../metadatas-builders/retrieveLocaleFileInfosMetadatas';
-import { LOCALES_INFOS_ROOT_KEY, LOCALES_LNG_INFOS_KEY, LIST_ELEMENT_PREFIX } from '../config';
+import { LOCALES_LNG_INFOS_KEY, LIST_ELEMENT_PREFIX } from '../config';
 import { prefixFeedback } from '../lib/feedbacksMerge';
-import { CRITICAL_ERRORS_STR } from '../config/vocab';
+import formatMessage from '../config/formatMessage';
 
 // https://github.com/vitest-dev/vitest/discussions/2484
 const fs = require('fs/promises');
 const path = require('path');
 
 const localesExtension = '.ts';
-const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
+const ERROR_PREFIX = formatMessage('failedToPassThePrebuild' satisfies VocabKey);
 
 async function localeFileInfosValidator(localeFilePath: string): Promise<MaybeEmptyErrorsDetectionFeedback> {
   let feedback: ErrorsDetectionFeedback = '';
@@ -20,12 +21,9 @@ async function localeFileInfosValidator(localeFilePath: string): Promise<MaybeEm
   const localeCode = localeMetadatas[LOCALES_LNG_INFOS_KEY];
 
   if (!localeCode) {
-    feedback += `The '${LOCALES_LNG_INFOS_KEY}' field value is empty or missing in '${LOCALES_INFOS_ROOT_KEY}'! (${localeFilePath})`;
+    feedback += formatMessage('localesInfosEmptyOrMissing' satisfies VocabKey, { localeFilePath });
   } else if (expectedLocaleCode !== localeCode) {
-    feedback +=
-      `The '${LOCALES_INFOS_ROOT_KEY}.${LOCALES_LNG_INFOS_KEY}' field value should match the locale filename! (${localeFilePath})` +
-      '\n' +
-      `Expected value: '${expectedLocaleCode}', given value: '${localeCode}'`;
+    feedback += formatMessage('localesInfosMismatch' satisfies VocabKey, { expectedLocaleCode, localeFilePath, localeCode });
   }
 
   return feedback;
@@ -35,7 +33,7 @@ async function localeFileInfosValidator(localeFilePath: string): Promise<MaybeEm
  * @throws {BuilderError}
  */
 export default async function localesInfosValidator(localesFolder: string, i18nSchemaFilePath: Path): Promise<MaybeEmptyErrorsDetectionFeedback> {
-  const ERROR_PREFIX_TAIL = '(locales files infos)';
+  const ERROR_PREFIX_TAIL = formatMessage('localesInfosValidatorTail' satisfies VocabKey);
   let feedback: ErrorsDetectionFeedback = '';
 
   const files: string[] = await fs.readdir(localesFolder);
@@ -53,19 +51,17 @@ export default async function localesInfosValidator(localesFolder: string, i18nS
   }
 
   if (localeFileInfosValidatorFeedbacks.length > 0) {
-    if (localeFileInfosValidatorFeedbacks.length > 1) {
-      feedback +=
-        `${LIST_ELEMENT_PREFIX}${localeFileInfosValidatorFeedbacks
-          .map((localeFileInfosValidatorFeedback) =>
-            localeFileInfosValidatorFeedback.replaceAll(
-              '\n',
-              '\n' + ' '.repeat(LIST_ELEMENT_PREFIX.length - LIST_ELEMENT_PREFIX.split('\n').length + 1)
+    feedback +=
+      localeFileInfosValidatorFeedbacks.length > 1
+        ? `${LIST_ELEMENT_PREFIX}${localeFileInfosValidatorFeedbacks
+            .map((localeFileInfosValidatorFeedback) =>
+              localeFileInfosValidatorFeedback.replaceAll(
+                '\n',
+                '\n' + ' '.repeat(LIST_ELEMENT_PREFIX.length - LIST_ELEMENT_PREFIX.split('\n').length + 1)
+              )
             )
-          )
-          .join(LIST_ELEMENT_PREFIX)}` + '\n';
-    } else {
-      feedback += '\n' + localeFileInfosValidatorFeedbacks[0] + '\n';
-    }
+            .join(LIST_ELEMENT_PREFIX)}` + '\n'
+        : '\n' + localeFileInfosValidatorFeedbacks[0] + '\n';
   }
   feedback = prefixFeedback(feedback, ERROR_PREFIX + ' ' + ERROR_PREFIX_TAIL);
   return feedback;

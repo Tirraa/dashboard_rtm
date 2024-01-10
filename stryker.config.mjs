@@ -1,7 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
 // @ts-check
-
 const SOON_OBSOLETE_IGNORE_PATTERNS = ['.next']; // {ToDo} Remove me when this will be released: https://github.com/stryker-mutator/stryker-js/issues/4571
 
 /** @type {import('@stryker-mutator/api/core').PartialStrykerOptions} */

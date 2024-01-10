@@ -7,13 +7,12 @@ import { FLAGS } from '../../config';
 
 const INVALID_PATH = './bless/the/draco/these/rounds/holy/sorry/bout/your/luck';
 
-// {ToDo} Rewrite this when https://github.com/Tirraa/dashboard_rtm/issues/16 will be solved.
 const NOT_A_DIRECTORY_NEEDLE = 'NOT a directory'.toLowerCase();
 const NOT_A_FILE_NEEDLE = 'NOT a file'.toLowerCase();
 const CANT_OPEN_NEEDLE = "Can't open".toLowerCase();
 const CANT_USE_NEEDLE = "can't use".toLocaleLowerCase();
 const CANT_OMIT_NEEDLE = "can't omit".toLocaleLowerCase();
-const FEATURE_RELIES_ON_ANOTHER_FEATURE_NEEDLE = 'feature relies on'.toLocaleLowerCase();
+const BREAKING_DEP_NEEDLE = 'Breaking dependency'.toLocaleLowerCase();
 
 const VALID_BLOG_POSTS_FOLDER = './packages/prebuilder/src/validators/__tests__/fake_posts_folders/phony_valid_fake_posts_folder';
 
@@ -276,7 +275,7 @@ describe('parseArguments unhappy paths (invalid args combinators: breaking depen
       await parseArguments();
     } catch (e) {
       const interceptedError = e as Error;
-      expect(interceptedError.message.toLowerCase().includes(FEATURE_RELIES_ON_ANOTHER_FEATURE_NEEDLE)).toBe(true);
+      expect(interceptedError.message.toLowerCase().includes(BREAKING_DEP_NEEDLE)).toBe(true);
     }
   });
 });

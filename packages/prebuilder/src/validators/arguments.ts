@@ -1,24 +1,18 @@
 import arg from 'arg';
 
-import type { Path } from '../types/Metadatas';
+import type { MaybeEmptyErrorsDetectionFeedback, ErrorsDetectionFeedback, Path } from '../types/Metadatas';
+import type { VocabKey, Locale } from '../config/translations';
 
-import {
-  DISABLE_BLOG_ANALYSIS_ADVICE,
-  DISABLE_I18N_ANALYSIS_ADVICE,
-  UNKNOWN_OPTIONS_PREFIX,
-  KNOWN_OPTIONS_PREFIX,
-  WRONG_OPTIONS_PREFIX,
-  CRITICAL_ERRORS_STR,
-  ARG_ERROR_PREFIX
-} from '../config/vocab';
+import { UNKNOWN_LOCALE_FALLBACK_MSG, LOCALES } from '../config/translations';
 import ArgumentsValidatorError from '../errors/ArgumentsValidatorError';
-import { prefixFeedback } from '../lib/feedbacksMerge';
+import { prefixFeedback, foldFeedbacks } from '../lib/feedbacksMerge';
+import formatMessage, { changeLocale } from '../config/formatMessage';
 import { FLAGS } from '../config';
 
 // https://github.com/vitest-dev/vitest/discussions/2484
 const fs = require('fs/promises');
 
-const { IMPOSSIBLE_TO_START: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
+const getErrorPrefix = () => formatMessage('impossibleToStartThePrebuilder' satisfies VocabKey);
 
 /**
  * @throws {ArgumentsValidatorError}
@@ -37,34 +31,70 @@ function crashIfArgumentsAreInvalid({ ...args }) {
   const wrongUseOfNoBlogOption = BLOG_POSTS_FOLDER !== undefined && NO_BLOG;
   const wrongUseOfNoI18nOption = I18N_LOCALES_SCHEMA_FILEPATH !== undefined && NO_I18N;
   const breakingBlogDependencyToI18n = BLOG_POSTS_FOLDER !== undefined && NO_I18N;
-  const unknownOptions = UNKNOWN_OPTIONS.length > 0;
-  const P = ARG_ERROR_PREFIX + UNKNOWN_OPTIONS_PREFIX;
-  const P2 = ARG_ERROR_PREFIX + WRONG_OPTIONS_PREFIX;
+  const havingUnknownOptions = UNKNOWN_OPTIONS.length > 0;
 
-  // {ToDo} Why else if? I bet we should accumulate all the feedbacks and finally display them all here too.
-  // Anyway, this part of the code is horrible and must be refactored.
-  let feedback = unknownOptions ? P + UNKNOWN_OPTIONS.join(', ') + '\n' + KNOWN_OPTIONS_PREFIX + Object.values(FLAGS).join(', ') : '';
+  const unknownOptionsFeedback: MaybeEmptyErrorsDetectionFeedback = havingUnknownOptions
+    ? formatMessage('unknownOptions' satisfies VocabKey, { UNKNOWN_OPTIONS: UNKNOWN_OPTIONS.join(', '), count: UNKNOWN_OPTIONS.length })
+    : '';
+  const incorrectOptionsFeedbacks: ErrorsDetectionFeedback[] = [];
+  const breakingDependenciesFeedbacks: ErrorsDetectionFeedback[] = [];
+
   if (invalidBlogOptions) {
-    feedback += P2 + `you must use the ${FLAGS.BLOG_POSTS_FOLDER} option unless you are using the ${FLAGS.NO_BLOG} option.`;
-  } else if (invalidI18nOptions) {
-    feedback += P2 + `you can't omit the ${FLAGS.I18N_LOCALES_SCHEMA_FILEPATH} option if you don't use the ${FLAGS.NO_I18N} option.`;
-  } else if (wrongUseOfNoBlogOption) {
-    feedback += P2 + `you can't use the ${FLAGS.NO_BLOG} option if you use blog related options.`;
-  } else if (wrongUseOfNoI18nOption) {
-    feedback += P2 + `you can't use the ${FLAGS.NO_I18N} option if you use i18n related options.`;
-  } else if (breakingBlogDependencyToI18n) {
-    feedback +=
-      P2 +
-      `you can't use both the ${FLAGS.NO_I18N} option and blog related options: the blog feature relies on i18n.` +
-      '\n' +
-      `Maybe you want to use the ${FLAGS.NO_I18N} and ${FLAGS.NO_BLOG} options?`;
+    incorrectOptionsFeedbacks.push(
+      formatMessage('unauthorizedToOmitOption' satisfies VocabKey, {
+        requiredOptionToAuthorizeOmission: FLAGS.NO_BLOG,
+        omittedOption: FLAGS.BLOG_POSTS_FOLDER
+      })
+    );
   }
 
+  if (invalidI18nOptions) {
+    incorrectOptionsFeedbacks.push(
+      formatMessage('unauthorizedToOmitOption' satisfies VocabKey, {
+        omittedOption: FLAGS.I18N_LOCALES_SCHEMA_FILEPATH,
+        requiredOptionToAuthorizeOmission: FLAGS.NO_I18N
+      })
+    );
+  }
+
+  if (wrongUseOfNoBlogOption) {
+    incorrectOptionsFeedbacks.push(
+      formatMessage('incompatibleOption' satisfies VocabKey, {
+        scope: formatMessage('blog' satisfies VocabKey),
+        incompatibleOption: FLAGS.NO_BLOG
+      })
+    );
+  }
+
+  if (wrongUseOfNoI18nOption) {
+    incorrectOptionsFeedbacks.push(
+      formatMessage('incompatibleOption' satisfies VocabKey, {
+        scope: formatMessage('i18n' satisfies VocabKey),
+        incompatibleOption: FLAGS.NO_I18N
+      })
+    );
+  }
+
+  if (breakingBlogDependencyToI18n) {
+    const _feedback =
+      formatMessage('breakingDependency' satisfies VocabKey, {
+        scope: formatMessage('blog' satisfies VocabKey),
+        incompatibleOption: FLAGS.NO_I18N
+      }) +
+      '\n' +
+      formatMessage('disableBothI18nAndBlogAnalysisMaybeAdvice' satisfies VocabKey);
+    breakingDependenciesFeedbacks.push(_feedback);
+  }
+
+  let feedback: MaybeEmptyErrorsDetectionFeedback = foldFeedbacks(
+    unknownOptionsFeedback,
+    ...incorrectOptionsFeedbacks,
+    ...breakingDependenciesFeedbacks
+  );
   if (!feedback) return;
 
-  feedback += '\n\n';
-  feedback += 'Options:' + '\n' + JSON.stringify(args, (k, v) => ((k === '_' && !unknownOptions) || !v ? undefined : v), 2);
-  throw new ArgumentsValidatorError(prefixFeedback(feedback, ERROR_PREFIX + '\n'));
+  feedback += '\n\n' + JSON.stringify(args, (k, v) => ((k === '_' && !havingUnknownOptions) || !v ? undefined : v), 2);
+  throw new ArgumentsValidatorError(prefixFeedback(feedback, getErrorPrefix() + '\n' + formatMessage('optionsAreInvalid' satisfies VocabKey) + '\n'));
 }
 
 async function fileExists(path: Path) {
@@ -90,32 +120,36 @@ async function crashIfFilesDoesNotExist({ ...args }) {
   async function checkI18n() {
     if (NO_I18N) return;
 
+    const ADVICE = formatMessage('disableI18nAnalysisAdvice' satisfies VocabKey);
+    const ERROR_PREFIX = getErrorPrefix();
+
     const i18nDefaultLocaleFileExists = await fileExists(I18N_LOCALES_SCHEMA_FILEPATH);
     if (!i18nDefaultLocaleFileExists) {
-      throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + "Can't open the i18n locale schema file!" + '\n' + DISABLE_I18N_ANALYSIS_ADVICE);
+      throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + formatMessage('cantOpenTheI18nLocaleSchemaFile' satisfies VocabKey) + '\n' + ADVICE);
     }
 
     const i18nLocalesSchemaStat = await fs.stat(I18N_LOCALES_SCHEMA_FILEPATH);
     const localesSchemaIsAFile = i18nLocalesSchemaStat.isFile();
     if (!localesSchemaIsAFile) {
-      throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + 'The locale schema you indicated is NOT a file!' + '\n' + DISABLE_I18N_ANALYSIS_ADVICE);
+      throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + formatMessage('theLocaleSchemaIsNotFile' satisfies VocabKey) + '\n' + ADVICE);
     }
   }
 
   async function checkBlog() {
     if (NO_BLOG) return;
 
-    const ADVICE = DISABLE_BLOG_ANALYSIS_ADVICE;
+    const ADVICE = formatMessage('disableBlogAnalysisAdvice' satisfies VocabKey);
+    const ERROR_PREFIX = getErrorPrefix();
 
     const postsFolderExists = await fileExists(BLOG_POSTS_FOLDER);
     if (!postsFolderExists) {
-      throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + "Can't open the posts folder!" + '\n' + ADVICE);
+      throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + formatMessage('cantOpenThePostsFolder' satisfies VocabKey) + '\n' + ADVICE);
     }
 
     const postsFolderStat = await fs.stat(BLOG_POSTS_FOLDER);
     const postsFolderIsDirectory = postsFolderStat.isDirectory();
     if (!postsFolderIsDirectory) {
-      throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + 'The posts folder you indicated is NOT a directory!' + '\n' + ADVICE);
+      throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + formatMessage('thePostsFolderIsNotDirectory' satisfies VocabKey) + '\n' + ADVICE);
     }
   }
 
@@ -130,10 +164,17 @@ export default async function parseArguments() {
       [FLAGS.BLOG_POSTS_FOLDER]: String,
       [FLAGS.SKIP_BENCHMARKS]: Boolean,
       [FLAGS.NO_BLOG]: Boolean,
-      [FLAGS.NO_I18N]: Boolean
+      [FLAGS.NO_I18N]: Boolean,
+      [FLAGS.LANG]: String
     },
     { permissive: true }
   );
+
+  const maybeLang = args[FLAGS.LANG];
+  if (maybeLang) {
+    if (LOCALES.includes(maybeLang as any)) changeLocale(maybeLang as Locale);
+    else console.warn(UNKNOWN_LOCALE_FALLBACK_MSG(maybeLang));
+  }
 
   crashIfArgumentsAreInvalid(args);
   await crashIfFilesDoesNotExist(args);

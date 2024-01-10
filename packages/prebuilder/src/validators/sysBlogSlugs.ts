@@ -1,13 +1,13 @@
 import type { MaybeEmptyErrorsDetectionFeedback, Filename, Path } from '../types/Metadatas';
+import type { VocabKey } from '../config/translations';
 
-import isValidTaxonomy, { NAMING_CONSTRAINTS_MSG } from './taxonomyConvention';
 import traverseAndMapFilepaths from '../lib/traverseAndMapFilepaths';
-import getErrorLabelForDefects from '../lib/getErrorLabelForDefects';
 import { LIST_ELEMENT_PREFIX, BLOG_POST_FILE_EXT } from '../config';
 import { prefixFeedback } from '../lib/feedbacksMerge';
-import { CRITICAL_ERRORS_STR } from '../config/vocab';
+import formatMessage from '../config/formatMessage';
+import isValidTaxonomy from './taxonomyConvention';
 
-const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
+const ERROR_PREFIX = formatMessage('failedToPassThePrebuild' satisfies VocabKey);
 
 export default async function sysBlogSlugsValidator(postsFolder: string): Promise<MaybeEmptyErrorsDetectionFeedback> {
   let feedback = '';
@@ -28,15 +28,13 @@ export default async function sysBlogSlugsValidator(postsFolder: string): Promis
 
   Object.entries(foldersWithDefects).forEach(([folderWithDefects, defects]) => {
     if (feedback) feedback += '\n';
-
-    feedback += getErrorLabelForDefects(
-      defects,
-      `Invalid slug in the '${folderWithDefects}' folder: ${defects}` + '\n' + NAMING_CONSTRAINTS_MSG + '\n',
-      `Invalid slugs in the '${folderWithDefects}' folder: ${LIST_ELEMENT_PREFIX}${defects.join(LIST_ELEMENT_PREFIX)}` +
-        '\n' +
-        NAMING_CONSTRAINTS_MSG +
-        '\n'
-    );
+    feedback +=
+      formatMessage('invalidSlugs' satisfies VocabKey, { count: defects.length, folderWithDefects }) +
+      ' ' +
+      (defects.length === 1 ? `${defects}` : `${LIST_ELEMENT_PREFIX}${defects.join(LIST_ELEMENT_PREFIX)}`) +
+      '\n' +
+      formatMessage('namingConstraint' satisfies VocabKey) +
+      '\n';
   });
   feedback = prefixFeedback(feedback, ERROR_PREFIX + '\n');
   return feedback;

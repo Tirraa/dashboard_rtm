@@ -13,7 +13,6 @@ const INVALID_BLOG_POSTS_FOLDER_CONTAINING_ONE_INVALID_BLOG_SUBCATEGORY =
 const INVALID_BLOG_POSTS_FOLDER_CONTAINING_SEVERAL_INVALID_BLOG_SUBCATEGORIES =
   './packages/prebuilder/src/validators/__tests__/fake_posts_folders/invalid_fake_posts_folder_several_invalid_subcategories';
 
-// {ToDo} Rewrite this when https://github.com/Tirraa/dashboard_rtm/issues/16 will be solved.
 const INVALID_SUBCATEGORY_NEEDLE = 'Invalid subcategory'.toLowerCase();
 const INVALID_SUBCATEGORIES_NEEDLE = 'Invalid subcategories'.toLowerCase();
 

@@ -1,12 +1,12 @@
 import type { MaybeEmptyErrorsDetectionFeedback, BlogSubcategory, BlogCategory } from '../types/Metadatas';
+import type { VocabKey } from '../config/translations';
 
-import isValidTaxonomy, { NAMING_CONSTRAINTS_MSG } from './taxonomyConvention';
-import getErrorLabelForDefects from '../lib/getErrorLabelForDefects';
 import { prefixFeedback } from '../lib/feedbacksMerge';
-import { CRITICAL_ERRORS_STR } from '../config/vocab';
+import formatMessage from '../config/formatMessage';
+import isValidTaxonomy from './taxonomyConvention';
 import { LIST_ELEMENT_PREFIX } from '../config';
 
-const { FAILED_TO_PASS: ERROR_PREFIX } = CRITICAL_ERRORS_STR;
+const ERROR_PREFIX = formatMessage('failedToPassThePrebuild' satisfies VocabKey);
 
 // https://github.com/vitest-dev/vitest/discussions/2484
 const fs = require('fs/promises');
@@ -35,14 +35,13 @@ export default async function sysBlogSubcategoriesValidator(postsFolder: string)
   Object.entries(categoriesWithDefects).forEach(([categoryWithDefects, defects]) => {
     if (feedback) feedback += '\n';
 
-    feedback += getErrorLabelForDefects(
-      defects,
-      `Invalid subcategory in the '${categoryWithDefects}' category: ${defects}` + '\n' + NAMING_CONSTRAINTS_MSG + '\n',
-      `Invalid subcategories in the '${categoryWithDefects}' category: ${LIST_ELEMENT_PREFIX}${defects.join(LIST_ELEMENT_PREFIX)}` +
-        '\n' +
-        NAMING_CONSTRAINTS_MSG +
-        '\n'
-    );
+    feedback +=
+      formatMessage('invalidSubcategories' satisfies VocabKey, { count: defects.length, categoryWithDefects }) +
+      ' ' +
+      (defects.length === 1 ? `${defects}` : `${LIST_ELEMENT_PREFIX}${defects.join(LIST_ELEMENT_PREFIX)}`) +
+      '\n' +
+      formatMessage('namingConstraint' satisfies VocabKey) +
+      '\n';
   });
 
   feedback = prefixFeedback(feedback, ERROR_PREFIX + '\n');

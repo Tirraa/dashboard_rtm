@@ -1,12 +1,13 @@
+import type { VocabKey } from '../config/translations';
 import type { I18nJSONPart } from '../types/Metadatas';
 
 import getRawDataFromBracesDeclaration from '../lib/getRawDataFromBracesDeclaration';
-import { LOCALES_INFOS_OBJ_NEEDLE, LOCALES_INFOS_ROOT_KEY } from '../config';
-import { CRITICAL_ERRORS_STR } from '../config/vocab';
+import { LOCALES_INFOS_OBJ_NEEDLE } from '../config';
+import formatMessage from '../config/formatMessage';
 import BuilderError from '../errors/BuilderError';
 import { objInnerToObj } from '../lib/etc';
 
-const { INTERRUPTED: ERROR_SUFFIX } = CRITICAL_ERRORS_STR;
+const ERROR_SUFFIX = formatMessage('interruptedThePrebuilder' satisfies VocabKey);
 
 // https://github.com/vitest-dev/vitest/discussions/2484
 const fs = require('fs/promises');
@@ -15,7 +16,7 @@ const fs = require('fs/promises');
  * @throws {BuilderError}
  */
 async function buildLocaleFileMetadatasFromLocaleFile(localeFilePath: string): Promise<I18nJSONPart> {
-  const error = new BuilderError(`Couldn't extract the content of the '${LOCALES_INFOS_ROOT_KEY}' i18n section!` + ' ' + ERROR_SUFFIX + '\n');
+  const error = new BuilderError(formatMessage('cantExtractLocalesInfosContent' satisfies VocabKey) + ' ' + ERROR_SUFFIX + '\n');
   const localeFileContent = await fs.readFile(localeFilePath, 'utf8');
   const startIndex = localeFileContent.indexOf(LOCALES_INFOS_OBJ_NEEDLE);
 

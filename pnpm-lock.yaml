@@ -260,6 +260,12 @@ importers:
       arg:
         specifier: ^5.0.2
         version: 5.0.2
+      format-message:
+        specifier: ^6.2.4
+        version: 6.2.4
+      inflection:
+        specifier: ^2.0.1
+        version: 2.0.1
       ts-morph:
         specifier: 21.0.1
         version: 21.0.1
@@ -4834,6 +4840,30 @@ packages:
       signal-exit: 4.1.0
     dev: true
 
+  /format-message-formats@6.2.4:
+    resolution: { integrity: sha512-smT/fAqBLqusWfWCKRAx6QBDAAbmYznWsIyTyk66COmvwt2Byiqd7SJe2ma9a5oV0kwRaOJpN/F4lr4YK/n6qQ== }
+    dev: false
+
+  /format-message-interpret@6.2.4:
+    resolution: { integrity: sha512-dRvz9mXhITApyOtfuFEb/XqvCe1u6RMkQW49UJHXS8w2S8cAHCqq5LNDFK+QK6XVzcofROycLb/k1uybTAKt2w== }
+    dependencies:
+      format-message-formats: 6.2.4
+      lookup-closest-locale: 6.2.0
+    dev: false
+
+  /format-message-parse@6.2.4:
+    resolution: { integrity: sha512-k7WqXkEzgXkW4wkHdS6Cv2Ou0rIFtiDelZjgoe1saW4p7FT7zS8OeAUpAekhormqzpeecR97e4vBft1zMsfFOQ== }
+    dev: false
+
+  /format-message@6.2.4:
+    resolution: { integrity: sha512-/24zYeSRy2ZlEO2OIctm7jOHvMpoWf+uhqFCaqqyZKi1C229zAAy2E5vF4lSSaMH0a2kewPrOzq6xN4Yy7cQrw== }
+    dependencies:
+      format-message-formats: 6.2.4
+      format-message-interpret: 6.2.4
+      format-message-parse: 6.2.4
+      lookup-closest-locale: 6.2.0
+    dev: false
+
   /format@0.2.2:
     resolution: { integrity: sha512-wzsgA6WOq+09wrU1tsJ09udeR/YZRaeArL9e1wPbFg3GG2yDnC2ldKpxs4xunpFF9DgqCqOIra3bc1HWrJ37Ww== }
     engines: { node: '>=0.4.x' }
@@ -6137,6 +6167,10 @@ packages:
     resolution: { integrity: sha512-Ajzxb8CM6WAnFjgiloPsI3bF+WCxcvhdIG3KNA2KN962+tdBsHcuQ4k4qX/EcS/2CRkcc0iAkR956Nib6aXU/Q== }
     engines: { node: '>=0.10.0' }
     dev: true
+
+  /lookup-closest-locale@6.2.0:
+    resolution: { integrity: sha512-/c2kL+Vnp1jnV6K6RpDTHK3dgg0Tu2VVp+elEiJpjfS1UyY7AjOYHohRug6wT0OpoX2qFgNORndE9RqesfVxWQ== }
+    dev: false
 
   /loose-envify@1.4.0:
     resolution: { integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q== }

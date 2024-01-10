@@ -1,7 +1,6 @@
 /* v8 ignore start */
-// @ts-check
-
 // Stryker disable all
+// @ts-check
 const DEFAULT_LANGUAGE = require('./interop/config/sitemap/defaultLanguageNextSitemapAdapter');
 const APP_PROTECTED_PATHS = require('./interop/config/sitemap/excludedRoutesPrefixesNextSitemapAdapter');
 
