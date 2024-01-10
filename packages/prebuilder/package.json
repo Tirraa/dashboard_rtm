@@ -15,7 +15,7 @@
   "dependencies": {
     "arg": "^5.0.2",
     "inflection": "^2.0.1",
-    "format-message": "^6.2.4",
+    "format-message": "6.2.4",
     "ts-morph": "21.0.1"
   },
   "packageManager": "^pnpm@8.14.0"

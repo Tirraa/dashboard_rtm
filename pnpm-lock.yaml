@@ -261,7 +261,7 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2
       format-message:
-        specifier: ^6.2.4
+        specifier: 6.2.4
         version: 6.2.4
       inflection:
         specifier: ^2.0.1

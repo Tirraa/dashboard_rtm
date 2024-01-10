@@ -93,7 +93,7 @@ const DEFAULT_TRANSLATION = {
   localesInfosMismatch:
     `The '${LOCALES_INFOS_ROOT_KEY}.${LOCALES_LNG_INFOS_KEY}' field value should match the locale filename! ({localeFilePath})` +
     '\n' +
-    `Expected value: '{expectedLocaleCode}', given value: '{localeCode}'`,
+    "Expected value: ''{expectedLocaleCode}'', given value: ''{localeCode}''",
   localesInfosValidatorTail: '(locales files infos)',
 
   optionsAreInvalid: `${capitalize(VOCAB_TOKENS.en.F_PLURAL.OPTIONS)} are invalid.`,
@@ -105,13 +105,13 @@ const DEFAULT_TRANSLATION = {
   }`,
   invalidSubcategories: `{count, plural,
     =0 {__NEVER__}
-    =1 {Invalid ${VOCAB_TOKENS.en.N_SINGULAR.SUBCATEGORIES} in the {categoryWithDefects} ${VOCAB_TOKENS.en.N_SINGULAR.CATEGORIES}:}
-    other {Invalid ${VOCAB_TOKENS.en.N_PLURAL.SUBCATEGORIES} in the {categoryWithDefects} ${VOCAB_TOKENS.en.N_SINGULAR.CATEGORIES}:}
+    =1 {Invalid ${VOCAB_TOKENS.en.N_SINGULAR.SUBCATEGORIES} in the ''{categoryWithDefects}'' ${VOCAB_TOKENS.en.N_SINGULAR.CATEGORIES}:}
+    other {Invalid ${VOCAB_TOKENS.en.N_PLURAL.SUBCATEGORIES} in the ''{categoryWithDefects}'' ${VOCAB_TOKENS.en.N_SINGULAR.CATEGORIES}:}
   }`,
   invalidSlugs: `{count, plural,
     =0 {__NEVER__}
-    =1 {Invalid ${VOCAB_TOKENS.en.N_SINGULAR.SLUGS} in the {folderWithDefects} folder:}
-    other {Invalid ${VOCAB_TOKENS.en.N_PLURAL.SLUGS} in the {folderWithDefects} folder:}
+    =1 {Invalid ${VOCAB_TOKENS.en.N_SINGULAR.SLUGS} in the ''{folderWithDefects}'' folder:}
+    other {Invalid ${VOCAB_TOKENS.en.N_PLURAL.SLUGS} in the ''{folderWithDefects}'' folder:}
   }`,
   unknownOptions: `{count, plural,
     =0 {__NEVER__}
@@ -125,15 +125,17 @@ const DEFAULT_TRANSLATION = {
 
   unauthorizedToOmitOption: `• ${capitalize(VOCAB_TOKENS.en.INVARIABLE.WRONG)} ${
     VOCAB_TOKENS.en.F_SINGULAR.OPTIONS
-  }: you can't omit the {omittedOption} ${VOCAB_TOKENS.en.F_SINGULAR.OPTIONS} unless you use the {requiredOptionToAuthorizeOmission} ${
+  }: you can't omit the ''{omittedOption}'' ${VOCAB_TOKENS.en.F_SINGULAR.OPTIONS} unless you use the ''{requiredOptionToAuthorizeOmission}'' ${
     VOCAB_TOKENS.en.F_SINGULAR.OPTIONS
   }.`,
 
   incompatibleOption: `• ${capitalize(VOCAB_TOKENS.en.INVARIABLE.WRONG)} ${
     VOCAB_TOKENS.en.F_SINGULAR.OPTIONS
-  }: you can't use the {incompatibleOption} ${VOCAB_TOKENS.en.F_SINGULAR.OPTIONS} if you use {scope} related ${VOCAB_TOKENS.en.F_PLURAL.OPTIONS}.`,
+  }: you can't use the ''{incompatibleOption}'' ${VOCAB_TOKENS.en.F_SINGULAR.OPTIONS} if you use {scope} related ${
+    VOCAB_TOKENS.en.F_PLURAL.OPTIONS
+  }.`,
 
-  breakingDependency: `• Breaking dependency: you can't use both the {incompatibleOption} ${VOCAB_TOKENS.en.F_SINGULAR.OPTIONS} and {scope} related ${VOCAB_TOKENS.en.F_PLURAL.OPTIONS}.`,
+  breakingDependency: `• Breaking dependency: you can't use both the ''{incompatibleOption}'' ${VOCAB_TOKENS.en.F_SINGULAR.OPTIONS} and {scope} related ${VOCAB_TOKENS.en.F_PLURAL.OPTIONS}.`,
 
   cantExtractLocalesInfosContent: `Can't extract the content of the '${LOCALES_INFOS_ROOT_KEY}' i18n section!`,
   cantOpenTheI18nLocaleSchemaFile: `Can't open the i18n ${VOCAB_TOKENS.en.N_SINGULAR.LOCALES} schema file!`,
