@@ -2,6 +2,8 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import ArgumentsValidatorError from '../../errors/ArgumentsValidatorError';
+import { getCurrentLocale } from '../../config/formatMessage';
+import { DEFAULT_LOCALE } from '../../config/translations';
 import parseArguments from '../arguments';
 import { FLAGS } from '../../config';
 
@@ -294,5 +296,40 @@ describe('parseArguments vacuous path (disabling all tools)', () => {
     ]);
 
     await expect(parseArguments()).resolves.not.toThrowError(ArgumentsValidatorError);
+  });
+});
+
+describe('parseArguments language support', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('should fallback on default language, given unknown locale', async () => {
+    vi.spyOn(console, 'warn').mockImplementationOnce(vi.fn(() => {}));
+    const argvSpy = vi.spyOn(process, 'argv', 'get');
+    // prettier-ignore
+    argvSpy.mockReturnValue([
+      '_', '_',
+      FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
+      FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH,
+      '--lang', '__UNKNOWN_LANG__'
+    ]);
+
+    await parseArguments();
+    expect(getCurrentLocale()).toBe(DEFAULT_LOCALE);
+  });
+
+  it('should set the language to default locale, given defaut locale', async () => {
+    const argvSpy = vi.spyOn(process, 'argv', 'get');
+    // prettier-ignore
+    argvSpy.mockReturnValue([
+      '_', '_',
+      FLAGS.BLOG_POSTS_FOLDER, VALID_BLOG_POSTS_FOLDER,
+      FLAGS.I18N_LOCALES_SCHEMA_FILEPATH, VALID_I18N_LOCALES_SCHEMA_FILEPATH,
+      '--lang', DEFAULT_LOCALE
+    ]);
+
+    await parseArguments();
+    expect(getCurrentLocale()).toBe(DEFAULT_LOCALE);
   });
 });

@@ -21,6 +21,8 @@ export function changeLocale(locale: Locale) {
   setup();
 }
 
+export const getCurrentLocale = () => Ctx.currentLocale;
+
 setup();
 
 export default formatMessage;

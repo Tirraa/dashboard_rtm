@@ -19,7 +19,8 @@ public/sitemap.xml
 .stryker-tmp
 
 # stryker reports
-reports
+reports/*
+!reports/stryker-incremental.json
 
 # dependencies
 node_modules
