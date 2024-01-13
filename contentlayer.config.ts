@@ -9,15 +9,16 @@ import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 
-import { BLOG_POSTS_FOLDER } from './interop/config/blog/contentlayerConfigTweakers';
-import CodeSnippetTheme from './interop/config/blog/code-snippet-theme.json';
+import { LANDING_PAGES_FOLDER, BLOG_POSTS_FOLDER } from './interop/config/contentlayer/contentlayerConfigTweakers';
+import landingPagesDocumentType from './interop/config/contentlayer/landing-pages/documentType';
+import CodeSnippetTheme from './interop/config/contentlayer/blog/code-snippet-theme.json';
+import blogDocumentTypes from './interop/config/contentlayer/blog/documentTypes';
 import validateContentLayerConfig from './interop/validators/contentLayer';
-import blogDocumentTypes from './interop/config/blog/documentTypes';
 import addClassname from './interop/lib/misc/addClassname';
 
 const contentDirPath = './content';
-const contentDirInclude = [BLOG_POSTS_FOLDER];
-const documentTypes = blogDocumentTypes;
+const contentDirInclude = [BLOG_POSTS_FOLDER, LANDING_PAGES_FOLDER];
+const documentTypes = [...blogDocumentTypes, landingPagesDocumentType];
 
 validateContentLayerConfig(documentTypes);
 

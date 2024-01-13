@@ -1,0 +1,4 @@
+// {ToDo} Codegen instead of "string" (as it is done for BlogCategory with BlogArchitecture codegen)
+export type LandingPageCategory = string;
+
+export type UnknownLandingPageSlug = string;

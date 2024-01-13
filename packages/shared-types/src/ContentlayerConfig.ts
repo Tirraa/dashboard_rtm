@@ -7,7 +7,7 @@ import type {
   BlogComputedFields,
   AllBlogFields,
   BlogFields
-} from '##/config/blog/contentlayerConfigTweakers';
+} from '##/config/contentlayer/contentlayerConfigTweakers';
 import type { DocumentContentType, ComputedFields, FieldDefs } from 'contentlayer/source-files';
 import type { FieldDefType, Document } from 'contentlayer/core';
 
@@ -35,8 +35,8 @@ export type DocumentsFields<
   __DocumentsComputedFieldsKeys extends keyof __AllFields = BlogDocumentsComputedFieldsKeys
 > = Omit<__AllFields, __DocumentsComputedFieldsKeys>;
 
-type AtomicDocumentConfig = DocumentsConfigType;
-export type AtomicContentLayerDocumentConfig = AtomicDocumentConfig & ContentLayerContentType;
+type AtomicBlogDocumentConfig = DocumentsConfigType;
+export type AtomicContentLayerDocumentConfig = AtomicBlogDocumentConfig & ContentLayerContentType;
 export type ContentLayerDocumentsConfigType<__TypeName extends string = TypeName, __AllBlogFields extends FieldDefs = AllBlogFields> = {
   fields: __AllBlogFields;
 } & ContentLayerContentType &
@@ -54,11 +54,11 @@ export type MakeFields<
   __DocumentsComputedFieldsKeys extends keyof __AllFields = BlogDocumentsComputedFieldsKeys
 > = T;
 
-export type PostToBuild = Document;
+export type DocumentToCompute = Document;
 
 // * ... Adapter
 export type ComputedField = {
-  resolve: (post: PostToBuild) => unknown;
+  resolve: (post: DocumentToCompute) => unknown;
   type: FieldDefType;
 };
 // Stryker restore all

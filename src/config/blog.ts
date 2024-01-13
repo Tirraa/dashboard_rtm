@@ -2,7 +2,7 @@ import type { StringsCompareFun } from '@rtm/shared-types/StringManipulations';
 import type { DatesCompareFun } from '@rtm/shared-types/DateManipulations';
 import type { PostsCollectionAssoc, BlogCategory } from '@/types/Blog';
 
-import { categoriesBlogDataAssoc } from '##/config/blog/documentTypes';
+import { categoriesBlogDataAssoc } from '##/config/contentlayer/blog/documentTypes';
 import { compareAlphabetically } from '@/lib/str';
 import compareDesc from 'date-fns/compareDesc';
 
