@@ -7,10 +7,7 @@ import type {
   DocumentsConfigTypeContentLayerMetadatas,
   ContentLayerDocumentsConfigType,
   MakeDocumentsAllFieldsSumType,
-  MakeDocumentsTypesSumType,
-  MakeComputedFields,
   DocumentsFields,
-  MakeAllFields,
   MakeFields
 } from '../ContentlayerConfig';
 
@@ -104,18 +101,14 @@ describe('ContentLayerConfig walkthrough', () => {
   type _AllFakeFields = typeof _FAKE_ALL_FIELDS;
   type _FakeComputedFields = typeof FAKE_COMPUTED_FIELDS;
   type _FakeFields = typeof FAKE_FIELDS;
-  type FakeDocumentsTypesKeys = MakeDocumentsTypesSumType<'FakePost1' | 'FakePost2'>;
+  type FakeDocumentsTypesKeys = 'FakePost1' | 'FakePost2';
   type FakeSchemaKey = typeof FAKE_SCHEMA_KEY;
   type FakeDocumentsTypesMetadatas = Record<FakeDocumentsTypesKeys, DocumentsConfigTypeContentLayerMetadatas<FakeDocumentsTypesKeys>>;
 
-  type AllFakeFields = MakeAllFields<_AllFakeFields>;
-  type FakeComputedFields = MakeComputedFields<_FakeComputedFields>;
   type FakeDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _FakeComputedFields, _AllFakeFields>;
   type FakeFields = MakeFields<_FakeFields, _AllFakeFields, keyof _FakeComputedFields>;
 
   it('should pass, otherwise it means that the type constructors are broken', () => {
-    expectAssignable<AllFakeFields>(_FAKE_ALL_FIELDS);
-    expectAssignable<FakeComputedFields>(FAKE_COMPUTED_FIELDS);
     expectAssignable<FakeDocumentsComputedFieldsKeys>('foo' as keyof typeof FAKE_COMPUTED_FIELDS);
     expectAssignable<FakeFields>(FAKE_FIELDS);
   });

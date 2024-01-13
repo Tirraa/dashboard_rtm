@@ -1,13 +1,10 @@
 import type {
+  BlogDocumentsConfigTypeMetadatas,
   ContentLayerDocumentsConfigType,
   MakeDocumentsAllFieldsSumType,
-  MakeDocumentsTypesSumType,
-  MakeComputedFields,
+  ComputedFieldsArtifact,
   DocumentsFields,
-  ComputedField,
-  MakeAllFields,
-  MakeFields,
-  TypeName
+  MakeFields
 } from '@rtm/shared-types/ContentlayerConfig';
 import type { DocumentContentType, ComputedFields, FieldDefs } from 'contentlayer/source-files';
 
@@ -73,6 +70,38 @@ const _ALL_BLOG_FIELDS = {
   }
 } as const satisfies FieldDefs;
 
+const _ALL_LANDING_PAGES_FIELDS = {
+  draft: {
+    type: 'boolean',
+    required: false,
+    default: false
+  },
+  metadescription: {
+    type: 'string',
+    required: true
+  },
+  category: {
+    type: 'string',
+    required: true
+  },
+  language: {
+    type: 'string',
+    required: true
+  },
+  title: {
+    type: 'string',
+    required: true
+  },
+  slug: {
+    type: 'string',
+    required: true
+  },
+  url: {
+    type: 'string',
+    required: true
+  }
+} as const satisfies FieldDefs;
+
 /* v8 ignore start */
 // Stryker disable all
 export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
@@ -81,7 +110,7 @@ export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
   category: { resolve: (post) => buildBlogPostCategory(post), type: 'string' },
   slug: { resolve: (post) => buildBlogPostSlug(post), type: 'string' },
   url: { resolve: (post) => buildBlogPostUrl(post), type: 'string' }
-} as const satisfies Partial<Record<keyof _AllBlogFields, ComputedField>> satisfies ComputedFields;
+} as const satisfies ComputedFieldsArtifact<AllBlogFields> satisfies ComputedFields;
 // Stryker restore all
 /* v8 ignore stop */
 
@@ -93,7 +122,7 @@ export const BLOG_DOCUMENTS_FIELDS = {
   date: { required: true, type: 'date' }
 } as const satisfies DocumentsFields;
 
-export const BLOG_POST_SCHEMA_CONFIG: ContentLayerDocumentsConfigType<PostSchemaKey> = {
+export const BLOG_POST_SCHEMA_CONFIG: ContentLayerDocumentsConfigType<BlogPostSchemaKey> = {
   contentType: DOCUMENTS_CONTENT_EXTENSION,
   fields: _ALL_BLOG_FIELDS,
   filePathPattern: '',
@@ -107,7 +136,7 @@ export const LANDING_PAGES_DOCUMENTS_COMPUTED_FIELDS = {
   category: { resolve: (lp) => buildLandingPageCategory(lp), type: 'string' },
   slug: { resolve: (lp) => buildLandingPageSlug(lp), type: 'string' },
   url: { resolve: (lp) => buildLandingPageUrl(lp), type: 'string' }
-} as const satisfies ComputedFields;
+} as const satisfies ComputedFieldsArtifact<_AllLandingPagesFields> satisfies ComputedFields;
 // Stryker restore all
 /* v8 ignore stop */
 
@@ -115,24 +144,18 @@ export const LANDING_PAGES_DOCUMENTS_FIELDS = {
   draft: { type: 'boolean', required: false, default: false },
   metadescription: { type: 'string', required: true },
   title: { type: 'string', required: true }
-} as const;
+} as const satisfies DocumentsFields<_AllLandingPagesFields, _LandingPagesDocumentsComputedFieldsKeys>;
 
-type _AllBlogFields = typeof _ALL_BLOG_FIELDS;
-type _BlogComputedFields = typeof BLOG_DOCUMENTS_COMPUTED_FIELDS;
+export type BlogDocumentsTypesKeys = 'PatchPostBis' | 'TestingPost' | 'PatchPost';
+type BlogPostSchemaKey = 'PostSchema';
+
 type _BlogFields = typeof BLOG_DOCUMENTS_FIELDS;
 
-export type BlogDocumentsTypesKeys = MakeDocumentsTypesSumType<'PatchPostBis' | 'TestingPost' | 'PatchPost'>;
-export type AllBlogFields = MakeAllFields<_AllBlogFields>;
+type _AllLandingPagesFields = typeof _ALL_LANDING_PAGES_FIELDS;
+type _LandingPagesComputedFields = typeof LANDING_PAGES_DOCUMENTS_COMPUTED_FIELDS;
+type _LandingPagesDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _LandingPagesComputedFields, _AllLandingPagesFields>;
+export type AllBlogFields = typeof _ALL_BLOG_FIELDS;
 export type BlogFields = MakeFields<_BlogFields>;
-export type BlogComputedFields = MakeComputedFields<_BlogComputedFields>;
-export type BlogDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _BlogComputedFields>;
-
-type PostSchemaKey = 'PostSchema';
-
+export type BlogComputedFields = typeof BLOG_DOCUMENTS_COMPUTED_FIELDS;
+export type BlogDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof BlogComputedFields>;
 export type BlogDocumentsTypesMetadatas = Record<BlogDocumentsTypesKeys, BlogDocumentsConfigTypeMetadatas<BlogDocumentsTypesKeys>>;
-
-type BlogDocumentsConfigTypeMetadatas<TYPENAME extends TypeName = TypeName> = {
-  categoryFolder: CategoryFolder;
-  name: TYPENAME;
-};
-type CategoryFolder = string;

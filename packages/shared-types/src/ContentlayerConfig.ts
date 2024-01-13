@@ -8,17 +8,18 @@ import type {
   AllBlogFields,
   BlogFields
 } from '##/config/contentlayer/contentlayerConfigTweakers';
-import type { DocumentContentType, ComputedFields, FieldDefs } from 'contentlayer/source-files';
+import type { DocumentContentType, ComputedFields, FieldDefs, FieldDef } from 'contentlayer/source-files';
 import type { FieldDefType, Document } from 'contentlayer/core';
 
 type ContentLayerContentType = { contentType: DocumentContentType };
 
+type CategoryFolder = string;
 type FilePathPattern = string;
 export type TypeName = BlogDocumentsTypesKeys;
 
-export type DocumentsConfigTypeContentLayerMetadatas<TYPENAME extends string> = {
+export type DocumentsConfigTypeContentLayerMetadatas<Name extends string> = {
   filePathPattern: FilePathPattern;
-  name: TYPENAME;
+  name: Name;
 };
 
 export type DocumentsConfigType<
@@ -42,10 +43,6 @@ export type ContentLayerDocumentsConfigType<__TypeName extends string = TypeName
 } & ContentLayerContentType &
   DocumentsConfigTypeContentLayerMetadatas<__TypeName>;
 
-export type MakeDocumentsTypesSumType<T extends string> = T;
-export type MakeComputedFields<T extends ComputedFields> = T;
-export type MakeAllFields<T extends FieldDefs> = T;
-
 export type MakeDocumentsAllFieldsSumType<T extends keyof __AllFields, __AllFields extends FieldDefs = AllBlogFields> = T;
 
 export type MakeFields<
@@ -57,9 +54,18 @@ export type MakeFields<
 export type DocumentToCompute = Document;
 
 // * ... Adapter
-export type ComputedField = {
+type ComputedField<T extends FieldDefType = FieldDefType> = {
   resolve: (post: DocumentToCompute) => unknown;
-  type: FieldDefType;
+  type: T;
 };
+type NarrowedFieldDefs = Record<string, FieldDef>;
+
+export type ComputedFieldsArtifact<T extends NarrowedFieldDefs> = Partial<{ [K in keyof T]: ComputedField<T[K]['type']> }>;
+
+export type BlogDocumentsConfigTypeMetadatas<Name extends TypeName = TypeName> = {
+  categoryFolder: CategoryFolder;
+  name: Name;
+};
+
 // Stryker restore all
 /* v8 ignore stop */
