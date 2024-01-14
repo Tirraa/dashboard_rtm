@@ -10,28 +10,32 @@ export const DEFAULT_LOCALE: Locale = 'en';
 
 const VOCAB_TOKENS = {
   fr: {
-    F_SINGULAR: {
-      SUBCATEGORIES: 'sous-catégorie',
-      CATEGORIES: 'catégorie',
-      TAXONOMY: 'taxonomie',
-      UNKNOWN: 'inconnue',
-      WRONG: 'incorrecte',
-      OPTIONS: 'option'
-    },
     F_PLURAL: {
       SUBCATEGORIES: 'sous-catégories',
       CATEGORIES: 'catégories',
+      INVALID: 'invalides',
       UNKNOWN: 'inconnues',
       WRONG: 'incorrectes',
       OPTIONS: 'options',
       LOCALES: 'locales'
     },
+    F_SINGULAR: {
+      SUBCATEGORIES: 'sous-catégorie',
+      CATEGORIES: 'catégorie',
+      TAXONOMY: 'taxonomie',
+      INVALID: 'invalide',
+      UNKNOWN: 'inconnue',
+      WRONG: 'incorrecte',
+      OPTIONS: 'option'
+    },
     M_SINGULAR: {
       PREBUILDER: 'prebuilder',
       PREBUILD: 'prebuild',
+      INVALID: 'invalide',
       SLUGS: 'slug'
     },
     M_PLURAL: {
+      INVALID: 'invalides',
       SLUGS: 'slugs'
     }
   },
@@ -52,6 +56,7 @@ const VOCAB_TOKENS = {
       SLUGS: 'slugs'
     },
     INVARIABLE: {
+      INVALID: 'invalid',
       UNKNOWN: 'unknown',
       WRONG: 'wrong'
     },
@@ -65,7 +70,9 @@ const VOCAB_TOKENS = {
 } as const satisfies Record<Locale, VocabTokensWithGrammaticalVariants>;
 
 export const UNKNOWN_LOCALE_FALLBACK_MSG = (unknownLocale: string) =>
-  `[Warning] Unknown ${VOCAB_TOKENS.en.N_SINGULAR.LOCALES}: ${unknownLocale}, falling back to ${DEFAULT_LOCALE}.` +
+  `[Warning] ${capitalize(VOCAB_TOKENS.en.INVARIABLE.UNKNOWN)} ${
+    VOCAB_TOKENS.en.N_SINGULAR.LOCALES
+  }: ${unknownLocale}, falling back to ${DEFAULT_LOCALE}.` +
   '\n' +
   `(Known ${VOCAB_TOKENS.en.N_PLURAL.LOCALES} are: ${LOCALES.join(', ')})` +
   '\n';
@@ -96,22 +103,26 @@ const DEFAULT_TRANSLATION = {
     "Expected value: ''{expectedLocaleCode}'', given value: ''{localeCode}''",
   localesInfosValidatorTail: '(locales files infos)',
 
-  optionsAreInvalid: `${capitalize(VOCAB_TOKENS.en.F_PLURAL.OPTIONS)} are invalid.`,
+  optionsAreInvalid: `${capitalize(VOCAB_TOKENS.en.F_PLURAL.OPTIONS)} are ${VOCAB_TOKENS.en.INVARIABLE.INVALID}.`,
 
   invalidCategories: `{count, plural,
     =0 {__NEVER__}
-    =1 {Invalid ${VOCAB_TOKENS.en.N_SINGULAR.CATEGORIES}:}
-    other {Invalid ${VOCAB_TOKENS.en.N_PLURAL.CATEGORIES}:}
+    =1 {${capitalize(VOCAB_TOKENS.en.INVARIABLE.INVALID)} ${VOCAB_TOKENS.en.N_SINGULAR.CATEGORIES}:}
+    other {${capitalize(VOCAB_TOKENS.en.INVARIABLE.INVALID)} ${VOCAB_TOKENS.en.N_PLURAL.CATEGORIES}:}
   }`,
   invalidSubcategories: `{count, plural,
     =0 {__NEVER__}
-    =1 {Invalid ${VOCAB_TOKENS.en.N_SINGULAR.SUBCATEGORIES} in the ''{categoryWithDefects}'' ${VOCAB_TOKENS.en.N_SINGULAR.CATEGORIES}:}
-    other {Invalid ${VOCAB_TOKENS.en.N_PLURAL.SUBCATEGORIES} in the ''{categoryWithDefects}'' ${VOCAB_TOKENS.en.N_SINGULAR.CATEGORIES}:}
+    =1 {${capitalize(VOCAB_TOKENS.en.INVARIABLE.INVALID)} ${VOCAB_TOKENS.en.N_SINGULAR.SUBCATEGORIES} in the ''{categoryWithDefects}'' ${
+      VOCAB_TOKENS.en.N_SINGULAR.CATEGORIES
+    }:}
+    other {${capitalize(VOCAB_TOKENS.en.INVARIABLE.INVALID)} ${VOCAB_TOKENS.en.N_PLURAL.SUBCATEGORIES} in the ''{categoryWithDefects}'' ${
+      VOCAB_TOKENS.en.N_SINGULAR.CATEGORIES
+    }:}
   }`,
   invalidSlugs: `{count, plural,
     =0 {__NEVER__}
-    =1 {Invalid ${VOCAB_TOKENS.en.N_SINGULAR.SLUGS} in the ''{folderWithDefects}'' folder:}
-    other {Invalid ${VOCAB_TOKENS.en.N_PLURAL.SLUGS} in the ''{folderWithDefects}'' folder:}
+    =1 {${capitalize(VOCAB_TOKENS.en.INVARIABLE.INVALID)} ${VOCAB_TOKENS.en.N_SINGULAR.SLUGS} in the ''{folderWithDefects}'' folder:}
+    other {${capitalize(VOCAB_TOKENS.en.INVARIABLE.INVALID)} ${VOCAB_TOKENS.en.N_PLURAL.SLUGS} in the ''{folderWithDefects}'' folder:}
   }`,
   unknownOptions: `{count, plural,
     =0 {__NEVER__}
@@ -167,7 +178,7 @@ const translations = {
     disableBlogAnalysisAdvice: `Si vous n'avez pas de blog dans votre projet, utilisez l'${VOCAB_TOKENS.fr.F_SINGULAR.OPTIONS} "${FLAGS.NO_BLOG}".`,
     disableBothI18nAndBlogAnalysisMaybeAdvice: `Peut-être voudriez-vous utilisez les ${VOCAB_TOKENS.fr.F_PLURAL.OPTIONS} "${FLAGS.NO_I18N}" et "${FLAGS.NO_BLOG}" ?`,
 
-    namingConstraint: `Seuls les tirets et les caractères alphanumériques sont autorisés. De plus, le premier caractère DOIT être une lettre ou un chiffre. Enfin, la longueur maximale autorisée est de : ${MAX_TAXONOMY_LEN} caractères.`,
+    namingConstraint: `Seuls les tirets et les caractères alphanumériques sont autorisés. De plus, le premier caractère DOIT être une lettre ou un chiffre. Enfin, la longueur maximale autorisée est de ${MAX_TAXONOMY_LEN} caractères.`,
     localesInfosEmptyOrMissing: `La valeur du champ "${LOCALES_LNG_INFOS_KEY}" est vide ou manquante dans "${LOCALES_INFOS_ROOT_KEY}" ! ({localeFilePath})`,
     localesInfosMismatch:
       `La valeur du champ "${LOCALES_INFOS_ROOT_KEY}.${LOCALES_LNG_INFOS_KEY}" doit correspondre au nom de fichier de la locale ! ({localeFilePath})` +
@@ -175,22 +186,26 @@ const translations = {
       `Valeur attendue : "{expectedLocaleCode}", valeur déduite : "{localeCode}"`,
     localesInfosValidatorTail: '(infos des fichiers des locales)',
 
-    optionsAreInvalid: `Les ${VOCAB_TOKENS.fr.F_PLURAL.OPTIONS} sont invalides.`,
+    optionsAreInvalid: `Les ${VOCAB_TOKENS.fr.F_PLURAL.OPTIONS} sont ${VOCAB_TOKENS.fr.F_PLURAL.INVALID}.`,
 
     invalidCategories: `{count, plural,
       =0 {__NEVER__}
-      =1 {${VOCAB_TOKENS.fr.F_SINGULAR.CATEGORIES} invalide : }
-      other {${VOCAB_TOKENS.fr.F_PLURAL.CATEGORIES} invalides : }
+      =1 {${capitalize(VOCAB_TOKENS.fr.F_SINGULAR.CATEGORIES)} ${VOCAB_TOKENS.fr.F_SINGULAR.INVALID} : }
+      other {${capitalize(VOCAB_TOKENS.fr.F_PLURAL.CATEGORIES)} ${VOCAB_TOKENS.fr.F_PLURAL.INVALID} : }
     }`,
     invalidSubcategories: `{count, plural,
       =0 {__NEVER__}
-      =1 {${VOCAB_TOKENS.fr.F_SINGULAR.SUBCATEGORIES} invalide dans la ${VOCAB_TOKENS.fr.F_SINGULAR.CATEGORIES} "{categoryWithDefects}" :}
-      other {${VOCAB_TOKENS.fr.F_PLURAL.SUBCATEGORIES} invalides dans la ${VOCAB_TOKENS.fr.F_SINGULAR.CATEGORIES} "{categoryWithDefects}" :}
+      =1 {${capitalize(VOCAB_TOKENS.fr.F_SINGULAR.SUBCATEGORIES)} ${VOCAB_TOKENS.fr.F_SINGULAR.INVALID} dans la ${
+        VOCAB_TOKENS.fr.F_SINGULAR.CATEGORIES
+      } "{categoryWithDefects}" :}
+      other {${capitalize(VOCAB_TOKENS.fr.F_PLURAL.SUBCATEGORIES)} ${VOCAB_TOKENS.fr.F_PLURAL.INVALID} dans la ${
+        VOCAB_TOKENS.fr.F_SINGULAR.CATEGORIES
+      } "{categoryWithDefects}" :}
     }`,
     invalidSlugs: `{count, plural,
       =0 {__NEVER__}
-      =1 {${VOCAB_TOKENS.fr.M_SINGULAR.SLUGS} invalide dans le dossier "{folderWithDefects}" :}
-      other {${VOCAB_TOKENS.fr.M_PLURAL.SLUGS} invalides dans le dossier "{folderWithDefects}" :}
+      =1 {${capitalize(VOCAB_TOKENS.fr.M_SINGULAR.SLUGS)} ${VOCAB_TOKENS.fr.M_SINGULAR.INVALID} dans le dossier "{folderWithDefects}" :}
+      other {${capitalize(VOCAB_TOKENS.fr.M_PLURAL.SLUGS)} ${VOCAB_TOKENS.fr.M_PLURAL.INVALID} dans le dossier "{folderWithDefects}" :}
     }`,
     unknownOptions: `{count, plural,
       =0 {__NEVER__}
@@ -238,7 +253,18 @@ const translations = {
 type Token = string;
 type GrammaticalVariantsSumType = 'INVARIABLE' | 'F_SINGULAR' | 'M_SINGULAR' | 'N_SINGULAR' | 'F_PLURAL' | 'M_PLURAL' | 'N_PLURAL';
 
-type VocabTokens = 'SUBCATEGORIES' | 'PREBUILDER' | 'CATEGORIES' | 'PREBUILD' | 'TAXONOMY' | 'LOCALES' | 'OPTIONS' | 'UNKNOWN' | 'WRONG' | 'SLUGS';
+type VocabTokens =
+  | 'SUBCATEGORIES'
+  | 'PREBUILDER'
+  | 'CATEGORIES'
+  | 'PREBUILD'
+  | 'TAXONOMY'
+  | 'LOCALES'
+  | 'OPTIONS'
+  | 'UNKNOWN'
+  | 'INVALID'
+  | 'WRONG'
+  | 'SLUGS';
 
 export const LOCALES = ['en', 'fr'] as const;
 export type Locale = (typeof LOCALES)[number];
