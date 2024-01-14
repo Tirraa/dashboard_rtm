@@ -3,9 +3,9 @@ import type { VocabKey } from '../config/translations';
 
 import traverseAndMapFilepaths from '../lib/traverseAndMapFilepaths';
 import { LIST_ELEMENT_PREFIX, BLOG_POST_FILE_EXT } from '../config';
+import { isValidBlogTaxonomy } from './taxonomyConvention';
 import { prefixFeedback } from '../lib/feedbacksMerge';
 import formatMessage from '../config/formatMessage';
-import isValidTaxonomy from './taxonomyConvention';
 
 const ERROR_PREFIX = formatMessage('failedToPassThePrebuild' satisfies VocabKey);
 
@@ -20,7 +20,7 @@ export default async function sysBlogSlugsValidator(postsFolder: string): Promis
     if (!maybeSlug.endsWith(BLOG_POST_FILE_EXT)) continue;
 
     const slug = maybeSlug.slice(0, -BLOG_POST_FILE_EXT.length);
-    if (!isValidTaxonomy(slug)) {
+    if (!isValidBlogTaxonomy(slug)) {
       if (!foldersWithDefects[file.directory]) foldersWithDefects[file.directory] = [];
       foldersWithDefects[file.directory].push(slug);
     }

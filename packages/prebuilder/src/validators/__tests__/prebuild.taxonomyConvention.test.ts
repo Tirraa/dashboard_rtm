@@ -1,24 +1,24 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { describe, expect, it } from 'vitest';
 
-import isValidTaxonomy from '../taxonomyConvention';
+import { isValidBlogTaxonomy } from '../taxonomyConvention';
 import { MAX_TAXONOMY_LEN } from '../../config';
 
-describe('isValidTaxonomy', () => {
+describe('isValidBlogTaxonomy', () => {
   it('should return false, given invalid taxonomies', () => {
     const tooLong = 'w'.repeat(MAX_TAXONOMY_LEN + 1);
 
-    expect(isValidTaxonomy('_$!§%&/()=?')).toBe(false);
-    expect(isValidTaxonomy('0_$!§%&/()=?')).toBe(false);
-    expect(isValidTaxonomy('foo-bar_$!§%&/()=?')).toBe(false);
-    expect(isValidTaxonomy('_foo-bar_$!§%&/()=?')).toBe(false);
-    expect(isValidTaxonomy('_foo-bar')).toBe(false);
-    expect(isValidTaxonomy('$foo-bar')).toBe(false);
-    expect(isValidTaxonomy(tooLong)).toBe(false);
+    expect(isValidBlogTaxonomy('_$!§%&/()=?')).toBe(false);
+    expect(isValidBlogTaxonomy('0_$!§%&/()=?')).toBe(false);
+    expect(isValidBlogTaxonomy('foo-bar_$!§%&/()=?')).toBe(false);
+    expect(isValidBlogTaxonomy('_foo-bar_$!§%&/()=?')).toBe(false);
+    expect(isValidBlogTaxonomy('_foo-bar')).toBe(false);
+    expect(isValidBlogTaxonomy('$foo-bar')).toBe(false);
+    expect(isValidBlogTaxonomy(tooLong)).toBe(false);
   });
 
   it('should return true, given valid taxonomies', () => {
-    expect(isValidTaxonomy('foo-bar')).toBe(true);
-    expect(isValidTaxonomy('0-foo-bar')).toBe(true);
+    expect(isValidBlogTaxonomy('foo-bar')).toBe(true);
+    expect(isValidBlogTaxonomy('0-foo-bar')).toBe(true);
   });
 });

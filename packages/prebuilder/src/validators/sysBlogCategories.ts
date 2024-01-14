@@ -1,9 +1,9 @@
 import type { MaybeEmptyErrorsDetectionFeedback } from '../types/Metadatas';
 import type { VocabKey } from '../config/translations';
 
+import { isValidBlogTaxonomy } from './taxonomyConvention';
 import { prefixFeedback } from '../lib/feedbacksMerge';
 import formatMessage from '../config/formatMessage';
-import isValidTaxonomy from './taxonomyConvention';
 import { LIST_ELEMENT_PREFIX } from '../config';
 
 const ERROR_PREFIX = formatMessage('failedToPassThePrebuild' satisfies VocabKey);
@@ -20,7 +20,7 @@ export default async function sysBlogCategoriesValidator(postsFolder: string): P
   for (const maybeCategory of maybeCategories) {
     if (!maybeCategory.isDirectory()) continue;
     const category = maybeCategory.name;
-    if (!isValidTaxonomy(category)) {
+    if (!isValidBlogTaxonomy(category)) {
       categoriesWithDefects.push(category);
     }
   }
