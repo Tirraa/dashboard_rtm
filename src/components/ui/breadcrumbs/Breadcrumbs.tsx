@@ -1,12 +1,12 @@
 'use client';
 
-import type { UnstrictScopedT, PagesTitlesKey } from '@rtm/shared-types/I18n';
+import type { UnstrictScopedT, PagesTitlesKey, LanguageFlag } from '@rtm/shared-types/I18n';
 import type { CustomCrumbs } from '@rtm/shared-types/Breadcrumbs';
 import type { FunctionComponent, ReactNode } from 'react';
 
 import { buildAbsolutePathFromParts } from '@rtm/shared-lib/str';
+import { useCurrentLocale, useScopedI18n } from '@/i18n/client';
 import { SHARED_VOCAB_SCHEMA } from '@/i18n/locales/schema';
-import { useScopedI18n } from '@/i18n/client';
 import { usePathname } from 'next/navigation';
 import ROUTES_ROOTS from '##/config/routes';
 import { getPathParts } from '@/lib/next';
@@ -22,7 +22,13 @@ interface BreadcrumbsProps {
   className?: string;
 }
 
-function crumbsGenerator(pathParts: string[], withHomepageElement: boolean, scopedT: UnstrictScopedT, customCrumbs?: CustomCrumbs): ReactNode[] {
+function crumbsGenerator(
+  pathParts: string[],
+  withHomepageElement: boolean,
+  scopedT: UnstrictScopedT,
+  currentLocale: LanguageFlag,
+  customCrumbs?: CustomCrumbs
+): ReactNode[] {
   function buildCurrentPath(pathParts: string[], depth: number) {
     const currentPathParts = pathParts.slice(0, depth + 1);
     const currentPath = buildAbsolutePathFromParts(...currentPathParts);
@@ -32,7 +38,7 @@ function crumbsGenerator(pathParts: string[], withHomepageElement: boolean, scop
   const crumbs: ReactNode[] = withHomepageElement
     ? [
         <>
-          <HomepageCrumb scopedT={scopedT} />
+          <HomepageCrumb />
           <CrumbSeparator />
         </>
       ]
@@ -46,7 +52,7 @@ function crumbsGenerator(pathParts: string[], withHomepageElement: boolean, scop
     }
 
     const missingLabel = !Object.keys(SHARED_VOCAB_SCHEMA['pages-titles']).includes(pathParts[depth]);
-    if (missingLabel) throw new Error('Missing pages-titles label: ' + pathParts[depth]);
+    if (missingLabel) throw new Error(`Missing pages-titles (${currentLocale}) label: ${pathParts[depth]}`);
 
     const label = scopedT(pathParts[depth] as PagesTitlesKey);
     return <Crumb isLeaf={isLeaf} label={label} href={href} />;
@@ -68,12 +74,13 @@ const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = ({ withHomepageElement:
   const { pagesTitles, vocab } = i18ns;
   const scopedT = useScopedI18n(pagesTitles);
   const scopedT2 = useScopedI18n(vocab);
+  const currentLocale = useCurrentLocale();
 
-  if (pathname === ROUTES_ROOTS.WEBSITE) return withHomepageElement ? <HomepageCrumb scopedT={scopedT} isLeaf /> : null;
+  if (pathname === ROUTES_ROOTS.WEBSITE) return withHomepageElement ? <HomepageCrumb isLeaf /> : null;
   return (
     <nav aria-label={scopedT2('breadcrumbs')} className={className}>
       <ol className="flex w-fit flex-wrap justify-center gap-y-1 rounded-lg bg-accent bg-opacity-75 px-3 py-2 lg:justify-normal">
-        {crumbsGenerator(pathParts, withHomepageElement, scopedT, customCrumbs)}
+        {crumbsGenerator(pathParts, withHomepageElement, scopedT, currentLocale, customCrumbs)}
       </ol>
     </nav>
   );
