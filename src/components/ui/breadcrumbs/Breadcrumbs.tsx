@@ -5,7 +5,7 @@ import type { CustomCrumbs } from '@rtm/shared-types/Breadcrumbs';
 import type { FunctionComponent, ReactNode } from 'react';
 
 import { buildAbsolutePathFromParts } from '@rtm/shared-lib/str';
-import { fromKebabCaseToSentenceCase } from '@/lib/str';
+import { SHARED_VOCAB_SCHEMA } from '@/i18n/locales/schema';
 import { useScopedI18n } from '@/i18n/client';
 import { usePathname } from 'next/navigation';
 import ROUTES_ROOTS from '##/config/routes';
@@ -45,13 +45,11 @@ function crumbsGenerator(pathParts: string[], withHomepageElement: boolean, scop
       }
     }
 
-    const retrievedVocabFromPathPart = scopedT(pathParts[depth] as PagesTitlesKey);
-    const shouldGenerateAFallbackLabel = retrievedVocabFromPathPart === pathParts[depth];
-    const fallbackLabel = shouldGenerateAFallbackLabel ? fromKebabCaseToSentenceCase(retrievedVocabFromPathPart) : undefined;
-    const label = fallbackLabel ?? retrievedVocabFromPathPart;
-    const withRescueCtx = fallbackLabel !== undefined;
+    const missingLabel = !Object.keys(SHARED_VOCAB_SCHEMA['pages-titles']).includes(pathParts[depth]);
+    if (missingLabel) throw new Error('Missing pages-titles label: ' + pathParts[depth]);
 
-    return <Crumb withRescueCtx={withRescueCtx} isLeaf={isLeaf} label={label} href={href} />;
+    const label = scopedT(pathParts[depth] as PagesTitlesKey);
+    return <Crumb isLeaf={isLeaf} label={label} href={href} />;
   }
 
   for (let depth = 0; depth < pathParts.length; depth++) {

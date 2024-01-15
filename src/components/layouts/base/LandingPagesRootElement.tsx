@@ -4,15 +4,14 @@ import type { LayoutBaseProps } from '@/types/Next';
 import type { FunctionComponent } from 'react';
 
 import DocumentRoot from '@/components/layouts/base/DocumentRoot';
+import 'intl-locale-textinfo-polyfill';
 
 interface HtmlElementProps extends LayoutBaseProps {}
 
-const PagesHtmlElement: FunctionComponent<HtmlElementProps> = ({ children, params }) => (
-  <DocumentRoot params={params} withNavbar>
-    {children}
-  </DocumentRoot>
+const LandingPagesRootElement: FunctionComponent<HtmlElementProps> = ({ children, params }) => (
+  <DocumentRoot params={params}>{children}</DocumentRoot>
 );
 
-export default PagesHtmlElement;
+export default LandingPagesRootElement;
 // Stryker restore all
 /* v8 ignore stop */

@@ -5,7 +5,7 @@ import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { LANGUAGES } from '##/config/i18n';
 
-import { getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict, getAllBlogCategories } from '../api';
+import { getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict, getAllBlogCategories } from '../api';
 
 export default async function getBlogStaticParams(): Promise<BlogStaticParams[]> {
   const blogStaticParams: BlogStaticParams[] = [];
@@ -19,7 +19,7 @@ export default async function getBlogStaticParams(): Promise<BlogStaticParams[]>
       for (const subcateg of curSubcategs) {
         const subcategory = subcateg as BlogSubcategoryFromUnknownCategory;
 
-        const relatedPosts: TBlogPost[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(category, subcategory, language);
+        const relatedPosts: TBlogPost[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(category, subcategory, language);
 
         for (const post of relatedPosts) {
           const slug = post.slug as UnknownBlogSlug;

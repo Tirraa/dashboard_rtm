@@ -11,14 +11,16 @@ export const SHARED_VOCAB_SCHEMA = {
     'fake-subcategory': _,
     'patch-notes-bis': _,
     'discord-bot-bis': _,
-
     'dashboard-bis': _,
+
     'patch-notes': _,
     'discord-bot': _,
-
     'sign-up': _,
+
     dashboard: _,
-    homepage: _
+    homepage: _,
+
+    blog: _
   },
   vocab: {
     breadcrumbs: _,

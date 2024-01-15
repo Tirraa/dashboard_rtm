@@ -3,7 +3,7 @@ import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, vi, it } from 'vitest';
 import BlogConfig from '@/config/blog';
 
-import { getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict, getBlogPostUnstrict, isValidBlogCategory } from '../api';
+import { getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict, getBlogPostUnstrict, isValidBlogCategory } from '../api';
 
 vi.mock('../ctx', async (orgImport) => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -17,9 +17,9 @@ vi.mock('../ctx', async (orgImport) => {
   } satisfies typeof mod;
 });
 
-describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict', () => {
+describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict', () => {
   it('should return an empty list, given testing category in not testing ctx', async () => {
-    const posts = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(
+    const posts = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(
       BlogConfig.TESTING_CATEGORY,
       TESTING_BLOG_FAKE_SUBCATEGORY,
       DEFAULT_LANGUAGE

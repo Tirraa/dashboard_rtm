@@ -5,6 +5,7 @@ import type { TBlogPost } from '@/types/Blog';
 import { TESTING_BLOG_FAKE_SUBCATEGORY } from '𝕍/testingBlogCategoryDatas';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, it, vi } from 'vitest';
+import ROUTES_ROOTS from '##/config/routes';
 import BlogConfig from '@/config/blog';
 
 import { getBlogPostStrict } from '../api';
@@ -31,7 +32,7 @@ describe('getPostStrict', () => {
     expect(post.subcategory).toBe(subcategory);
     expect(post.slug).toBe(targettedSlug);
     expect(post.language).toBe(language);
-    expect(post.url).toBe(`/${language}/${category}/${subcategory}/${targettedSlug}`);
+    expect(post.url).toBe('/' + language + ROUTES_ROOTS.BLOG + `${category}/${subcategory}/${targettedSlug}`);
   });
 
   it('should always return NULL when picking a draft post in an unauthorized drafts CTX', async () => {

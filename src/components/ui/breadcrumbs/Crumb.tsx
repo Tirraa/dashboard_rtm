@@ -1,7 +1,5 @@
-import type { MaybeObjectValue } from '@rtm/shared-types/CustomUtilityTypes';
 import type { FunctionComponent } from 'react';
 
-import { DATA_QA_WARNING_DOM_KEY, QA_WARNINGS } from '##/config/QA';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
@@ -14,21 +12,12 @@ interface CrumbProps {
   href: string;
 }
 
-const Crumb: FunctionComponent<CrumbProps> = ({ withRescueCtx: maybeWithRescueCtx, isLeaf: maybeIsLeaf, label, href }) => {
-  const QA_WARNING: MaybeObjectValue<string> = maybeWithRescueCtx ? QA_WARNINGS.IS_A_FALLBACK : undefined;
-  const QA_PROPS = { [DATA_QA_WARNING_DOM_KEY]: QA_WARNING };
+const Crumb: FunctionComponent<CrumbProps> = ({ isLeaf: maybeIsLeaf, label, href }) => {
   const isLeaf = Boolean(maybeIsLeaf);
-
-  if (QA_WARNING) {
-    console.warn(
-      `Crumb with label '${label}' got rescued! The fallback generated is poorly featured. For instance: you may have internationalization issues.`
-    );
-  }
 
   return (
     <>
       <Link
-        {...QA_PROPS}
         className={cn(
           'duration-250 transition-colors',
           {

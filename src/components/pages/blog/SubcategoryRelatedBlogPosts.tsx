@@ -2,7 +2,7 @@ import type { BlogCategoriesAndSubcategoriesAssoc, BlogSubcategoryPageProps, TBl
 import type { FunctionComponent } from 'react';
 
 import {
-  getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict,
+  getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict,
   isValidBlogCategoryAndSubcategoryPairInAnyLanguage,
   blogSubcategoryShouldTriggerNotFound
 } from '@/lib/blog/api';
@@ -29,7 +29,7 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
 
   const scopedT = await getScopedI18n(i18ns.blogCategories);
 
-  const postsCollection: TBlogPost[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(category, subcategory, language);
+  const postsCollection: TBlogPost[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(category, subcategory, language);
 
   if (blogSubcategoryShouldTriggerNotFound(postsCollection)) notFound();
   else if (postsCollection.length === 0) return <BlogPostsNotFound />;

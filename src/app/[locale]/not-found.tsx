@@ -2,7 +2,7 @@
 // Stryker disable all
 import type { I18nParams } from '@/types/Next';
 
-import PagesHtmlElement from '@/components/layouts/base/PagesHtmlElement';
+import PagesRootElement from '@/components/layouts/base/PagesRootElement';
 import { getCurrentLocale, getScopedI18n } from '@/i18n/server';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { buildPageTitle } from '@rtm/shared-lib/str';
@@ -24,9 +24,9 @@ export default async function NotFoundPage() {
   const params: I18nParams = { [I18nTaxonomy.LANGUAGE]: language };
 
   return (
-    <PagesHtmlElement params={params}>
+    <PagesRootElement params={params}>
       <NotFound />
-    </PagesHtmlElement>
+    </PagesRootElement>
   );
 }
 // Stryker restore all

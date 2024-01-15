@@ -4,11 +4,12 @@ import type { TBlogPost } from '@/types/Blog';
 import { TESTING_BLOG_FAKE_SUBCATEGORY } from '𝕍/testingBlogCategoryDatas';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, it } from 'vitest';
+import ROUTES_ROOTS from '##/config/routes';
 import BlogConfig from '@/config/blog';
 
 import {
-  getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict,
-  getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict,
+  getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict,
+  getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict,
   isValidBlogCategoryAndSubcategoryPairInAnyLanguage,
   isValidBlogCategoryAndSubcategoryPair,
   getBlogPostPathWithoutI18nPart,
@@ -26,7 +27,7 @@ describe('getPostStrict', () => {
     expect(post.subcategory).toBe(subcategory);
     expect(post.slug).toBe(targettedSlug);
     expect(post.language).toBe(language);
-    expect(post.url).toBe(`/${language}/${category}/${subcategory}/${targettedSlug}`);
+    expect(post.url).toBe('/' + language + ROUTES_ROOTS.BLOG + `${category}/${subcategory}/${targettedSlug}`);
   });
 });
 
@@ -36,9 +37,9 @@ describe('getBlogPostFormattedDate', () => {
   });
 });
 
-describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict', () => {
+describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict', () => {
   it("should return 4 posts, given the fake language 'posts'", async () => {
-    const postsCollection = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict(
+    const postsCollection = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict(
       BlogConfig.TESTING_CATEGORY,
       TESTING_BLOG_FAKE_SUBCATEGORY,
       'posts' satisfies TFakeLanguage
@@ -47,7 +48,7 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict', () => {
   });
 
   it('should return 3 posts, with the default language', async () => {
-    const postsCollection = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict(
+    const postsCollection = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict(
       BlogConfig.TESTING_CATEGORY,
       TESTING_BLOG_FAKE_SUBCATEGORY,
       DEFAULT_LANGUAGE
@@ -98,10 +99,10 @@ describe('isValidBlogCategoryAndSubcategoryPair', () => {
   });
 });
 
-describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict', () => {
+describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict', () => {
   it('should return empty list, given invalid combination', async () => {
     // @ts-expect-error
-    const posts = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict('testing', '__INVALID_SUBCATEGORY__', DEFAULT_LANGUAGE);
+    const posts = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict('testing', '__INVALID_SUBCATEGORY__', DEFAULT_LANGUAGE);
     expect(posts).toStrictEqual([]);
   });
 });
@@ -118,7 +119,7 @@ describe('getBlogPostPathWithoutI18nPart', () => {
     const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as TBlogPost;
     const blogPostWithoutI18nPart = getBlogPostPathWithoutI18nPart(post);
 
-    expect(blogPostWithoutI18nPart).toBe('/' + [category, subcategory, targettedSlug].join('/'));
+    expect(blogPostWithoutI18nPart).toBe(ROUTES_ROOTS.BLOG + [category, subcategory, targettedSlug].join('/'));
   });
 });
 

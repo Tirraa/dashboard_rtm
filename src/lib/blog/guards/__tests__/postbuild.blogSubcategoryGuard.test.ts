@@ -5,6 +5,7 @@ import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { indexOfNthOccurrence } from '@/lib/str';
 import { describe, expect, it } from 'vitest';
+import ROUTES_ROOTS from '##/config/routes';
 import BlogConfig from '@/config/blog';
 
 import blogSubcategoryGuard from '../blogSubcategoryGuard';
@@ -60,7 +61,7 @@ describe('blogSubcategoryGuard', () => {
     } catch (interceptedError) {
       expect(isRedirectError(interceptedError)).toBe(true);
       const URLFromDigest = getUrlFromDigest((interceptedError as any).digest);
-      expect(URLFromDigest).toBe('/' + BlogConfig.TESTING_CATEGORY);
+      expect(URLFromDigest).toBe(ROUTES_ROOTS.BLOG + BlogConfig.TESTING_CATEGORY);
     }
   });
 });

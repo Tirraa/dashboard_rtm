@@ -17,7 +17,9 @@ const SHARED: SharedVocabType = {
 
     dashboard: 'Dashboard',
     homepage: 'Homepage',
-    'sign-up': 'Sign up'
+    'sign-up': 'Sign up',
+
+    blog: 'Blog'
   },
   vocab: {
     brand: 'Rust Team Management',

@@ -2,10 +2,10 @@
 // Stryker disable all
 import type { LayoutBaseProps } from '@/types/Next';
 
-import LandingPagesHtmlElement from '@/components/layouts/base/LandingPagesHtmlElement';
+import HtmlElement from '@/components/layouts/base/HtmlElement';
 
 export default function RootLayout({ children, params }: LayoutBaseProps) {
-  return <LandingPagesHtmlElement params={params}>{children}</LandingPagesHtmlElement>;
+  return <HtmlElement params={params}>{children}</HtmlElement>;
 }
 // Stryker restore all
 /* v8 ignore stop */

@@ -7,6 +7,7 @@ import capitalize from '../../lib/portable/str/capitalize';
 const SHARED: SharedVocabType = {
   'pages-titles': {
     ...SHARED_TESTING_BLOG_SUBCATEGORIES_PAGES_TITLES,
+
     'patch-notes-bis': 'Notes de patch (bis)',
     'discord-bot-bis': 'Bot Discord (bis)',
 
@@ -16,7 +17,9 @@ const SHARED: SharedVocabType = {
 
     homepage: "Page d'accueil",
     'sign-up': 'Inscription',
-    dashboard: 'Dashboard'
+    dashboard: 'Dashboard',
+
+    blog: 'Blog'
   },
   vocab: {
     brand: 'Rust Team Management',

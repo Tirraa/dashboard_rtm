@@ -31,7 +31,7 @@ export async function getAllBlogPostsByCategoryAndLanguage(categ: BlogCategory, 
   return posts;
 }
 
-export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(
+export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(
   category: BlogCategory,
   subcategory: BlogSubcategoryFromUnknownCategory,
   language: LanguageFlag
@@ -82,17 +82,17 @@ export async function getBlogPostUnstrict(
   const getPostWithDisallowedDraftsCtx: () => MaybeNull<TBlogPost> = () =>
     postsCollection.find(({ draft: currentPostDraft, slug: currentPostSlug }) => !currentPostDraft && currentPostSlug === targettedSlug) ?? null;
 
-  const postsCollection: TBlogPost[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(category, subcategory, language);
+  const postsCollection: TBlogPost[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(category, subcategory, language);
 
   return ComputedBlogCtx.ALLOWED_DRAFTS ? getPostWithAllowedDraftsCtx() : getPostWithDisallowedDraftsCtx();
 }
 
-export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagStrict<C extends keyof StrictBlog>(
+export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict<C extends keyof StrictBlog>(
   category: C,
   subcategory: keyof StrictBlog[C],
   language: keyof StrictBlog[C][keyof StrictBlog[C]]
 ): Promise<TBlogPost[]> {
-  const allPosts: TBlogPost[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageFlagUnstrict(
+  const allPosts: TBlogPost[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(
     category,
     subcategory as BlogSubcategoryFromUnknownCategory,
     language as LanguageFlag

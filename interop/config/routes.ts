@@ -7,7 +7,7 @@ type RoutesRoots = Record<RoutesRootsKeys, AppPath>;
 
 const ROUTES_ROOTS_BASE = {
   WEBSITE: getSlashEnvelope('/'),
-  BLOG: getSlashEnvelope('/')
+  BLOG: getSlashEnvelope('blog')
 } satisfies Partial<RoutesRoots>;
 
 const blogRoutesBase = ROUTES_ROOTS_BASE.BLOG;
