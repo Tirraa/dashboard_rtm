@@ -58,7 +58,7 @@ const authOptions: NextAuthOptions = {
   },
 
   pages: {
-    signIn: '/sign-up'
+    signIn: '/lp/sign-up'
   }
 };
 
