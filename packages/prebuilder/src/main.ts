@@ -25,6 +25,8 @@ import { foldFeedbacks } from './lib/feedbacksMerge';
 import parseArguments from './validators/arguments';
 import FeedbackError from './errors/FeedbackError';
 import BuilderError from './errors/BuilderError';
+import sysLpCategoriesValidator from './validators/sysLpCategories';
+import sysLpSlugsValidator from './validators/sysLpSlugs';
 /* eslint-enable perfectionist/sort-imports */
 
 const BENCHMARK_ACCURACY = 5;
@@ -39,39 +41,45 @@ function printPrebuilderDoneMsg(sideEffectAtExit?: () => void) {
 }
 
 function printPrebuildReport({
-  taxonomyCheckersStartTime,
+  blogTaxonomyCheckersStartTime,
+  blogTaxonomyCheckersEndTime,
+  lpTaxonomyCheckersStartTime,
+  lpTaxonomyCheckersEndTime,
   localesCheckersStartTime,
-  taxonomyCheckersEndTime,
   localesCheckersEndTime,
-  codegenStartTime,
-  globalStartTime,
-  codegenEndTime
+  blogCodegenStartTime,
+  blogCodegenEndTime,
+  globalStartTime
 }: Partial<{
-  taxonomyCheckersStartTime: number;
+  blogTaxonomyCheckersStartTime: number;
+  blogTaxonomyCheckersEndTime: number;
+  lpTaxonomyCheckersStartTime: number;
+  lpTaxonomyCheckersEndTime: number;
   localesCheckersStartTime: number;
-  taxonomyCheckersEndTime: number;
   localesCheckersEndTime: number;
-  codegenStartTime: number;
+  blogCodegenStartTime: number;
+  blogCodegenEndTime: number;
   globalStartTime: number;
-  codegenEndTime: number;
 }>) {
   const IGNORED = -1 as const;
 
   const computeDelay = (maybeStart: MaybeUndefined<number>, maybeEnd: MaybeUndefined<number>) =>
     maybeStart === undefined || maybeEnd === undefined ? IGNORED : (Math.abs(maybeEnd - maybeStart) / 1e3).toFixed(BENCHMARK_ACCURACY);
 
-  const [localesElapsedTime, taxonomyElapsedTime, codegenElapsedTime, totalGlobalElapsedTime] = [
+  const [localesElapsedTime, blogTaxonomyElapsedTime, lpTaxonomyElapsedTime, blogCodegenElapsedTime, totalGlobalElapsedTime] = [
     computeDelay(localesCheckersStartTime, localesCheckersEndTime),
-    computeDelay(taxonomyCheckersStartTime, taxonomyCheckersEndTime),
-    computeDelay(codegenStartTime, codegenEndTime),
+    computeDelay(blogTaxonomyCheckersStartTime, blogTaxonomyCheckersEndTime),
+    computeDelay(lpTaxonomyCheckersStartTime, lpTaxonomyCheckersEndTime),
+    computeDelay(blogCodegenStartTime, blogCodegenEndTime),
     computeDelay(globalStartTime, performance.now())
   ];
 
   (
     [
       ['validatedLocalesInfosBenchmark', localesElapsedTime],
-      ['validatedTaxonomyBenchmark', taxonomyElapsedTime],
-      ['codegenBenchmark', codegenElapsedTime],
+      ['validatedBlogTaxonomyBenchmark', blogTaxonomyElapsedTime],
+      ['validatedLpTaxonomyBenchmark', lpTaxonomyElapsedTime],
+      ['blogCodegenBenchmark', blogCodegenElapsedTime],
       ['totalExecutionTimeBenchmark', totalGlobalElapsedTime]
     ] satisfies Tuple<VocabKey, typeof IGNORED | string>[]
   ).forEach(([label, duration]) => {
@@ -93,15 +101,24 @@ async function processPrebuild() {
     const {
       [FLAGS.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
       [FLAGS.SKIP_LOCALES_INFOS]: SKIP_LOCALES_INFOS,
+      [FLAGS.LANDING_PAGES_FOLDER]: LP_POSTS_FOLDER,
       [FLAGS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
       [FLAGS.SKIP_BENCHMARKS]: SKIP_BENCHMARKS,
       [FLAGS.NO_I18N]: NO_I18N,
-      [FLAGS.NO_BLOG]: NO_BLOG
+      [FLAGS.NO_BLOG]: NO_BLOG,
+      [FLAGS.NO_LP]: NO_LP
     } = retrievedValuesFromArgs as Required<typeof retrievedValuesFromArgs>;
-    const NO_CONTENTLAYER_RELATED_FEATURES = NO_BLOG; // {ToDo} && NO_LANDING_PAGES && NO_PAGES && ...;
+    const NO_CONTENTLAYER_RELATED_FEATURES = NO_BLOG && NO_LP; // {ToDo} && NO_PAGES && ...;
 
-    let [localesCheckersStartTime, taxonomyCheckersStartTime, taxonomyCheckersEndTime, codegenStartTime, codegenEndTime]: MaybeUndefined<number>[] =
-      [];
+    let [
+      localesCheckersStartTime,
+      blogTaxonomyCheckersStartTime,
+      blogTaxonomyCheckersEndTime,
+      blogCodegenStartTime,
+      blogCodegenEndTime,
+      lpTaxonomyCheckersStartTime,
+      lpTaxonomyCheckersEndTime
+    ]: MaybeUndefined<number>[] = [];
     let localesValidatorFeedback: MaybeEmptyErrorsDetectionFeedback = '';
 
     if (!SKIP_LOCALES_INFOS && !NO_I18N) {
@@ -118,7 +135,7 @@ async function processPrebuild() {
     }
 
     if (!NO_BLOG) {
-      taxonomyCheckersStartTime = performance.now();
+      blogTaxonomyCheckersStartTime = performance.now();
       const [sysBlogCategoriesValidatorFeedback, sysBlogSubcategoriesValidatorFeedback, sysBlogSlugsValidatorFeedback] = await Promise.all([
         sysBlogCategoriesValidator(BLOG_POSTS_FOLDER),
         sysBlogSubcategoriesValidator(BLOG_POSTS_FOLDER),
@@ -132,9 +149,9 @@ async function processPrebuild() {
         localesValidatorFeedback
       );
       if (feedbacks) throw new FeedbackError(feedbacks);
-      taxonomyCheckersEndTime = performance.now();
+      blogTaxonomyCheckersEndTime = performance.now();
 
-      codegenStartTime = performance.now();
+      blogCodegenStartTime = performance.now();
       const blogArchitecture = await getBlogArchitectureMetadatas(BLOG_POSTS_FOLDER);
 
       await Promise.all([
@@ -142,20 +159,34 @@ async function processPrebuild() {
         generateI18nBlogCategories(blogArchitecture),
         generateBlogType(blogArchitecture)
       ]);
-      codegenEndTime = performance.now();
+      blogCodegenEndTime = performance.now();
+    }
+
+    if (!NO_LP) {
+      lpTaxonomyCheckersStartTime = performance.now();
+      const [sysLpCategoriesValidatorFeedback, sysLpSlugsValidatorFeedback] = await Promise.all([
+        sysLpCategoriesValidator(LP_POSTS_FOLDER),
+        sysLpSlugsValidator(LP_POSTS_FOLDER)
+      ]);
+      lpTaxonomyCheckersEndTime = performance.now();
+
+      const feedbacks = foldFeedbacks(sysLpCategoriesValidatorFeedback, sysLpSlugsValidatorFeedback);
+      if (feedbacks) throw new FeedbackError(feedbacks);
     }
 
     printPrebuilderDoneMsg(
       () =>
         SKIP_BENCHMARKS ||
         printPrebuildReport({
-          taxonomyCheckersStartTime,
+          blogTaxonomyCheckersStartTime,
+          blogTaxonomyCheckersEndTime,
+          lpTaxonomyCheckersStartTime,
+          lpTaxonomyCheckersEndTime,
           localesCheckersStartTime,
-          taxonomyCheckersEndTime,
           localesCheckersEndTime,
-          codegenStartTime,
-          globalStartTime,
-          codegenEndTime
+          blogCodegenStartTime,
+          blogCodegenEndTime,
+          globalStartTime
         })
     );
   } catch (error) {

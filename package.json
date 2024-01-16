@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
-    "prebuild": "pnpm --filter @rtm/prebuilder start --blog-posts-folder ./content/blog --i18n-locales-schema ./src/i18n/locales/schema.ts",
+    "prebuild": "pnpm --filter @rtm/prebuilder start --blog-posts-folder ./content/blog --i18n-locales-schema ./src/i18n/locales/schema.ts --lp-folder ./content/landing-pages",
     "build": "next build",
     "postbuild": "next-sitemap",
     "dev": "next dev",

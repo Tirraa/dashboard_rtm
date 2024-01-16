@@ -40,7 +40,7 @@ export default async function sysBlogSubcategoriesValidator(postsFolder: string)
       ' ' +
       (defects.length === 1 ? `${defects}` : `${LIST_ELEMENT_PREFIX}${defects.join(LIST_ELEMENT_PREFIX)}`) +
       '\n' +
-      formatMessage('namingConstraint' satisfies VocabKey) +
+      formatMessage('blogNamingConstraint' satisfies VocabKey) +
       '\n';
   });
 

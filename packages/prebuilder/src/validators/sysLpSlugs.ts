@@ -2,25 +2,25 @@ import type { MaybeEmptyErrorsDetectionFeedback, Filename, Path } from '../types
 import type { VocabKey } from '../config/translations';
 
 import traverseAndMapFilepaths from '../lib/traverseAndMapFilepaths';
-import { LIST_ELEMENT_PREFIX, BLOG_POST_FILE_EXT } from '../config';
-import { isValidBlogTaxonomy } from './taxonomyConvention';
+import { LIST_ELEMENT_PREFIX, LP_FILE_EXT } from '../config';
+import { isValidLpTaxonomy } from './taxonomyConvention';
 import { prefixFeedback } from '../lib/feedbacksMerge';
 import formatMessage from '../config/formatMessage';
 
 const ERROR_PREFIX = formatMessage('failedToPassThePrebuild' satisfies VocabKey);
 
-export default async function sysBlogSlugsValidator(postsFolder: string): Promise<MaybeEmptyErrorsDetectionFeedback> {
+export default async function sysLpSlugsValidator(lpFolder: string): Promise<MaybeEmptyErrorsDetectionFeedback> {
   let feedback = '';
 
   const foldersWithDefects: Record<Path, Filename[]> = {};
-  const filesCollection = await traverseAndMapFilepaths(postsFolder);
+  const filesCollection = await traverseAndMapFilepaths(lpFolder);
 
   for (const file of filesCollection) {
     const maybeSlug = file.name;
-    if (!maybeSlug.endsWith(BLOG_POST_FILE_EXT)) continue;
+    if (!maybeSlug.endsWith(LP_FILE_EXT)) continue;
 
-    const slug = maybeSlug.slice(0, -BLOG_POST_FILE_EXT.length);
-    if (!isValidBlogTaxonomy(slug)) {
+    const slug = maybeSlug.slice(0, -LP_FILE_EXT.length);
+    if (!isValidLpTaxonomy(slug)) {
       if (!foldersWithDefects[file.directory]) foldersWithDefects[file.directory] = [];
       foldersWithDefects[file.directory].push(slug);
     }
@@ -33,7 +33,7 @@ export default async function sysBlogSlugsValidator(postsFolder: string): Promis
       ' ' +
       (defects.length === 1 ? `${defects}` : `${LIST_ELEMENT_PREFIX}${defects.join(LIST_ELEMENT_PREFIX)}`) +
       '\n' +
-      formatMessage('blogNamingConstraint' satisfies VocabKey) +
+      formatMessage('lpNamingConstraint' satisfies VocabKey) +
       '\n';
   });
   feedback = prefixFeedback(feedback, ERROR_PREFIX + '\n');

@@ -2,7 +2,8 @@
 // Stryker disable all
 
 /* ⚙️ Tweakers - SAFE */
-export const MAX_TAXONOMY_LEN: number = 34;
+export const MAX_BLOG_TAXONOMY_LEN: number = 34;
+export const MAX_LP_TAXONOMY_LEN: number = 128;
 
 /* ⚠️ Tweakers - UNSAFE (type checked: will break the build if invalid) */
 export const I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = ['title', 'meta-description'];
@@ -14,14 +15,17 @@ export const FLAGS = {
   SKIP_LOCALES_INFOS: '--skip-locales-infos',
   BLOG_POSTS_FOLDER: '--blog-posts-folder',
   SKIP_BENCHMARKS: '--skip-benchmarks',
+  LANDING_PAGES_FOLDER: '--lp-folder',
   NO_BLOG: '--no-blog',
   NO_I18N: '--no-i18n',
+  NO_LP: '--no-lp',
   LANG: '--lang'
 } as const;
 export const LIST_ELEMENT_PREFIX: string = '\n - ';
 export const TS_MORPH_FORMATTER_SETTINGS = { ensureNewLineAtEndOfFile: true, indentSize: 2 };
 
 export const BLOG_POST_FILE_EXT: string = '.mdx';
+export const LP_FILE_EXT: string = '.mdx';
 export const I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_PREFIX: string = '_';
 export const BLOG_TYPE_STR: string = 'Blog';
 export const BLOG_ARCHITECTURE_TYPE_STR: string = 'BlogArchitecture';

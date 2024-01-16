@@ -4,6 +4,7 @@ import type { IDiscordApi } from '@/meta/discordapi';
 import type { JWT } from 'next-auth/jwt';
 
 import DiscordProvider from 'next-auth/providers/discord';
+import ROUTES_ROOTS from '##/config/routes';
 import discordApi from '@/meta/discordapi';
 
 import bentocache, { keysFactory } from '../bentocache';
@@ -58,7 +59,7 @@ const authOptions: NextAuthOptions = {
   },
 
   pages: {
-    signIn: '/lp/sign-up'
+    signIn: ROUTES_ROOTS.LANDING_PAGES + 'sign-up'
   }
 };
 

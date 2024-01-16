@@ -2,10 +2,11 @@ import type { AppPath } from '@rtm/shared-types/Next';
 
 import getSlashEnvelope from '../../src/lib/portable/str/getSlashEnvelope';
 
-type RoutesRootsKeys = 'PATCH_NOTES' | 'DASHBOARD' | 'WEBSITE' | 'BLOG';
+type RoutesRootsKeys = 'LANDING_PAGES' | 'PATCH_NOTES' | 'DASHBOARD' | 'WEBSITE' | 'BLOG';
 type RoutesRoots = Record<RoutesRootsKeys, AppPath>;
 
 const ROUTES_ROOTS_BASE = {
+  LANDING_PAGES: getSlashEnvelope('lp'),
   WEBSITE: getSlashEnvelope('/'),
   BLOG: getSlashEnvelope('blog')
 } satisfies Partial<RoutesRoots>;

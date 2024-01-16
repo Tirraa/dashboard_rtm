@@ -20,17 +20,24 @@ const getErrorPrefix = () => formatMessage('impossibleToStartThePrebuilder' sati
 function crashIfArgumentsAreInvalid({ ...args }) {
   const {
     [FLAGS.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
+    [FLAGS.LANDING_PAGES_FOLDER]: LANDING_PAGES_FOLDER,
     [FLAGS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
     [FLAGS.NO_BLOG]: NO_BLOG,
     [FLAGS.NO_I18N]: NO_I18N,
+    [FLAGS.NO_LP]: NO_LP,
     _: UNKNOWN_OPTIONS
   } = args;
 
   const invalidBlogOptions = BLOG_POSTS_FOLDER === undefined && !NO_BLOG;
   const invalidI18nOptions = I18N_LOCALES_SCHEMA_FILEPATH === undefined && !NO_I18N;
+
   const wrongUseOfNoBlogOption = BLOG_POSTS_FOLDER !== undefined && NO_BLOG;
   const wrongUseOfNoI18nOption = I18N_LOCALES_SCHEMA_FILEPATH !== undefined && NO_I18N;
+  const wrongUseOfNoLpOption = LANDING_PAGES_FOLDER !== undefined && NO_LP;
+
   const breakingBlogDependencyToI18n = BLOG_POSTS_FOLDER !== undefined && NO_I18N;
+  const breakingLpDependencyToI18n = LANDING_PAGES_FOLDER !== undefined && NO_I18N;
+
   const havingUnknownOptions = UNKNOWN_OPTIONS.length > 0;
 
   const unknownOptionsFeedback: MaybeEmptyErrorsDetectionFeedback = havingUnknownOptions
@@ -75,15 +82,35 @@ function crashIfArgumentsAreInvalid({ ...args }) {
     );
   }
 
+  if (wrongUseOfNoLpOption) {
+    incorrectOptionsFeedbacks.push(
+      formatMessage('incompatibleOption' satisfies VocabKey, {
+        scope: formatMessage('lp' satisfies VocabKey),
+        incompatibleOption: FLAGS.NO_LP
+      })
+    );
+  }
+
   if (breakingBlogDependencyToI18n) {
-    const _feedback =
+    breakingDependenciesFeedbacks.push(
       formatMessage('breakingDependency' satisfies VocabKey, {
         scope: formatMessage('blog' satisfies VocabKey),
         incompatibleOption: FLAGS.NO_I18N
       }) +
-      '\n' +
-      formatMessage('disableBothI18nAndBlogAnalysisMaybeAdvice' satisfies VocabKey);
-    breakingDependenciesFeedbacks.push(_feedback);
+        '\n' +
+        formatMessage('disableBothI18nAndBlogAnalysisMaybeAdvice' satisfies VocabKey)
+    );
+  }
+
+  if (breakingLpDependencyToI18n) {
+    breakingDependenciesFeedbacks.push(
+      formatMessage('breakingDependency' satisfies VocabKey, {
+        scope: formatMessage('lp' satisfies VocabKey),
+        incompatibleOption: FLAGS.NO_I18N
+      }) +
+        '\n' +
+        formatMessage('disableBothI18nAndLpAnalysisMaybeAdvice' satisfies VocabKey)
+    );
   }
 
   let feedback: MaybeEmptyErrorsDetectionFeedback = foldFeedbacks(
@@ -112,9 +139,11 @@ async function fileExists(path: Path) {
 async function crashIfFilesDoesNotExist({ ...args }) {
   const {
     [FLAGS.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
+    [FLAGS.LANDING_PAGES_FOLDER]: LP_POSTS_FOLDER,
     [FLAGS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
     [FLAGS.NO_BLOG]: NO_BLOG,
-    [FLAGS.NO_I18N]: NO_I18N
+    [FLAGS.NO_I18N]: NO_I18N,
+    [FLAGS.NO_LP]: NO_LP
   } = args;
 
   async function checkI18n() {
@@ -153,18 +182,38 @@ async function crashIfFilesDoesNotExist({ ...args }) {
     }
   }
 
-  await Promise.all([checkI18n(), checkBlog()]);
+  async function checkLp() {
+    if (NO_LP) return;
+
+    const ADVICE = formatMessage('disableLpAnalysisAdvice' satisfies VocabKey);
+    const ERROR_PREFIX = getErrorPrefix();
+
+    const lpFolderExists = await fileExists(LP_POSTS_FOLDER);
+    if (!lpFolderExists) {
+      throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + formatMessage('cantOpenTheLpFolder' satisfies VocabKey) + '\n' + ADVICE);
+    }
+
+    const lpFolderStat = await fs.stat(LP_POSTS_FOLDER);
+    const lpFolderIsDirectory = lpFolderStat.isDirectory();
+    if (!lpFolderIsDirectory) {
+      throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + formatMessage('theLpFolderIsNotDirectory' satisfies VocabKey) + '\n' + ADVICE);
+    }
+  }
+
+  await Promise.all([checkI18n(), checkBlog(), checkLp()]);
 }
 
 export default async function parseArguments() {
   const args = arg(
     {
       [FLAGS.I18N_LOCALES_SCHEMA_FILEPATH]: String,
+      [FLAGS.LANDING_PAGES_FOLDER]: String,
       [FLAGS.SKIP_LOCALES_INFOS]: Boolean,
       [FLAGS.BLOG_POSTS_FOLDER]: String,
       [FLAGS.SKIP_BENCHMARKS]: Boolean,
       [FLAGS.NO_BLOG]: Boolean,
       [FLAGS.NO_I18N]: Boolean,
+      [FLAGS.NO_LP]: Boolean,
       [FLAGS.LANG]: String
     },
     { permissive: true }

@@ -2,11 +2,11 @@
 import { describe, expect, it } from 'vitest';
 
 import { isValidBlogTaxonomy } from '../taxonomyConvention';
-import { MAX_TAXONOMY_LEN } from '../../config';
+import { MAX_BLOG_TAXONOMY_LEN } from '../../config';
 
 describe('isValidBlogTaxonomy', () => {
   it('should return false, given invalid taxonomies', () => {
-    const tooLong = 'w'.repeat(MAX_TAXONOMY_LEN + 1);
+    const tooLong = 'w'.repeat(MAX_BLOG_TAXONOMY_LEN + 1);
 
     expect(isValidBlogTaxonomy('_$!§%&/()=?')).toBe(false);
     expect(isValidBlogTaxonomy('0_$!§%&/()=?')).toBe(false);
