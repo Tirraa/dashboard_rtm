@@ -33,8 +33,7 @@ export async function generateMetadata({ params }: LandingPageProps) {
 // {ToDo} Move this in the static generation API and handle drafts & testing
 export async function generateStaticParams() {
   const staticParams = [];
-  for (const lp of allLandingPages)
-    staticParams.push({ [LandingPageTaxonomy.SLUG]: [lp.category, lp.slug].join('-'), [I18nTaxonomy.LANGUAGE]: lp.language });
+  for (const { language, slug } of allLandingPages) staticParams.push({ [I18nTaxonomy.LANGUAGE]: language, [LandingPageTaxonomy.SLUG]: slug });
 
   return staticParams;
 }

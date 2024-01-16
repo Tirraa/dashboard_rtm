@@ -1,7 +1,29 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { UnknownLandingPageSlug } from '@/types/LandingPage';
 
-import { InvalidArgumentsError } from '../../../unifiedImport';
+import { getFlattenedPathWithoutRootFolder, InvalidArgumentsError, LANDING_PAGES_FOLDER, indexOfNthOccurrence } from '../../../unifiedImport';
+
+/**
+ * @throws {InvalidArgumentsError}
+ */
+function buildLandingPageCategoryFromStr(flattenedPath: string) {
+  const categBuilder = (flattenedPath: string, firstSlashIndex: number) => flattenedPath.substring(0, firstSlashIndex);
+
+  const firstSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 1);
+  if (firstSlashIndex === -1) {
+    throw new InvalidArgumentsError(buildLandingPageCategoryFromStr.name, { flattenedPath }, "Can't find any '/' character in flattenedPath");
+  }
+
+  const categ = categBuilder(flattenedPath, firstSlashIndex);
+  return categ;
+}
+
+function buildLandingPageCategoryFromLpObj(lp: DocumentToCompute) {
+  const flattenedPath = getFlattenedPathWithoutRootFolder(lp._raw.flattenedPath, LANDING_PAGES_FOLDER);
+  return buildLandingPageCategoryFromStr(flattenedPath);
+}
+
+export const buildLandingPageCategory = (lp: DocumentToCompute) => buildLandingPageCategoryFromLpObj(lp);
 
 /**
  * @throws {InvalidArgumentsError}
@@ -28,11 +50,12 @@ function buildLandingPageSlugFromStr(flattenedPath: string): UnknownLandingPageS
   return slug;
 }
 
-function buildLandingPageSlugFromLpObj(lp: DocumentToCompute): UnknownLandingPageSlug {
+export function buildLandingPageSlugFromLpObj(lp: DocumentToCompute): UnknownLandingPageSlug {
   const { flattenedPath } = lp._raw;
   return buildLandingPageSlugFromStr(flattenedPath);
 }
 
-const buildLandingPageSlug = (lp: DocumentToCompute): UnknownLandingPageSlug => buildLandingPageSlugFromLpObj(lp);
+const buildLandingPageSlug = (lp: DocumentToCompute): UnknownLandingPageSlug =>
+  [buildLandingPageCategory(lp), buildLandingPageSlugFromLpObj(lp)].join('-');
 
 export default buildLandingPageSlug;

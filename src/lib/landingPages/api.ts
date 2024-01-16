@@ -7,10 +7,7 @@ import { allLandingPages } from 'contentlayer/generated';
 
 // {ToDo} Handle drafts and testing + write tests
 export const getLandingPageBySlugAndLanguageUnstrict = (slug: UnknownLandingPageSlug, language: LanguageFlag): MaybeNull<LandingPage> =>
-  allLandingPages.find(
-    ({ language: currentLanguage, category: currentCategory, slug: currentSlug }) =>
-      [currentCategory, currentSlug].join('-') === slug && currentLanguage === language
-  ) ?? null;
+  allLandingPages.find(({ language: currentLanguage, slug: currentSlug }) => currentSlug === slug && currentLanguage === language) ?? null;
 
 // {ToDo} Codegen + Strict typing + write tests
 // export const getLandingPageBySlugAndLanguageStrict
