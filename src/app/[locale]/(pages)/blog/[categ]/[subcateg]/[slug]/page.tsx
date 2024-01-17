@@ -30,9 +30,7 @@ export default async function Page({ params }: BlogPostPageProps) {
   const language = params[I18nTaxonomy.LANGUAGE];
   setStaticParamsLocale(language);
 
-  const category = params[BlogTaxonomy.CATEGORY];
-  const subcategory = params[BlogTaxonomy.SUBCATEGORY];
-  const slug = params[BlogTaxonomy.SLUG];
+  const [category, subcategory, slug] = [params[BlogTaxonomy.CATEGORY], params[BlogTaxonomy.SUBCATEGORY], params[BlogTaxonomy.SLUG]];
 
   const post: MaybeNull<TBlogPost> = await getBlogPostUnstrict(category, subcategory, slug, language);
   if (!post) notFound();

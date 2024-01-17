@@ -38,9 +38,7 @@ export async function getBlogCategoryMetadatas({ params }: BlogCategoryPageProps
 }
 
 export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPageProps) {
-  const category = params[BlogTaxonomy.CATEGORY];
-  const subcategory = params[BlogTaxonomy.SUBCATEGORY];
-  const language = params[I18nTaxonomy.LANGUAGE];
+  const [category, subcategory, language] = [params[BlogTaxonomy.CATEGORY], params[BlogTaxonomy.SUBCATEGORY], params[I18nTaxonomy.LANGUAGE]];
 
   if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory, language)) return {};
 
@@ -53,11 +51,13 @@ export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPag
 }
 
 export async function getBlogPostMetadatas({ params }: BlogPostPageProps) {
-  const category = params[BlogTaxonomy.CATEGORY];
-  const subcategory = params[BlogTaxonomy.SUBCATEGORY];
+  const [category, subcategory, slug, language] = [
+    params[BlogTaxonomy.CATEGORY],
+    params[BlogTaxonomy.SUBCATEGORY],
+    params[BlogTaxonomy.SLUG],
+    params[I18nTaxonomy.LANGUAGE]
+  ];
 
-  const slug = params[BlogTaxonomy.SLUG];
-  const language = params[I18nTaxonomy.LANGUAGE];
   const post: MaybeNull<TBlogPost> = await getBlogPostUnstrict(category, subcategory, slug, language);
 
   const globalT = await getServerSideI18n();

@@ -14,13 +14,11 @@ import {
 } from '../api';
 
 export default async function blogPostGuard({ params }: BlogPostPageProps) {
-  const category = params[BlogTaxonomy.CATEGORY];
-  const subcategory = params[BlogTaxonomy.SUBCATEGORY];
+  const [category, subcategory] = [params[BlogTaxonomy.CATEGORY], params[BlogTaxonomy.SUBCATEGORY]];
 
   const validCombination: boolean = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage(category, subcategory);
 
-  const slug = params[BlogTaxonomy.SLUG];
-  const language = params[I18nTaxonomy.LANGUAGE];
+  const [slug, language] = [params[BlogTaxonomy.SLUG], params[I18nTaxonomy.LANGUAGE]];
 
   const post = validCombination ? await getBlogPostUnstrict(category, subcategory, slug, language) : undefined;
 

@@ -27,9 +27,7 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = ({ className: class
 );
 
 const BlogPost: FunctionComponent<_BlogPostPageProps> = async ({ className: classNameValue, params }) => {
-  const category = params[BlogTaxonomy.CATEGORY];
-  const subcategory = params[BlogTaxonomy.SUBCATEGORY];
-  const language = params[I18nTaxonomy.LANGUAGE];
+  const [category, subcategory, language] = [params[BlogTaxonomy.CATEGORY], params[BlogTaxonomy.SUBCATEGORY], params[I18nTaxonomy.LANGUAGE]];
 
   const isValidPair: boolean = await isValidBlogCategoryAndSubcategoryPair(category, subcategory, language);
   if (!isValidPair) notFound();

@@ -16,9 +16,8 @@ import { notFound } from 'next/navigation';
 import { i18ns } from '##/config/i18n';
 
 export async function generateMetadata({ params }: LandingPageProps) {
-  const slug = params[LandingPageTaxonomy.SLUG];
-  const lang = params[I18nTaxonomy.LANGUAGE];
-  const lp: MaybeNull<LandingPage> = getLandingPageBySlugAndLanguageUnstrict(slug, lang);
+  const [lang, slug] = [params[I18nTaxonomy.LANGUAGE], params[LandingPageTaxonomy.SLUG]];
+  const lp: MaybeNull<LandingPage> = getLandingPageBySlugAndLanguageUnstrict(lang, slug);
   if (!lp) notFound();
 
   const globalT = await getServerSideI18n();
@@ -43,8 +42,7 @@ export default function Page({ params }: LandingPageProps) {
   setStaticParamsLocale(language);
 
   const slug = params[LandingPageTaxonomy.SLUG];
-  const lang = params[I18nTaxonomy.LANGUAGE];
-  const lp: MaybeNull<LandingPage> = getLandingPageBySlugAndLanguageUnstrict(slug, lang);
+  const lp: MaybeNull<LandingPage> = getLandingPageBySlugAndLanguageUnstrict(language, slug);
 
   if (!lp) notFound();
   return (

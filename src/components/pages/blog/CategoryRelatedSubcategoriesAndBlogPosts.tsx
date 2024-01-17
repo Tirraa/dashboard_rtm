@@ -1,4 +1,4 @@
-import type { BlogCategoryPageProps, BlogCategory, TBlogPost } from '@/types/Blog';
+import type { BlogCategoryPageProps, TBlogPost } from '@/types/Blog';
 import type { FunctionComponent } from 'react';
 
 import blogCategoryPageBuilder from '@/lib/blog/blogCategoryPageBuilder';
@@ -14,8 +14,7 @@ import BlogConfig from '@/config/blog';
 interface CategoryRelatedSubcategoriesAndBlogPostsProps extends BlogCategoryPageProps {}
 
 const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<CategoryRelatedSubcategoriesAndBlogPostsProps> = async ({ params }) => {
-  const language = params[I18nTaxonomy.LANGUAGE];
-  const category: BlogCategory = params[BlogTaxonomy.CATEGORY];
+  const [language, category] = [params[I18nTaxonomy.LANGUAGE], params[BlogTaxonomy.CATEGORY]];
   const scopedT = await getScopedI18n(i18ns.blogCategories);
 
   let gettedOnTheFlyPosts: TBlogPost[] = [];

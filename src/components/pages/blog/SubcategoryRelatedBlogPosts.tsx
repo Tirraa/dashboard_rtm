@@ -20,9 +20,7 @@ import BlogConfig from '@/config/blog';
 const slugger = new GithubSlugger();
 
 const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> = async ({ params }) => {
-  const category = params[BlogTaxonomy.CATEGORY];
-  const subcategory = params[BlogTaxonomy.SUBCATEGORY];
-  const language = params[I18nTaxonomy.LANGUAGE];
+  const [category, subcategory, language] = [params[BlogTaxonomy.CATEGORY], params[BlogTaxonomy.SUBCATEGORY], params[I18nTaxonomy.LANGUAGE]];
 
   const isValidPair: boolean = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage(category, subcategory);
   if (!isValidPair) notFound();
