@@ -27,6 +27,8 @@ import FeedbackError from './errors/FeedbackError';
 import BuilderError from './errors/BuilderError';
 import sysLpCategoriesValidator from './validators/sysLpCategories';
 import sysLpSlugsValidator from './validators/sysLpSlugs';
+import getLpMetadatas from './metadatas-builders/landingPagesMetadatas';
+import generateLandingPageType from './generators/lp/lpType';
 /* eslint-enable perfectionist/sort-imports */
 
 const BENCHMARK_ACCURACY = 5;
@@ -49,6 +51,8 @@ function printPrebuildReport({
   localesCheckersEndTime,
   blogCodegenStartTime,
   blogCodegenEndTime,
+  lpCodegenStartTime,
+  lpCodegenEndTime,
   globalStartTime
 }: Partial<{
   blogTaxonomyCheckersStartTime: number;
@@ -59,6 +63,8 @@ function printPrebuildReport({
   localesCheckersEndTime: number;
   blogCodegenStartTime: number;
   blogCodegenEndTime: number;
+  lpCodegenStartTime: number;
+  lpCodegenEndTime: number;
   globalStartTime: number;
 }>) {
   const IGNORED = -1 as const;
@@ -66,11 +72,12 @@ function printPrebuildReport({
   const computeDelay = (maybeStart: MaybeUndefined<number>, maybeEnd: MaybeUndefined<number>) =>
     maybeStart === undefined || maybeEnd === undefined ? IGNORED : (Math.abs(maybeEnd - maybeStart) / 1e3).toFixed(BENCHMARK_ACCURACY);
 
-  const [localesElapsedTime, blogTaxonomyElapsedTime, lpTaxonomyElapsedTime, blogCodegenElapsedTime, totalGlobalElapsedTime] = [
+  const [localesElapsedTime, blogTaxonomyElapsedTime, lpTaxonomyElapsedTime, blogCodegenElapsedTime, lpCodegenElapsedTime, totalGlobalElapsedTime] = [
     computeDelay(localesCheckersStartTime, localesCheckersEndTime),
     computeDelay(blogTaxonomyCheckersStartTime, blogTaxonomyCheckersEndTime),
     computeDelay(lpTaxonomyCheckersStartTime, lpTaxonomyCheckersEndTime),
     computeDelay(blogCodegenStartTime, blogCodegenEndTime),
+    computeDelay(lpCodegenStartTime, lpCodegenEndTime),
     computeDelay(globalStartTime, performance.now())
   ];
 
@@ -80,6 +87,7 @@ function printPrebuildReport({
       ['validatedBlogTaxonomyBenchmark', blogTaxonomyElapsedTime],
       ['validatedLpTaxonomyBenchmark', lpTaxonomyElapsedTime],
       ['blogCodegenBenchmark', blogCodegenElapsedTime],
+      ['lpCodegenBenchmark', lpCodegenElapsedTime],
       ['totalExecutionTimeBenchmark', totalGlobalElapsedTime]
     ] satisfies Tuple<VocabKey, typeof IGNORED | string>[]
   ).forEach(([label, duration]) => {
@@ -101,9 +109,9 @@ async function processPrebuild() {
     const {
       [FLAGS.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
       [FLAGS.SKIP_LOCALES_INFOS]: SKIP_LOCALES_INFOS,
-      [FLAGS.LANDING_PAGES_FOLDER]: LP_POSTS_FOLDER,
       [FLAGS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
       [FLAGS.SKIP_BENCHMARKS]: SKIP_BENCHMARKS,
+      [FLAGS.LANDING_PAGES_FOLDER]: LP_FOLDER,
       [FLAGS.NO_I18N]: NO_I18N,
       [FLAGS.NO_BLOG]: NO_BLOG,
       [FLAGS.NO_LP]: NO_LP
@@ -116,6 +124,8 @@ async function processPrebuild() {
       blogTaxonomyCheckersEndTime,
       blogCodegenStartTime,
       blogCodegenEndTime,
+      lpCodegenStartTime,
+      lpCodegenEndTime,
       lpTaxonomyCheckersStartTime,
       lpTaxonomyCheckersEndTime
     ]: MaybeUndefined<number>[] = [];
@@ -165,13 +175,18 @@ async function processPrebuild() {
     if (!NO_LP) {
       lpTaxonomyCheckersStartTime = performance.now();
       const [sysLpCategoriesValidatorFeedback, sysLpSlugsValidatorFeedback] = await Promise.all([
-        sysLpCategoriesValidator(LP_POSTS_FOLDER),
-        sysLpSlugsValidator(LP_POSTS_FOLDER)
+        sysLpCategoriesValidator(LP_FOLDER),
+        sysLpSlugsValidator(LP_FOLDER)
       ]);
       lpTaxonomyCheckersEndTime = performance.now();
 
       const feedbacks = foldFeedbacks(sysLpCategoriesValidatorFeedback, sysLpSlugsValidatorFeedback);
       if (feedbacks) throw new FeedbackError(feedbacks);
+
+      lpCodegenStartTime = performance.now();
+      const lpArchitecture = await getLpMetadatas(LP_FOLDER);
+      generateLandingPageType(lpArchitecture); // {ToDo} Test Codegen
+      lpCodegenEndTime = performance.now();
     }
 
     printPrebuilderDoneMsg(
@@ -186,6 +201,8 @@ async function processPrebuild() {
           localesCheckersEndTime,
           blogCodegenStartTime,
           blogCodegenEndTime,
+          lpCodegenStartTime,
+          lpCodegenEndTime,
           globalStartTime
         })
     );

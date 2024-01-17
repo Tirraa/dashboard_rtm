@@ -1,15 +1,15 @@
 /* v8 ignore start */
 // Stryker disable all
-import type { MaybeNull } from 'packages/shared-types/src/CustomUtilityTypes';
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { LandingPageProps } from '@/types/LandingPage';
 import type { LandingPage } from 'contentlayer/generated';
 
 import { getLandingPageBySlugAndLanguageUnstrict } from '@/lib/landingPages/api';
 import LandingPageTaxonomy from '##/config/taxonomies/landingPages';
 import { setStaticParamsLocale } from 'next-international/server';
-import { buildPageTitle } from 'packages/shared-lib/src/str';
 import { allLandingPages } from 'contentlayer/generated';
 import MDX from '@/components/layouts/blog/MdxComponent';
+import { buildPageTitle } from '@rtm/shared-lib/str';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSideI18n } from '@/i18n/server';
 import { notFound } from 'next/navigation';

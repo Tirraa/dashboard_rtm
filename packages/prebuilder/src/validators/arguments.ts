@@ -139,8 +139,8 @@ async function fileExists(path: Path) {
 async function crashIfFilesDoesNotExist({ ...args }) {
   const {
     [FLAGS.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
-    [FLAGS.LANDING_PAGES_FOLDER]: LP_POSTS_FOLDER,
     [FLAGS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
+    [FLAGS.LANDING_PAGES_FOLDER]: LP_FOLDER,
     [FLAGS.NO_BLOG]: NO_BLOG,
     [FLAGS.NO_I18N]: NO_I18N,
     [FLAGS.NO_LP]: NO_LP
@@ -188,12 +188,12 @@ async function crashIfFilesDoesNotExist({ ...args }) {
     const ADVICE = formatMessage('disableLpAnalysisAdvice' satisfies VocabKey);
     const ERROR_PREFIX = getErrorPrefix();
 
-    const lpFolderExists = await fileExists(LP_POSTS_FOLDER);
+    const lpFolderExists = await fileExists(LP_FOLDER);
     if (!lpFolderExists) {
       throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + formatMessage('cantOpenTheLpFolder' satisfies VocabKey) + '\n' + ADVICE);
     }
 
-    const lpFolderStat = await fs.stat(LP_POSTS_FOLDER);
+    const lpFolderStat = await fs.stat(LP_FOLDER);
     const lpFolderIsDirectory = lpFolderStat.isDirectory();
     if (!lpFolderIsDirectory) {
       throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + formatMessage('theLpFolderIsNotDirectory' satisfies VocabKey) + '\n' + ADVICE);

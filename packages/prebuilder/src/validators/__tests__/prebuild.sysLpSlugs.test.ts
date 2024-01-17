@@ -7,10 +7,10 @@ const INVALID_PATH = './bless/the/draco/these/rounds/holy/sorry/bout/your/luck';
 
 const VALID_LP_FOLDER = './packages/prebuilder/src/validators/__tests__/fake_lp_folders/valid_fake_lp_folder';
 
-const INVALID_LP_POSTS_FOLDER_CONTAINING_ONE_INVALID_LP_SLUG =
+const INVALID_LP_FOLDER_CONTAINING_ONE_INVALID_LP_SLUG =
   './packages/prebuilder/src/validators/__tests__/fake_lp_folders/invalid_fake_lp_folder_invalid_slug';
 
-const INVALID_LP_POSTS_FOLDER_CONTAINING_SEVERAL_INVALID_LP_SLUGS =
+const INVALID_LP_FOLDER_CONTAINING_SEVERAL_INVALID_LP_SLUGS =
   './packages/prebuilder/src/validators/__tests__/fake_lp_folders/invalid_fake_lp_folder_several_invalid_slugs';
 
 const INVALID_SLUG_NEEDLE = 'Invalid slug'.toLowerCase();
@@ -35,12 +35,12 @@ describe('sysLpSlugsValidator', () => {
   });
 
   it('should produce an error feedback, given a path to a folder with an invalid lp slug', async () => {
-    const feedback = await sysLpSlugsValidator(INVALID_LP_POSTS_FOLDER_CONTAINING_ONE_INVALID_LP_SLUG);
+    const feedback = await sysLpSlugsValidator(INVALID_LP_FOLDER_CONTAINING_ONE_INVALID_LP_SLUG);
     expect(feedback.toLowerCase().includes(INVALID_SLUG_NEEDLE)).toBe(true);
   });
 
   it('should produce an error feedback, given a path to a folder with several invalid lp slugs', async () => {
-    const feedback = await sysLpSlugsValidator(INVALID_LP_POSTS_FOLDER_CONTAINING_SEVERAL_INVALID_LP_SLUGS);
+    const feedback = await sysLpSlugsValidator(INVALID_LP_FOLDER_CONTAINING_SEVERAL_INVALID_LP_SLUGS);
     expect(feedback.toLowerCase().includes(INVALID_SLUG_NEEDLE)).toBe(true);
     expect(feedback.toLowerCase().includes(INVALID_SLUGS_NEEDLE)).toBe(true);
   });

@@ -18,7 +18,7 @@ const BREAKING_DEP_NEEDLE = 'Breaking dependency'.toLocaleLowerCase();
 
 const VALID_I18N_LOCALES_SCHEMA_FILEPATH = './packages/prebuilder/src/validators/__tests__/fake_locales/valid_fake_locales/schema.ts';
 
-const VALID_LP_FOLDER = './packages/prebuilder/src/validators/__tests__/fake_lp_folders/valid_fake_lp_folder';
+const VALID_LP_FOLDER = './packages/prebuilder/src/validators/__tests__/fake_lp_folders/phony_valid_fake_lp_folder';
 
 const VALID_BLOG_POSTS_FOLDER = './packages/prebuilder/src/validators/__tests__/fake_posts_folders/phony_valid_fake_posts_folder';
 

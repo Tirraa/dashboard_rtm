@@ -1,6 +1,6 @@
 import type { CategoriesMetadatasEntity, CategoriesMetadatas, BlogSlug } from '../types/Metadatas';
 
-import { BLOG_ARCHITECTURE_METADATAS_DEFAULT_LANGUAGE_KEY as DEFAULT_LANGUAGE_KEY, BLOG_POST_FILE_EXT } from '../config';
+import { DEFAULT_LANGUAGE_KEY, BLOG_POST_FILE_EXT } from '../config';
 
 // https://github.com/vitest-dev/vitest/discussions/2484
 const path = require('path');

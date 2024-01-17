@@ -83,11 +83,14 @@ const DEFAULT_TRANSLATION = {
   i18n: 'i18n',
   lp: 'landing page',
 
-  validatedLocalesInfosBenchmark: `Validated ${VOCAB_TOKENS.en.N_PLURAL.LOCALES} infos in ~{duration}s`,
-  totalExecutionTimeBenchmark: 'Total execution time: ~{duration}s',
   blogCodegenBenchmark: 'Generated blog related code in ~{duration}s',
+  lpCodegenBenchmark: 'Generated landing pages related code in ~{duration}s',
+
+  validatedLocalesInfosBenchmark: `Validated ${VOCAB_TOKENS.en.N_PLURAL.LOCALES} infos in ~{duration}s`,
   validatedBlogTaxonomyBenchmark: `Validated blog ${VOCAB_TOKENS.en.N_SINGULAR.TAXONOMY} in ~{duration}s`,
   validatedLpTaxonomyBenchmark: `Validated landing pages ${VOCAB_TOKENS.en.N_SINGULAR.TAXONOMY} in ~{duration}s`,
+
+  totalExecutionTimeBenchmark: 'Total execution time: ~{duration}s',
 
   impossibleToStartThePrebuilder: `Impossible to start the ${VOCAB_TOKENS.en.N_SINGULAR.PREBUILDER}!`,
   interruptedThePrebuilder: `Interrupted the ${VOCAB_TOKENS.en.N_SINGULAR.PREBUILDER}!`,
@@ -175,11 +178,13 @@ const translations = {
     i18n: 'i18n',
     lp: 'landing page',
 
+    blogCodegenBenchmark: 'Code relatif au blog généré en ~{duration}s',
+    lpCodegenBenchmark: 'Code relatif aux landing pages généré en ~{duration}s',
+
     validatedLocalesInfosBenchmark: `Validation des champs 'infos' des ${VOCAB_TOKENS.fr.F_PLURAL.LOCALES} effectuée en ~{duration}s`,
     validatedBlogTaxonomyBenchmark: `Validation de la ${VOCAB_TOKENS.fr.F_SINGULAR.TAXONOMY} du blog effectuée en ~{duration}s`,
     validatedLpTaxonomyBenchmark: `Validation de la ${VOCAB_TOKENS.fr.F_SINGULAR.TAXONOMY} des landing pages en ~{duration}s`,
 
-    blogCodegenBenchmark: 'Code relatif au blog généré en ~{duration}s',
     totalExecutionTimeBenchmark: "Temps total d'exécution : ~{duration}s",
 
     impossibleToStartThePrebuilder: `Impossible de démarrer le ${VOCAB_TOKENS.fr.M_SINGULAR.PREBUILDER} !`,

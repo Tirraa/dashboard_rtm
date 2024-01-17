@@ -1,0 +1,14 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getLpMetadatas > should match snapshot 1`] = `
+{
+  "fake-category": {
+    "DEFAULT_LANGUAGE": [
+      "fake-category-lp-00",
+    ],
+    "en": [
+      "fake-category-lp-00",
+    ],
+  },
+}
+`;
