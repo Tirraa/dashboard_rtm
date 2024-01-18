@@ -9,11 +9,13 @@ import type { I18nParams } from './Next';
 type LandingPagePropsParams = TLandingPageTaxonomy;
 
 type LpLanguageAndSlugPair = {
-  [L in keyof LandingPages[keyof LandingPages]]: {
-    lang: L extends 'DEFAULT_LANGUAGE' ? typeof DEFAULT_LANGUAGE : L;
-    slug: LandingPages[keyof LandingPages][L];
-  };
-}[keyof LandingPages[keyof LandingPages]];
+  [Category in keyof LandingPages]: {
+    [Lang in keyof LandingPages[Category]]: {
+      lang: Lang extends 'DEFAULT_LANGUAGE' ? typeof DEFAULT_LANGUAGE : Lang;
+      slug: LandingPages[Category][Lang];
+    };
+  }[keyof LandingPages[Category]];
+}[keyof LandingPages];
 
 export interface LandingPageProps {
   params: LandingPagePropsParams & I18nParams;
@@ -21,6 +23,6 @@ export interface LandingPageProps {
 
 export type UnknownLandingPageSlug = string;
 export type LandingPageLang = LpLanguageAndSlugPair['lang'];
-export type LandingPageSlug<L extends LandingPageLang> = Extract<LpLanguageAndSlugPair, { lang: L }>['slug'];
+export type LandingPageSlug<Lang extends LandingPageLang> = Extract<LpLanguageAndSlugPair, { lang: Lang }>['slug'];
 // Stryker restore all
 /* v8 ignore stop */
