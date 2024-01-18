@@ -9,14 +9,14 @@ import { getMaybeI18nFlagFromRequest } from '@/lib/next';
 import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
 import { APP_PROTECTED_PATHS } from '@/middleware';
 import { withAuth } from 'next-auth/middleware';
-import { getSlashEnvelope } from '@/lib/str';
+import ROUTES_ROOTS from '##/config/routes';
 
 function authMiddleware(request: NextRequest) {
   const maybeI18nFlag = getMaybeI18nFlagFromRequest(request);
-  const i18nPrefix = maybeI18nFlag ? getSlashEnvelope(maybeI18nFlag) : '/';
+  const i18nPrefix = maybeI18nFlag ? '/' + maybeI18nFlag : '';
 
   return withAuth(mainMiddlewaresChain, {
-    pages: { signIn: i18nPrefix + 'sign-up' }
+    pages: { signIn: i18nPrefix + ROUTES_ROOTS.LANDING_PAGES + 'sign-up' }
   });
 }
 
