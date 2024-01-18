@@ -6,7 +6,7 @@ import { LOCALES_INFOS_ROOT_KEY, LOCALES_LNG_INFOS_KEY, MAX_BLOG_TAXONOMY_LEN, M
 
 const KNOWN_OPTIONS = Object.values(FLAGS).join(', ');
 
-export const DEFAULT_LOCALE: Locale = 'en';
+export const DEFAULT_LOCALE = 'en' as const satisfies Locale;
 
 const VOCAB_TOKENS = {
   fr: {
@@ -70,11 +70,11 @@ const VOCAB_TOKENS = {
 } as const satisfies Record<Locale, VocabTokensWithGrammaticalVariants>;
 
 export const UNKNOWN_LOCALE_FALLBACK_MSG = (unknownLocale: string) =>
-  `[Warning] ${capitalize(VOCAB_TOKENS.en.INVARIABLE.UNKNOWN)} ${
-    VOCAB_TOKENS.en.N_SINGULAR.LOCALES
+  `[Warning] ${capitalize(VOCAB_TOKENS[DEFAULT_LOCALE].INVARIABLE.UNKNOWN)} ${
+    VOCAB_TOKENS[DEFAULT_LOCALE].N_SINGULAR.LOCALES
   }: ${unknownLocale}, falling back to ${DEFAULT_LOCALE}.` +
   '\n' +
-  `(Known ${VOCAB_TOKENS.en.N_PLURAL.LOCALES} are: ${LOCALES.join(', ')})` +
+  `(Known ${VOCAB_TOKENS[DEFAULT_LOCALE].N_PLURAL.LOCALES} are: ${LOCALES.join(', ')})` +
   '\n';
 
 /* eslint-disable perfectionist/sort-objects */
