@@ -185,7 +185,7 @@ async function processPrebuild() {
 
       lpCodegenStartTime = performance.now();
       const lpArchitecture = await getLpMetadatas(LP_FOLDER);
-      generateLandingPageType(lpArchitecture); // {ToDo} Test Codegen
+      generateLandingPageType(lpArchitecture);
       lpCodegenEndTime = performance.now();
     }
 

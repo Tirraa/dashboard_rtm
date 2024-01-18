@@ -3,23 +3,23 @@ import { describe, expect, it } from 'vitest';
 
 import generateLpType from '../lpType';
 
-const fs = require('fs/promises');
+const fs = require('fs');
 
 const __TARGET_FOLDER_ROOT = './packages/prebuilder/src/generators/lp/__tests__/FAKE_CODEGEN';
 const __TARGET_FOLDER = __TARGET_FOLDER_ROOT + '/' + 'LP_TYPE';
 
 describe('generateLpType', () => {
-  it('should match snapshot', async () => {
+  it('should match snapshot', () => {
     const targetFile = 'FAKE_EMPTY_LP_TYPE';
-    await generateLpType({}, targetFile, __TARGET_FOLDER);
+    generateLpType({}, targetFile, __TARGET_FOLDER);
 
-    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 
-  it('should match snapshot', async () => {
+  it('should match snapshot', () => {
     const targetFile = 'FAKE_LP_TYPE';
-    await generateLpType(
+    generateLpType(
       {
         'fake-category-one': {
           DEFAULT_LANGUAGE: ['fake-lp-01', 'fake-lp-02', 'fake-lp-03'],
@@ -40,7 +40,7 @@ describe('generateLpType', () => {
       __TARGET_FOLDER
     );
 
-    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 });
