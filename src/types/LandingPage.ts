@@ -24,5 +24,6 @@ export interface LandingPageProps {
 export type UnknownLandingPageSlug = string;
 export type LandingPageLang = LpLanguageAndSlugPair['lang'];
 export type LandingPageSlug<Lang extends LandingPageLang> = Extract<LpLanguageAndSlugPair, { lang: Lang }>['slug'];
+export type LandingPageCategory = keyof LandingPages;
 // Stryker restore all
 /* v8 ignore stop */

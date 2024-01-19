@@ -4,10 +4,10 @@ import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { LandingPageProps } from '@/types/LandingPage';
 import type { LandingPage } from 'contentlayer/generated';
 
+import { getLandingPagesStaticParams } from '@/lib/landingPages/staticGeneration';
 import { getLandingPageBySlugAndLanguageUnstrict } from '@/lib/landingPages/api';
 import LandingPageTaxonomy from '##/config/taxonomies/landingPages';
 import { setStaticParamsLocale } from 'next-international/server';
-import { allLandingPages } from 'contentlayer/generated';
 import MDX from '@/components/layouts/blog/MdxComponent';
 import { buildPageTitle } from '@rtm/shared-lib/str';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
@@ -29,11 +29,8 @@ export async function generateMetadata({ params }: LandingPageProps) {
   return { description, title };
 }
 
-// {ToDo} Move this in the static generation API and handle drafts & testing
 export async function generateStaticParams() {
-  const staticParams = [];
-  for (const { language, slug } of allLandingPages) staticParams.push({ [I18nTaxonomy.LANGUAGE]: language, [LandingPageTaxonomy.SLUG]: slug });
-
+  const staticParams = getLandingPagesStaticParams();
   return staticParams;
 }
 

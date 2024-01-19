@@ -12,6 +12,7 @@ import {
   buildLandingPageLanguageFlag,
   buildBlogPostLanguageFlag,
   buildBlogPostSubcategory,
+  buildLandingPageCategory,
   buildBlogPostCategory,
   buildLandingPageSlug,
   buildLandingPageUrl,
@@ -83,6 +84,10 @@ const _ALL_LANDING_PAGES_FIELDS = {
     type: 'string',
     required: true
   },
+  category: {
+    type: 'string',
+    required: true
+  },
   title: {
     type: 'string',
     required: true
@@ -128,6 +133,7 @@ export const BLOG_POST_SCHEMA_CONFIG: ContentLayerDocumentsConfigType<BlogPostSc
 // Stryker disable all
 export const LANDING_PAGES_DOCUMENTS_COMPUTED_FIELDS = {
   language: { resolve: (lp) => buildLandingPageLanguageFlag(lp), type: 'string' },
+  category: { resolve: (lp) => buildLandingPageCategory(lp), type: 'string' },
   slug: { resolve: (lp) => buildLandingPageSlug(lp), type: 'string' },
   url: { resolve: (lp) => buildLandingPageUrl(lp), type: 'string' }
 } as const satisfies ComputedFieldsArtifact<_AllLandingPagesFields> satisfies ComputedFields;
