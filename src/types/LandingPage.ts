@@ -22,6 +22,7 @@ export interface LandingPageProps {
 }
 
 export type UnknownLandingPageSlug = string;
+export type UnknownLandingPageCategory = string;
 export type LandingPageLang = LpLanguageAndSlugPair['lang'];
 export type LandingPageSlug<Lang extends LandingPageLang> = Extract<LpLanguageAndSlugPair, { lang: Lang }>['slug'];
 export type LandingPageCategory = keyof LandingPages;

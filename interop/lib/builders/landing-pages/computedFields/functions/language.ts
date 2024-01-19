@@ -1,9 +1,9 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
-import type { LanguageFlag } from '@rtm/shared-types/LanguageFlag';
+import type { UnknownLanguageFlag } from '@rtm/shared-types/LanguageFlag';
 
 import { getFlattenedPathWithoutRootFolder, indexOfNthOccurrence, LANDING_PAGES_FOLDER, DEFAULT_LANGUAGE } from '../../../unifiedImport';
 
-function buildLandingPageLanguageFlagFromStr(flattenedPath: string): LanguageFlag | string {
+function buildLandingPageLanguageFlagFromStr(flattenedPath: string): UnknownLanguageFlag {
   const envelopeBeginSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 1);
   if (envelopeBeginSlashIndex === -1) return DEFAULT_LANGUAGE;
 
@@ -16,7 +16,7 @@ function buildLandingPageLanguageFlagFromStr(flattenedPath: string): LanguageFla
   return DEFAULT_LANGUAGE;
 }
 
-function buildLandingPageLanguageFlag(lp: DocumentToCompute): LanguageFlag | string {
+function buildLandingPageLanguageFlag(lp: DocumentToCompute): UnknownLanguageFlag {
   const flattenedPath = getFlattenedPathWithoutRootFolder(lp._raw.flattenedPath, LANDING_PAGES_FOLDER);
   const language = buildLandingPageLanguageFlagFromStr(flattenedPath);
   return language;
