@@ -1,13 +1,8 @@
-import type { FunctionComponent } from 'react';
-
-import { afterAll, describe, expect, it, vi } from 'vitest';
+import { beforeAll, afterAll, describe, expect, it, vi } from 'vitest';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { render, screen } from '@testing-library/react';
 
 import computeHTMLElementHeight from '../computeHTMLElementHeight';
 import computeHTMLElementWidth from '../computeHTMLElementWidth';
-
-const FakeComponent: FunctionComponent<{}> = () => <div data-testid="fake-component" />;
 
 vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(() => {
   return {
@@ -31,14 +26,21 @@ vi.spyOn(window, 'getComputedStyle').mockImplementation(() => {
 vi.resetModules();
 
 describe('computeHTMLElementHeight/computeHTMLElementWidth', () => {
+  let fakeElement: HTMLElement;
+
+  beforeAll(() => {
+    fakeElement = document.createElement('div');
+    fakeElement.setAttribute('data-testid', 'fake-component');
+    document.body.appendChild(fakeElement);
+  });
+
   afterAll(() => {
+    document.body.removeChild(fakeElement);
     vi.restoreAllMocks();
   });
 
   it('should return the correct height/width of an element', () => {
-    render(<FakeComponent />);
-    const fakeComponent = screen.getByTestId('fake-component');
-    expect(computeHTMLElementHeight(fakeComponent)).toBe(2165);
-    expect(computeHTMLElementWidth(fakeComponent)).toBe(3730);
+    expect(computeHTMLElementHeight(fakeElement)).toBe(2165);
+    expect(computeHTMLElementWidth(fakeElement)).toBe(3730);
   });
 });
