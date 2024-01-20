@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import buildLandingPageUrl from '../url';
 
 describe('url', () => {
-  const root = ROUTES_ROOTS.WEBSITE;
+  const root = ROUTES_ROOTS.LANDING_PAGES;
   it('should return the correct default language URL, given a valid default language flattened path', () => {
     const url = '/' + DEFAULT_LANGUAGE + root + 'category-slug';
     expect(

@@ -11,7 +11,7 @@ import {
 
 function buildLandingPageUrl(landingPage: DocumentToCompute): AppPath {
   const OPTIONAL_LOCALE_PART_INDEX = 1;
-  const root = ROUTES_ROOTS.WEBSITE;
+  const root = ROUTES_ROOTS.LANDING_PAGES;
 
   const flattenedPath = getFlattenedPathWithoutRootFolder(landingPage._raw.flattenedPath, LANDING_PAGES_FOLDER);
   const flattenedPathParts = flattenedPath.split('/');

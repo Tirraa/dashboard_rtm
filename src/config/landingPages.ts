@@ -1,6 +1,6 @@
 import type { LandingPageCategory } from '@/types/LandingPage';
 
-type TLandingPagesConfig = {
+export type TLandingPagesConfig = {
   TESTING_CATEGORY: typeof TESTING_CATEGORY;
   ENABLE_DRAFTS_IN_PROD: boolean;
 };
