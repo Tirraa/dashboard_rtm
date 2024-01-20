@@ -19,7 +19,7 @@ vi.mock('../ctx', async (orgImport) => {
 });
 
 describe('getLandingPageBySlugAndLanguageStrict', () => {
-  it('should return null, given testing category in not testing ctx', () => {
+  it('should return a valid testing lp, given testing category in testing ctx', () => {
     const category = 'testing' as const;
     const targettedSlug = 'testing-fake-lp-00' as const;
     const language = DEFAULT_LANGUAGE;

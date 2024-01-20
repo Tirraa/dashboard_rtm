@@ -19,10 +19,18 @@ describe('getLandingPageBySlugAndLanguageStrict', () => {
     expect(lp.url).toBe('/' + language + ROUTES_ROOTS.LANDING_PAGES + targettedSlug);
   });
 
-  it('should always return null', () => {
+  it('should always return null, given invalid slug', () => {
     const targettedSlug = '__INVALID__TARGETTED_SLUG__' as const;
     // @ts-expect-error
     const lp = getLandingPageBySlugAndLanguageStrict(DEFAULT_LANGUAGE, targettedSlug);
+
+    expect(lp).toBe(null);
+  });
+
+  it('should always return null, given invalid language', () => {
+    const targettedSlug = 'testing-fake-lp-00' as const;
+    // @ts-expect-error
+    const lp = getLandingPageBySlugAndLanguageStrict('__INVALID_LANGUAGE__', targettedSlug);
 
     expect(lp).toBe(null);
   });

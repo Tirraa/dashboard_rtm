@@ -12,6 +12,8 @@ export function getLandingPageBySlugAndLanguageUnstrict(language: LanguageFlag, 
   const matchingLandingPage =
     allLandingPages.find(({ language: currentLanguage, slug: currentSlug }) => currentSlug === slug && currentLanguage === language) ?? null;
 
+  // Stryker Workaround 1. Mutant will be killed with `&& false` as expected, but `&& true` mutant is pointless.
+  // Stryker disable next-line ConditionalExpression
   if (!ComputedLandingPagesCtx.TESTING && matchingLandingPage?.category === LandingPagesConfig.TESTING_CATEGORY) return null;
   if (matchingLandingPage && !ComputedLandingPagesCtx.ALLOWED_DRAFTS && matchingLandingPage.draft) return null;
   return matchingLandingPage;
