@@ -39,13 +39,13 @@ async function buildLpMetadatasFromLpFolder(lpFolder: string): Promise<LpMetadat
 
           const language = maybeLanguage.name;
           if (metadatas[category][language] === undefined) metadatas[category][language] = [];
-          metadatas[category][language].push([category, slug].join('-'));
+          metadatas[category][language].push(category + '-' + slug);
         }
       } else if (maybePost.isFile()) {
         const slug = getSlug(maybePost.name);
         if (!slug) continue;
         if (metadatas[category][DEFAULT_LANGUAGE_KEY] === undefined) metadatas[category][DEFAULT_LANGUAGE_KEY] = [];
-        metadatas[category][DEFAULT_LANGUAGE_KEY].push([category, slug].join('-'));
+        metadatas[category][DEFAULT_LANGUAGE_KEY].push(category + '-' + slug);
       }
     }
   }

@@ -9,11 +9,11 @@ import {
   ROUTES_ROOTS
 } from '../../../unifiedImport';
 
-function buildLandingPageUrl(landingPage: DocumentToCompute): AppPath {
+function buildLandingPageUrl(lp: DocumentToCompute): AppPath {
   const OPTIONAL_LOCALE_PART_INDEX = 1;
   const root = ROUTES_ROOTS.LANDING_PAGES;
 
-  const flattenedPath = getFlattenedPathWithoutRootFolder(landingPage._raw.flattenedPath, LANDING_PAGES_FOLDER);
+  const flattenedPath = getFlattenedPathWithoutRootFolder(lp._raw.flattenedPath, LANDING_PAGES_FOLDER);
   const flattenedPathParts = flattenedPath.split('/');
 
   if (flattenedPathParts.length !== 3 && flattenedPathParts.length !== 2) {

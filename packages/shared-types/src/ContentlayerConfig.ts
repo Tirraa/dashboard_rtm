@@ -53,7 +53,7 @@ export type MakeFields<
 
 export type DocumentToCompute = Document;
 
-// * ... Adapter
+// * ... Adapter (narrowing)
 type ComputedField<T extends FieldDefType = FieldDefType> = {
   resolve: (post: DocumentToCompute) => unknown;
   type: T;

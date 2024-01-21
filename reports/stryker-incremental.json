@@ -27264,6 +27264,46 @@
       "language": "typescript",
       "mutants": [
         {
+          "id": "1346",
+          "mutatorName": "BlockStatement",
+          "replacement": "{}",
+          "statusReason": "src/lib/landingPages/api.ts(11,112): error TS2355: A function whose declared type is neither 'undefined', 'void', nor 'any' must return a value.\n",
+          "status": "CompileError",
+          "static": false,
+          "killedBy": [],
+          "coveredBy": ["146", "147", "156", "157", "173", "174", "175", "193", "236"],
+          "location": {
+            "end": {
+              "column": 2,
+              "line": 20
+            },
+            "start": {
+              "column": 135,
+              "line": 11
+            }
+          }
+        },
+        {
+          "id": "1347",
+          "mutatorName": "LogicalOperator",
+          "replacement": "allLandingPages.find(({\n  language: currentLanguage,\n  slug: currentSlug\n}) => currentSlug === slug && currentLanguage === language) && null",
+          "statusReason": "src/lib/landingPages/api.ts(20,64): error TS2339: Property 'category' does not exist on type 'never'.\nsrc/lib/landingPages/api.ts(21,93): error TS2339: Property 'draft' does not exist on type 'never'.\nsrc/lib/landingPages/api.ts(22,3): error TS2322: Type 'null | undefined' is not assignable to type 'MaybeNull<LandingPage>'.\n  Type 'undefined' is not assignable to type 'MaybeNull<LandingPage>'.\n",
+          "status": "CompileError",
+          "static": false,
+          "killedBy": [],
+          "coveredBy": ["146", "147", "156", "157", "173", "174", "175", "193", "236"],
+          "location": {
+            "end": {
+              "column": 141,
+              "line": 13
+            },
+            "start": {
+              "column": 5,
+              "line": 13
+            }
+          }
+        },
+        {
           "id": "1348",
           "mutatorName": "ArrowFunction",
           "replacement": "() => undefined",
@@ -27306,6 +27346,27 @@
           }
         },
         {
+          "id": "1350",
+          "mutatorName": "ConditionalExpression",
+          "replacement": "false",
+          "statusReason": "Cannot read properties of null (reading 'category')",
+          "status": "Killed",
+          "testsCompleted": 1,
+          "static": false,
+          "killedBy": ["146"],
+          "coveredBy": ["146", "147", "156", "157", "173", "174", "175", "193", "236"],
+          "location": {
+            "end": {
+              "column": 132,
+              "line": 13
+            },
+            "start": {
+              "column": 80,
+              "line": 13
+            }
+          }
+        },
+        {
           "id": "1351",
           "mutatorName": "LogicalOperator",
           "replacement": "currentSlug === slug || currentLanguage === language",
@@ -27318,6 +27379,27 @@
           "location": {
             "end": {
               "column": 132,
+              "line": 13
+            },
+            "start": {
+              "column": 80,
+              "line": 13
+            }
+          }
+        },
+        {
+          "id": "1352",
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "statusReason": "expected 'dummy-category' to be 'testing' // Object.is equality",
+          "status": "Killed",
+          "testsCompleted": 1,
+          "static": false,
+          "killedBy": ["156"],
+          "coveredBy": ["146", "147", "156", "157", "173", "174", "175", "193", "236"],
+          "location": {
+            "end": {
+              "column": 100,
               "line": 13
             },
             "start": {
@@ -27426,6 +27508,48 @@
           }
         },
         {
+          "id": "1358",
+          "mutatorName": "LogicalOperator",
+          "replacement": "!ComputedLandingPagesCtx.TESTING || matchingLandingPage?.category === LandingPagesConfig.TESTING_CATEGORY",
+          "statusReason": "Cannot read properties of null (reading 'category')",
+          "status": "Killed",
+          "testsCompleted": 1,
+          "static": false,
+          "killedBy": ["156"],
+          "coveredBy": ["146", "147", "156", "157", "173", "174", "175", "193", "236"],
+          "location": {
+            "end": {
+              "column": 112,
+              "line": 17
+            },
+            "start": {
+              "column": 7,
+              "line": 17
+            }
+          }
+        },
+        {
+          "id": "1359",
+          "mutatorName": "BooleanLiteral",
+          "replacement": "ComputedLandingPagesCtx.TESTING",
+          "statusReason": "Cannot read properties of null (reading 'category')",
+          "status": "Killed",
+          "testsCompleted": 1,
+          "static": false,
+          "killedBy": ["146"],
+          "coveredBy": ["146", "147", "156", "157", "173", "174", "175", "193", "236"],
+          "location": {
+            "end": {
+              "column": 39,
+              "line": 17
+            },
+            "start": {
+              "column": 7,
+              "line": 17
+            }
+          }
+        },
+        {
           "id": "1360",
           "mutatorName": "ConditionalExpression",
           "replacement": "true",
@@ -27435,6 +27559,47 @@
           "location": {
             "end": {
               "column": 112,
+              "line": 17
+            },
+            "start": {
+              "column": 43,
+              "line": 17
+            }
+          }
+        },
+        {
+          "id": "1361",
+          "mutatorName": "EqualityOperator",
+          "replacement": "matchingLandingPage?.category !== LandingPagesConfig.TESTING_CATEGORY",
+          "statusReason": "expected { draft: false, …(10) } to be null // Object.is equality",
+          "status": "Killed",
+          "testsCompleted": 1,
+          "static": false,
+          "killedBy": ["236"],
+          "coveredBy": ["236"],
+          "location": {
+            "end": {
+              "column": 112,
+              "line": 17
+            },
+            "start": {
+              "column": 43,
+              "line": 17
+            }
+          }
+        },
+        {
+          "id": "1362",
+          "mutatorName": "OptionalChaining",
+          "replacement": "matchingLandingPage.category",
+          "statusReason": "src/lib/landingPages/api.ts(17,43): error TS18047: 'matchingLandingPage' is possibly 'null'.\n",
+          "status": "CompileError",
+          "static": false,
+          "killedBy": [],
+          "coveredBy": ["236"],
+          "location": {
+            "end": {
+              "column": 72,
               "line": 17
             },
             "start": {
@@ -27486,6 +27651,66 @@
           }
         },
         {
+          "id": "1365",
+          "mutatorName": "LogicalOperator",
+          "replacement": "matchingLandingPage && !ComputedLandingPagesCtx.ALLOWED_DRAFTS || matchingLandingPage.draft",
+          "statusReason": "src/lib/landingPages/api.ts(18,73): error TS18047: 'matchingLandingPage' is possibly 'null'.\n",
+          "status": "CompileError",
+          "static": false,
+          "killedBy": [],
+          "coveredBy": ["146", "147", "156", "157", "173", "174", "175", "193"],
+          "location": {
+            "end": {
+              "column": 98,
+              "line": 18
+            },
+            "start": {
+              "column": 7,
+              "line": 18
+            }
+          }
+        },
+        {
+          "id": "1366",
+          "mutatorName": "ConditionalExpression",
+          "replacement": "true",
+          "statusReason": "src/lib/landingPages/api.ts(18,15): error TS18047: 'matchingLandingPage' is possibly 'null'.\n",
+          "status": "CompileError",
+          "static": false,
+          "killedBy": [],
+          "coveredBy": ["146", "147", "156", "157", "173", "174", "175", "193"],
+          "location": {
+            "end": {
+              "column": 69,
+              "line": 18
+            },
+            "start": {
+              "column": 7,
+              "line": 18
+            }
+          }
+        },
+        {
+          "id": "1367",
+          "mutatorName": "LogicalOperator",
+          "replacement": "matchingLandingPage || !ComputedLandingPagesCtx.ALLOWED_DRAFTS",
+          "statusReason": "src/lib/landingPages/api.ts(18,73): error TS18047: 'matchingLandingPage' is possibly 'null'.\n",
+          "status": "CompileError",
+          "static": false,
+          "killedBy": [],
+          "coveredBy": ["146", "147", "156", "157", "173", "174", "175", "193"],
+          "location": {
+            "end": {
+              "column": 69,
+              "line": 18
+            },
+            "start": {
+              "column": 7,
+              "line": 18
+            }
+          }
+        },
+        {
           "id": "1368",
           "mutatorName": "BooleanLiteral",
           "replacement": "ComputedLandingPagesCtx.ALLOWED_DRAFTS",
@@ -27525,228 +27750,9 @@
               "line": 22
             }
           }
-        },
-        {
-          "id": "1346",
-          "mutatorName": "BlockStatement",
-          "replacement": "{}",
-          "statusReason": "src/lib/landingPages/api.ts(11,112): error TS2355: A function whose declared type is neither 'undefined', 'void', nor 'any' must return a value.\n",
-          "status": "CompileError",
-          "static": false,
-          "coveredBy": ["146", "147", "156", "157", "173", "174", "175", "193", "236"],
-          "location": {
-            "end": {
-              "column": 2,
-              "line": 20
-            },
-            "start": {
-              "column": 135,
-              "line": 11
-            }
-          }
-        },
-        {
-          "id": "1347",
-          "mutatorName": "LogicalOperator",
-          "replacement": "allLandingPages.find(({\n  language: currentLanguage,\n  slug: currentSlug\n}) => currentSlug === slug && currentLanguage === language) && null",
-          "statusReason": "src/lib/landingPages/api.ts(20,64): error TS2339: Property 'category' does not exist on type 'never'.\nsrc/lib/landingPages/api.ts(21,93): error TS2339: Property 'draft' does not exist on type 'never'.\nsrc/lib/landingPages/api.ts(22,3): error TS2322: Type 'null | undefined' is not assignable to type 'MaybeNull<LandingPage>'.\n  Type 'undefined' is not assignable to type 'MaybeNull<LandingPage>'.\n",
-          "status": "CompileError",
-          "static": false,
-          "coveredBy": ["146", "147", "156", "157", "173", "174", "175", "193", "236"],
-          "location": {
-            "end": {
-              "column": 141,
-              "line": 13
-            },
-            "start": {
-              "column": 5,
-              "line": 13
-            }
-          }
-        },
-        {
-          "id": "1352",
-          "mutatorName": "ConditionalExpression",
-          "replacement": "true",
-          "statusReason": "expected 'dummy-category' to be 'testing' // Object.is equality",
-          "status": "Killed",
-          "static": false,
-          "testsCompleted": 1,
-          "killedBy": ["156"],
-          "coveredBy": ["146", "147", "156", "157", "173", "174", "175", "193", "236"],
-          "location": {
-            "end": {
-              "column": 100,
-              "line": 13
-            },
-            "start": {
-              "column": 80,
-              "line": 13
-            }
-          }
-        },
-        {
-          "id": "1350",
-          "mutatorName": "ConditionalExpression",
-          "replacement": "false",
-          "statusReason": "Cannot read properties of null (reading 'category')",
-          "status": "Killed",
-          "static": false,
-          "testsCompleted": 1,
-          "killedBy": ["146"],
-          "coveredBy": ["146", "147", "156", "157", "173", "174", "175", "193", "236"],
-          "location": {
-            "end": {
-              "column": 132,
-              "line": 13
-            },
-            "start": {
-              "column": 80,
-              "line": 13
-            }
-          }
-        },
-        {
-          "id": "1358",
-          "mutatorName": "LogicalOperator",
-          "replacement": "!ComputedLandingPagesCtx.TESTING || matchingLandingPage?.category === LandingPagesConfig.TESTING_CATEGORY",
-          "statusReason": "Cannot read properties of null (reading 'category')",
-          "status": "Killed",
-          "static": false,
-          "testsCompleted": 1,
-          "killedBy": ["156"],
-          "coveredBy": ["146", "147", "156", "157", "173", "174", "175", "193", "236"],
-          "location": {
-            "end": {
-              "column": 112,
-              "line": 17
-            },
-            "start": {
-              "column": 7,
-              "line": 17
-            }
-          }
-        },
-        {
-          "id": "1359",
-          "mutatorName": "BooleanLiteral",
-          "replacement": "ComputedLandingPagesCtx.TESTING",
-          "statusReason": "Cannot read properties of null (reading 'category')",
-          "status": "Killed",
-          "static": false,
-          "testsCompleted": 1,
-          "killedBy": ["146"],
-          "coveredBy": ["146", "147", "156", "157", "173", "174", "175", "193", "236"],
-          "location": {
-            "end": {
-              "column": 39,
-              "line": 17
-            },
-            "start": {
-              "column": 7,
-              "line": 17
-            }
-          }
-        },
-        {
-          "id": "1362",
-          "mutatorName": "OptionalChaining",
-          "replacement": "matchingLandingPage.category",
-          "statusReason": "src/lib/landingPages/api.ts(17,43): error TS18047: 'matchingLandingPage' is possibly 'null'.\n",
-          "status": "CompileError",
-          "static": false,
-          "coveredBy": ["236"],
-          "location": {
-            "end": {
-              "column": 72,
-              "line": 17
-            },
-            "start": {
-              "column": 43,
-              "line": 17
-            }
-          }
-        },
-        {
-          "id": "1361",
-          "mutatorName": "EqualityOperator",
-          "replacement": "matchingLandingPage?.category !== LandingPagesConfig.TESTING_CATEGORY",
-          "statusReason": "expected { draft: false, …(10) } to be null // Object.is equality",
-          "status": "Killed",
-          "static": false,
-          "testsCompleted": 1,
-          "killedBy": ["236"],
-          "coveredBy": ["236"],
-          "location": {
-            "end": {
-              "column": 112,
-              "line": 17
-            },
-            "start": {
-              "column": 43,
-              "line": 17
-            }
-          }
-        },
-        {
-          "id": "1365",
-          "mutatorName": "LogicalOperator",
-          "replacement": "matchingLandingPage && !ComputedLandingPagesCtx.ALLOWED_DRAFTS || matchingLandingPage.draft",
-          "statusReason": "src/lib/landingPages/api.ts(18,73): error TS18047: 'matchingLandingPage' is possibly 'null'.\n",
-          "status": "CompileError",
-          "static": false,
-          "coveredBy": ["146", "147", "156", "157", "173", "174", "175", "193"],
-          "location": {
-            "end": {
-              "column": 98,
-              "line": 18
-            },
-            "start": {
-              "column": 7,
-              "line": 18
-            }
-          }
-        },
-        {
-          "id": "1366",
-          "mutatorName": "ConditionalExpression",
-          "replacement": "true",
-          "statusReason": "src/lib/landingPages/api.ts(18,15): error TS18047: 'matchingLandingPage' is possibly 'null'.\n",
-          "status": "CompileError",
-          "static": false,
-          "coveredBy": ["146", "147", "156", "157", "173", "174", "175", "193"],
-          "location": {
-            "end": {
-              "column": 69,
-              "line": 18
-            },
-            "start": {
-              "column": 7,
-              "line": 18
-            }
-          }
-        },
-        {
-          "id": "1367",
-          "mutatorName": "LogicalOperator",
-          "replacement": "matchingLandingPage || !ComputedLandingPagesCtx.ALLOWED_DRAFTS",
-          "statusReason": "src/lib/landingPages/api.ts(18,73): error TS18047: 'matchingLandingPage' is possibly 'null'.\n",
-          "status": "CompileError",
-          "static": false,
-          "coveredBy": ["146", "147", "156", "157", "173", "174", "175", "193"],
-          "location": {
-            "end": {
-              "column": 69,
-              "line": 18
-            },
-            "start": {
-              "column": 7,
-              "line": 18
-            }
-          }
         }
       ],
-      "source": "import type { UnknownLandingPageSlug, LandingPageLang, LandingPageSlug } from '@/types/LandingPage';\nimport type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';\nimport type { LanguageFlag } from '@rtm/shared-types/I18n';\nimport type { LandingPage } from 'contentlayer/generated';\n\nimport { allLandingPages } from 'contentlayer/generated';\nimport LandingPagesConfig from '@/config/landingPages';\n\nimport ComputedLandingPagesCtx from './ctx';\n\nexport function getLandingPageBySlugAndLanguageUnstrict(language: LanguageFlag, slug: UnknownLandingPageSlug): MaybeNull<LandingPage> {\n  const matchingLandingPage =\n    allLandingPages.find(({ language: currentLanguage, slug: currentSlug }) => currentSlug === slug && currentLanguage === language) ?? null;\n\n  // Stryker Workaround 1. Pointless mutant: there's no ambiguity here.\n  // Stryker disable next-line ConditionalExpression\n  if (!ComputedLandingPagesCtx.TESTING && matchingLandingPage?.category === LandingPagesConfig.TESTING_CATEGORY) return null;\n  if (matchingLandingPage && !ComputedLandingPagesCtx.ALLOWED_DRAFTS && matchingLandingPage.draft) return null;\n  return matchingLandingPage;\n}\n\nexport const getLandingPageBySlugAndLanguageStrict = <L extends LandingPageLang>(lang: L, slug: LandingPageSlug<L>): MaybeNull<LandingPage> =>\n  getLandingPageBySlugAndLanguageUnstrict(lang as any, slug);\n"
+      "source": "import type { UnknownLandingPageSlug, LandingPageLang, LandingPageSlug } from '@/types/LandingPage';\nimport type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';\nimport type { LanguageFlag } from '@rtm/shared-types/I18n';\nimport type { LandingPage } from 'contentlayer/generated';\n\nimport { allLandingPages } from 'contentlayer/generated';\nimport LandingPagesConfig from '@/config/landingPages';\n\nimport ComputedLandingPagesCtx from './ctx';\n\nexport function getLandingPageBySlugAndLanguageUnstrict(language: LanguageFlag, slug: UnknownLandingPageSlug): MaybeNull<LandingPage> {\n  const matchingLandingPage =\n    allLandingPages.find(({ language: currentLanguage, slug: currentSlug }) => currentSlug === slug && currentLanguage === language) ?? null;\n\n  // Stryker Workaround 1. Mutant will be killed with `&& false` as expected, but `&& true` mutant is pointless.\n  // Stryker disable next-line ConditionalExpression\n  if (!ComputedLandingPagesCtx.TESTING && matchingLandingPage?.category === LandingPagesConfig.TESTING_CATEGORY) return null;\n  if (matchingLandingPage && !ComputedLandingPagesCtx.ALLOWED_DRAFTS && matchingLandingPage.draft) return null;\n  return matchingLandingPage;\n}\n\nexport const getLandingPageBySlugAndLanguageStrict = <L extends LandingPageLang>(lang: L, slug: LandingPageSlug<L>): MaybeNull<LandingPage> =>\n  getLandingPageBySlugAndLanguageUnstrict(lang as any, slug);\n"
     },
     "src/lib/landingPages/ctx.ts": {
       "language": "typescript",

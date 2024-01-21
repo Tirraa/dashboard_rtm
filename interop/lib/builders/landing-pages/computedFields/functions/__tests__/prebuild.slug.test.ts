@@ -6,7 +6,7 @@ import buildLandingPageSlug, { buildLandingPageSlugFromLpObj } from '../slug';
 describe('slug', () => {
   const name = 'slug';
   const category = 'category';
-  const slug = [category, name].join('-');
+  const slug = category + '-' + name;
 
   it('should return the category string part, given a valid flattenedPath', () => {
     expect(

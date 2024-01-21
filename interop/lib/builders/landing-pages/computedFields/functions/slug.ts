@@ -35,6 +35,6 @@ export function buildLandingPageSlugFromLpObj(lp: DocumentToCompute): UnknownLan
 }
 
 const buildLandingPageSlug = (lp: DocumentToCompute): UnknownLandingPageSlug =>
-  [buildLandingPageCategory(lp), buildLandingPageSlugFromLpObj(lp)].join('-');
+  buildLandingPageCategory(lp) + '-' + buildLandingPageSlugFromLpObj(lp);
 
 export default buildLandingPageSlug;

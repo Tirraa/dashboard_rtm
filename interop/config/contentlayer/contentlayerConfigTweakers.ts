@@ -14,14 +14,19 @@ import {
   buildBlogPostSubcategory,
   buildLandingPageCategory,
   buildBlogPostCategory,
+  buildPageLanguageFlag,
   buildLandingPageSlug,
   buildLandingPageUrl,
   buildBlogPostSlug,
-  buildBlogPostUrl
+  buildBlogPostUrl,
+  buildPagePath,
+  buildPageUrl
 } from '../../lib/builders';
 
+export const PAGES_FOLDER = 'pages';
 export const BLOG_POSTS_FOLDER = 'blog';
 export const LANDING_PAGES_FOLDER = 'landing-pages';
+export const PAGES_DOCUMENT_TYPE_NAME = 'Page';
 export const LANDING_PAGES_DOCUMENT_TYPE_NAME = 'LandingPage';
 export const DOCUMENTS_CONTENT_TYPE: DocumentContentType = 'mdx';
 export const DOCUMENTS_CONTENT_EXTENSION = 'mdx';
@@ -102,6 +107,34 @@ const _ALL_LANDING_PAGES_FIELDS = {
   }
 } as const satisfies FieldDefs;
 
+const _ALL_PAGES_FIELDS = {
+  draft: {
+    type: 'boolean',
+    required: false,
+    default: false
+  },
+  metadescription: {
+    type: 'string',
+    required: true
+  },
+  language: {
+    type: 'string',
+    required: true
+  },
+  title: {
+    type: 'string',
+    required: true
+  },
+  path: {
+    type: 'string',
+    required: true
+  },
+  url: {
+    type: 'string',
+    required: true
+  }
+} as const satisfies FieldDefs;
+
 /* v8 ignore start */
 // Stryker disable all
 export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
@@ -146,13 +179,31 @@ export const LANDING_PAGES_DOCUMENTS_FIELDS = {
   title: { type: 'string', required: true }
 } as const satisfies DocumentsFields<_AllLandingPagesFields, _LandingPagesDocumentsComputedFieldsKeys>;
 
+/* v8 ignore start */
+// Stryker disable all
+export const PAGES_DOCUMENTS_COMPUTED_FIELDS = {
+  language: { resolve: (page) => buildPageLanguageFlag(page), type: 'string' },
+  path: { resolve: (page) => buildPagePath(page), type: 'string' },
+  url: { resolve: (page) => buildPageUrl(page), type: 'string' }
+} as const satisfies ComputedFieldsArtifact<_AllPagesFields> satisfies ComputedFields;
+// Stryker restore all
+/* v8 ignore stop */
+
+export const PAGES_DOCUMENTS_FIELDS = {
+  draft: { type: 'boolean', required: false, default: false },
+  metadescription: { type: 'string', required: true },
+  title: { type: 'string', required: true }
+} as const satisfies DocumentsFields<_AllPagesFields, _PagesDocumentsComputedFieldsKeys>;
+
 export type BlogDocumentsTypesKeys = 'PatchPostBis' | 'TestingPost' | 'PatchPost';
 type BlogPostSchemaKey = 'PostSchema';
 
 type _BlogFields = typeof BLOG_DOCUMENTS_FIELDS;
-
+type _AllPagesFields = typeof _ALL_PAGES_FIELDS;
 type _AllLandingPagesFields = typeof _ALL_LANDING_PAGES_FIELDS;
+type _PagesComputedFields = typeof PAGES_DOCUMENTS_COMPUTED_FIELDS;
 type _LandingPagesComputedFields = typeof LANDING_PAGES_DOCUMENTS_COMPUTED_FIELDS;
+type _PagesDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _PagesComputedFields, _AllPagesFields>;
 type _LandingPagesDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _LandingPagesComputedFields, _AllLandingPagesFields>;
 export type AllBlogFields = typeof _ALL_BLOG_FIELDS;
 export type BlogFields = MakeFields<_BlogFields>;

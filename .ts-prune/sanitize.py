@@ -84,7 +84,7 @@ def analyze() -> PrintSideEffect:
             unit: str = 's'
             process_delta, pipeline_delta = t_end - t_process_start, t_end - t_pipeline_start
             trunc_proc_delta, trunc_pipe_delta = f"{process_delta:.5f}", f"{pipeline_delta:.5f}"
-            print("Sanitized and printed results in: ~", trunc_proc_delta, unit, sep='')
+            print("Sanitized and printed results in ~", trunc_proc_delta, unit, sep='')
             print("Total execution time: ~", trunc_pipe_delta, unit, sep='')
 
         def print_issues() -> PrintSideEffect:
