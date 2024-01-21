@@ -7,7 +7,7 @@ namespace LandingPageTaxonomy {
 }
 
 export type TLandingPageTaxonomy = {
-  [LandingPageTaxonomy.SLUG]: UnknownLandingPageSlug; // {ToDo} Codegen
+  [LandingPageTaxonomy.SLUG]: UnknownLandingPageSlug;
 };
 
 export default LandingPageTaxonomy;

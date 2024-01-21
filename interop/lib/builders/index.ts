@@ -9,6 +9,7 @@ import buildBlogPostCategory from './blog/computedFields/functions/category';
 import buildBlogPostSlug from './blog/computedFields/functions/slug';
 import buildBlogPostUrl from './blog/computedFields/functions/url';
 import buildPagePath from './pages/computedFields/functions/path';
+import buildPageRoot from './pages/computedFields/functions/root';
 import buildPageUrl from './pages/computedFields/functions/url';
 
 export {
@@ -23,5 +24,6 @@ export {
   buildBlogPostSlug,
   buildBlogPostUrl,
   buildPagePath,
+  buildPageRoot,
   buildPageUrl
 };

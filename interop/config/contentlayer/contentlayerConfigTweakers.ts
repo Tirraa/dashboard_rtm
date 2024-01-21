@@ -19,6 +19,7 @@ import {
   buildLandingPageUrl,
   buildBlogPostSlug,
   buildBlogPostUrl,
+  buildPageRoot,
   buildPagePath,
   buildPageUrl
 } from '../../lib/builders';
@@ -129,6 +130,10 @@ const _ALL_PAGES_FIELDS = {
     type: 'string',
     required: true
   },
+  root: {
+    type: 'string',
+    required: true
+  },
   url: {
     type: 'string',
     required: true
@@ -184,6 +189,7 @@ export const LANDING_PAGES_DOCUMENTS_FIELDS = {
 export const PAGES_DOCUMENTS_COMPUTED_FIELDS = {
   language: { resolve: (page) => buildPageLanguageFlag(page), type: 'string' },
   path: { resolve: (page) => buildPagePath(page), type: 'string' },
+  root: { resolve: (page) => buildPageRoot(page), type: 'string' },
   url: { resolve: (page) => buildPageUrl(page), type: 'string' }
 } as const satisfies ComputedFieldsArtifact<_AllPagesFields> satisfies ComputedFields;
 // Stryker restore all

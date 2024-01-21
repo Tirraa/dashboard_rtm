@@ -13,11 +13,11 @@ async function makeThunks(currentFolder: Path, __currentDeepPath: Path = current
   const files: Filename[] = await fs.readdir(currentFolder);
   const thunks: Thunks<ArborescenceFragmentPromise> = files.map((currentFilename: Filename) => {
     const maybeFilepath: Path = path.join(currentFolder, currentFilename);
-    const thunk: Thunk<ArborescenceFragmentPromise> = async (): ArborescenceFragmentPromise => {
+    const thunk: Thunk<ArborescenceFragmentPromise> = async () => {
       const filepathStats: Stats = await fs.stat(maybeFilepath);
       return filepathStats.isDirectory()
         ? execute(await makeThunks(maybeFilepath, path.join(__currentDeepPath, currentFilename)))
-        : { directory: __currentDeepPath, name: currentFilename };
+        : ({ directory: __currentDeepPath, name: currentFilename } satisfies File);
     };
     return thunk;
   });
