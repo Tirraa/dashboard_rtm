@@ -10,7 +10,7 @@ describe('language', () => {
   while (LANGUAGES.includes((prefixAcc + DEFAULT_LANGUAGE) as any)) prefixAcc += PREFIX;
   const invalidLanguage = prefixAcc + DEFAULT_LANGUAGE;
 
-  it('should NOT be fault tolerant, given an invalid language in the flattenedPath (fallback on default language)', () => {
+  it('should be fault tolerant, given an invalid language in the flattenedPath (fallback on default language)', () => {
     expect(
       buildPageLanguageFlag({
         _raw: {

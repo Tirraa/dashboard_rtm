@@ -4,10 +4,10 @@ import type { LanguageFlag } from '@rtm/shared-types/LanguageFlag';
 import { getFlattenedPathWithoutRootFolder, indexOfNthOccurrence, isValidLanguageFlag, DEFAULT_LANGUAGE, PAGES_FOLDER } from '../../../unifiedImport';
 
 function buildPageLanguageFlagFromStr(flattenedPath: string): LanguageFlag {
-  const envelopeEndSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 1);
-  if (envelopeEndSlashIndex === -1) return DEFAULT_LANGUAGE;
+  const maybeLanguageEnvelopeEndSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 1);
+  if (maybeLanguageEnvelopeEndSlashIndex === -1) return DEFAULT_LANGUAGE;
 
-  const maybeLanguage = flattenedPath.substring(0, envelopeEndSlashIndex);
+  const maybeLanguage = flattenedPath.substring(0, maybeLanguageEnvelopeEndSlashIndex);
   if (isValidLanguageFlag(maybeLanguage)) return maybeLanguage;
 
   return DEFAULT_LANGUAGE;
