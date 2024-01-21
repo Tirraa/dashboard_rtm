@@ -30,6 +30,9 @@ const SHARED: SharedVocabType = {
 } as const;
 
 export default {
+  _infos: { lng: 'en' },
+
+  // eslint-disable-next-line perfectionist/sort-objects
   'blog-categories': {
     'patch-notes-bis': {
       'discord-bot-bis': {
@@ -120,8 +123,6 @@ export default {
     login: 'Login'
   },
 
-  'pages-titles': SHARED['pages-titles'],
-
-  _infos: { lng: 'en' }
+  'pages-titles': SHARED['pages-titles']
 } as const satisfies VocabType;
 /* v8 ignore stop */

@@ -31,6 +31,11 @@ export const SHARED_VOCAB_SCHEMA = {
 } as const satisfies TypedLeafsJSONData<NotScanned>;
 
 export default {
+  _infos: {
+    lng: '__SCANNED_ON_PREBUILD_FIELD__'
+  },
+
+  // eslint-disable-next-line perfectionist/sort-objects
   navbar: {
     'sr-only': {
       'close-language-switcher-menu': _,
@@ -44,6 +49,7 @@ export default {
     },
     assistance: _
   },
+
   vocab: {
     ...SHARED_VOCAB_SCHEMA.vocab,
     'sr-only': {
@@ -90,15 +96,11 @@ export default {
 
   'pages-titles': SHARED_VOCAB_SCHEMA['pages-titles'],
 
-  _infos: {
-    lng: '__SCANNED_ON_BUILD_FIELD__'
-  },
-
   'blog-categories': blogCategories
 } as const satisfies TypedLeafsJSONData<MaybeScanned>;
 
 type NotScanned = '';
-type Scanned = '__SCANNED_ON_BUILD_FIELD__';
+type Scanned = '__SCANNED_ON_PREBUILD_FIELD__';
 type MaybeScanned = NotScanned | Scanned;
 // Stryker restore all
 /* v8 ignore stop */

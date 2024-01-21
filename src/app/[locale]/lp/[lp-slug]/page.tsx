@@ -4,33 +4,21 @@ import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { LandingPageProps } from '@/types/LandingPage';
 import type { LandingPage } from 'contentlayer/generated';
 
-import { getLandingPagesStaticParams } from '@/lib/landingPages/staticGeneration';
+import { getLandingPagesStaticParams, getLandingPageMetadatas } from '@/lib/landingPages/staticGeneration';
 import { getLandingPageBySlugAndLanguageUnstrict } from '@/lib/landingPages/api';
 import LandingPageTaxonomy from '##/config/taxonomies/landingPages';
 import { setStaticParamsLocale } from 'next-international/server';
 import MDX from '@/components/layouts/blog/MdxComponent';
-import { buildPageTitle } from '@rtm/shared-lib/str';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
-import { getServerSideI18n } from '@/i18n/server';
 import { notFound } from 'next/navigation';
-import { i18ns } from '##/config/i18n';
 
 export async function generateMetadata({ params }: LandingPageProps) {
-  const [lang, slug] = [params[I18nTaxonomy.LANGUAGE], params[LandingPageTaxonomy.SLUG]];
-  const lp: MaybeNull<LandingPage> = getLandingPageBySlugAndLanguageUnstrict(lang, slug);
-  if (!lp) notFound();
-
-  const globalT = await getServerSideI18n();
-  const { metadescription: description, title: lpTitle } = lp;
-
-  const { vocab } = i18ns;
-  const title = buildPageTitle(globalT(`${vocab}.brand-short`), lpTitle);
-
-  return { description, title };
+  const metadatas = await getLandingPageMetadatas({ params });
+  return metadatas;
 }
 
 export async function generateStaticParams() {
-  const staticParams = getLandingPagesStaticParams();
+  const staticParams = await getLandingPagesStaticParams();
   return staticParams;
 }
 
@@ -40,8 +28,8 @@ export default function Page({ params }: LandingPageProps) {
 
   const slug = params[LandingPageTaxonomy.SLUG];
   const lp: MaybeNull<LandingPage> = getLandingPageBySlugAndLanguageUnstrict(language, slug);
-
   if (!lp) notFound();
+
   return (
     <main className="max-w-full">
       <MDX code={lp.body.code} />
