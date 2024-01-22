@@ -14,38 +14,27 @@ const fs = require('fs/promises');
 
 const getErrorPrefix = () => formatMessage('impossibleToStartThePrebuilder' satisfies VocabKey);
 
-/**
- * @throws {ArgumentsValidatorError}
- */
-function crashIfArgumentsAreInvalid({ ...args }) {
-  const {
-    [FLAGS.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
-    [FLAGS.LANDING_PAGES_FOLDER]: LANDING_PAGES_FOLDER,
-    [FLAGS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
-    [FLAGS.NO_BLOG]: NO_BLOG,
-    [FLAGS.NO_I18N]: NO_I18N,
-    [FLAGS.NO_LP]: NO_LP,
-    _: UNKNOWN_OPTIONS
-  } = args;
-
-  const invalidBlogOptions = BLOG_POSTS_FOLDER === undefined && !NO_BLOG;
-  const invalidI18nOptions = I18N_LOCALES_SCHEMA_FILEPATH === undefined && !NO_I18N;
-
-  const wrongUseOfNoBlogOption = BLOG_POSTS_FOLDER !== undefined && NO_BLOG;
-  const wrongUseOfNoI18nOption = I18N_LOCALES_SCHEMA_FILEPATH !== undefined && NO_I18N;
-  const wrongUseOfNoLpOption = LANDING_PAGES_FOLDER !== undefined && NO_LP;
-
-  const breakingBlogDependencyToI18n = BLOG_POSTS_FOLDER !== undefined && NO_I18N;
-  const breakingLpDependencyToI18n = LANDING_PAGES_FOLDER !== undefined && NO_I18N;
-
-  const havingUnknownOptions = UNKNOWN_OPTIONS.length > 0;
-
+function getUnknownOptionsFeedback(UNKNOWN_OPTIONS: any[], havingUnknownOptions: boolean) {
   const unknownOptionsFeedback: MaybeEmptyErrorsDetectionFeedback = havingUnknownOptions
     ? formatMessage('unknownOptions' satisfies VocabKey, { UNKNOWN_OPTIONS: UNKNOWN_OPTIONS.join(', '), count: UNKNOWN_OPTIONS.length })
     : '';
-  const incorrectOptionsFeedbacks: ErrorsDetectionFeedback[] = [];
-  const breakingDependenciesFeedbacks: ErrorsDetectionFeedback[] = [];
+  return unknownOptionsFeedback;
+}
 
+function getIncorrectOptionsFeedbacks({
+  wrongUseOfNoBlogOption,
+  wrongUseOfNoI18nOption,
+  wrongUseOfNoLpOption,
+  invalidBlogOptions,
+  invalidI18nOptions
+}: {
+  wrongUseOfNoBlogOption: boolean;
+  wrongUseOfNoI18nOption: boolean;
+  wrongUseOfNoLpOption: boolean;
+  invalidBlogOptions: boolean;
+  invalidI18nOptions: boolean;
+}) {
+  const incorrectOptionsFeedbacks: ErrorsDetectionFeedback[] = [];
   if (invalidBlogOptions) {
     incorrectOptionsFeedbacks.push(
       formatMessage('unauthorizedToOmitOption' satisfies VocabKey, {
@@ -90,6 +79,17 @@ function crashIfArgumentsAreInvalid({ ...args }) {
       })
     );
   }
+  return incorrectOptionsFeedbacks;
+}
+
+function getBreakingDependenciesFeedbacks({
+  breakingBlogDependencyToI18n,
+  breakingLpDependencyToI18n
+}: {
+  breakingBlogDependencyToI18n: boolean;
+  breakingLpDependencyToI18n: boolean;
+}): ErrorsDetectionFeedback[] {
+  const breakingDependenciesFeedbacks: ErrorsDetectionFeedback[] = [];
 
   if (breakingBlogDependencyToI18n) {
     breakingDependenciesFeedbacks.push(
@@ -112,6 +112,49 @@ function crashIfArgumentsAreInvalid({ ...args }) {
         formatMessage('disableBothI18nAndLpAnalysisMaybeAdvice' satisfies VocabKey)
     );
   }
+  return breakingDependenciesFeedbacks;
+}
+
+/**
+ * @throws {ArgumentsValidatorError}
+ */
+function crashIfArgumentsAreInvalid({ ...args }) {
+  const {
+    [FLAGS.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
+    [FLAGS.LANDING_PAGES_FOLDER]: LANDING_PAGES_FOLDER,
+    [FLAGS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
+    [FLAGS.NO_BLOG]: NO_BLOG,
+    [FLAGS.NO_I18N]: NO_I18N,
+    [FLAGS.NO_LP]: NO_LP,
+    _: UNKNOWN_OPTIONS
+  } = args;
+
+  const invalidBlogOptions = BLOG_POSTS_FOLDER === undefined && !NO_BLOG;
+  const invalidI18nOptions = I18N_LOCALES_SCHEMA_FILEPATH === undefined && !NO_I18N;
+
+  const wrongUseOfNoBlogOption = BLOG_POSTS_FOLDER !== undefined && NO_BLOG;
+  const wrongUseOfNoI18nOption = I18N_LOCALES_SCHEMA_FILEPATH !== undefined && NO_I18N;
+  const wrongUseOfNoLpOption = LANDING_PAGES_FOLDER !== undefined && NO_LP;
+
+  const breakingBlogDependencyToI18n = BLOG_POSTS_FOLDER !== undefined && NO_I18N;
+  const breakingLpDependencyToI18n = LANDING_PAGES_FOLDER !== undefined && NO_I18N;
+
+  const havingUnknownOptions = UNKNOWN_OPTIONS.length > 0;
+
+  const unknownOptionsFeedback: MaybeEmptyErrorsDetectionFeedback = getUnknownOptionsFeedback(UNKNOWN_OPTIONS, havingUnknownOptions);
+
+  const incorrectOptionsFeedbacks: ErrorsDetectionFeedback[] = getIncorrectOptionsFeedbacks({
+    wrongUseOfNoBlogOption,
+    wrongUseOfNoI18nOption,
+    wrongUseOfNoLpOption,
+    invalidBlogOptions,
+    invalidI18nOptions
+  });
+
+  const breakingDependenciesFeedbacks: ErrorsDetectionFeedback[] = getBreakingDependenciesFeedbacks({
+    breakingBlogDependencyToI18n,
+    breakingLpDependencyToI18n
+  });
 
   let feedback: MaybeEmptyErrorsDetectionFeedback = foldFeedbacks(
     unknownOptionsFeedback,
