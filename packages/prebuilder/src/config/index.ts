@@ -16,6 +16,7 @@ export const FLAGS = {
   BLOG_POSTS_FOLDER: '--blog-posts-folder',
   SKIP_BENCHMARKS: '--skip-benchmarks',
   LANDING_PAGES_FOLDER: '--lp-folder',
+  FORMAT_CODEGEN: '--format-codegen',
   NO_BLOG: '--no-blog',
   NO_I18N: '--no-i18n',
   NO_LP: '--no-lp',

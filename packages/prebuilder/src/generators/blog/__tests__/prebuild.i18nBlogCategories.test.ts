@@ -67,12 +67,14 @@ const FAKE_METADATAS_B = {
   'fake-empty-category': {}
 };
 
-describe('generateI18nBlogCategories', () => {
+describe('generateI18nBlogCategories (formatted)', () => {
+  const pretty = true;
   it('should match snapshot', async () => {
     const targetFile = 'FAKE_EMPTY_BLOG_CATEGORIES_MIN';
 
     await generateI18nBlogCategories(
       EMPTY_METADATAS,
+      pretty,
       targetFile,
       __TARGET_FOLDER,
       __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_MIN,
@@ -87,6 +89,7 @@ describe('generateI18nBlogCategories', () => {
 
     await generateI18nBlogCategories(
       FAKE_METADATAS_A,
+      pretty,
       targetFile,
       __TARGET_FOLDER,
       __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_MIN,
@@ -101,6 +104,7 @@ describe('generateI18nBlogCategories', () => {
 
     await generateI18nBlogCategories(
       FAKE_METADATAS_B,
+      pretty,
       targetFile,
       __TARGET_FOLDER,
       __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_MIN,
@@ -115,6 +119,7 @@ describe('generateI18nBlogCategories', () => {
 
     await generateI18nBlogCategories(
       FAKE_METADATAS_A,
+      pretty,
       targetFile,
       __TARGET_FOLDER,
       __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_EMPTY,
@@ -129,6 +134,7 @@ describe('generateI18nBlogCategories', () => {
 
     await generateI18nBlogCategories(
       FAKE_METADATAS_B,
+      pretty,
       targetFile,
       __TARGET_FOLDER,
       __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_EMPTY,
@@ -143,6 +149,7 @@ describe('generateI18nBlogCategories', () => {
 
     await generateI18nBlogCategories(
       FAKE_METADATAS_A,
+      pretty,
       targetFile,
       __TARGET_FOLDER,
       __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_ONE,
@@ -157,6 +164,7 @@ describe('generateI18nBlogCategories', () => {
 
     await generateI18nBlogCategories(
       FAKE_METADATAS_B,
+      pretty,
       targetFile,
       __TARGET_FOLDER,
       __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_ONE,
@@ -171,6 +179,7 @@ describe('generateI18nBlogCategories', () => {
 
     await generateI18nBlogCategories(
       FAKE_METADATAS_A,
+      pretty,
       targetFile,
       __TARGET_FOLDER,
       __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_THREE,
@@ -185,6 +194,145 @@ describe('generateI18nBlogCategories', () => {
 
     await generateI18nBlogCategories(
       FAKE_METADATAS_B,
+      pretty,
+      targetFile,
+      __TARGET_FOLDER,
+      __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_THREE,
+      __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_THREE
+    );
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    expect(fileContent).toMatchSnapshot();
+  });
+});
+
+describe('generateI18nBlogCategories (ugly)', () => {
+  const pretty = false;
+  it('should match snapshot', async () => {
+    const targetFile = 'FAKE_EMPTY_BLOG_CATEGORIES_MIN';
+
+    await generateI18nBlogCategories(
+      EMPTY_METADATAS,
+      pretty,
+      targetFile,
+      __TARGET_FOLDER,
+      __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_MIN,
+      __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_MIN
+    );
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    expect(fileContent).toMatchSnapshot();
+  });
+
+  it('should match snapshot', async () => {
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_MIN_FAKE_METADATAS_A';
+
+    await generateI18nBlogCategories(
+      FAKE_METADATAS_A,
+      pretty,
+      targetFile,
+      __TARGET_FOLDER,
+      __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_MIN,
+      __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_MIN
+    );
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    expect(fileContent).toMatchSnapshot();
+  });
+
+  it('should match snapshot', async () => {
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_MIN_FAKE_METADATAS_B';
+
+    await generateI18nBlogCategories(
+      FAKE_METADATAS_B,
+      pretty,
+      targetFile,
+      __TARGET_FOLDER,
+      __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_MIN,
+      __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_MIN
+    );
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    expect(fileContent).toMatchSnapshot();
+  });
+
+  it('should match snapshot', async () => {
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_EMPTY_EXTRAS_FAKE_METADATAS_A';
+
+    await generateI18nBlogCategories(
+      FAKE_METADATAS_A,
+      pretty,
+      targetFile,
+      __TARGET_FOLDER,
+      __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_EMPTY,
+      __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_EMPTY
+    );
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    expect(fileContent).toMatchSnapshot();
+  });
+
+  it('should match snapshot', async () => {
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_EMPTY_EXTRAS_FAKE_METADATAS_B';
+
+    await generateI18nBlogCategories(
+      FAKE_METADATAS_B,
+      pretty,
+      targetFile,
+      __TARGET_FOLDER,
+      __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_EMPTY,
+      __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_EMPTY
+    );
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    expect(fileContent).toMatchSnapshot();
+  });
+
+  it('should match snapshot', async () => {
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_ONES_EXTRAS_FAKE_METADATAS_A';
+
+    await generateI18nBlogCategories(
+      FAKE_METADATAS_A,
+      pretty,
+      targetFile,
+      __TARGET_FOLDER,
+      __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_ONE,
+      __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_ONE
+    );
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    expect(fileContent).toMatchSnapshot();
+  });
+
+  it('should match snapshot', async () => {
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_ONES_EXTRAS_FAKE_METADATAS_B';
+
+    await generateI18nBlogCategories(
+      FAKE_METADATAS_B,
+      pretty,
+      targetFile,
+      __TARGET_FOLDER,
+      __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_ONE,
+      __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_ONE
+    );
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    expect(fileContent).toMatchSnapshot();
+  });
+
+  it('should match snapshot', async () => {
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_THREES_EXTRAS_FAKE_METADATAS_A';
+
+    await generateI18nBlogCategories(
+      FAKE_METADATAS_A,
+      pretty,
+      targetFile,
+      __TARGET_FOLDER,
+      __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_THREE,
+      __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_THREE
+    );
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    expect(fileContent).toMatchSnapshot();
+  });
+
+  it('should match snapshot', async () => {
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_THREES_EXTRAS_FAKE_METADATAS_B';
+
+    await generateI18nBlogCategories(
+      FAKE_METADATAS_B,
+      pretty,
       targetFile,
       __TARGET_FOLDER,
       __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_THREE,

@@ -112,6 +112,7 @@ async function processPrebuild() {
       [FLAGS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
       [FLAGS.SKIP_BENCHMARKS]: SKIP_BENCHMARKS,
       [FLAGS.LANDING_PAGES_FOLDER]: LP_FOLDER,
+      [FLAGS.FORMAT_CODEGEN]: FORMAT_CODEGEN,
       [FLAGS.NO_I18N]: NO_I18N,
       [FLAGS.NO_BLOG]: NO_BLOG,
       [FLAGS.NO_LP]: NO_LP
@@ -165,9 +166,9 @@ async function processPrebuild() {
       const blogArchitecture = await getBlogArchitectureMetadatas(BLOG_POSTS_FOLDER);
 
       await Promise.all([
-        generateBlogArchitectureType(blogArchitecture),
-        generateI18nBlogCategories(blogArchitecture),
-        generateBlogType(blogArchitecture)
+        generateBlogArchitectureType(blogArchitecture, FORMAT_CODEGEN),
+        generateI18nBlogCategories(blogArchitecture, FORMAT_CODEGEN),
+        generateBlogType(blogArchitecture, FORMAT_CODEGEN)
       ]);
       blogCodegenEndTime = performance.now();
     }
@@ -185,7 +186,7 @@ async function processPrebuild() {
 
       lpCodegenStartTime = performance.now();
       const lpArchitecture = await getLpMetadatas(LP_FOLDER);
-      generateLandingPageType(lpArchitecture);
+      generateLandingPageType(lpArchitecture, FORMAT_CODEGEN);
       lpCodegenEndTime = performance.now();
     }
 

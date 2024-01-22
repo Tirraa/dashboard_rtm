@@ -211,6 +211,7 @@ export default async function parseArguments() {
       [FLAGS.SKIP_LOCALES_INFOS]: Boolean,
       [FLAGS.BLOG_POSTS_FOLDER]: String,
       [FLAGS.SKIP_BENCHMARKS]: Boolean,
+      [FLAGS.FORMAT_CODEGEN]: Boolean,
       [FLAGS.NO_BLOG]: Boolean,
       [FLAGS.NO_I18N]: Boolean,
       [FLAGS.NO_LP]: Boolean,
