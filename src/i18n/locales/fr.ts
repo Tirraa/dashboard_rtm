@@ -62,7 +62,7 @@ export default {
       _title: SHARED['pages-titles']['patch-notes']
     },
 
-    testing: SHARED_TESTING_BLOG_CATEGORY_METADATAS
+    'blog-testing-category': SHARED_TESTING_BLOG_CATEGORY_METADATAS
   },
 
   navbar: {

@@ -101,8 +101,12 @@ describe('isValidBlogCategoryAndSubcategoryPair', () => {
 
 describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict', () => {
   it('should return empty list, given invalid combination', async () => {
-    // @ts-expect-error
-    const posts = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict('testing', '__INVALID_SUBCATEGORY__', DEFAULT_LANGUAGE);
+    const posts = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(
+      BlogConfig.TESTING_CATEGORY,
+      // @ts-expect-error
+      '__INVALID_SUBCATEGORY__',
+      DEFAULT_LANGUAGE
+    );
     expect(posts).toStrictEqual([]);
   });
 });

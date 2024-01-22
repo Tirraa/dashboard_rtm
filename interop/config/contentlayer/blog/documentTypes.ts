@@ -15,6 +15,10 @@ import blogDataAssocBuilder from '../../../lib/builders/blog/blogDataAssoc';
 import { defineDocumentType } from '../adapters';
 
 const documentsTypesMetadatas: BlogDocumentsTypesMetadatas = {
+  TestingPost: {
+    categoryFolder: 'blog-testing-category',
+    name: 'TestingPost'
+  },
   PatchPostBis: {
     categoryFolder: 'patch-notes-bis',
     name: 'PatchPostBis'
@@ -22,10 +26,6 @@ const documentsTypesMetadatas: BlogDocumentsTypesMetadatas = {
   PatchPost: {
     categoryFolder: 'patch-notes',
     name: 'PatchPost'
-  },
-  TestingPost: {
-    categoryFolder: 'testing',
-    name: 'TestingPost'
   }
 } as const;
 

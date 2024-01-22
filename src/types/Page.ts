@@ -7,3 +7,6 @@ type PagePropsParams = TPageTaxonomy;
 export interface PageProps {
   params: PagePropsParams & I18nParams;
 }
+
+// export type UnknownPagePath = string;
+// export type PageRoot = string; // {ToDo} Codegen

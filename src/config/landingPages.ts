@@ -5,7 +5,7 @@ export type TLandingPagesConfig = {
   ENABLE_DRAFTS_IN_PROD: boolean;
 };
 
-const TESTING_CATEGORY = 'testing' as const satisfies LandingPageCategory;
+const TESTING_CATEGORY = 'landing-pages-testing-category' as const satisfies LandingPageCategory;
 const LandingPagesConfig: TLandingPagesConfig = {
   ENABLE_DRAFTS_IN_PROD: false,
   TESTING_CATEGORY

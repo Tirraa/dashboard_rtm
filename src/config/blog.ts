@@ -19,7 +19,7 @@ export type TBlogConfig = {
   ENABLE_DRAFTS_IN_PROD: boolean;
 };
 
-const TESTING_CATEGORY = 'testing' as const satisfies BlogCategory;
+const TESTING_CATEGORY = 'blog-testing-category' as const satisfies BlogCategory;
 const BlogConfig: TBlogConfig = {
   BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC: Object.fromEntries(
     Object.entries(categoriesBlogDataAssoc).map(([categoryFolder, blogDataName]) => [

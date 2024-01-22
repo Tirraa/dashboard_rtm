@@ -9,7 +9,8 @@ import { getLandingPageBySlugAndLanguageStrict } from '../api';
 
 describe('getLandingPageBySlugAndLanguageStrict', () => {
   it('should always return a valid lp', () => {
-    const [category, targettedSlug] = [LandingPagesConfig.TESTING_CATEGORY, 'testing-fake-lp-00' as const];
+    const category = LandingPagesConfig.TESTING_CATEGORY;
+    const targettedSlug = `${category}-fake-lp-00` as const;
     const language = DEFAULT_LANGUAGE;
     const lp = getLandingPageBySlugAndLanguageStrict(DEFAULT_LANGUAGE, targettedSlug) as LandingPage;
 

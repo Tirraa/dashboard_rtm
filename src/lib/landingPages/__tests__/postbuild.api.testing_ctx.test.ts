@@ -1,5 +1,6 @@
 import type { LandingPage } from 'contentlayer/generated';
 
+import LandingPagesConfig from '@/config/landingPages';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, vi, it } from 'vitest';
 import ROUTES_ROOTS from '##/config/routes';
@@ -20,8 +21,8 @@ vi.mock('../ctx', async (orgImport) => {
 
 describe('getLandingPageBySlugAndLanguageStrict', () => {
   it('should return a valid testing lp, given testing category in testing ctx', () => {
-    const category = 'testing' as const;
-    const targettedSlug = 'testing-fake-lp-00' as const;
+    const category = LandingPagesConfig.TESTING_CATEGORY;
+    const targettedSlug = `${category}-fake-lp-00` as const;
     const language = DEFAULT_LANGUAGE;
     const lp = getLandingPageBySlugAndLanguageStrict(DEFAULT_LANGUAGE, targettedSlug) as LandingPage;
 

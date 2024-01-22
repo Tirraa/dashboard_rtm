@@ -47,44 +47,44 @@ describe('getBlogStaticParams', () => {
     expect(staticParams).toStrictEqual([
       {
         [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
+        [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
         [I18nTaxonomy.LANGUAGE]: DEFAULT_LANGUAGE,
+        [BlogTaxonomy.SLUG]: 'fake-post-01'
+      },
+      {
+        [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
+        [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
+        [I18nTaxonomy.LANGUAGE]: DEFAULT_LANGUAGE,
+        [BlogTaxonomy.SLUG]: 'fake-post-02'
+      },
+      {
+        [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
+        [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
+        [I18nTaxonomy.LANGUAGE]: DEFAULT_LANGUAGE,
+        [BlogTaxonomy.SLUG]: 'fake-post-03'
+      },
+      {
+        [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
+        [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
         [BlogTaxonomy.SLUG]: 'fake-post-01',
-        [BlogTaxonomy.CATEGORY]: 'testing'
+        [I18nTaxonomy.LANGUAGE]: 'posts'
       },
       {
         [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
-        [I18nTaxonomy.LANGUAGE]: DEFAULT_LANGUAGE,
+        [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
         [BlogTaxonomy.SLUG]: 'fake-post-02',
-        [BlogTaxonomy.CATEGORY]: 'testing'
+        [I18nTaxonomy.LANGUAGE]: 'posts'
       },
       {
         [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
-        [I18nTaxonomy.LANGUAGE]: DEFAULT_LANGUAGE,
+        [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
         [BlogTaxonomy.SLUG]: 'fake-post-03',
-        [BlogTaxonomy.CATEGORY]: 'testing'
-      },
-      {
-        [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
-        [BlogTaxonomy.SLUG]: 'fake-post-01',
-        [BlogTaxonomy.CATEGORY]: 'testing',
         [I18nTaxonomy.LANGUAGE]: 'posts'
       },
       {
         [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
-        [BlogTaxonomy.SLUG]: 'fake-post-02',
-        [BlogTaxonomy.CATEGORY]: 'testing',
-        [I18nTaxonomy.LANGUAGE]: 'posts'
-      },
-      {
-        [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
-        [BlogTaxonomy.SLUG]: 'fake-post-03',
-        [BlogTaxonomy.CATEGORY]: 'testing',
-        [I18nTaxonomy.LANGUAGE]: 'posts'
-      },
-      {
-        [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
+        [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
         [BlogTaxonomy.SLUG]: 'fake-post-04',
-        [BlogTaxonomy.CATEGORY]: 'testing',
         [I18nTaxonomy.LANGUAGE]: 'posts'
       }
     ]);
