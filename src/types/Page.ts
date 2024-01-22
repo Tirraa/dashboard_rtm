@@ -9,4 +9,4 @@ export interface PageProps {
 }
 
 export type UnknownPagePath = string;
-// export type PageRoot = string; // {ToDo} Codegen
+export type PageRoot = string; // {ToDo} Codegen

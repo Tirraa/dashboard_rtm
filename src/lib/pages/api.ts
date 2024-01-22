@@ -4,13 +4,18 @@ import type { UnknownPagePath } from '@/types/Page';
 import type { Page } from 'contentlayer/generated';
 
 import { allPages } from 'contentlayer/generated';
+import PagesConfig from '@/config/pages';
 
-// {ToDo} Handle testing + drafts + write tests
+import ComputedPagesCtx from './ctx';
+
+// {ToDo} Write tests
 export function getPageByPathAndLanguageUnstrict(language: LanguageFlag, path: UnknownPagePath): MaybeNull<Page> {
-  const matchingLandingPage =
+  const matchingPage =
     allPages.find(({ language: currentLanguage, path: currentPath }) => currentPath === path && currentLanguage === language) ?? null;
 
-  return matchingLandingPage;
+  if (!ComputedPagesCtx.TESTING && matchingPage?.root === PagesConfig.TESTING_ROOT) return null;
+  if (matchingPage && !ComputedPagesCtx.ALLOWED_DRAFTS && matchingPage.draft) return null;
+  return matchingPage;
 }
 
 // {ToDo} Codegen + strict impl

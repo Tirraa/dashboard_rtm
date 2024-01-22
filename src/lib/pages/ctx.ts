@@ -1,18 +1,18 @@
-// import LandingPagesConfig from '@/config/landingPages';
+import PagesConfig from '@/config/pages';
 
-// import ComputedNodeCtx from '../portable/node/env';
+import ComputedNodeCtx from '../portable/node/env';
 
-// type TComputedPagesCtx = {
-//   ALLOWED_DRAFTS: boolean;
-//   TESTING: boolean;
-// };
+type TComputedPagesCtx = {
+  ALLOWED_DRAFTS: boolean;
+  TESTING: boolean;
+};
 
-// const TESTING = ComputedNodeCtx.TEST;
-// const ALLOWED_DRAFTS = LandingPagesConfig.ENABLE_DRAFTS_IN_PROD || ComputedNodeCtx.DEV;
+const TESTING = ComputedNodeCtx.TEST;
+const ALLOWED_DRAFTS = PagesConfig.ENABLE_DRAFTS_IN_PROD || ComputedNodeCtx.DEV;
 
-// const ComputedPagesCtx: TComputedPagesCtx = {
-//   ALLOWED_DRAFTS,
-//   TESTING
-// } as const;
+const ComputedPagesCtx: TComputedPagesCtx = {
+  ALLOWED_DRAFTS,
+  TESTING
+} as const;
 
-// export default ComputedPagesCtx;
+export default ComputedPagesCtx;
