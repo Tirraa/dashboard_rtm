@@ -4,6 +4,15 @@ import { describe, expect, it, vi } from 'vitest';
 
 import getLandingPagesStaticParams from '../getLandingPagesStaticParams';
 
+vi.mock('../../../../../interop/config/i18n', async (orgImport) => {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+  const mod = await orgImport<typeof import('../../../../../interop/config/i18n')>();
+  return {
+    ...mod,
+    LANGUAGES: ['fr', 'en']
+  };
+});
+
 vi.mock('contentlayer/generated', async (orgImport) => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
   const mod = await orgImport<typeof import('contentlayer/generated')>();
@@ -140,4 +149,5 @@ describe('getLandingPagesStaticParams', () => {
   });
 });
 
+vi.doUnmock('../../../../../interop/config/i18n');
 vi.doUnmock('contentlayer/generated');
