@@ -4,10 +4,7 @@ import type { VocabKey } from '../config/translations';
 import traverseAndMapFilepaths from '../lib/traverseAndMapFilepaths';
 import { LIST_ELEMENT_PREFIX, LP_FILE_EXT } from '../config';
 import { isValidLpTaxonomy } from './taxonomyConvention';
-import { prefixFeedback } from '../lib/feedbacksMerge';
 import formatMessage from '../config/formatMessage';
-
-const ERROR_PREFIX = formatMessage('failedToPassThePrebuild' satisfies VocabKey);
 
 export default async function sysLpSlugsValidator(lpFolder: string): Promise<MaybeEmptyErrorsDetectionFeedback> {
   let feedback = '';
@@ -36,6 +33,5 @@ export default async function sysLpSlugsValidator(lpFolder: string): Promise<May
       formatMessage('lpNamingConstraint' satisfies VocabKey) +
       '\n';
   });
-  feedback = prefixFeedback(feedback, ERROR_PREFIX + '\n');
   return feedback;
 }

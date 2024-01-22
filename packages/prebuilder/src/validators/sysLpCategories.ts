@@ -2,11 +2,8 @@ import type { MaybeEmptyErrorsDetectionFeedback } from '../types/Metadatas';
 import type { VocabKey } from '../config/translations';
 
 import { isValidLpTaxonomy } from './taxonomyConvention';
-import { prefixFeedback } from '../lib/feedbacksMerge';
 import formatMessage from '../config/formatMessage';
 import { LIST_ELEMENT_PREFIX } from '../config';
-
-const ERROR_PREFIX = formatMessage('failedToPassThePrebuild' satisfies VocabKey);
 
 // https://github.com/vitest-dev/vitest/discussions/2484
 const fs = require('fs/promises');
@@ -32,7 +29,5 @@ export default async function sysLpCategoriesValidator(lpFolder: string): Promis
       formatMessage('lpNamingConstraint' satisfies VocabKey) +
       '\n';
   }
-
-  feedback = prefixFeedback(feedback, ERROR_PREFIX + '\n');
   return feedback;
 }

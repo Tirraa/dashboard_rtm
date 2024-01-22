@@ -127,6 +127,24 @@ vi.mock('contentlayer/generated', async (orgImport) => {
         language: 'en',
         title: 'FAKE',
         draft: false
+      },
+      {
+        _raw: {
+          sourceFilePath: 'landing-pages/testing/__INVALID_LOCALE__/fake-lp-00.mdx',
+          flattenedPath: 'landing-pages/testing/__INVALID_LOCALE__/fake-lp-00',
+          sourceFileDir: 'landing-pages/testing/__INVALID_LOCALE__',
+          sourceFileName: 'fake-lp-00.mdx',
+          contentType: 'mdx'
+        },
+        _id: 'landing-pages/testing/__INVALID_LOCALE__/fake-lp-00.mdx',
+        url: '/__INVALID_LOCALE__/lp/testing-fake-lp-00',
+        language: '__INVALID_LOCALE__',
+        slug: 'testing-fake-lp-00',
+        metadescription: 'FAKE',
+        type: 'LandingPage',
+        category: 'testing',
+        title: 'FAKE',
+        draft: false
       }
     ]
   };

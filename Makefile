@@ -13,7 +13,6 @@ RTM_GENERATED_CODE := .rtm-generated
 NEXT_GENERATED_CODE := .next
 
 COVERAGE_GENERATED_REPORT := coverage
-STRYKER_GENERATED_REPORT := reports
 
 ENV_EXAMPLE := .env_example
 ENV_FILE := .env
@@ -81,7 +80,7 @@ clean-codegen:
 	rm -rf $(NEXT_GENERATED_CODE) $(CONTENTLAYER_GENERATED_CODE) $(RTM_GENERATED_CODE)
 
 clean: clean-codegen
-	rm -rf $(COVERAGE_GENERATED_REPORT) $(STRYKER_GENERATED_REPORT)
+	rm -rf $(COVERAGE_GENERATED_REPORT)
 
 fclean: clean
 	find . \( -type d -name "node_modules" -o -name "prebuilder-dist" -o -name ".stryker-tmp" \) -exec rm -rf {} +

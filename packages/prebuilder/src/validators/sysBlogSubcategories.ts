@@ -2,11 +2,8 @@ import type { MaybeEmptyErrorsDetectionFeedback, BlogSubcategory, BlogCategory }
 import type { VocabKey } from '../config/translations';
 
 import { isValidBlogTaxonomy } from './taxonomyConvention';
-import { prefixFeedback } from '../lib/feedbacksMerge';
 import formatMessage from '../config/formatMessage';
 import { LIST_ELEMENT_PREFIX } from '../config';
-
-const ERROR_PREFIX = formatMessage('failedToPassThePrebuild' satisfies VocabKey);
 
 // https://github.com/vitest-dev/vitest/discussions/2484
 const fs = require('fs/promises');
@@ -43,7 +40,5 @@ export default async function sysBlogSubcategoriesValidator(postsFolder: string)
       formatMessage('blogNamingConstraint' satisfies VocabKey) +
       '\n';
   });
-
-  feedback = prefixFeedback(feedback, ERROR_PREFIX + '\n');
   return feedback;
 }
