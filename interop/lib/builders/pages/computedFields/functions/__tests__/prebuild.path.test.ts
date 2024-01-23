@@ -3,21 +3,25 @@ import { describe, expect, it } from 'vitest';
 
 import buildPagePath, { INDEX_NEEDLE } from '../path';
 
+const EXT = '.FAKE_EXT';
+
 describe('path', () => {
   const leaf = 'leaf';
   it('should return a valid path, given a valid input', () => {
     expect(
       buildPagePath({
         _raw: {
-          flattenedPath: PAGES_FOLDER + '/'
+          sourceFilePath: PAGES_FOLDER + '/' + INDEX_NEEDLE + EXT,
+          flattenedPath: PAGES_FOLDER
         },
         _id: '_'
       })
-    ).toBe('');
+    ).toBe(INDEX_NEEDLE);
 
     expect(
       buildPagePath({
         _raw: {
+          sourceFilePath: PAGES_FOLDER + `/foo/bar/${leaf}` + EXT,
           flattenedPath: PAGES_FOLDER + `/foo/bar/${leaf}`
         },
         _id: '_'
@@ -27,6 +31,7 @@ describe('path', () => {
     expect(
       buildPagePath({
         _raw: {
+          sourceFilePath: PAGES_FOLDER + `/foo/bar/baz/${leaf}` + EXT,
           flattenedPath: PAGES_FOLDER + `/foo/bar/baz/${leaf}`
         },
         _id: '_'
@@ -38,15 +43,7 @@ describe('path', () => {
     expect(
       buildPagePath({
         _raw: {
-          flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/`
-        },
-        _id: '_'
-      })
-    ).toBe('');
-
-    expect(
-      buildPagePath({
-        _raw: {
+          sourceFilePath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/${leaf}` + EXT,
           flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/${leaf}`
         },
         _id: '_'
@@ -56,6 +53,7 @@ describe('path', () => {
     expect(
       buildPagePath({
         _raw: {
+          sourceFilePath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/baz/${leaf}` + EXT,
           flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/baz/${leaf}`
         },
         _id: '_'
@@ -67,16 +65,8 @@ describe('path', () => {
     expect(
       buildPagePath({
         _raw: {
-          flattenedPath: PAGES_FOLDER + '/' + INDEX_NEEDLE
-        },
-        _id: '_'
-      })
-    ).toBe('');
-
-    expect(
-      buildPagePath({
-        _raw: {
-          flattenedPath: PAGES_FOLDER + `/foo/bar/${leaf}` + '/' + INDEX_NEEDLE
+          sourceFilePath: PAGES_FOLDER + `/foo/bar/${leaf}/${INDEX_NEEDLE}` + EXT,
+          flattenedPath: PAGES_FOLDER + `/foo/bar/${leaf}`
         },
         _id: '_'
       })
@@ -85,7 +75,8 @@ describe('path', () => {
     expect(
       buildPagePath({
         _raw: {
-          flattenedPath: PAGES_FOLDER + `/foo/bar/baz/${leaf}` + '/' + INDEX_NEEDLE
+          sourceFilePath: PAGES_FOLDER + `/foo/bar/baz/${leaf}/${INDEX_NEEDLE}` + EXT,
+          flattenedPath: PAGES_FOLDER + `/foo/bar/baz/${leaf}`
         },
         _id: '_'
       })
@@ -96,7 +87,8 @@ describe('path', () => {
     expect(
       buildPagePath({
         _raw: {
-          flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/` + INDEX_NEEDLE
+          sourceFilePath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/` + INDEX_NEEDLE + EXT,
+          flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}`
         },
         _id: '_'
       })
@@ -105,7 +97,8 @@ describe('path', () => {
     expect(
       buildPagePath({
         _raw: {
-          flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/${leaf}` + '/' + INDEX_NEEDLE
+          sourceFilePath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/${leaf}/${INDEX_NEEDLE}` + EXT,
+          flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/${leaf}`
         },
         _id: '_'
       })
@@ -114,22 +107,12 @@ describe('path', () => {
     expect(
       buildPagePath({
         _raw: {
-          flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/baz/${leaf}` + '/' + INDEX_NEEDLE
+          sourceFilePath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/baz/${leaf}/${INDEX_NEEDLE}` + EXT,
+          flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/baz/${leaf}`
         },
         _id: '_'
       })
     ).toBe(`foo/bar/baz/${leaf}`);
-  });
-
-  it('should throw, given an invalid flattenedPath', () => {
-    expect(() =>
-      buildPagePath({
-        _raw: {
-          flattenedPath: PAGES_FOLDER
-        },
-        _id: '_'
-      })
-    ).toThrowError(InvalidArgumentsError);
   });
 
   it('should NOT be fault tolerant', () => {
