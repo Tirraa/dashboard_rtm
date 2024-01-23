@@ -22,28 +22,25 @@ function getUnknownOptionsFeedback(UNKNOWN_OPTIONS: any[], havingUnknownOptions:
 }
 
 function getIncorrectOptionsFeedbacks({
+  wrongUseOfNoPagesOption,
   wrongUseOfNoBlogOption,
   wrongUseOfNoI18nOption,
   wrongUseOfNoLpOption,
+  invalidPagesOptions,
   invalidBlogOptions,
-  invalidI18nOptions
+  invalidI18nOptions,
+  invalidLpOptions
 }: {
+  wrongUseOfNoPagesOption: boolean;
   wrongUseOfNoBlogOption: boolean;
   wrongUseOfNoI18nOption: boolean;
   wrongUseOfNoLpOption: boolean;
+  invalidPagesOptions: boolean;
   invalidBlogOptions: boolean;
   invalidI18nOptions: boolean;
+  invalidLpOptions: boolean;
 }) {
   const incorrectOptionsFeedbacks: ErrorsDetectionFeedback[] = [];
-  if (invalidBlogOptions) {
-    incorrectOptionsFeedbacks.push(
-      formatMessage('unauthorizedToOmitOption' satisfies VocabKey, {
-        requiredOptionToAuthorizeOmission: FLAGS.NO_BLOG,
-        omittedOption: FLAGS.BLOG_POSTS_FOLDER
-      })
-    );
-  }
-
   if (invalidI18nOptions) {
     incorrectOptionsFeedbacks.push(
       formatMessage('unauthorizedToOmitOption' satisfies VocabKey, {
@@ -53,11 +50,29 @@ function getIncorrectOptionsFeedbacks({
     );
   }
 
-  if (wrongUseOfNoBlogOption) {
+  if (invalidPagesOptions) {
     incorrectOptionsFeedbacks.push(
-      formatMessage('incompatibleOption' satisfies VocabKey, {
-        scope: formatMessage('blog' satisfies VocabKey),
-        incompatibleOption: FLAGS.NO_BLOG
+      formatMessage('unauthorizedToOmitOption' satisfies VocabKey, {
+        requiredOptionToAuthorizeOmission: FLAGS.NO_PAGES,
+        omittedOption: FLAGS.PAGES_FOLDER
+      })
+    );
+  }
+
+  if (invalidBlogOptions) {
+    incorrectOptionsFeedbacks.push(
+      formatMessage('unauthorizedToOmitOption' satisfies VocabKey, {
+        requiredOptionToAuthorizeOmission: FLAGS.NO_BLOG,
+        omittedOption: FLAGS.BLOG_POSTS_FOLDER
+      })
+    );
+  }
+
+  if (invalidLpOptions) {
+    incorrectOptionsFeedbacks.push(
+      formatMessage('unauthorizedToOmitOption' satisfies VocabKey, {
+        requiredOptionToAuthorizeOmission: FLAGS.NO_LP,
+        omittedOption: FLAGS.LANDING_PAGES_FOLDER
       })
     );
   }
@@ -67,6 +82,24 @@ function getIncorrectOptionsFeedbacks({
       formatMessage('incompatibleOption' satisfies VocabKey, {
         scope: formatMessage('i18n' satisfies VocabKey),
         incompatibleOption: FLAGS.NO_I18N
+      })
+    );
+  }
+
+  if (wrongUseOfNoPagesOption) {
+    incorrectOptionsFeedbacks.push(
+      formatMessage('incompatibleOption' satisfies VocabKey, {
+        scope: formatMessage('pages' satisfies VocabKey),
+        incompatibleOption: FLAGS.NO_PAGES
+      })
+    );
+  }
+
+  if (wrongUseOfNoBlogOption) {
+    incorrectOptionsFeedbacks.push(
+      formatMessage('incompatibleOption' satisfies VocabKey, {
+        scope: formatMessage('blog' satisfies VocabKey),
+        incompatibleOption: FLAGS.NO_BLOG
       })
     );
   }
@@ -83,13 +116,26 @@ function getIncorrectOptionsFeedbacks({
 }
 
 function getBreakingDependenciesFeedbacks({
+  breakingPagesDependencyToI18n,
   breakingBlogDependencyToI18n,
   breakingLpDependencyToI18n
 }: {
+  breakingPagesDependencyToI18n: boolean;
   breakingBlogDependencyToI18n: boolean;
   breakingLpDependencyToI18n: boolean;
 }): ErrorsDetectionFeedback[] {
   const breakingDependenciesFeedbacks: ErrorsDetectionFeedback[] = [];
+
+  if (breakingPagesDependencyToI18n) {
+    breakingDependenciesFeedbacks.push(
+      formatMessage('breakingDependency' satisfies VocabKey, {
+        scope: formatMessage('pages' satisfies VocabKey),
+        incompatibleOption: FLAGS.NO_I18N
+      }) +
+        '\n' +
+        formatMessage('disableBothI18nAndPagesAnalysisMaybeAdvice' satisfies VocabKey)
+    );
+  }
 
   if (breakingBlogDependencyToI18n) {
     breakingDependenciesFeedbacks.push(
@@ -123,35 +169,45 @@ function crashIfArgumentsAreInvalid({ ...args }) {
     [FLAGS.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
     [FLAGS.LANDING_PAGES_FOLDER]: LANDING_PAGES_FOLDER,
     [FLAGS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
+    [FLAGS.PAGES_FOLDER]: PAGES_FOLDER,
+    [FLAGS.NO_PAGES]: NO_PAGES,
     [FLAGS.NO_BLOG]: NO_BLOG,
     [FLAGS.NO_I18N]: NO_I18N,
     [FLAGS.NO_LP]: NO_LP,
     _: UNKNOWN_OPTIONS
   } = args;
 
-  const invalidBlogOptions = BLOG_POSTS_FOLDER === undefined && !NO_BLOG;
-  const invalidI18nOptions = I18N_LOCALES_SCHEMA_FILEPATH === undefined && !NO_I18N;
+  const invalidI18nOptions: boolean = I18N_LOCALES_SCHEMA_FILEPATH === undefined && !NO_I18N;
+  const invalidPagesOptions: boolean = PAGES_FOLDER === undefined && !NO_PAGES;
+  const invalidBlogOptions: boolean = BLOG_POSTS_FOLDER === undefined && !NO_BLOG;
+  const invalidLpOptions: boolean = LANDING_PAGES_FOLDER === undefined && !NO_LP;
 
-  const wrongUseOfNoBlogOption = BLOG_POSTS_FOLDER !== undefined && NO_BLOG;
-  const wrongUseOfNoI18nOption = I18N_LOCALES_SCHEMA_FILEPATH !== undefined && NO_I18N;
-  const wrongUseOfNoLpOption = LANDING_PAGES_FOLDER !== undefined && NO_LP;
+  const wrongUseOfNoI18nOption: boolean = I18N_LOCALES_SCHEMA_FILEPATH !== undefined && NO_I18N;
+  const wrongUseOfNoPagesOption: boolean = PAGES_FOLDER !== undefined && NO_PAGES;
+  const wrongUseOfNoBlogOption: boolean = BLOG_POSTS_FOLDER !== undefined && NO_BLOG;
+  const wrongUseOfNoLpOption: boolean = LANDING_PAGES_FOLDER !== undefined && NO_LP;
 
-  const breakingBlogDependencyToI18n = BLOG_POSTS_FOLDER !== undefined && NO_I18N;
-  const breakingLpDependencyToI18n = LANDING_PAGES_FOLDER !== undefined && NO_I18N;
+  const breakingPagesDependencyToI18n: boolean = PAGES_FOLDER !== undefined && NO_I18N;
+  const breakingBlogDependencyToI18n: boolean = BLOG_POSTS_FOLDER !== undefined && NO_I18N;
+  const breakingLpDependencyToI18n: boolean = LANDING_PAGES_FOLDER !== undefined && NO_I18N;
 
-  const havingUnknownOptions = UNKNOWN_OPTIONS.length > 0;
+  const havingUnknownOptions: boolean = UNKNOWN_OPTIONS.length > 0;
 
   const unknownOptionsFeedback: MaybeEmptyErrorsDetectionFeedback = getUnknownOptionsFeedback(UNKNOWN_OPTIONS, havingUnknownOptions);
 
   const incorrectOptionsFeedbacks: ErrorsDetectionFeedback[] = getIncorrectOptionsFeedbacks({
+    wrongUseOfNoPagesOption,
     wrongUseOfNoBlogOption,
     wrongUseOfNoI18nOption,
     wrongUseOfNoLpOption,
+    invalidPagesOptions,
     invalidBlogOptions,
-    invalidI18nOptions
+    invalidI18nOptions,
+    invalidLpOptions
   });
 
   const breakingDependenciesFeedbacks: ErrorsDetectionFeedback[] = getBreakingDependenciesFeedbacks({
+    breakingPagesDependencyToI18n,
     breakingBlogDependencyToI18n,
     breakingLpDependencyToI18n
   });
@@ -184,6 +240,8 @@ async function crashIfFilesDoesNotExist({ ...args }) {
     [FLAGS.I18N_LOCALES_SCHEMA_FILEPATH]: I18N_LOCALES_SCHEMA_FILEPATH,
     [FLAGS.BLOG_POSTS_FOLDER]: BLOG_POSTS_FOLDER,
     [FLAGS.LANDING_PAGES_FOLDER]: LP_FOLDER,
+    [FLAGS.PAGES_FOLDER]: PAGES_FOLDER,
+    [FLAGS.NO_PAGES]: NO_PAGES,
     [FLAGS.NO_BLOG]: NO_BLOG,
     [FLAGS.NO_I18N]: NO_I18N,
     [FLAGS.NO_LP]: NO_LP
@@ -204,6 +262,24 @@ async function crashIfFilesDoesNotExist({ ...args }) {
     const localesSchemaIsAFile = i18nLocalesSchemaStat.isFile();
     if (!localesSchemaIsAFile) {
       throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + formatMessage('theLocaleSchemaIsNotFile' satisfies VocabKey) + '\n' + ADVICE);
+    }
+  }
+
+  async function checkPages() {
+    if (NO_PAGES) return;
+
+    const ADVICE = formatMessage('disablePagesAnalysisAdvice' satisfies VocabKey);
+    const ERROR_PREFIX = getErrorPrefix();
+
+    const pagesFolderExists = await fileExists(PAGES_FOLDER);
+    if (!pagesFolderExists) {
+      throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + formatMessage('cantOpenThePagesFolder' satisfies VocabKey) + '\n' + ADVICE);
+    }
+
+    const pagesFolderStat = await fs.stat(PAGES_FOLDER);
+    const pagesFolderIsDirectory = pagesFolderStat.isDirectory();
+    if (!pagesFolderIsDirectory) {
+      throw new ArgumentsValidatorError(ERROR_PREFIX + '\n' + formatMessage('thePagesFolderIsNotDirectory' satisfies VocabKey) + '\n' + ADVICE);
     }
   }
 
@@ -243,7 +319,7 @@ async function crashIfFilesDoesNotExist({ ...args }) {
     }
   }
 
-  await Promise.all([checkI18n(), checkBlog(), checkLp()]);
+  await Promise.all([checkI18n(), checkPages(), checkBlog(), checkLp()]);
 }
 
 export default async function parseArguments() {
@@ -254,7 +330,9 @@ export default async function parseArguments() {
       [FLAGS.SKIP_LOCALES_INFOS]: Boolean,
       [FLAGS.BLOG_POSTS_FOLDER]: String,
       [FLAGS.SKIP_BENCHMARKS]: Boolean,
-      [FLAGS.FORMAT_CODEGEN]: Boolean,
+      [FLAGS.PRETTY_CODEGEN]: Boolean,
+      [FLAGS.PAGES_FOLDER]: String,
+      [FLAGS.NO_PAGES]: Boolean,
       [FLAGS.NO_BLOG]: Boolean,
       [FLAGS.NO_I18N]: Boolean,
       [FLAGS.NO_LP]: Boolean,

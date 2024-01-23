@@ -21,7 +21,7 @@ function buildPagePath(page: DocumentToCompute): AppPath {
   if (maybeLanguageEnvelopeEndSlashIndex !== -1) {
     const maybeLanguage = path.substring(0, maybeLanguageEnvelopeEndSlashIndex);
     if (isValidLanguageFlag(maybeLanguage)) return path.substring(maybeLanguage.length + 1);
-  } else if (withIndexNotationCtx && isValidLanguageFlag(path)) return '';
+  } else if (withIndexNotationCtx && isValidLanguageFlag(path)) return INDEX_NEEDLE;
 
   return path;
 }

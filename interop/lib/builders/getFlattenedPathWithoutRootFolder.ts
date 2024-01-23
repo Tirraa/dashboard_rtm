@@ -3,11 +3,11 @@ import { InvalidArgumentsError } from './unifiedImport';
 /**
  * @throws {InvalidArgumentsError}
  */
-function getFlattenedPathWithoutUnkownRootFolder(flattenedPath: string) {
+function getFlattenedPathWithUnkownRootFolder(flattenedPath: string) {
   const firstSlashIndex = flattenedPath.indexOf('/');
   if (firstSlashIndex === -1 || flattenedPath.length - 1 <= firstSlashIndex) {
     throw new InvalidArgumentsError(
-      getFlattenedPathWithoutUnkownRootFolder.name,
+      getFlattenedPathWithUnkownRootFolder.name,
       { flattenedPath },
       (firstSlashIndex === -1 ? `Can't find any '/' in flattenedPath` : `Can't find anything after the first '/' in flattenedPath`) +
         ". Maybe you just don't need to use this function?"
@@ -20,7 +20,7 @@ function getFlattenedPathWithoutUnkownRootFolder(flattenedPath: string) {
  * @throws {InvalidArgumentsError}
  */
 function getFlattenedPathWithoutRootFolder(flattenedPath: string, rootFolderNeedle?: string) {
-  if (!rootFolderNeedle) return getFlattenedPathWithoutUnkownRootFolder(flattenedPath);
+  if (!rootFolderNeedle) return getFlattenedPathWithUnkownRootFolder(flattenedPath);
 
   const expectedFlattenedPathStartStr = rootFolderNeedle + '/';
   if (!flattenedPath.startsWith(expectedFlattenedPathStartStr)) {

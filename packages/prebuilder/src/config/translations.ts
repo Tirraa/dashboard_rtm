@@ -79,9 +79,10 @@ export const UNKNOWN_LOCALE_FALLBACK_MSG = (unknownLocale: string) =>
 
 /* eslint-disable perfectionist/sort-objects */
 const DEFAULT_TRANSLATION = {
+  pages: 'pages',
   blog: 'blog',
   i18n: 'i18n',
-  lp: 'landing page',
+  lp: 'landing pages',
 
   blogCodegenBenchmark: 'Generated blog related code in ~{duration}s',
   lpCodegenBenchmark: 'Generated landing pages related code in ~{duration}s',
@@ -96,11 +97,13 @@ const DEFAULT_TRANSLATION = {
   interruptedThePrebuilder: `Interrupted the ${VOCAB_TOKENS.en.N_SINGULAR.PREBUILDER}!`,
   failedToPassThePrebuild: `Failed to pass the ${VOCAB_TOKENS.en.N_SINGULAR.PREBUILD}!`,
 
-  disableI18nAnalysisAdvice: `If you don't use i18n in your project, use the ${FLAGS.NO_I18N} ${VOCAB_TOKENS.en.F_SINGULAR.OPTIONS}.`,
-  disableBlogAnalysisAdvice: `If you don't have a blog in your project, use the ${FLAGS.NO_BLOG} ${VOCAB_TOKENS.en.F_SINGULAR.OPTIONS}.`,
-  disableLpAnalysisAdvice: `If you don't have any landing in your project, use the ${FLAGS.NO_LP} ${VOCAB_TOKENS.en.F_SINGULAR.OPTIONS}.`,
-  disableBothI18nAndBlogAnalysisMaybeAdvice: `Maybe you want to use the ${FLAGS.NO_I18N} and ${FLAGS.NO_BLOG} ${VOCAB_TOKENS.en.F_PLURAL.OPTIONS}?`,
-  disableBothI18nAndLpAnalysisMaybeAdvice: `Maybe you want to use the ${FLAGS.NO_I18N} and ${FLAGS.NO_LP} ${VOCAB_TOKENS.en.F_PLURAL.OPTIONS} ?`,
+  disableI18nAnalysisAdvice: `If you don't use i18n in your project, use the '${FLAGS.NO_I18N}' ${VOCAB_TOKENS.en.F_SINGULAR.OPTIONS}.`,
+  disablePagesAnalysisAdvice: `If you don't use pages in your project, use the '${FLAGS.NO_PAGES}' ${VOCAB_TOKENS.en.F_SINGULAR.OPTIONS}.`,
+  disableBlogAnalysisAdvice: `If you don't use a blog in your project, use the '${FLAGS.NO_BLOG}' ${VOCAB_TOKENS.en.F_SINGULAR.OPTIONS}.`,
+  disableLpAnalysisAdvice: `If you don't use landing pages in your project, use the '${FLAGS.NO_LP}' ${VOCAB_TOKENS.en.F_SINGULAR.OPTIONS}.`,
+  disableBothI18nAndPagesAnalysisMaybeAdvice: `↳ Maybe you want to use the '${FLAGS.NO_I18N}' and '${FLAGS.NO_PAGES}' ${VOCAB_TOKENS.en.F_PLURAL.OPTIONS}?`,
+  disableBothI18nAndBlogAnalysisMaybeAdvice: `↳ Maybe you want to use the '${FLAGS.NO_I18N}' and '${FLAGS.NO_BLOG}' ${VOCAB_TOKENS.en.F_PLURAL.OPTIONS}?`,
+  disableBothI18nAndLpAnalysisMaybeAdvice: `↳ Maybe you want to use the '${FLAGS.NO_I18N}' and '${FLAGS.NO_LP}' ${VOCAB_TOKENS.en.F_PLURAL.OPTIONS}?`,
 
   blogNamingConstraint: `Only dashes and alphanumeric characters are allowed, with the requirement that the first character MUST be a letter or a digit. Also, the maximum length allowed is: ${MAX_BLOG_TAXONOMY_LEN} characters.`,
 
@@ -113,7 +116,7 @@ const DEFAULT_TRANSLATION = {
     "Expected value: ''{expectedLocaleCode}'', given value: ''{localeCode}''",
   localesInfosValidatorTail: '(locales files infos)',
 
-  optionsAreInvalid: `${capitalize(VOCAB_TOKENS.en.F_PLURAL.OPTIONS)} are ${VOCAB_TOKENS.en.INVARIABLE.INVALID}.`,
+  optionsAreInvalid: `${capitalize(VOCAB_TOKENS.en.F_PLURAL.OPTIONS)} are ${VOCAB_TOKENS.en.INVARIABLE.INVALID}:`,
 
   invalidCategories: `{count, plural,
     =0 {__NEVER__}
@@ -160,8 +163,10 @@ const DEFAULT_TRANSLATION = {
 
   cantExtractLocalesInfosContent: `Can't extract the content of the '${LOCALES_INFOS_ROOT_KEY}' i18n section!`,
   cantOpenTheI18nLocaleSchemaFile: `Can't open the i18n ${VOCAB_TOKENS.en.N_SINGULAR.LOCALES} schema file!`,
+  cantOpenThePagesFolder: "Can't open the pages folder!",
   cantOpenThePostsFolder: "Can't open the posts folder!",
   cantOpenTheLpFolder: "Can't open the landing pages folder!",
+  thePagesFolderIsNotDirectory: 'The pages folder you indicated is NOT a directory!',
   thePostsFolderIsNotDirectory: 'The posts folder you indicated is NOT a directory!',
   theLpFolderIsNotDirectory: 'The landing pages folder you indicated is NOT a directory!',
   theLocaleSchemaIsNotFile: 'The locale schema file you indicated is NOT a file!',
@@ -174,9 +179,10 @@ const DEFAULT_TRANSLATION = {
 /* eslint-disable perfectionist/sort-objects */
 const translations = {
   fr: {
+    pages: 'pages',
     blog: 'blog',
     i18n: 'i18n',
-    lp: 'landing page',
+    lp: 'landing pages',
 
     blogCodegenBenchmark: 'Code relatif au blog généré en ~{duration}s',
     lpCodegenBenchmark: 'Code relatif aux landing pages généré en ~{duration}s',
@@ -192,11 +198,12 @@ const translations = {
     failedToPassThePrebuild: `Échec du ${VOCAB_TOKENS.fr.M_SINGULAR.PREBUILD} !`,
 
     disableI18nAnalysisAdvice: `Si vous n'utilisez pas l'i18n dans votre projet, utilisez l'${VOCAB_TOKENS.fr.F_SINGULAR.OPTIONS} "${FLAGS.NO_I18N}".`,
-    disableBlogAnalysisAdvice: `Si vous n'avez pas de blog dans votre projet, utilisez l'${VOCAB_TOKENS.fr.F_SINGULAR.OPTIONS} "${FLAGS.NO_BLOG}".`,
-    disableLpAnalysisAdvice: `Si vous n'avez pas de landing page dans votre projet, utilisez l'${VOCAB_TOKENS.fr.F_SINGULAR.OPTIONS} "${FLAGS.NO_LP}".`,
-
-    disableBothI18nAndBlogAnalysisMaybeAdvice: `Peut-être voudriez-vous utilisez les ${VOCAB_TOKENS.fr.F_PLURAL.OPTIONS} "${FLAGS.NO_I18N}" et "${FLAGS.NO_BLOG}" ?`,
-    disableBothI18nAndLpAnalysisMaybeAdvice: `Peut-être voudriez-vous utilisez les ${VOCAB_TOKENS.fr.F_PLURAL.OPTIONS} "${FLAGS.NO_I18N}" et "${FLAGS.NO_LP}" ?`,
+    disablePagesAnalysisAdvice: `Si vous n'utilisez pas de pages dans votre projet, utilisez l'${VOCAB_TOKENS.fr.F_SINGULAR.OPTIONS} "${FLAGS.NO_PAGES}".`,
+    disableBlogAnalysisAdvice: `Si vous n'utilisez pas de blog dans votre projet, utilisez l'${VOCAB_TOKENS.fr.F_SINGULAR.OPTIONS} "${FLAGS.NO_BLOG}".`,
+    disableLpAnalysisAdvice: `Si vous n'utilisez pas de landing pages dans votre projet, utilisez l'${VOCAB_TOKENS.fr.F_SINGULAR.OPTIONS} "${FLAGS.NO_LP}".`,
+    disableBothI18nAndPagesAnalysisMaybeAdvice: `↳ Peut-être que vous voudriez utiliser les ${VOCAB_TOKENS.fr.F_PLURAL.OPTIONS} "${FLAGS.NO_I18N}" et "${FLAGS.NO_PAGES}" ?`,
+    disableBothI18nAndBlogAnalysisMaybeAdvice: `↳ Peut-être que vous voudriez utiliser les ${VOCAB_TOKENS.fr.F_PLURAL.OPTIONS} "${FLAGS.NO_I18N}" et "${FLAGS.NO_BLOG}" ?`,
+    disableBothI18nAndLpAnalysisMaybeAdvice: `↳ Peut-être que vous voudriez utiliser les ${VOCAB_TOKENS.fr.F_PLURAL.OPTIONS} "${FLAGS.NO_I18N}" et "${FLAGS.NO_LP}" ?`,
 
     blogNamingConstraint: `Seuls les tirets et les caractères alphanumériques sont autorisés. De plus, le premier caractère DOIT être une lettre ou un chiffre. Enfin, la longueur maximale autorisée est de ${MAX_BLOG_TAXONOMY_LEN} caractères.`,
 
@@ -209,7 +216,7 @@ const translations = {
       `Valeur attendue : "{expectedLocaleCode}", valeur déduite : "{localeCode}"`,
     localesInfosValidatorTail: '(infos des fichiers des locales)',
 
-    optionsAreInvalid: `Les ${VOCAB_TOKENS.fr.F_PLURAL.OPTIONS} sont ${VOCAB_TOKENS.fr.F_PLURAL.INVALID}.`,
+    optionsAreInvalid: `Les ${VOCAB_TOKENS.fr.F_PLURAL.OPTIONS} sont ${VOCAB_TOKENS.fr.F_PLURAL.INVALID} :`,
 
     invalidCategories: `{count, plural,
       =0 {__NEVER__}
@@ -255,7 +262,9 @@ const translations = {
     cantExtractLocalesInfosContent: `Impossible d'extraire le contenu de la section i18n "${LOCALES_INFOS_ROOT_KEY}" !`,
     cantOpenTheI18nLocaleSchemaFile: `Impossible d'ouvrir le fichier contenant le schéma des ${VOCAB_TOKENS.fr.F_PLURAL.LOCALES} !`,
     cantOpenTheLpFolder: "Impossible d'ouvrir le dossier des landing pages !",
+    cantOpenThePagesFolder: "Impossible d'ouvrir le dossier des pages !",
     cantOpenThePostsFolder: "Impossible d'ouvrir le dossier des posts !",
+    thePagesFolderIsNotDirectory: "Le dossier des pages que vous avez renseigné n'est PAS un dossier !",
     thePostsFolderIsNotDirectory: "Le dossier des posts que vous avez renseigné n'est PAS un dossier !",
     theLpFolderIsNotDirectory: "Le dossier des landing pages que vous avez renseigné n'est PAS un dossier !",
     theLocaleSchemaIsNotFile: `Le fichier du schéma des ${VOCAB_TOKENS.fr.F_PLURAL.LOCALES} que vous avez renseigné n'est PAS un fichier !`,

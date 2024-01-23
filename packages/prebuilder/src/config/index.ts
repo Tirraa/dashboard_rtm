@@ -3,6 +3,7 @@
 import type { FormatCodeSettings } from 'ts-morph';
 
 /* ⚙️ Tweakers - SAFE */
+// {Note} It would be great to provide a config path flag + handle config file parsing and injection... maybe the next decade? ¯\_(ツ)_/¯
 export const MAX_BLOG_TAXONOMY_LEN: number = 34;
 export const MAX_LP_TAXONOMY_LEN: number = 128;
 
@@ -16,7 +17,9 @@ export const FLAGS = {
   BLOG_POSTS_FOLDER: '--blog-posts-folder',
   SKIP_BENCHMARKS: '--skip-benchmarks',
   LANDING_PAGES_FOLDER: '--lp-folder',
-  FORMAT_CODEGEN: '--format-codegen',
+  PRETTY_CODEGEN: '--pretty-codegen',
+  PAGES_FOLDER: '--pages-folder',
+  NO_PAGES: '--no-pages',
   NO_BLOG: '--no-blog',
   NO_I18N: '--no-i18n',
   NO_LP: '--no-lp',

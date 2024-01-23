@@ -100,7 +100,7 @@ describe('path', () => {
         },
         _id: '_'
       })
-    ).toBe('');
+    ).toBe(INDEX_NEEDLE);
 
     expect(
       buildPagePath({

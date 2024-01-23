@@ -1,5 +1,6 @@
 import type { PageProps } from '@/types/Page';
 
+import { INDEX_NEEDLE } from '##/lib/builders/pages/computedFields/functions/path';
 import { isValidLanguageFlag } from '##/lib/builders/unifiedImport';
 import { getPageByPathAndLanguageUnstrict } from '@/lib/pages/api';
 import { setStaticParamsLocale } from 'next-international/server';
@@ -12,7 +13,7 @@ import { allPages } from 'contentlayer/generated';
 import { notFound } from 'next/navigation';
 import { i18ns } from '##/config/i18n';
 
-// {ToDo} Move this into its own API
+// {ToDo} Move this into its own API + test it
 export async function generateMetadata({ params }: PageProps) {
   const [path, language] = [params[PageTaxonomy.PATH].join('/'), params[I18nTaxonomy.LANGUAGE]];
   const page = getPageByPathAndLanguageUnstrict(language, path);
@@ -27,11 +28,12 @@ export async function generateMetadata({ params }: PageProps) {
   return { description, title };
 }
 
-// {ToDo} Move this into its own API
+// {ToDo} Move this into its own API + test it
 export async function generateStaticParams() {
   const staticParams = [];
 
   for (const { language, path } of allPages) {
+    if (path === INDEX_NEEDLE) continue;
     if (!isValidLanguageFlag(language)) continue;
     const page = getPageByPathAndLanguageUnstrict(language, path);
     if (!page) continue;
