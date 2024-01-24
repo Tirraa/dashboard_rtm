@@ -3,12 +3,10 @@ import type { BlogSubcategoryFromUnknownCategory } from '@/types/Blog';
 
 import {
   getFlattenedPathWithoutRootFolder,
-  ForbiddenToUseIndexError,
-  getPathWithoutExtension,
+  throwIfForbiddenToUseIndexError,
   InvalidArgumentsError,
   indexOfNthOccurrence,
-  BLOG_POSTS_FOLDER,
-  INDEX_TOKEN
+  BLOG_POSTS_FOLDER
 } from '../../../unifiedImport';
 
 /**
@@ -21,22 +19,27 @@ function buildBlogPostSubcategoryFromStr(flattenedPath: string): BlogSubcategory
   }
 
   const firstSlashIndex = flattenedPath.indexOf('/');
-  if (firstSlashIndex === -1) {
-    throw new InvalidArgumentsError(buildBlogPostSubcategoryFromStr.name, { flattenedPath }, "Can't find any '/' character in flattenedPath");
-  }
-
   const secondSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 2);
   const subcateg = subcategBuilder(flattenedPath, firstSlashIndex, secondSlashIndex);
   return subcateg;
 }
 
+/**
+ * @throws {ForbiddenToUseIndexError}
+ * @throws {InvalidArgumentsError}
+ */
 function buildBlogPostSubcategoryFromPostObj(post: DocumentToCompute): BlogSubcategoryFromUnknownCategory {
   const orgFlattenedPath = post._raw.flattenedPath;
   const filepath = post._raw.sourceFilePath;
 
-  const filepathWithoutExt = getPathWithoutExtension(filepath);
-  if (filepathWithoutExt.endsWith(INDEX_TOKEN) && indexOfNthOccurrence(orgFlattenedPath, '/', 2) === -1) {
-    throw new ForbiddenToUseIndexError();
+  throwIfForbiddenToUseIndexError(filepath, orgFlattenedPath);
+
+  if (indexOfNthOccurrence(filepath, '/', 5) !== -1) {
+    throw new InvalidArgumentsError(
+      buildBlogPostSubcategoryFromPostObj.name,
+      { post: JSON.stringify(post, null, 2) },
+      'The path is too deep to be a valid blog post path.'
+    );
   }
 
   const flattenedPath = getFlattenedPathWithoutRootFolder(orgFlattenedPath, BLOG_POSTS_FOLDER);

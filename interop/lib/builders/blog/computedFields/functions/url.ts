@@ -3,24 +3,25 @@ import type { AppPath } from '@rtm/shared-types/Next';
 
 import {
   getFlattenedPathWithoutRootFolder,
-  ForbiddenToUseIndexError,
+  throwIfForbiddenToUseIndexError,
   getPathWithoutExtension,
   InvalidArgumentsError,
-  indexOfNthOccurrence,
   BLOG_POSTS_FOLDER,
   DEFAULT_LANGUAGE,
   ROUTES_ROOTS,
   INDEX_TOKEN
 } from '../../../unifiedImport';
 
+/**
+ * @throws {ForbiddenToUseIndexError}
+ * @throws {InvalidArgumentsError}
+ */
 function buildBlogPostUrl(post: DocumentToCompute): AppPath {
   const orgFlattenedPath = post._raw.flattenedPath;
   const filepath = post._raw.sourceFilePath;
   const filepathWithoutExt = getPathWithoutExtension(filepath);
 
-  if (filepathWithoutExt.endsWith(INDEX_TOKEN) && indexOfNthOccurrence(orgFlattenedPath, '/', 2) === -1) {
-    throw new ForbiddenToUseIndexError();
-  }
+  throwIfForbiddenToUseIndexError(filepath, orgFlattenedPath);
 
   const OPTIONAL_LOCALE_PART_INDEX = 2;
   const root = ROUTES_ROOTS.BLOG;

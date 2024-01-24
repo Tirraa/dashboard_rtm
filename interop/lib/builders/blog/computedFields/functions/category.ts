@@ -1,14 +1,7 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { BlogCategory } from '@/types/Blog';
 
-import {
-  getFlattenedPathWithoutRootFolder,
-  ForbiddenToUseIndexError,
-  getPathWithoutExtension,
-  indexOfNthOccurrence,
-  BLOG_POSTS_FOLDER,
-  INDEX_TOKEN
-} from '../../../unifiedImport';
+import { getFlattenedPathWithoutRootFolder, throwIfForbiddenToUseIndexError, BLOG_POSTS_FOLDER } from '../../../unifiedImport';
 
 /**
  * @throws {InvalidArgumentsError}
@@ -21,14 +14,14 @@ function buildBlogPostCategoryFromStr(flattenedPath: string): BlogCategory {
   return categ;
 }
 
+/**
+ * @throws {ForbiddenToUseIndexError}
+ */
 function buildBlogPostCategoryFromPostObj(post: DocumentToCompute): BlogCategory {
   const orgFlattenedPath = post._raw.flattenedPath;
   const filepath = post._raw.sourceFilePath;
-  const filepathWithoutExt = getPathWithoutExtension(filepath);
 
-  if (filepathWithoutExt.endsWith(INDEX_TOKEN) && indexOfNthOccurrence(orgFlattenedPath, '/', 2) === -1) {
-    throw new ForbiddenToUseIndexError();
-  }
+  throwIfForbiddenToUseIndexError(filepath, orgFlattenedPath);
 
   const flattenedPath = getFlattenedPathWithoutRootFolder(orgFlattenedPath, BLOG_POSTS_FOLDER);
   return buildBlogPostCategoryFromStr(flattenedPath);

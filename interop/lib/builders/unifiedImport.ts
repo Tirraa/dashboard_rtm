@@ -7,11 +7,13 @@ import ForbiddenToUseIndexError from '../../errors/ForbiddenToUseIndex';
 import capitalize from '../../../src/lib/portable/str/capitalize';
 import InvalidArgumentsError from '../../errors/InvalidArguments';
 import { INDEX_TOKEN } from '../misc/contentlayerCornerCases';
+import throwIfForbiddenToUseIndexError from './blog/helpers';
 import { DEFAULT_LANGUAGE } from '../../config/i18n';
 import ROUTES_ROOTS from '../../config/routes';
 
 export {
   getFlattenedPathWithoutRootFolder,
+  throwIfForbiddenToUseIndexError,
   ForbiddenToUseIndexError,
   getPathWithoutExtension,
   InvalidArgumentsError,

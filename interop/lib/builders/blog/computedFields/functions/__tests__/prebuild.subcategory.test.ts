@@ -43,6 +43,16 @@ describe('subcategory', () => {
     expect(() =>
       buildBlogPostSubcategory({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + `/category/${subcategory}/lang/slug/slug` + EXT,
+          flattenedPath: BLOG_POSTS_FOLDER + `/category/${subcategory}/lang/slug/slug`
+        },
+        _id: '_'
+      })
+    ).toThrowError(InvalidArgumentsError);
+
+    expect(() =>
+      buildBlogPostSubcategory({
+        _raw: {
           sourceFilePath: '_' + BLOG_POSTS_FOLDER + `/category/${subcategory}/lang/slug` + EXT,
           flattenedPath: '_' + BLOG_POSTS_FOLDER + `/category/${subcategory}/lang/slug`
         },
