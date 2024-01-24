@@ -41,6 +41,7 @@ describe('url', () => {
     const url = '/' + 'fr' + root + 'category/subcategory/slug';
     const url2 = '/' + 'en' + root + 'category/subcategory/slug';
     const url3 = '/' + 'it' + root + 'category/subcategory/slug';
+    const url4 = '/' + 'it' + root + 'category/subcategory/index';
     expect(
       buildBlogPostUrl({
         _raw: {
@@ -70,6 +71,16 @@ describe('url', () => {
         _id: '_'
       })
     ).toBe(url3);
+
+    expect(
+      buildBlogPostUrl({
+        _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + '/category/subcategory/it/' + INDEX_TOKEN + EXT,
+          flattenedPath: BLOG_POSTS_FOLDER + '/category/subcategory/it'
+        },
+        _id: '_'
+      })
+    ).toBe(url4);
   });
 
   it('should throw, given invalid flattened paths', () => {
