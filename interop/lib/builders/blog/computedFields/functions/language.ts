@@ -12,9 +12,6 @@ import {
 } from '../../../unifiedImport';
 
 function buildBlogPostLanguageFlagFromStr(flattenedPath: string, sourceFilePath: string): LanguageFlag | string {
-  const firstSlashIndex = flattenedPath.indexOf('/');
-  if (firstSlashIndex === -1) return DEFAULT_LANGUAGE;
-
   const filepathWithoutExt = getPathWithoutExtension(sourceFilePath);
   const suffix = filepathWithoutExt.endsWith(INDEX_TOKEN) ? '/' + INDEX_TOKEN : '';
   const transformedFlattenedPath = flattenedPath + suffix;
