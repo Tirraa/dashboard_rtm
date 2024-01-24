@@ -77,7 +77,7 @@ describe('url', () => {
       buildBlogPostUrl({
         _raw: {
           sourceFilePath: BLOG_POSTS_FOLDER + '/' + INDEX_TOKEN + EXT,
-          flattenedPath: BLOG_POSTS_FOLDER + '/'
+          flattenedPath: BLOG_POSTS_FOLDER
         },
         _id: '_'
       })
