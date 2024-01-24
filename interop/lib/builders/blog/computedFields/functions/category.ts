@@ -1,7 +1,7 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { BlogCategory } from '@/types/Blog';
 
-import { getFlattenedPathWithoutRootFolder, InvalidArgumentsError, indexOfNthOccurrence, BLOG_POSTS_FOLDER } from '../../../unifiedImport';
+import { getFlattenedPathWithoutRootFolder, InvalidArgumentsError, BLOG_POSTS_FOLDER } from '../../../unifiedImport';
 
 /**
  * @throws {InvalidArgumentsError}
@@ -9,7 +9,7 @@ import { getFlattenedPathWithoutRootFolder, InvalidArgumentsError, indexOfNthOcc
 function buildBlogPostCategoryFromStr(flattenedPath: string): BlogCategory {
   const categBuilder = (flattenedPath: string, firstSlashIndex: number): BlogCategory => flattenedPath.substring(0, firstSlashIndex) as BlogCategory;
 
-  const firstSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 1);
+  const firstSlashIndex = flattenedPath.indexOf('/');
   if (firstSlashIndex === -1) {
     throw new InvalidArgumentsError(buildBlogPostCategoryFromStr.name, { flattenedPath }, "Can't find any '/' character in flattenedPath");
   }

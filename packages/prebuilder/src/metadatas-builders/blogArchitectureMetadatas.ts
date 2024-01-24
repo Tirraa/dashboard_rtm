@@ -8,7 +8,7 @@ const fs = require('fs/promises');
 
 function getSlug(filename: string): BlogSlug | null {
   const ext = path.extname(filename);
-  if (ext === BLOG_POST_FILE_EXT) return path.basename(filename, path.extname(filename));
+  if (ext === BLOG_POST_FILE_EXT) return path.basename(filename, ext);
   return null;
 }
 

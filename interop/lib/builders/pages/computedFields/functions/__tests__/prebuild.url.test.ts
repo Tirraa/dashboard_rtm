@@ -1,4 +1,4 @@
-import { InvalidArgumentsError, DEFAULT_LANGUAGE, PAGES_FOLDER, ROUTES_ROOTS } from '##/lib/builders/unifiedImport';
+import { InvalidArgumentsError, DEFAULT_LANGUAGE, INDEX_NEEDLE, PAGES_FOLDER, ROUTES_ROOTS } from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 
 import buildPageUrl from '../url';
@@ -9,11 +9,20 @@ describe('url', () => {
     expect(
       buildPageUrl({
         _raw: {
+          flattenedPath: PAGES_FOLDER
+        },
+        _id: '_'
+      })
+    ).toBe(ROUTES_ROOTS.WEBSITE + DEFAULT_LANGUAGE + '/' + INDEX_NEEDLE);
+
+    expect(
+      buildPageUrl({
+        _raw: {
           flattenedPath: PAGES_FOLDER + '/'
         },
         _id: '_'
       })
-    ).toBe(ROUTES_ROOTS.WEBSITE + DEFAULT_LANGUAGE + '/');
+    ).toBe(ROUTES_ROOTS.WEBSITE + DEFAULT_LANGUAGE + '/' + INDEX_NEEDLE);
 
     expect(
       buildPageUrl({
@@ -42,7 +51,7 @@ describe('url', () => {
         },
         _id: '_'
       })
-    ).toBe(ROUTES_ROOTS.WEBSITE + DEFAULT_LANGUAGE + '/');
+    ).toBe(ROUTES_ROOTS.WEBSITE + DEFAULT_LANGUAGE + '/' + INDEX_NEEDLE);
 
     expect(
       buildPageUrl({
@@ -61,17 +70,6 @@ describe('url', () => {
         _id: '_'
       })
     ).toBe(ROUTES_ROOTS.WEBSITE + `${DEFAULT_LANGUAGE}/foo/bar/baz/${leaf}`);
-  });
-
-  it('should throw, given an invalid flattenedPath', () => {
-    expect(() =>
-      buildPageUrl({
-        _raw: {
-          flattenedPath: PAGES_FOLDER
-        },
-        _id: '_'
-      })
-    ).toThrowError(InvalidArgumentsError);
   });
 
   it('should NOT be fault tolerant', () => {

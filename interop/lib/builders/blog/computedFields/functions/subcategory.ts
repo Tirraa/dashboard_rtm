@@ -12,7 +12,7 @@ function buildBlogPostSubcategoryFromStr(flattenedPath: string): BlogSubcategory
     return flattenedPath.substring(firstSlashIndex + 1) as BlogSubcategoryFromUnknownCategory;
   }
 
-  const firstSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 1);
+  const firstSlashIndex = flattenedPath.indexOf('/');
   if (firstSlashIndex === -1) {
     throw new InvalidArgumentsError(buildBlogPostSubcategoryFromStr.name, { flattenedPath }, "Can't find any '/' character in flattenedPath");
   }

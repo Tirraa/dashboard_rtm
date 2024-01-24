@@ -1,7 +1,6 @@
 import type { PageProps } from '@/types/Page';
 
-import { INDEX_NEEDLE } from '##/lib/builders/pages/computedFields/functions/path';
-import { isValidLanguageFlag } from '##/lib/builders/unifiedImport';
+import { isValidLanguageFlag, INDEX_NEEDLE } from '##/lib/builders/unifiedImport';
 import { getPageByPathAndLanguageUnstrict } from '@/lib/pages/api';
 import { setStaticParamsLocale } from 'next-international/server';
 import MDX from '@/components/layouts/blog/MdxComponent';

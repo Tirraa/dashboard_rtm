@@ -4,7 +4,7 @@ import type { LanguageFlag } from '@rtm/shared-types/LanguageFlag';
 import { getFlattenedPathWithoutRootFolder, indexOfNthOccurrence, BLOG_POSTS_FOLDER, DEFAULT_LANGUAGE } from '../../../unifiedImport';
 
 function buildBlogPostLanguageFlagFromStr(flattenedPath: string): LanguageFlag | string {
-  const firstSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 1);
+  const firstSlashIndex = flattenedPath.indexOf('/');
   if (firstSlashIndex === -1) return DEFAULT_LANGUAGE;
 
   const envelopeBeginSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 2);
