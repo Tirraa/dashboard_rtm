@@ -8,7 +8,7 @@ import {
   BLOG_POSTS_FOLDER,
   DEFAULT_LANGUAGE,
   ROUTES_ROOTS,
-  INDEX_NEEDLE
+  INDEX_TOKEN
 } from '../../../unifiedImport';
 
 function buildBlogPostUrl(post: DocumentToCompute): AppPath {
@@ -20,7 +20,7 @@ function buildBlogPostUrl(post: DocumentToCompute): AppPath {
 
   const filepath = post._raw.sourceFilePath;
   const filepathWithoutExt = getPathWithoutExtension(filepath);
-  if (filepathWithoutExt.endsWith(INDEX_NEEDLE)) flattenedPathParts.push(INDEX_NEEDLE);
+  if (filepathWithoutExt.endsWith(INDEX_TOKEN)) flattenedPathParts.push(INDEX_TOKEN);
 
   if (flattenedPathParts.length !== 3 && flattenedPathParts.length !== 4) {
     throw new InvalidArgumentsError(

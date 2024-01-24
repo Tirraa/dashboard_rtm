@@ -7,7 +7,7 @@ import {
   indexOfNthOccurrence,
   BLOG_POSTS_FOLDER,
   DEFAULT_LANGUAGE,
-  INDEX_NEEDLE
+  INDEX_TOKEN
 } from '../../../unifiedImport';
 
 function buildBlogPostLanguageFlagFromStr(flattenedPath: string, sourceFilePath: string): LanguageFlag | string {
@@ -15,7 +15,7 @@ function buildBlogPostLanguageFlagFromStr(flattenedPath: string, sourceFilePath:
   if (firstSlashIndex === -1) return DEFAULT_LANGUAGE;
 
   const filepathWithoutExt = getPathWithoutExtension(sourceFilePath);
-  const suffix = filepathWithoutExt.endsWith(INDEX_NEEDLE) ? '/' + INDEX_NEEDLE : '';
+  const suffix = filepathWithoutExt.endsWith(INDEX_TOKEN) ? '/' + INDEX_TOKEN : '';
   const transformedFlattenedPath = flattenedPath + suffix;
 
   const envelopeBeginSlashIndex = indexOfNthOccurrence(transformedFlattenedPath, '/', 2);

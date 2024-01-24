@@ -1,4 +1,4 @@
-import { InvalidArgumentsError, BLOG_POSTS_FOLDER, INDEX_NEEDLE } from '##/lib/builders/unifiedImport';
+import { InvalidArgumentsError, BLOG_POSTS_FOLDER, INDEX_TOKEN } from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 
 import buildBlogPostSlug from '../slug';
@@ -33,7 +33,7 @@ describe('slug', () => {
     expect(() =>
       buildBlogPostSlug({
         _raw: {
-          sourceFilePath: BLOG_POSTS_FOLDER + '/' + INDEX_NEEDLE + EXT,
+          sourceFilePath: BLOG_POSTS_FOLDER + '/' + INDEX_TOKEN + EXT,
           flattenedPath: BLOG_POSTS_FOLDER
         },
         _id: '_'
@@ -43,7 +43,7 @@ describe('slug', () => {
     expect(() =>
       buildBlogPostSlug({
         _raw: {
-          sourceFilePath: BLOG_POSTS_FOLDER + '/' + INDEX_NEEDLE + EXT,
+          sourceFilePath: BLOG_POSTS_FOLDER + '/' + INDEX_TOKEN + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + '/'
         },
         _id: '_'

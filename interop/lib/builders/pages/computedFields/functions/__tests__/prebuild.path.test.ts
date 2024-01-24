@@ -1,4 +1,4 @@
-import { InvalidArgumentsError, DEFAULT_LANGUAGE, INDEX_NEEDLE, PAGES_FOLDER } from '##/lib/builders/unifiedImport';
+import { InvalidArgumentsError, DEFAULT_LANGUAGE, INDEX_TOKEN, PAGES_FOLDER } from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 
 import buildPagePath from '../path';
@@ -13,7 +13,7 @@ describe('path', () => {
         },
         _id: '_'
       })
-    ).toBe(INDEX_NEEDLE);
+    ).toBe(INDEX_TOKEN);
 
     expect(
       buildPagePath({
@@ -22,7 +22,7 @@ describe('path', () => {
         },
         _id: '_'
       })
-    ).toBe(INDEX_NEEDLE);
+    ).toBe(INDEX_TOKEN);
 
     expect(
       buildPagePath({
@@ -91,7 +91,7 @@ describe('path', () => {
         },
         _id: '_'
       })
-    ).toBe(INDEX_NEEDLE);
+    ).toBe(INDEX_TOKEN);
 
     expect(
       buildPagePath({

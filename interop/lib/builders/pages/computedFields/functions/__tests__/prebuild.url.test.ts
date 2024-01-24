@@ -1,4 +1,4 @@
-import { InvalidArgumentsError, DEFAULT_LANGUAGE, INDEX_NEEDLE, PAGES_FOLDER, ROUTES_ROOTS } from '##/lib/builders/unifiedImport';
+import { InvalidArgumentsError, DEFAULT_LANGUAGE, INDEX_TOKEN, PAGES_FOLDER, ROUTES_ROOTS } from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 
 import buildPageUrl from '../url';
@@ -13,7 +13,7 @@ describe('url', () => {
         },
         _id: '_'
       })
-    ).toBe(ROUTES_ROOTS.WEBSITE + DEFAULT_LANGUAGE + '/' + INDEX_NEEDLE);
+    ).toBe(ROUTES_ROOTS.WEBSITE + DEFAULT_LANGUAGE + '/' + INDEX_TOKEN);
 
     expect(
       buildPageUrl({
@@ -22,7 +22,7 @@ describe('url', () => {
         },
         _id: '_'
       })
-    ).toBe(ROUTES_ROOTS.WEBSITE + DEFAULT_LANGUAGE + '/' + INDEX_NEEDLE);
+    ).toBe(ROUTES_ROOTS.WEBSITE + DEFAULT_LANGUAGE + '/' + INDEX_TOKEN);
 
     expect(
       buildPageUrl({
@@ -51,7 +51,7 @@ describe('url', () => {
         },
         _id: '_'
       })
-    ).toBe(ROUTES_ROOTS.WEBSITE + DEFAULT_LANGUAGE + '/' + INDEX_NEEDLE);
+    ).toBe(ROUTES_ROOTS.WEBSITE + DEFAULT_LANGUAGE + '/' + INDEX_TOKEN);
 
     expect(
       buildPageUrl({

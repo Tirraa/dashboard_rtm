@@ -1,4 +1,4 @@
-import { InvalidArgumentsError, BLOG_POSTS_FOLDER, DEFAULT_LANGUAGE, INDEX_NEEDLE } from '##/lib/builders/unifiedImport';
+import { InvalidArgumentsError, BLOG_POSTS_FOLDER, DEFAULT_LANGUAGE, INDEX_TOKEN } from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 import { LANGUAGES } from '##/config/i18n';
 
@@ -28,7 +28,7 @@ describe('language', () => {
     expect(
       buildBlogPostLanguageFlag({
         _raw: {
-          sourceFilePath: BLOG_POSTS_FOLDER + `/category/subcategory/${INDEX_NEEDLE}` + EXT,
+          sourceFilePath: BLOG_POSTS_FOLDER + `/category/subcategory/${INDEX_TOKEN}` + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + `/category/subcategory`
         },
         _id: '_'
@@ -40,7 +40,7 @@ describe('language', () => {
     expect(
       buildBlogPostLanguageFlag({
         _raw: {
-          sourceFilePath: BLOG_POSTS_FOLDER + `/category/subcategory/${invalidLanguage}/${INDEX_NEEDLE}` + EXT,
+          sourceFilePath: BLOG_POSTS_FOLDER + `/category/subcategory/${invalidLanguage}/${INDEX_TOKEN}` + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + `/category/subcategory/${invalidLanguage}`
         },
         _id: '_'

@@ -2,7 +2,7 @@ import type { TFakeLanguage } from '𝕍/testingBlogCategoryDatas';
 import type { TBlogPost } from '@/types/Blog';
 
 import { TESTING_BLOG_FAKE_SUBCATEGORY } from '𝕍/testingBlogCategoryDatas';
-import { INDEX_NEEDLE } from '##/lib/misc/contentlayerCornerCases';
+import { INDEX_TOKEN } from '##/lib/misc/contentlayerCornerCases';
 import { describe, expect, it, vi } from 'vitest';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import ROUTES_ROOTS from '##/config/routes';
@@ -292,16 +292,16 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict', () => {
     expect(posts[4].metadescription).toBe('FAKE');
     expect(posts[4].description).toBe('FAKE');
     expect(posts[4].title).toBe('FAKE');
-    expect(posts[4]._id).toBe(`blog/${BlogConfig.TESTING_CATEGORY}/fake-subcategory/posts/${INDEX_NEEDLE}.mdx`);
-    expect(posts[4]._raw.sourceFilePath).toBe(`blog/${BlogConfig.TESTING_CATEGORY}/fake-subcategory/posts/${INDEX_NEEDLE}.mdx`);
-    expect(posts[4]._raw.sourceFileName).toBe(`${INDEX_NEEDLE}.mdx`);
+    expect(posts[4]._id).toBe(`blog/${BlogConfig.TESTING_CATEGORY}/fake-subcategory/posts/${INDEX_TOKEN}.mdx`);
+    expect(posts[4]._raw.sourceFilePath).toBe(`blog/${BlogConfig.TESTING_CATEGORY}/fake-subcategory/posts/${INDEX_TOKEN}.mdx`);
+    expect(posts[4]._raw.sourceFileName).toBe(`${INDEX_TOKEN}.mdx`);
     expect(posts[4]._raw.sourceFileDir).toBe(`blog/${BlogConfig.TESTING_CATEGORY}/fake-subcategory/posts`);
     expect(posts[4]._raw.flattenedPath).toBe(`blog/${BlogConfig.TESTING_CATEGORY}/fake-subcategory/posts`);
     expect(posts[4].subcategory).toBe('fake-subcategory');
     expect(posts[4].language).toBe('posts');
     expect(posts[4].category).toBe(BlogConfig.TESTING_CATEGORY);
-    expect(posts[4].slug).toBe(`${INDEX_NEEDLE}`);
-    expect(posts[4].url).toBe('/posts' + ROUTES_ROOTS.BLOG + `${BlogConfig.TESTING_CATEGORY}/fake-subcategory/${INDEX_NEEDLE}`);
+    expect(posts[4].slug).toBe(`${INDEX_TOKEN}`);
+    expect(posts[4].url).toBe('/posts' + ROUTES_ROOTS.BLOG + `${BlogConfig.TESTING_CATEGORY}/fake-subcategory/${INDEX_TOKEN}`);
   });
 });
 

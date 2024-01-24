@@ -5,7 +5,7 @@ import isValidLanguageFlag from '../../../src/lib/portable/i18n/isValidLanguageF
 import getFlattenedPathWithoutRootFolder from './getFlattenedPathWithoutRootFolder';
 import capitalize from '../../../src/lib/portable/str/capitalize';
 import InvalidArgumentsError from '../../errors/InvalidArguments';
-import { INDEX_NEEDLE } from '../misc/contentlayerCornerCases';
+import { INDEX_TOKEN } from '../misc/contentlayerCornerCases';
 import { DEFAULT_LANGUAGE } from '../../config/i18n';
 import ROUTES_ROOTS from '../../config/routes';
 
@@ -18,7 +18,7 @@ export {
   isValidLanguageFlag,
   BLOG_POSTS_FOLDER,
   DEFAULT_LANGUAGE,
-  INDEX_NEEDLE,
+  INDEX_TOKEN,
   PAGES_FOLDER,
   ROUTES_ROOTS,
   capitalize

@@ -1,7 +1,7 @@
 import type { TBlogConfig } from '@/config/blog';
 
 import { TESTING_BLOG_CATEGORY_FAKE_LANGUAGES, TESTING_BLOG_FAKE_SUBCATEGORY } from '𝕍/testingBlogCategoryDatas';
-import { INDEX_NEEDLE } from '##/lib/misc/contentlayerCornerCases';
+import { INDEX_TOKEN } from '##/lib/misc/contentlayerCornerCases';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { describe, expect, it, vi } from 'vitest';
@@ -68,7 +68,7 @@ describe('getBlogStaticParams', () => {
         [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
         [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
         [I18nTaxonomy.LANGUAGE]: DEFAULT_LANGUAGE,
-        [BlogTaxonomy.SLUG]: INDEX_NEEDLE
+        [BlogTaxonomy.SLUG]: INDEX_TOKEN
       },
       {
         [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
@@ -97,7 +97,7 @@ describe('getBlogStaticParams', () => {
       {
         [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
         [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
-        [BlogTaxonomy.SLUG]: INDEX_NEEDLE,
+        [BlogTaxonomy.SLUG]: INDEX_TOKEN,
         [I18nTaxonomy.LANGUAGE]: 'posts'
       }
     ]);

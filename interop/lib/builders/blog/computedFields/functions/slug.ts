@@ -1,7 +1,7 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { UnknownBlogSlug } from '@/types/Blog';
 
-import { getPathWithoutExtension, InvalidArgumentsError, INDEX_NEEDLE } from '../../../unifiedImport';
+import { getPathWithoutExtension, InvalidArgumentsError, INDEX_TOKEN } from '../../../unifiedImport';
 
 /**
  * @throws {InvalidArgumentsError}
@@ -25,7 +25,7 @@ function buildBlogPostSlugFromStr(flattenedPath: string, sourceFilePath: string)
   }
 
   const filepathWithoutExt = getPathWithoutExtension(sourceFilePath);
-  const suffix = filepathWithoutExt.endsWith(INDEX_NEEDLE) ? '/' + INDEX_NEEDLE : '';
+  const suffix = filepathWithoutExt.endsWith(INDEX_TOKEN) ? '/' + INDEX_TOKEN : '';
 
   const transformedFlattenedPath = flattenedPath + suffix;
   const lastSlashIndexAfterTransform = transformedFlattenedPath.lastIndexOf('/');
