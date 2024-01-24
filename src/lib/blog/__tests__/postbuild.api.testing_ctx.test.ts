@@ -54,14 +54,14 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict', () => {
     expect(postsCollection.length).toBe(4);
   });
 
-  it('should return 3 posts, with the default language', async () => {
+  it('should return 4 posts, with the default language', async () => {
     const postsCollection = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict(
       BlogConfig.TESTING_CATEGORY,
       TESTING_BLOG_FAKE_SUBCATEGORY,
       DEFAULT_LANGUAGE
     );
 
-    expect(postsCollection.length).toBe(3);
+    expect(postsCollection.length).toBe(4);
   });
 });
 
