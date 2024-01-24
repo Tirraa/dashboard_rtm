@@ -5,7 +5,6 @@ import {
   getFlattenedPathWithoutRootFolder,
   ForbiddenToUseIndexError,
   getPathWithoutExtension,
-  InvalidArgumentsError,
   indexOfNthOccurrence,
   BLOG_POSTS_FOLDER,
   INDEX_TOKEN
@@ -18,10 +17,6 @@ function buildBlogPostCategoryFromStr(flattenedPath: string): BlogCategory {
   const categBuilder = (flattenedPath: string, firstSlashIndex: number): BlogCategory => flattenedPath.substring(0, firstSlashIndex) as BlogCategory;
 
   const firstSlashIndex = flattenedPath.indexOf('/');
-  if (firstSlashIndex === -1) {
-    throw new InvalidArgumentsError(buildBlogPostCategoryFromStr.name, { flattenedPath }, "Can't find any '/' character in flattenedPath");
-  }
-
   const categ = categBuilder(flattenedPath, firstSlashIndex);
   return categ;
 }
