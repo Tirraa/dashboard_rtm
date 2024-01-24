@@ -52,4 +52,16 @@ describe('slug', () => {
       })
     ).toBe(slug);
   });
+
+  it('should return the correct slug, with index notation', () => {
+    expect(
+      buildBlogPostSlug({
+        _raw: {
+          sourceFilePath: '_' + BLOG_POSTS_FOLDER + `/category/subcategory/lang/${INDEX_TOKEN}` + EXT,
+          flattenedPath: '_' + BLOG_POSTS_FOLDER + `/category/subcategory/lang`
+        },
+        _id: '_'
+      })
+    ).toBe(INDEX_TOKEN);
+  });
 });

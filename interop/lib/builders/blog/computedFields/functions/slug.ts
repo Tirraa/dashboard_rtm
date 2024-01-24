@@ -1,7 +1,7 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { UnknownBlogSlug } from '@/types/Blog';
 
-import { ForbiddenToUseIndexError, getPathWithoutExtension, InvalidArgumentsError, indexOfNthOccurrence, INDEX_TOKEN } from '../../../unifiedImport';
+import { ForbiddenToUseIndexError, getPathWithoutExtension, indexOfNthOccurrence, INDEX_TOKEN } from '../../../unifiedImport';
 
 /**
  * @throws {InvalidArgumentsError}
@@ -9,20 +9,6 @@ import { ForbiddenToUseIndexError, getPathWithoutExtension, InvalidArgumentsErro
 function buildBlogPostSlugFromStr(flattenedPath: string, sourceFilePath: string): UnknownBlogSlug {
   const slugBuilder = (flattenedPath: string, lastSlashIndex: number): UnknownBlogSlug =>
     flattenedPath.substring(lastSlashIndex + 1) as UnknownBlogSlug;
-
-  const lastSlashIndexBeforeTransform = flattenedPath.lastIndexOf('/');
-
-  if (lastSlashIndexBeforeTransform === -1) {
-    throw new InvalidArgumentsError(buildBlogPostSlugFromStr.name, { flattenedPath }, "Can't find any '/' character in flattenedPath");
-  }
-
-  if (lastSlashIndexBeforeTransform === flattenedPath.length - 1) {
-    throw new InvalidArgumentsError(
-      buildBlogPostSlugFromStr.name,
-      { flattenedPath },
-      "Can't find anything after the last '/' character in flattenedPath"
-    );
-  }
 
   const filepathWithoutExt = getPathWithoutExtension(sourceFilePath);
   const suffix = filepathWithoutExt.endsWith(INDEX_TOKEN) ? '/' + INDEX_TOKEN : '';
