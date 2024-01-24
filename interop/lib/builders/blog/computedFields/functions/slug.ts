@@ -1,22 +1,22 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { UnknownBlogSlug } from '@/types/Blog';
 
-import { InvalidArgumentsError } from '../../../unifiedImport';
+import { getPathWithoutExtension, InvalidArgumentsError, INDEX_NEEDLE } from '../../../unifiedImport';
 
 /**
  * @throws {InvalidArgumentsError}
  */
-function buildBlogPostSlugFromStr(flattenedPath: string): UnknownBlogSlug {
+function buildBlogPostSlugFromStr(flattenedPath: string, sourceFilePath: string): UnknownBlogSlug {
   const slugBuilder = (flattenedPath: string, lastSlashIndex: number): UnknownBlogSlug =>
     flattenedPath.substring(lastSlashIndex + 1) as UnknownBlogSlug;
 
-  const lastSlashIndex = flattenedPath.lastIndexOf('/');
+  const lastSlashIndexBeforeTransform = flattenedPath.lastIndexOf('/');
 
-  if (lastSlashIndex === -1) {
+  if (lastSlashIndexBeforeTransform === -1) {
     throw new InvalidArgumentsError(buildBlogPostSlugFromStr.name, { flattenedPath }, "Can't find any '/' character in flattenedPath");
   }
 
-  if (lastSlashIndex === flattenedPath.length - 1) {
+  if (lastSlashIndexBeforeTransform === flattenedPath.length - 1) {
     throw new InvalidArgumentsError(
       buildBlogPostSlugFromStr.name,
       { flattenedPath },
@@ -24,13 +24,19 @@ function buildBlogPostSlugFromStr(flattenedPath: string): UnknownBlogSlug {
     );
   }
 
-  const slug = slugBuilder(flattenedPath, lastSlashIndex);
+  const filepathWithoutExt = getPathWithoutExtension(sourceFilePath);
+  const suffix = filepathWithoutExt.endsWith(INDEX_NEEDLE) ? '/' + INDEX_NEEDLE : '';
+
+  const transformedFlattenedPath = flattenedPath + suffix;
+  const lastSlashIndexAfterTransform = transformedFlattenedPath.lastIndexOf('/');
+
+  const slug = slugBuilder(flattenedPath + suffix, lastSlashIndexAfterTransform);
   return slug;
 }
 
 function buildBlogPostSlugFromPostObj(post: DocumentToCompute): UnknownBlogSlug {
-  const { flattenedPath } = post._raw;
-  return buildBlogPostSlugFromStr(flattenedPath);
+  const { sourceFilePath, flattenedPath } = post._raw;
+  return buildBlogPostSlugFromStr(flattenedPath, sourceFilePath);
 }
 
 const buildBlogPostSlug = (post: DocumentToCompute): UnknownBlogSlug => buildBlogPostSlugFromPostObj(post);

@@ -1,7 +1,9 @@
-import { InvalidArgumentsError, BLOG_POSTS_FOLDER } from '##/lib/builders/unifiedImport';
+import { InvalidArgumentsError, BLOG_POSTS_FOLDER, INDEX_NEEDLE } from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 
 import buildBlogPostSlug from '../slug';
+
+const EXT = '.FAKE_EXT';
 
 describe('slug', () => {
   const slug = 'slug';
@@ -9,6 +11,7 @@ describe('slug', () => {
     expect(
       buildBlogPostSlug({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + `/category/subcategory/${slug}` + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + `/category/subcategory/${slug}`
         },
         _id: '_'
@@ -18,6 +21,7 @@ describe('slug', () => {
     expect(
       buildBlogPostSlug({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + `/category/subcategory/lang/${slug}` + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + `/category/subcategory/lang/${slug}`
         },
         _id: '_'
@@ -29,6 +33,7 @@ describe('slug', () => {
     expect(() =>
       buildBlogPostSlug({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + '/' + INDEX_NEEDLE + EXT,
           flattenedPath: BLOG_POSTS_FOLDER
         },
         _id: '_'
@@ -38,6 +43,7 @@ describe('slug', () => {
     expect(() =>
       buildBlogPostSlug({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + '/' + INDEX_NEEDLE + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + '/'
         },
         _id: '_'
@@ -49,6 +55,7 @@ describe('slug', () => {
     expect(
       buildBlogPostSlug({
         _raw: {
+          sourceFilePath: '_' + BLOG_POSTS_FOLDER + `/category/subcategory/lang/${slug}` + EXT,
           flattenedPath: '_' + BLOG_POSTS_FOLDER + `/category/subcategory/lang/${slug}`
         },
         _id: '_'

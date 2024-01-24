@@ -2,6 +2,7 @@ import type { AppPath } from '@rtm/shared-types/Next';
 
 import ROUTES_ROOTS from '##/config/routes';
 
+import getPathWithoutExtension from './portable/str/getPathWithoutExtension';
 import compareAlphabetically from './portable/str/compareAlphabetically';
 import indexOfNthOccurrence from './portable/str/indexOfNthOccurrence';
 import getFormattedDate from './portable/str/getFormattedDate';
@@ -23,4 +24,13 @@ export function hrefMatchesPathname(href: AppPath, pathname: AppPath, root: AppP
   return false;
 }
 
-export { compareAlphabetically, indexOfNthOccurrence, getFormattedDate, getSlashEnvelope, countCharacter, endsWithChars, capitalize };
+export {
+  getPathWithoutExtension,
+  compareAlphabetically,
+  indexOfNthOccurrence,
+  getFormattedDate,
+  getSlashEnvelope,
+  countCharacter,
+  endsWithChars,
+  capitalize
+};

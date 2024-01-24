@@ -1,7 +1,9 @@
-import { InvalidArgumentsError, BLOG_POSTS_FOLDER, DEFAULT_LANGUAGE, ROUTES_ROOTS } from '##/lib/builders/unifiedImport';
+import { InvalidArgumentsError, BLOG_POSTS_FOLDER, DEFAULT_LANGUAGE, ROUTES_ROOTS, INDEX_NEEDLE } from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 
 import buildBlogPostUrl from '../url';
+
+const EXT = '.FAKE_EXT';
 
 describe('url', () => {
   const root = ROUTES_ROOTS.BLOG;
@@ -10,6 +12,7 @@ describe('url', () => {
     expect(
       buildBlogPostUrl({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + '/category/subcategory/slug' + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + '/category/subcategory/slug'
         },
         _id: '_'
@@ -19,6 +22,7 @@ describe('url', () => {
     expect(
       buildBlogPostUrl({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + `/category/subcategory/${DEFAULT_LANGUAGE}/slug` + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + `/category/subcategory/${DEFAULT_LANGUAGE}/slug`
         },
         _id: '_'
@@ -33,6 +37,7 @@ describe('url', () => {
     expect(
       buildBlogPostUrl({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + '/category/subcategory/fr/slug' + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + '/category/subcategory/fr/slug'
         },
         _id: '_'
@@ -42,6 +47,7 @@ describe('url', () => {
     expect(
       buildBlogPostUrl({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + '/category/subcategory/en/slug' + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + '/category/subcategory/en/slug'
         },
         _id: '_'
@@ -51,6 +57,7 @@ describe('url', () => {
     expect(
       buildBlogPostUrl({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + '/category/subcategory/it/slug' + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + '/category/subcategory/it/slug'
         },
         _id: '_'
@@ -62,6 +69,7 @@ describe('url', () => {
     expect(() =>
       buildBlogPostUrl({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + '/' + INDEX_NEEDLE + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + '/'
         },
         _id: '_'
@@ -71,6 +79,7 @@ describe('url', () => {
     expect(() =>
       buildBlogPostUrl({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + '/category' + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + '/category'
         },
         _id: '_'
@@ -80,6 +89,7 @@ describe('url', () => {
     expect(() =>
       buildBlogPostUrl({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + '/category/slug' + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + '/category/slug'
         },
         _id: '_'
@@ -89,6 +99,7 @@ describe('url', () => {
     expect(() =>
       buildBlogPostUrl({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + '/category/subcategory/it/slug/foo' + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + '/category/subcategory/it/slug/foo'
         },
         _id: '_'
@@ -98,6 +109,7 @@ describe('url', () => {
     expect(() =>
       buildBlogPostUrl({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + '/category/subcategory/it/slug/foo/bar' + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + '/category/subcategory/it/slug/foo/bar'
         },
         _id: '_'

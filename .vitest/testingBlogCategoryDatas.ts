@@ -1,4 +1,5 @@
 export const TESTING_BLOG_CATEGORY_FAKE_LANGUAGES = ['drafts', 'posts'] as const;
+export const TESTING_LP_FAKE_LANGUAGES = ['fr', 'en'] as const;
 
 export const TESTING_BLOG_FAKE_SUBCATEGORY = 'fake-subcategory' as const;
 
