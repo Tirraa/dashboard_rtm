@@ -1,4 +1,11 @@
-import { InvalidArgumentsError, BLOG_POSTS_FOLDER, DEFAULT_LANGUAGE, ROUTES_ROOTS, INDEX_TOKEN } from '##/lib/builders/unifiedImport';
+import {
+  ForbiddenToUseIndexError,
+  InvalidArgumentsError,
+  BLOG_POSTS_FOLDER,
+  DEFAULT_LANGUAGE,
+  ROUTES_ROOTS,
+  INDEX_TOKEN
+} from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 
 import buildBlogPostUrl from '../url';
@@ -74,7 +81,7 @@ describe('url', () => {
         },
         _id: '_'
       })
-    ).toThrowError(InvalidArgumentsError);
+    ).toThrowError(ForbiddenToUseIndexError);
 
     expect(() =>
       buildBlogPostUrl({

@@ -1,7 +1,9 @@
-import { InvalidArgumentsError, BLOG_POSTS_FOLDER } from '##/lib/builders/unifiedImport';
+import { ForbiddenToUseIndexError, InvalidArgumentsError, BLOG_POSTS_FOLDER, INDEX_TOKEN } from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 
 import buildBlogPostCategory from '../category';
+
+const EXT = '.FAKE_EXT';
 
 describe('category', () => {
   const category = 'category';
@@ -9,6 +11,7 @@ describe('category', () => {
     expect(
       buildBlogPostCategory({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + `/${category}/subcategory/slug` + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + `/${category}/subcategory/slug`
         },
         _id: '_'
@@ -18,6 +21,7 @@ describe('category', () => {
     expect(
       buildBlogPostCategory({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + `/${category}/subcategory/lang/slug` + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + `/${category}/subcategory/lang/slug`
         },
         _id: '_'
@@ -29,24 +33,17 @@ describe('category', () => {
     expect(() =>
       buildBlogPostCategory({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + '/' + INDEX_TOKEN + EXT,
           flattenedPath: BLOG_POSTS_FOLDER
         },
         _id: '_'
       })
-    ).toThrowError(InvalidArgumentsError);
+    ).toThrowError(ForbiddenToUseIndexError);
 
     expect(() =>
       buildBlogPostCategory({
         _raw: {
-          flattenedPath: BLOG_POSTS_FOLDER + '/'
-        },
-        _id: '_'
-      })
-    ).toThrowError(InvalidArgumentsError);
-
-    expect(() =>
-      buildBlogPostCategory({
-        _raw: {
+          sourceFilePath: '_' + BLOG_POSTS_FOLDER + `/${category}/subcategory/lang/slug` + EXT,
           flattenedPath: '_' + BLOG_POSTS_FOLDER + `/${category}/subcategory/lang/slug`
         },
         _id: '_'

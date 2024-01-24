@@ -66,6 +66,5 @@ export type BlogDocumentsConfigTypeMetadatas<Name extends TypeName = TypeName> =
   categoryFolder: CategoryFolder;
   name: Name;
 };
-
 // Stryker restore all
 /* v8 ignore stop */

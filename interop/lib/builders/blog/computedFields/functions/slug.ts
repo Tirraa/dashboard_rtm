@@ -1,7 +1,7 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { UnknownBlogSlug } from '@/types/Blog';
 
-import { getPathWithoutExtension, InvalidArgumentsError, INDEX_TOKEN } from '../../../unifiedImport';
+import { ForbiddenToUseIndexError, getPathWithoutExtension, InvalidArgumentsError, indexOfNthOccurrence, INDEX_TOKEN } from '../../../unifiedImport';
 
 /**
  * @throws {InvalidArgumentsError}
@@ -36,6 +36,12 @@ function buildBlogPostSlugFromStr(flattenedPath: string, sourceFilePath: string)
 
 function buildBlogPostSlugFromPostObj(post: DocumentToCompute): UnknownBlogSlug {
   const { sourceFilePath, flattenedPath } = post._raw;
+  const filepathWithoutExt = getPathWithoutExtension(sourceFilePath);
+
+  if (filepathWithoutExt.endsWith(INDEX_TOKEN) && indexOfNthOccurrence(flattenedPath, '/', 2) === -1) {
+    throw new ForbiddenToUseIndexError();
+  }
+
   return buildBlogPostSlugFromStr(flattenedPath, sourceFilePath);
 }
 

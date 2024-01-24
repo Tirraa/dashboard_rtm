@@ -3,6 +3,7 @@ import type { LanguageFlag } from '@rtm/shared-types/LanguageFlag';
 
 import {
   getFlattenedPathWithoutRootFolder,
+  ForbiddenToUseIndexError,
   getPathWithoutExtension,
   indexOfNthOccurrence,
   BLOG_POSTS_FOLDER,
@@ -30,7 +31,14 @@ function buildBlogPostLanguageFlagFromStr(flattenedPath: string, sourceFilePath:
 
 function buildBlogPostLanguageFlag(post: DocumentToCompute): LanguageFlag | string {
   const sourceFilePath = post._raw.sourceFilePath;
-  const flattenedPath = getFlattenedPathWithoutRootFolder(post._raw.flattenedPath, BLOG_POSTS_FOLDER);
+  const orgFlattenedPath = post._raw.flattenedPath;
+
+  const filepathWithoutExt = getPathWithoutExtension(sourceFilePath);
+  if (filepathWithoutExt.endsWith(INDEX_TOKEN) && indexOfNthOccurrence(orgFlattenedPath, '/', 2) === -1) {
+    throw new ForbiddenToUseIndexError();
+  }
+
+  const flattenedPath = getFlattenedPathWithoutRootFolder(orgFlattenedPath, BLOG_POSTS_FOLDER);
   const language = buildBlogPostLanguageFlagFromStr(flattenedPath, sourceFilePath);
   return language;
 }

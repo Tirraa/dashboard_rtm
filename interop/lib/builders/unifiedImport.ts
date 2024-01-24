@@ -3,6 +3,7 @@ import getPathWithoutExtension from '../../../src/lib/portable/str/getPathWithou
 import indexOfNthOccurrence from '../../../src/lib/portable/str/indexOfNthOccurrence';
 import isValidLanguageFlag from '../../../src/lib/portable/i18n/isValidLanguageFlag';
 import getFlattenedPathWithoutRootFolder from './getFlattenedPathWithoutRootFolder';
+import ForbiddenToUseIndexError from '../../errors/ForbiddenToUseIndex';
 import capitalize from '../../../src/lib/portable/str/capitalize';
 import InvalidArgumentsError from '../../errors/InvalidArguments';
 import { INDEX_TOKEN } from '../misc/contentlayerCornerCases';
@@ -11,6 +12,7 @@ import ROUTES_ROOTS from '../../config/routes';
 
 export {
   getFlattenedPathWithoutRootFolder,
+  ForbiddenToUseIndexError,
   getPathWithoutExtension,
   InvalidArgumentsError,
   indexOfNthOccurrence,
@@ -18,8 +20,8 @@ export {
   isValidLanguageFlag,
   BLOG_POSTS_FOLDER,
   DEFAULT_LANGUAGE,
-  INDEX_TOKEN,
   PAGES_FOLDER,
   ROUTES_ROOTS,
+  INDEX_TOKEN,
   capitalize
 };

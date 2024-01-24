@@ -1,4 +1,4 @@
-import { InvalidArgumentsError, BLOG_POSTS_FOLDER, INDEX_TOKEN } from '##/lib/builders/unifiedImport';
+import { ForbiddenToUseIndexError, BLOG_POSTS_FOLDER, INDEX_TOKEN } from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 
 import buildBlogPostSlug from '../slug';
@@ -38,17 +38,7 @@ describe('slug', () => {
         },
         _id: '_'
       })
-    ).toThrowError(InvalidArgumentsError);
-
-    expect(() =>
-      buildBlogPostSlug({
-        _raw: {
-          sourceFilePath: BLOG_POSTS_FOLDER + '/' + INDEX_TOKEN + EXT,
-          flattenedPath: BLOG_POSTS_FOLDER + '/'
-        },
-        _id: '_'
-      })
-    ).toThrowError(InvalidArgumentsError);
+    ).toThrowError(ForbiddenToUseIndexError);
   });
 
   it('should be fault tolerant', () => {

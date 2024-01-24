@@ -1,4 +1,4 @@
-import { InvalidArgumentsError, BLOG_POSTS_FOLDER, DEFAULT_LANGUAGE, INDEX_TOKEN } from '##/lib/builders/unifiedImport';
+import { ForbiddenToUseIndexError, InvalidArgumentsError, BLOG_POSTS_FOLDER, DEFAULT_LANGUAGE, INDEX_TOKEN } from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 import { LANGUAGES } from '##/config/i18n';
 
@@ -72,30 +72,21 @@ describe('language', () => {
     ).toBe(DEFAULT_LANGUAGE);
   });
 
-  it('should return the default language, given an incomplete flattenedPath', () => {
-    expect(
-      buildBlogPostLanguageFlag({
-        _raw: {
-          flattenedPath: BLOG_POSTS_FOLDER + '/'
-        },
-        _id: '_'
-      })
-    ).toBe(DEFAULT_LANGUAGE);
-  });
-
   it('should throw, given an invalid flattenedPath', () => {
     expect(() =>
       buildBlogPostLanguageFlag({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + '/' + INDEX_TOKEN + EXT,
           flattenedPath: BLOG_POSTS_FOLDER
         },
         _id: '_'
       })
-    ).toThrowError(InvalidArgumentsError);
+    ).toThrowError(ForbiddenToUseIndexError);
 
     expect(() =>
       buildBlogPostLanguageFlag({
         _raw: {
+          sourceFilePath: '_' + BLOG_POSTS_FOLDER + '/category/subcategory/lang/slug' + EXT,
           flattenedPath: '_' + BLOG_POSTS_FOLDER + '/category/subcategory/lang/slug'
         },
         _id: '_'
@@ -105,6 +96,7 @@ describe('language', () => {
     expect(() =>
       buildBlogPostLanguageFlag({
         _raw: {
+          sourceFilePath: '_' + BLOG_POSTS_FOLDER + '/category/subcategory/slug' + EXT,
           flattenedPath: '_' + BLOG_POSTS_FOLDER + '/category/subcategory/slug'
         },
         _id: '_'

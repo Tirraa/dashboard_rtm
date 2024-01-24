@@ -3,8 +3,10 @@ import type { AppPath } from '@rtm/shared-types/Next';
 
 import {
   getFlattenedPathWithoutRootFolder,
+  ForbiddenToUseIndexError,
   getPathWithoutExtension,
   InvalidArgumentsError,
+  indexOfNthOccurrence,
   BLOG_POSTS_FOLDER,
   DEFAULT_LANGUAGE,
   ROUTES_ROOTS,
@@ -12,14 +14,20 @@ import {
 } from '../../../unifiedImport';
 
 function buildBlogPostUrl(post: DocumentToCompute): AppPath {
+  const orgFlattenedPath = post._raw.flattenedPath;
+  const filepath = post._raw.sourceFilePath;
+  const filepathWithoutExt = getPathWithoutExtension(filepath);
+
+  if (filepathWithoutExt.endsWith(INDEX_TOKEN) && indexOfNthOccurrence(orgFlattenedPath, '/', 2) === -1) {
+    throw new ForbiddenToUseIndexError();
+  }
+
   const OPTIONAL_LOCALE_PART_INDEX = 2;
   const root = ROUTES_ROOTS.BLOG;
 
-  const flattenedPath = getFlattenedPathWithoutRootFolder(post._raw.flattenedPath, BLOG_POSTS_FOLDER);
+  const flattenedPath = getFlattenedPathWithoutRootFolder(orgFlattenedPath, BLOG_POSTS_FOLDER);
   const flattenedPathParts = flattenedPath.split('/');
 
-  const filepath = post._raw.sourceFilePath;
-  const filepathWithoutExt = getPathWithoutExtension(filepath);
   if (filepathWithoutExt.endsWith(INDEX_TOKEN)) flattenedPathParts.push(INDEX_TOKEN);
 
   if (flattenedPathParts.length !== 3 && flattenedPathParts.length !== 4) {
