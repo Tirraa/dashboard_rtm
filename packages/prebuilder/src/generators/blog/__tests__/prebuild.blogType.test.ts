@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { describe, expect, it } from 'vitest';
 
+import { INDEX_NEEDLE } from '../../../../../../interop/lib/builders/unifiedImport';
 import generateBlogType from '../blogType';
 
 const fs = require('fs/promises');
@@ -30,8 +31,8 @@ describe('generateBlogType (formatted)', () => {
             fr: ['fake-post-01']
           },
           'fake-subcategory-three': {
-            DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03', 'index'],
-            es: ['fake-post-01', 'index'],
+            DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03', INDEX_NEEDLE],
+            es: ['fake-post-01', INDEX_NEEDLE],
             zh: ['fake-post-02']
           },
           'fake-subcategory-two': { fr: ['fake-post-02'] }
@@ -73,8 +74,8 @@ describe('generateBlogType (ugly)', () => {
       {
         'fake-category-one': {
           'fake-subcategory-one': {
-            DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03', 'index'],
-            en: ['fake-post-01', 'fake-post-03', 'index'],
+            DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03', INDEX_NEEDLE],
+            en: ['fake-post-01', 'fake-post-03', INDEX_NEEDLE],
             it: ['fake-post-01', 'fake-post-02'],
             fr: ['fake-post-01']
           },
@@ -87,18 +88,24 @@ describe('generateBlogType (ugly)', () => {
         },
         'fake-category-three': {
           'fake-subcategory-five': {
-            DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03', 'index'],
+            DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03', INDEX_NEEDLE],
             en: ['fake-post-03'],
             it: ['fake-post-03']
           },
-          'fake-subcategory-four': { DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03', 'index'], es: ['fake-post-04', 'index'] }
+          'fake-subcategory-four': {
+            DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03', INDEX_NEEDLE],
+            es: ['fake-post-04', INDEX_NEEDLE]
+          }
         },
         'fake-empty-subcategories-nested-in-category': {
-          'fake-subcategory-seven': { DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03', 'index'], zh: ['fake-post-10', 'index'] },
+          'fake-subcategory-seven': {
+            DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03', INDEX_NEEDLE],
+            zh: ['fake-post-10', INDEX_NEEDLE]
+          },
           'fake-empty-subcategory': {}
         },
         'fake-category-two': {
-          'fake-subcategory-six': { DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03', 'index'], zh: ['fake-post-10'] }
+          'fake-subcategory-six': { DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03', INDEX_NEEDLE], zh: ['fake-post-10'] }
         },
         'fake-empty-category': {}
       },

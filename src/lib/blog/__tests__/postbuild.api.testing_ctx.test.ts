@@ -2,6 +2,7 @@ import type { TFakeLanguage } from '𝕍/testingBlogCategoryDatas';
 import type { TBlogPost } from '@/types/Blog';
 
 import { TESTING_BLOG_FAKE_SUBCATEGORY } from '𝕍/testingBlogCategoryDatas';
+import { INDEX_NEEDLE } from '##/lib/misc/contentlayerCornerCases';
 import { describe, expect, it, vi } from 'vitest';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import ROUTES_ROOTS from '##/config/routes';
@@ -45,13 +46,13 @@ describe('getPostStrict', () => {
 });
 
 describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict', () => {
-  it("should return 4 posts, given the fake language 'posts'", async () => {
+  it("should return 5 posts, given the fake language 'posts'", async () => {
     const postsCollection = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict(
       BlogConfig.TESTING_CATEGORY,
       TESTING_BLOG_FAKE_SUBCATEGORY,
       'posts' satisfies TFakeLanguage
     );
-    expect(postsCollection.length).toBe(4);
+    expect(postsCollection.length).toBe(5);
   });
 
   it('should return 4 posts, with the default language', async () => {
@@ -225,7 +226,7 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict', () => {
       'posts' as const satisfies TFakeLanguage as any
     );
 
-    expect(posts.length).toBe(4);
+    expect(posts.length).toBe(5);
 
     expect(posts[0].draft).toBe(false);
     expect(posts[0].metadescription).toBe('FAKE');
@@ -286,6 +287,21 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict', () => {
     expect(posts[3].category).toBe(BlogConfig.TESTING_CATEGORY);
     expect(posts[3].slug).toBe('fake-post-04');
     expect(posts[3].url).toBe('/posts' + ROUTES_ROOTS.BLOG + `${BlogConfig.TESTING_CATEGORY}/fake-subcategory/fake-post-04`);
+
+    expect(posts[4].draft).toBe(false);
+    expect(posts[4].metadescription).toBe('FAKE');
+    expect(posts[4].description).toBe('FAKE');
+    expect(posts[4].title).toBe('FAKE');
+    expect(posts[4]._id).toBe(`blog/${BlogConfig.TESTING_CATEGORY}/fake-subcategory/posts/${INDEX_NEEDLE}.mdx`);
+    expect(posts[4]._raw.sourceFilePath).toBe(`blog/${BlogConfig.TESTING_CATEGORY}/fake-subcategory/posts/${INDEX_NEEDLE}.mdx`);
+    expect(posts[4]._raw.sourceFileName).toBe(`${INDEX_NEEDLE}.mdx`);
+    expect(posts[4]._raw.sourceFileDir).toBe(`blog/${BlogConfig.TESTING_CATEGORY}/fake-subcategory/posts`);
+    expect(posts[4]._raw.flattenedPath).toBe(`blog/${BlogConfig.TESTING_CATEGORY}/fake-subcategory/posts`);
+    expect(posts[4].subcategory).toBe('fake-subcategory');
+    expect(posts[4].language).toBe('posts');
+    expect(posts[4].category).toBe(BlogConfig.TESTING_CATEGORY);
+    expect(posts[4].slug).toBe(`${INDEX_NEEDLE}`);
+    expect(posts[4].url).toBe('/posts' + ROUTES_ROOTS.BLOG + `${BlogConfig.TESTING_CATEGORY}/fake-subcategory/${INDEX_NEEDLE}`);
   });
 });
 

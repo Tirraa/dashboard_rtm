@@ -93,6 +93,12 @@ describe('getBlogStaticParams', () => {
         [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
         [BlogTaxonomy.SLUG]: 'fake-post-04',
         [I18nTaxonomy.LANGUAGE]: 'posts'
+      },
+      {
+        [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
+        [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
+        [BlogTaxonomy.SLUG]: INDEX_NEEDLE,
+        [I18nTaxonomy.LANGUAGE]: 'posts'
       }
     ]);
   });
