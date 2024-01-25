@@ -4,7 +4,7 @@ import indexOfNthOccurrence from '../../../src/lib/portable/str/indexOfNthOccurr
 import isValidLanguageFlag from '../../../src/lib/portable/i18n/isValidLanguageFlag';
 import getFlattenedPathWithoutRootFolder from './getFlattenedPathWithoutRootFolder';
 import ForbiddenToUseIndexError from '../../errors/ForbiddenToUseIndex';
-import { throwIfForbiddenToUseIndexErrorBlogCtx } from './blog/helpers';
+import { throwIfForbiddenToUseIndexErrorBlogCtx } from './helpers';
 import capitalize from '../../../src/lib/portable/str/capitalize';
 import InvalidArgumentsError from '../../errors/InvalidArguments';
 import { INDEX_TOKEN } from '../misc/contentlayerCornerCases';

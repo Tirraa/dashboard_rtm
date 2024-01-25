@@ -1,4 +1,4 @@
-import { ForbiddenToUseIndexError, getPathWithoutExtension, indexOfNthOccurrence, INDEX_TOKEN } from '../unifiedImport';
+import { ForbiddenToUseIndexError, getPathWithoutExtension, indexOfNthOccurrence, INDEX_TOKEN } from './unifiedImport';
 
 /**
  * @throws {ForbiddenToUseIndexError}
