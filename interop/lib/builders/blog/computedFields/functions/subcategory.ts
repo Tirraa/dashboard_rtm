@@ -32,7 +32,7 @@ function buildBlogPostSubcategoryFromPostObj(post: DocumentToCompute): BlogSubca
   const orgFlattenedPath = post._raw.flattenedPath;
   const filepath = post._raw.sourceFilePath;
 
-  throwIfForbiddenToUseIndexErrorBlogCtx(filepath, orgFlattenedPath);
+  throwIfForbiddenToUseIndexErrorBlogCtx(filepath);
 
   if (indexOfNthOccurrence(filepath, '/', 5) !== -1) {
     throw new InvalidArgumentsError(

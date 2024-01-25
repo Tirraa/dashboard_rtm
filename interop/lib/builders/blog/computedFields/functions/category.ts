@@ -21,7 +21,7 @@ function buildBlogPostCategoryFromPostObj(post: DocumentToCompute): BlogCategory
   const orgFlattenedPath = post._raw.flattenedPath;
   const filepath = post._raw.sourceFilePath;
 
-  throwIfForbiddenToUseIndexErrorBlogCtx(filepath, orgFlattenedPath);
+  throwIfForbiddenToUseIndexErrorBlogCtx(filepath);
 
   const flattenedPath = getFlattenedPathWithoutRootFolder(orgFlattenedPath, BLOG_POSTS_FOLDER);
   return buildBlogPostCategoryFromStr(flattenedPath);

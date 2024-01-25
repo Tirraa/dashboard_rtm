@@ -3,10 +3,10 @@ import { ForbiddenToUseIndexError, getPathWithoutExtension, indexOfNthOccurrence
 /**
  * @throws {ForbiddenToUseIndexError}
  */
-function throwIfForbiddenToUseIndexError(sourceFilePath: string, flattenedPath: string, slashOccurrenceNb: number) {
+function throwIfForbiddenToUseIndexError(sourceFilePath: string, minRequiredSlashAmount: number) {
   const filepathWithoutExt = getPathWithoutExtension(sourceFilePath);
 
-  if (filepathWithoutExt.endsWith(INDEX_TOKEN) && indexOfNthOccurrence(flattenedPath, '/', slashOccurrenceNb) === -1) {
+  if (filepathWithoutExt.endsWith(INDEX_TOKEN) && indexOfNthOccurrence(filepathWithoutExt, '/', minRequiredSlashAmount) === -1) {
     throw new ForbiddenToUseIndexError();
   }
 }
@@ -14,5 +14,4 @@ function throwIfForbiddenToUseIndexError(sourceFilePath: string, flattenedPath: 
 /**
  * @throws {ForbiddenToUseIndexError}
  */
-export const throwIfForbiddenToUseIndexErrorBlogCtx = (sourceFilePath: string, flattenedPath: string) =>
-  throwIfForbiddenToUseIndexError(sourceFilePath, flattenedPath, 2);
+export const throwIfForbiddenToUseIndexErrorBlogCtx = (sourceFilePath: string) => throwIfForbiddenToUseIndexError(sourceFilePath, 3);

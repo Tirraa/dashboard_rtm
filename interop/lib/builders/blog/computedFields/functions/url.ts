@@ -21,7 +21,7 @@ function buildBlogPostUrl(post: DocumentToCompute): AppPath {
   const filepath = post._raw.sourceFilePath;
   const filepathWithoutExt = getPathWithoutExtension(filepath);
 
-  throwIfForbiddenToUseIndexErrorBlogCtx(filepath, orgFlattenedPath);
+  throwIfForbiddenToUseIndexErrorBlogCtx(filepath);
 
   const OPTIONAL_LOCALE_PART_INDEX = 2;
   const root = ROUTES_ROOTS.BLOG;
