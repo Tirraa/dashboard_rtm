@@ -155,14 +155,22 @@ async function generateBlogCode(BLOG_POSTS_FOLDER: Path, PRETTY_CODEGEN: boolean
   blogCodegenEndTime = performance.now();
 }
 
+async function generatePhonyBlogCode() {
+  await Promise.all([generateBlogArchitectureType({}, false), generateI18nBlogCategories({}, false), generateBlogType({}, false)]);
+}
+
 /**
  * @effect {Benchmark}
  */
 async function generateLpCode(LP_FOLDER: Path, PRETTY_CODEGEN: boolean) {
   lpCodegenStartTime = performance.now();
   const lpArchitecture = await getLpMetadatas(LP_FOLDER);
-  generateLandingPageType(lpArchitecture, PRETTY_CODEGEN);
+  await generateLandingPageType(lpArchitecture, PRETTY_CODEGEN);
   lpCodegenEndTime = performance.now();
+}
+
+async function generatePhonyLpCode() {
+  await generateLandingPageType({}, false);
 }
 
 /**
@@ -238,7 +246,10 @@ async function processPrebuild() {
 
     // {ToDo} Handle pages
 
-    await Promise.all([!NO_BLOG && generateBlogCode(BLOG_POSTS_FOLDER, PRETTY_CODEGEN), !NO_LP && generateLpCode(LP_FOLDER, PRETTY_CODEGEN)]);
+    await Promise.all([
+      (!NO_BLOG && generateBlogCode(BLOG_POSTS_FOLDER, PRETTY_CODEGEN)) || generatePhonyBlogCode(),
+      (!NO_LP && generateLpCode(LP_FOLDER, PRETTY_CODEGEN)) || generatePhonyLpCode()
+    ]);
 
     printPrebuilderDoneMsg(
       () =>
