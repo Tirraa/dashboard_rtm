@@ -20,4 +20,4 @@ export function getLandingPageBySlugAndLanguageUnstrict(language: LanguageFlag, 
 }
 
 export const getLandingPageBySlugAndLanguageStrict = <L extends LandingPageLang>(lang: L, slug: LandingPageSlug<L>): MaybeNull<LandingPage> =>
-  getLandingPageBySlugAndLanguageUnstrict(lang as any, slug);
+  getLandingPageBySlugAndLanguageUnstrict(lang as any, slug as any);
