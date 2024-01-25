@@ -6,11 +6,11 @@ import { throwIfForbiddenToUseIndexErrorBlogCtx, getFlattenedPathWithoutRootFold
 /**
  * @throws {InvalidArgumentsError}
  */
-function buildBlogPostCategoryFromStr(flattenedPath: string): BlogCategory {
-  const categBuilder = (flattenedPath: string, firstSlashIndex: number): BlogCategory => flattenedPath.substring(0, firstSlashIndex) as BlogCategory;
+function buildBlogPostCategoryFromStr(path: string): BlogCategory {
+  const categBuilder = (path: string, firstSlashIndex: number): BlogCategory => path.substring(0, firstSlashIndex) as BlogCategory;
 
-  const firstSlashIndex = flattenedPath.indexOf('/');
-  const categ = categBuilder(flattenedPath, firstSlashIndex);
+  const firstSlashIndex = path.indexOf('/');
+  const categ = categBuilder(path, firstSlashIndex);
   return categ;
 }
 

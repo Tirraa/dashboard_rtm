@@ -12,15 +12,15 @@ import {
 /**
  * @throws {InvalidArgumentsError}
  */
-function buildBlogPostSubcategoryFromStr(flattenedPath: string): BlogSubcategoryFromUnknownCategory {
-  function subcategBuilder(flattenedPath: string, firstSlashIndex: number, secondSlashIndex: number): BlogSubcategoryFromUnknownCategory {
-    if (secondSlashIndex !== -1) return flattenedPath.substring(firstSlashIndex + 1, secondSlashIndex) as BlogSubcategoryFromUnknownCategory;
-    return flattenedPath.substring(firstSlashIndex + 1) as BlogSubcategoryFromUnknownCategory;
+function buildBlogPostSubcategoryFromStr(path: string): BlogSubcategoryFromUnknownCategory {
+  function subcategBuilder(path: string, firstSlashIndex: number, secondSlashIndex: number): BlogSubcategoryFromUnknownCategory {
+    if (secondSlashIndex !== -1) return path.substring(firstSlashIndex + 1, secondSlashIndex) as BlogSubcategoryFromUnknownCategory;
+    return path.substring(firstSlashIndex + 1) as BlogSubcategoryFromUnknownCategory;
   }
 
-  const firstSlashIndex = flattenedPath.indexOf('/');
-  const secondSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 2);
-  const subcateg = subcategBuilder(flattenedPath, firstSlashIndex, secondSlashIndex);
+  const firstSlashIndex = path.indexOf('/');
+  const secondSlashIndex = indexOfNthOccurrence(path, '/', 2);
+  const subcateg = subcategBuilder(path, firstSlashIndex, secondSlashIndex);
   return subcateg;
 }
 

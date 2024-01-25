@@ -11,16 +11,16 @@ import {
   INDEX_TOKEN
 } from '../../../unifiedImport';
 
-function buildBlogPostLanguageFlagFromStr(flattenedPath: string, sourceFilePath: string): LanguageFlag | string {
+function buildBlogPostLanguageFlagFromStr(path: string, sourceFilePath: string): LanguageFlag | string {
   const filepathWithoutExt = getPathWithoutExtension(sourceFilePath);
   const suffix = filepathWithoutExt.endsWith(INDEX_TOKEN) ? '/' + INDEX_TOKEN : '';
-  const transformedFlattenedPath = flattenedPath + suffix;
+  const transformedPath = path + suffix;
 
-  const envelopeBeginSlashIndex = indexOfNthOccurrence(transformedFlattenedPath, '/', 2);
-  const envelopeEndSlashIndex = indexOfNthOccurrence(transformedFlattenedPath, '/', 3);
+  const envelopeBeginSlashIndex = indexOfNthOccurrence(transformedPath, '/', 2);
+  const envelopeEndSlashIndex = indexOfNthOccurrence(transformedPath, '/', 3);
 
   if (envelopeBeginSlashIndex !== -1 && envelopeEndSlashIndex !== -1) {
-    const language = transformedFlattenedPath.substring(envelopeBeginSlashIndex + 1, envelopeEndSlashIndex);
+    const language = transformedPath.substring(envelopeBeginSlashIndex + 1, envelopeEndSlashIndex);
     return language;
   }
   return DEFAULT_LANGUAGE;

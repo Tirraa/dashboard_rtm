@@ -27,7 +27,8 @@ function buildBlogPostSlugFromPostObj(post: DocumentToCompute): UnknownBlogSlug 
   const { sourceFilePath, flattenedPath } = post._raw;
 
   throwIfForbiddenToUseIndexErrorBlogCtx(sourceFilePath);
-  return buildBlogPostSlugFromStr(flattenedPath, sourceFilePath);
+  const blogSlug = buildBlogPostSlugFromStr(flattenedPath, sourceFilePath);
+  return blogSlug;
 }
 
 const buildBlogPostSlug = (post: DocumentToCompute): UnknownBlogSlug => buildBlogPostSlugFromPostObj(post);
