@@ -4,16 +4,16 @@ import indexOfNthOccurrence from '../../../src/lib/portable/str/indexOfNthOccurr
 import isValidLanguageFlag from '../../../src/lib/portable/i18n/isValidLanguageFlag';
 import getFlattenedPathWithoutRootFolder from './getFlattenedPathWithoutRootFolder';
 import ForbiddenToUseIndexError from '../../errors/ForbiddenToUseIndex';
+import { throwIfForbiddenToUseIndexErrorBlogCtx } from './blog/helpers';
 import capitalize from '../../../src/lib/portable/str/capitalize';
 import InvalidArgumentsError from '../../errors/InvalidArguments';
 import { INDEX_TOKEN } from '../misc/contentlayerCornerCases';
-import throwIfForbiddenToUseIndexError from './blog/helpers';
 import { DEFAULT_LANGUAGE } from '../../config/i18n';
 import ROUTES_ROOTS from '../../config/routes';
 
 export {
+  throwIfForbiddenToUseIndexErrorBlogCtx,
   getFlattenedPathWithoutRootFolder,
-  throwIfForbiddenToUseIndexError,
   ForbiddenToUseIndexError,
   getPathWithoutExtension,
   InvalidArgumentsError,

@@ -2,8 +2,8 @@ import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { AppPath } from '@rtm/shared-types/Next';
 
 import {
+  throwIfForbiddenToUseIndexErrorBlogCtx,
   getFlattenedPathWithoutRootFolder,
-  throwIfForbiddenToUseIndexError,
   getPathWithoutExtension,
   InvalidArgumentsError,
   BLOG_POSTS_FOLDER,
@@ -21,7 +21,7 @@ function buildBlogPostUrl(post: DocumentToCompute): AppPath {
   const filepath = post._raw.sourceFilePath;
   const filepathWithoutExt = getPathWithoutExtension(filepath);
 
-  throwIfForbiddenToUseIndexError(filepath, orgFlattenedPath);
+  throwIfForbiddenToUseIndexErrorBlogCtx(filepath, orgFlattenedPath);
 
   const OPTIONAL_LOCALE_PART_INDEX = 2;
   const root = ROUTES_ROOTS.BLOG;

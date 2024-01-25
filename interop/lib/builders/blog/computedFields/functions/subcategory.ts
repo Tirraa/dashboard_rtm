@@ -2,8 +2,8 @@ import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { BlogSubcategoryFromUnknownCategory } from '@/types/Blog';
 
 import {
+  throwIfForbiddenToUseIndexErrorBlogCtx,
   getFlattenedPathWithoutRootFolder,
-  throwIfForbiddenToUseIndexError,
   InvalidArgumentsError,
   indexOfNthOccurrence,
   BLOG_POSTS_FOLDER
@@ -32,7 +32,7 @@ function buildBlogPostSubcategoryFromPostObj(post: DocumentToCompute): BlogSubca
   const orgFlattenedPath = post._raw.flattenedPath;
   const filepath = post._raw.sourceFilePath;
 
-  throwIfForbiddenToUseIndexError(filepath, orgFlattenedPath);
+  throwIfForbiddenToUseIndexErrorBlogCtx(filepath, orgFlattenedPath);
 
   if (indexOfNthOccurrence(filepath, '/', 5) !== -1) {
     throw new InvalidArgumentsError(
