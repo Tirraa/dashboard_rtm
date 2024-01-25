@@ -11,6 +11,7 @@ import { INDEX_TOKEN } from '../misc/contentlayerCornerCases';
 import { DEFAULT_LANGUAGE } from '../../config/i18n';
 import ROUTES_ROOTS from '../../config/routes';
 
+// https://github.com/contentlayerdev/contentlayer/issues/608
 export {
   throwIfForbiddenToUseIndexErrorBlogCtx,
   getFlattenedPathWithoutRootFolder,

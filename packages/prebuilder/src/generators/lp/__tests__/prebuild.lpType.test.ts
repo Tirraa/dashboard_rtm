@@ -11,17 +11,17 @@ const __TARGET_FOLDER = __TARGET_FOLDER_ROOT + '/' + 'LP_TYPE';
 describe('generateLandingPageType (formatted)', () => {
   const pretty = true;
 
-  it('should match snapshot', () => {
+  it('should match snapshot', async () => {
     const targetFile = 'FAKE_EMPTY_LP_TYPE';
-    generateLandingPageType({}, pretty, targetFile, __TARGET_FOLDER);
+    await generateLandingPageType({}, pretty, targetFile, __TARGET_FOLDER);
 
     const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 
-  it('should match snapshot', () => {
+  it('should match snapshot', async () => {
     const targetFile = 'FAKE_LP_TYPE';
-    generateLandingPageType(
+    await generateLandingPageType(
       {
         'fake-category-one': {
           DEFAULT_LANGUAGE: ['fake-lp-01', 'fake-lp-02', 'fake-lp-03'],
@@ -51,17 +51,17 @@ describe('generateLandingPageType (formatted)', () => {
 describe('generateLandingPageType (ugly)', () => {
   const pretty = false;
 
-  it('should match snapshot', () => {
+  it('should match snapshot', async () => {
     const targetFile = 'FAKE_EMPTY_LP_TYPE';
-    generateLandingPageType({}, pretty, targetFile, __TARGET_FOLDER);
+    await generateLandingPageType({}, pretty, targetFile, __TARGET_FOLDER);
 
     const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 
-  it('should match snapshot', () => {
+  it('should match snapshot', async () => {
     const targetFile = 'FAKE_LP_TYPE';
-    generateLandingPageType(
+    await generateLandingPageType(
       {
         'fake-category-one': {
           DEFAULT_LANGUAGE: ['fake-lp-01', 'fake-lp-02', 'fake-lp-03'],
