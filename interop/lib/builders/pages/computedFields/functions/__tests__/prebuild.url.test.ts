@@ -1,4 +1,4 @@
-import { InvalidArgumentsError, DEFAULT_LANGUAGE, INDEX_TOKEN, PAGES_FOLDER, ROUTES_ROOTS } from '##/lib/builders/unifiedImport';
+import { InvalidArgumentsError, DEFAULT_LANGUAGE, PAGES_FOLDER, ROUTES_ROOTS, INDEX_TOKEN } from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 
 import buildPageUrl from '../url';

@@ -1,7 +1,7 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { AppPath } from '@rtm/shared-types/Next';
 
-import { getFlattenedPathWithoutRootFolder, isValidLanguageFlag, INDEX_TOKEN, PAGES_FOLDER } from '../../../unifiedImport';
+import { getFlattenedPathWithoutRootFolder, isValidLanguageFlag, PAGES_FOLDER, INDEX_TOKEN } from '../../../unifiedImport';
 
 function buildPagePath(page: DocumentToCompute): AppPath {
   const flattenedPath = page._raw.flattenedPath;
