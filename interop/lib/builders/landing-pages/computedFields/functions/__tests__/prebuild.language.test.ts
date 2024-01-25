@@ -1,19 +1,22 @@
-import { InvalidArgumentsError, LANDING_PAGES_FOLDER, DEFAULT_LANGUAGE } from '##/lib/builders/unifiedImport';
+import { ForbiddenToUseIndexError, InvalidArgumentsError, LANDING_PAGES_FOLDER, DEFAULT_LANGUAGE, INDEX_TOKEN } from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 import { LANGUAGES } from '##/config/i18n';
 
 import buildLandingPageLanguageFlag from '../language';
 
-describe('language', () => {
-  const PREFIX = '$';
-  let prefixAcc = PREFIX;
-  while (LANGUAGES.includes((prefixAcc + DEFAULT_LANGUAGE) as any)) prefixAcc += PREFIX;
-  const invalidLanguage = prefixAcc + DEFAULT_LANGUAGE;
+const EXT = '.FAKE_EXT';
 
+const PREFIX = '$';
+let prefixAcc = PREFIX;
+while (LANGUAGES.includes((prefixAcc + DEFAULT_LANGUAGE) as any)) prefixAcc += PREFIX;
+const invalidLanguage = prefixAcc + DEFAULT_LANGUAGE;
+
+describe('lp language (happy paths)', () => {
   it('should be fault tolerant, given an invalid language in the flattenedPath', () => {
     expect(
       buildLandingPageLanguageFlag({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + `/category/${invalidLanguage}/slug` + EXT,
           flattenedPath: LANDING_PAGES_FOLDER + `/category/${invalidLanguage}/slug`
         },
         _id: '_'
@@ -25,6 +28,7 @@ describe('language', () => {
     expect(
       buildLandingPageLanguageFlag({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + `/category/${DEFAULT_LANGUAGE}/slug` + EXT,
           flattenedPath: LANDING_PAGES_FOLDER + `/category/${DEFAULT_LANGUAGE}/slug`
         },
         _id: '_'
@@ -36,37 +40,69 @@ describe('language', () => {
     expect(
       buildLandingPageLanguageFlag({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + '/category/slug' + EXT,
           flattenedPath: LANDING_PAGES_FOLDER + '/category/slug'
         },
         _id: '_'
       })
     ).toBe(DEFAULT_LANGUAGE);
   });
+});
 
-  it('should return the default language, given an incomplete flattenedPath', () => {
+describe('lp language (happy paths, with index notation)', () => {
+  it('should be fault tolerant, given an invalid language in the flattenedPath', () => {
     expect(
       buildLandingPageLanguageFlag({
         _raw: {
-          flattenedPath: LANDING_PAGES_FOLDER + '/'
+          sourceFilePath: LANDING_PAGES_FOLDER + `/category/${invalidLanguage}/${INDEX_TOKEN}` + EXT,
+          flattenedPath: LANDING_PAGES_FOLDER + `/category/${invalidLanguage}`
+        },
+        _id: '_'
+      })
+    ).toBe(invalidLanguage);
+  });
+
+  it('should return the default language, given the valid default language in the flattenedPath', () => {
+    expect(
+      buildLandingPageLanguageFlag({
+        _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + `/category/${DEFAULT_LANGUAGE}/{INDEX_TOKEN}` + EXT,
+          flattenedPath: LANDING_PAGES_FOLDER + `/category/${DEFAULT_LANGUAGE}`
         },
         _id: '_'
       })
     ).toBe(DEFAULT_LANGUAGE);
   });
 
+  it('should return the default language, given a valid flattenedPath without language param', () => {
+    expect(
+      buildLandingPageLanguageFlag({
+        _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + `/category/${INDEX_TOKEN}` + EXT,
+          flattenedPath: LANDING_PAGES_FOLDER + '/category'
+        },
+        _id: '_'
+      })
+    ).toBe(DEFAULT_LANGUAGE);
+  });
+});
+
+describe('lp language (unhappy paths)', () => {
   it('should throw, given an invalid flattenedPath', () => {
     expect(() =>
       buildLandingPageLanguageFlag({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + '/' + INDEX_TOKEN + EXT,
           flattenedPath: LANDING_PAGES_FOLDER
         },
         _id: '_'
       })
-    ).toThrowError(InvalidArgumentsError);
+    ).toThrowError(ForbiddenToUseIndexError);
 
     expect(() =>
       buildLandingPageLanguageFlag({
         _raw: {
+          sourceFilePath: '_' + LANDING_PAGES_FOLDER + '/category/lang/slug' + EXT,
           flattenedPath: '_' + LANDING_PAGES_FOLDER + '/category/lang/slug'
         },
         _id: '_'
@@ -76,6 +112,7 @@ describe('language', () => {
     expect(() =>
       buildLandingPageLanguageFlag({
         _raw: {
+          sourceFilePath: '_' + LANDING_PAGES_FOLDER + '/category/slug' + EXT,
           flattenedPath: '_' + LANDING_PAGES_FOLDER + '/category/slug'
         },
         _id: '_'

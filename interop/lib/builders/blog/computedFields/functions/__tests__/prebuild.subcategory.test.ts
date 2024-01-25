@@ -5,7 +5,7 @@ import buildBlogPostSubcategory from '../subcategory';
 
 const EXT = '.FAKE_EXT';
 
-describe('subcategory', () => {
+describe('blog subcategory (happy paths)', () => {
   const subcategory = 'subcategory';
   it('should return the subcategory string part, given a valid flattenedPath', () => {
     expect(
@@ -29,6 +29,21 @@ describe('subcategory', () => {
     ).toBe(subcategory);
   });
 
+  it('should be fault tolerant', () => {
+    expect(
+      buildBlogPostSubcategory({
+        _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + `/category/${subcategory}` + EXT,
+          flattenedPath: BLOG_POSTS_FOLDER + `/category/${subcategory}`
+        },
+        _id: '_'
+      })
+    ).toBe(subcategory);
+  });
+});
+
+describe('blog subcategory (unhappy paths)', () => {
+  const subcategory = 'subcategory';
   it('should throw, given an invalid flattenedPath', () => {
     expect(() =>
       buildBlogPostSubcategory({
@@ -59,17 +74,5 @@ describe('subcategory', () => {
         _id: '_'
       })
     ).toThrowError(InvalidArgumentsError);
-  });
-
-  it('should be fault tolerant', () => {
-    expect(
-      buildBlogPostSubcategory({
-        _raw: {
-          sourceFilePath: BLOG_POSTS_FOLDER + `/category/${subcategory}` + EXT,
-          flattenedPath: BLOG_POSTS_FOLDER + `/category/${subcategory}`
-        },
-        _id: '_'
-      })
-    ).toBe(subcategory);
   });
 });

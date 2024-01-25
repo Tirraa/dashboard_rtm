@@ -1,3 +1,5 @@
+import type { TLpFakeLanguage } from '𝕍/testingBlogCategoryDatas';
+
 import { TESTING_LP_FAKE_LANGUAGES } from '𝕍/testingBlogCategoryDatas';
 import LandingPageTaxonomy from '##/config/taxonomies/landingPages';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
@@ -29,14 +31,14 @@ vi.mock('contentlayer/generated', async (orgImport) => {
           sourceFileName: 'lp-00.mdx',
           contentType: 'mdx'
         },
-        metadescription: 'Meta description LP test FR',
+        metadescription: 'Meta description LP test (default language)',
+        language: 'default_language' satisfies TLpFakeLanguage,
+        url: '/default_language/lp/dummy-category-lp-00',
         _id: 'landing-pages/dummy-category/lp-00.mdx',
-        url: '/fr/lp/dummy-category-lp-00',
+        title: 'LP test (default language)',
         slug: 'dummy-category-lp-00',
         category: 'dummy-category',
-        title: 'LP test FR',
         type: 'LandingPage',
-        language: 'fr',
         draft: true
       },
       {
@@ -47,13 +49,13 @@ vi.mock('contentlayer/generated', async (orgImport) => {
           sourceFileDir: 'landing-pages/testing',
           contentType: 'mdx'
         },
+        language: 'default_language' satisfies TLpFakeLanguage,
+        url: '/default_language/lp/testing-fake-draft-lp-00',
         _id: 'landing-pages/testing/fake-draft-lp-00.mdx',
-        url: '/fr/lp/testing-fake-draft-lp-00',
         slug: 'testing-fake-draft-lp-00',
         metadescription: 'FAKE',
         type: 'LandingPage',
         category: 'testing',
-        language: 'fr',
         title: 'FAKE',
         draft: true
       },
@@ -65,13 +67,13 @@ vi.mock('contentlayer/generated', async (orgImport) => {
           sourceFileName: 'fake-lp-00.mdx',
           contentType: 'mdx'
         },
+        language: 'default_language' satisfies TLpFakeLanguage,
+        url: '/default_language/lp/testing-fake-lp-00',
         _id: 'landing-pages/testing/fake-lp-00.mdx',
-        url: '/fr/lp/testing-fake-lp-00',
         slug: 'testing-fake-lp-00',
         metadescription: 'FAKE',
         type: 'LandingPage',
         category: 'testing',
-        language: 'fr',
         title: 'FAKE',
         draft: false
       },
@@ -85,12 +87,12 @@ vi.mock('contentlayer/generated', async (orgImport) => {
         },
         _id: 'landing-pages/dummy-category/en/lp-00.mdx',
         metadescription: 'Meta description LP test EN',
+        language: 'en' satisfies TLpFakeLanguage,
         url: '/en/lp/dummy-category-lp-00',
         slug: 'dummy-category-lp-00',
         category: 'dummy-category',
         title: 'LP test EN',
         type: 'LandingPage',
-        language: 'en',
         draft: true
       },
       {
@@ -102,12 +104,12 @@ vi.mock('contentlayer/generated', async (orgImport) => {
           contentType: 'mdx'
         },
         _id: 'landing-pages/testing/en/fake-draft-lp-00.mdx',
+        language: 'en' satisfies TLpFakeLanguage,
         url: '/en/lp/testing-fake-draft-lp-00',
         slug: 'testing-fake-draft-lp-00',
         metadescription: 'FAKE',
         type: 'LandingPage',
         category: 'testing',
-        language: 'en',
         title: 'FAKE',
         draft: true
       },
@@ -120,12 +122,12 @@ vi.mock('contentlayer/generated', async (orgImport) => {
           contentType: 'mdx'
         },
         _id: 'landing-pages/testing/en/fake-lp-00.mdx',
+        language: 'en' satisfies TLpFakeLanguage,
         url: '/en/lp/testing-fake-lp-00',
         slug: 'testing-fake-lp-00',
         metadescription: 'FAKE',
         type: 'LandingPage',
         category: 'testing',
-        language: 'en',
         title: 'FAKE',
         draft: false
       },
@@ -157,12 +159,12 @@ describe('getLandingPagesStaticParams', () => {
 
     expect(staticParams).toStrictEqual([
       {
-        [LandingPageTaxonomy.SLUG]: 'testing-fake-lp-00',
-        [I18nTaxonomy.LANGUAGE]: 'fr'
+        [I18nTaxonomy.LANGUAGE]: 'default_language' satisfies TLpFakeLanguage,
+        [LandingPageTaxonomy.SLUG]: 'testing-fake-lp-00'
       },
       {
-        [LandingPageTaxonomy.SLUG]: 'testing-fake-lp-00',
-        [I18nTaxonomy.LANGUAGE]: 'en'
+        [I18nTaxonomy.LANGUAGE]: 'en' satisfies TLpFakeLanguage,
+        [LandingPageTaxonomy.SLUG]: 'testing-fake-lp-00'
       }
     ]);
   });

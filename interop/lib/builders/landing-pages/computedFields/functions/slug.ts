@@ -1,7 +1,7 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { UnknownLandingPageSlug } from '@/types/LandingPage';
 
-import { InvalidArgumentsError } from '../../../unifiedImport';
+import { throwIfForbiddenToUseIndexErrorLpCtx, getPathWithIndexSuffix } from '../../../unifiedImport';
 import buildLandingPageCategory from './category';
 
 /**
@@ -13,25 +13,19 @@ function buildLandingPageSlugFromStr(flattenedPath: string): UnknownLandingPageS
 
   const lastSlashIndex = flattenedPath.lastIndexOf('/');
 
-  if (lastSlashIndex === -1) {
-    throw new InvalidArgumentsError(buildLandingPageSlugFromStr.name, { flattenedPath }, "Can't find any '/' character in flattenedPath");
-  }
-
-  if (lastSlashIndex === flattenedPath.length - 1) {
-    throw new InvalidArgumentsError(
-      buildLandingPageSlugFromStr.name,
-      { flattenedPath },
-      "Can't find anything after the last '/' character in flattenedPath"
-    );
-  }
-
   const slug = slugBuilder(flattenedPath, lastSlashIndex);
   return slug;
 }
 
 export function buildLandingPageSlugFromLpObj(lp: DocumentToCompute): UnknownLandingPageSlug {
-  const { flattenedPath } = lp._raw;
-  return buildLandingPageSlugFromStr(flattenedPath);
+  const { sourceFilePath, flattenedPath } = lp._raw;
+
+  throwIfForbiddenToUseIndexErrorLpCtx(sourceFilePath);
+
+  const transformedFlattenedPath = getPathWithIndexSuffix(flattenedPath, sourceFilePath);
+
+  const landingPageSlug = buildLandingPageSlugFromStr(transformedFlattenedPath);
+  return landingPageSlug;
 }
 
 const buildLandingPageSlug = (lp: DocumentToCompute): UnknownLandingPageSlug =>

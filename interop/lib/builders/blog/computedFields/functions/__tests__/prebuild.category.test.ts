@@ -5,7 +5,7 @@ import buildBlogPostCategory from '../category';
 
 const EXT = '.FAKE_EXT';
 
-describe('category', () => {
+describe('blog category (happy paths)', () => {
   const category = 'category';
   it('should return the category string part, given a valid flattenedPath', () => {
     expect(
@@ -28,7 +28,10 @@ describe('category', () => {
       })
     ).toBe(category);
   });
+});
 
+describe('blog category (unhappy paths)', () => {
+  const category = 'category';
   it('should throw, given an invalid flattenedPath', () => {
     expect(() =>
       buildBlogPostCategory({

@@ -6,11 +6,11 @@ import { throwIfForbiddenToUseIndexErrorBlogCtx, getFlattenedPathWithoutRootFold
 /**
  * @throws {InvalidArgumentsError}
  */
-function buildBlogPostCategoryFromStr(flattenedPath: string): BlogCategory {
-  const categBuilder = (flattenedPath: string, firstSlashIndex: number): BlogCategory => flattenedPath.substring(0, firstSlashIndex) as BlogCategory;
+function buildBlogPostCategoryFromStr(path: string): BlogCategory {
+  const categBuilder = (path: string, firstSlashIndex: number): BlogCategory => path.substring(0, firstSlashIndex) as BlogCategory;
 
-  const firstSlashIndex = flattenedPath.indexOf('/');
-  const categ = categBuilder(flattenedPath, firstSlashIndex);
+  const firstSlashIndex = path.indexOf('/');
+  const categ = categBuilder(path, firstSlashIndex);
   return categ;
 }
 
@@ -18,13 +18,13 @@ function buildBlogPostCategoryFromStr(flattenedPath: string): BlogCategory {
  * @throws {ForbiddenToUseIndexError}
  */
 function buildBlogPostCategoryFromPostObj(post: DocumentToCompute): BlogCategory {
-  const orgFlattenedPath = post._raw.flattenedPath;
-  const filepath = post._raw.sourceFilePath;
+  const { sourceFilePath, flattenedPath } = post._raw;
 
-  throwIfForbiddenToUseIndexErrorBlogCtx(filepath);
+  throwIfForbiddenToUseIndexErrorBlogCtx(sourceFilePath);
 
-  const flattenedPath = getFlattenedPathWithoutRootFolder(orgFlattenedPath, BLOG_POSTS_FOLDER);
-  return buildBlogPostCategoryFromStr(flattenedPath);
+  const path = getFlattenedPathWithoutRootFolder(flattenedPath, BLOG_POSTS_FOLDER);
+  const blogPostCategory = buildBlogPostCategoryFromStr(path);
+  return blogPostCategory;
 }
 
 const buildBlogPostCategory = (post: DocumentToCompute): BlogCategory => buildBlogPostCategoryFromPostObj(post);

@@ -2,7 +2,9 @@ import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { AppPath } from '@rtm/shared-types/Next';
 
 import {
+  throwIfForbiddenToUseIndexErrorLpCtx,
   getFlattenedPathWithoutRootFolder,
+  getPathWithIndexSuffix,
   InvalidArgumentsError,
   LANDING_PAGES_FOLDER,
   DEFAULT_LANGUAGE,
@@ -10,28 +12,30 @@ import {
 } from '../../../unifiedImport';
 
 function buildLandingPageUrl(lp: DocumentToCompute): AppPath {
+  const { sourceFilePath, flattenedPath } = lp._raw;
+
+  throwIfForbiddenToUseIndexErrorLpCtx(sourceFilePath);
+
   const OPTIONAL_LOCALE_PART_INDEX = 1;
   const root = ROUTES_ROOTS.LANDING_PAGES;
 
-  const flattenedPath = getFlattenedPathWithoutRootFolder(lp._raw.flattenedPath, LANDING_PAGES_FOLDER);
-  const flattenedPathParts = flattenedPath.split('/');
+  const transformedFlattenedPath = getPathWithIndexSuffix(flattenedPath, sourceFilePath);
 
-  if (flattenedPathParts.length !== 3 && flattenedPathParts.length !== 2) {
-    throw new InvalidArgumentsError(
-      buildLandingPageUrl.name,
-      { flattenedPath },
-      `Invalid flattenedPath! Expected 2 or 3 parts, but got: ${flattenedPathParts.length}.`
-    );
+  const path = getFlattenedPathWithoutRootFolder(transformedFlattenedPath, LANDING_PAGES_FOLDER);
+  const pathParts = path.split('/');
+
+  if (pathParts.length !== 2 && pathParts.length !== 3) {
+    throw new InvalidArgumentsError(buildLandingPageUrl.name, { path }, `Invalid path! Expected 2 or 3 parts, but got: ${pathParts.length}.`);
   }
 
-  if (flattenedPathParts.length <= OPTIONAL_LOCALE_PART_INDEX + 1) {
-    const url = '/' + DEFAULT_LANGUAGE + root + flattenedPathParts.join('-');
+  if (pathParts.length <= OPTIONAL_LOCALE_PART_INDEX + 1) {
+    const url = '/' + DEFAULT_LANGUAGE + root + pathParts.join('-');
     return url;
   }
 
-  const localePart = flattenedPathParts[OPTIONAL_LOCALE_PART_INDEX];
-  flattenedPathParts.splice(OPTIONAL_LOCALE_PART_INDEX, 1);
-  const url = '/' + localePart + root + flattenedPathParts.join('-');
+  const localePart = pathParts[OPTIONAL_LOCALE_PART_INDEX];
+  pathParts.splice(OPTIONAL_LOCALE_PART_INDEX, 1);
+  const url = '/' + localePart + root + pathParts.join('-');
   return url;
 }
 
