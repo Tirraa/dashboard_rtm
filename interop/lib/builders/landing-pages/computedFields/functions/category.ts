@@ -1,12 +1,7 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { UnknownLandingPageCategory } from '@/types/LandingPage';
 
-import {
-  throwIfForbiddenToUseIndexErrorLpCtx,
-  getFlattenedPathWithoutRootFolder,
-  InvalidArgumentsError,
-  LANDING_PAGES_FOLDER
-} from '../../../unifiedImport';
+import { throwIfForbiddenToUseIndexErrorLpCtx, getFlattenedPathWithoutRootFolder, LANDING_PAGES_FOLDER } from '../../../unifiedImport';
 
 /**
  * @throws {InvalidArgumentsError}
@@ -15,9 +10,6 @@ function buildLandingPageCategoryFromStr(flattenedPath: string): UnknownLandingP
   const categBuilder = (flattenedPath: string, firstSlashIndex: number) => flattenedPath.substring(0, firstSlashIndex);
 
   const firstSlashIndex = flattenedPath.indexOf('/');
-  if (firstSlashIndex === -1) {
-    throw new InvalidArgumentsError(buildLandingPageCategoryFromStr.name, { flattenedPath }, "Can't find any '/' character in flattenedPath");
-  }
 
   const categ = categBuilder(flattenedPath, firstSlashIndex);
   return categ;

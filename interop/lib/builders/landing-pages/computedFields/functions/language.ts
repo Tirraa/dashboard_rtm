@@ -11,8 +11,6 @@ import {
 
 function buildLandingPageLanguageFlagFromStr(flattenedPath: string): UnknownLanguageFlag {
   const envelopeBeginSlashIndex = flattenedPath.indexOf('/');
-  if (envelopeBeginSlashIndex === -1) return DEFAULT_LANGUAGE;
-
   const envelopeEndSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 2);
 
   if (envelopeBeginSlashIndex !== -1 && envelopeEndSlashIndex !== -1) {
