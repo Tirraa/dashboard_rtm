@@ -31,7 +31,8 @@ function buildLandingPageSlugFromStr(flattenedPath: string): UnknownLandingPageS
 
 export function buildLandingPageSlugFromLpObj(lp: DocumentToCompute): UnknownLandingPageSlug {
   const { flattenedPath } = lp._raw;
-  return buildLandingPageSlugFromStr(flattenedPath);
+  const landingPageSlug = buildLandingPageSlugFromStr(flattenedPath);
+  return landingPageSlug;
 }
 
 const buildLandingPageSlug = (lp: DocumentToCompute): UnknownLandingPageSlug =>

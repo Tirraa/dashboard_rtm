@@ -20,7 +20,8 @@ function buildLandingPageCategoryFromStr(flattenedPath: string): UnknownLandingP
 
 function buildLandingPageCategoryFromLpObj(lp: DocumentToCompute): UnknownLandingPageCategory {
   const flattenedPath = getFlattenedPathWithoutRootFolder(lp._raw.flattenedPath, LANDING_PAGES_FOLDER);
-  return buildLandingPageCategoryFromStr(flattenedPath);
+  const landingPageCategory = buildLandingPageCategoryFromStr(flattenedPath);
+  return landingPageCategory;
 }
 
 const buildLandingPageCategory = (lp: DocumentToCompute): UnknownLandingPageCategory => buildLandingPageCategoryFromLpObj(lp);
