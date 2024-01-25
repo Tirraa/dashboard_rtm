@@ -1,16 +1,37 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { AppPath } from '@rtm/shared-types/Next';
 
-import { getFlattenedPathWithoutRootFolder, InvalidArgumentsError, BLOG_POSTS_FOLDER, DEFAULT_LANGUAGE, ROUTES_ROOTS } from '../../../unifiedImport';
+import {
+  throwIfForbiddenToUseIndexErrorBlogCtx,
+  getFlattenedPathWithoutRootFolder,
+  getPathWithoutExtension,
+  InvalidArgumentsError,
+  BLOG_POSTS_FOLDER,
+  DEFAULT_LANGUAGE,
+  ROUTES_ROOTS,
+  INDEX_TOKEN
+} from '../../../unifiedImport';
 
+/**
+ * @throws {ForbiddenToUseIndexError}
+ * @throws {InvalidArgumentsError}
+ */
 function buildBlogPostUrl(post: DocumentToCompute): AppPath {
+  const orgFlattenedPath = post._raw.flattenedPath;
+  const filepath = post._raw.sourceFilePath;
+  const filepathWithoutExt = getPathWithoutExtension(filepath);
+
+  throwIfForbiddenToUseIndexErrorBlogCtx(filepath);
+
   const OPTIONAL_LOCALE_PART_INDEX = 2;
   const root = ROUTES_ROOTS.BLOG;
 
-  const flattenedPath = getFlattenedPathWithoutRootFolder(post._raw.flattenedPath, BLOG_POSTS_FOLDER);
+  const flattenedPath = getFlattenedPathWithoutRootFolder(orgFlattenedPath, BLOG_POSTS_FOLDER);
   const flattenedPathParts = flattenedPath.split('/');
 
-  if (flattenedPathParts.length !== 4 && flattenedPathParts.length !== 3) {
+  if (filepathWithoutExt.endsWith(INDEX_TOKEN)) flattenedPathParts.push(INDEX_TOKEN);
+
+  if (flattenedPathParts.length !== 3 && flattenedPathParts.length !== 4) {
     throw new InvalidArgumentsError(
       buildBlogPostUrl.name,
       { flattenedPath },
@@ -19,7 +40,7 @@ function buildBlogPostUrl(post: DocumentToCompute): AppPath {
   }
 
   if (flattenedPathParts.length <= OPTIONAL_LOCALE_PART_INDEX + 1) {
-    const url = '/' + DEFAULT_LANGUAGE + root + flattenedPath;
+    const url = '/' + DEFAULT_LANGUAGE + root + flattenedPathParts.join('/');
     return url;
   }
 

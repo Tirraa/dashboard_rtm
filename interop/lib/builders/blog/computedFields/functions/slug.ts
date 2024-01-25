@@ -1,36 +1,33 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { UnknownBlogSlug } from '@/types/Blog';
 
-import { InvalidArgumentsError } from '../../../unifiedImport';
+import { throwIfForbiddenToUseIndexErrorBlogCtx, getPathWithoutExtension, INDEX_TOKEN } from '../../../unifiedImport';
 
 /**
  * @throws {InvalidArgumentsError}
  */
-function buildBlogPostSlugFromStr(flattenedPath: string): UnknownBlogSlug {
+function buildBlogPostSlugFromStr(flattenedPath: string, sourceFilePath: string): UnknownBlogSlug {
   const slugBuilder = (flattenedPath: string, lastSlashIndex: number): UnknownBlogSlug =>
     flattenedPath.substring(lastSlashIndex + 1) as UnknownBlogSlug;
 
-  const lastSlashIndex = flattenedPath.lastIndexOf('/');
+  const filepathWithoutExt = getPathWithoutExtension(sourceFilePath);
+  const suffix = filepathWithoutExt.endsWith(INDEX_TOKEN) ? '/' + INDEX_TOKEN : '';
 
-  if (lastSlashIndex === -1) {
-    throw new InvalidArgumentsError(buildBlogPostSlugFromStr.name, { flattenedPath }, "Can't find any '/' character in flattenedPath");
-  }
+  const transformedFlattenedPath = flattenedPath + suffix;
+  const lastSlashIndexAfterTransform = transformedFlattenedPath.lastIndexOf('/');
 
-  if (lastSlashIndex === flattenedPath.length - 1) {
-    throw new InvalidArgumentsError(
-      buildBlogPostSlugFromStr.name,
-      { flattenedPath },
-      "Can't find anything after the last '/' character in flattenedPath"
-    );
-  }
-
-  const slug = slugBuilder(flattenedPath, lastSlashIndex);
+  const slug = slugBuilder(flattenedPath + suffix, lastSlashIndexAfterTransform);
   return slug;
 }
 
+/**
+ * @throws {ForbiddenToUseIndexError}
+ */
 function buildBlogPostSlugFromPostObj(post: DocumentToCompute): UnknownBlogSlug {
-  const { flattenedPath } = post._raw;
-  return buildBlogPostSlugFromStr(flattenedPath);
+  const { sourceFilePath, flattenedPath } = post._raw;
+
+  throwIfForbiddenToUseIndexErrorBlogCtx(sourceFilePath);
+  return buildBlogPostSlugFromStr(flattenedPath, sourceFilePath);
 }
 
 const buildBlogPostSlug = (post: DocumentToCompute): UnknownBlogSlug => buildBlogPostSlugFromPostObj(post);

@@ -4,7 +4,7 @@ import type { UnknownLanguageFlag } from '@rtm/shared-types/LanguageFlag';
 import { getFlattenedPathWithoutRootFolder, indexOfNthOccurrence, LANDING_PAGES_FOLDER, DEFAULT_LANGUAGE } from '../../../unifiedImport';
 
 function buildLandingPageLanguageFlagFromStr(flattenedPath: string): UnknownLanguageFlag {
-  const envelopeBeginSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 1);
+  const envelopeBeginSlashIndex = flattenedPath.indexOf('/');
   if (envelopeBeginSlashIndex === -1) return DEFAULT_LANGUAGE;
 
   const envelopeEndSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 2);

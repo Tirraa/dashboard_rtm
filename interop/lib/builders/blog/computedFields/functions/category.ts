@@ -1,7 +1,7 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { BlogCategory } from '@/types/Blog';
 
-import { getFlattenedPathWithoutRootFolder, InvalidArgumentsError, indexOfNthOccurrence, BLOG_POSTS_FOLDER } from '../../../unifiedImport';
+import { throwIfForbiddenToUseIndexErrorBlogCtx, getFlattenedPathWithoutRootFolder, BLOG_POSTS_FOLDER } from '../../../unifiedImport';
 
 /**
  * @throws {InvalidArgumentsError}
@@ -9,17 +9,21 @@ import { getFlattenedPathWithoutRootFolder, InvalidArgumentsError, indexOfNthOcc
 function buildBlogPostCategoryFromStr(flattenedPath: string): BlogCategory {
   const categBuilder = (flattenedPath: string, firstSlashIndex: number): BlogCategory => flattenedPath.substring(0, firstSlashIndex) as BlogCategory;
 
-  const firstSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 1);
-  if (firstSlashIndex === -1) {
-    throw new InvalidArgumentsError(buildBlogPostCategoryFromStr.name, { flattenedPath }, "Can't find any '/' character in flattenedPath");
-  }
-
+  const firstSlashIndex = flattenedPath.indexOf('/');
   const categ = categBuilder(flattenedPath, firstSlashIndex);
   return categ;
 }
 
+/**
+ * @throws {ForbiddenToUseIndexError}
+ */
 function buildBlogPostCategoryFromPostObj(post: DocumentToCompute): BlogCategory {
-  const flattenedPath = getFlattenedPathWithoutRootFolder(post._raw.flattenedPath, BLOG_POSTS_FOLDER);
+  const orgFlattenedPath = post._raw.flattenedPath;
+  const filepath = post._raw.sourceFilePath;
+
+  throwIfForbiddenToUseIndexErrorBlogCtx(filepath);
+
+  const flattenedPath = getFlattenedPathWithoutRootFolder(orgFlattenedPath, BLOG_POSTS_FOLDER);
   return buildBlogPostCategoryFromStr(flattenedPath);
 }
 

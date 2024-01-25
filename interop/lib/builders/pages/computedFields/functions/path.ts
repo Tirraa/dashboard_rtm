@@ -1,29 +1,23 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { AppPath } from '@rtm/shared-types/Next';
 
-import { getFlattenedPathWithoutRootFolder, indexOfNthOccurrence, isValidLanguageFlag, PAGES_FOLDER } from '../../../unifiedImport';
-
-export const INDEX_NEEDLE = 'index';
+import { getFlattenedPathWithoutRootFolder, isValidLanguageFlag, PAGES_FOLDER, INDEX_TOKEN } from '../../../unifiedImport';
 
 function buildPagePath(page: DocumentToCompute): AppPath {
-  let path = getFlattenedPathWithoutRootFolder(page._raw.flattenedPath, PAGES_FOLDER);
-  let withIndexNotationCtx = false;
+  const flattenedPath = page._raw.flattenedPath;
+  const indexOfFirstSlash = flattenedPath.indexOf('/');
+  if (indexOfFirstSlash === -1 || indexOfFirstSlash === flattenedPath.length - 1) return INDEX_TOKEN;
 
-  if (path.endsWith('/' + INDEX_NEEDLE)) {
-    path = path.slice(0, -INDEX_NEEDLE.length - 1);
-    withIndexNotationCtx = true;
-  } else if (path.endsWith(INDEX_NEEDLE)) {
-    path = path.slice(0, -INDEX_NEEDLE.length);
-    withIndexNotationCtx = true;
+  const documentPath = getFlattenedPathWithoutRootFolder(flattenedPath, PAGES_FOLDER);
+  const documentPathParts = documentPath.split('/');
+  const maybeLanguage = documentPathParts[0];
+
+  if (isValidLanguageFlag(maybeLanguage)) {
+    const documentPathWithoutLanguage = documentPathParts.join('/').substring(maybeLanguage.length + 1);
+    if (documentPathWithoutLanguage === '') return INDEX_TOKEN;
+    return documentPathWithoutLanguage;
   }
-
-  const maybeLanguageEnvelopeEndSlashIndex = indexOfNthOccurrence(path, '/', 1);
-  if (maybeLanguageEnvelopeEndSlashIndex !== -1) {
-    const maybeLanguage = path.substring(0, maybeLanguageEnvelopeEndSlashIndex);
-    if (isValidLanguageFlag(maybeLanguage)) return path.substring(maybeLanguage.length + 1);
-  } else if (withIndexNotationCtx && isValidLanguageFlag(path)) return INDEX_NEEDLE;
-
-  return path;
+  return documentPath;
 }
 
 export default buildPagePath;

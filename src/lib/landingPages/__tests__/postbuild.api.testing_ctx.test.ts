@@ -20,7 +20,7 @@ vi.mock('../ctx', async (orgImport) => {
 });
 
 describe('getLandingPageBySlugAndLanguageStrict', () => {
-  it('should return a valid testing lp, given testing category in testing ctx', () => {
+  it('should always return a valid lp', () => {
     const category = LandingPagesConfig.TESTING_CATEGORY;
     const targettedSlug = `${category}-fake-lp-00` as const;
     const language = DEFAULT_LANGUAGE;
@@ -30,6 +30,22 @@ describe('getLandingPageBySlugAndLanguageStrict', () => {
     expect(lp.slug).toBe(targettedSlug);
     expect(lp.language).toBe(language);
     expect(lp.url).toBe('/' + language + ROUTES_ROOTS.LANDING_PAGES + targettedSlug);
+  });
+
+  it('should always return null, given invalid slug', () => {
+    const targettedSlug = '__INVALID__TARGETTED_SLUG__' as const;
+    // @ts-expect-error
+    const lp = getLandingPageBySlugAndLanguageStrict(DEFAULT_LANGUAGE, targettedSlug);
+
+    expect(lp).toBe(null);
+  });
+
+  it('should always return null, given invalid language', () => {
+    const targettedSlug = 'testing-fake-lp-00' as const;
+    // @ts-expect-error
+    const lp = getLandingPageBySlugAndLanguageStrict('__INVALID_LANGUAGE__', targettedSlug);
+
+    expect(lp).toBe(null);
   });
 });
 

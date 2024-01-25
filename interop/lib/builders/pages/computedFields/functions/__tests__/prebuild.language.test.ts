@@ -47,6 +47,15 @@ describe('language', () => {
     expect(
       buildPageLanguageFlag({
         _raw: {
+          flattenedPath: PAGES_FOLDER
+        },
+        _id: '_'
+      })
+    ).toBe(DEFAULT_LANGUAGE);
+
+    expect(
+      buildPageLanguageFlag({
+        _raw: {
           flattenedPath: PAGES_FOLDER + '/'
         },
         _id: '_'
@@ -55,15 +64,6 @@ describe('language', () => {
   });
 
   it('should throw, given an invalid flattenedPath', () => {
-    expect(() =>
-      buildPageLanguageFlag({
-        _raw: {
-          flattenedPath: PAGES_FOLDER
-        },
-        _id: '_'
-      })
-    ).toThrowError(InvalidArgumentsError);
-
     expect(() =>
       buildPageLanguageFlag({
         _raw: {

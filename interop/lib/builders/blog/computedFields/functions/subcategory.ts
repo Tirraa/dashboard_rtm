@@ -1,7 +1,13 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { BlogSubcategoryFromUnknownCategory } from '@/types/Blog';
 
-import { getFlattenedPathWithoutRootFolder, InvalidArgumentsError, indexOfNthOccurrence, BLOG_POSTS_FOLDER } from '../../../unifiedImport';
+import {
+  throwIfForbiddenToUseIndexErrorBlogCtx,
+  getFlattenedPathWithoutRootFolder,
+  InvalidArgumentsError,
+  indexOfNthOccurrence,
+  BLOG_POSTS_FOLDER
+} from '../../../unifiedImport';
 
 /**
  * @throws {InvalidArgumentsError}
@@ -12,18 +18,31 @@ function buildBlogPostSubcategoryFromStr(flattenedPath: string): BlogSubcategory
     return flattenedPath.substring(firstSlashIndex + 1) as BlogSubcategoryFromUnknownCategory;
   }
 
-  const firstSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 1);
-  if (firstSlashIndex === -1) {
-    throw new InvalidArgumentsError(buildBlogPostSubcategoryFromStr.name, { flattenedPath }, "Can't find any '/' character in flattenedPath");
-  }
-
+  const firstSlashIndex = flattenedPath.indexOf('/');
   const secondSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 2);
   const subcateg = subcategBuilder(flattenedPath, firstSlashIndex, secondSlashIndex);
   return subcateg;
 }
 
+/**
+ * @throws {ForbiddenToUseIndexError}
+ * @throws {InvalidArgumentsError}
+ */
 function buildBlogPostSubcategoryFromPostObj(post: DocumentToCompute): BlogSubcategoryFromUnknownCategory {
-  const flattenedPath = getFlattenedPathWithoutRootFolder(post._raw.flattenedPath, BLOG_POSTS_FOLDER);
+  const orgFlattenedPath = post._raw.flattenedPath;
+  const filepath = post._raw.sourceFilePath;
+
+  throwIfForbiddenToUseIndexErrorBlogCtx(filepath);
+
+  if (indexOfNthOccurrence(filepath, '/', 5) !== -1) {
+    throw new InvalidArgumentsError(
+      buildBlogPostSubcategoryFromPostObj.name,
+      { post: JSON.stringify(post, null, 2) },
+      'The path is too deep to be a valid blog post path.'
+    );
+  }
+
+  const flattenedPath = getFlattenedPathWithoutRootFolder(orgFlattenedPath, BLOG_POSTS_FOLDER);
   return buildBlogPostSubcategoryFromStr(flattenedPath);
 }
 

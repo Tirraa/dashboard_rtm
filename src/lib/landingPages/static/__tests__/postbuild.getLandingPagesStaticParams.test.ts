@@ -1,3 +1,4 @@
+import { TESTING_LP_FAKE_LANGUAGES } from '𝕍/testingBlogCategoryDatas';
 import LandingPageTaxonomy from '##/config/taxonomies/landingPages';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { describe, expect, it, vi } from 'vitest';
@@ -9,7 +10,7 @@ vi.mock('../../../../../interop/config/i18n', async (orgImport) => {
   const mod = await orgImport<typeof import('../../../../../interop/config/i18n')>();
   return {
     ...mod,
-    LANGUAGES: ['fr', 'en']
+    LANGUAGES: TESTING_LP_FAKE_LANGUAGES
   };
 });
 

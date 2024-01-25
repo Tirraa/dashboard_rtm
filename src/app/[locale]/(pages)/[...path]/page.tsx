@@ -1,7 +1,6 @@
 import type { PageProps } from '@/types/Page';
 
-import { INDEX_NEEDLE } from '##/lib/builders/pages/computedFields/functions/path';
-import { isValidLanguageFlag } from '##/lib/builders/unifiedImport';
+import { isValidLanguageFlag, INDEX_TOKEN } from '##/lib/builders/unifiedImport';
 import { getPageByPathAndLanguageUnstrict } from '@/lib/pages/api';
 import { setStaticParamsLocale } from 'next-international/server';
 import MDX from '@/components/layouts/blog/MdxComponent';
@@ -33,7 +32,7 @@ export async function generateStaticParams() {
   const staticParams = [];
 
   for (const { language, path } of allPages) {
-    if (path === INDEX_NEEDLE) continue;
+    if (path === INDEX_TOKEN) continue;
     if (!isValidLanguageFlag(language)) continue;
     const page = getPageByPathAndLanguageUnstrict(language, path);
     if (!page) continue;

@@ -1,7 +1,7 @@
-import { InvalidArgumentsError, DEFAULT_LANGUAGE, PAGES_FOLDER } from '##/lib/builders/unifiedImport';
+import { InvalidArgumentsError, DEFAULT_LANGUAGE, PAGES_FOLDER, INDEX_TOKEN } from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 
-import buildPagePath, { INDEX_NEEDLE } from '../path';
+import buildPagePath from '../path';
 
 describe('path', () => {
   const leaf = 'leaf';
@@ -9,11 +9,20 @@ describe('path', () => {
     expect(
       buildPagePath({
         _raw: {
+          flattenedPath: PAGES_FOLDER
+        },
+        _id: '_'
+      })
+    ).toBe(INDEX_TOKEN);
+
+    expect(
+      buildPagePath({
+        _raw: {
           flattenedPath: PAGES_FOLDER + '/'
         },
         _id: '_'
       })
-    ).toBe('');
+    ).toBe(INDEX_TOKEN);
 
     expect(
       buildPagePath({
@@ -38,15 +47,6 @@ describe('path', () => {
     expect(
       buildPagePath({
         _raw: {
-          flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/`
-        },
-        _id: '_'
-      })
-    ).toBe('');
-
-    expect(
-      buildPagePath({
-        _raw: {
           flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/${leaf}`
         },
         _id: '_'
@@ -67,16 +67,7 @@ describe('path', () => {
     expect(
       buildPagePath({
         _raw: {
-          flattenedPath: PAGES_FOLDER + '/' + INDEX_NEEDLE
-        },
-        _id: '_'
-      })
-    ).toBe('');
-
-    expect(
-      buildPagePath({
-        _raw: {
-          flattenedPath: PAGES_FOLDER + `/foo/bar/${leaf}` + '/' + INDEX_NEEDLE
+          flattenedPath: PAGES_FOLDER + `/foo/bar/${leaf}`
         },
         _id: '_'
       })
@@ -85,7 +76,7 @@ describe('path', () => {
     expect(
       buildPagePath({
         _raw: {
-          flattenedPath: PAGES_FOLDER + `/foo/bar/baz/${leaf}` + '/' + INDEX_NEEDLE
+          flattenedPath: PAGES_FOLDER + `/foo/bar/baz/${leaf}`
         },
         _id: '_'
       })
@@ -96,16 +87,16 @@ describe('path', () => {
     expect(
       buildPagePath({
         _raw: {
-          flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/` + INDEX_NEEDLE
+          flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}`
         },
         _id: '_'
       })
-    ).toBe(INDEX_NEEDLE);
+    ).toBe(INDEX_TOKEN);
 
     expect(
       buildPagePath({
         _raw: {
-          flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/${leaf}` + '/' + INDEX_NEEDLE
+          flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/${leaf}`
         },
         _id: '_'
       })
@@ -114,22 +105,11 @@ describe('path', () => {
     expect(
       buildPagePath({
         _raw: {
-          flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/baz/${leaf}` + '/' + INDEX_NEEDLE
+          flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/baz/${leaf}`
         },
         _id: '_'
       })
     ).toBe(`foo/bar/baz/${leaf}`);
-  });
-
-  it('should throw, given an invalid flattenedPath', () => {
-    expect(() =>
-      buildPagePath({
-        _raw: {
-          flattenedPath: PAGES_FOLDER
-        },
-        _id: '_'
-      })
-    ).toThrowError(InvalidArgumentsError);
   });
 
   it('should NOT be fault tolerant', () => {

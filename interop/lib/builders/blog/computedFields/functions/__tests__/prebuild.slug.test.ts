@@ -1,7 +1,9 @@
-import { InvalidArgumentsError, BLOG_POSTS_FOLDER } from '##/lib/builders/unifiedImport';
+import { ForbiddenToUseIndexError, BLOG_POSTS_FOLDER, INDEX_TOKEN } from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 
 import buildBlogPostSlug from '../slug';
+
+const EXT = '.FAKE_EXT';
 
 describe('slug', () => {
   const slug = 'slug';
@@ -9,6 +11,7 @@ describe('slug', () => {
     expect(
       buildBlogPostSlug({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + `/category/subcategory/${slug}` + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + `/category/subcategory/${slug}`
         },
         _id: '_'
@@ -18,6 +21,7 @@ describe('slug', () => {
     expect(
       buildBlogPostSlug({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + `/category/subcategory/lang/${slug}` + EXT,
           flattenedPath: BLOG_POSTS_FOLDER + `/category/subcategory/lang/${slug}`
         },
         _id: '_'
@@ -29,30 +33,35 @@ describe('slug', () => {
     expect(() =>
       buildBlogPostSlug({
         _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + '/' + INDEX_TOKEN + EXT,
           flattenedPath: BLOG_POSTS_FOLDER
         },
         _id: '_'
       })
-    ).toThrowError(InvalidArgumentsError);
-
-    expect(() =>
-      buildBlogPostSlug({
-        _raw: {
-          flattenedPath: BLOG_POSTS_FOLDER + '/'
-        },
-        _id: '_'
-      })
-    ).toThrowError(InvalidArgumentsError);
+    ).toThrowError(ForbiddenToUseIndexError);
   });
 
   it('should be fault tolerant', () => {
     expect(
       buildBlogPostSlug({
         _raw: {
+          sourceFilePath: '_' + BLOG_POSTS_FOLDER + `/category/subcategory/lang/${slug}` + EXT,
           flattenedPath: '_' + BLOG_POSTS_FOLDER + `/category/subcategory/lang/${slug}`
         },
         _id: '_'
       })
     ).toBe(slug);
+  });
+
+  it('should return the correct slug, with index notation', () => {
+    expect(
+      buildBlogPostSlug({
+        _raw: {
+          sourceFilePath: '_' + BLOG_POSTS_FOLDER + `/category/subcategory/lang/${INDEX_TOKEN}` + EXT,
+          flattenedPath: '_' + BLOG_POSTS_FOLDER + `/category/subcategory/lang`
+        },
+        _id: '_'
+      })
+    ).toBe(INDEX_TOKEN);
   });
 });

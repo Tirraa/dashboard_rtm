@@ -93,9 +93,9 @@ export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict<C
   language: keyof StrictBlog[C][keyof StrictBlog[C]]
 ): Promise<TBlogPost[]> {
   const allPosts: TBlogPost[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(
-    category,
-    subcategory as BlogSubcategoryFromUnknownCategory,
-    language as LanguageFlag
+    category as any,
+    subcategory as any,
+    language as any
   );
   return allPosts;
 }
@@ -110,12 +110,7 @@ export async function getBlogPostStrict<
   language: Language,
   targettedSlug: StrictBlog[Category][Subcategory][Language]
 ): Promise<MaybeNull<TBlogPost>> {
-  const post: MaybeNull<TBlogPost> = await getBlogPostUnstrict(
-    category,
-    subcategory as BlogSubcategoryFromUnknownCategory,
-    targettedSlug as UnknownBlogSlug,
-    language as LanguageFlag
-  );
+  const post: MaybeNull<TBlogPost> = await getBlogPostUnstrict(category as any, subcategory as any, targettedSlug as any, language as any);
   return post;
 }
 
