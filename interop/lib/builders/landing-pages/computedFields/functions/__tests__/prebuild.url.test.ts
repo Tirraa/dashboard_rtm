@@ -12,7 +12,7 @@ import buildLandingPageUrl from '../url';
 
 const EXT = '.FAKE_EXT';
 
-describe('url', () => {
+describe('lp url (happy paths)', () => {
   const root = ROUTES_ROOTS.LANDING_PAGES;
   it('should return the correct default language URL, given a valid default language flattened path', () => {
     const url = '/' + DEFAULT_LANGUAGE + root + 'category-slug';
@@ -41,6 +41,9 @@ describe('url', () => {
     const url = '/' + 'fr' + root + 'category-slug';
     const url2 = '/' + 'en' + root + 'category-slug';
     const url3 = '/' + 'it' + root + 'category-slug';
+    const url4 = '/' + 'it' + root + 'index-slug';
+    const url5 = '/' + 'it' + root + 'category-index';
+
     expect(
       buildLandingPageUrl({
         _raw: {
@@ -70,8 +73,30 @@ describe('url', () => {
         _id: '_'
       })
     ).toBe(url3);
-  });
 
+    expect(
+      buildLandingPageUrl({
+        _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + `/${INDEX_TOKEN}/it/slug` + EXT,
+          flattenedPath: LANDING_PAGES_FOLDER + `/${INDEX_TOKEN}/it/slug`
+        },
+        _id: '_'
+      })
+    ).toBe(url4);
+
+    expect(
+      buildLandingPageUrl({
+        _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + `/category/it/${INDEX_TOKEN}` + EXT,
+          flattenedPath: LANDING_PAGES_FOLDER + '/category/it'
+        },
+        _id: '_'
+      })
+    ).toBe(url5);
+  });
+});
+
+describe('lp url (unhappy paths)', () => {
   it('should throw, given invalid flattened paths', () => {
     expect(() =>
       buildLandingPageUrl({

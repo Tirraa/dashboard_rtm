@@ -1,4 +1,4 @@
-import type { TFakeLanguage } from '𝕍/testingBlogCategoryDatas';
+import type { TBlogFakeLanguage } from '𝕍/testingBlogCategoryDatas';
 import type { TBlogConfig } from '@/config/blog';
 import type { TBlogPost } from '@/types/Blog';
 
@@ -39,7 +39,7 @@ describe('getPostStrict', () => {
     const [category, subcategory, language, targettedSlug] = [
       BlogConfig.TESTING_CATEGORY,
       TESTING_BLOG_FAKE_SUBCATEGORY,
-      'drafts' as const satisfies TFakeLanguage,
+      'drafts' as const satisfies TBlogFakeLanguage,
       'fake-draft-01' as const
     ];
     const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as TBlogPost;

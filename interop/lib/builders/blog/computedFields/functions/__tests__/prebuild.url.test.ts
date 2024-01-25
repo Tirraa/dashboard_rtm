@@ -12,8 +12,9 @@ import buildBlogPostUrl from '../url';
 
 const EXT = '.FAKE_EXT';
 
-describe('url', () => {
-  const root = ROUTES_ROOTS.BLOG;
+const root = ROUTES_ROOTS.BLOG;
+
+describe('blog url (happy paths)', () => {
   it('should return the correct default language URL, given a valid default language flattened path', () => {
     const url = '/' + DEFAULT_LANGUAGE + root + 'category/subcategory/slug';
     expect(
@@ -41,7 +42,7 @@ describe('url', () => {
     const url = '/' + 'fr' + root + 'category/subcategory/slug';
     const url2 = '/' + 'en' + root + 'category/subcategory/slug';
     const url3 = '/' + 'it' + root + 'category/subcategory/slug';
-    const url4 = '/' + 'it' + root + 'category/subcategory/index';
+
     expect(
       buildBlogPostUrl({
         _raw: {
@@ -71,7 +72,12 @@ describe('url', () => {
         _id: '_'
       })
     ).toBe(url3);
+  });
+});
 
+describe('blog url (happy paths, with index notation)', () => {
+  it('should return the correct language URL, given a valid flattened path including a language', () => {
+    const url = '/' + 'it' + root + 'category/subcategory/index';
     expect(
       buildBlogPostUrl({
         _raw: {
@@ -80,9 +86,11 @@ describe('url', () => {
         },
         _id: '_'
       })
-    ).toBe(url4);
+    ).toBe(url);
   });
+});
 
+describe('blog url (unhappy paths)', () => {
   it('should throw, given invalid flattened paths', () => {
     expect(() =>
       buildBlogPostUrl({

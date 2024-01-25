@@ -5,12 +5,12 @@ import buildLandingPageSlug, { buildLandingPageSlugFromLpObj } from '../slug';
 
 const EXT = '.FAKE_EXT';
 
-describe('slug', () => {
+describe('lp slug (happy paths)', () => {
   const name = 'slug';
   const category = 'category';
   const slug = category + '-' + name;
 
-  it('should return the category string part, given a valid flattenedPath', () => {
+  it('should return a valid slug, given a valid flattenedPath', () => {
     expect(
       buildLandingPageSlug({
         _raw: {
@@ -31,6 +31,35 @@ describe('slug', () => {
       })
     ).toBe(slug);
   });
+});
+
+describe('lp slug (happy paths, index notation)', () => {
+  it('should return a valid slug, given a valid flattenedPath', () => {
+    expect(
+      buildLandingPageSlug({
+        _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + `/${INDEX_TOKEN}/subcategory/slug` + EXT,
+          flattenedPath: LANDING_PAGES_FOLDER + `/${INDEX_TOKEN}/subcategory/slug`
+        },
+        _id: '_'
+      })
+    ).toBe('index-slug');
+
+    expect(
+      buildLandingPageSlug({
+        _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + `/category/subcategory/lang/${INDEX_TOKEN}` + EXT,
+          flattenedPath: LANDING_PAGES_FOLDER + '/category/subcategory/lang'
+        },
+        _id: '_'
+      })
+    ).toBe('category-index');
+  });
+});
+
+describe('lp slug (unhappy paths)', () => {
+  const name = 'slug';
+  const category = 'category';
 
   it('should throw, given an invalid flattenedPath', () => {
     expect(() =>

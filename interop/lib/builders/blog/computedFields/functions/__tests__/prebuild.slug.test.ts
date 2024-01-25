@@ -5,7 +5,7 @@ import buildBlogPostSlug from '../slug';
 
 const EXT = '.FAKE_EXT';
 
-describe('slug', () => {
+describe('blog slug (happy paths)', () => {
   const slug = 'slug';
   it('should return the category string part, given a valid flattenedPath', () => {
     expect(
@@ -29,18 +29,6 @@ describe('slug', () => {
     ).toBe(slug);
   });
 
-  it('should throw, given an invalid flattenedPath', () => {
-    expect(() =>
-      buildBlogPostSlug({
-        _raw: {
-          sourceFilePath: BLOG_POSTS_FOLDER + '/' + INDEX_TOKEN + EXT,
-          flattenedPath: BLOG_POSTS_FOLDER
-        },
-        _id: '_'
-      })
-    ).toThrowError(ForbiddenToUseIndexError);
-  });
-
   it('should be fault tolerant', () => {
     expect(
       buildBlogPostSlug({
@@ -52,7 +40,9 @@ describe('slug', () => {
       })
     ).toBe(slug);
   });
+});
 
+describe('blog slug (happy paths, with index notation)', () => {
   it('should return the correct slug, with index notation', () => {
     expect(
       buildBlogPostSlug({
@@ -63,5 +53,19 @@ describe('slug', () => {
         _id: '_'
       })
     ).toBe(INDEX_TOKEN);
+  });
+});
+
+describe('blog slug (unhappy paths)', () => {
+  it('should throw, given an invalid flattenedPath', () => {
+    expect(() =>
+      buildBlogPostSlug({
+        _raw: {
+          sourceFilePath: BLOG_POSTS_FOLDER + '/' + INDEX_TOKEN + EXT,
+          flattenedPath: BLOG_POSTS_FOLDER
+        },
+        _id: '_'
+      })
+    ).toThrowError(ForbiddenToUseIndexError);
   });
 });

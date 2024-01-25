@@ -1,4 +1,4 @@
-import type { TFakeLanguage } from '𝕍/testingBlogCategoryDatas';
+import type { TBlogFakeLanguage } from '𝕍/testingBlogCategoryDatas';
 import type { TBlogPost } from '@/types/Blog';
 
 import { TESTING_BLOG_FAKE_SUBCATEGORY } from '𝕍/testingBlogCategoryDatas';
@@ -50,7 +50,7 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict', () => {
     const postsCollection = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict(
       BlogConfig.TESTING_CATEGORY,
       TESTING_BLOG_FAKE_SUBCATEGORY,
-      'posts' satisfies TFakeLanguage
+      'posts' satisfies TBlogFakeLanguage
     );
     expect(postsCollection.length).toBe(5);
   });
@@ -71,7 +71,7 @@ describe('isValidBlogCategoryAndSubcategoryPair', () => {
     const isValid = await isValidBlogCategoryAndSubcategoryPair(
       BlogConfig.TESTING_CATEGORY,
       TESTING_BLOG_FAKE_SUBCATEGORY,
-      'drafts' satisfies TFakeLanguage as any
+      'drafts' satisfies TBlogFakeLanguage as any
     );
     expect(isValid).toBe(true);
   });
@@ -81,7 +81,7 @@ describe('isValidBlogCategoryAndSubcategoryPair', () => {
       // @ts-expect-error
       '__INVALID_CATEGORY__',
       TESTING_BLOG_FAKE_SUBCATEGORY,
-      'drafts' satisfies TFakeLanguage
+      'drafts' satisfies TBlogFakeLanguage
     );
     expect(isValid).toBe(false);
   });
@@ -91,7 +91,7 @@ describe('isValidBlogCategoryAndSubcategoryPair', () => {
       BlogConfig.TESTING_CATEGORY,
       // @ts-expect-error
       '__INVALID_SUBCATEGORY__',
-      'drafts' satisfies TFakeLanguage
+      'drafts' satisfies TBlogFakeLanguage
     );
     expect(isValid).toBe(false);
   });
@@ -114,7 +114,7 @@ describe('getBlogPostPathWithoutI18nPart', () => {
     const [category, subcategory, language, targettedSlug] = [
       BlogConfig.TESTING_CATEGORY,
       TESTING_BLOG_FAKE_SUBCATEGORY,
-      'posts' as const satisfies TFakeLanguage,
+      'posts' as const satisfies TBlogFakeLanguage,
       'fake-post-03' as const
     ];
 
@@ -166,7 +166,7 @@ describe('getAllBlogPostsByCategoryAndLanguage', () => {
   it('should pass', async () => {
     const posts = (await getAllBlogPostsByCategoryAndLanguage(
       BlogConfig.TESTING_CATEGORY,
-      'drafts' as const satisfies TFakeLanguage as any
+      'drafts' as const satisfies TBlogFakeLanguage as any
     )) as TBlogPost[];
 
     expect(posts.length).toBe(3);
@@ -223,7 +223,7 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict', () => {
     const posts = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(
       BlogConfig.TESTING_CATEGORY,
       TESTING_BLOG_FAKE_SUBCATEGORY,
-      'posts' as const satisfies TFakeLanguage as any
+      'posts' as const satisfies TBlogFakeLanguage as any
     );
 
     expect(posts.length).toBe(5);
