@@ -1,7 +1,7 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { UnknownLandingPageSlug } from '@/types/LandingPage';
 
-import { throwIfForbiddenToUseIndexErrorLpCtx } from '../../../unifiedImport';
+import { throwIfForbiddenToUseIndexErrorLpCtx, getPathWithIndexSuffix } from '../../../unifiedImport';
 import buildLandingPageCategory from './category';
 
 /**
@@ -22,7 +22,9 @@ export function buildLandingPageSlugFromLpObj(lp: DocumentToCompute): UnknownLan
 
   throwIfForbiddenToUseIndexErrorLpCtx(sourceFilePath);
 
-  const landingPageSlug = buildLandingPageSlugFromStr(flattenedPath);
+  const transformedFlattenedPath = getPathWithIndexSuffix(flattenedPath, sourceFilePath);
+
+  const landingPageSlug = buildLandingPageSlugFromStr(transformedFlattenedPath);
   return landingPageSlug;
 }
 

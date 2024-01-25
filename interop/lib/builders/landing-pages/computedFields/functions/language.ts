@@ -4,6 +4,7 @@ import type { UnknownLanguageFlag } from '@rtm/shared-types/LanguageFlag';
 import {
   throwIfForbiddenToUseIndexErrorLpCtx,
   getFlattenedPathWithoutRootFolder,
+  getPathWithIndexSuffix,
   indexOfNthOccurrence,
   LANDING_PAGES_FOLDER,
   DEFAULT_LANGUAGE
@@ -25,7 +26,9 @@ function buildLandingPageLanguageFlag(lp: DocumentToCompute): UnknownLanguageFla
 
   throwIfForbiddenToUseIndexErrorLpCtx(sourceFilePath);
 
-  const path = getFlattenedPathWithoutRootFolder(flattenedPath, LANDING_PAGES_FOLDER);
+  const transformedFlattenedPath = getPathWithIndexSuffix(flattenedPath, sourceFilePath);
+
+  const path = getFlattenedPathWithoutRootFolder(transformedFlattenedPath, LANDING_PAGES_FOLDER);
   const language = buildLandingPageLanguageFlagFromStr(path);
   return language;
 }

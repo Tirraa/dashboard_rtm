@@ -4,6 +4,7 @@ import type { AppPath } from '@rtm/shared-types/Next';
 import {
   throwIfForbiddenToUseIndexErrorLpCtx,
   getFlattenedPathWithoutRootFolder,
+  getPathWithIndexSuffix,
   InvalidArgumentsError,
   LANDING_PAGES_FOLDER,
   DEFAULT_LANGUAGE,
@@ -18,7 +19,9 @@ function buildLandingPageUrl(lp: DocumentToCompute): AppPath {
   const OPTIONAL_LOCALE_PART_INDEX = 1;
   const root = ROUTES_ROOTS.LANDING_PAGES;
 
-  const path = getFlattenedPathWithoutRootFolder(flattenedPath, LANDING_PAGES_FOLDER);
+  const transformedFlattenedPath = getPathWithIndexSuffix(flattenedPath, sourceFilePath);
+
+  const path = getFlattenedPathWithoutRootFolder(transformedFlattenedPath, LANDING_PAGES_FOLDER);
   const pathParts = path.split('/');
 
   if (pathParts.length !== 2 && pathParts.length !== 3) {

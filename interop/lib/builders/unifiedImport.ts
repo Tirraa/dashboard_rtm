@@ -1,6 +1,6 @@
+import { throwIfForbiddenToUseIndexErrorBlogCtx, throwIfForbiddenToUseIndexErrorLpCtx, getPathWithIndexSuffix } from './helpers';
 import { LANDING_PAGES_FOLDER, BLOG_POSTS_FOLDER, PAGES_FOLDER } from '../../config/contentlayer/contentlayerConfigTweakers';
 import getPathWithoutExtension from '../../../packages/shared-lib/src/portable/str/getPathWithoutExtension';
-import { throwIfForbiddenToUseIndexErrorBlogCtx, throwIfForbiddenToUseIndexErrorLpCtx } from './helpers';
 import indexOfNthOccurrence from '../../../src/lib/portable/str/indexOfNthOccurrence';
 import isValidLanguageFlag from '../../../src/lib/portable/i18n/isValidLanguageFlag';
 import getFlattenedPathWithoutRootFolder from './getFlattenedPathWithoutRootFolder';
@@ -18,6 +18,7 @@ export {
   getFlattenedPathWithoutRootFolder,
   ForbiddenToUseIndexError,
   getPathWithoutExtension,
+  getPathWithIndexSuffix,
   InvalidArgumentsError,
   indexOfNthOccurrence,
   LANDING_PAGES_FOLDER,

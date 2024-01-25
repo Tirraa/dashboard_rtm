@@ -1,7 +1,7 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { UnknownBlogSlug } from '@/types/Blog';
 
-import { throwIfForbiddenToUseIndexErrorBlogCtx, getPathWithoutExtension, INDEX_TOKEN } from '../../../unifiedImport';
+import { throwIfForbiddenToUseIndexErrorBlogCtx, getPathWithIndexSuffix } from '../../../unifiedImport';
 
 /**
  * @throws {InvalidArgumentsError}
@@ -10,13 +10,10 @@ function buildBlogPostSlugFromStr(flattenedPath: string, sourceFilePath: string)
   const slugBuilder = (flattenedPath: string, lastSlashIndex: number): UnknownBlogSlug =>
     flattenedPath.substring(lastSlashIndex + 1) as UnknownBlogSlug;
 
-  const filepathWithoutExt = getPathWithoutExtension(sourceFilePath);
-  const suffix = filepathWithoutExt.endsWith(INDEX_TOKEN) ? '/' + INDEX_TOKEN : '';
-
-  const transformedFlattenedPath = flattenedPath + suffix;
+  const transformedFlattenedPath = getPathWithIndexSuffix(flattenedPath, sourceFilePath);
   const lastSlashIndexAfterTransform = transformedFlattenedPath.lastIndexOf('/');
 
-  const slug = slugBuilder(flattenedPath + suffix, lastSlashIndexAfterTransform);
+  const slug = slugBuilder(transformedFlattenedPath, lastSlashIndexAfterTransform);
   return slug;
 }
 

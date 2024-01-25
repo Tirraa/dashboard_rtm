@@ -4,17 +4,14 @@ import type { LanguageFlag } from '@rtm/shared-types/LanguageFlag';
 import {
   throwIfForbiddenToUseIndexErrorBlogCtx,
   getFlattenedPathWithoutRootFolder,
-  getPathWithoutExtension,
+  getPathWithIndexSuffix,
   indexOfNthOccurrence,
   BLOG_POSTS_FOLDER,
-  DEFAULT_LANGUAGE,
-  INDEX_TOKEN
+  DEFAULT_LANGUAGE
 } from '../../../unifiedImport';
 
 function buildBlogPostLanguageFlagFromStr(path: string, sourceFilePath: string): LanguageFlag | string {
-  const filepathWithoutExt = getPathWithoutExtension(sourceFilePath);
-  const suffix = filepathWithoutExt.endsWith(INDEX_TOKEN) ? '/' + INDEX_TOKEN : '';
-  const transformedPath = path + suffix;
+  const transformedPath = getPathWithIndexSuffix(path, sourceFilePath);
 
   const envelopeBeginSlashIndex = indexOfNthOccurrence(transformedPath, '/', 2);
   const envelopeEndSlashIndex = indexOfNthOccurrence(transformedPath, '/', 3);

@@ -20,3 +20,10 @@ export const throwIfForbiddenToUseIndexErrorBlogCtx = (sourceFilePath: string) =
  * @throws {ForbiddenToUseIndexError}
  */
 export const throwIfForbiddenToUseIndexErrorLpCtx = (sourceFilePath: string) => throwIfForbiddenToUseIndexError(sourceFilePath, 2);
+
+export function getPathWithIndexSuffix(path: string, sourceFilePath: string): string {
+  const filepathWithoutExt = getPathWithoutExtension(sourceFilePath);
+  const suffix = filepathWithoutExt.endsWith(INDEX_TOKEN) ? '/' + INDEX_TOKEN : '';
+  const transformedPath = path + suffix;
+  return transformedPath;
+}
