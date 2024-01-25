@@ -15,3 +15,8 @@ function throwIfForbiddenToUseIndexError(sourceFilePath: string, minRequiredSlas
  * @throws {ForbiddenToUseIndexError}
  */
 export const throwIfForbiddenToUseIndexErrorBlogCtx = (sourceFilePath: string) => throwIfForbiddenToUseIndexError(sourceFilePath, 3);
+
+/**
+ * @throws {ForbiddenToUseIndexError}
+ */
+export const throwIfForbiddenToUseIndexErrorLpCtx = (sourceFilePath: string) => throwIfForbiddenToUseIndexError(sourceFilePath, 2);

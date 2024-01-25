@@ -1,7 +1,12 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { UnknownLandingPageCategory } from '@/types/LandingPage';
 
-import { getFlattenedPathWithoutRootFolder, InvalidArgumentsError, LANDING_PAGES_FOLDER } from '../../../unifiedImport';
+import {
+  throwIfForbiddenToUseIndexErrorLpCtx,
+  getFlattenedPathWithoutRootFolder,
+  InvalidArgumentsError,
+  LANDING_PAGES_FOLDER
+} from '../../../unifiedImport';
 
 /**
  * @throws {InvalidArgumentsError}
@@ -19,8 +24,12 @@ function buildLandingPageCategoryFromStr(flattenedPath: string): UnknownLandingP
 }
 
 function buildLandingPageCategoryFromLpObj(lp: DocumentToCompute): UnknownLandingPageCategory {
-  const flattenedPath = getFlattenedPathWithoutRootFolder(lp._raw.flattenedPath, LANDING_PAGES_FOLDER);
-  const landingPageCategory = buildLandingPageCategoryFromStr(flattenedPath);
+  const { sourceFilePath, flattenedPath } = lp._raw;
+
+  throwIfForbiddenToUseIndexErrorLpCtx(sourceFilePath);
+
+  const path = getFlattenedPathWithoutRootFolder(flattenedPath, LANDING_PAGES_FOLDER);
+  const landingPageCategory = buildLandingPageCategoryFromStr(path);
   return landingPageCategory;
 }
 

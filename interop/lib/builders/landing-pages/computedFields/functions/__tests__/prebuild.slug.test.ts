@@ -1,7 +1,9 @@
-import { InvalidArgumentsError, LANDING_PAGES_FOLDER } from '##/lib/builders/unifiedImport';
+import { ForbiddenToUseIndexError, InvalidArgumentsError, LANDING_PAGES_FOLDER, INDEX_TOKEN } from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 
 import buildLandingPageSlug, { buildLandingPageSlugFromLpObj } from '../slug';
+
+const EXT = '.FAKE_EXT';
 
 describe('slug', () => {
   const name = 'slug';
@@ -12,6 +14,7 @@ describe('slug', () => {
     expect(
       buildLandingPageSlug({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + `/${category}/subcategory/${name}` + EXT,
           flattenedPath: LANDING_PAGES_FOLDER + `/${category}/subcategory/${name}`
         },
         _id: '_'
@@ -21,6 +24,7 @@ describe('slug', () => {
     expect(
       buildLandingPageSlug({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + `/${category}/subcategory/lang/${name}` + EXT,
           flattenedPath: LANDING_PAGES_FOLDER + `/${category}/subcategory/lang/${name}`
         },
         _id: '_'
@@ -32,26 +36,19 @@ describe('slug', () => {
     expect(() =>
       buildLandingPageSlugFromLpObj({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + '/' + INDEX_TOKEN + EXT,
           flattenedPath: LANDING_PAGES_FOLDER
         },
         _id: '_'
       })
-    ).toThrowError(InvalidArgumentsError);
-
-    expect(() =>
-      buildLandingPageSlugFromLpObj({
-        _raw: {
-          flattenedPath: LANDING_PAGES_FOLDER + '/'
-        },
-        _id: '_'
-      })
-    ).toThrowError(InvalidArgumentsError);
+    ).toThrowError(ForbiddenToUseIndexError);
   });
 
   it('should NOT be fault tolerant', () => {
     expect(() =>
       buildLandingPageSlug({
         _raw: {
+          sourceFilePath: '_' + LANDING_PAGES_FOLDER + `/${category}/subcategory/lang/${name}` + EXT,
           flattenedPath: '_' + LANDING_PAGES_FOLDER + `/${category}/subcategory/lang/${name}`
         },
         _id: '_'

@@ -1,7 +1,9 @@
-import { InvalidArgumentsError, LANDING_PAGES_FOLDER } from '##/lib/builders/unifiedImport';
+import { ForbiddenToUseIndexError, InvalidArgumentsError, LANDING_PAGES_FOLDER, INDEX_TOKEN } from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 
 import buildLandingPageCategory from '../category';
+
+const EXT = '.FAKE_EXT';
 
 describe('category', () => {
   const category = 'category';
@@ -9,6 +11,7 @@ describe('category', () => {
     expect(
       buildLandingPageCategory({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + `/${category}/slug` + EXT,
           flattenedPath: LANDING_PAGES_FOLDER + `/${category}/slug`
         },
         _id: '_'
@@ -18,6 +21,7 @@ describe('category', () => {
     expect(
       buildLandingPageCategory({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + `/${category}/lang/slug` + EXT,
           flattenedPath: LANDING_PAGES_FOLDER + `/${category}/lang/slug`
         },
         _id: '_'
@@ -29,24 +33,17 @@ describe('category', () => {
     expect(() =>
       buildLandingPageCategory({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + '/' + INDEX_TOKEN + EXT,
           flattenedPath: LANDING_PAGES_FOLDER
         },
         _id: '_'
       })
-    ).toThrowError(InvalidArgumentsError);
+    ).toThrowError(ForbiddenToUseIndexError);
 
     expect(() =>
       buildLandingPageCategory({
         _raw: {
-          flattenedPath: LANDING_PAGES_FOLDER + '/'
-        },
-        _id: '_'
-      })
-    ).toThrowError(InvalidArgumentsError);
-
-    expect(() =>
-      buildLandingPageCategory({
-        _raw: {
+          sourceFilePath: '_' + LANDING_PAGES_FOLDER + `/${category}/lang/slug` + EXT,
           flattenedPath: '_' + LANDING_PAGES_FOLDER + `/${category}/lang/slug`
         },
         _id: '_'

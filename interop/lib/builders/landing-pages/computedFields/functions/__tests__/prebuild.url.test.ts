@@ -1,7 +1,16 @@
-import { InvalidArgumentsError, LANDING_PAGES_FOLDER, DEFAULT_LANGUAGE, ROUTES_ROOTS } from '##/lib/builders/unifiedImport';
+import {
+  ForbiddenToUseIndexError,
+  InvalidArgumentsError,
+  LANDING_PAGES_FOLDER,
+  DEFAULT_LANGUAGE,
+  ROUTES_ROOTS,
+  INDEX_TOKEN
+} from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 
 import buildLandingPageUrl from '../url';
+
+const EXT = '.FAKE_EXT';
 
 describe('url', () => {
   const root = ROUTES_ROOTS.LANDING_PAGES;
@@ -10,6 +19,7 @@ describe('url', () => {
     expect(
       buildLandingPageUrl({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + '/category/slug' + EXT,
           flattenedPath: LANDING_PAGES_FOLDER + '/category/slug'
         },
         _id: '_'
@@ -19,6 +29,7 @@ describe('url', () => {
     expect(
       buildLandingPageUrl({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + `/category/${DEFAULT_LANGUAGE}/slug` + EXT,
           flattenedPath: LANDING_PAGES_FOLDER + `/category/${DEFAULT_LANGUAGE}/slug`
         },
         _id: '_'
@@ -33,6 +44,7 @@ describe('url', () => {
     expect(
       buildLandingPageUrl({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + '/category/fr/slug' + EXT,
           flattenedPath: LANDING_PAGES_FOLDER + '/category/fr/slug'
         },
         _id: '_'
@@ -42,6 +54,7 @@ describe('url', () => {
     expect(
       buildLandingPageUrl({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + '/category/en/slug' + EXT,
           flattenedPath: LANDING_PAGES_FOLDER + '/category/en/slug'
         },
         _id: '_'
@@ -51,6 +64,7 @@ describe('url', () => {
     expect(
       buildLandingPageUrl({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + '/category/it/slug' + EXT,
           flattenedPath: LANDING_PAGES_FOLDER + '/category/it/slug'
         },
         _id: '_'
@@ -62,15 +76,17 @@ describe('url', () => {
     expect(() =>
       buildLandingPageUrl({
         _raw: {
-          flattenedPath: LANDING_PAGES_FOLDER + '/'
+          sourceFilePath: LANDING_PAGES_FOLDER + '/' + INDEX_TOKEN + EXT,
+          flattenedPath: LANDING_PAGES_FOLDER
         },
         _id: '_'
       })
-    ).toThrowError(InvalidArgumentsError);
+    ).toThrowError(ForbiddenToUseIndexError);
 
     expect(() =>
       buildLandingPageUrl({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + '/category' + EXT,
           flattenedPath: LANDING_PAGES_FOLDER + '/category'
         },
         _id: '_'
@@ -80,6 +96,7 @@ describe('url', () => {
     expect(() =>
       buildLandingPageUrl({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + '/slug' + EXT,
           flattenedPath: LANDING_PAGES_FOLDER + '/slug'
         },
         _id: '_'
@@ -89,6 +106,7 @@ describe('url', () => {
     expect(() =>
       buildLandingPageUrl({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + '/category/it/slug/foo' + EXT,
           flattenedPath: LANDING_PAGES_FOLDER + '/category/it/slug/foo'
         },
         _id: '_'
@@ -98,6 +116,7 @@ describe('url', () => {
     expect(() =>
       buildLandingPageUrl({
         _raw: {
+          sourceFilePath: LANDING_PAGES_FOLDER + '/category/it/slug/foo/bar' + EXT,
           flattenedPath: LANDING_PAGES_FOLDER + '/category/it/slug/foo/bar'
         },
         _id: '_'
