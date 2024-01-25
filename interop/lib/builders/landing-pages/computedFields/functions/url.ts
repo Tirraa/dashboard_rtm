@@ -22,11 +22,7 @@ function buildLandingPageUrl(lp: DocumentToCompute): AppPath {
   const pathParts = path.split('/');
 
   if (pathParts.length !== 2 && pathParts.length !== 3) {
-    throw new InvalidArgumentsError(
-      buildLandingPageUrl.name,
-      { flattenedPath },
-      `Invalid flattenedPath! Expected 2 or 3 parts, but got: ${pathParts.length}.`
-    );
+    throw new InvalidArgumentsError(buildLandingPageUrl.name, { path }, `Invalid path! Expected 2 or 3 parts, but got: ${pathParts.length}.`);
   }
 
   if (pathParts.length <= OPTIONAL_LOCALE_PART_INDEX + 1) {

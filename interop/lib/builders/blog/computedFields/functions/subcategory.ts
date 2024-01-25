@@ -29,12 +29,11 @@ function buildBlogPostSubcategoryFromStr(flattenedPath: string): BlogSubcategory
  * @throws {InvalidArgumentsError}
  */
 function buildBlogPostSubcategoryFromPostObj(post: DocumentToCompute): BlogSubcategoryFromUnknownCategory {
-  const orgFlattenedPath = post._raw.flattenedPath;
-  const filepath = post._raw.sourceFilePath;
+  const { sourceFilePath, flattenedPath } = post._raw;
 
-  throwIfForbiddenToUseIndexErrorBlogCtx(filepath);
+  throwIfForbiddenToUseIndexErrorBlogCtx(sourceFilePath);
 
-  if (indexOfNthOccurrence(filepath, '/', 5) !== -1) {
+  if (indexOfNthOccurrence(sourceFilePath, '/', 5) !== -1) {
     throw new InvalidArgumentsError(
       buildBlogPostSubcategoryFromPostObj.name,
       { post: JSON.stringify(post, null, 2) },
@@ -42,8 +41,9 @@ function buildBlogPostSubcategoryFromPostObj(post: DocumentToCompute): BlogSubca
     );
   }
 
-  const flattenedPath = getFlattenedPathWithoutRootFolder(orgFlattenedPath, BLOG_POSTS_FOLDER);
-  return buildBlogPostSubcategoryFromStr(flattenedPath);
+  const path = getFlattenedPathWithoutRootFolder(flattenedPath, BLOG_POSTS_FOLDER);
+  const blogPostSubcategory = buildBlogPostSubcategoryFromStr(path);
+  return blogPostSubcategory;
 }
 
 const buildBlogPostSubcategory = (post: DocumentToCompute): BlogSubcategoryFromUnknownCategory => buildBlogPostSubcategoryFromPostObj(post);

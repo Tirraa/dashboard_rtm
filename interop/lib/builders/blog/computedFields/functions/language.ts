@@ -2,8 +2,8 @@ import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { LanguageFlag } from '@rtm/shared-types/LanguageFlag';
 
 import {
+  throwIfForbiddenToUseIndexErrorBlogCtx,
   getFlattenedPathWithoutRootFolder,
-  ForbiddenToUseIndexError,
   getPathWithoutExtension,
   indexOfNthOccurrence,
   BLOG_POSTS_FOLDER,
@@ -27,16 +27,12 @@ function buildBlogPostLanguageFlagFromStr(flattenedPath: string, sourceFilePath:
 }
 
 function buildBlogPostLanguageFlag(post: DocumentToCompute): LanguageFlag | string {
-  const sourceFilePath = post._raw.sourceFilePath;
-  const orgFlattenedPath = post._raw.flattenedPath;
+  const { sourceFilePath, flattenedPath } = post._raw;
 
-  const filepathWithoutExt = getPathWithoutExtension(sourceFilePath);
-  if (filepathWithoutExt.endsWith(INDEX_TOKEN) && indexOfNthOccurrence(orgFlattenedPath, '/', 2) === -1) {
-    throw new ForbiddenToUseIndexError();
-  }
+  throwIfForbiddenToUseIndexErrorBlogCtx(sourceFilePath);
 
-  const flattenedPath = getFlattenedPathWithoutRootFolder(orgFlattenedPath, BLOG_POSTS_FOLDER);
-  const language = buildBlogPostLanguageFlagFromStr(flattenedPath, sourceFilePath);
+  const path = getFlattenedPathWithoutRootFolder(flattenedPath, BLOG_POSTS_FOLDER);
+  const language = buildBlogPostLanguageFlagFromStr(path, sourceFilePath);
   return language;
 }
 

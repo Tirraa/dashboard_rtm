@@ -17,36 +17,31 @@ import {
  * @throws {InvalidArgumentsError}
  */
 function buildBlogPostUrl(post: DocumentToCompute): AppPath {
-  const orgFlattenedPath = post._raw.flattenedPath;
-  const filepath = post._raw.sourceFilePath;
-  const filepathWithoutExt = getPathWithoutExtension(filepath);
+  const { sourceFilePath, flattenedPath } = post._raw;
 
-  throwIfForbiddenToUseIndexErrorBlogCtx(filepath);
+  throwIfForbiddenToUseIndexErrorBlogCtx(sourceFilePath);
 
+  const filepathWithoutExt = getPathWithoutExtension(sourceFilePath);
   const OPTIONAL_LOCALE_PART_INDEX = 2;
   const root = ROUTES_ROOTS.BLOG;
 
-  const flattenedPath = getFlattenedPathWithoutRootFolder(orgFlattenedPath, BLOG_POSTS_FOLDER);
-  const flattenedPathParts = flattenedPath.split('/');
+  const path = getFlattenedPathWithoutRootFolder(flattenedPath, BLOG_POSTS_FOLDER);
+  const pathParts = path.split('/');
 
-  if (filepathWithoutExt.endsWith(INDEX_TOKEN)) flattenedPathParts.push(INDEX_TOKEN);
+  if (filepathWithoutExt.endsWith(INDEX_TOKEN)) pathParts.push(INDEX_TOKEN);
 
-  if (flattenedPathParts.length !== 3 && flattenedPathParts.length !== 4) {
-    throw new InvalidArgumentsError(
-      buildBlogPostUrl.name,
-      { flattenedPath },
-      `Invalid flattenedPath! Expected 3 or 4 parts, but got: ${flattenedPathParts.length}.`
-    );
+  if (pathParts.length !== 3 && pathParts.length !== 4) {
+    throw new InvalidArgumentsError(buildBlogPostUrl.name, { path }, `Invalid path! Expected 3 or 4 parts, but got: ${pathParts.length}.`);
   }
 
-  if (flattenedPathParts.length <= OPTIONAL_LOCALE_PART_INDEX + 1) {
-    const url = '/' + DEFAULT_LANGUAGE + root + flattenedPathParts.join('/');
+  if (pathParts.length <= OPTIONAL_LOCALE_PART_INDEX + 1) {
+    const url = '/' + DEFAULT_LANGUAGE + root + pathParts.join('/');
     return url;
   }
 
-  const localePart = flattenedPathParts[OPTIONAL_LOCALE_PART_INDEX];
-  flattenedPathParts.splice(OPTIONAL_LOCALE_PART_INDEX, 1);
-  const url = '/' + localePart + root + flattenedPathParts.join('/');
+  const localePart = pathParts[OPTIONAL_LOCALE_PART_INDEX];
+  pathParts.splice(OPTIONAL_LOCALE_PART_INDEX, 1);
+  const url = '/' + localePart + root + pathParts.join('/');
   return url;
 }
 
