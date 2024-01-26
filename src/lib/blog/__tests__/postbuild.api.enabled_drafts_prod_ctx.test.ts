@@ -22,7 +22,7 @@ vi.mock('@/config/blog', async (orgImport) => {
   };
 });
 
-describe('getPostStrict', () => {
+describe('getPostStrict (happy paths)', () => {
   it('should always return a valid post when picking a non-draft post in an authorized drafts CTX', async () => {
     const [category, subcategory, targettedSlug] = [BlogConfig.TESTING_CATEGORY, TESTING_BLOG_FAKE_SUBCATEGORY, 'fake-post-01' as const];
     const language = DEFAULT_LANGUAGE;
@@ -52,7 +52,7 @@ describe('getPostStrict', () => {
   });
 });
 
-describe('getBlogPostUnstrict', () => {
+describe('getBlogPostUnstrict (unhappy paths)', () => {
   it('should return null, given invalid slug', async () => {
     const posts = await getBlogPostUnstrict(BlogConfig.TESTING_CATEGORY, TESTING_BLOG_FAKE_SUBCATEGORY, '__INVALID_SLUG__', DEFAULT_LANGUAGE);
     expect(posts).toBe(null);

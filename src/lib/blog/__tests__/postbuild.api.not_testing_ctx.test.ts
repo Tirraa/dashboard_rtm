@@ -17,7 +17,7 @@ vi.mock('../ctx', async (orgImport) => {
   } satisfies typeof mod;
 });
 
-describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict', () => {
+describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict (unhappy paths)', () => {
   it('should return an empty list, given testing category in not testing ctx', async () => {
     const posts = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(
       BlogConfig.TESTING_CATEGORY,
@@ -28,7 +28,7 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict', () => {
   });
 });
 
-describe('getBlogPostUnstrict', () => {
+describe('getBlogPostUnstrict (unhappy paths)', () => {
   it('should return null, given testing category in not testing ctx', async () => {
     const posts = await getBlogPostUnstrict(BlogConfig.TESTING_CATEGORY, TESTING_BLOG_FAKE_SUBCATEGORY, 'fake-post-01', DEFAULT_LANGUAGE);
     expect(posts).toBe(null);

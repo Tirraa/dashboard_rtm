@@ -31,7 +31,7 @@ vi.mock('../ctx', async (orgImport) => {
   } satisfies typeof mod;
 });
 
-describe('getPostStrict', () => {
+describe('getPostStrict (happy paths)', () => {
   it('should always return a valid post', async () => {
     const [category, subcategory, targettedSlug] = [BlogConfig.TESTING_CATEGORY, TESTING_BLOG_FAKE_SUBCATEGORY, 'fake-post-01' as const];
     const language = DEFAULT_LANGUAGE;
@@ -45,7 +45,7 @@ describe('getPostStrict', () => {
   });
 });
 
-describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict', () => {
+describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict (happy paths)', () => {
   it("should return 5 posts, given the fake language 'posts'", async () => {
     const postsCollection = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict(
       BlogConfig.TESTING_CATEGORY,
@@ -97,7 +97,7 @@ describe('isValidBlogCategoryAndSubcategoryPair', () => {
   });
 });
 
-describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict', () => {
+describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict (unhappy paths)', () => {
   it('should return empty list, given invalid combination', async () => {
     const posts = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(
       BlogConfig.TESTING_CATEGORY,
@@ -109,7 +109,7 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict', () => {
   });
 });
 
-describe('getBlogPostPathWithoutI18nPart', () => {
+describe('getBlogPostPathWithoutI18nPart (happy paths)', () => {
   it('should return the path without its language part', async () => {
     const [category, subcategory, language, targettedSlug] = [
       BlogConfig.TESTING_CATEGORY,
@@ -162,7 +162,7 @@ describe('getSlicedBlogPostDescription', () => {
   });
 });
 
-describe('getAllBlogPostsByCategoryAndLanguage', () => {
+describe('getAllBlogPostsByCategoryAndLanguage (happy paths)', () => {
   it('should pass', async () => {
     const posts = (await getAllBlogPostsByCategoryAndLanguage(
       BlogConfig.TESTING_CATEGORY,
@@ -218,7 +218,7 @@ describe('getAllBlogPostsByCategoryAndLanguage', () => {
   });
 });
 
-describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict', () => {
+describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict (happy paths)', () => {
   it('should pass', async () => {
     const posts = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(
       BlogConfig.TESTING_CATEGORY,
