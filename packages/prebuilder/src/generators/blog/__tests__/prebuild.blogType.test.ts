@@ -1,7 +1,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { INDEX_TOKEN } from '##/lib/builders/unifiedImport';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { describe, expect, it } from 'vitest';
 
-import { INDEX_TOKEN } from '../../../../../../interop/lib/builders/unifiedImport';
 import generateBlogType from '../blogType';
 
 const fs = require('fs/promises');
