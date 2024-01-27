@@ -13,7 +13,7 @@ const path = require('path');
 const localesExtension = '.ts';
 const ERROR_PREFIX = formatMessage('failedToPassThePrebuild' satisfies VocabKey);
 
-async function localeFileInfosValidator(localeFilePath: string): Promise<MaybeEmptyErrorsDetectionFeedback> {
+async function localeFileInfosValidator(localeFilePath: Path): Promise<MaybeEmptyErrorsDetectionFeedback> {
   let feedback: ErrorsDetectionFeedback = '';
 
   const localeMetadatas = await retrieveLocaleFileInfosMetadatas(localeFilePath);
@@ -32,7 +32,7 @@ async function localeFileInfosValidator(localeFilePath: string): Promise<MaybeEm
 /**
  * @throws {BuilderError}
  */
-export default async function localesInfosValidator(localesFolder: string, i18nSchemaFilePath: Path): Promise<MaybeEmptyErrorsDetectionFeedback> {
+export default async function localesInfosValidator(localesFolder: Path, i18nSchemaFilePath: Path): Promise<MaybeEmptyErrorsDetectionFeedback> {
   const ERROR_PREFIX_TAIL = formatMessage('localesInfosValidatorTail' satisfies VocabKey);
   let feedback: ErrorsDetectionFeedback = '';
 

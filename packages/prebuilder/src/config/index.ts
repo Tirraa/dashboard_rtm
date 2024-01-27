@@ -4,6 +4,7 @@ import type { FormatCodeSettings } from 'ts-morph';
 
 /* ⚙️ Tweakers - SAFE */
 // {Note} It would be great to provide a config path flag + handle config file parsing and injection... maybe the next decade? ¯\_(ツ)_/¯
+export const MAX_PAGE_TAXONOMY_LEN: number = 80;
 export const MAX_BLOG_TAXONOMY_LEN: number = 34;
 export const MAX_LP_TAXONOMY_LEN: number = 128;
 
@@ -32,6 +33,7 @@ export const I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = [...MY_I18N_SU
 export const LIST_ELEMENT_PREFIX: string = '\n - ';
 export const TS_MORPH_FORMATTER_SETTINGS = { ensureNewLineAtEndOfFile: true, indentSize: 2 } as const satisfies FormatCodeSettings;
 
+export const PAGE_FILE_EXT: string = '.mdx';
 export const BLOG_POST_FILE_EXT: string = '.mdx';
 export const LP_FILE_EXT: string = '.mdx';
 export const I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_PREFIX: string = '_';

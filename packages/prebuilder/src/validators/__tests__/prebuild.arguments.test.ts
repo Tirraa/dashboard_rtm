@@ -1,20 +1,15 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { NOT_A_DIRECTORY_NEEDLE, BREAKING_DEP_NEEDLE, NOT_A_FILE_NEEDLE, CANT_OPEN_NEEDLE, CANT_OMIT_NEEDLE, CANT_USE_NEEDLE } from '𝕍/needles';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { afterEach, describe, expect, it, vi } from 'vitest';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { INVALID_PATH } from '𝕍/commons';
 
 import ArgumentsValidatorError from '../../errors/ArgumentsValidatorError';
 import { getCurrentLocale } from '../../config/formatMessage';
 import { DEFAULT_LOCALE } from '../../config/translations';
 import parseArguments from '../arguments';
 import { FLAGS } from '../../config';
-
-const INVALID_PATH = './bless/the/draco/these/rounds/holy/sorry/bout/your/luck';
-
-const NOT_A_DIRECTORY_NEEDLE = 'NOT a directory'.toLowerCase();
-const NOT_A_FILE_NEEDLE = 'NOT a file'.toLowerCase();
-const CANT_OPEN_NEEDLE = "Can't open".toLowerCase();
-const CANT_USE_NEEDLE = "can't use".toLocaleLowerCase();
-const CANT_OMIT_NEEDLE = "can't omit".toLocaleLowerCase();
-const BREAKING_DEP_NEEDLE = 'Breaking dependency'.toLocaleLowerCase();
 
 const VALID_I18N_LOCALES_SCHEMA_FILEPATH = './packages/prebuilder/src/validators/__tests__/fake_locales/valid_fake_locales/schema.ts';
 

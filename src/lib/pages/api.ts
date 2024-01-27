@@ -8,7 +8,6 @@ import PagesConfig from '@/config/pages';
 
 import ComputedPagesCtx from './ctx';
 
-// {ToDo} Write tests
 export function getPageByPathAndLanguageUnstrict(language: LanguageFlag, path: UnknownPagePath): MaybeNull<Page> {
   const matchingPage =
     allPages.find(({ language: currentLanguage, path: currentPath }) => currentPath === path && currentLanguage === language) ?? null;
@@ -19,4 +18,5 @@ export function getPageByPathAndLanguageUnstrict(language: LanguageFlag, path: U
 }
 
 // {ToDo} Codegen + strict impl
+// {ToDo} Write tests on getPageByPathAndLanguageStrict to cover both Strict and Unstrict impls
 // export const getPageByPathAndLanguageStrict

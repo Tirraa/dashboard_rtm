@@ -5,16 +5,7 @@ import buildPageRoot from '../root';
 
 describe('root', () => {
   const root = 'root';
-  it('should return a valid root, given a valid input', () => {
-    expect(
-      buildPageRoot({
-        _raw: {
-          flattenedPath: PAGES_FOLDER + '/'
-        },
-        _id: '_'
-      })
-    ).toBe('');
-
+  it('should return the top level root, given a valid input', () => {
     expect(
       buildPageRoot({
         _raw: {
@@ -22,7 +13,7 @@ describe('root', () => {
         },
         _id: '_'
       })
-    ).toBe('');
+    ).toBe('/');
 
     expect(
       buildPageRoot({
@@ -43,7 +34,7 @@ describe('root', () => {
     ).toBe(root);
   });
 
-  it('should return a valid root, given a valid input (with default language root)', () => {
+  it('should return the top level root, given a valid input (with default language root)', () => {
     expect(
       buildPageRoot({
         _raw: {
@@ -51,7 +42,7 @@ describe('root', () => {
         },
         _id: '_'
       })
-    ).toBe('');
+    ).toBe('/');
 
     expect(
       buildPageRoot({
@@ -72,15 +63,15 @@ describe('root', () => {
     ).toBe(root);
   });
 
-  it('should throw, given an invalid flattenedPath', () => {
-    expect(() =>
+  it('should return the top level root, given a flattenedPath corresponding to index notation', () => {
+    expect(
       buildPageRoot({
         _raw: {
           flattenedPath: PAGES_FOLDER
         },
         _id: '_'
       })
-    ).toThrowError(InvalidArgumentsError);
+    ).toBe('/');
   });
 
   it('should NOT be fault tolerant', () => {

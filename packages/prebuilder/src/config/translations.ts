@@ -2,7 +2,16 @@
 // Stryker disable all
 import { capitalize } from 'inflection';
 
-import { LOCALES_INFOS_ROOT_KEY, LOCALES_LNG_INFOS_KEY, MAX_BLOG_TAXONOMY_LEN, MAX_LP_TAXONOMY_LEN, BUGTRACKER_URL, DOC_URL, FLAGS } from '.';
+import {
+  LOCALES_INFOS_ROOT_KEY,
+  LOCALES_LNG_INFOS_KEY,
+  MAX_BLOG_TAXONOMY_LEN,
+  MAX_PAGE_TAXONOMY_LEN,
+  MAX_LP_TAXONOMY_LEN,
+  BUGTRACKER_URL,
+  DOC_URL,
+  FLAGS
+} from '.';
 
 const KNOWN_OPTIONS = Object.values(FLAGS).join(', ');
 
@@ -29,12 +38,14 @@ const VOCAB_TOKENS = {
       OPTIONS: 'option'
     },
     M_SINGULAR: {
+      NESTINGS: 'embranchement',
       PREBUILDER: 'prebuilder',
       PREBUILD: 'prebuild',
       INVALID: 'invalide',
       SLUGS: 'slug'
     },
     M_PLURAL: {
+      NESTINGS: 'embranchements',
       INVALID: 'invalides',
       SLUGS: 'slugs'
     }
@@ -46,12 +57,14 @@ const VOCAB_TOKENS = {
       CATEGORIES: 'category',
       TAXONOMY: 'taxonomy',
       PREBUILD: 'prebuild',
+      NESTINGS: 'nesting',
       LOCALES: 'locale',
       SLUGS: 'slug'
     },
     N_PLURAL: {
       SUBCATEGORIES: 'subcategories',
       CATEGORIES: 'categories',
+      NESTINGS: 'nestings',
       LOCALES: 'locales',
       SLUGS: 'slugs'
     },
@@ -88,6 +101,7 @@ const DEFAULT_TRANSLATION = {
   lpCodegenBenchmark: 'Generated landing pages related code in ~{duration}s',
 
   validatedLocalesInfosBenchmark: `Validated ${VOCAB_TOKENS.en.N_PLURAL.LOCALES} infos in ~{duration}s`,
+  validatedPagesTaxonomyBenchmark: `Validated pages ${VOCAB_TOKENS.en.N_SINGULAR.TAXONOMY} in ~{duration}s`,
   validatedBlogTaxonomyBenchmark: `Validated blog ${VOCAB_TOKENS.en.N_SINGULAR.TAXONOMY} in ~{duration}s`,
   validatedLpTaxonomyBenchmark: `Validated landing pages ${VOCAB_TOKENS.en.N_SINGULAR.TAXONOMY} in ~{duration}s`,
 
@@ -104,6 +118,8 @@ const DEFAULT_TRANSLATION = {
   disableBothI18nAndPagesAnalysisMaybeAdvice: `↳ Maybe you want to use the '${FLAGS.NO_I18N}' and '${FLAGS.NO_PAGES}' ${VOCAB_TOKENS.en.F_PLURAL.OPTIONS}?`,
   disableBothI18nAndBlogAnalysisMaybeAdvice: `↳ Maybe you want to use the '${FLAGS.NO_I18N}' and '${FLAGS.NO_BLOG}' ${VOCAB_TOKENS.en.F_PLURAL.OPTIONS}?`,
   disableBothI18nAndLpAnalysisMaybeAdvice: `↳ Maybe you want to use the '${FLAGS.NO_I18N}' and '${FLAGS.NO_LP}' ${VOCAB_TOKENS.en.F_PLURAL.OPTIONS}?`,
+
+  pagesNamingConstraint: `Only dashes and alphanumeric characters are allowed, with the requirement that the first character MUST be a letter or a digit. Also, the maximum length allowed is: ${MAX_PAGE_TAXONOMY_LEN} characters.`,
 
   blogNamingConstraint: `Only dashes and alphanumeric characters are allowed, with the requirement that the first character MUST be a letter or a digit. Also, the maximum length allowed is: ${MAX_BLOG_TAXONOMY_LEN} characters.`,
 
@@ -136,6 +152,11 @@ const DEFAULT_TRANSLATION = {
     =0 {__NEVER__}
     =1 {${capitalize(VOCAB_TOKENS.en.INVARIABLE.INVALID)} ${VOCAB_TOKENS.en.N_SINGULAR.SLUGS} in the ''{folderWithDefects}'' folder:}
     other {${capitalize(VOCAB_TOKENS.en.INVARIABLE.INVALID)} ${VOCAB_TOKENS.en.N_PLURAL.SLUGS} in the ''{folderWithDefects}'' folder:}
+  }`,
+  invalidNestings: `{count, plural,
+    =0 {__NEVER__}
+    =1 {${capitalize(VOCAB_TOKENS.en.INVARIABLE.INVALID)} ${VOCAB_TOKENS.en.N_SINGULAR.NESTINGS}:}
+    other {${capitalize(VOCAB_TOKENS.en.INVARIABLE.INVALID)} ${VOCAB_TOKENS.en.N_PLURAL.NESTINGS}:}
   }`,
   unknownOptions: `{count, plural,
     =0 {__NEVER__}
@@ -188,6 +209,7 @@ const translations = {
     lpCodegenBenchmark: 'Code relatif aux landing pages généré en ~{duration}s',
 
     validatedLocalesInfosBenchmark: `Validation des champs 'infos' des ${VOCAB_TOKENS.fr.F_PLURAL.LOCALES} effectuée en ~{duration}s`,
+    validatedPagesTaxonomyBenchmark: `Validation de la ${VOCAB_TOKENS.fr.F_SINGULAR.TAXONOMY} des pages effectuée en ~{duration}s`,
     validatedBlogTaxonomyBenchmark: `Validation de la ${VOCAB_TOKENS.fr.F_SINGULAR.TAXONOMY} du blog effectuée en ~{duration}s`,
     validatedLpTaxonomyBenchmark: `Validation de la ${VOCAB_TOKENS.fr.F_SINGULAR.TAXONOMY} des landing pages en ~{duration}s`,
 
@@ -204,6 +226,8 @@ const translations = {
     disableBothI18nAndPagesAnalysisMaybeAdvice: `↳ Peut-être que vous voudriez utiliser les ${VOCAB_TOKENS.fr.F_PLURAL.OPTIONS} "${FLAGS.NO_I18N}" et "${FLAGS.NO_PAGES}" ?`,
     disableBothI18nAndBlogAnalysisMaybeAdvice: `↳ Peut-être que vous voudriez utiliser les ${VOCAB_TOKENS.fr.F_PLURAL.OPTIONS} "${FLAGS.NO_I18N}" et "${FLAGS.NO_BLOG}" ?`,
     disableBothI18nAndLpAnalysisMaybeAdvice: `↳ Peut-être que vous voudriez utiliser les ${VOCAB_TOKENS.fr.F_PLURAL.OPTIONS} "${FLAGS.NO_I18N}" et "${FLAGS.NO_LP}" ?`,
+
+    pagesNamingConstraint: `Seuls les tirets et les caractères alphanumériques sont autorisés. De plus, le premier caractère DOIT être une lettre ou un chiffre. Enfin, la longueur maximale autorisée est de ${MAX_PAGE_TAXONOMY_LEN} caractères.`,
 
     blogNamingConstraint: `Seuls les tirets et les caractères alphanumériques sont autorisés. De plus, le premier caractère DOIT être une lettre ou un chiffre. Enfin, la longueur maximale autorisée est de ${MAX_BLOG_TAXONOMY_LEN} caractères.`,
 
@@ -237,6 +261,11 @@ const translations = {
       =1 {${capitalize(VOCAB_TOKENS.fr.M_SINGULAR.SLUGS)} ${VOCAB_TOKENS.fr.M_SINGULAR.INVALID} dans le dossier "{folderWithDefects}" :}
       other {${capitalize(VOCAB_TOKENS.fr.M_PLURAL.SLUGS)} ${VOCAB_TOKENS.fr.M_PLURAL.INVALID} dans le dossier "{folderWithDefects}" :}
     }`,
+    invalidNestings: `{count, plural,
+    =0 {__NEVER__}
+    =1 {${capitalize(VOCAB_TOKENS.fr.M_SINGULAR.NESTINGS)} ${VOCAB_TOKENS.fr.M_SINGULAR.INVALID} :}
+    other {${capitalize(VOCAB_TOKENS.fr.M_PLURAL.NESTINGS)} ${VOCAB_TOKENS.fr.M_PLURAL.INVALID} :}
+  }`,
     unknownOptions: `{count, plural,
       =0 {__NEVER__}
       =1 {• ${capitalize(VOCAB_TOKENS.fr.F_SINGULAR.OPTIONS)} ${VOCAB_TOKENS.fr.F_SINGULAR.UNKNOWN} : {UNKNOWN_OPTIONS}\n(Les ${
@@ -293,6 +322,7 @@ type VocabTokens =
   | 'CATEGORIES'
   | 'PREBUILD'
   | 'TAXONOMY'
+  | 'NESTINGS'
   | 'LOCALES'
   | 'OPTIONS'
   | 'UNKNOWN'

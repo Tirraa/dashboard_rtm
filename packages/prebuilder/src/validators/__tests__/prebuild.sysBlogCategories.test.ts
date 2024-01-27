@@ -1,9 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { INVALID_CATEGORIES_NEEDLE, INVALID_CATEGORY_NEEDLE } from '𝕍/needles';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { describe, expect, it } from 'vitest';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { INVALID_PATH } from '𝕍/commons';
 
 import sysBlogCategoriesValidator from '../sysBlogCategories';
-
-const INVALID_PATH = './bless/the/draco/these/rounds/holy/sorry/bout/your/luck';
 
 const VALID_BLOG_POSTS_FOLDER = './packages/prebuilder/src/validators/__tests__/fake_posts_folders/valid_fake_posts_folder';
 
@@ -12,9 +14,6 @@ const INVALID_BLOG_POSTS_FOLDER_CONTAINING_ONE_INVALID_BLOG_CATEGORY =
 
 const INVALID_BLOG_POSTS_FOLDER_CONTAINING_SEVERAL_INVALID_BLOG_CATEGORIES =
   './packages/prebuilder/src/validators/__tests__/fake_posts_folders/invalid_fake_posts_folder_several_invalid_categories';
-
-const INVALID_CATEGORY_NEEDLE = 'Invalid category'.toLowerCase();
-const INVALID_CATEGORIES_NEEDLE = 'Invalid categories'.toLowerCase();
 
 const EMPTY_FEEDBACK = '';
 

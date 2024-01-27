@@ -29,6 +29,7 @@ import sysLpCategoriesValidator from './validators/sysLpCategories';
 import sysLpSlugsValidator from './validators/sysLpSlugs';
 import getLpMetadatas from './metadatas-builders/landingPagesMetadatas';
 import generateLandingPageType from './generators/lp/lpType';
+import sysPagesValidator from './validators/sysPages';
 /* eslint-enable perfectionist/sort-imports */
 
 const BENCHMARK_ACCURACY = 5;
@@ -38,6 +39,8 @@ const HANDLED_ERRORS_TYPES = [FeedbackError, BuilderError, ArgumentsValidatorErr
 let [
   localesCheckersStartTime,
   localesCheckersEndTime,
+  pagesTaxonomyCheckersStartTime,
+  pagesTaxonomyCheckersEndTime,
   blogTaxonomyCheckersStartTime,
   blogTaxonomyCheckersEndTime,
   blogCodegenStartTime,
@@ -56,7 +59,9 @@ function printPrebuilderDoneMsg(sideEffectAtExit?: () => void) {
 }
 
 function printPrebuildReport({
+  pagesTaxonomyCheckersStartTime,
   blogTaxonomyCheckersStartTime,
+  pagesTaxonomyCheckersEndTime,
   blogTaxonomyCheckersEndTime,
   lpTaxonomyCheckersStartTime,
   lpTaxonomyCheckersEndTime,
@@ -68,7 +73,9 @@ function printPrebuildReport({
   lpCodegenEndTime,
   globalStartTime
 }: Partial<{
+  pagesTaxonomyCheckersStartTime: number;
   blogTaxonomyCheckersStartTime: number;
+  pagesTaxonomyCheckersEndTime: number;
   blogTaxonomyCheckersEndTime: number;
   lpTaxonomyCheckersStartTime: number;
   lpTaxonomyCheckersEndTime: number;
@@ -85,8 +92,17 @@ function printPrebuildReport({
   const computeDelay = (maybeStart: MaybeUndefined<number>, maybeEnd: MaybeUndefined<number>) =>
     maybeStart === undefined || maybeEnd === undefined ? IGNORED : (Math.abs(maybeEnd - maybeStart) / 1e3).toFixed(BENCHMARK_ACCURACY);
 
-  const [localesElapsedTime, blogTaxonomyElapsedTime, lpTaxonomyElapsedTime, blogCodegenElapsedTime, lpCodegenElapsedTime, totalGlobalElapsedTime] = [
+  const [
+    localesElapsedTime,
+    pagesTaxonomyElapsedTime,
+    blogTaxonomyElapsedTime,
+    lpTaxonomyElapsedTime,
+    blogCodegenElapsedTime,
+    lpCodegenElapsedTime,
+    totalGlobalElapsedTime
+  ] = [
     computeDelay(localesCheckersStartTime, localesCheckersEndTime),
+    computeDelay(pagesTaxonomyCheckersStartTime, pagesTaxonomyCheckersEndTime),
     computeDelay(blogTaxonomyCheckersStartTime, blogTaxonomyCheckersEndTime),
     computeDelay(lpTaxonomyCheckersStartTime, lpTaxonomyCheckersEndTime),
     computeDelay(blogCodegenStartTime, blogCodegenEndTime),
@@ -97,6 +113,7 @@ function printPrebuildReport({
   (
     [
       ['validatedLocalesInfosBenchmark', localesElapsedTime],
+      ['validatedPagesTaxonomyBenchmark', pagesTaxonomyElapsedTime],
       ['validatedBlogTaxonomyBenchmark', blogTaxonomyElapsedTime],
       ['validatedLpTaxonomyBenchmark', lpTaxonomyElapsedTime],
       ['blogCodegenBenchmark', blogCodegenElapsedTime],
@@ -107,6 +124,16 @@ function printPrebuildReport({
     if (duration === IGNORED) return;
     console.log(formatMessage(label satisfies VocabKey, { duration }));
   });
+}
+
+/**
+ * @effect {Benchmark}
+ */
+async function pagesTaxonomyValidator(PAGES_FOLDER: Path) {
+  pagesTaxonomyCheckersStartTime = performance.now();
+  const pagesValidatorResult = await sysPagesValidator(PAGES_FOLDER);
+  pagesTaxonomyCheckersEndTime = performance.now();
+  return pagesValidatorResult;
 }
 
 /**
@@ -217,6 +244,7 @@ async function processPrebuild() {
       [FLAGS.SKIP_BENCHMARKS]: SKIP_BENCHMARKS,
       [FLAGS.LANDING_PAGES_FOLDER]: LP_FOLDER,
       [FLAGS.PRETTY_CODEGEN]: PRETTY_CODEGEN,
+      [FLAGS.PAGES_FOLDER]: PAGES_FOLDER,
       [FLAGS.NO_PAGES]: NO_PAGES,
       [FLAGS.NO_I18N]: NO_I18N,
       [FLAGS.NO_BLOG]: NO_BLOG,
@@ -234,17 +262,20 @@ async function processPrebuild() {
       return;
     }
 
-    // {ToDo} Handle pages
-
+    const PHONY_PAGES_CHECKERS_RESULT = { arborescence: [], feedback: '' } as const;
+    const pagesFeedbackPromise = !NO_PAGES ? pagesTaxonomyValidator(PAGES_FOLDER) : PHONY_PAGES_CHECKERS_RESULT;
     const blogFeedbackPromise = !NO_BLOG ? blogTaxonomyValidator(BLOG_POSTS_FOLDER) : '';
     const lpFeedbackPromise = !NO_LP ? lpTaxonomyValidator(LP_FOLDER) : '';
-    const [blogFeedback, lpFeedback] = await Promise.all([blogFeedbackPromise, lpFeedbackPromise]);
+    const [pagesCheckerResult, blogFeedback, lpFeedback] = await Promise.all([pagesFeedbackPromise, blogFeedbackPromise, lpFeedbackPromise]);
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { arborescence: pagesArborescence, feedback: pagesCheckerFeedback } = pagesCheckerResult; // {ToDo} Remove eslint disable
 
     const ERROR_PREFIX = formatMessage('failedToPassThePrebuild' satisfies VocabKey);
-    const feedback = prefixFeedback(foldFeedbacks(localesValidatorFeedback, blogFeedback, lpFeedback), ERROR_PREFIX + '\n');
+    const feedback = prefixFeedback(foldFeedbacks(localesValidatorFeedback, pagesCheckerFeedback, blogFeedback, lpFeedback), ERROR_PREFIX + '\n');
     if (feedback) throw new FeedbackError(feedback);
 
-    // {ToDo} Handle pages
+    // {ToDo} Use pagesArborescence to process codegen
 
     await Promise.all([
       (!NO_BLOG && generateBlogCode(BLOG_POSTS_FOLDER, PRETTY_CODEGEN)) || generatePhonyBlogCode(),
@@ -255,7 +286,9 @@ async function processPrebuild() {
       () =>
         SKIP_BENCHMARKS ||
         printPrebuildReport({
+          pagesTaxonomyCheckersStartTime,
           blogTaxonomyCheckersStartTime,
+          pagesTaxonomyCheckersEndTime,
           blogTaxonomyCheckersEndTime,
           lpTaxonomyCheckersStartTime,
           lpTaxonomyCheckersEndTime,

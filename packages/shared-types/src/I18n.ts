@@ -7,7 +7,6 @@ import type { RemovePlural } from '@rtm/shared-types/international-types';
 import type { SHARED_VOCAB_SCHEMA } from '@/i18n/locales/schema';
 import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
 import type VOCAB_SCHEMA from '@/i18n/locales/schema';
-import type { getScopedI18n } from '@/i18n/server';
 
 type AllowedVocabObjValuesTypes = string;
 
@@ -37,8 +36,6 @@ type VocabBase = typeof VOCAB_SCHEMA;
 export type VocabType = MakeHomogeneousValuesObjType<VocabBase, VocabObjValue>;
 export type I18nVocabTarget = MakeVocabTargets<VocabBase>;
 export type I18nVocabScope = MakeVocabTargetsScopes<I18nVocabTarget>;
-
-export type UnstrictScopedT = Awaited<ReturnType<typeof getScopedI18n<I18nVocabScope>>>;
 
 export type I18nMiddlewareConfig = {
   urlMappingStrategy: 'rewriteDefault' | 'redirect';

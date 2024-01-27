@@ -1,9 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { INVALID_SLUGS_NEEDLE, INVALID_SLUG_NEEDLE } from '𝕍/needles';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { describe, expect, it } from 'vitest';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { INVALID_PATH } from '𝕍/commons';
 
 import sysLpSlugsValidator from '../sysLpSlugs';
-
-const INVALID_PATH = './bless/the/draco/these/rounds/holy/sorry/bout/your/luck';
 
 const VALID_LP_FOLDER = './packages/prebuilder/src/validators/__tests__/fake_lp_folders/valid_fake_lp_folder';
 
@@ -12,9 +14,6 @@ const INVALID_LP_FOLDER_CONTAINING_ONE_INVALID_LP_SLUG =
 
 const INVALID_LP_FOLDER_CONTAINING_SEVERAL_INVALID_LP_SLUGS =
   './packages/prebuilder/src/validators/__tests__/fake_lp_folders/invalid_fake_lp_folder_several_invalid_slugs';
-
-const INVALID_SLUG_NEEDLE = 'Invalid slug'.toLowerCase();
-const INVALID_SLUGS_NEEDLE = 'Invalid slugs'.toLowerCase();
 
 const EMPTY_FEEDBACK = '';
 

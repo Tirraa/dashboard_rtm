@@ -3,7 +3,13 @@ import type { AppPath } from '@rtm/shared-types/Next';
 
 import { getFlattenedPathWithoutRootFolder, isValidLanguageFlag, PAGES_FOLDER } from '../../../unifiedImport';
 
+const TOP_LEVEL_ROOT = '/';
+
 function buildPageRoot(page: DocumentToCompute): AppPath {
+  const { flattenedPath } = page._raw;
+  const flattenedPathFirstSlashIndex = flattenedPath.indexOf('/');
+  if (flattenedPathFirstSlashIndex === -1) return TOP_LEVEL_ROOT;
+
   let path = getFlattenedPathWithoutRootFolder(page._raw.flattenedPath, PAGES_FOLDER);
   const maybeLanguageEnvelopeEndSlashIndex = path.indexOf('/');
 
@@ -13,7 +19,7 @@ function buildPageRoot(page: DocumentToCompute): AppPath {
   }
 
   const maybeRootEnvelopeEndSlashIndex = path.indexOf('/');
-  if (maybeRootEnvelopeEndSlashIndex === -1) return '';
+  if (maybeRootEnvelopeEndSlashIndex === -1) return TOP_LEVEL_ROOT;
   const root = path.substring(0, maybeRootEnvelopeEndSlashIndex);
   return root;
 }

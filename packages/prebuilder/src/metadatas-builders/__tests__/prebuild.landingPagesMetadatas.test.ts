@@ -1,9 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { describe, expect, it } from 'vitest';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { INVALID_PATH } from '𝕍/commons';
 
 import getLpMetadatas from '../landingPagesMetadatas';
-
-const INVALID_PATH = './bless/the/draco/these/rounds/holy/sorry/bout/your/luck';
 
 const VALID_LP_FOLDER_PATH = './packages/prebuilder/src/metadatas-builders/__tests__/fake_lp_folder';
 

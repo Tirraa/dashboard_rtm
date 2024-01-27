@@ -2,10 +2,10 @@
 import BuilderError from '@rtm/prebuilder/errors/BuilderError';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { describe, expect, it } from 'vitest';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { INVALID_PATH } from '𝕍/commons';
 
 import retrieveLocaleFileInfosMetadatas from '../retrieveLocaleFileInfosMetadatas';
-
-const INVALID_PATH = './bless/the/draco/these/rounds/holy/sorry/bout/your/luck';
 
 const VALID_I18N_LOCALE_FILEPATH = './packages/prebuilder/src/metadatas-builders/__tests__/fake_locales/foo_valid_locale.ts';
 const INVALID_I18N_LOCALE_FILEPATH_NOT_EVALUABLE =

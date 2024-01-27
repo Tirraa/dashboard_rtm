@@ -2,10 +2,10 @@
 import BuilderError from '@rtm/prebuilder/errors/BuilderError';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { describe, expect, it } from 'vitest';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { INVALID_PATH } from '𝕍/commons';
 
 import localesInfosValidator from '../localesInfos';
-
-const INVALID_PATH = './bless/the/draco/these/rounds/holy/sorry/bout/your/luck';
 
 const VALID_LOCALES_FOLDER = './packages/prebuilder/src/validators/__tests__/fake_locales/valid_fake_locales';
 const VALID_I18N_LOCALES_SCHEMA_FILEPATH = './packages/prebuilder/src/validators/__tests__/fake_locales/valid_fake_locales/schema.ts';

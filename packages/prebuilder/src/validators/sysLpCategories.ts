@@ -1,4 +1,4 @@
-import type { MaybeEmptyErrorsDetectionFeedback } from '../types/Metadatas';
+import type { MaybeEmptyErrorsDetectionFeedback, Path } from '../types/Metadatas';
 import type { VocabKey } from '../config/translations';
 
 import { isValidLpTaxonomy } from './taxonomyConvention';
@@ -8,7 +8,7 @@ import { LIST_ELEMENT_PREFIX } from '../config';
 // https://github.com/vitest-dev/vitest/discussions/2484
 const fs = require('fs/promises');
 
-export default async function sysLpCategoriesValidator(lpFolder: string): Promise<MaybeEmptyErrorsDetectionFeedback> {
+export default async function sysLpCategoriesValidator(lpFolder: Path): Promise<MaybeEmptyErrorsDetectionFeedback> {
   let feedback = '';
 
   const categoriesWithDefects = [];

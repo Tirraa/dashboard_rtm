@@ -1,8 +1,9 @@
 'use client';
 
-import type { UnstrictScopedT, PagesTitlesKey, LanguageFlag } from '@rtm/shared-types/I18n';
+import type { PagesTitlesKey, LanguageFlag } from '@rtm/shared-types/I18n';
 import type { CustomCrumbs } from '@rtm/shared-types/Breadcrumbs';
 import type { FunctionComponent, ReactNode } from 'react';
+import type { getScopedI18n } from '@/i18n/server';
 
 import { buildAbsolutePathFromParts } from '@rtm/shared-lib/str';
 import { useCurrentLocale, useScopedI18n } from '@/i18n/client';
@@ -25,7 +26,7 @@ interface BreadcrumbsProps {
 function crumbsGenerator(
   pathParts: string[],
   withHomepageElement: boolean,
-  scopedT: UnstrictScopedT,
+  scopedT: Awaited<ReturnType<typeof getScopedI18n<typeof i18ns.pagesTitles>>>,
   currentLocale: LanguageFlag,
   customCrumbs?: CustomCrumbs
 ): ReactNode[] {

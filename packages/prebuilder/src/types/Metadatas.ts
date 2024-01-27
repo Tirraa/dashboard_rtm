@@ -23,8 +23,11 @@ export type File = {
   directory: string;
   name: string;
 };
+export type ProcessedFile = { directoriesChain: string[]; filename: string };
+export type Arborescence = ProcessedFile[];
 
 export type Path = string;
+export type PathSegment = string;
 export type Filename = string;
 // Stryker restore all
 /* v8 ignore stop */

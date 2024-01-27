@@ -1,9 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { describe, expect, it } from 'vitest';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { INVALID_PATH } from '𝕍/commons';
 
 import traverseAndMapFilepaths from '../traverseAndMapFilepaths';
-
-const INVALID_PATH = './bless/the/draco/these/rounds/holy/sorry/bout/your/luck';
 
 describe('traverseAndMapFilepaths', () => {
   it('should return an arborescence, given a valid RootFolder (full)', async () => {
