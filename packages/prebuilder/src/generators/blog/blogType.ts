@@ -17,10 +17,11 @@ export default async function generateBlogType(
     {
       statements: [
         {
-          type: JSON.stringify(blogArchitecture, (_, v) => (Array.isArray(v) ? v.map((slug) => `'${slug}'`).join(' | ') : v), 2).replace(
-            /"'|'"/g,
-            "'"
-          ),
+          type: JSON.stringify(
+            blogArchitecture,
+            (_, v) => (Array.isArray(v) ? v.map((slug) => `'${slug}'`).join(' | ') : v),
+            pretty ? 2 : undefined
+          ).replace(/"'|'"/g, "'"),
           kind: StructureKind.TypeAlias,
           name: __BLOG_TYPE_STR,
           isExported: false

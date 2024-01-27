@@ -8,7 +8,7 @@ import type { MaybeUndefined, Tuple } from '@rtm/shared-types/CustomUtilityTypes
 import { ArgError } from 'arg';
 import path from 'path';
 
-import type { MaybeEmptyErrorsDetectionFeedback, Path } from './types/Metadatas';
+import type { MaybeEmptyErrorsDetectionFeedback, Arborescence, Path } from './types/Metadatas';
 import type { VocabKey } from './config/translations';
 
 import { ROOT_FOLDER_RELATIVE_PATH_FROM_PREBUILDER_CTX, FLAGS } from './config';
@@ -28,8 +28,10 @@ import BuilderError from './errors/BuilderError';
 import sysLpCategoriesValidator from './validators/sysLpCategories';
 import sysLpSlugsValidator from './validators/sysLpSlugs';
 import getLpMetadatas from './metadatas-builders/landingPagesMetadatas';
-import generateLandingPageType from './generators/lp/lpType';
+import generateLandingPagesType from './generators/lp/lpType';
 import sysPagesValidator from './validators/sysPages';
+import getPagesArchitectureMetadatas from './metadatas-builders/pagesArchitectureMetadatas';
+import generatePagesType from './generators/pages/pagesType';
 /* eslint-enable perfectionist/sort-imports */
 
 const BENCHMARK_ACCURACY = 5;
@@ -39,6 +41,8 @@ const HANDLED_ERRORS_TYPES = [FeedbackError, BuilderError, ArgumentsValidatorErr
 let [
   localesCheckersStartTime,
   localesCheckersEndTime,
+  pagesCodegenStartTime,
+  pagesCodegenEndTime,
   pagesTaxonomyCheckersStartTime,
   pagesTaxonomyCheckersEndTime,
   blogTaxonomyCheckersStartTime,
@@ -67,7 +71,9 @@ function printPrebuildReport({
   lpTaxonomyCheckersEndTime,
   localesCheckersStartTime,
   localesCheckersEndTime,
+  pagesCodegenStartTime,
   blogCodegenStartTime,
+  pagesCodegenEndTime,
   blogCodegenEndTime,
   lpCodegenStartTime,
   lpCodegenEndTime,
@@ -81,7 +87,9 @@ function printPrebuildReport({
   lpTaxonomyCheckersEndTime: number;
   localesCheckersStartTime: number;
   localesCheckersEndTime: number;
+  pagesCodegenStartTime: number;
   blogCodegenStartTime: number;
+  pagesCodegenEndTime: number;
   blogCodegenEndTime: number;
   lpCodegenStartTime: number;
   lpCodegenEndTime: number;
@@ -97,6 +105,7 @@ function printPrebuildReport({
     pagesTaxonomyElapsedTime,
     blogTaxonomyElapsedTime,
     lpTaxonomyElapsedTime,
+    pagesCodegenElapsedTime,
     blogCodegenElapsedTime,
     lpCodegenElapsedTime,
     totalGlobalElapsedTime
@@ -105,6 +114,7 @@ function printPrebuildReport({
     computeDelay(pagesTaxonomyCheckersStartTime, pagesTaxonomyCheckersEndTime),
     computeDelay(blogTaxonomyCheckersStartTime, blogTaxonomyCheckersEndTime),
     computeDelay(lpTaxonomyCheckersStartTime, lpTaxonomyCheckersEndTime),
+    computeDelay(pagesCodegenStartTime, pagesCodegenEndTime),
     computeDelay(blogCodegenStartTime, blogCodegenEndTime),
     computeDelay(lpCodegenStartTime, lpCodegenEndTime),
     computeDelay(globalStartTime, performance.now())
@@ -116,6 +126,7 @@ function printPrebuildReport({
       ['validatedPagesTaxonomyBenchmark', pagesTaxonomyElapsedTime],
       ['validatedBlogTaxonomyBenchmark', blogTaxonomyElapsedTime],
       ['validatedLpTaxonomyBenchmark', lpTaxonomyElapsedTime],
+      ['pagesCodegenBenchmark', pagesCodegenElapsedTime],
       ['blogCodegenBenchmark', blogCodegenElapsedTime],
       ['lpCodegenBenchmark', lpCodegenElapsedTime],
       ['totalExecutionTimeBenchmark', totalGlobalElapsedTime]
@@ -124,6 +135,17 @@ function printPrebuildReport({
     if (duration === IGNORED) return;
     console.log(formatMessage(label satisfies VocabKey, { duration }));
   });
+}
+
+/**
+ * @effect {Benchmark}
+ */
+async function validateLocales(I18N_LOCALES_SCHEMA_FILEPATH: Path): Promise<MaybeEmptyErrorsDetectionFeedback> {
+  localesCheckersStartTime = performance.now();
+  const localesFolder = path.dirname(I18N_LOCALES_SCHEMA_FILEPATH);
+  const feedback = await localesInfosValidator(localesFolder, I18N_LOCALES_SCHEMA_FILEPATH);
+  localesCheckersEndTime = performance.now();
+  return feedback;
 }
 
 /**
@@ -170,6 +192,20 @@ async function lpTaxonomyValidator(LP_FOLDER: Path): Promise<MaybeEmptyErrorsDet
 /**
  * @effect {Benchmark}
  */
+async function generatePagesCode(pagesArborescence: Arborescence, PRETTY_CODEGEN: boolean) {
+  pagesCodegenStartTime = performance.now();
+  const pagesMetadatas = getPagesArchitectureMetadatas(pagesArborescence);
+  await generatePagesType(pagesMetadatas, PRETTY_CODEGEN);
+  pagesCodegenEndTime = performance.now();
+}
+
+async function generatePhonyPagesCode() {
+  await generatePagesType({}, false);
+}
+
+/**
+ * @effect {Benchmark}
+ */
 async function generateBlogCode(BLOG_POSTS_FOLDER: Path, PRETTY_CODEGEN: boolean) {
   blogCodegenStartTime = performance.now();
   const blogArchitecture = await getBlogArchitectureMetadatas(BLOG_POSTS_FOLDER);
@@ -192,23 +228,12 @@ async function generatePhonyBlogCode() {
 async function generateLpCode(LP_FOLDER: Path, PRETTY_CODEGEN: boolean) {
   lpCodegenStartTime = performance.now();
   const lpArchitecture = await getLpMetadatas(LP_FOLDER);
-  await generateLandingPageType(lpArchitecture, PRETTY_CODEGEN);
+  await generateLandingPagesType(lpArchitecture, PRETTY_CODEGEN);
   lpCodegenEndTime = performance.now();
 }
 
 async function generatePhonyLpCode() {
-  await generateLandingPageType({}, false);
-}
-
-/**
- * @effect {Benchmark}
- */
-async function validateLocales(I18N_LOCALES_SCHEMA_FILEPATH: Path): Promise<MaybeEmptyErrorsDetectionFeedback> {
-  localesCheckersStartTime = performance.now();
-  const localesFolder = path.dirname(I18N_LOCALES_SCHEMA_FILEPATH);
-  const feedback = await localesInfosValidator(localesFolder, I18N_LOCALES_SCHEMA_FILEPATH);
-  localesCheckersEndTime = performance.now();
-  return feedback;
+  await generateLandingPagesType({}, false);
 }
 
 function logError(error: unknown) {
@@ -262,22 +287,20 @@ async function processPrebuild() {
       return;
     }
 
-    const PHONY_PAGES_CHECKERS_RESULT = { arborescence: [], feedback: '' } as const;
+    const PHONY_PAGES_CHECKERS_RESULT = { arborescence: [] as Arborescence, feedback: '' } as const;
     const pagesFeedbackPromise = !NO_PAGES ? pagesTaxonomyValidator(PAGES_FOLDER) : PHONY_PAGES_CHECKERS_RESULT;
     const blogFeedbackPromise = !NO_BLOG ? blogTaxonomyValidator(BLOG_POSTS_FOLDER) : '';
     const lpFeedbackPromise = !NO_LP ? lpTaxonomyValidator(LP_FOLDER) : '';
     const [pagesCheckerResult, blogFeedback, lpFeedback] = await Promise.all([pagesFeedbackPromise, blogFeedbackPromise, lpFeedbackPromise]);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { arborescence: pagesArborescence, feedback: pagesCheckerFeedback } = pagesCheckerResult; // {ToDo} Remove eslint disable
+    const { arborescence: pagesArborescence, feedback: pagesCheckerFeedback } = pagesCheckerResult;
 
     const ERROR_PREFIX = formatMessage('failedToPassThePrebuild' satisfies VocabKey);
     const feedback = prefixFeedback(foldFeedbacks(localesValidatorFeedback, pagesCheckerFeedback, blogFeedback, lpFeedback), ERROR_PREFIX + '\n');
     if (feedback) throw new FeedbackError(feedback);
 
-    // {ToDo} Use pagesArborescence to process codegen
-
     await Promise.all([
+      (!NO_PAGES && generatePagesCode(pagesArborescence, PRETTY_CODEGEN)) || generatePhonyPagesCode(),
       (!NO_BLOG && generateBlogCode(BLOG_POSTS_FOLDER, PRETTY_CODEGEN)) || generatePhonyBlogCode(),
       (!NO_LP && generateLpCode(LP_FOLDER, PRETTY_CODEGEN)) || generatePhonyLpCode()
     ]);
@@ -294,7 +317,9 @@ async function processPrebuild() {
           lpTaxonomyCheckersEndTime,
           localesCheckersStartTime,
           localesCheckersEndTime,
+          pagesCodegenStartTime,
           blogCodegenStartTime,
+          pagesCodegenEndTime,
           blogCodegenEndTime,
           lpCodegenStartTime,
           lpCodegenEndTime,

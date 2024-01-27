@@ -3,19 +3,19 @@ import { INDEX_TOKEN } from '##/lib/builders/unifiedImport';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { describe, expect, it } from 'vitest';
 
-import generateLandingPageType from '../lpType';
+import generateLandingPagesType from '../lpType';
 
 const fs = require('fs');
 
 const __TARGET_FOLDER_ROOT = './packages/prebuilder/src/generators/lp/__tests__/FAKE_CODEGEN';
 const __TARGET_FOLDER = __TARGET_FOLDER_ROOT + '/' + 'LP_TYPE';
 
-describe('generateLandingPageType (formatted)', () => {
+describe('generateLandingPagesType (formatted)', () => {
   const pretty = true;
 
   it('should match snapshot', async () => {
     const targetFile = 'FAKE_EMPTY_LP_TYPE';
-    await generateLandingPageType({}, pretty, targetFile, __TARGET_FOLDER);
+    await generateLandingPagesType({}, pretty, targetFile, __TARGET_FOLDER);
 
     const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
@@ -23,7 +23,7 @@ describe('generateLandingPageType (formatted)', () => {
 
   it('should match snapshot', async () => {
     const targetFile = 'FAKE_LP_TYPE';
-    await generateLandingPageType(
+    await generateLandingPagesType(
       {
         'fake-category-one': {
           DEFAULT_LANGUAGE: ['fake-lp-01', 'fake-lp-02', 'fake-lp-03'],
@@ -50,12 +50,12 @@ describe('generateLandingPageType (formatted)', () => {
   });
 });
 
-describe('generateLandingPageType (ugly)', () => {
+describe('generateLandingPagesType (ugly)', () => {
   const pretty = false;
 
   it('should match snapshot', async () => {
     const targetFile = 'FAKE_EMPTY_LP_TYPE';
-    await generateLandingPageType({}, pretty, targetFile, __TARGET_FOLDER);
+    await generateLandingPagesType({}, pretty, targetFile, __TARGET_FOLDER);
 
     const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
@@ -63,7 +63,7 @@ describe('generateLandingPageType (ugly)', () => {
 
   it('should match snapshot', async () => {
     const targetFile = 'FAKE_LP_TYPE';
-    await generateLandingPageType(
+    await generateLandingPagesType(
       {
         'fake-category-one': {
           DEFAULT_LANGUAGE: ['fake-lp-01', 'fake-lp-02', 'fake-lp-03', INDEX_TOKEN],

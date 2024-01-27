@@ -37,6 +37,7 @@ export const PAGE_FILE_EXT: string = '.mdx';
 export const BLOG_POST_FILE_EXT: string = '.mdx';
 export const LP_FILE_EXT: string = '.mdx';
 export const I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_PREFIX: string = '_';
+export const PAGES_TYPE_STR: string = 'Pages';
 export const BLOG_TYPE_STR: string = 'Blog';
 export const LP_TYPE_STR: string = 'LandingPages';
 export const BLOG_ARCHITECTURE_TYPE_STR: string = 'BlogArchitecture';

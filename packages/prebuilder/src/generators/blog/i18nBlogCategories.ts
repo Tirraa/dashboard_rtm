@@ -95,7 +95,7 @@ export default async function generateI18nBlogCategories(
     JSON.stringify(
       generateSchema(blogArchitecture, __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS, __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS),
       null,
-      2
+      pretty ? 2 : undefined
     ).replace(/""|''|``/g, '_'),
     'const satisfies BlogCategoriesArtifact;\n'
   );

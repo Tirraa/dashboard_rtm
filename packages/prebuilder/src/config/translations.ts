@@ -97,6 +97,7 @@ const DEFAULT_TRANSLATION = {
   i18n: 'i18n',
   lp: 'landing pages',
 
+  pagesCodegenBenchmark: 'Generated pages related code in ~{duration}s',
   blogCodegenBenchmark: 'Generated blog related code in ~{duration}s',
   lpCodegenBenchmark: 'Generated landing pages related code in ~{duration}s',
 
@@ -205,6 +206,7 @@ const translations = {
     i18n: 'i18n',
     lp: 'landing pages',
 
+    pagesCodegenBenchmark: 'Code relatif aux pages généré en ~{duration}s',
     blogCodegenBenchmark: 'Code relatif au blog généré en ~{duration}s',
     lpCodegenBenchmark: 'Code relatif aux landing pages généré en ~{duration}s',
 
