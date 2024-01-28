@@ -1,7 +1,7 @@
 import type { PageProps } from '@/types/Page';
 
 import { isValidLanguageFlag, INDEX_TOKEN } from '##/lib/builders/unifiedImport';
-import { getPageByPathAndLanguageUnstrict } from '@/lib/pages/api';
+import { getPageByLanguageAndPathUnstrict } from '@/lib/pages/api';
 import { setStaticParamsLocale } from 'next-international/server';
 import MDX from '@/components/layouts/blog/MdxComponent';
 import PageTaxonomy from '##/config/taxonomies/pages';
@@ -15,7 +15,7 @@ import { i18ns } from '##/config/i18n';
 // {ToDo} Move this into its own API + test it
 export async function generateMetadata({ params }: PageProps) {
   const [path, language] = [params[PageTaxonomy.PATH].join('/'), params[I18nTaxonomy.LANGUAGE]];
-  const page = getPageByPathAndLanguageUnstrict(language, path);
+  const page = getPageByLanguageAndPathUnstrict(language, path);
   if (!page) notFound();
 
   const globalT = await getServerSideI18n();
@@ -34,7 +34,7 @@ export async function generateStaticParams() {
   for (const { language, path } of allPages) {
     if (path === INDEX_TOKEN) continue;
     if (!isValidLanguageFlag(language)) continue;
-    const page = getPageByPathAndLanguageUnstrict(language, path);
+    const page = getPageByLanguageAndPathUnstrict(language, path);
     if (!page) continue;
     staticParams.push({ [PageTaxonomy.PATH]: page.path.split('/'), [I18nTaxonomy.LANGUAGE]: page.language });
   }
@@ -46,7 +46,7 @@ export default function Page({ params }: PageProps) {
   setStaticParamsLocale(language);
 
   const path = params[PageTaxonomy.PATH].join('/');
-  const page = getPageByPathAndLanguageUnstrict(language, path);
+  const page = getPageByLanguageAndPathUnstrict(language, path);
 
   if (!page) notFound();
   return (

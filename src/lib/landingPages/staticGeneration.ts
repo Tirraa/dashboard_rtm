@@ -12,7 +12,7 @@ import { notFound } from 'next/navigation';
 import { i18ns } from '##/config/i18n';
 
 import doGetLandingPagesStaticParams from './static/getLandingPagesStaticParams';
-import { getLandingPageBySlugAndLanguageUnstrict } from './api';
+import { getLandingPageByLanguageAndSlugUnstrict } from './api';
 
 export async function getLandingPagesStaticParams() {
   const landingPagesStaticParams = await doGetLandingPagesStaticParams();
@@ -21,7 +21,7 @@ export async function getLandingPagesStaticParams() {
 
 export async function getLandingPageMetadatas({ params }: LandingPageProps) {
   const [lang, slug] = [params[I18nTaxonomy.LANGUAGE], params[LandingPageTaxonomy.SLUG]];
-  const lp: MaybeNull<LandingPage> = getLandingPageBySlugAndLanguageUnstrict(lang, slug);
+  const lp: MaybeNull<LandingPage> = getLandingPageByLanguageAndSlugUnstrict(lang, slug);
   if (!lp) notFound();
 
   const globalT = await getServerSideI18n();

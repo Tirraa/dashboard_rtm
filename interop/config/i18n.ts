@@ -28,3 +28,5 @@ export const i18ns = {
 
 export const DEFAULT_LANGUAGE = DEFAULT_LANGUAGE_OBJ._infos.lng satisfies LanguageFlag;
 export const LANGUAGES: LanguageFlag[] = getEnumKeys(ELanguagesFlag);
+
+export type DefaultLanguage = typeof DEFAULT_LANGUAGE;

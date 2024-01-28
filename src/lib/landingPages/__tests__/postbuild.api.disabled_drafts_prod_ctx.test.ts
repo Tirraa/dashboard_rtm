@@ -6,7 +6,7 @@ import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, it, vi } from 'vitest';
 import ROUTES_ROOTS from '##/config/routes';
 
-import { getLandingPageBySlugAndLanguageStrict } from '../api';
+import { getLandingPageByLanguageAndSlugStrict } from '../api';
 
 vi.mock('@/config/landingPages', async (orgImport) => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -20,12 +20,12 @@ vi.mock('@/config/landingPages', async (orgImport) => {
   };
 });
 
-describe('getLandingPageBySlugAndLanguageStrict (happy paths)', () => {
+describe('getLandingPageByLanguageAndSlugStrict (happy paths)', () => {
   it('should always return a valid lp', () => {
     const category = LandingPagesConfig.TESTING_CATEGORY;
     const targettedSlug = `${category}-fake-lp-00` as const;
     const language = DEFAULT_LANGUAGE;
-    const lp = getLandingPageBySlugAndLanguageStrict(DEFAULT_LANGUAGE, targettedSlug) as LandingPage;
+    const lp = getLandingPageByLanguageAndSlugStrict(DEFAULT_LANGUAGE, targettedSlug) as LandingPage;
 
     expect(lp.category).toBe(category);
     expect(lp.slug).toBe(targettedSlug);
@@ -34,10 +34,10 @@ describe('getLandingPageBySlugAndLanguageStrict (happy paths)', () => {
   });
 });
 
-describe('getLandingPageBySlugAndLanguageStrict (unhappy paths)', () => {
+describe('getLandingPageByLanguageAndSlugStrict (unhappy paths)', () => {
   it('should always return NULL when picking a draft lp in an unauthorized drafts CTX', () => {
     const targettedSlug = `${LandingPagesConfig.TESTING_CATEGORY}-fake-draft-lp-00` as const;
-    const lp = getLandingPageBySlugAndLanguageStrict(DEFAULT_LANGUAGE, targettedSlug) as LandingPage;
+    const lp = getLandingPageByLanguageAndSlugStrict(DEFAULT_LANGUAGE, targettedSlug) as LandingPage;
 
     expect(lp).toBe(null);
   });

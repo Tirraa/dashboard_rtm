@@ -7,7 +7,7 @@ import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, vi, it } from 'vitest';
 import ROUTES_ROOTS from '##/config/routes';
 
-import { getLandingPageBySlugAndLanguageStrict } from '../api';
+import { getLandingPageByLanguageAndSlugStrict } from '../api';
 
 vi.mock('../ctx', async (orgImport) => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -30,12 +30,12 @@ vi.mock('../../../../interop/config/i18n', async (orgImport) => {
   };
 });
 
-describe('getLandingPageBySlugAndLanguageStrict (happy paths)', () => {
+describe('getLandingPageByLanguageAndSlugStrict (happy paths)', () => {
   it('should always return a valid lp', () => {
     const category = LandingPagesConfig.TESTING_CATEGORY;
     const targettedSlug = `${category}-fake-lp-00` as const;
     const language = DEFAULT_LANGUAGE;
-    const lp = getLandingPageBySlugAndLanguageStrict(language, targettedSlug) as LandingPage;
+    const lp = getLandingPageByLanguageAndSlugStrict(language, targettedSlug) as LandingPage;
 
     expect(lp.category).toBe(category);
     expect(lp.slug).toBe(targettedSlug);
@@ -47,7 +47,7 @@ describe('getLandingPageBySlugAndLanguageStrict (happy paths)', () => {
     const category = LandingPagesConfig.TESTING_CATEGORY;
     const targettedSlug = `${category}-index` as const;
     const language = DEFAULT_LANGUAGE;
-    const lp = getLandingPageBySlugAndLanguageStrict(language, targettedSlug) as LandingPage;
+    const lp = getLandingPageByLanguageAndSlugStrict(language, targettedSlug) as LandingPage;
 
     expect(lp.category).toBe(category);
     expect(lp.slug).toBe(targettedSlug);
@@ -59,7 +59,7 @@ describe('getLandingPageBySlugAndLanguageStrict (happy paths)', () => {
     const category = LandingPagesConfig.TESTING_CATEGORY;
     const targettedSlug = `${category}-index` as const;
     const language = 'en' satisfies TLpFakeLanguage;
-    const lp = getLandingPageBySlugAndLanguageStrict(language, targettedSlug) as LandingPage;
+    const lp = getLandingPageByLanguageAndSlugStrict(language, targettedSlug) as LandingPage;
 
     expect(lp.category).toBe(category);
     expect(lp.slug).toBe(targettedSlug);
@@ -68,11 +68,11 @@ describe('getLandingPageBySlugAndLanguageStrict (happy paths)', () => {
   });
 });
 
-describe('getLandingPageBySlugAndLanguageStrict (unhappy paths)', () => {
+describe('getLandingPageByLanguageAndSlugStrict (unhappy paths)', () => {
   it('should always return null, given invalid slug', () => {
     const targettedSlug = '__INVALID__TARGETTED_SLUG__' as const;
     // @ts-expect-error
-    const lp = getLandingPageBySlugAndLanguageStrict(DEFAULT_LANGUAGE, targettedSlug);
+    const lp = getLandingPageByLanguageAndSlugStrict(DEFAULT_LANGUAGE, targettedSlug);
 
     expect(lp).toBe(null);
   });
@@ -80,7 +80,7 @@ describe('getLandingPageBySlugAndLanguageStrict (unhappy paths)', () => {
   it('should always return null, given invalid language', () => {
     const targettedSlug = 'testing-fake-lp-00' as const;
     // @ts-expect-error
-    const lp = getLandingPageBySlugAndLanguageStrict('__INVALID_LANGUAGE__', targettedSlug);
+    const lp = getLandingPageByLanguageAndSlugStrict('__INVALID_LANGUAGE__', targettedSlug);
 
     expect(lp).toBe(null);
   });

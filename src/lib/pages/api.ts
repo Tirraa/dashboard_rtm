@@ -1,6 +1,6 @@
+import type { UnknownPagePath, PageLang, PagePath } from '@/types/Page';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
-import type { UnknownPagePath } from '@/types/Page';
 import type { Page } from 'contentlayer/generated';
 
 import { allPages } from 'contentlayer/generated';
@@ -8,7 +8,7 @@ import PagesConfig from '@/config/pages';
 
 import ComputedPagesCtx from './ctx';
 
-export function getPageByPathAndLanguageUnstrict(language: LanguageFlag, path: UnknownPagePath): MaybeNull<Page> {
+export function getPageByLanguageAndPathUnstrict(language: LanguageFlag, path: UnknownPagePath): MaybeNull<Page> {
   const matchingPage =
     allPages.find(({ language: currentLanguage, path: currentPath }) => currentPath === path && currentLanguage === language) ?? null;
 
@@ -17,6 +17,6 @@ export function getPageByPathAndLanguageUnstrict(language: LanguageFlag, path: U
   return matchingPage;
 }
 
-// {ToDo} Codegen + strict impl
-// {ToDo} Write tests on getPageByPathAndLanguageStrict to cover both Strict and Unstrict impls
-// export const getPageByPathAndLanguageStrict
+// {ToDo} Write tests
+export const getPageByLanguageAndPathStrict = <L extends PageLang>(lang: L, path: PagePath<L>): MaybeNull<Page> =>
+  getPageByLanguageAndPathUnstrict(lang as any, path as any);

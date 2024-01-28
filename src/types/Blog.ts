@@ -7,7 +7,7 @@ import type { WithClassname } from '@rtm/shared-types/Next';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type BlogTaxonomy from '##/config/taxonomies/blog';
 import type { PostSchema } from 'contentlayer/generated';
-import type { DEFAULT_LANGUAGE } from '##/config/i18n';
+import type { DefaultLanguage } from '##/config/i18n';
 import type Blog from '@rtm/generated/Blog';
 
 import type { I18nParams } from './Next';
@@ -61,7 +61,7 @@ export type StrictBlog = {
   [Category in keyof Blog]: {
     [Subcategory in keyof Blog[Category]]: {
       [Language in keyof Blog[Category][Subcategory] as Language extends 'DEFAULT_LANGUAGE'
-        ? typeof DEFAULT_LANGUAGE
+        ? DefaultLanguage
         : Language]: Blog[Category][Subcategory][Language];
     };
   };

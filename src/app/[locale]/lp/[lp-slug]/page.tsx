@@ -5,7 +5,7 @@ import type { LandingPageProps } from '@/types/LandingPage';
 import type { LandingPage } from 'contentlayer/generated';
 
 import { getLandingPagesStaticParams, getLandingPageMetadatas } from '@/lib/landingPages/staticGeneration';
-import { getLandingPageBySlugAndLanguageUnstrict } from '@/lib/landingPages/api';
+import { getLandingPageByLanguageAndSlugUnstrict } from '@/lib/landingPages/api';
 import LandingPageTaxonomy from '##/config/taxonomies/landingPages';
 import { setStaticParamsLocale } from 'next-international/server';
 import MDX from '@/components/layouts/blog/MdxComponent';
@@ -27,7 +27,7 @@ export default function Page({ params }: LandingPageProps) {
   setStaticParamsLocale(language);
 
   const slug = params[LandingPageTaxonomy.SLUG];
-  const lp: MaybeNull<LandingPage> = getLandingPageBySlugAndLanguageUnstrict(language, slug);
+  const lp: MaybeNull<LandingPage> = getLandingPageByLanguageAndSlugUnstrict(language, slug);
   if (!lp) notFound();
 
   return (

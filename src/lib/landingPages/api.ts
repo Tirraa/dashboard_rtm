@@ -8,7 +8,7 @@ import LandingPagesConfig from '@/config/landingPages';
 
 import ComputedLandingPagesCtx from './ctx';
 
-export function getLandingPageBySlugAndLanguageUnstrict(language: LanguageFlag, slug: UnknownLandingPageSlug): MaybeNull<LandingPage> {
+export function getLandingPageByLanguageAndSlugUnstrict(language: LanguageFlag, slug: UnknownLandingPageSlug): MaybeNull<LandingPage> {
   const matchingLandingPage =
     allLandingPages.find(({ language: currentLanguage, slug: currentSlug }) => currentSlug === slug && currentLanguage === language) ?? null;
 
@@ -19,5 +19,5 @@ export function getLandingPageBySlugAndLanguageUnstrict(language: LanguageFlag, 
   return matchingLandingPage;
 }
 
-export const getLandingPageBySlugAndLanguageStrict = <L extends LandingPageLang>(lang: L, slug: LandingPageSlug<L>): MaybeNull<LandingPage> =>
-  getLandingPageBySlugAndLanguageUnstrict(lang as any, slug as any);
+export const getLandingPageByLanguageAndSlugStrict = <L extends LandingPageLang>(lang: L, slug: LandingPageSlug<L>): MaybeNull<LandingPage> =>
+  getLandingPageByLanguageAndSlugUnstrict(lang as any, slug as any);
