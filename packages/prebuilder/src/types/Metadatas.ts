@@ -1,9 +1,9 @@
 /* v8 ignore start */
 // Stryker disable all
-type Page = {
+export type Page = {
+  nestingLevelTwo: PathSegment | PageRoot | '';
   head: I18nLanguageFlag | PageRoot | '/';
-  nestingLevelTwo: PathSegment | '';
-  pathWithoutHead: Path | '';
+  pathWithoutHead: Path;
   tail: PathSegment;
   path: Path;
   url: Path;
@@ -24,7 +24,7 @@ export type LpMetadatas = Record<LpCategory, LpMetadatasEntity>;
 
 type JSONKey = string;
 type UnknownI18nJSONProp = UnknownI18nJSONObj | string;
-export type UnknownI18nJSONObj = Record<JSONKey, unknown>;
+type UnknownI18nJSONObj = Record<JSONKey, unknown>;
 export type I18nJSONPart = Record<JSONKey, UnknownI18nJSONProp>;
 
 export type ErrorsDetectionFeedback = string;

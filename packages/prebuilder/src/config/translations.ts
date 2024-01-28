@@ -48,6 +48,9 @@ const VOCAB_TOKENS = {
       NESTINGS: 'embranchements',
       INVALID: 'invalides',
       SLUGS: 'slugs'
+    },
+    N_SINGULAR: {
+      WARNING: 'warning'
     }
   },
   en: {
@@ -58,6 +61,7 @@ const VOCAB_TOKENS = {
       TAXONOMY: 'taxonomy',
       PREBUILD: 'prebuild',
       NESTINGS: 'nesting',
+      WARNING: 'warning',
       LOCALES: 'locale',
       SLUGS: 'slug'
     },
@@ -83,7 +87,7 @@ const VOCAB_TOKENS = {
 } as const satisfies Record<Locale, VocabTokensWithGrammaticalVariants>;
 
 export const UNKNOWN_LOCALE_FALLBACK_MSG = (unknownLocale: string) =>
-  `[Warning] ${capitalize(VOCAB_TOKENS[DEFAULT_LOCALE].INVARIABLE.UNKNOWN)} ${
+  `[${capitalize(VOCAB_TOKENS[DEFAULT_LOCALE].N_SINGULAR.WARNING)}] ${capitalize(VOCAB_TOKENS[DEFAULT_LOCALE].INVARIABLE.UNKNOWN)} ${
     VOCAB_TOKENS[DEFAULT_LOCALE].N_SINGULAR.LOCALES
   }: ${unknownLocale}, falling back to ${DEFAULT_LOCALE}.` +
   '\n' +
@@ -96,6 +100,11 @@ const DEFAULT_TRANSLATION = {
   blog: 'blog',
   i18n: 'i18n',
   lp: 'landing pages',
+
+  // {ToDo} You will delete me as soon as you will have written tests to replace me (using a fake page)
+  hardcodedPagesTypeIsStale: `[${capitalize(
+    VOCAB_TOKENS.en.N_SINGULAR.WARNING
+  )}] HARDCODED_FALLBACK_TYPE_FIELDS is stale!\nExpected fields: {expectedFields}\nGot: {gotFields}`,
 
   pagesCodegenBenchmark: 'Generated pages related code in ~{duration}s',
   blogCodegenBenchmark: 'Generated blog related code in ~{duration}s',
@@ -205,6 +214,11 @@ const translations = {
     blog: 'blog',
     i18n: 'i18n',
     lp: 'landing pages',
+
+    // {ToDo} You will delete me as soon as you will have written tests to replace me (using a fake page)
+    hardcodedPagesTypeIsStale: `[${capitalize(
+      VOCAB_TOKENS.fr.N_SINGULAR.WARNING
+    )}] HARDCODED_FALLBACK_TYPE_FIELDS est obsolète !\nChamps attendus : {expectedFields}\nChamps actuels : {gotFields}`,
 
     pagesCodegenBenchmark: 'Code relatif aux pages généré en ~{duration}s',
     blogCodegenBenchmark: 'Code relatif au blog généré en ~{duration}s',
@@ -329,6 +343,7 @@ type VocabTokens =
   | 'OPTIONS'
   | 'UNKNOWN'
   | 'INVALID'
+  | 'WARNING'
   | 'WRONG'
   | 'SLUGS';
 

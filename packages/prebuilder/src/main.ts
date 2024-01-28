@@ -246,9 +246,7 @@ function logError(error: unknown) {
       const msg = (error as Error).message + (!(error instanceof FeedbackError) ? '\n' : '');
       console.error(msg);
     }
-  } else {
-    console.error(formatMessage('unhandledError' satisfies VocabKey, { error }));
-  }
+  } else console.error(formatMessage('unhandledError' satisfies VocabKey, { error }));
 }
 
 /**
