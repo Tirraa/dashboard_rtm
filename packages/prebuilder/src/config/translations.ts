@@ -21,6 +21,7 @@ const VOCAB_TOKENS = {
   fr: {
     F_PLURAL: {
       SUBCATEGORIES: 'sous-catégories',
+      NESTINGS: 'imbrications',
       CATEGORIES: 'catégories',
       INVALID: 'invalides',
       UNKNOWN: 'inconnues',
@@ -30,6 +31,7 @@ const VOCAB_TOKENS = {
     },
     F_SINGULAR: {
       SUBCATEGORIES: 'sous-catégorie',
+      NESTINGS: 'imbrication',
       CATEGORIES: 'catégorie',
       TAXONOMY: 'taxonomie',
       INVALID: 'invalide',
@@ -38,14 +40,12 @@ const VOCAB_TOKENS = {
       OPTIONS: 'option'
     },
     M_SINGULAR: {
-      NESTINGS: 'embranchement',
       PREBUILDER: 'prebuilder',
       PREBUILD: 'prebuild',
       INVALID: 'invalide',
       SLUGS: 'slug'
     },
     M_PLURAL: {
-      NESTINGS: 'embranchements',
       INVALID: 'invalides',
       SLUGS: 'slugs'
     },
@@ -269,8 +269,8 @@ const translations = {
     }`,
     invalidNestings: `{count, plural,
     =0 {__NEVER__}
-    =1 {${capitalize(VOCAB_TOKENS.fr.M_SINGULAR.NESTINGS)} ${VOCAB_TOKENS.fr.M_SINGULAR.INVALID} :}
-    other {${capitalize(VOCAB_TOKENS.fr.M_PLURAL.NESTINGS)} ${VOCAB_TOKENS.fr.M_PLURAL.INVALID} :}
+    =1 {${capitalize(VOCAB_TOKENS.fr.F_SINGULAR.NESTINGS)} ${VOCAB_TOKENS.fr.F_SINGULAR.INVALID} :}
+    other {${capitalize(VOCAB_TOKENS.fr.F_PLURAL.NESTINGS)} ${VOCAB_TOKENS.fr.F_PLURAL.INVALID} :}
   }`,
     unknownOptions: `{count, plural,
       =0 {__NEVER__}
