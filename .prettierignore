@@ -2,3 +2,4 @@ LICENSE
 node_modules
 dist
 prebuilder-dist
+pnpm-lock.yaml

@@ -25,14 +25,14 @@ describe('Hard-coded values safety check', () => {
       return false;
     }
 
-    const fakePage = {
-      nestingLevelTwo: 'FAKE_NESTING_LEVEL_TWO',
-      pathWithoutHead: 'FAKE_PATH_WITHOUT_HEAD',
-      head: 'FAKE_HEAD',
-      path: 'FAKE_PATH',
-      tail: 'FAKE_TAIL',
-      url: 'FAKE_URL'
-    } as const satisfies Page;
+    const fakePage: Page = {
+      nestingLevelTwo: 'FAKE',
+      pathWithoutHead: 'FAKE',
+      head: 'FAKE',
+      path: 'FAKE',
+      tail: 'FAKE',
+      url: 'FAKE'
+    };
     const fields = Object.keys(fakePage) as (keyof Page)[];
 
     expect(isStale(fields)).toBe(false);

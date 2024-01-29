@@ -80,7 +80,7 @@ exports[`traverseAndMapFilepaths > should return an arborescence, given a valid 
 exports[`traverseAndMapFilepaths > should return an arborescence, given a valid RootFolder (partial 2) 1`] = `
 [
   {
-    "directory": "./packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz/foo",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz/foo",
     "name": "file1",
   },
 ]
@@ -105,11 +105,11 @@ exports[`traverseAndMapFilepaths > should return an arborescence, given a valid 
     "name": "file1",
   },
   {
-    "directory": "./packages/prebuilder/src/lib/__tests__/fakeDirectory/bar",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar",
     "name": "file1",
   },
   {
-    "directory": "./packages/prebuilder/src/lib/__tests__/fakeDirectory/bar",
+    "directory": "packages/prebuilder/src/lib/__tests__/fakeDirectory/bar",
     "name": "file2",
   },
 ]
