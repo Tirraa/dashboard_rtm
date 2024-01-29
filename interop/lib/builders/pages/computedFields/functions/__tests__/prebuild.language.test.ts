@@ -1,8 +1,10 @@
-import { InvalidArgumentsError, DEFAULT_LANGUAGE, PAGES_FOLDER } from '##/lib/builders/unifiedImport';
+import { InvalidArgumentsError, DEFAULT_LANGUAGE, PAGES_FOLDER, INDEX_TOKEN } from '##/lib/builders/unifiedImport';
 import { describe, expect, it } from 'vitest';
 import { LANGUAGES } from '##/config/i18n';
 
 import buildPageLanguageFlag from '../language';
+
+const EXT = '.FAKE_EXT';
 
 describe('language', () => {
   const PREFIX = '$';
@@ -14,6 +16,7 @@ describe('language', () => {
     expect(
       buildPageLanguageFlag({
         _raw: {
+          sourceFilePath: PAGES_FOLDER + `/${invalidLanguage}/slug` + EXT,
           flattenedPath: PAGES_FOLDER + `/${invalidLanguage}/slug`
         },
         _id: '_'
@@ -25,6 +28,7 @@ describe('language', () => {
     expect(
       buildPageLanguageFlag({
         _raw: {
+          sourceFilePath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/slug` + EXT,
           flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/slug`
         },
         _id: '_'
@@ -36,6 +40,7 @@ describe('language', () => {
     expect(
       buildPageLanguageFlag({
         _raw: {
+          sourceFilePath: PAGES_FOLDER + '/slug' + EXT,
           flattenedPath: PAGES_FOLDER + '/slug'
         },
         _id: '_'
@@ -47,16 +52,8 @@ describe('language', () => {
     expect(
       buildPageLanguageFlag({
         _raw: {
+          sourceFilePath: PAGES_FOLDER + '/' + INDEX_TOKEN + EXT,
           flattenedPath: PAGES_FOLDER
-        },
-        _id: '_'
-      })
-    ).toBe(DEFAULT_LANGUAGE);
-
-    expect(
-      buildPageLanguageFlag({
-        _raw: {
-          flattenedPath: PAGES_FOLDER + '/'
         },
         _id: '_'
       })
@@ -67,6 +64,7 @@ describe('language', () => {
     expect(() =>
       buildPageLanguageFlag({
         _raw: {
+          sourceFilePath: '_' + PAGES_FOLDER + '/slug' + EXT,
           flattenedPath: '_' + PAGES_FOLDER + '/slug'
         },
         _id: '_'

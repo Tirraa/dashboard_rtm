@@ -3,12 +3,15 @@ import { describe, expect, it } from 'vitest';
 
 import buildPageUrl from '../url';
 
+const EXT = '.FAKE_EXT';
+
 describe('url', () => {
   const leaf = 'leaf';
   it('should return a valid url, given a valid input', () => {
     expect(
       buildPageUrl({
         _raw: {
+          sourceFilePath: PAGES_FOLDER + '/' + INDEX_TOKEN + EXT,
           flattenedPath: PAGES_FOLDER
         },
         _id: '_'
@@ -18,15 +21,7 @@ describe('url', () => {
     expect(
       buildPageUrl({
         _raw: {
-          flattenedPath: PAGES_FOLDER + '/'
-        },
-        _id: '_'
-      })
-    ).toBe(ROUTES_ROOTS.WEBSITE + DEFAULT_LANGUAGE + '/' + INDEX_TOKEN);
-
-    expect(
-      buildPageUrl({
-        _raw: {
+          sourceFilePath: PAGES_FOLDER + `/foo/bar/${leaf}` + EXT,
           flattenedPath: PAGES_FOLDER + `/foo/bar/${leaf}`
         },
         _id: '_'
@@ -36,6 +31,7 @@ describe('url', () => {
     expect(
       buildPageUrl({
         _raw: {
+          sourceFilePath: PAGES_FOLDER + `/foo/bar/baz/${leaf}` + EXT,
           flattenedPath: PAGES_FOLDER + `/foo/bar/baz/${leaf}`
         },
         _id: '_'
@@ -47,7 +43,8 @@ describe('url', () => {
     expect(
       buildPageUrl({
         _raw: {
-          flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/`
+          sourceFilePath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}` + '/' + INDEX_TOKEN + EXT,
+          flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}`
         },
         _id: '_'
       })
@@ -56,6 +53,7 @@ describe('url', () => {
     expect(
       buildPageUrl({
         _raw: {
+          sourceFilePath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/${leaf}` + EXT,
           flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/${leaf}`
         },
         _id: '_'
@@ -65,6 +63,7 @@ describe('url', () => {
     expect(
       buildPageUrl({
         _raw: {
+          sourceFilePath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/baz/${leaf}` + EXT,
           flattenedPath: PAGES_FOLDER + `/${DEFAULT_LANGUAGE}/foo/bar/baz/${leaf}`
         },
         _id: '_'
@@ -76,6 +75,7 @@ describe('url', () => {
     expect(() =>
       buildPageUrl({
         _raw: {
+          sourceFilePath: '_' + PAGES_FOLDER + `/foo/bar/baz/${leaf}` + EXT,
           flattenedPath: '_' + PAGES_FOLDER + `/foo/bar/baz/${leaf}`
         },
         _id: '_'

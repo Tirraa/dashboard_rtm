@@ -1,7 +1,13 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { LanguageFlag } from '@rtm/shared-types/LanguageFlag';
 
-import { getFlattenedPathWithoutRootFolder, isValidLanguageFlag, DEFAULT_LANGUAGE, PAGES_FOLDER } from '../../../unifiedImport';
+import {
+  getFlattenedPathWithoutRootFolder,
+  getPathWithIndexSuffix,
+  isValidLanguageFlag,
+  DEFAULT_LANGUAGE,
+  PAGES_FOLDER
+} from '../../../unifiedImport';
 
 function buildPageLanguageFlagFromStr(flattenedPath: string): LanguageFlag {
   const maybeLanguageEnvelopeEndSlashIndex = flattenedPath.indexOf('/');
@@ -14,12 +20,15 @@ function buildPageLanguageFlagFromStr(flattenedPath: string): LanguageFlag {
 }
 
 function buildPageLanguageFlag(page: DocumentToCompute): LanguageFlag {
-  const orgFlattenedPath = page._raw.flattenedPath;
-  const maybeLanguageEnvelopeEndSlashIndex = orgFlattenedPath.indexOf('/');
+  const { sourceFilePath, flattenedPath } = page._raw;
+
+  const transformedFlattenedPath = getPathWithIndexSuffix(flattenedPath, sourceFilePath);
+  const path = getFlattenedPathWithoutRootFolder(transformedFlattenedPath, PAGES_FOLDER);
+
+  const maybeLanguageEnvelopeEndSlashIndex = path.indexOf('/');
   if (maybeLanguageEnvelopeEndSlashIndex === -1) return DEFAULT_LANGUAGE;
 
-  const flattenedPath = getFlattenedPathWithoutRootFolder(orgFlattenedPath, PAGES_FOLDER);
-  const language = buildPageLanguageFlagFromStr(flattenedPath);
+  const language = buildPageLanguageFlagFromStr(path);
   return language;
 }
 

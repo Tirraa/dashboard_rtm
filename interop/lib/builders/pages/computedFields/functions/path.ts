@@ -4,9 +4,9 @@ import type { AppPath } from '@rtm/shared-types/Next';
 import { getFlattenedPathWithoutRootFolder, isValidLanguageFlag, PAGES_FOLDER, INDEX_TOKEN } from '../../../unifiedImport';
 
 function buildPagePath(page: DocumentToCompute): AppPath {
-  const flattenedPath = page._raw.flattenedPath;
+  const { flattenedPath } = page._raw;
   const indexOfFirstSlash = flattenedPath.indexOf('/');
-  if (indexOfFirstSlash === -1 || indexOfFirstSlash === flattenedPath.length - 1) return INDEX_TOKEN;
+  if (indexOfFirstSlash === -1) return INDEX_TOKEN;
 
   const documentPath = getFlattenedPathWithoutRootFolder(flattenedPath, PAGES_FOLDER);
   const documentPathParts = documentPath.split('/');
