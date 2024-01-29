@@ -101,11 +101,6 @@ const DEFAULT_TRANSLATION = {
   i18n: 'i18n',
   lp: 'landing pages',
 
-  // {ToDo} You will delete me as soon as you will have written tests to replace me (using a fake page)
-  hardcodedPagesTypeIsStale: `[${capitalize(
-    VOCAB_TOKENS.en.N_SINGULAR.WARNING
-  )}] HARDCODED_FALLBACK_TYPE_FIELDS is stale!\nExpected fields: {expectedFields}\nGot: {gotFields}`,
-
   pagesCodegenBenchmark: 'Generated pages related code in ~{duration}s',
   blogCodegenBenchmark: 'Generated blog related code in ~{duration}s',
   lpCodegenBenchmark: 'Generated landing pages related code in ~{duration}s',
@@ -214,11 +209,6 @@ const translations = {
     blog: 'blog',
     i18n: 'i18n',
     lp: 'landing pages',
-
-    // {ToDo} You will delete me as soon as you will have written tests to replace me (using a fake page)
-    hardcodedPagesTypeIsStale: `[${capitalize(
-      VOCAB_TOKENS.fr.N_SINGULAR.WARNING
-    )}] HARDCODED_FALLBACK_TYPE_FIELDS est obsolète !\nChamps attendus : {expectedFields}\nChamps actuels : {gotFields}`,
 
     pagesCodegenBenchmark: 'Code relatif aux pages généré en ~{duration}s',
     blogCodegenBenchmark: 'Code relatif au blog généré en ~{duration}s',

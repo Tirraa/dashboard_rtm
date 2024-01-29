@@ -2,12 +2,42 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { describe, expect, it } from 'vitest';
 
-import generatePagesType from '../pagesType';
+import type { Page } from '../../../types/Metadatas';
+
+import generatePagesType, { HARDCODED_FALLBACK_TYPE_FIELDS } from '../pagesType';
 
 const fs = require('fs/promises');
 
 const __TARGET_FOLDER_ROOT = './packages/prebuilder/src/generators/pages/__tests__/FAKE_CODEGEN';
 const __TARGET_FOLDER = __TARGET_FOLDER_ROOT + '/' + 'PAGES_TYPE';
+
+describe('Hard-coded values safety check', () => {
+  it('should not be stale', () => {
+    function isStale(fields: (keyof Page)[]) {
+      for (const field of fields) {
+        if (!HARDCODED_FALLBACK_TYPE_FIELDS.has(field)) {
+          const expectedFields = fields.sort().join(', ');
+          const gotFields = Array.from(HARDCODED_FALLBACK_TYPE_FIELDS).sort().join(', ');
+          console.warn('stale:', { expectedFields, gotFields });
+          return true;
+        }
+      }
+      return false;
+    }
+
+    const fakePage = {
+      nestingLevelTwo: 'FAKE_NESTING_LEVEL_TWO',
+      pathWithoutHead: 'FAKE_PATH_WITHOUT_HEAD',
+      head: 'FAKE_HEAD',
+      path: 'FAKE_PATH',
+      tail: 'FAKE_TAIL',
+      url: 'FAKE_URL'
+    } as const satisfies Page;
+    const fields = Object.keys(fakePage) as (keyof Page)[];
+
+    expect(isStale(fields)).toBe(false);
+  });
+});
 
 describe('generatePagesType (formatted)', () => {
   const pretty = true;
