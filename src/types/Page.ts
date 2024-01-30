@@ -1,3 +1,5 @@
+/* v8 ignore start */
+// Stryker disable all
 import type { INDEX_TOKEN } from '##/lib/misc/contentlayerCornerCases';
 import type { PagesFromCodegenSchema } from '@rtm/generated/Pages';
 import type { TPageTaxonomy } from '##/config/taxonomies/pages';
@@ -46,3 +48,5 @@ type StrictPage = {
 
 export type PageLang = StrictPage['lang'];
 export type PagePath<L extends PageLang> = Extract<StrictPage, { lang: L }>['path'];
+// Stryker restore all
+/* v8 ignore stop */

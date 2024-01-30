@@ -34,6 +34,9 @@ import getPagesArchitectureMetadatas from './metadatas-builders/pagesArchitectur
 import generatePagesType from './generators/pages/pagesType';
 /* eslint-enable perfectionist/sort-imports */
 
+// NOTE: The prebuilder is too greedy
+// https://github.com/Tirraa/dashboard_rtm/issues/78
+
 const BENCHMARK_ACCURACY = 5;
 
 const HANDLED_ERRORS_TYPES = [FeedbackError, BuilderError, ArgumentsValidatorError, ArgError];
