@@ -25,7 +25,7 @@ describe('getLandingPageByLanguageAndSlugStrict (happy paths)', () => {
     const category = LandingPagesConfig.TESTING_CATEGORY;
     const targettedSlug = `${category}-fake-lp-00` as const;
     const language = DEFAULT_LANGUAGE;
-    const lp = getLandingPageByLanguageAndSlugStrict(DEFAULT_LANGUAGE, targettedSlug) as LandingPage;
+    const lp = getLandingPageByLanguageAndSlugStrict(language, targettedSlug) as LandingPage;
 
     expect(lp.category).toBe(category);
     expect(lp.slug).toBe(targettedSlug);
@@ -37,7 +37,8 @@ describe('getLandingPageByLanguageAndSlugStrict (happy paths)', () => {
 describe('getLandingPageByLanguageAndSlugStrict (unhappy paths)', () => {
   it('should always return NULL when picking a draft lp in an unauthorized drafts CTX', () => {
     const targettedSlug = `${LandingPagesConfig.TESTING_CATEGORY}-fake-draft-lp-00` as const;
-    const lp = getLandingPageByLanguageAndSlugStrict(DEFAULT_LANGUAGE, targettedSlug) as LandingPage;
+    const language = DEFAULT_LANGUAGE;
+    const lp = getLandingPageByLanguageAndSlugStrict(language, targettedSlug) as LandingPage;
 
     expect(lp).toBe(null);
   });

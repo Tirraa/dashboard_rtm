@@ -1,6 +1,6 @@
 import type { PageRoot } from '@/types/Page';
 
-type TPagesConfig = {
+export type TPagesConfig = {
   TESTING_ROOT: typeof TESTING_ROOT;
   ENABLE_DRAFTS_IN_PROD: boolean;
 };
