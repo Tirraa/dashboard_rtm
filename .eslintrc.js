@@ -1,3 +1,6 @@
+/* v8 ignore start */
+// Stryker disable all
+// @ts-check
 const [_OFF, _WARN, _ERROR] = [0, 1, 2];
 const [OFF, , ERROR] = [_OFF, _WARN, _ERROR];
 
@@ -34,3 +37,5 @@ module.exports = {
 
   plugins: ['@typescript-eslint', 'import', 'unused-imports', 'only-error', 'perfectionist']
 };
+// Stryker restore all
+/* v8 ignore stop */

@@ -5,15 +5,27 @@ import { configDefaults, defineConfig } from 'vitest/config';
 // import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 
+const exclude = [
+  ...configDefaults.exclude,
+  'node_modules',
+  '**/prebuilder-dist',
+  '.next',
+  '.stryker-tmp',
+  '.rtm-generated',
+  '.contentlayer',
+  '*.d.ts'
+];
+
 // https://vitejs.dev/config/
 export default defineConfig({
   // plugins: [react()],
   test: {
     include: [...configDefaults.include, '**/?(*.){test,spec}.?(c|m)[jt]s?(x)'],
     setupFiles: ['./.vitest/setEnv.ts', './.vitest/jestDOM.ts'],
-    exclude: [...configDefaults.exclude, 'node_modules', '.stryker-tmp'],
+    exclude,
     coverage: {
-      reporter: ['html', 'text']
+      reporter: ['html', 'text'],
+      exclude: [...exclude, '**/__tests__']
     },
     environment: 'happy-dom',
     globals: true // * ... Hackish: only used to force Jest-tsd compatibility

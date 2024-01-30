@@ -1,5 +1,3 @@
-/* v8 ignore start */
-// Stryker disable all
 import type { I18nPageProps } from '@/types/Next';
 
 import { setStaticParamsLocale } from 'next-international/server';
@@ -16,5 +14,3 @@ export default function Page({ params }: I18nPageProps) {
 
   return <>{'{ToDo}'}</>;
 }
-// Stryker restore all
-/* v8 ignore stop */
