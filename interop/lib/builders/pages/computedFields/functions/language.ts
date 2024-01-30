@@ -11,7 +11,6 @@ import {
 
 function buildPageLanguageFlagFromStr(flattenedPath: string): LanguageFlag {
   const maybeLanguageEnvelopeEndSlashIndex = flattenedPath.indexOf('/');
-  if (maybeLanguageEnvelopeEndSlashIndex === -1) return DEFAULT_LANGUAGE;
 
   const maybeLanguage = flattenedPath.substring(0, maybeLanguageEnvelopeEndSlashIndex);
   if (isValidLanguageFlag(maybeLanguage)) return maybeLanguage;
