@@ -43,7 +43,7 @@ describe('getLandingPageByLanguageAndSlugStrict (happy paths)', () => {
     expect(lp.url).toBe('/' + language + ROUTES_ROOTS.LANDING_PAGES + targettedSlug);
   });
 
-  it('should return a valid lp', () => {
+  it('should return a valid lp (index notation)', () => {
     const category = LandingPagesConfig.TESTING_CATEGORY;
     const targettedSlug = `${category}-index` as const;
     const language = DEFAULT_LANGUAGE;
@@ -55,7 +55,7 @@ describe('getLandingPageByLanguageAndSlugStrict (happy paths)', () => {
     expect(lp.url).toBe('/' + language + ROUTES_ROOTS.LANDING_PAGES + targettedSlug);
   });
 
-  it('should return a valid lp', () => {
+  it('should return a valid lp (index notation)', () => {
     const category = LandingPagesConfig.TESTING_CATEGORY;
     const targettedSlug = `${category}-index` as const;
     const language = 'en' satisfies TLpFakeLanguage;

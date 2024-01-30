@@ -17,6 +17,5 @@ export function getPageByLanguageAndPathUnstrict(language: LanguageFlag, path: U
   return matchingPage;
 }
 
-// {ToDo} Write tests
 export const getPageByLanguageAndPathStrict = <L extends PageLang>(lang: L, path: PagePath<L>): MaybeNull<Page> =>
   getPageByLanguageAndPathUnstrict(lang as any, path as any);
