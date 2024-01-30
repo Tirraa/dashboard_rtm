@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { describe, expect, it } from 'vitest';
 
 import type { Page } from '../../../types/Metadatas';
@@ -25,11 +24,13 @@ describe('Hard-coded values safety check', () => {
       return false;
     }
 
+    // NOTE: Typechecked via tsc --noEmit --skipLibCheck
+    // Check the package.json script: `before-build:tricky-typechecks`
     const fakePage: Page = {
       nestingLevelTwo: 'FAKE',
       pathWithoutHead: 'FAKE',
-      head: 'FAKE',
       path: 'FAKE',
+      head: 'FAKE',
       tail: 'FAKE',
       url: 'FAKE'
     };

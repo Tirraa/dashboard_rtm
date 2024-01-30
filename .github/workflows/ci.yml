@@ -65,7 +65,7 @@ jobs:
       - name: Initialize project
         run: make initialize
       - name: Tests (before build)
-        run: make test-before-build
+        run: make before-build:test
   build:
     runs-on: ubuntu-20.04
     steps:
@@ -99,7 +99,7 @@ jobs:
       - name: Build
         run: make
       - name: Tests (after build)
-        run: make test-after-build
+        run: make after-build:test
   ts-prune:
     runs-on: ubuntu-20.04
     steps:

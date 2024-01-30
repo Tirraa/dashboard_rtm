@@ -46,6 +46,7 @@ prebuild: build-contentlayer
 
 # @Override
 test: initialize
+	$(PM) before-build:tricky-typechecks
 	$(PM) test:run
 
 # @Override
