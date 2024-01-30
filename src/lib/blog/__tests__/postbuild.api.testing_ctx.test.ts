@@ -32,7 +32,7 @@ vi.mock('../ctx', async (orgImport) => {
 });
 
 describe('getPostStrict (happy paths)', () => {
-  it('should always return a valid post', async () => {
+  it('should return a valid post', async () => {
     const [category, subcategory, targettedSlug] = [BlogConfig.TESTING_CATEGORY, TESTING_BLOG_FAKE_SUBCATEGORY, 'fake-post-01' as const];
     const language = DEFAULT_LANGUAGE;
     const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as TBlogPost;

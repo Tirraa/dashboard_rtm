@@ -43,7 +43,7 @@ describe('getPathParts', () => {
 });
 
 describe('stackMiddlewares', () => {
-  it('should always return an instanceof function', () => {
+  it('should return an instanceof function', () => {
     const foo = stackMiddlewares();
     expect(foo).toBeInstanceOf(Function);
     const bar = stackMiddlewares([]);

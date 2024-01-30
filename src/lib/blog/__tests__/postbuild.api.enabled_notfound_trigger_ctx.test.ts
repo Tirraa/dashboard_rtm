@@ -21,7 +21,7 @@ vi.mock('@/config/blog', async (orgImport) => {
 });
 
 describe('blogSubcategoryShouldTriggerNotFound', () => {
-  it('should always return false', async () => {
+  it('should return false', async () => {
     const [category, subcategory, targettedSlug] = [BlogConfig.TESTING_CATEGORY, TESTING_BLOG_FAKE_SUBCATEGORY, 'fake-post-01' as const];
     const language = DEFAULT_LANGUAGE;
     const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as TBlogPost;

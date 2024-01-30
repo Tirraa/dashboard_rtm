@@ -31,7 +31,7 @@ vi.mock('../../../../interop/config/i18n', async (orgImport) => {
 });
 
 describe('getLandingPageByLanguageAndSlugStrict (happy paths)', () => {
-  it('should always return a valid lp', () => {
+  it('should return a valid lp', () => {
     const category = LandingPagesConfig.TESTING_CATEGORY;
     const targettedSlug = `${category}-fake-lp-00` as const;
     const language = DEFAULT_LANGUAGE;
@@ -43,7 +43,7 @@ describe('getLandingPageByLanguageAndSlugStrict (happy paths)', () => {
     expect(lp.url).toBe('/' + language + ROUTES_ROOTS.LANDING_PAGES + targettedSlug);
   });
 
-  it('should always return a valid lp', () => {
+  it('should return a valid lp', () => {
     const category = LandingPagesConfig.TESTING_CATEGORY;
     const targettedSlug = `${category}-index` as const;
     const language = DEFAULT_LANGUAGE;
@@ -55,7 +55,7 @@ describe('getLandingPageByLanguageAndSlugStrict (happy paths)', () => {
     expect(lp.url).toBe('/' + language + ROUTES_ROOTS.LANDING_PAGES + targettedSlug);
   });
 
-  it('should always return a valid lp', () => {
+  it('should return a valid lp', () => {
     const category = LandingPagesConfig.TESTING_CATEGORY;
     const targettedSlug = `${category}-index` as const;
     const language = 'en' satisfies TLpFakeLanguage;
@@ -69,7 +69,7 @@ describe('getLandingPageByLanguageAndSlugStrict (happy paths)', () => {
 });
 
 describe('getLandingPageByLanguageAndSlugStrict (unhappy paths)', () => {
-  it('should always return null, given invalid slug', () => {
+  it('should return null, given invalid slug', () => {
     const targettedSlug = '__INVALID__TARGETTED_SLUG__' as const;
     // @ts-expect-error
     const lp = getLandingPageByLanguageAndSlugStrict(DEFAULT_LANGUAGE, targettedSlug);
@@ -77,7 +77,7 @@ describe('getLandingPageByLanguageAndSlugStrict (unhappy paths)', () => {
     expect(lp).toBe(null);
   });
 
-  it('should always return null, given invalid language', () => {
+  it('should return null, given invalid language', () => {
     const targettedSlug = 'testing-fake-lp-00' as const;
     // @ts-expect-error
     const lp = getLandingPageByLanguageAndSlugStrict('__INVALID_LANGUAGE__', targettedSlug);

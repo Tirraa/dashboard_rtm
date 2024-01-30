@@ -15,12 +15,12 @@ vi.mock('@/config/pages', async (orgImport) => {
   return {
     default: {
       ...mod.default,
-      ENABLE_DRAFTS_IN_PROD: false
+      ENABLE_DRAFTS_IN_PROD: true
     } satisfies TPagesConfig
   };
 });
 
-describe('getPageByLanguageAndPathStrict (happy paths)', () => {
+describe('getPageByLanguageAndPathStrict', () => {
   it('should return a valid page', () => {
     const root = PagesConfig.TESTING_ROOT;
     const targettedPath = `${root}/fake-page-00` as const;
@@ -31,16 +31,16 @@ describe('getPageByLanguageAndPathStrict (happy paths)', () => {
     expect(page.root).toBe(root);
     expect(page.url).toBe('/' + language + ROUTES_ROOTS.WEBSITE + targettedPath);
   });
-});
 
-describe('getPageByLanguageAndPathStrict (unhappy paths)', () => {
-  it('should return NULL when picking a draft page in an unauthorized drafts CTX', () => {
+  it('should return a valid page when picking a draft page in an authorized drafts CTX', () => {
     const root = PagesConfig.TESTING_ROOT;
     const targettedPath = `${root}/fake-draft-00` as const;
     const language = DEFAULT_LANGUAGE;
-    const page = getPageByLanguageAndPathStrict(language, targettedPath);
+    const page = getPageByLanguageAndPathStrict(language, targettedPath) as Page;
 
-    expect(page).toBe(null);
+    expect(page.path).toBe(targettedPath);
+    expect(page.root).toBe(root);
+    expect(page.url).toBe('/' + language + ROUTES_ROOTS.WEBSITE + targettedPath);
   });
 });
 
