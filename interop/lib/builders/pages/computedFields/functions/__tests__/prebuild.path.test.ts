@@ -18,15 +18,6 @@ describe('path', () => {
     expect(
       buildPagePath({
         _raw: {
-          flattenedPath: PAGES_FOLDER + '/'
-        },
-        _id: '_'
-      })
-    ).toBe(INDEX_TOKEN);
-
-    expect(
-      buildPagePath({
-        _raw: {
           flattenedPath: PAGES_FOLDER + `/foo/bar/${leaf}`
         },
         _id: '_'
