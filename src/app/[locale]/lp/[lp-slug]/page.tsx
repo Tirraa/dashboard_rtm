@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: LandingPageProps) {
   return metadatas;
 }
 
-export async function generateStaticParams() {
-  const staticParams = await getLandingPagesStaticParams();
+export function generateStaticParams() {
+  const staticParams = getLandingPagesStaticParams();
   return staticParams;
 }
 

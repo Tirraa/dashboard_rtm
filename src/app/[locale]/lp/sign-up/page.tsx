@@ -20,7 +20,7 @@ export async function generateMetadata() {
   return { description, title };
 }
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return getStaticParams();
 }
 

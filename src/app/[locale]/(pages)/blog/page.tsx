@@ -4,7 +4,7 @@ import { setStaticParamsLocale } from 'next-international/server';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getStaticParams } from '@/i18n/server';
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return getStaticParams();
 }
 

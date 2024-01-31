@@ -14,8 +14,8 @@ import { i18ns } from '##/config/i18n';
 import doGetLandingPagesStaticParams from './static/getLandingPagesStaticParams';
 import { getLandingPageByLanguageAndSlugUnstrict } from './api';
 
-export async function getLandingPagesStaticParams() {
-  const landingPagesStaticParams = await doGetLandingPagesStaticParams();
+export function getLandingPagesStaticParams() {
+  const landingPagesStaticParams = doGetLandingPagesStaticParams();
   return landingPagesStaticParams;
 }
 

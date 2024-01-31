@@ -9,7 +9,7 @@ import { getStaticParams } from '@/i18n/server';
 
 interface DashboardLayoutProps extends LayoutBaseProps {}
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return getStaticParams();
 }
 

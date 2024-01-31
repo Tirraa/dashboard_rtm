@@ -5,7 +5,7 @@ import I18nTaxonomy from '##/config/taxonomies/i18n';
 
 import { getLandingPageByLanguageAndSlugUnstrict } from '../api';
 
-async function getLandingPagesStaticParams() {
+function getLandingPagesStaticParams() {
   const staticParams = [];
 
   for (const { language, slug } of allLandingPages) {

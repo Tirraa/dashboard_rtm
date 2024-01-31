@@ -8,7 +8,7 @@ import { getStaticParams } from '@/i18n/server';
 import ROUTES_ROOTS from '##/config/routes';
 import { redirect } from 'next/navigation';
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return getStaticParams();
 }
 
