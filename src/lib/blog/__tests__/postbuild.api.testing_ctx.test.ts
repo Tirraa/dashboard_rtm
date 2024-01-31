@@ -3,8 +3,8 @@ import type { TBlogPost } from '@/types/Blog';
 
 import { TESTING_BLOG_FAKE_SUBCATEGORY } from '𝕍/testingBlogCategoryDatas';
 import { INDEX_TOKEN } from '##/lib/misc/contentlayerCornerCases';
-import { describe, expect, it, vi } from 'vitest';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
+import { describe, expect, it } from 'vitest';
 import ROUTES_ROOTS from '##/config/routes';
 import BlogConfig from '@/config/blog';
 
@@ -18,18 +18,6 @@ import {
   getSlicedBlogPostDescription,
   getBlogPostStrict
 } from '../api';
-
-vi.mock('../ctx', async (orgImport) => {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-  const mod = await orgImport<typeof import('../ctx')>();
-
-  return {
-    default: {
-      ...mod.default,
-      TESTING: true
-    }
-  } satisfies typeof mod;
-});
 
 describe('getPostStrict (happy paths)', () => {
   it('should return a valid post', async () => {
@@ -304,5 +292,3 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict (happy path
     expect(posts[4].url).toBe('/posts' + ROUTES_ROOTS.BLOG + `${BlogConfig.TESTING_CATEGORY}/fake-subcategory/${INDEX_TOKEN}`);
   });
 });
-
-vi.doUnmock('../ctx');

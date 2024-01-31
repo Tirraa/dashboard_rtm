@@ -9,18 +9,6 @@ import ROUTES_ROOTS from '##/config/routes';
 
 import { getLandingPageByLanguageAndSlugStrict } from '../api';
 
-vi.mock('../ctx', async (orgImport) => {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-  const mod = await orgImport<typeof import('../ctx')>();
-
-  return {
-    default: {
-      ...mod.default,
-      TESTING: true
-    }
-  } satisfies typeof mod;
-});
-
 vi.mock('../../../../interop/config/i18n', async (orgImport) => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
   const mod = await orgImport<typeof import('../../../../interop/config/i18n')>();
@@ -86,5 +74,4 @@ describe('getLandingPageByLanguageAndSlugStrict (unhappy paths)', () => {
   });
 });
 
-vi.doUnmock('../ctx');
 vi.doUnmock('../../../../interop/config/i18n');

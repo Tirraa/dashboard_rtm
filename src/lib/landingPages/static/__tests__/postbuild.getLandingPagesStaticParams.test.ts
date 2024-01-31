@@ -1,4 +1,5 @@
 import type { TLpFakeLanguage } from '𝕍/testingBlogCategoryDatas';
+import type { LandingPage } from 'contentlayer/generated';
 
 import { TESTING_LP_FAKE_LANGUAGES } from '𝕍/testingBlogCategoryDatas';
 import LandingPageTaxonomy from '##/config/taxonomies/landingPages';
@@ -149,7 +150,7 @@ vi.mock('contentlayer/generated', async (orgImport) => {
         title: 'FAKE',
         draft: false
       }
-    ]
+    ] satisfies Omit<LandingPage, 'body'>[]
   };
 });
 
