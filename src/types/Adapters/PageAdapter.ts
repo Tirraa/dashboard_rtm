@@ -9,6 +9,7 @@ type IndexToken = typeof INDEX_TOKEN;
 type PathSeparator = '/';
 type TopLevelRoot = '/';
 
+// * ... Adapter (narrowing & rewriting)
 type PageAdapter<P extends PagesFromCodegenSchema> = P extends { head: LanguageFlag }
   ? P extends { head: DefaultLanguage }
     ? {
