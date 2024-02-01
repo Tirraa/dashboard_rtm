@@ -12,7 +12,7 @@ const __TOKEN = 'FAKE_TOKEN';
 
 describe('generateDefaultLanguageTokenType', () => {
   it('should match snapshot', async () => {
-    const targetFile = 'FAKE_EMPTY_DEFAULT_LANGUAGE_TOKEN_TYPE';
+    const targetFile = 'FAKE_DEFAULT_LANGUAGE_TOKEN_TYPE';
     await generateDefaultLanguageTokenType(__TOKEN, targetFile, __TARGET_FOLDER);
 
     const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');

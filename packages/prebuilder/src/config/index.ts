@@ -2,16 +2,15 @@
 // Stryker disable all
 import type { FormatCodeSettings } from 'ts-morph';
 
-/* ⚙️ Tweakers - SAFE */
-// {Note} It would be great to provide a config path flag + handle config file parsing and injection... maybe the next decade? ¯\_(ツ)_/¯
-export const MAX_PAGE_TAXONOMY_LEN: number = 80;
-export const MAX_BLOG_TAXONOMY_LEN: number = 34;
-export const MAX_LP_TAXONOMY_LEN: number = 128;
+import config from '../prebuilder.config';
 
-const MY_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = [];
-const MY_I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = [];
+const MY_MAX_PAGE_TAXONOMY_LEN: number = config.maxPageTaxonomyLen ?? 80;
+const MY_MAX_BLOG_TAXONOMY_LEN: number = config.maxBlogTaxonomyLen ?? 34;
+const MY_MAX_LP_TAXONOMY_LEN: number = config.maxLpTaxonomyLen ?? 128;
+const MY_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = config.i18nCategoriesRequiredExtraFields ?? [];
+const MY_I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = config.i18nSubcategoriesRequiredExtraFields ?? [];
+const MY_DEFAULT_LANGUAGE_TOKEN_TYPE_STR: string = config.defaultLanguageTokenTypeStr ?? 'DefaultLanguageToken';
 
-/* ⛔ Do NOT edit the code BELOW this line unless you (really) know what you are doing */
 export const FLAGS = {
   I18N_LOCALES_SCHEMA_FILEPATH: '--i18n-locales-schema',
   SKIP_LOCALES_INFOS: '--skip-locales-infos',
@@ -27,6 +26,10 @@ export const FLAGS = {
   LANG: '--lang'
 } as const satisfies Record<PropertyKey, string>;
 
+export const MAX_PAGE_TAXONOMY_LEN: number = MY_MAX_PAGE_TAXONOMY_LEN;
+export const MAX_BLOG_TAXONOMY_LEN: number = MY_MAX_BLOG_TAXONOMY_LEN;
+export const MAX_LP_TAXONOMY_LEN: number = MY_MAX_LP_TAXONOMY_LEN;
+
 export const I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = [...MY_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS, 'title', 'meta-description'];
 export const I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = [...MY_I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS, 'title', 'meta-description'];
 
@@ -37,7 +40,7 @@ export const PAGE_FILE_EXT: string = '.mdx';
 export const BLOG_POST_FILE_EXT: string = '.mdx';
 export const LP_FILE_EXT: string = '.mdx';
 export const I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_PREFIX: string = '_';
-export const DEFAULT_LANGUAGE_TOKEN_TYPE_STR: string = 'DefaultLanguageToken';
+export const DEFAULT_LANGUAGE_TOKEN_TYPE_STR: string = MY_DEFAULT_LANGUAGE_TOKEN_TYPE_STR;
 export const PAGES_TYPE_STR: string = 'Pages';
 export const BLOG_TYPE_STR: string = 'Blog';
 export const LP_TYPE_STR: string = 'LandingPages';
