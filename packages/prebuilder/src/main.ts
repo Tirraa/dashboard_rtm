@@ -3,7 +3,7 @@
 import formatMessage from './config/formatMessage';
 
 /* eslint-disable perfectionist/sort-imports */
-import type { MaybeUndefined, Tuple } from '@rtm/shared-types/CustomUtilityTypes';
+import type { MaybeUndefined, Couple } from '@rtm/shared-types/CustomUtilityTypes';
 
 import { ArgError } from 'arg';
 import path from 'path';
@@ -133,7 +133,7 @@ function printPrebuildReport({
       ['blogCodegenBenchmark', blogCodegenElapsedTime],
       ['lpCodegenBenchmark', lpCodegenElapsedTime],
       ['totalExecutionTimeBenchmark', totalGlobalElapsedTime]
-    ] satisfies Tuple<VocabKey, typeof IGNORED | string>[]
+    ] satisfies Couple<VocabKey, typeof IGNORED | string>[]
   ).forEach(([label, duration]) => {
     if (duration === IGNORED) return;
     console.log(formatMessage(label satisfies VocabKey, { duration }));
