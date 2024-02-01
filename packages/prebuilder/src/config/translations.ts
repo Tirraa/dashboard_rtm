@@ -106,6 +106,7 @@ const DEFAULT_TRANSLATION = {
   lpCodegenBenchmark: 'Generated landing pages related code in ~{duration}s',
 
   validatedLocalesInfosBenchmark: `Validated ${VOCAB_TOKENS.en.N_PLURAL.LOCALES} infos in ~{duration}s`,
+  generatedUtilTypesBenchmark: `Generated util types in ~{duration}s`,
   validatedPagesTaxonomyBenchmark: `Validated pages ${VOCAB_TOKENS.en.N_SINGULAR.TAXONOMY} in ~{duration}s`,
   validatedBlogTaxonomyBenchmark: `Validated blog ${VOCAB_TOKENS.en.N_SINGULAR.TAXONOMY} in ~{duration}s`,
   validatedLpTaxonomyBenchmark: `Validated landing pages ${VOCAB_TOKENS.en.N_SINGULAR.TAXONOMY} in ~{duration}s`,
@@ -215,6 +216,7 @@ const translations = {
     lpCodegenBenchmark: 'Code relatif aux landing pages généré en ~{duration}s',
 
     validatedLocalesInfosBenchmark: `Validation des champs 'infos' des ${VOCAB_TOKENS.fr.F_PLURAL.LOCALES} effectuée en ~{duration}s`,
+    generatedUtilTypesBenchmark: `Génération des types utilitaires effectuée en ~{duration}s`,
     validatedPagesTaxonomyBenchmark: `Validation de la ${VOCAB_TOKENS.fr.F_SINGULAR.TAXONOMY} des pages effectuée en ~{duration}s`,
     validatedBlogTaxonomyBenchmark: `Validation de la ${VOCAB_TOKENS.fr.F_SINGULAR.TAXONOMY} du blog effectuée en ~{duration}s`,
     validatedLpTaxonomyBenchmark: `Validation de la ${VOCAB_TOKENS.fr.F_SINGULAR.TAXONOMY} des landing pages en ~{duration}s`,

@@ -7,9 +7,8 @@ import type { WithClassname } from '@rtm/shared-types/Next';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type BlogTaxonomy from '##/config/taxonomies/blog';
 import type { PostSchema } from 'contentlayer/generated';
-import type { DefaultLanguage } from '##/config/i18n';
-import type Blog from '@rtm/generated/Blog';
 
+import type StrictBlog from './adapters/StrictBlog';
 import type { I18nParams } from './Next';
 
 type ContentLayerPhantomType = 'type';
@@ -57,14 +56,6 @@ export type PostsCollectionAssoc = Record<BlogCategory, AllPostsGetter>;
 type BlogStaticParamsValue = string;
 export type BlogStaticParams = Record<keyof TBlogTaxonomy, BlogStaticParamsValue>;
 
-export type StrictBlog = {
-  [Category in keyof Blog]: {
-    [Subcategory in keyof Blog[Category]]: {
-      [Language in keyof Blog[Category][Subcategory] as Language extends 'DEFAULT_LANGUAGE'
-        ? DefaultLanguage
-        : Language]: Blog[Category][Subcategory][Language];
-    };
-  };
-};
+export { type StrictBlog };
 // Stryker restore all
 /* v8 ignore stop */

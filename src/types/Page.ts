@@ -3,7 +3,7 @@
 import type { TPageTaxonomy } from '##/config/taxonomies/pages';
 import type Pages from '@rtm/generated/Pages';
 
-import type PageAdapter from './Adapters/PageAdapter';
+import type PageAdapter from './adapters/PageAdapter';
 import type { I18nParams } from './Next';
 
 type PagePropsParams = TPageTaxonomy;

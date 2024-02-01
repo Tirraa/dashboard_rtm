@@ -2,20 +2,11 @@
 // Stryker disable all
 import type { TLandingPageTaxonomy } from '##/config/taxonomies/landingPages';
 import type LandingPages from '@rtm/generated/LandingPages';
-import type { DefaultLanguage } from '##/config/i18n';
 
+import type LpLanguageAndSlugPair from './adapters/LpLanguageAndSlugPair';
 import type { I18nParams } from './Next';
 
 type LandingPagePropsParams = TLandingPageTaxonomy;
-
-type LpLanguageAndSlugPair = {
-  [Category in keyof LandingPages]: {
-    [Lang in keyof LandingPages[Category]]: {
-      lang: Lang extends 'DEFAULT_LANGUAGE' ? DefaultLanguage : Lang;
-      slug: LandingPages[Category][Lang];
-    };
-  }[keyof LandingPages[Category]];
-}[keyof LandingPages];
 
 export interface LandingPageProps {
   params: LandingPagePropsParams & I18nParams;

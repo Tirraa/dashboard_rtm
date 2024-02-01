@@ -32,6 +32,7 @@ import generateLandingPagesType from './generators/lp/lpType';
 import sysPagesValidator from './validators/sysPages';
 import getPagesArchitectureMetadatas from './metadatas-builders/pagesArchitectureMetadatas';
 import generatePagesType from './generators/pages/pagesType';
+import generateDefaultLanguageTokenType from './generators/defaultLanguageToken/defaultLanguageTokenType';
 /* eslint-enable perfectionist/sort-imports */
 
 // NOTE: The prebuilder is too greedy
@@ -55,7 +56,9 @@ let [
   lpCodegenStartTime,
   lpCodegenEndTime,
   lpTaxonomyCheckersStartTime,
-  lpTaxonomyCheckersEndTime
+  lpTaxonomyCheckersEndTime,
+  utilsCodegenStartTime,
+  utilsCodegenEndTime
 ]: MaybeUndefined<number>[] = [];
 
 const moveToRoot = () => process.chdir(path.join(__dirname, ROOT_FOLDER_RELATIVE_PATH_FROM_PREBUILDER_CTX));
@@ -75,8 +78,10 @@ function printPrebuildReport({
   localesCheckersStartTime,
   localesCheckersEndTime,
   pagesCodegenStartTime,
+  utilsCodegenStartTime,
   blogCodegenStartTime,
   pagesCodegenEndTime,
+  utilsCodegenEndTime,
   blogCodegenEndTime,
   lpCodegenStartTime,
   lpCodegenEndTime,
@@ -91,8 +96,10 @@ function printPrebuildReport({
   localesCheckersStartTime: number;
   localesCheckersEndTime: number;
   pagesCodegenStartTime: number;
+  utilsCodegenStartTime: number;
   blogCodegenStartTime: number;
   pagesCodegenEndTime: number;
+  utilsCodegenEndTime: number;
   blogCodegenEndTime: number;
   lpCodegenStartTime: number;
   lpCodegenEndTime: number;
@@ -105,6 +112,7 @@ function printPrebuildReport({
 
   const [
     localesElapsedTime,
+    utilsElapsedTime,
     pagesTaxonomyElapsedTime,
     blogTaxonomyElapsedTime,
     lpTaxonomyElapsedTime,
@@ -114,6 +122,7 @@ function printPrebuildReport({
     totalGlobalElapsedTime
   ] = [
     computeDelay(localesCheckersStartTime, localesCheckersEndTime),
+    computeDelay(utilsCodegenStartTime, utilsCodegenEndTime),
     computeDelay(pagesTaxonomyCheckersStartTime, pagesTaxonomyCheckersEndTime),
     computeDelay(blogTaxonomyCheckersStartTime, blogTaxonomyCheckersEndTime),
     computeDelay(lpTaxonomyCheckersStartTime, lpTaxonomyCheckersEndTime),
@@ -126,6 +135,7 @@ function printPrebuildReport({
   (
     [
       ['validatedLocalesInfosBenchmark', localesElapsedTime],
+      ['generatedUtilTypesBenchmark', utilsElapsedTime],
       ['validatedPagesTaxonomyBenchmark', pagesTaxonomyElapsedTime],
       ['validatedBlogTaxonomyBenchmark', blogTaxonomyElapsedTime],
       ['validatedLpTaxonomyBenchmark', lpTaxonomyElapsedTime],
@@ -190,6 +200,15 @@ async function lpTaxonomyValidator(LP_FOLDER: Path): Promise<MaybeEmptyErrorsDet
   const feedback = foldFeedbacks(sysLpCategoriesValidatorFeedback, sysLpSlugsValidatorFeedback);
   lpTaxonomyCheckersEndTime = performance.now();
   return feedback;
+}
+
+/**
+ * @effect {Benchmark}
+ */
+async function generateUtilTypes() {
+  utilsCodegenStartTime = performance.now();
+  await generateDefaultLanguageTokenType();
+  utilsCodegenEndTime = performance.now();
 }
 
 /**
@@ -306,6 +325,8 @@ async function processPrebuild() {
       (!NO_LP && generateLpCode(LP_FOLDER, PRETTY_CODEGEN)) || generatePhonyLpCode()
     ]);
 
+    await generateUtilTypes();
+
     printPrebuilderDoneMsg(
       () =>
         SKIP_BENCHMARKS ||
@@ -319,8 +340,10 @@ async function processPrebuild() {
           localesCheckersStartTime,
           localesCheckersEndTime,
           pagesCodegenStartTime,
+          utilsCodegenStartTime,
           blogCodegenStartTime,
           pagesCodegenEndTime,
+          utilsCodegenEndTime,
           blogCodegenEndTime,
           lpCodegenStartTime,
           lpCodegenEndTime,
