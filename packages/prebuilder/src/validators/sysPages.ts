@@ -54,7 +54,7 @@ export default async function sysPagesValidator(pagesFolder: Path): Promise<{
       const currentPath = pagesFolderPrefix + '/' + directoriesChain.slice(0, i + 1).join('/');
       const currentNesting = directoriesChain[i];
       if (!isValidPageTaxonomy(currentNesting)) {
-        nestingsDefects.add(currentPath);
+        nestingsDefects.add(currentPath + ' ' + '(' + currentNesting + ')');
       }
     }
 

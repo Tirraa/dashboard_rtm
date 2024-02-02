@@ -1,12 +1,9 @@
+/* v8 ignore start */
+// Stryker disable all
 import type Config from './src/types/Config';
 
-const config: Config = {
-  defaultLanguageTokenTypeStr: 'DefaultLanguageToken',
-  i18nSubcategoriesRequiredExtraFields: [],
-  i18nCategoriesRequiredExtraFields: [],
-  maxPageTaxonomyLen: 80,
-  maxBlogTaxonomyLen: 34,
-  maxLpTaxonomyLen: 128
-};
+const config: Config = {};
 
 export default config;
+// Stryker restore all
+/* v8 ignore stop */

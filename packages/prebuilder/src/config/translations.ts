@@ -125,7 +125,7 @@ const DEFAULT_TRANSLATION = {
   disableBothI18nAndBlogAnalysisMaybeAdvice: `↳ Maybe you want to use the '${FLAGS.NO_I18N}' and '${FLAGS.NO_BLOG}' ${VOCAB_TOKENS.en.F_PLURAL.OPTIONS}?`,
   disableBothI18nAndLpAnalysisMaybeAdvice: `↳ Maybe you want to use the '${FLAGS.NO_I18N}' and '${FLAGS.NO_LP}' ${VOCAB_TOKENS.en.F_PLURAL.OPTIONS}?`,
 
-  pagesNamingConstraint: `Only dashes and alphanumeric characters are allowed, with the requirement that the first character MUST be a letter or a digit. Also, the maximum length per segment allowed is: ${MAX_PAGE_TAXONOMY_LEN} characters.`,
+  pagesNamingConstraint: `Only dashes and alphanumeric characters are allowed, with the requirement that the first character MUST be a letter or a digit. Also, the maximum length allowed is: ${MAX_PAGE_TAXONOMY_LEN} characters.`,
 
   blogNamingConstraint: `Only dashes and alphanumeric characters are allowed, with the requirement that the first character MUST be a letter or a digit. Also, the maximum length allowed is: ${MAX_BLOG_TAXONOMY_LEN} characters.`,
 
@@ -235,7 +235,7 @@ const translations = {
     disableBothI18nAndBlogAnalysisMaybeAdvice: `↳ Peut-être que vous voudriez utiliser les ${VOCAB_TOKENS.fr.F_PLURAL.OPTIONS} "${FLAGS.NO_I18N}" et "${FLAGS.NO_BLOG}" ?`,
     disableBothI18nAndLpAnalysisMaybeAdvice: `↳ Peut-être que vous voudriez utiliser les ${VOCAB_TOKENS.fr.F_PLURAL.OPTIONS} "${FLAGS.NO_I18N}" et "${FLAGS.NO_LP}" ?`,
 
-    pagesNamingConstraint: `Seuls les tirets et les caractères alphanumériques sont autorisés. De plus, le premier caractère DOIT être une lettre ou un chiffre. Enfin, la longueur maximale par segment autorisée est de ${MAX_PAGE_TAXONOMY_LEN} caractères.`,
+    pagesNamingConstraint: `Seuls les tirets et les caractères alphanumériques sont autorisés. De plus, le premier caractère DOIT être une lettre ou un chiffre. Enfin, la longueur maximale autorisée est de ${MAX_PAGE_TAXONOMY_LEN} caractères.`,
 
     blogNamingConstraint: `Seuls les tirets et les caractères alphanumériques sont autorisés. De plus, le premier caractère DOIT être une lettre ou un chiffre. Enfin, la longueur maximale autorisée est de ${MAX_BLOG_TAXONOMY_LEN} caractères.`,
 
