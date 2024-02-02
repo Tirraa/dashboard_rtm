@@ -1,5 +1,5 @@
-import type { Page } from 'contentlayer/generated';
 import type { PagesConfigType } from '@/config/pages';
+import type { Page } from 'contentlayer/generated';
 
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, it, vi } from 'vitest';

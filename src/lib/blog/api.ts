@@ -1,4 +1,4 @@
-import type { BlogSubcategoryFromUnknownCategory, UnknownBlogSlug, BlogCategory, StrictBlog, BlogPostType } from '@/types/Blog';
+import type { BlogSubcategoryFromUnknownCategory, UnknownBlogSlug, BlogCategory, BlogPostType, StrictBlog } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { IsoDateTimeString } from 'contentlayer/core';
