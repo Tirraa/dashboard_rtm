@@ -3,13 +3,16 @@
 import type { FormatCodeSettings } from 'ts-morph';
 
 import config from '../../prebuilder.config';
+import defaultConfig from './defaultConfig';
 
-const MY_MAX_PAGE_TAXONOMY_LEN: number = config.maxPageTaxonomyLen ?? 80;
-const MY_MAX_BLOG_TAXONOMY_LEN: number = config.maxBlogTaxonomyLen ?? 34;
-const MY_MAX_LP_TAXONOMY_LEN: number = config.maxLpTaxonomyLen ?? 128;
-const MY_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = config.i18nCategoriesRequiredExtraFields ?? [];
-const MY_I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = config.i18nSubcategoriesRequiredExtraFields ?? [];
-const MY_DEFAULT_LANGUAGE_KEY: string = config.defaultLanguageKey ?? 'DEFAULT_LANGUAGE';
+const MY_MAX_PAGE_TAXONOMY_LEN: number = config.maxPageTaxonomyLen ?? defaultConfig.maxPageTaxonomyLen;
+const MY_MAX_BLOG_TAXONOMY_LEN: number = config.maxBlogTaxonomyLen ?? defaultConfig.maxBlogTaxonomyLen;
+const MY_MAX_LP_TAXONOMY_LEN: number = config.maxLpTaxonomyLen ?? defaultConfig.maxLpTaxonomyLen;
+const MY_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS: string[] =
+  config.i18nCategoriesRequiredExtraFields ?? defaultConfig.i18nCategoriesRequiredExtraFields;
+const MY_I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS: string[] =
+  config.i18nSubcategoriesRequiredExtraFields ?? defaultConfig.i18nSubcategoriesRequiredExtraFields;
+const MY_DEFAULT_LANGUAGE_KEY: string = config.defaultLanguageKey ?? defaultConfig.defaultLanguageKey;
 
 export const FLAGS = {
   I18N_LOCALES_SCHEMA_FILEPATH: '--i18n-locales-schema',
