@@ -38,7 +38,7 @@ export default async function localesInfosValidator(localesFolder: Path, i18nSch
 
   const files: string[] = await fs.readdir(localesFolder);
   const filteredFiles = files.filter((file: string) => path.extname(file) === '.ts' && path.basename(file) !== path.basename(i18nSchemaFilePath));
-  const fullFilesPaths = filteredFiles.map((filename) => [localesFolder, filename].join('/'));
+  const fullFilesPaths = filteredFiles.map((filename) => path.join(localesFolder, filename));
   const localeFileInfosValidatorFeedbacks = [];
 
   for (const currentFile of fullFilesPaths) {

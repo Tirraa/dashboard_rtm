@@ -25,13 +25,13 @@ async function buildLpMetadatasFromLpFolder(lpFolder: string): Promise<LpMetadat
     const category = maybeCategory.name;
     if (metadatas[category] === undefined) metadatas[category] = {};
 
-    const maybePosts = await fs.readdir([lpFolder, category].join('/'), { withFileTypes: true });
+    const maybePosts = await fs.readdir(path.join(lpFolder, category), { withFileTypes: true });
 
     for (const maybePost of maybePosts) {
       if (maybePost.isDirectory()) {
         const maybeLanguage = maybePost;
 
-        const lps = await fs.readdir([maybeLanguage.path, maybeLanguage.name].join('/'), { withFileTypes: true });
+        const lps = await fs.readdir(path.join(maybeLanguage.path, maybeLanguage.name), { withFileTypes: true });
         for (const lp of lps) {
           const filename = lp.name;
           const slug = getSlug(filename);
