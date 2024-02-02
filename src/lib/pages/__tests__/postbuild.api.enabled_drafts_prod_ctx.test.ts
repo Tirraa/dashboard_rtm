@@ -1,5 +1,5 @@
 import type { Page } from 'contentlayer/generated';
-import type { TPagesConfig } from '@/config/pages';
+import type { PagesConfigType } from '@/config/pages';
 
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, it, vi } from 'vitest';
@@ -16,7 +16,7 @@ vi.mock('@/config/pages', async (orgImport) => {
     default: {
       ...mod.default,
       ENABLE_DRAFTS_IN_PROD: true
-    } satisfies TPagesConfig
+    } satisfies PagesConfigType
   };
 });
 

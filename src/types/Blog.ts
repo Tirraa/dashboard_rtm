@@ -2,7 +2,7 @@
 // Stryker disable all
 import type { KeySeparator } from '@rtm/shared-types/CustomUtilityTypes';
 import type BlogArchitecture from '@rtm/generated/BlogArchitecture';
-import type { TBlogTaxonomy } from '##/config/taxonomies/blog';
+import type { BlogTaxonomyType } from '##/config/taxonomies/blog';
 import type { WithClassname } from '@rtm/shared-types/Next';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type BlogTaxonomy from '##/config/taxonomies/blog';
@@ -12,7 +12,7 @@ import type StrictBlog from './adapters/StrictBlog';
 import type { I18nParams } from './Next';
 
 type ContentLayerPhantomType = 'type';
-export type TBlogPost = Omit<PostSchema, ContentLayerPhantomType>;
+export type BlogPostType = Omit<PostSchema, ContentLayerPhantomType>;
 
 export type BlogCategory = keyof BlogArchitecture;
 export type BlogSubcategoryFromUnknownCategory = BlogArchitecture[BlogCategory];
@@ -27,7 +27,7 @@ type BlogSubcategoryPagePropsParams = {
   [BlogTaxonomy.CATEGORY]: BlogCategory;
 };
 
-type BlogPostPagePropsParams = TBlogTaxonomy;
+type BlogPostPagePropsParams = BlogTaxonomyType;
 
 export interface BlogCategoryPageProps {
   params: BlogCategoryPagePropsParams & I18nParams;
@@ -43,18 +43,18 @@ export interface BlogPostPageProps {
 
 export interface BlogPostProps extends Partial<WithClassname> {
   language: LanguageFlag;
-  post: TBlogPost;
+  post: BlogPostType;
 }
 
 export type BlogCategoriesAndSubcategoriesAssoc = {
   [__BlogCategory in keyof BlogArchitecture]: `${__BlogCategory}${KeySeparator}${BlogArchitecture[__BlogCategory]}`;
 }[keyof BlogArchitecture];
 
-type AllPostsGetter = () => Promise<TBlogPost[]>;
+type AllPostsGetter = () => Promise<BlogPostType[]>;
 export type PostsCollectionAssoc = Record<BlogCategory, AllPostsGetter>;
 
 type BlogStaticParamsValue = string;
-export type BlogStaticParams = Record<keyof TBlogTaxonomy, BlogStaticParamsValue>;
+export type BlogStaticParams = Record<keyof BlogTaxonomyType, BlogStaticParamsValue>;
 
 export { type StrictBlog };
 // Stryker restore all

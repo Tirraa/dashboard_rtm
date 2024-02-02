@@ -2,7 +2,7 @@ import PagesConfig from '@/config/pages';
 
 import ComputedNodeCtx from '../portable/node/env';
 
-type TComputedPagesCtx = {
+type ComputedPagesCtxType = {
   ALLOWED_DRAFTS: boolean;
   TESTING: boolean;
 };
@@ -10,7 +10,7 @@ type TComputedPagesCtx = {
 const TESTING = ComputedNodeCtx.TEST;
 const ALLOWED_DRAFTS = PagesConfig.ENABLE_DRAFTS_IN_PROD || ComputedNodeCtx.DEV;
 
-const ComputedPagesCtx: TComputedPagesCtx = {
+const ComputedPagesCtx: ComputedPagesCtxType = {
   ALLOWED_DRAFTS,
   TESTING
 } as const;

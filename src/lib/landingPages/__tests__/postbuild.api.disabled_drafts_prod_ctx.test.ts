@@ -1,4 +1,4 @@
-import type { TLandingPagesConfig } from '@/config/landingPages';
+import type { LandingPagesConfigType } from '@/config/landingPages';
 import type { LandingPage } from 'contentlayer/generated';
 
 import LandingPagesConfig from '@/config/landingPages';
@@ -16,7 +16,7 @@ vi.mock('@/config/landingPages', async (orgImport) => {
     default: {
       ...mod.default,
       ENABLE_DRAFTS_IN_PROD: false
-    } satisfies TLandingPagesConfig
+    } satisfies LandingPagesConfigType
   };
 });
 

@@ -6,7 +6,7 @@ import type {
   BlogCategoryPageProps,
   BlogPostPageProps,
   BlogStaticParams,
-  TBlogPost
+  BlogPostType
 } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 
@@ -58,15 +58,15 @@ export async function getBlogPostMetadatas({ params }: BlogPostPageProps) {
     params[I18nTaxonomy.LANGUAGE]
   ];
 
-  const post: MaybeNull<TBlogPost> = await getBlogPostUnstrict(category, subcategory, slug, language);
+  const post: MaybeNull<BlogPostType> = await getBlogPostUnstrict(category, subcategory, slug, language);
 
   const globalT = await getServerSideI18n();
-  const currentPost = post as TBlogPost;
+  const currentPost = post as BlogPostType;
 
   if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory, language)) return {};
 
   const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), currentPost.title);
-  const { metadescription: description } = post as TBlogPost;
+  const { metadescription: description } = post as BlogPostType;
   return { description, title };
 }
 

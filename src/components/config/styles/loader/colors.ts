@@ -1,6 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
-type TLoaderConfig = {
+type LoaderConfigType = {
   BACKGROUND_COLOR: string;
   COLOR: string;
 };
@@ -8,7 +8,7 @@ type TLoaderConfig = {
 const COLOR = '#42546E';
 const BACKGROUND_COLOR = '#000';
 
-const LOADER_CONFIG: TLoaderConfig = {
+const LOADER_CONFIG: LoaderConfigType = {
   BACKGROUND_COLOR,
   COLOR
 } as const;

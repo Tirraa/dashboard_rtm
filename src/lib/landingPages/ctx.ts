@@ -2,7 +2,7 @@ import LandingPagesConfig from '@/config/landingPages';
 
 import ComputedNodeCtx from '../portable/node/env';
 
-type TComputedLandingPagesCtx = {
+type ComputedLandingPagesCtxType = {
   ALLOWED_DRAFTS: boolean;
   TESTING: boolean;
 };
@@ -10,7 +10,7 @@ type TComputedLandingPagesCtx = {
 const TESTING = ComputedNodeCtx.TEST;
 const ALLOWED_DRAFTS = LandingPagesConfig.ENABLE_DRAFTS_IN_PROD || ComputedNodeCtx.DEV;
 
-const ComputedLandingPagesCtx: TComputedLandingPagesCtx = {
+const ComputedLandingPagesCtx: ComputedLandingPagesCtxType = {
   ALLOWED_DRAFTS,
   TESTING
 } as const;

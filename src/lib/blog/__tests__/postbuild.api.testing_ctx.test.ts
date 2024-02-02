@@ -1,5 +1,5 @@
-import type { TBlogFakeLanguage } from '𝕍/testingBlogCategoryDatas';
-import type { TBlogPost } from '@/types/Blog';
+import type { BlogFakeLanguageType } from '𝕍/testingBlogCategoryDatas';
+import type { BlogPostType } from '@/types/Blog';
 
 import { TESTING_BLOG_FAKE_SUBCATEGORY } from '𝕍/testingBlogCategoryDatas';
 import { INDEX_TOKEN } from '##/lib/misc/contentlayerCornerCases';
@@ -23,7 +23,7 @@ describe('getPostStrict (happy paths)', () => {
   it('should return a valid post', async () => {
     const [category, subcategory, targettedSlug] = [BlogConfig.TESTING_CATEGORY, TESTING_BLOG_FAKE_SUBCATEGORY, 'fake-post-01' as const];
     const language = DEFAULT_LANGUAGE;
-    const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as TBlogPost;
+    const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as BlogPostType;
 
     expect(post.category).toBe(category);
     expect(post.subcategory).toBe(subcategory);
@@ -38,7 +38,7 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict (happy paths)
     const postsCollection = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict(
       BlogConfig.TESTING_CATEGORY,
       TESTING_BLOG_FAKE_SUBCATEGORY,
-      'posts' satisfies TBlogFakeLanguage
+      'posts' satisfies BlogFakeLanguageType
     );
     expect(postsCollection.length).toBe(5);
   });
@@ -59,7 +59,7 @@ describe('isValidBlogCategoryAndSubcategoryPair', () => {
     const isValid = await isValidBlogCategoryAndSubcategoryPair(
       BlogConfig.TESTING_CATEGORY,
       TESTING_BLOG_FAKE_SUBCATEGORY,
-      'drafts' satisfies TBlogFakeLanguage as any
+      'drafts' satisfies BlogFakeLanguageType as any
     );
     expect(isValid).toBe(true);
   });
@@ -69,7 +69,7 @@ describe('isValidBlogCategoryAndSubcategoryPair', () => {
       // @ts-expect-error
       '__INVALID_CATEGORY__',
       TESTING_BLOG_FAKE_SUBCATEGORY,
-      'drafts' satisfies TBlogFakeLanguage
+      'drafts' satisfies BlogFakeLanguageType
     );
     expect(isValid).toBe(false);
   });
@@ -79,7 +79,7 @@ describe('isValidBlogCategoryAndSubcategoryPair', () => {
       BlogConfig.TESTING_CATEGORY,
       // @ts-expect-error
       '__INVALID_SUBCATEGORY__',
-      'drafts' satisfies TBlogFakeLanguage
+      'drafts' satisfies BlogFakeLanguageType
     );
     expect(isValid).toBe(false);
   });
@@ -102,11 +102,11 @@ describe('getBlogPostPathWithoutI18nPart (happy paths)', () => {
     const [category, subcategory, language, targettedSlug] = [
       BlogConfig.TESTING_CATEGORY,
       TESTING_BLOG_FAKE_SUBCATEGORY,
-      'posts' as const satisfies TBlogFakeLanguage,
+      'posts' as const satisfies BlogFakeLanguageType,
       'fake-post-03' as const
     ];
 
-    const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as TBlogPost;
+    const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as BlogPostType;
     const blogPostWithoutI18nPart = getBlogPostPathWithoutI18nPart(post);
 
     expect(blogPostWithoutI18nPart).toBe(ROUTES_ROOTS.BLOG + [category, subcategory, targettedSlug].join('/'));
@@ -154,8 +154,8 @@ describe('getAllBlogPostsByCategoryAndLanguage (happy paths)', () => {
   it('should pass', async () => {
     const posts = (await getAllBlogPostsByCategoryAndLanguage(
       BlogConfig.TESTING_CATEGORY,
-      'drafts' as const satisfies TBlogFakeLanguage as any
-    )) as TBlogPost[];
+      'drafts' as const satisfies BlogFakeLanguageType as any
+    )) as BlogPostType[];
 
     expect(posts.length).toBe(3);
 
@@ -211,7 +211,7 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict (happy path
     const posts = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(
       BlogConfig.TESTING_CATEGORY,
       TESTING_BLOG_FAKE_SUBCATEGORY,
-      'posts' as const satisfies TBlogFakeLanguage as any
+      'posts' as const satisfies BlogFakeLanguageType as any
     );
 
     expect(posts.length).toBe(5);

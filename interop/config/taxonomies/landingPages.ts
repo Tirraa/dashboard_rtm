@@ -6,7 +6,7 @@ namespace LandingPageTaxonomy {
   export const SLUG = 'lp-slug';
 }
 
-export type TLandingPageTaxonomy = {
+export type LandingPageTaxonomyType = {
   [LandingPageTaxonomy.SLUG]: UnknownLandingPageSlug;
 };
 

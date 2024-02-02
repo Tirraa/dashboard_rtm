@@ -6,7 +6,7 @@ import { categoriesBlogDataAssoc } from '##/config/contentlayer/blog/documentTyp
 import { compareAlphabetically } from '@/lib/str';
 import compareDesc from 'date-fns/compareDesc';
 
-export type TBlogConfig = {
+export type BlogConfigType = {
   DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_SUBCATEGORIES_ON_BLOG_CATEGORY_PAGE: StringsCompareFun;
   DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE: DatesCompareFun;
   DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_CATEGORY_PAGE: DatesCompareFun;
@@ -20,7 +20,7 @@ export type TBlogConfig = {
 };
 
 const TESTING_CATEGORY = 'blog-testing-category' as const satisfies BlogCategory;
-const BlogConfig: TBlogConfig = {
+const BlogConfig: BlogConfigType = {
   BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC: Object.fromEntries(
     Object.entries(categoriesBlogDataAssoc).map(([categoryFolder, blogDataName]) => [
       categoryFolder,

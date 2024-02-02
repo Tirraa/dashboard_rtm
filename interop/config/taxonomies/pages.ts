@@ -6,7 +6,7 @@ namespace PageTaxonomy {
   export const PATH = 'path';
 }
 
-export type TPageTaxonomy = {
+export type PageTaxonomyType = {
   [PageTaxonomy.PATH]: PathSegment[];
 };
 

@@ -1,4 +1,4 @@
-import type { BlogCategoryPageProps, TBlogPost } from '@/types/Blog';
+import type { BlogCategoryPageProps, BlogPostType } from '@/types/Blog';
 import type { FunctionComponent } from 'react';
 
 import blogCategoryPageBuilder from '@/lib/blog/blogCategoryPageBuilder';
@@ -17,13 +17,13 @@ const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<CategoryRelate
   const [language, category] = [params[I18nTaxonomy.LANGUAGE], params[BlogTaxonomy.CATEGORY]];
   const scopedT = await getScopedI18n(i18ns.blogCategories);
 
-  let gettedOnTheFlyPosts: TBlogPost[] = [];
-  const getPostsWithAllowedDraftsCtx = (postsCollection: TBlogPost[]): TBlogPost[] =>
+  let gettedOnTheFlyPosts: BlogPostType[] = [];
+  const getPostsWithAllowedDraftsCtx = (postsCollection: BlogPostType[]): BlogPostType[] =>
     ComputedBlogCtx.TESTING
       ? postsCollection
       : postsCollection.filter(({ category: currentPostCategory }) => currentPostCategory !== BlogConfig.TESTING_CATEGORY);
 
-  const getPostsWithDisallowedDraftsCtx = (postsCollection: TBlogPost[]): TBlogPost[] =>
+  const getPostsWithDisallowedDraftsCtx = (postsCollection: BlogPostType[]): BlogPostType[] =>
     ComputedBlogCtx.TESTING
       ? postsCollection.filter(({ draft: currentPostDraft }) => !currentPostDraft)
       : postsCollection.filter(

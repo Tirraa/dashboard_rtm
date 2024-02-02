@@ -1,4 +1,4 @@
-import type { TBlogConfig } from '@/config/blog';
+import type { BlogConfigType } from '@/config/blog';
 
 import { TESTING_BLOG_CATEGORY_FAKE_LANGUAGES, TESTING_BLOG_FAKE_SUBCATEGORY } from '𝕍/testingBlogCategoryDatas';
 import { INDEX_TOKEN } from '##/lib/misc/contentlayerCornerCases';
@@ -38,7 +38,7 @@ vi.mock('@/config/blog', async (orgImport) => {
     default: {
       ...mod.default,
       ENABLE_DRAFTS_IN_PROD: false
-    } satisfies TBlogConfig
+    } satisfies BlogConfigType
   };
 });
 

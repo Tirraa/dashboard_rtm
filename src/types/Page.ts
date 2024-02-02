@@ -1,12 +1,12 @@
 /* v8 ignore start */
 // Stryker disable all
-import type { TPageTaxonomy } from '##/config/taxonomies/pages';
+import type { PageTaxonomyType } from '##/config/taxonomies/pages';
 import type Pages from '@rtm/generated/Pages';
 
 import type PageAdapter from './adapters/PageAdapter';
 import type { I18nParams } from './Next';
 
-type PagePropsParams = TPageTaxonomy;
+type PagePropsParams = PageTaxonomyType;
 
 export interface PageProps {
   params: PagePropsParams & I18nParams;

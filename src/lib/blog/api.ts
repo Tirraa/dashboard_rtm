@@ -1,4 +1,4 @@
-import type { BlogSubcategoryFromUnknownCategory, UnknownBlogSlug, BlogCategory, StrictBlog, TBlogPost } from '@/types/Blog';
+import type { BlogSubcategoryFromUnknownCategory, UnknownBlogSlug, BlogCategory, StrictBlog, BlogPostType } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { IsoDateTimeString } from 'contentlayer/core';
@@ -14,7 +14,7 @@ import BlogConfig from '@/config/blog';
 import { getFormattedDate } from '../str';
 import ComputedBlogCtx from './ctx';
 
-export async function getAllBlogPostsByCategory(categ: BlogCategory): Promise<MaybeNull<TBlogPost[]>> {
+export async function getAllBlogPostsByCategory(categ: BlogCategory): Promise<MaybeNull<BlogPostType[]>> {
   try {
     const posts = await BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC[categ]();
     return posts;
@@ -23,7 +23,7 @@ export async function getAllBlogPostsByCategory(categ: BlogCategory): Promise<Ma
   }
 }
 
-export async function getAllBlogPostsByCategoryAndLanguage(categ: BlogCategory, language: LanguageFlag): Promise<MaybeNull<TBlogPost[]>> {
+export async function getAllBlogPostsByCategoryAndLanguage(categ: BlogCategory, language: LanguageFlag): Promise<MaybeNull<BlogPostType[]>> {
   const allPosts = await getAllBlogPostsByCategory(categ);
   if (allPosts === null) return null;
 
@@ -35,7 +35,7 @@ export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict
   category: BlogCategory,
   subcategory: BlogSubcategoryFromUnknownCategory,
   language: LanguageFlag
-): Promise<TBlogPost[]> {
+): Promise<BlogPostType[]> {
   // Stryker Workaround 1. Pointless mutants: there's no ambiguity here.
   // Stryker disable next-line ConditionalExpression,EqualityOperator
   if (!ComputedBlogCtx.TESTING && category === BlogConfig.TESTING_CATEGORY) return [];
@@ -45,7 +45,7 @@ export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict
   // Stryker disable next-line ConditionalExpression
   if (!isValidPair) return [];
 
-  const getPostsWithAllowedDraftsCtx = (postsCollection: TBlogPost[]): TBlogPost[] =>
+  const getPostsWithAllowedDraftsCtx = (postsCollection: BlogPostType[]): BlogPostType[] =>
     postsCollection.filter(
       ({ subcategory: currentPostSubcategory, language: currentPostLanguage }) =>
         // Stryker Workaround 3. Pointless mutants: there's no ambiguity here.
@@ -53,7 +53,7 @@ export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict
         currentPostSubcategory === subcategory && currentPostLanguage === language
     );
 
-  const getPostsWithDisallowedDraftsCtx = (postsCollection: TBlogPost[]): TBlogPost[] =>
+  const getPostsWithDisallowedDraftsCtx = (postsCollection: BlogPostType[]): BlogPostType[] =>
     postsCollection.filter(
       ({ subcategory: currentPostSubcategory, language: currentPostLanguage, draft: currentPostDraft }) =>
         // Stryker Workaround 4. Pointless mutants: there's no ambiguity here.
@@ -61,7 +61,7 @@ export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict
         !currentPostDraft && currentPostSubcategory === subcategory && currentPostLanguage === language
     );
 
-  const postsCollection = (await getAllBlogPostsByCategory(category)) as TBlogPost[];
+  const postsCollection = (await getAllBlogPostsByCategory(category)) as BlogPostType[];
 
   return ComputedBlogCtx.ALLOWED_DRAFTS ? getPostsWithAllowedDraftsCtx(postsCollection) : getPostsWithDisallowedDraftsCtx(postsCollection);
 }
@@ -71,18 +71,18 @@ export async function getBlogPostUnstrict(
   subcategory: BlogSubcategoryFromUnknownCategory,
   targettedSlug: UnknownBlogSlug,
   language: LanguageFlag
-): Promise<MaybeNull<TBlogPost>> {
+): Promise<MaybeNull<BlogPostType>> {
   // Stryker Workaround 5. Pointless mutants: there's no ambiguity here.
   // Stryker disable next-line ConditionalExpression,EqualityOperator
   if (!ComputedBlogCtx.TESTING && category === BlogConfig.TESTING_CATEGORY) return null;
 
-  const getPostWithAllowedDraftsCtx: () => MaybeNull<TBlogPost> = () =>
+  const getPostWithAllowedDraftsCtx: () => MaybeNull<BlogPostType> = () =>
     postsCollection.find(({ slug: currentPostSlug }) => currentPostSlug === targettedSlug) ?? null;
 
-  const getPostWithDisallowedDraftsCtx: () => MaybeNull<TBlogPost> = () =>
+  const getPostWithDisallowedDraftsCtx: () => MaybeNull<BlogPostType> = () =>
     postsCollection.find(({ draft: currentPostDraft, slug: currentPostSlug }) => !currentPostDraft && currentPostSlug === targettedSlug) ?? null;
 
-  const postsCollection: TBlogPost[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(category, subcategory, language);
+  const postsCollection: BlogPostType[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(category, subcategory, language);
 
   return ComputedBlogCtx.ALLOWED_DRAFTS ? getPostWithAllowedDraftsCtx() : getPostWithDisallowedDraftsCtx();
 }
@@ -91,8 +91,8 @@ export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict<C
   category: C,
   subcategory: keyof StrictBlog[C],
   language: keyof StrictBlog[C][keyof StrictBlog[C]]
-): Promise<TBlogPost[]> {
-  const allPosts: TBlogPost[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(
+): Promise<BlogPostType[]> {
+  const allPosts: BlogPostType[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(
     category as any,
     subcategory as any,
     language as any
@@ -109,14 +109,14 @@ export async function getBlogPostStrict<
   subcategory: Subcategory,
   language: Language,
   targettedSlug: StrictBlog[Category][Subcategory][Language]
-): Promise<MaybeNull<TBlogPost>> {
-  const post: MaybeNull<TBlogPost> = await getBlogPostUnstrict(category as any, subcategory as any, targettedSlug as any, language as any);
+): Promise<MaybeNull<BlogPostType>> {
+  const post: MaybeNull<BlogPostType> = await getBlogPostUnstrict(category as any, subcategory as any, targettedSlug as any, language as any);
   return post;
 }
 
 export const getAllBlogCategories: () => BlogCategory[] = () => Object.keys(BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC) as BlogCategory[];
 
-export function blogSubcategoryShouldTriggerNotFound(postsCollection: TBlogPost[]): boolean {
+export function blogSubcategoryShouldTriggerNotFound(postsCollection: BlogPostType[]): boolean {
   const isForcedPath = BlogConfig.USE_BLOG_POSTS_NOTFOUND_WHEN_SUBCATEGORY_IS_EMPTY_INSTEAD_OF_NOT_FOUND;
   return !isForcedPath && postsCollection.length === 0;
 }
@@ -175,7 +175,7 @@ export const redirectToBlogCategoryPage = (category: BlogCategory): void => redi
 export const redirectToBlogCategoryAndSubcategoryPairPageUnstrict = (category: BlogCategory, subcategory: BlogSubcategoryFromUnknownCategory): void =>
   redirect(buildAbsolutePathFromParts(ROUTES_ROOTS.BLOG, category, subcategory));
 
-export function getBlogPostPathWithoutI18nPart({ language, url }: TBlogPost): AppPath {
+export function getBlogPostPathWithoutI18nPart({ language, url }: BlogPostType): AppPath {
   const blogPostPathWithoutI18nPart = url.replace(`/${language}/`, '/');
   return blogPostPathWithoutI18nPart;
 }

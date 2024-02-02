@@ -1,4 +1,4 @@
-import type { BlogSubcategoryFromUnknownCategory, BlogStaticParams, UnknownBlogSlug, BlogCategory, TBlogPost } from '@/types/Blog';
+import type { BlogSubcategoryFromUnknownCategory, BlogStaticParams, UnknownBlogSlug, BlogCategory, BlogPostType } from '@/types/Blog';
 
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import BlogTaxonomy from '##/config/taxonomies/blog';
@@ -19,7 +19,7 @@ export default async function getBlogStaticParams(): Promise<BlogStaticParams[]>
       for (const subcateg of curSubcategs) {
         const subcategory = subcateg as BlogSubcategoryFromUnknownCategory;
 
-        const relatedPosts: TBlogPost[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(category, subcategory, language);
+        const relatedPosts: BlogPostType[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(category, subcategory, language);
 
         for (const post of relatedPosts) {
           const slug = post.slug as UnknownBlogSlug;

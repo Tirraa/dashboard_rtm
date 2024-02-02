@@ -1,4 +1,4 @@
-import type { TBlogFakeLanguage } from '𝕍/testingBlogCategoryDatas';
+import type { BlogFakeLanguageType } from '𝕍/testingBlogCategoryDatas';
 
 import { describe, expect, it } from 'vitest';
 
@@ -16,7 +16,7 @@ describe('isValidBlogCategoryAndSubcategoryPair', () => {
       // @ts-expect-error
       '__INVALID_CATEGORY__',
       '__INVALID_SUBCATEGORY__',
-      'drafts' satisfies TBlogFakeLanguage
+      'drafts' satisfies BlogFakeLanguageType
     );
     expect(isValid).toBe(false);
   });

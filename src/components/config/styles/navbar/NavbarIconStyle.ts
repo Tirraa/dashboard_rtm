@@ -1,10 +1,10 @@
 /* v8 ignore start */
 // Stryker disable all
-type TNavbarIconStyle = {
+type NavbarIconStyleType = {
   SIZE_PX_VALUE: number;
 };
 
-const NAVBAR_ICON_STYLE: TNavbarIconStyle = {
+const NAVBAR_ICON_STYLE: NavbarIconStyleType = {
   SIZE_PX_VALUE: 25
 } as const;
 

@@ -1,4 +1,4 @@
-import type { TLpFakeLanguage } from '𝕍/testingBlogCategoryDatas';
+import type { LpFakeLanguageType } from '𝕍/testingBlogCategoryDatas';
 import type { LandingPage } from 'contentlayer/generated';
 
 import { TESTING_LP_FAKE_LANGUAGES } from '𝕍/testingBlogCategoryDatas';
@@ -46,7 +46,7 @@ describe('getLandingPageByLanguageAndSlugStrict (happy paths)', () => {
   it('should return a valid lp (index notation)', () => {
     const category = LandingPagesConfig.TESTING_CATEGORY;
     const targettedSlug = `${category}-index` as const;
-    const language = 'en' satisfies TLpFakeLanguage;
+    const language = 'en' satisfies LpFakeLanguageType;
     const lp = getLandingPageByLanguageAndSlugStrict(language, targettedSlug) as LandingPage;
 
     expect(lp.category).toBe(category);

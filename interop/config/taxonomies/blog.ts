@@ -11,7 +11,7 @@ namespace BlogTaxonomy {
   export const SLUG = 'slug';
 }
 
-export type TBlogTaxonomy = {
+export type BlogTaxonomyType = {
   [BlogTaxonomy.SUBCATEGORY]: BlogSubcategoryFromUnknownCategory;
   [I18nTaxonomy.LANGUAGE]: LanguageFlag;
   [BlogTaxonomy.CATEGORY]: BlogCategory;

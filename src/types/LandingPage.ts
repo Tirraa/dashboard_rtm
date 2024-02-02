@@ -1,12 +1,12 @@
 /* v8 ignore start */
 // Stryker disable all
-import type { TLandingPageTaxonomy } from '##/config/taxonomies/landingPages';
+import type { LandingPageTaxonomyType } from '##/config/taxonomies/landingPages';
 import type LandingPages from '@rtm/generated/LandingPages';
 
 import type LpLanguageAndSlugPair from './adapters/LpLanguageAndSlugPair';
 import type { I18nParams } from './Next';
 
-type LandingPagePropsParams = TLandingPageTaxonomy;
+type LandingPagePropsParams = LandingPageTaxonomyType;
 
 export interface LandingPageProps {
   params: LandingPagePropsParams & I18nParams;

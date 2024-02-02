@@ -1,6 +1,6 @@
 import executionContextWarningsVocabGetter from '../../../errors/vocab/warnings/executionContext';
 
-type TComputedNodeEnv = {
+type ComputedNodeEnvType = {
   PROD: boolean;
   TEST: boolean;
   DEV: boolean;
@@ -44,7 +44,7 @@ if ([devCtx, testCtx, prodCtx, forcedToProd].every((v) => v === false)) {
   forcedToProd = true;
 }
 
-const ComputedNodeCtx: TComputedNodeEnv = {
+const ComputedNodeCtx: ComputedNodeEnvType = {
   PROD: forcedToProd || !testCtx ? !devCtx : false,
   TEST: !forcedToProd ? testCtx : false,
   DEV: !forcedToProd ? devCtx : false
