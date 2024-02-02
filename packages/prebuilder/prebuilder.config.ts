@@ -1,4 +1,4 @@
-import type Config from './types/Config';
+import type Config from './src/types/Config';
 
 const config: Config = {
   defaultLanguageTokenTypeStr: 'DefaultLanguageToken',

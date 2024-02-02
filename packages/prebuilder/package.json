@@ -6,7 +6,7 @@
   "version": "1.0.0",
   "description": "GustaveWPM's NextJS Dashboard codebase internal prebuilder",
   "scripts": {
-    "start": "tsc --build && node prebuilder-dist/main.js"
+    "start": "tsc --build && node prebuilder-dist/src/main.js"
   },
   "devDependencies": {
     "@rtm/shared-types": "*",
