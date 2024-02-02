@@ -5,10 +5,10 @@ const path = require('path');
 
 function buildDirectoriesChain(directory: Path, rootFolder: Path): PathSegment[] {
   const cutDirectory = path.normalize(directory).replace(rootFolder, '');
-  const cleanedCutDirectory = cutDirectory.replace(/^\/+/, '');
+  const cleanedCutDirectory = cutDirectory.replace(/^\/+|^\\+/, '');
   if (cleanedCutDirectory === '') return [];
 
-  const directoriesChain = cleanedCutDirectory.split('/');
+  const directoriesChain = cleanedCutDirectory.split(path.sep);
   return directoriesChain;
 }
 
