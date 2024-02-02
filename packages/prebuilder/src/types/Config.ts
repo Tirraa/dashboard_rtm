@@ -1,7 +1,7 @@
 type Config = Partial<{
   i18nSubcategoriesRequiredExtraFields: string[];
   i18nCategoriesRequiredExtraFields: string[];
-  defaultLanguageTokenTypeStr: string;
+  defaultLanguageKey: string;
   maxPageTaxonomyLen: number;
   maxBlogTaxonomyLen: number;
   maxLpTaxonomyLen: number;
