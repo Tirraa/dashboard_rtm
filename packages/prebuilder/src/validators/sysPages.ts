@@ -64,7 +64,7 @@ export default async function sysPagesValidator(pagesFolder: Path): Promise<{
     const slug = filename.slice(0, -PAGE_FILE_EXT.length);
     if (!isValidPageTaxonomy(slug)) {
       if (foldersWithSlugDefects[currentSlugPath] === undefined) foldersWithSlugDefects[currentSlugPath] = [];
-      foldersWithSlugDefects[currentSlugPath].push(filename);
+      foldersWithSlugDefects[currentSlugPath].push(slug);
     }
   }
 
