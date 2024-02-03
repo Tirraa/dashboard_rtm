@@ -102,8 +102,15 @@ jobs:
         run: make
 
   test-after-build:
-    runs-on: 'ubuntu-latest'
+    strategy:
+      matrix:
+        node-version: [18, 20]
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
+      - name: Enable long paths support
+        if: matrix.os == 'windows-latest'
+        run: git config --system core.longpaths true
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
         with:
@@ -111,7 +118,7 @@ jobs:
       - name: Use Node.js 20
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
       - name: Initialize project
         run: make initialize
@@ -146,8 +153,15 @@ jobs:
         run: sudo rm -f /usr/bin/python3 && sudo mv /usr/bin/python3.bak /usr/bin/python3
 
   simulate-deploy-discarding-build-cache:
-    runs-on: 'ubuntu-latest'
+    strategy:
+      matrix:
+        node-version: [18, 20]
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
+      - name: Enable long paths support
+        if: matrix.os == 'windows-latest'
+        run: git config --system core.longpaths true
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
         with:
@@ -155,7 +169,7 @@ jobs:
       - name: Use Node.js 20
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
       - name: Create .env
         run: cp .env_example .env

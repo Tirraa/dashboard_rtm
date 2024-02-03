@@ -5,6 +5,7 @@ import type { ImgHTMLAttributes, HTMLAttributes } from 'react';
 import CopyToClipboard from '@/components/ui/blog/CopyToClipboard';
 import { cn } from '@/lib/tailwind';
 
+/* eslint-disable perfectionist/sort-objects */
 const PrimitiveComponents: Record<PropertyKey, (...args: any[]) => JSX.Element> = {
   img: ({ className, alt, ...props }: ImgHTMLAttributes<HTMLImageElement>) => (
     // eslint-disable-next-line @next/next/no-img-element
@@ -67,6 +68,7 @@ const PrimitiveComponents: Record<PropertyKey, (...args: any[]) => JSX.Element> 
   li: ({ className, ...props }) => <li className={cn('mt-2', className)} {...props} />,
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />
 };
+/* eslint-enable perfectionist/sort-objects */
 
 export default PrimitiveComponents;
 // Stryker restore all
