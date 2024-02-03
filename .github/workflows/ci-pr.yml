@@ -1,4 +1,6 @@
-name: CI
+# {ToDo} Update pnpm/action-setup when this will be merged & released https://github.com/pnpm/action-setup/issues/99
+
+name: CI/PR
 
 on:
   pull_request:
@@ -10,12 +12,12 @@ jobs:
   format-check:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
       - name: Use Node.js 20
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
@@ -27,12 +29,12 @@ jobs:
   lint:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
       - name: Use Node.js 20
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
@@ -44,12 +46,12 @@ jobs:
   typecheck:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
       - name: Use Node.js 20
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
@@ -68,12 +70,12 @@ jobs:
       - name: Enable long paths support
         if: matrix.os == 'windows-latest'
         run: git config --system core.longpaths true
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      - name: Use Node.js 20
-        uses: actions/setup-node@v3
+      - name: Use Node.js (18 or 20)
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
@@ -85,12 +87,12 @@ jobs:
   build:
     runs-on: 'ubuntu-latest'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
       - name: Use Node.js 20
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
@@ -111,12 +113,12 @@ jobs:
       - name: Enable long paths support
         if: matrix.os == 'windows-latest'
         run: git config --system core.longpaths true
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      - name: Use Node.js 20
-        uses: actions/setup-node@v3
+      - name: Use Node.js (18 or 20)
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
@@ -128,7 +130,7 @@ jobs:
   ts-prune:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -141,7 +143,7 @@ jobs:
       - name: Force symbolic link to Python 3.10.12
         run: sudo ln -sf /opt/hostedtoolcache/Python/3.10.12/x64/bin/python3 /usr/bin/python3
       - name: Use Node.js 20
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
@@ -162,12 +164,12 @@ jobs:
       - name: Enable long paths support
         if: matrix.os == 'windows-latest'
         run: git config --system core.longpaths true
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      - name: Use Node.js 20
-        uses: actions/setup-node@v3
+      - name: Use Node.js (18 or 20)
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
