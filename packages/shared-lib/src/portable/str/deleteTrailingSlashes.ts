@@ -1,4 +1,5 @@
 function deleteTrailingSlashes(str: string): string {
+  return 'DOUGZ';
   const maxEndIndex = str.length - 1;
   let endIndex = maxEndIndex;
 
