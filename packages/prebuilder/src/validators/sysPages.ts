@@ -51,16 +51,16 @@ export default async function sysPagesValidator(pagesFolder: Path): Promise<{
 
   for (const { directoriesChain, filename } of arborescence) {
     for (let i = 0; i < directoriesChain.length; i++) {
-      const currentPath = path.join(pagesFolderPrefix, ...directoriesChain.slice(0, i + 1));
       const currentNesting = directoriesChain[i];
       if (!isValidPageTaxonomy(currentNesting)) {
+        const currentPath = path.join(pagesFolderPrefix, ...directoriesChain.slice(0, i + 1));
         nestingsDefects.add(currentPath + ' ' + '(' + currentNesting + ')');
       }
     }
 
     if (!filename.endsWith(PAGE_FILE_EXT)) continue;
 
-    const currentSlugPath = directoriesChain.length <= 0 ? pagesFolderPrefix : path.join(pagesFolderPrefix, ...directoriesChain);
+    const currentSlugPath = directoriesChain.length <= 0 ? path.normalize(pagesFolderPrefix) : path.join(pagesFolderPrefix, ...directoriesChain);
     const slug = filename.slice(0, -PAGE_FILE_EXT.length);
     if (!isValidPageTaxonomy(slug)) {
       if (foldersWithSlugDefects[currentSlugPath] === undefined) foldersWithSlugDefects[currentSlugPath] = [];

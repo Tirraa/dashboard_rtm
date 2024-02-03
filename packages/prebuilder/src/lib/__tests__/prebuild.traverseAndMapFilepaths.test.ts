@@ -9,32 +9,17 @@ describe('traverseAndMapFilepaths', () => {
   it('should return an arborescence, given a valid RootFolder (full)', async () => {
     const architecture = await traverseAndMapFilepaths('./packages/prebuilder/src/lib/__tests__/fakeDirectory');
 
-    // {ToDo} Remove this Windows workaround
-    for (const file of architecture) {
-      file.directory = file.directory.replace(/\\/g, '/');
-    }
-
     expect(architecture).toMatchSnapshot();
   });
 
   it('should return an arborescence, given a valid RootFolder (partial)', async () => {
     const architecture = await traverseAndMapFilepaths('./packages/prebuilder/src/lib/__tests__/fakeDirectory/bar');
 
-    // {ToDo} Remove this Windows workaround
-    for (const file of architecture) {
-      file.directory = file.directory.replace(/\\/g, '/');
-    }
-
     expect(architecture).toMatchSnapshot();
   });
 
   it('should return an arborescence, given a valid RootFolder (partial 2)', async () => {
     const architecture = await traverseAndMapFilepaths('./packages/prebuilder/src/lib/__tests__/fakeDirectory/bar/baz/foo');
-
-    // {ToDo} Remove this Windows workaround
-    for (const file of architecture) {
-      file.directory = file.directory.replace(/\\/g, '/');
-    }
 
     expect(architecture).toMatchSnapshot();
   });
