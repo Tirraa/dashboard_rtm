@@ -1,7 +1,7 @@
-import type { LpFakeLanguageType } from '𝕍/testingBlogCategoryDatas';
+import type { LpFakeLanguageType } from '𝕍/testingContentCategoryDatas';
 import type { LandingPage } from 'contentlayer/generated';
 
-import { TESTING_LP_FAKE_LANGUAGES } from '𝕍/testingBlogCategoryDatas';
+import { TESTING_LP_FAKE_LANGUAGES } from '𝕍/testingContentCategoryDatas';
 import LandingPagesConfig from '@/config/landingPages';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, vi, it } from 'vitest';

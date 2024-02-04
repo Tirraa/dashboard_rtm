@@ -1,6 +1,6 @@
 import type { Page } from 'contentlayer/generated';
 
-import { TESTING_PAGES_FAKE_LANGUAGES } from '𝕍/testingBlogCategoryDatas';
+import { TESTING_PAGES_FAKE_LANGUAGES } from '𝕍/testingContentCategoryDatas';
 import { describe, expect, it, vi } from 'vitest';
 
 import getPagesStaticParams from '../getPagesStaticParams';
