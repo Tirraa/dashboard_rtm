@@ -24,7 +24,7 @@ vi.mock('@/config/pages', async (orgImport) => {
   return {
     default: {
       ...mod.default,
-      ENABLE_DRAFTS_IN_PROD: false
+      ENABLE_DRAFTS_IN_PROD: true
     } satisfies PagesConfigType
   };
 });
@@ -36,18 +36,6 @@ vi.mock('contentlayer/generated', async (orgImport) => {
   return {
     ...mod,
     allPages: [
-      {
-        _raw: { sourceFilePath: 'pages/index.mdx', sourceFileName: 'index.mdx', sourceFileDir: 'pages', flattenedPath: 'pages', contentType: 'mdx' },
-        metadescription: 'Metadescription de la page de test',
-        _id: 'pages/index.mdx',
-        title: 'Test Page',
-        url: '/fr/index',
-        language: 'fr',
-        path: 'index',
-        draft: false,
-        type: 'Page',
-        root: '/'
-      },
       {
         _raw: {
           sourceFilePath: 'pages/page-00.mdx',
@@ -86,24 +74,6 @@ vi.mock('contentlayer/generated', async (orgImport) => {
       },
       {
         _raw: {
-          sourceFilePath: 'pages/en/index.mdx',
-          sourceFileName: 'index.mdx',
-          sourceFileDir: 'pages/en',
-          flattenedPath: 'pages/en',
-          contentType: 'mdx'
-        },
-        metadescription: 'Metadescription de la page de test',
-        _id: 'pages/en/index.mdx',
-        title: 'Test Page',
-        url: '/en/index',
-        language: 'en',
-        path: 'index',
-        draft: false,
-        type: 'Page',
-        root: '/'
-      },
-      {
-        _raw: {
           sourceFilePath: 'pages/en/page-00.mdx',
           flattenedPath: 'pages/en/page-00',
           sourceFileName: 'page-00.mdx',
@@ -116,24 +86,6 @@ vi.mock('contentlayer/generated', async (orgImport) => {
         url: '/en/page-00',
         path: 'page-00',
         language: 'en',
-        draft: false,
-        type: 'Page',
-        root: '/'
-      },
-      {
-        _raw: {
-          sourceFilePath: 'pages/nesting-1/index.mdx',
-          sourceFileDir: 'pages/nesting-1',
-          flattenedPath: 'pages/nesting-1',
-          sourceFileName: 'index.mdx',
-          contentType: 'mdx'
-        },
-        metadescription: 'Metadescription de la page de test',
-        _id: 'pages/nesting-1/index.mdx',
-        url: '/fr/nesting-1',
-        title: 'Test Page',
-        path: 'nesting-1',
-        language: 'fr',
         draft: false,
         type: 'Page',
         root: '/'
@@ -212,42 +164,6 @@ vi.mock('contentlayer/generated', async (orgImport) => {
       },
       {
         _raw: {
-          sourceFilePath: 'pages/testing-pages-root/index.mdx',
-          sourceFileDir: 'pages/testing-pages-root',
-          flattenedPath: 'pages/testing-pages-root',
-          sourceFileName: 'index.mdx',
-          contentType: 'mdx'
-        },
-        metadescription: 'Metadescription de la page de test',
-        _id: 'pages/testing-pages-root/index.mdx',
-        url: '/fr/testing-pages-root',
-        path: 'testing-pages-root',
-        title: 'Test Page',
-        language: 'fr',
-        draft: false,
-        type: 'Page',
-        root: '/'
-      },
-      {
-        _raw: {
-          sourceFilePath: 'pages/en/nesting-1/index.mdx',
-          sourceFileDir: 'pages/en/nesting-1',
-          flattenedPath: 'pages/en/nesting-1',
-          sourceFileName: 'index.mdx',
-          contentType: 'mdx'
-        },
-        metadescription: 'Metadescription de la page de test',
-        _id: 'pages/en/nesting-1/index.mdx',
-        url: '/en/nesting-1',
-        title: 'Test Page',
-        path: 'nesting-1',
-        language: 'en',
-        draft: false,
-        type: 'Page',
-        root: '/'
-      },
-      {
-        _raw: {
           sourceFilePath: 'pages/en/nesting-1/page-00.mdx',
           flattenedPath: 'pages/en/nesting-1/page-00',
           sourceFileDir: 'pages/en/nesting-1',
@@ -261,24 +177,6 @@ vi.mock('contentlayer/generated', async (orgImport) => {
         path: 'nesting-1/page-00',
         root: 'nesting-1',
         language: 'en',
-        draft: false,
-        type: 'Page'
-      },
-      {
-        _raw: {
-          sourceFilePath: 'pages/nesting-1/nesting-2/index.mdx',
-          sourceFileDir: 'pages/nesting-1/nesting-2',
-          flattenedPath: 'pages/nesting-1/nesting-2',
-          sourceFileName: 'index.mdx',
-          contentType: 'mdx'
-        },
-        metadescription: 'Metadescription de la page de test',
-        _id: 'pages/nesting-1/nesting-2/index.mdx',
-        url: '/fr/nesting-1/nesting-2',
-        path: 'nesting-1/nesting-2',
-        title: 'Test Page',
-        root: 'nesting-1',
-        language: 'fr',
         draft: false,
         type: 'Page'
       },
@@ -338,24 +236,6 @@ vi.mock('contentlayer/generated', async (orgImport) => {
       },
       {
         _raw: {
-          sourceFilePath: 'pages/en/nesting-1/nesting-2/index.mdx',
-          sourceFileDir: 'pages/en/nesting-1/nesting-2',
-          flattenedPath: 'pages/en/nesting-1/nesting-2',
-          sourceFileName: 'index.mdx',
-          contentType: 'mdx'
-        },
-        metadescription: 'Metadescription de la page de test',
-        _id: 'pages/en/nesting-1/nesting-2/index.mdx',
-        url: '/en/nesting-1/nesting-2',
-        path: 'nesting-1/nesting-2',
-        title: 'Test Page',
-        root: 'nesting-1',
-        language: 'en',
-        draft: false,
-        type: 'Page'
-      },
-      {
-        _raw: {
           sourceFilePath: 'pages/en/nesting-1/nesting-2/page-00.mdx',
           flattenedPath: 'pages/en/nesting-1/nesting-2/page-00',
           sourceFileDir: 'pages/en/nesting-1/nesting-2',
@@ -376,28 +256,22 @@ vi.mock('contentlayer/generated', async (orgImport) => {
   };
 });
 
-describe('getPagesStaticParams (index notation)', () => {
+describe('getPagesStaticParams', () => {
   it('should return static params according to the allPages mock', () => {
     const staticParams = getPagesStaticParams();
 
     expect(staticParams).toStrictEqual([
-      { [PageTaxonomy.PATH]: ['index'], [I18nTaxonomy.LANGUAGE]: 'fr' },
       { [PageTaxonomy.PATH]: ['page-00'], [I18nTaxonomy.LANGUAGE]: 'fr' },
       { [PageTaxonomy.PATH]: ['page-01'], [I18nTaxonomy.LANGUAGE]: 'fr' },
-      { [PageTaxonomy.PATH]: ['index'], [I18nTaxonomy.LANGUAGE]: 'en' },
       { [PageTaxonomy.PATH]: ['page-00'], [I18nTaxonomy.LANGUAGE]: 'en' },
-      { [PageTaxonomy.PATH]: ['nesting-1'], [I18nTaxonomy.LANGUAGE]: 'fr' },
       { [PageTaxonomy.PATH]: ['nesting-1', 'page-00'], [I18nTaxonomy.LANGUAGE]: 'fr' },
       { [PageTaxonomy.PATH]: ['nesting-1', 'page-01'], [I18nTaxonomy.LANGUAGE]: 'fr' },
+      { [PageTaxonomy.PATH]: ['testing-pages-root', 'fake-draft-00'], [I18nTaxonomy.LANGUAGE]: 'fr' },
       { [PageTaxonomy.PATH]: ['testing-pages-root', 'fake-page-00'], [I18nTaxonomy.LANGUAGE]: 'fr' },
-      { [PageTaxonomy.PATH]: ['testing-pages-root'], [I18nTaxonomy.LANGUAGE]: 'fr' },
-      { [PageTaxonomy.PATH]: ['nesting-1'], [I18nTaxonomy.LANGUAGE]: 'en' },
       { [PageTaxonomy.PATH]: ['nesting-1', 'page-00'], [I18nTaxonomy.LANGUAGE]: 'en' },
-      { [PageTaxonomy.PATH]: ['nesting-1', 'nesting-2'], [I18nTaxonomy.LANGUAGE]: 'fr' },
       { [PageTaxonomy.PATH]: ['nesting-1', 'nesting-2', 'page-00'], [I18nTaxonomy.LANGUAGE]: 'fr' },
       { [PageTaxonomy.PATH]: ['nesting-1', 'nesting-2', 'page-01'], [I18nTaxonomy.LANGUAGE]: 'fr' },
       { [PageTaxonomy.PATH]: ['testing-pages-root', 'fake-nesting'], [I18nTaxonomy.LANGUAGE]: 'fr' },
-      { [PageTaxonomy.PATH]: ['nesting-1', 'nesting-2'], [I18nTaxonomy.LANGUAGE]: 'en' },
       { [PageTaxonomy.PATH]: ['nesting-1', 'nesting-2', 'page-00'], [I18nTaxonomy.LANGUAGE]: 'en' }
     ]);
   });

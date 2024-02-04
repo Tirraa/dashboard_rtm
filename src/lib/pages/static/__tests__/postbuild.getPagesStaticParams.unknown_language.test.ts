@@ -1,6 +1,9 @@
+import type { PagesConfigType } from '@/config/pages';
 import type { Page } from 'contentlayer/generated';
 
 import { TESTING_PAGES_FAKE_LANGUAGES } from '𝕍/testingContentCategoryDatas';
+import PageTaxonomy from '##/config/taxonomies/pages';
+import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { describe, expect, it, vi } from 'vitest';
 
 import getPagesStaticParams from '../getPagesStaticParams';
@@ -11,6 +14,18 @@ vi.mock('../../../../../interop/config/i18n', async (orgImport) => {
   return {
     ...mod,
     LANGUAGES: [mod.DEFAULT_LANGUAGE, ...TESTING_PAGES_FAKE_LANGUAGES]
+  };
+});
+
+vi.mock('@/config/pages', async (orgImport) => {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+  const mod = await orgImport<typeof import('@/config/pages')>();
+
+  return {
+    default: {
+      ...mod.default,
+      ENABLE_DRAFTS_IN_PROD: false
+    } satisfies PagesConfigType
   };
 });
 
@@ -264,20 +279,21 @@ describe('getPagesStaticParams', () => {
     const staticParams = getPagesStaticParams();
 
     expect(staticParams).toStrictEqual([
-      { path: ['page-00'], locale: 'fr' },
-      { path: ['page-01'], locale: 'fr' },
-      { path: ['page-00'], locale: 'en' },
-      { path: ['nesting-1', 'page-00'], locale: 'fr' },
-      { path: ['nesting-1', 'page-01'], locale: 'fr' },
-      { path: ['testing-pages-root', 'fake-page-00'], locale: 'fr' },
-      { path: ['nesting-1', 'page-00'], locale: 'en' },
-      { path: ['nesting-1', 'nesting-2', 'page-00'], locale: 'fr' },
-      { path: ['nesting-1', 'nesting-2', 'page-01'], locale: 'fr' },
-      { path: ['testing-pages-root', 'fake-nesting'], locale: 'fr' },
-      { path: ['nesting-1', 'nesting-2', 'page-00'], locale: 'en' }
+      { [PageTaxonomy.PATH]: ['page-00'], [I18nTaxonomy.LANGUAGE]: 'fr' },
+      { [PageTaxonomy.PATH]: ['page-01'], [I18nTaxonomy.LANGUAGE]: 'fr' },
+      { [PageTaxonomy.PATH]: ['page-00'], [I18nTaxonomy.LANGUAGE]: 'en' },
+      { [PageTaxonomy.PATH]: ['nesting-1', 'page-00'], [I18nTaxonomy.LANGUAGE]: 'fr' },
+      { [PageTaxonomy.PATH]: ['nesting-1', 'page-01'], [I18nTaxonomy.LANGUAGE]: 'fr' },
+      { [PageTaxonomy.PATH]: ['testing-pages-root', 'fake-page-00'], [I18nTaxonomy.LANGUAGE]: 'fr' },
+      { [PageTaxonomy.PATH]: ['nesting-1', 'page-00'], [I18nTaxonomy.LANGUAGE]: 'en' },
+      { [PageTaxonomy.PATH]: ['nesting-1', 'nesting-2', 'page-00'], [I18nTaxonomy.LANGUAGE]: 'fr' },
+      { [PageTaxonomy.PATH]: ['nesting-1', 'nesting-2', 'page-01'], [I18nTaxonomy.LANGUAGE]: 'fr' },
+      { [PageTaxonomy.PATH]: ['testing-pages-root', 'fake-nesting'], [I18nTaxonomy.LANGUAGE]: 'fr' },
+      { [PageTaxonomy.PATH]: ['nesting-1', 'nesting-2', 'page-00'], [I18nTaxonomy.LANGUAGE]: 'en' }
     ]);
   });
 });
 
 vi.doUnmock('../../../../../interop/config/i18n');
+vi.doUnmock('@/config/pages');
 vi.doUnmock('contentlayer/generated');
