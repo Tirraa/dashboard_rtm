@@ -1,4 +1,4 @@
-import type { BlogFakeLanguageType } from '𝕍/testingBlogCategoryDatas';
+import type { BlogFakeLanguageType } from '𝕍/testingContentCategoryDatas';
 
 import { describe, expect, it } from 'vitest';
 

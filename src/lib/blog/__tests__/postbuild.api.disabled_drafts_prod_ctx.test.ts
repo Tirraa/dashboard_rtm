@@ -1,8 +1,8 @@
-import type { BlogFakeLanguageType } from '𝕍/testingBlogCategoryDatas';
+import type { BlogFakeLanguageType } from '𝕍/testingContentCategoryDatas';
 import type { BlogConfigType } from '@/config/blog';
 import type { BlogPostType } from '@/types/Blog';
 
-import { TESTING_BLOG_FAKE_SUBCATEGORY } from '𝕍/testingBlogCategoryDatas';
+import { TESTING_BLOG_FAKE_SUBCATEGORY } from '𝕍/testingContentCategoryDatas';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, it, vi } from 'vitest';
 import ROUTES_ROOTS from '##/config/routes';

@@ -1,4 +1,5 @@
 import type { LpFakeLanguageType } from '𝕍/testingContentCategoryDatas';
+import type { LandingPagesConfigType } from '@/config/landingPages';
 import type { LandingPage } from 'contentlayer/generated';
 
 import { TESTING_LP_FAKE_LANGUAGES } from '𝕍/testingContentCategoryDatas';
@@ -8,12 +9,25 @@ import { describe, expect, it, vi } from 'vitest';
 
 import getLandingPagesStaticParams from '../getLandingPagesStaticParams';
 
-vi.mock('../../../../../interop/config/i18n', async (orgImport) => {
+vi.mock('##/config/i18n', async (orgImport) => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-  const mod = await orgImport<typeof import('../../../../../interop/config/i18n')>();
+  const mod = await orgImport<typeof import('##/config/i18n')>();
+
   return {
     ...mod,
-    LANGUAGES: TESTING_LP_FAKE_LANGUAGES
+    LANGUAGES: [mod.DEFAULT_LANGUAGE, ...TESTING_LP_FAKE_LANGUAGES]
+  };
+});
+
+vi.mock('@/config/landingPages', async (orgImport) => {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+  const mod = await orgImport<typeof import('@/config/landingPages')>();
+
+  return {
+    default: {
+      ...mod.default,
+      ENABLE_DRAFTS_IN_PROD: true
+    } satisfies LandingPagesConfigType
   };
 });
 
@@ -155,21 +169,19 @@ vi.mock('contentlayer/generated', async (orgImport) => {
 });
 
 describe('getLandingPagesStaticParams', () => {
-  it('should return static params, according to the allLandingPages mock', async () => {
+  it('should return static params, including the mocked drafts', async () => {
     const staticParams = await getLandingPagesStaticParams();
-
     expect(staticParams).toStrictEqual([
-      {
-        [I18nTaxonomy.LANGUAGE]: 'default_language' satisfies LpFakeLanguageType,
-        [LandingPageTaxonomy.SLUG]: 'testing-fake-lp-00'
-      },
-      {
-        [I18nTaxonomy.LANGUAGE]: 'en' satisfies LpFakeLanguageType,
-        [LandingPageTaxonomy.SLUG]: 'testing-fake-lp-00'
-      }
+      { [LandingPageTaxonomy.SLUG]: 'dummy-category-lp-00', [I18nTaxonomy.LANGUAGE]: 'default_language' },
+      { [LandingPageTaxonomy.SLUG]: 'testing-fake-draft-lp-00', [I18nTaxonomy.LANGUAGE]: 'default_language' },
+      { [LandingPageTaxonomy.SLUG]: 'testing-fake-lp-00', [I18nTaxonomy.LANGUAGE]: 'default_language' },
+      { [LandingPageTaxonomy.SLUG]: 'dummy-category-lp-00', [I18nTaxonomy.LANGUAGE]: 'en' },
+      { [LandingPageTaxonomy.SLUG]: 'testing-fake-draft-lp-00', [I18nTaxonomy.LANGUAGE]: 'en' },
+      { [LandingPageTaxonomy.SLUG]: 'testing-fake-lp-00', [I18nTaxonomy.LANGUAGE]: 'en' }
     ]);
   });
 });
 
-vi.doUnmock('../../../../../interop/config/i18n');
+vi.doUnmock('##/config/i18n');
+vi.doUnmock('@/config/landingPages');
 vi.doUnmock('contentlayer/generated');
