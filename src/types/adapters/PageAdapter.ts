@@ -14,23 +14,38 @@ type PageAdapter<P extends PagesFromCodegenSchema> = P extends { head: LanguageF
   ? P extends { head: DefaultLanguage }
     ? {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        url: P['url'] extends `${TopLevelRoot}${DefaultLanguage}${PathSeparator}${infer _}`
-          ? P['url']
-          : `${TopLevelRoot}${DefaultLanguage}${P['url']}`;
+        path: P['path'] extends `${infer Head}${PathSeparator}${IndexToken}`
+          ? Head extends `${DefaultLanguage}/${infer Tail}`
+            ? Tail
+            : never
+          : P['pathWithoutHead'];
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        path: P['path'] extends `${infer _}${PathSeparator}${IndexToken}` ? IndexToken : P['path'];
-        root: P['head'] extends DefaultLanguage ? TopLevelRoot : P['head'];
+        url: P['url'] extends `${infer Head}${PathSeparator}${IndexToken}` ? Head : P['url'];
+        root: P['nestingLevelTwo'] extends '' ? TopLevelRoot : P['nestingLevelTwo'];
         lang: DefaultLanguage;
       }
     : {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        url: P['url'] extends `${TopLevelRoot}${P['head']}${PathSeparator}${infer _}`
+          ? P['url'] extends `${infer Head}${PathSeparator}${IndexToken}`
+            ? Head
+            : P['url']
+          : P['url'] extends `${infer Head}${PathSeparator}${IndexToken}`
+            ? `${TopLevelRoot}${P['head']}${Head}`
+            : `${TopLevelRoot}${P['head']}${P['url']}`;
         path: P['pathWithoutHead'] extends `${infer Head}${PathSeparator}${IndexToken}` ? Head : P['pathWithoutHead'];
         root: P['nestingLevelTwo'] extends '' ? TopLevelRoot : P['nestingLevelTwo'];
         lang: P['head'];
-        url: P['url'];
       }
   : {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      url: P['url'] extends `${TopLevelRoot}${DefaultLanguage}${PathSeparator}${infer _}` ? P['url'] : `${TopLevelRoot}${DefaultLanguage}${P['url']}`;
+      url: P['url'] extends `${TopLevelRoot}${DefaultLanguage}${PathSeparator}${infer _}`
+        ? P['url'] extends `${infer Head}${PathSeparator}${IndexToken}`
+          ? Head
+          : P['url']
+        : P['url'] extends `${infer Head}${PathSeparator}${IndexToken}`
+          ? `${TopLevelRoot}${DefaultLanguage}${Head}`
+          : `${TopLevelRoot}${DefaultLanguage}${P['url']}`;
       root: P['path'] extends `${P['head']}${PathSeparator}${IndexToken}` ? TopLevelRoot : P['head'];
       path: P['path'] extends `${infer Head}${PathSeparator}${IndexToken}` ? Head : P['path'];
       lang: DefaultLanguage;
