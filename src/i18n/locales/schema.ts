@@ -15,7 +15,6 @@ export const SHARED_VOCAB_SCHEMA = {
 
     'patch-notes': _,
     'discord-bot': _,
-    'sign-up': _,
 
     dashboard: _,
     homepage: _,
@@ -24,6 +23,7 @@ export const SHARED_VOCAB_SCHEMA = {
   },
   vocab: {
     breadcrumbs: _,
+    'sign-up': _,
     brand: _,
     logo: _,
     page: _
@@ -80,10 +80,6 @@ export default {
 
   'manual-SEO': {
     homepage: {
-      'meta-description': _
-    },
-
-    signup: {
       'meta-description': _
     }
   },

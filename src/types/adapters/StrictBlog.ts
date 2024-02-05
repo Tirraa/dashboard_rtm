@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+//!\ TESTED VIA JEST-TSD
 import type DefaultLanguageToken from '@rtm/generated/DefaultLanguageToken';
 import type { DefaultLanguage } from '##/config/i18n';
 import type Blog from '@rtm/generated/Blog';

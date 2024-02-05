@@ -17,13 +17,13 @@ const SHARED: SharedVocabType = {
 
     dashboard: 'Dashboard',
     homepage: 'Homepage',
-    'sign-up': 'Sign up',
 
     blog: 'Blog'
   },
   vocab: {
     brand: 'Rust Team Management',
     breadcrumbs: 'Breadcrumbs',
+    'sign-up': 'Sign up',
     logo: 'logo',
     page: 'page'
   }
@@ -110,15 +110,11 @@ export default {
   'manual-SEO': {
     homepage: {
       'meta-description': 'This is the homepage metadescription'
-    },
-
-    signup: {
-      'meta-description': 'Dashboard portal metadescription'
     }
   },
 
   auth: {
-    signup: SHARED['pages-titles']['sign-up'],
+    signup: SHARED['vocab']['sign-up'],
     logout: 'Logout',
     login: 'Login'
   },

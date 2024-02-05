@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+//!\ TESTED VIA JEST-TSD
 import type { INDEX_TOKEN } from '##/lib/misc/contentlayerCornerCases';
 import type { PagesFromCodegenSchema } from '@rtm/generated/Pages';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';

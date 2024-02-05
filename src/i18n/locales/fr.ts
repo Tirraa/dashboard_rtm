@@ -16,7 +16,6 @@ const SHARED: SharedVocabType = {
     'discord-bot': 'Bot Discord',
 
     homepage: "Page d'accueil",
-    'sign-up': 'Inscription',
     dashboard: 'Dashboard',
 
     blog: 'Blog'
@@ -24,6 +23,7 @@ const SHARED: SharedVocabType = {
   vocab: {
     brand: 'Rust Team Management',
     breadcrumbs: "Fil d'ariane",
+    'sign-up': 'Inscription',
     logo: 'logo',
     page: 'page'
   }
@@ -108,10 +108,6 @@ export default {
   },
 
   'manual-SEO': {
-    signup: {
-      'meta-description': 'Metadescription portail dashboard'
-    },
-
     homepage: {
       'meta-description': "Metadescription Page d'accueil"
     }

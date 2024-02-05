@@ -1,22 +1,30 @@
 /* v8 ignore start */
 // Stryker disable all
+import type { LanguageFlag } from 'packages/shared-types/src/I18n';
+import type { Page } from 'contentlayer/generated';
 import type { I18nPageProps } from '@/types/Next';
 
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
 import { setStaticParamsLocale } from 'next-international/server';
-import SignupButton from '@/components/ui/cta/SignupButton';
+import { getPageByLanguageAndPathStrict } from '@/lib/pages/api';
+import { buildPageTitle } from 'packages/shared-lib/src/str';
+import MDX from '@/components/layouts/blog/MdxComponent';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
-import { buildPageTitle } from '@rtm/shared-lib/str';
 import { getServerSession } from 'next-auth';
 import ROUTES_ROOTS from '##/config/routes';
 import { redirect } from 'next/navigation';
 import { i18ns } from '##/config/i18n';
 
-export async function generateMetadata() {
+export async function generateMetadata({ params }: I18nPageProps) {
   const globalT = await getServerSideI18n();
-  const { pagesTitles, manualSEO, vocab } = i18ns;
-  const title = buildPageTitle(globalT(`${vocab}.brand-short`), globalT(`${pagesTitles}.sign-up`), true);
-  const description = globalT(`${manualSEO}.signup.meta-description`);
+  const language = params[I18nTaxonomy.LANGUAGE];
+
+  const document = getPageByLanguageAndPathStrict(language as LanguageFlag, 'lp/sign-up') as Page;
+
+  const { vocab } = i18ns;
+  const { metadescription: description, title: documentTitle } = document;
+  const title = buildPageTitle(globalT(`${vocab}.brand-short`), documentTitle);
+
   return { description, title };
 }
 
@@ -31,7 +39,8 @@ export default async function Page({ params }: I18nPageProps) {
   const session = await getServerSession();
   if (session) redirect(ROUTES_ROOTS.DASHBOARD);
 
-  return <SignupButton />;
+  const document = getPageByLanguageAndPathStrict(language as LanguageFlag, 'lp/sign-up') as Page;
+  return <MDX code={document.body.code} />;
 }
 // Stryker restore all
 /* v8 ignore stop */
