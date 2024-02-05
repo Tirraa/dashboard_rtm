@@ -1,6 +1,6 @@
 {
   "name": "rtm-dashboard",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "author": "gustaveWPM (github.com/gustaveWPM)",
   "contributors": [
     "Tirraa (github.com/Tirraa)"
@@ -119,7 +119,7 @@
     "tsd": "^0.29.0",
     "typescript": "^5.3.2",
     "vite": "^5.0.12",
-    "vitest": "^1.2.2"
+    "vitest": "1.2.2"
   },
   "engines": {
     "node": "18.x"

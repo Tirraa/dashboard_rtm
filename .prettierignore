@@ -3,3 +3,9 @@ node_modules
 dist
 prebuilder-dist
 pnpm-lock.yaml
+
+FAKE_CODEGEN
+.rtm-generated
+.contentlayer
+.stryker-tmp
+.next
