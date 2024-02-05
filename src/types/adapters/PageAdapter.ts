@@ -13,13 +13,11 @@ type TopLevelRoot = '/';
 type PageAdapter<P extends PagesFromCodegenSchema> = P extends { head: LanguageFlag }
   ? P extends { head: DefaultLanguage }
     ? {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         path: P['path'] extends `${infer Head}${PathSeparator}${IndexToken}`
           ? Head extends `${DefaultLanguage}/${infer Tail}`
             ? Tail
             : never
           : P['pathWithoutHead'];
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         url: P['url'] extends `${infer Head}${PathSeparator}${IndexToken}` ? Head : P['url'];
         root: P['nestingLevelTwo'] extends '' ? TopLevelRoot : P['nestingLevelTwo'];
         lang: DefaultLanguage;

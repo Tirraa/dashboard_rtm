@@ -11,80 +11,6 @@ const _ = {};
 const validAlternativeLanguage: Exclude<LanguageFlag, DefaultLanguage> = 'en';
 type ValidAlternativeLanguage = typeof validAlternativeLanguage;
 
-describe('PageAdapter (Default Language inference)', () => {
-  it('should pass (default language narrowing)', () => {
-    const fake = _ as PageAdapter<{
-      path: 'testing-pages-root/fake-draft-00';
-      url: '/testing-pages-root/fake-draft-00';
-      pathWithoutHead: 'fake-draft-00';
-      head: 'testing-pages-root';
-      tail: 'fake-draft-00';
-      nestingLevelTwo: '';
-    }>;
-
-    expectType<{
-      url: `/${DefaultLanguage}/testing-pages-root/fake-draft-00`;
-      path: 'testing-pages-root/fake-draft-00';
-      root: 'testing-pages-root';
-      lang: DefaultLanguage;
-    }>(fake);
-  });
-
-  it('should pass (default language narrowing, deep path)', () => {
-    const fake = _ as PageAdapter<{
-      pathWithoutHead: 'nesting-2/page-00';
-      path: 'nesting-1/nesting-2/page-00';
-      url: '/nesting-1/nesting-2/page-00';
-      nestingLevelTwo: 'nesting-2';
-      head: 'nesting-1';
-      tail: 'page-00';
-    }>;
-
-    expectType<{
-      url: `/${DefaultLanguage}/nesting-1/nesting-2/page-00`;
-      path: 'nesting-1/nesting-2/page-00';
-      lang: DefaultLanguage;
-      root: 'nesting-1';
-    }>(fake);
-  });
-
-  it('should pass (default language narrowing, top root level path)', () => {
-    const fake = _ as PageAdapter<{
-      pathWithoutHead: 'page-00';
-      nestingLevelTwo: '';
-      path: 'page-00';
-      url: '/page-00';
-      tail: 'page-00';
-      head: '/';
-    }>;
-
-    expectType<{
-      url: `/${DefaultLanguage}/page-00`;
-      lang: DefaultLanguage;
-      path: 'page-00';
-      root: '/';
-    }>(fake);
-  });
-
-  it('should pass (default language narrowing, index notation)', () => {
-    const fake = _ as PageAdapter<{
-      path: 'testing-pages-root/fake-nesting/index';
-      url: '/testing-pages-root/fake-nesting/index';
-      pathWithoutHead: 'fake-nesting/index';
-      nestingLevelTwo: 'fake-nesting';
-      head: 'testing-pages-root';
-      tail: 'index';
-    }>;
-
-    expectType<{
-      url: `/${DefaultLanguage}/testing-pages-root/fake-nesting`;
-      path: 'testing-pages-root/fake-nesting';
-      root: 'testing-pages-root';
-      lang: DefaultLanguage;
-    }>(fake);
-  });
-});
-
 describe('PageAdapter (Valid alternative language)', () => {
   it('should pass (Valid alternative language narrowing)', () => {
     const fake = _ as PageAdapter<{
@@ -155,6 +81,80 @@ describe('PageAdapter (Valid alternative language)', () => {
       path: 'testing-pages-root/fake-nesting';
       lang: ValidAlternativeLanguage;
       root: 'testing-pages-root';
+    }>(fake);
+  });
+});
+
+describe('PageAdapter (Default Language inference)', () => {
+  it('should pass (default language narrowing)', () => {
+    const fake = _ as PageAdapter<{
+      path: 'testing-pages-root/fake-draft-00';
+      url: '/testing-pages-root/fake-draft-00';
+      pathWithoutHead: 'fake-draft-00';
+      head: 'testing-pages-root';
+      tail: 'fake-draft-00';
+      nestingLevelTwo: '';
+    }>;
+
+    expectType<{
+      url: `/${DefaultLanguage}/testing-pages-root/fake-draft-00`;
+      path: 'testing-pages-root/fake-draft-00';
+      root: 'testing-pages-root';
+      lang: DefaultLanguage;
+    }>(fake);
+  });
+
+  it('should pass (default language narrowing, deep path)', () => {
+    const fake = _ as PageAdapter<{
+      pathWithoutHead: 'nesting-2/page-00';
+      path: 'nesting-1/nesting-2/page-00';
+      url: '/nesting-1/nesting-2/page-00';
+      nestingLevelTwo: 'nesting-2';
+      head: 'nesting-1';
+      tail: 'page-00';
+    }>;
+
+    expectType<{
+      url: `/${DefaultLanguage}/nesting-1/nesting-2/page-00`;
+      path: 'nesting-1/nesting-2/page-00';
+      lang: DefaultLanguage;
+      root: 'nesting-1';
+    }>(fake);
+  });
+
+  it('should pass (default language narrowing, top root level path)', () => {
+    const fake = _ as PageAdapter<{
+      pathWithoutHead: 'page-00';
+      nestingLevelTwo: '';
+      path: 'page-00';
+      url: '/page-00';
+      tail: 'page-00';
+      head: '/';
+    }>;
+
+    expectType<{
+      url: `/${DefaultLanguage}/page-00`;
+      lang: DefaultLanguage;
+      path: 'page-00';
+      root: '/';
+    }>(fake);
+  });
+
+  it('should pass (default language narrowing, index notation)', () => {
+    const fake = _ as PageAdapter<{
+      path: 'testing-pages-root/fake-nesting/index';
+      url: '/testing-pages-root/fake-nesting/index';
+      pathWithoutHead: 'fake-nesting/index';
+      nestingLevelTwo: 'fake-nesting';
+      head: 'testing-pages-root';
+      tail: 'index';
+    }>;
+
+    expectType<{
+      url: `/${DefaultLanguage}/testing-pages-root/fake-nesting`;
+      path: 'testing-pages-root/fake-nesting';
+      root: 'testing-pages-root';
+      lang: DefaultLanguage;
     }>(fake);
   });
 });

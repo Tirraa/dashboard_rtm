@@ -1,3 +1,6 @@
 **/__tests__/FAKE_CODEGEN/
 **/prebuilder/prebuilder-dist/
 .rtm-generated/
+.stryker-tmp/
+reports/
+coverage/
