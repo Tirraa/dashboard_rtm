@@ -6,7 +6,7 @@ type RoutesRootsKeys = 'LANDING_PAGES' | 'PATCH_NOTES' | 'DASHBOARD' | 'WEBSITE'
 type RoutesRoots = Record<RoutesRootsKeys, AppPath>;
 
 const ROUTES_ROOTS_BASE = {
-  LANDING_PAGES: getSlashEnvelope('lp'),
+  LANDING_PAGES: getSlashEnvelope('/'),
   WEBSITE: getSlashEnvelope('/'),
   BLOG: getSlashEnvelope('blog')
 } satisfies Partial<RoutesRoots>;
