@@ -34,19 +34,17 @@ describe('LpLanguageAndSlugPair (Valid structure)', () => {
       };
     }>;
 
-    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-default-language-exclusivity' as const, lang: DEFAULT_LANGUAGE_VALUE });
+    expectAssignable<typeof fake>({
+      slug: 'landing-pages-testing-category-default-language-exclusivity',
+      lang: DEFAULT_LANGUAGE_VALUE
+    } as const);
+    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-fake-draft-lp-00', lang: DEFAULT_LANGUAGE_VALUE } as const);
+    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-fake-lp-00', lang: DEFAULT_LANGUAGE_VALUE } as const);
+    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-index', lang: DEFAULT_LANGUAGE_VALUE } as const);
 
-    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-fake-draft-lp-00' as const, lang: DEFAULT_LANGUAGE_VALUE });
-
-    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-fake-lp-00' as const, lang: DEFAULT_LANGUAGE_VALUE });
-
-    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-index' as const, lang: DEFAULT_LANGUAGE_VALUE });
-
-    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-fake-draft-lp-00' as const, lang: 'en' as const });
-
-    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-fake-lp-00' as const, lang: 'en' as const });
-
-    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-index' as const, lang: 'en' as const });
+    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-fake-draft-lp-00', lang: 'en' } as const);
+    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-fake-lp-00', lang: 'en' } as const);
+    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-index', lang: 'en' } as const);
   });
 
   it('should pass (mixed structure)', () => {
@@ -67,24 +65,18 @@ describe('LpLanguageAndSlugPair (Valid structure)', () => {
       };
     }>;
 
-    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-default-language-exclusivity' as const, lang: DEFAULT_LANGUAGE_VALUE });
+    expectAssignable<typeof fake>({ slug: 'dummy-category-lp-00', lang: DEFAULT_LANGUAGE_VALUE } as const);
 
-    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-fake-draft-lp-00' as const, lang: DEFAULT_LANGUAGE_VALUE });
+    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-default-language-exclusivity', lang: DEFAULT_LANGUAGE_VALUE } as const);
+    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-fake-draft-lp-00', lang: DEFAULT_LANGUAGE_VALUE } as const);
+    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-fake-lp-00', lang: DEFAULT_LANGUAGE_VALUE } as const);
+    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-index', lang: DEFAULT_LANGUAGE_VALUE } as const);
 
-    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-fake-lp-00' as const, lang: DEFAULT_LANGUAGE_VALUE });
+    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-fake-draft-lp-00', lang: 'en' } as const);
+    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-fake-lp-00', lang: 'en' } as const);
+    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-index', lang: 'en' } as const);
 
-    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-index' as const, lang: DEFAULT_LANGUAGE_VALUE });
-
-    expectAssignable<typeof fake>({ slug: 'dummy-category-lp-00' as const, lang: DEFAULT_LANGUAGE_VALUE });
-
-    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-fake-draft-lp-00' as const, lang: 'en' as const });
-
-    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-fake-lp-00' as const, lang: 'en' as const });
-
-    expectAssignable<typeof fake>({ slug: 'landing-pages-testing-category-index' as const, lang: 'en' as const });
-
-    expectAssignable<typeof fake>({ slug: 'dummy-category-en-exclusivity' as const, lang: 'en' as const });
-
-    expectAssignable<typeof fake>({ slug: 'dummy-category-lp-00' as const, lang: 'en' as const });
+    expectAssignable<typeof fake>({ slug: 'dummy-category-en-exclusivity', lang: 'en' } as const);
+    expectAssignable<typeof fake>({ slug: 'dummy-category-lp-00', lang: 'en' } as const);
   });
 });

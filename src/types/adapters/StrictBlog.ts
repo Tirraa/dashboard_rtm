@@ -5,12 +5,12 @@ import type { DefaultLanguage } from '##/config/i18n';
 import type Blog from '@rtm/generated/Blog';
 
 // * ... Adapter (rewriting)
-type StrictBlog = {
-  [Category in keyof Blog]: {
-    [Subcategory in keyof Blog[Category]]: {
-      [Language in keyof Blog[Category][Subcategory] as Language extends DefaultLanguageToken
+type StrictBlog<__Blog extends object = Blog> = {
+  [Category in keyof __Blog]: {
+    [Subcategory in keyof __Blog[Category]]: {
+      [Language in keyof __Blog[Category][Subcategory] as Language extends DefaultLanguageToken
         ? DefaultLanguage
-        : Language]: Blog[Category][Subcategory][Language];
+        : Language]: __Blog[Category][Subcategory][Language];
     };
   };
 };
