@@ -4,14 +4,14 @@ import { expectNotAssignable, expectAssignable } from 'jest-tsd';
 import { describe, it } from 'vitest';
 
 import type {
-  DocumentsConfigTypeContentLayerMetadatas,
-  ContentLayerDocumentsConfigType,
+  DocumentsConfigTypeContentlayerMetadatas,
+  ContentlayerDocumentsConfigType,
   MakeDocumentsAllFieldsSumType,
   DocumentsFields,
   MakeFields
 } from '../ContentlayerConfig';
 
-describe('ContentLayerConfig walkthrough', () => {
+describe('ContentlayerConfig walkthrough', () => {
   const EXT = 'mdx';
   const FAKE_SCHEMA_KEY = 'FakeSchema';
 
@@ -47,7 +47,7 @@ describe('ContentLayerConfig walkthrough', () => {
   } as const;
 
   it('should pass, given the correct FAKE_SCHEMA pattern', () =>
-    expectAssignable<ContentLayerDocumentsConfigType<'FakeSchema', _AllFakeFields>>(FAKE_SCHEMA));
+    expectAssignable<ContentlayerDocumentsConfigType<'FakeSchema', _AllFakeFields>>(FAKE_SCHEMA));
 
   it('should pass, given two invalid FAKE_SCHEMA patterns, and expecting the type system to disallow this unhappy path', () => {
     const INVALID_FAKE_SCHEMA_1 = {
@@ -64,8 +64,8 @@ describe('ContentLayerConfig walkthrough', () => {
       name: '$' // <== Invalid: only the FakeSchemaKey literal is allowed here
     } as const;
 
-    expectNotAssignable<ContentLayerDocumentsConfigType<FakeSchemaKey, _AllFakeFields>>(INVALID_FAKE_SCHEMA_1);
-    expectNotAssignable<ContentLayerDocumentsConfigType<FakeSchemaKey, _AllFakeFields>>(INVALID_FAKE_SCHEMA_2);
+    expectNotAssignable<ContentlayerDocumentsConfigType<FakeSchemaKey, _AllFakeFields>>(INVALID_FAKE_SCHEMA_1);
+    expectNotAssignable<ContentlayerDocumentsConfigType<FakeSchemaKey, _AllFakeFields>>(INVALID_FAKE_SCHEMA_2);
   });
 
   const FAKE_DOCUMENTS_TYPES_METADATAS = {
@@ -103,7 +103,7 @@ describe('ContentLayerConfig walkthrough', () => {
   type _FakeFields = typeof FAKE_FIELDS;
   type FakeDocumentsTypesKeys = 'FakePost1' | 'FakePost2';
   type FakeSchemaKey = typeof FAKE_SCHEMA_KEY;
-  type FakeDocumentsTypesMetadatas = Record<FakeDocumentsTypesKeys, DocumentsConfigTypeContentLayerMetadatas<FakeDocumentsTypesKeys>>;
+  type FakeDocumentsTypesMetadatas = Record<FakeDocumentsTypesKeys, DocumentsConfigTypeContentlayerMetadatas<FakeDocumentsTypesKeys>>;
 
   type FakeDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _FakeComputedFields, _AllFakeFields>;
   type FakeFields = MakeFields<_FakeFields, _AllFakeFields, keyof _FakeComputedFields>;

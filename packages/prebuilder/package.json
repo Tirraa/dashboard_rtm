@@ -4,7 +4,7 @@
   "author": "gustaveWPM (github.com/gustaveWPM)",
   "license": "MIT",
   "version": "1.0.0",
-  "description": "GustaveWPM's NextJS Dashboard codebase internal prebuilder",
+  "description": "GustaveWPM's NextJS Dashboard codebase prebuilder",
   "scripts": {
     "start": "tsc --build && node prebuilder-dist/src/main.js"
   },

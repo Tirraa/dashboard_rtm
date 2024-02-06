@@ -1,26 +1,26 @@
 import { describe, expect, it } from 'vitest';
 
-import ContentLayerDuplicateTypesError from '../errors/ContentLayerDuplicateTypesError';
-import validateContentLayerConfig from '../contentLayer';
+import ContentlayerDuplicateTypesError from '../errors/ContentlayerDuplicateTypesError';
+import validateContentlayerConfig from '../contentlayer';
 
-describe('validateContentLayerConfig', () => {
+describe('validateContentlayerConfig', () => {
   it('should throw, given invalid config, containing duplicates', () => {
     expect(() =>
-      validateContentLayerConfig([
+      validateContentlayerConfig([
         { def: () => ({ name: 'duplicate' }), type: 'document' },
         { def: () => ({ name: 'duplicate' }), type: 'document' },
         { def: () => ({ name: 'notDuplicate' }), type: 'document' }
       ])
-    ).toThrowError(ContentLayerDuplicateTypesError);
+    ).toThrowError(ContentlayerDuplicateTypesError);
   });
 
   it('should not throw, given invalid config, containing duplicates', () => {
     expect(() =>
-      validateContentLayerConfig([
+      validateContentlayerConfig([
         { def: () => ({ name: 'a' }), type: 'document' },
         { def: () => ({ name: 'b' }), type: 'document' },
         { def: () => ({ name: 'c' }), type: 'document' }
       ])
-    ).not.toThrowError(ContentLayerDuplicateTypesError);
+    ).not.toThrowError(ContentlayerDuplicateTypesError);
   });
 });

@@ -14,14 +14,14 @@ import landingPagesDocumentType from './interop/config/contentlayer/landing-page
 import CodeSnippetTheme from './interop/config/contentlayer/blog/code-snippet-theme.json';
 import blogDocumentTypes from './interop/config/contentlayer/blog/documentTypes';
 import pagesDocumentType from './interop/config/contentlayer/pages/documentType';
-import validateContentLayerConfig from './interop/validators/contentLayer';
+import validateContentlayerConfig from './interop/validators/contentlayer';
 import addClassname from './interop/lib/misc/addClassname';
 
 const contentDirPath = './content';
 const contentDirInclude = [BLOG_POSTS_FOLDER, LANDING_PAGES_FOLDER, PAGES_FOLDER];
 const documentTypes = [...blogDocumentTypes, landingPagesDocumentType, pagesDocumentType];
 
-validateContentLayerConfig(documentTypes);
+validateContentlayerConfig(documentTypes);
 
 export default makeSource({
   mdx: {

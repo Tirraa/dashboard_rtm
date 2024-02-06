@@ -1,13 +1,13 @@
 import type { DocumentType } from 'contentlayer/source-files';
 
-import ContentLayerDuplicateTypesError from './errors/ContentLayerDuplicateTypesError';
+import ContentlayerDuplicateTypesError from './errors/ContentlayerDuplicateTypesError';
 
 const getDocumentTypeName = (documentType: DocumentType<string>) => documentType.def().name;
 
 /**
- * @throws {ContentLayerDuplicateTypesError}
+ * @throws {ContentlayerDuplicateTypesError}
  */
-function validateContentLayerConfig(documentTypes: DocumentType<string>[]) {
+function validateContentlayerConfig(documentTypes: DocumentType<string>[]) {
   const documentTypesMemory: unknown[] = [];
   const duplicatesSet = new Set<unknown>();
 
@@ -22,7 +22,7 @@ function validateContentLayerConfig(documentTypes: DocumentType<string>[]) {
   }
 
   const duplicates = Array.from(duplicatesSet);
-  if (duplicates.length > 0) throw new ContentLayerDuplicateTypesError(duplicates);
+  if (duplicates.length > 0) throw new ContentlayerDuplicateTypesError(duplicates);
 }
 
-export default validateContentLayerConfig;
+export default validateContentlayerConfig;

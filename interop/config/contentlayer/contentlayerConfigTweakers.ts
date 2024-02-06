@@ -1,6 +1,6 @@
 import type {
   BlogDocumentsConfigTypeMetadatas,
-  ContentLayerDocumentsConfigType,
+  ContentlayerDocumentsConfigType,
   MakeDocumentsAllFieldsSumType,
   ComputedFieldsArtifact,
   DocumentsFields,
@@ -160,11 +160,11 @@ export const BLOG_DOCUMENTS_FIELDS = {
   date: { required: true, type: 'date' }
 } as const satisfies DocumentsFields;
 
-export const BLOG_POST_SCHEMA_CONFIG: ContentLayerDocumentsConfigType<BlogPostSchemaKey> = {
+export const BLOG_POST_SCHEMA_CONFIG: ContentlayerDocumentsConfigType<BlogPostSchemaKey> = {
   contentType: DOCUMENTS_CONTENT_EXTENSION,
   fields: _ALL_BLOG_FIELDS,
-  filePathPattern: '',
-  name: 'PostSchema'
+  name: 'BlogPostSchema',
+  filePathPattern: ''
 } as const;
 
 /* v8 ignore start */
@@ -202,7 +202,7 @@ export const PAGES_DOCUMENTS_FIELDS = {
 } as const satisfies DocumentsFields<_AllPagesFields, _PagesDocumentsComputedFieldsKeys>;
 
 export type BlogDocumentsTypesKeys = 'PatchPostBis' | 'TestingPost' | 'PatchPost';
-type BlogPostSchemaKey = 'PostSchema';
+type BlogPostSchemaKey = 'BlogPostSchema';
 
 type _BlogFields = typeof BLOG_DOCUMENTS_FIELDS;
 type _AllPagesFields = typeof _ALL_PAGES_FIELDS;

@@ -7,5 +7,12 @@
   "typescript.referencesCodeLens.enabled": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
-  }
+  },
+  "grammarly.selectors": [
+    {
+      "language": "markdown",
+      "scheme": "file",
+      "pattern": "**/*.md"
+    }
+  ]
 }

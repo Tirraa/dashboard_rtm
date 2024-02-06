@@ -1,12 +1,12 @@
 /* v8 ignore start */
 // Stryker disable all
-class ContentLayerDuplicateTypesError extends Error {
+class ContentlayerDuplicateTypesError extends Error {
   constructor(duplicates: unknown[]) {
     super(`[${duplicates.join(', ')}] ${duplicates.length > 1 ? 'are' : 'is'} defined several times.`);
-    this.name = 'ContentLayerDuplicateTypesError';
+    this.name = 'ContentlayerDuplicateTypesError';
   }
 }
 
-export default ContentLayerDuplicateTypesError;
+export default ContentlayerDuplicateTypesError;
 // Stryker restore all
 /* v8 ignore stop */

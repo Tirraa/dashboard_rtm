@@ -11,13 +11,13 @@ import type {
 import type { DocumentContentType, ComputedFields, FieldDefs, FieldDef } from 'contentlayer/source-files';
 import type { FieldDefType, Document } from 'contentlayer/core';
 
-type ContentLayerContentType = { contentType: DocumentContentType };
+type ContentlayerContentType = { contentType: DocumentContentType };
 
 type CategoryFolder = string;
 type FilePathPattern = string;
 export type TypeName = BlogDocumentsTypesKeys;
 
-export type DocumentsConfigTypeContentLayerMetadatas<Name extends string> = {
+export type DocumentsConfigTypeContentlayerMetadatas<Name extends string> = {
   filePathPattern: FilePathPattern;
   name: Name;
 };
@@ -26,7 +26,7 @@ export type DocumentsConfigType<
   __Fields extends DocumentsFields = BlogFields,
   __ComputedFields extends ComputedFields = BlogComputedFields,
   __TypeName extends string = TypeName
-> = DocumentsConfigTypeContentLayerMetadatas<__TypeName> & {
+> = DocumentsConfigTypeContentlayerMetadatas<__TypeName> & {
   computedFields: __ComputedFields;
   fields: __Fields;
 };
@@ -37,11 +37,11 @@ export type DocumentsFields<
 > = Omit<__AllFields, __DocumentsComputedFieldsKeys>;
 
 type AtomicBlogDocumentConfig = DocumentsConfigType;
-export type AtomicContentLayerDocumentConfig = AtomicBlogDocumentConfig & ContentLayerContentType;
-export type ContentLayerDocumentsConfigType<__TypeName extends string = TypeName, __AllBlogFields extends FieldDefs = AllBlogFields> = {
+export type AtomicContentlayerDocumentConfig = AtomicBlogDocumentConfig & ContentlayerContentType;
+export type ContentlayerDocumentsConfigType<__TypeName extends string = TypeName, __AllBlogFields extends FieldDefs = AllBlogFields> = {
   fields: __AllBlogFields;
-} & ContentLayerContentType &
-  DocumentsConfigTypeContentLayerMetadatas<__TypeName>;
+} & ContentlayerContentType &
+  DocumentsConfigTypeContentlayerMetadatas<__TypeName>;
 
 export type MakeDocumentsAllFieldsSumType<T extends keyof __AllFields, __AllFields extends FieldDefs = AllBlogFields> = T;
 

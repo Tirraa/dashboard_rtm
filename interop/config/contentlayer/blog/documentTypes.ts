@@ -1,4 +1,4 @@
-import type { AtomicContentLayerDocumentConfig } from '@rtm/shared-types/ContentlayerConfig';
+import type { AtomicContentlayerDocumentConfig } from '@rtm/shared-types/ContentlayerConfig';
 import type { DocumentType } from 'contentlayer/source-files';
 
 import type { BlogDocumentsTypesMetadatas } from '../contentlayerConfigTweakers';
@@ -34,7 +34,7 @@ const blogDocumentTypes: DocumentType[] = Object.values(documentsTypesMetadatas)
     const { categoryFolder, name } = documentTypeMetadatas;
     const filePathPattern = BLOG_POSTS_FOLDER + '/' + categoryFolder + `/**/*.${EXT}`;
     acc.push(
-      defineDocumentType(() => ({ filePathPattern, computedFields, contentType, fields, name }) as const satisfies AtomicContentLayerDocumentConfig)
+      defineDocumentType(() => ({ filePathPattern, computedFields, contentType, fields, name }) as const satisfies AtomicContentlayerDocumentConfig)
     );
     return acc;
   },

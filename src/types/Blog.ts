@@ -3,16 +3,16 @@
 import type { KeySeparator } from '@rtm/shared-types/CustomUtilityTypes';
 import type BlogArchitecture from '@rtm/generated/BlogArchitecture';
 import type { BlogTaxonomyType } from '##/config/taxonomies/blog';
+import type { BlogPostSchema } from 'contentlayer/generated';
 import type { WithClassname } from '@rtm/shared-types/Next';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type BlogTaxonomy from '##/config/taxonomies/blog';
-import type { PostSchema } from 'contentlayer/generated';
 
 import type StrictBlog from './adapters/StrictBlog';
 import type { I18nParams } from './Next';
 
-type ContentLayerPhantomType = 'type';
-export type BlogPostType = Omit<PostSchema, ContentLayerPhantomType>;
+type ContentlayerPhantomType = 'type';
+export type BlogPostType = Omit<BlogPostSchema, ContentlayerPhantomType>;
 
 export type BlogCategory = keyof BlogArchitecture;
 export type BlogSubcategoryFromUnknownCategory = BlogArchitecture[BlogCategory];
