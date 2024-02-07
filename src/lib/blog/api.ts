@@ -45,7 +45,7 @@ export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict
   // Stryker disable next-line ConditionalExpression
   if (!isValidPair) return [];
 
-  const getPostsWithAllowedDraftsCtx = (postsCollection: BlogPostType[]): BlogPostType[] =>
+  const getBlogPostsWithAllowedDraftsCtx = (postsCollection: BlogPostType[]): BlogPostType[] =>
     postsCollection.filter(
       ({ subcategory: currentPostSubcategory, language: currentPostLanguage }) =>
         // Stryker Workaround 3. Pointless mutants: there's no ambiguity here.
@@ -53,7 +53,7 @@ export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict
         currentPostSubcategory === subcategory && currentPostLanguage === language
     );
 
-  const getPostsWithDisallowedDraftsCtx = (postsCollection: BlogPostType[]): BlogPostType[] =>
+  const getBlogPostsWithDisallowedDraftsCtx = (postsCollection: BlogPostType[]): BlogPostType[] =>
     postsCollection.filter(
       ({ subcategory: currentPostSubcategory, language: currentPostLanguage, draft: currentPostDraft }) =>
         // Stryker Workaround 4. Pointless mutants: there's no ambiguity here.
@@ -63,7 +63,7 @@ export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict
 
   const postsCollection = (await getAllBlogPostsByCategory(category)) as BlogPostType[];
 
-  return ComputedBlogCtx.ALLOWED_DRAFTS ? getPostsWithAllowedDraftsCtx(postsCollection) : getPostsWithDisallowedDraftsCtx(postsCollection);
+  return ComputedBlogCtx.ALLOWED_DRAFTS ? getBlogPostsWithAllowedDraftsCtx(postsCollection) : getBlogPostsWithDisallowedDraftsCtx(postsCollection);
 }
 
 export async function getBlogPostUnstrict(
@@ -76,15 +76,15 @@ export async function getBlogPostUnstrict(
   // Stryker disable next-line ConditionalExpression,EqualityOperator
   if (!ComputedBlogCtx.TESTING && category === BlogConfig.TESTING_CATEGORY) return null;
 
-  const getPostWithAllowedDraftsCtx: () => MaybeNull<BlogPostType> = () =>
+  const getBlogPostWithAllowedDraftsCtx: () => MaybeNull<BlogPostType> = () =>
     postsCollection.find(({ slug: currentPostSlug }) => currentPostSlug === targettedSlug) ?? null;
 
-  const getPostWithDisallowedDraftsCtx: () => MaybeNull<BlogPostType> = () =>
+  const getBlogPostWithDisallowedDraftsCtx: () => MaybeNull<BlogPostType> = () =>
     postsCollection.find(({ draft: currentPostDraft, slug: currentPostSlug }) => !currentPostDraft && currentPostSlug === targettedSlug) ?? null;
 
   const postsCollection: BlogPostType[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(category, subcategory, language);
 
-  return ComputedBlogCtx.ALLOWED_DRAFTS ? getPostWithAllowedDraftsCtx() : getPostWithDisallowedDraftsCtx();
+  return ComputedBlogCtx.ALLOWED_DRAFTS ? getBlogPostWithAllowedDraftsCtx() : getBlogPostWithDisallowedDraftsCtx();
 }
 
 export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict<C extends keyof StrictBlog>(

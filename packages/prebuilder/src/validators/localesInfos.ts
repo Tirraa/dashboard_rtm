@@ -3,7 +3,6 @@ import type { VocabKey } from '../config/translations';
 
 import retrieveLocaleFileInfosMetadatas from '../metadatas-builders/retrieveLocaleFileInfosMetadatas';
 import { LOCALES_LNG_INFOS_KEY, LIST_ELEMENT_PREFIX } from '../config';
-import { prefixFeedback } from '../lib/feedbacksMerge';
 import formatMessage from '../config/formatMessage';
 
 // https://github.com/vitest-dev/vitest/discussions/2484
@@ -11,7 +10,6 @@ const fs = require('fs/promises');
 const path = require('path');
 
 const localesExtension = '.ts';
-const ERROR_PREFIX = formatMessage('failedToPassThePrebuild' satisfies VocabKey);
 
 async function localeFileInfosValidator(localeFilePath: Path): Promise<MaybeEmptyErrorsDetectionFeedback> {
   let feedback: ErrorsDetectionFeedback = '';
@@ -33,7 +31,6 @@ async function localeFileInfosValidator(localeFilePath: Path): Promise<MaybeEmpt
  * @throws {BuilderError}
  */
 export default async function localesInfosValidator(localesFolder: Path, i18nSchemaFilePath: Path): Promise<MaybeEmptyErrorsDetectionFeedback> {
-  const ERROR_PREFIX_TAIL = formatMessage('localesInfosValidatorTail' satisfies VocabKey);
   let feedback: ErrorsDetectionFeedback = '';
 
   const files: string[] = await fs.readdir(localesFolder);
@@ -61,8 +58,7 @@ export default async function localesInfosValidator(localesFolder: Path, i18nSch
               )
             )
             .join(LIST_ELEMENT_PREFIX)}` + '\n'
-        : '\n' + localeFileInfosValidatorFeedbacks[0] + '\n';
+        : localeFileInfosValidatorFeedbacks[0] + '\n';
   }
-  feedback = prefixFeedback(feedback, ERROR_PREFIX + ' ' + ERROR_PREFIX_TAIL);
   return feedback;
 }

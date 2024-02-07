@@ -18,12 +18,13 @@ const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<CategoryRelate
   const scopedT = await getScopedI18n(i18ns.blogCategories);
 
   let gettedOnTheFlyPosts: BlogPostType[] = [];
-  const getPostsWithAllowedDraftsCtx = (postsCollection: BlogPostType[]): BlogPostType[] =>
+  // {ToDo} Smells like code duplicates, see blog API and review this!
+  const getBlogPostsWithAllowedDraftsCtx = (postsCollection: BlogPostType[]): BlogPostType[] =>
     ComputedBlogCtx.TESTING
       ? postsCollection
       : postsCollection.filter(({ category: currentPostCategory }) => currentPostCategory !== BlogConfig.TESTING_CATEGORY);
 
-  const getPostsWithDisallowedDraftsCtx = (postsCollection: BlogPostType[]): BlogPostType[] =>
+  const getBlogPostsWithDisallowedDraftsCtx = (postsCollection: BlogPostType[]): BlogPostType[] =>
     ComputedBlogCtx.TESTING
       ? postsCollection.filter(({ draft: currentPostDraft }) => !currentPostDraft)
       : postsCollection.filter(
@@ -34,8 +35,8 @@ const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<CategoryRelate
   if (postsCollection === null) notFound();
 
   gettedOnTheFlyPosts = ComputedBlogCtx.ALLOWED_DRAFTS
-    ? getPostsWithAllowedDraftsCtx(postsCollection)
-    : getPostsWithDisallowedDraftsCtx(postsCollection);
+    ? getBlogPostsWithAllowedDraftsCtx(postsCollection)
+    : getBlogPostsWithDisallowedDraftsCtx(postsCollection);
 
   const posts = gettedOnTheFlyPosts.sort((post1, post2) =>
     BlogConfig.DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_CATEGORY_PAGE(new Date(post1.date), new Date(post2.date))

@@ -136,7 +136,6 @@ const DEFAULT_TRANSLATION = {
     `The '${LOCALES_INFOS_ROOT_KEY}.${LOCALES_LNG_INFOS_KEY}' field value should match the locale filename! ({localeFilePath})` +
     '\n' +
     "Expected value: ''{expectedLocaleCode}'', given value: ''{localeCode}''",
-  localesInfosValidatorTail: '(locales files infos)',
 
   optionsAreInvalid: `${capitalize(VOCAB_TOKENS.en.F_PLURAL.OPTIONS)} are ${VOCAB_TOKENS.en.INVARIABLE.INVALID}:`,
 
@@ -246,7 +245,6 @@ const translations = {
       `La valeur du champ "${LOCALES_INFOS_ROOT_KEY}.${LOCALES_LNG_INFOS_KEY}" doit correspondre au nom de fichier de la locale ! ({localeFilePath})` +
       '\n' +
       `Valeur attendue : "{expectedLocaleCode}", valeur déduite : "{localeCode}"`,
-    localesInfosValidatorTail: '(infos des fichiers des locales)',
 
     optionsAreInvalid: `Les ${VOCAB_TOKENS.fr.F_PLURAL.OPTIONS} sont ${VOCAB_TOKENS.fr.F_PLURAL.INVALID} :`,
 
