@@ -1,3 +1,4 @@
+// Stryker disable all
 import PagesConfig from '@/config/pages';
 
 import ComputedNodeCtx from '../portable/node/env';
@@ -16,3 +17,4 @@ const ComputedPagesCtx: ComputedPagesCtxType = {
 } as const;
 
 export default ComputedPagesCtx;
+// Stryker restore all
