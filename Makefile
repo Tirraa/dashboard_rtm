@@ -1,4 +1,4 @@
-.PHONY: all install build prebuild test coverage mutations-tests check-coding-style vercel-ci-build-command build-contentlayer prebuild-rtm initialize-env initialize clean-codegen clean fclean re re-using-pm-cache re-using-next-cache simulate-deploy simulate-deploy-discarding-build-cache
+.PHONY: all install build prebuild test coverage mutations-tests check-coding-style vercel-ci-build-command build-contentlayer prebuild-rtm initialize-env initialize clean-codegen clean-stryker-cache clean-prebuilder-dist clean-node-modules clean-coverage-report clean fclean re re-using-pm-cache re-using-next-cache simulate-deploy simulate-deploy-discarding-build-cache
 
 MAKEFLAGS += --silent
 
@@ -11,6 +11,9 @@ PM := pnpm
 CONTENTLAYER_GENERATED_CODE := .contentlayer
 RTM_GENERATED_CODE := .rtm-generated
 NEXT_GENERATED_CODE := .next
+STRYKER_TMP := .stryker-tmp
+PREBUILDER_DIST := prebuilder-dist
+NODE_MODULES := node_modules
 
 COVERAGE_GENERATED_REPORT := coverage
 
@@ -54,7 +57,7 @@ coverage: initialize
 	$(PM) coverage
 
 # @Override
-mutations-tests: clean-codegen initialize
+mutations-tests: clean-codegen clean-stryker-cache initialize
 	$(PM) mutations-tests:run
 
 # @Override
@@ -88,11 +91,21 @@ initialize: install prebuild initialize-env
 clean-codegen:
 	rm -rf $(NEXT_GENERATED_CODE) $(CONTENTLAYER_GENERATED_CODE) $(RTM_GENERATED_CODE)
 
-clean: clean-codegen
+clean-stryker-cache:
+	rm -rf $(STRYKER_TMP)
+
+clean-prebuilder-dist:
+	find . -type d -name "$(PREBUILDER_DIST)" -exec rm -rf {} +
+
+clean-node-modules:
+	find . -type d -name "$(NODE_MODULES)" -exec rm -rf {} +
+
+clean-coverage-report:
 	rm -rf $(COVERAGE_GENERATED_REPORT)
 
-fclean: clean
-	find . \( -type d -name "node_modules" -o -name "prebuilder-dist" -o -name ".stryker-tmp" \) -exec rm -rf {} +
+clean: clean-codegen clean-coverage-report
+
+fclean: clean clean-stryker-cache clean-prebuilder-dist clean-node-modules
 
 re: fclean install build
 
