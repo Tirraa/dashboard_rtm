@@ -114,6 +114,11 @@ const _ALL_PAGES_FIELDS = {
     required: false,
     default: false
   },
+  foo: {
+    type: 'boolean',
+    required: false,
+    default: false
+  },
   metadescription: {
     type: 'string',
     required: true
@@ -197,6 +202,7 @@ export const PAGES_DOCUMENTS_COMPUTED_FIELDS = {
 
 export const PAGES_DOCUMENTS_FIELDS = {
   draft: { type: 'boolean', required: false, default: false },
+  foo: { type: 'boolean', required: false, default: false }, // * ... Added 'foo' field here too.
   metadescription: { type: 'string', required: true },
   title: { type: 'string', required: true }
 } as const satisfies DocumentsFields<_AllPagesFields, _PagesDocumentsComputedFieldsKeys>;
