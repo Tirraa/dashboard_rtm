@@ -1,4 +1,4 @@
-.PHONY: all install build prebuild test coverage mutations-tests vercel-ci-build-command build-contentlayer prebuild-rtm initialize-env initialize clean-codegen clean fclean re re-using-pm-cache re-using-next-cache simulate-deploy simulate-deploy-discarding-build-cache check-coding-style
+.PHONY: all install build prebuild test coverage mutations-tests check-coding-style vercel-ci-build-command build-contentlayer prebuild-rtm initialize-env initialize clean-codegen clean fclean re re-using-pm-cache re-using-next-cache simulate-deploy simulate-deploy-discarding-build-cache
 
 MAKEFLAGS += --silent
 
@@ -57,6 +57,12 @@ coverage: initialize
 mutations-tests: clean-codegen initialize
 	$(PM) mutations-tests:run
 
+# @Override
+check-coding-style:
+	$(PM) ci:format-check
+	$(PM) ci:lint
+	$(PM) ci:typecheck
+
 # @Alias
 vercel-ci-build-command:
 	$(PM) ci:vercel-build-command
@@ -97,8 +103,3 @@ re-using-next-cache: build
 simulate-deploy: clean vercel-ci-build-command
 
 simulate-deploy-discarding-build-cache: fclean install vercel-ci-build-command
-
-check-coding-style:
-	$(PM) ci:format-check
-	$(PM) ci:lint
-	$(PM) ci:typecheck
