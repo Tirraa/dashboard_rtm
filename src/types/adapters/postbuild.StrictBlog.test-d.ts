@@ -1,6 +1,8 @@
+// Error will not be thrown in test ctx
 import type DefaultLanguageToken from '@rtm/generated/DefaultLanguageToken';
 
 import { expectAssignable, expectType } from 'jest-tsd';
+// Error will not be thrown in test ctx
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, it } from 'vitest';
 

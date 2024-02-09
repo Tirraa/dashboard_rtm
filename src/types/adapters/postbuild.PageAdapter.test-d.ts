@@ -1,4 +1,5 @@
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
+// Error will not be thrown in test ctx
 import type { DefaultLanguage } from '##/config/i18n';
 
 import { describe, it } from 'vitest';
@@ -8,6 +9,7 @@ import type PageAdapter from './PageAdapter';
 
 const _ = {};
 
+// Error will not be thrown in test ctx
 const validAlternativeLanguage: Exclude<LanguageFlag, DefaultLanguage> = 'en';
 type ValidAlternativeLanguage = typeof validAlternativeLanguage;
 

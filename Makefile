@@ -1,4 +1,4 @@
-.PHONY: all install build prebuild test coverage mutations-tests vercel-ci-build-command build-contentlayer prebuild-rtm initialize clean-codegen clean fclean re re-using-pm-cache re-using-next-cache simulate-deploy simulate-deploy-discarding-build-cache check-coding-style
+.PHONY: all install build prebuild test coverage mutations-tests vercel-ci-build-command build-contentlayer prebuild-rtm initialize-env initialize clean-codegen clean fclean re re-using-pm-cache re-using-next-cache simulate-deploy simulate-deploy-discarding-build-cache check-coding-style
 
 MAKEFLAGS += --silent
 
@@ -74,8 +74,10 @@ prebuild-rtm:
 # **** II. 2) DSL
 #------------------
 
-initialize: install prebuild
+initialize-env:
 	[ -e "$(ENV_FILE)" ] || cp "$(ENV_EXAMPLE)" "$(ENV_FILE)"
+
+initialize: install prebuild initialize-env
 
 clean-codegen:
 	rm -rf $(NEXT_GENERATED_CODE) $(CONTENTLAYER_GENERATED_CODE) $(RTM_GENERATED_CODE)

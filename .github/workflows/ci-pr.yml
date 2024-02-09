@@ -1,5 +1,3 @@
-# {ToDo} Update pnpm/action-setup when this will be merged & released https://github.com/pnpm/action-setup/issues/99
-
 name: CI/PR
 
 on:
@@ -13,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8
       - name: Use Node.js 20
@@ -30,7 +28,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8
       - name: Use Node.js 20
@@ -47,7 +45,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8
       - name: Use Node.js 20
@@ -71,7 +69,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: git config --system core.longpaths true
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8
       - name: Use Node.js (18 or 20)
@@ -88,7 +86,7 @@ jobs:
     runs-on: 'ubuntu-latest'
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8
       - name: Use Node.js 20
@@ -114,7 +112,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: git config --system core.longpaths true
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8
       - name: Use Node.js (18 or 20)
@@ -131,11 +129,11 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8
       - name: Use Python 3.10.12
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
           python-version: 3.10.12
       - name: Backup old symbolic link
@@ -165,7 +163,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: git config --system core.longpaths true
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8
       - name: Use Node.js (18 or 20)

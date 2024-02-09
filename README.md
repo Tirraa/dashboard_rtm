@@ -1,6 +1,6 @@
 # RTM Dashboard
 
-## _This project is mostly an attempt to create a reliable codebase with next-international, Contentlayer and Next.js_
+## _This project is mostly an attempt to create a reliable codebase with next-international, Contentlayer, and Next.js_
 
 ### RT(F)M
 
@@ -20,7 +20,7 @@
 
 ##### Dev mode
 
-`$ make initialize && make dev`
+`$ make prebuild-rtm && make dev`
 
 ##### Prod mode
 
