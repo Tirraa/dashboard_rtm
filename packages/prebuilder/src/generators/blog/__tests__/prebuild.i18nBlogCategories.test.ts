@@ -1,4 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { FAKE_BLOG_METADATAS_A, FAKE_BLOG_METADATAS_B } from '𝕍/commons';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { describe, expect, it } from 'vitest';
 
 import generateI18nBlogCategories from '../i18nBlogCategories';
@@ -22,51 +24,6 @@ const __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_EMPTY: string[] = [];
 
 const EMPTY_METADATAS = {};
 
-const FAKE_METADATAS_A = {
-  'fake-category-one': {
-    'fake-subcategory-one': {
-      DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03'],
-      en: ['fake-post-01', 'fake-post-03'],
-      it: ['fake-post-01', 'fake-post-02'],
-      fr: ['fake-post-01']
-    },
-    'fake-subcategory-three': { DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03'], es: ['fake-post-01'], zh: ['fake-post-02'] },
-    'fake-subcategory-two': { DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03'], fr: ['fake-post-02'] }
-  },
-  'fake-category-three': {
-    'fake-subcategory-five': { DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03'], en: ['fake-post-03'], it: ['fake-post-03'] },
-    'fake-subcategory-four': { DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03'], es: ['fake-post-04'] }
-  },
-  'fake-category-two': { 'fake-subcategory-six': { DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03'], zh: ['fake-post-10'] } }
-};
-
-const FAKE_METADATAS_B = {
-  'fake-category-one': {
-    'fake-subcategory-one': {
-      DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03'],
-      en: ['fake-post-01', 'fake-post-03'],
-      it: ['fake-post-01', 'fake-post-02'],
-      fr: ['fake-post-01']
-    },
-    'fake-subcategory-three': {
-      DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03'],
-      es: ['fake-post-01'],
-      zh: ['fake-post-02']
-    },
-    'fake-subcategory-two': { fr: ['fake-post-02'] }
-  },
-  'fake-category-three': {
-    'fake-subcategory-five': { DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03'], en: ['fake-post-03'], it: ['fake-post-03'] },
-    'fake-subcategory-four': { DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03'], es: ['fake-post-04'] }
-  },
-  'fake-empty-subcategories-nested-in-category': {
-    'fake-subcategory-seven': { DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03'], zh: ['fake-post-10'] },
-    'fake-empty-subcategory': {}
-  },
-  'fake-category-two': { 'fake-subcategory-six': { DEFAULT_LANGUAGE: ['fake-post-01', 'fake-post-02', 'fake-post-03'], zh: ['fake-post-10'] } },
-  'fake-empty-category': {}
-};
-
 describe('generateI18nBlogCategories (formatted)', () => {
   const pretty = true;
   it('should match snapshot', async () => {
@@ -85,10 +42,10 @@ describe('generateI18nBlogCategories (formatted)', () => {
   });
 
   it('should match snapshot', async () => {
-    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_MIN_FAKE_METADATAS_A';
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_MIN_FAKE_BLOG_METADATAS_A';
 
     await generateI18nBlogCategories(
-      FAKE_METADATAS_A,
+      FAKE_BLOG_METADATAS_A,
       pretty,
       targetFile,
       __TARGET_FOLDER,
@@ -100,10 +57,10 @@ describe('generateI18nBlogCategories (formatted)', () => {
   });
 
   it('should match snapshot', async () => {
-    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_MIN_FAKE_METADATAS_B';
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_MIN_FAKE_BLOG_METADATAS_B';
 
     await generateI18nBlogCategories(
-      FAKE_METADATAS_B,
+      FAKE_BLOG_METADATAS_B,
       pretty,
       targetFile,
       __TARGET_FOLDER,
@@ -115,10 +72,10 @@ describe('generateI18nBlogCategories (formatted)', () => {
   });
 
   it('should match snapshot', async () => {
-    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_EMPTY_EXTRAS_FAKE_METADATAS_A';
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_EMPTY_EXTRAS_FAKE_BLOG_METADATAS_A';
 
     await generateI18nBlogCategories(
-      FAKE_METADATAS_A,
+      FAKE_BLOG_METADATAS_A,
       pretty,
       targetFile,
       __TARGET_FOLDER,
@@ -130,10 +87,10 @@ describe('generateI18nBlogCategories (formatted)', () => {
   });
 
   it('should match snapshot', async () => {
-    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_EMPTY_EXTRAS_FAKE_METADATAS_B';
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_EMPTY_EXTRAS_FAKE_BLOG_METADATAS_B';
 
     await generateI18nBlogCategories(
-      FAKE_METADATAS_B,
+      FAKE_BLOG_METADATAS_B,
       pretty,
       targetFile,
       __TARGET_FOLDER,
@@ -145,10 +102,10 @@ describe('generateI18nBlogCategories (formatted)', () => {
   });
 
   it('should match snapshot', async () => {
-    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_ONES_EXTRAS_FAKE_METADATAS_A';
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_ONE_EXTRA_FAKE_BLOG_METADATAS_A';
 
     await generateI18nBlogCategories(
-      FAKE_METADATAS_A,
+      FAKE_BLOG_METADATAS_A,
       pretty,
       targetFile,
       __TARGET_FOLDER,
@@ -160,10 +117,10 @@ describe('generateI18nBlogCategories (formatted)', () => {
   });
 
   it('should match snapshot', async () => {
-    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_ONES_EXTRAS_FAKE_METADATAS_B';
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_ONE_EXTRA_FAKE_BLOG_METADATAS_B';
 
     await generateI18nBlogCategories(
-      FAKE_METADATAS_B,
+      FAKE_BLOG_METADATAS_B,
       pretty,
       targetFile,
       __TARGET_FOLDER,
@@ -175,10 +132,10 @@ describe('generateI18nBlogCategories (formatted)', () => {
   });
 
   it('should match snapshot', async () => {
-    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_THREES_EXTRAS_FAKE_METADATAS_A';
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_THREE_EXTRAS_FAKE_BLOG_METADATAS_A';
 
     await generateI18nBlogCategories(
-      FAKE_METADATAS_A,
+      FAKE_BLOG_METADATAS_A,
       pretty,
       targetFile,
       __TARGET_FOLDER,
@@ -190,10 +147,10 @@ describe('generateI18nBlogCategories (formatted)', () => {
   });
 
   it('should match snapshot', async () => {
-    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_THREES_EXTRAS_FAKE_METADATAS_B';
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_THREE_EXTRAS_FAKE_BLOG_METADATAS_B';
 
     await generateI18nBlogCategories(
-      FAKE_METADATAS_B,
+      FAKE_BLOG_METADATAS_B,
       pretty,
       targetFile,
       __TARGET_FOLDER,
@@ -223,10 +180,10 @@ describe('generateI18nBlogCategories (ugly)', () => {
   });
 
   it('should match snapshot', async () => {
-    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_MIN_FAKE_METADATAS_A';
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_MIN_FAKE_BLOG_METADATAS_A';
 
     await generateI18nBlogCategories(
-      FAKE_METADATAS_A,
+      FAKE_BLOG_METADATAS_A,
       pretty,
       targetFile,
       __TARGET_FOLDER,
@@ -238,10 +195,10 @@ describe('generateI18nBlogCategories (ugly)', () => {
   });
 
   it('should match snapshot', async () => {
-    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_MIN_FAKE_METADATAS_B';
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_MIN_FAKE_BLOG_METADATAS_B';
 
     await generateI18nBlogCategories(
-      FAKE_METADATAS_B,
+      FAKE_BLOG_METADATAS_B,
       pretty,
       targetFile,
       __TARGET_FOLDER,
@@ -253,10 +210,10 @@ describe('generateI18nBlogCategories (ugly)', () => {
   });
 
   it('should match snapshot', async () => {
-    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_EMPTY_EXTRAS_FAKE_METADATAS_A';
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_EMPTY_EXTRAS_FAKE_BLOG_METADATAS_A';
 
     await generateI18nBlogCategories(
-      FAKE_METADATAS_A,
+      FAKE_BLOG_METADATAS_A,
       pretty,
       targetFile,
       __TARGET_FOLDER,
@@ -268,10 +225,10 @@ describe('generateI18nBlogCategories (ugly)', () => {
   });
 
   it('should match snapshot', async () => {
-    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_EMPTY_EXTRAS_FAKE_METADATAS_B';
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_EMPTY_EXTRAS_FAKE_BLOG_METADATAS_B';
 
     await generateI18nBlogCategories(
-      FAKE_METADATAS_B,
+      FAKE_BLOG_METADATAS_B,
       pretty,
       targetFile,
       __TARGET_FOLDER,
@@ -283,10 +240,10 @@ describe('generateI18nBlogCategories (ugly)', () => {
   });
 
   it('should match snapshot', async () => {
-    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_ONES_EXTRAS_FAKE_METADATAS_A';
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_ONE_EXTRA_FAKE_BLOG_METADATAS_A';
 
     await generateI18nBlogCategories(
-      FAKE_METADATAS_A,
+      FAKE_BLOG_METADATAS_A,
       pretty,
       targetFile,
       __TARGET_FOLDER,
@@ -298,10 +255,10 @@ describe('generateI18nBlogCategories (ugly)', () => {
   });
 
   it('should match snapshot', async () => {
-    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_ONES_EXTRAS_FAKE_METADATAS_B';
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_ONE_EXTRA_FAKE_BLOG_METADATAS_B';
 
     await generateI18nBlogCategories(
-      FAKE_METADATAS_B,
+      FAKE_BLOG_METADATAS_B,
       pretty,
       targetFile,
       __TARGET_FOLDER,
@@ -313,10 +270,10 @@ describe('generateI18nBlogCategories (ugly)', () => {
   });
 
   it('should match snapshot', async () => {
-    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_THREES_EXTRAS_FAKE_METADATAS_A';
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_THREE_EXTRAS_FAKE_BLOG_METADATAS_A';
 
     await generateI18nBlogCategories(
-      FAKE_METADATAS_A,
+      FAKE_BLOG_METADATAS_A,
       pretty,
       targetFile,
       __TARGET_FOLDER,
@@ -328,10 +285,10 @@ describe('generateI18nBlogCategories (ugly)', () => {
   });
 
   it('should match snapshot', async () => {
-    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_THREES_EXTRAS_FAKE_METADATAS_B';
+    const targetFile = 'FAKE_NOT_EMPTY_BLOG_CATEGORIES_USING_THREE_EXTRAS_FAKE_BLOG_METADATAS_B';
 
     await generateI18nBlogCategories(
-      FAKE_METADATAS_B,
+      FAKE_BLOG_METADATAS_B,
       pretty,
       targetFile,
       __TARGET_FOLDER,

@@ -3,38 +3,28 @@
 import type { TypedLeafsJSONData } from '@rtm/shared-types/JSON';
 
 import blogCategories from '@rtm/generated/blogCategories';
+import pagesTitles from '@rtm/generated/pagesTitles';
 
 const _: NotScanned = '';
 
 export const SHARED_VOCAB_SCHEMA = {
-  'pages-titles': {
-    'fake-subcategory': _,
-    'patch-notes-bis': _,
-    'discord-bot-bis': _,
-    'dashboard-bis': _,
-
-    'patch-notes': _,
-    'discord-bot': _,
-
-    dashboard: _,
-    homepage: _,
-
-    blog: _
-  },
   vocab: {
     breadcrumbs: _,
     'sign-up': _,
     brand: _,
     logo: _,
     page: _
+  },
+
+  'pages-titles': {
+    ...pagesTitles,
+
+    homepage: _,
+    blog: _
   }
 } as const satisfies TypedLeafsJSONData<NotScanned>;
 
 export default {
-  _infos: {
-    lng: '__SCANNED_ON_PREBUILD_FIELD__'
-  },
-
   // eslint-disable-next-line perfectionist/sort-objects
   navbar: {
     'sr-only': {
@@ -82,6 +72,10 @@ export default {
     homepage: {
       'meta-description': _
     }
+  },
+
+  _infos: {
+    lng: '__SCANNED_ON_PREBUILD_FIELD__'
   },
 
   auth: {

@@ -33,6 +33,7 @@ import sysPagesValidator from './validators/sysPages';
 import getPagesArchitectureMetadatas from './metadatas-builders/pagesArchitectureMetadatas';
 import generatePagesType from './generators/pages/pagesType';
 import generateDefaultLanguageTokenType from './generators/defaultLanguageToken/defaultLanguageTokenType';
+import generateI18nPagesTitles from './generators/blog/i18nPagesTitles';
 /* eslint-enable perfectionist/sort-imports */
 
 // NOTE: The prebuilder is too greedy
@@ -235,13 +236,19 @@ async function generateBlogCode(BLOG_POSTS_FOLDER: Path, PRETTY_CODEGEN: boolean
   await Promise.all([
     generateBlogArchitectureType(blogArchitecture, PRETTY_CODEGEN),
     generateI18nBlogCategories(blogArchitecture, PRETTY_CODEGEN),
-    generateBlogType(blogArchitecture, PRETTY_CODEGEN)
+    generateBlogType(blogArchitecture, PRETTY_CODEGEN),
+    generateI18nPagesTitles(blogArchitecture, PRETTY_CODEGEN)
   ]);
   blogCodegenEndTime = performance.now();
 }
 
 async function generatePhonyBlogCode() {
-  await Promise.all([generateBlogArchitectureType({}, false), generateI18nBlogCategories({}, false), generateBlogType({}, false)]);
+  await Promise.all([
+    generateBlogArchitectureType({}, false),
+    generateI18nBlogCategories({}, false),
+    generateBlogType({}, false),
+    generateI18nPagesTitles({}, false)
+  ]);
 }
 
 /**
@@ -322,10 +329,9 @@ async function processPrebuild() {
     await Promise.all([
       (!NO_PAGES && generatePagesCode(pagesArborescence, PRETTY_CODEGEN)) || generatePhonyPagesCode(),
       (!NO_BLOG && generateBlogCode(BLOG_POSTS_FOLDER, PRETTY_CODEGEN)) || generatePhonyBlogCode(),
-      (!NO_LP && generateLpCode(LP_FOLDER, PRETTY_CODEGEN)) || generatePhonyLpCode()
+      (!NO_LP && generateLpCode(LP_FOLDER, PRETTY_CODEGEN)) || generatePhonyLpCode(),
+      generateUtilTypes()
     ]);
-
-    await generateUtilTypes();
 
     printPrebuilderDoneMsg(
       () =>

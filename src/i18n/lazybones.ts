@@ -2,6 +2,7 @@ import type { TypedLeafsJSONData } from '@rtm/shared-types/JSON';
 import type { VocabObjValue } from '@rtm/shared-types/I18n';
 
 const _: EmptyString = '';
+
 export const SHARED_TESTING_BLOG_CATEGORY_METADATAS = {
   'fake-subcategory': {
     'meta-description': _,
@@ -12,6 +13,7 @@ export const SHARED_TESTING_BLOG_CATEGORY_METADATAS = {
 } as const satisfies TypedLeafsJSONData<VocabObjValue>;
 
 export const SHARED_TESTING_BLOG_SUBCATEGORIES_PAGES_TITLES = {
+  'blog-testing-category': _,
   'fake-subcategory': _
 } as const satisfies TypedLeafsJSONData<VocabObjValue>;
 
