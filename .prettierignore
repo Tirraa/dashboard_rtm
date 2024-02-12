@@ -9,3 +9,4 @@ FAKE_CODEGEN
 .contentlayer
 .stryker-tmp
 .next
+.ts-prune

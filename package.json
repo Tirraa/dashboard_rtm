@@ -125,5 +125,5 @@
   "engines": {
     "node": "18.x"
   },
-  "packageManager": "^pnpm@8.15.1"
+  "packageManager": "^pnpm@8.15.2"
 }
