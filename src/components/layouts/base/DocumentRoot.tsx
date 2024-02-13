@@ -10,8 +10,9 @@ import PROGRESSBAR_CONFIG from '@/config/progressbar';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import ELEMENTS_ID from '@/config/elementsId';
 import Providers from '@/contexts/Providers';
+import dynamic from 'next/dynamic';
 
-import NextTopLoader from './NextTopLoader';
+const NextTopLoader = dynamic(() => import('./NextTopLoader'), { ssr: false });
 
 interface DocumentRootProps extends LayoutBaseProps {
   disableTopLoader?: boolean;

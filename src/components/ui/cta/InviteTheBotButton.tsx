@@ -10,13 +10,15 @@ import { Button } from '@/components/ui/Button';
 import DISCORD_CONFIG from '@/config/discord';
 import { i18ns } from '##/config/i18n';
 
-interface InviteTheBotButtonProps {}
+interface InviteTheBotButtonProps {
+  className?: string;
+}
 
-const InviteTheBotButton: FunctionComponent<InviteTheBotButtonProps> = () => {
+const InviteTheBotButton: FunctionComponent<InviteTheBotButtonProps> = ({ className }) => {
   const globalT = getClientSideI18n();
 
   return (
-    <Button href={DISCORD_CONFIG.BOT_INVITE_LINK}>
+    <Button href={DISCORD_CONFIG.BOT_INVITE_LINK} className={className}>
       <span className="flex items-center gap-1">
         <span>
           <CogIcon className="h-7 w-7" />

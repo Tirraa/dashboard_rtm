@@ -6,9 +6,10 @@ import type { FunctionComponent, CSSProperties } from 'react';
 
 import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-import InviteTheBotButton from '../ui/cta/InviteTheBotButton';
+const InviteTheBotButton = dynamic(() => import('../ui/cta/InviteTheBotButton'), { loading: () => <div className="min-h-[40px]" />, ssr: false });
 
 interface HomepageProps {}
 

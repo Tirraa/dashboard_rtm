@@ -11,7 +11,6 @@ import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
 // https://www.npmjs.com/package/nextjs-toploader
 // Copyright (c) 2023 Shri Ganesh Jha
 
-import * as PropTypes from 'prop-types';
 import nProgress from 'nprogress';
 import * as React from 'react';
 export type NextTopLoaderProps = {
@@ -167,18 +166,6 @@ const NextTopLoader = ({
   }, [crawl, crawlSpeed, easing, initialPosition, showSpinner, speed, isOnMobileOrTablet]);
 
   return styles;
-};
-
-NextTopLoader.propTypes = {
-  shadow: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  initialPosition: PropTypes.number,
-  crawlSpeed: PropTypes.number,
-  showSpinner: PropTypes.bool,
-  height: PropTypes.number,
-  easing: PropTypes.string,
-  color: PropTypes.string,
-  speed: PropTypes.number,
-  crawl: PropTypes.bool
 };
 
 export default NextTopLoader;

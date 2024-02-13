@@ -80,9 +80,6 @@ importers:
       nprogress:
         specifier: ^0.2.0
         version: 0.2.0
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -168,9 +165,6 @@ importers:
       '@types/nprogress':
         specifier: ^0.2.0
         version: 0.2.3
-      '@types/prop-types':
-        specifier: ^15.7.11
-        version: 15.7.11
       '@types/react':
         specifier: 18.2.20
         version: 18.2.20
@@ -991,10 +985,6 @@ packages:
     peerDependencies:
       '@effect-ts/otel-node': '*'
     peerDependenciesMeta:
-      '@effect-ts/core':
-        optional: true
-      '@effect-ts/otel':
-        optional: true
       '@effect-ts/otel-node':
         optional: true
     dependencies:
