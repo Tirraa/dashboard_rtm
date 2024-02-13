@@ -2,7 +2,7 @@
 // Stryker disable all
 'use client';
 
-import type { MaybeNull } from 'packages/shared-types/src/CustomUtilityTypes';
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { FunctionComponent } from 'react';
 
 import { useEffect, useState } from 'react';

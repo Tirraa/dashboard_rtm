@@ -1,14 +1,14 @@
 /* v8 ignore start */
 // Stryker disable all
-import type { LanguageFlag } from 'packages/shared-types/src/I18n';
+import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { Page } from 'contentlayer/generated';
 import type { I18nPageProps } from '@/types/Next';
 
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
 import { setStaticParamsLocale } from 'next-international/server';
 import { getPageByLanguageAndPathStrict } from '@/lib/pages/api';
-import { buildPageTitle } from 'packages/shared-lib/src/str';
 import MDX from '@/components/layouts/blog/MdxComponent';
+import { buildPageTitle } from '@rtm/shared-lib/str';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSession } from 'next-auth';
 import ROUTES_ROOTS from '##/config/routes';
