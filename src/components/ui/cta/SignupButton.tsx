@@ -11,7 +11,7 @@ import ROUTES_ROOTS from '##/config/routes';
 import { signIn } from 'next-auth/react';
 import { i18ns } from '##/config/i18n';
 
-interface SignUpButtonProps {}
+export interface SignUpButtonProps {}
 
 const SignupButton: FunctionComponent<SignUpButtonProps> = () => {
   const globalT = getClientSideI18n();

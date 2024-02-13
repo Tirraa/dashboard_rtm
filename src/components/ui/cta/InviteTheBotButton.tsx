@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/Button';
 import DISCORD_CONFIG from '@/config/discord';
 import { i18ns } from '##/config/i18n';
 
-interface InviteTheBotButtonProps {
+export interface InviteTheBotButtonProps {
   className?: string;
 }
 

@@ -1,11 +1,11 @@
 /* v8 ignore start */
 // Stryker disable all
-import InviteTheBotButton from '@/components/ui/cta/InviteTheBotButton';
-import SignupButton from '@/components/ui/cta/SignupButton';
+import MdxInviteTheBotButton from '@/components/ui/cta/MdxInviteTheBotButton';
+import MdxSignupButton from '@/components/ui/cta/MdxSignupButton';
 
 const CTAs: Record<PropertyKey, (...args: any[]) => JSX.Element> = {
-  InviteTheBotButton: ({ ...props }) => <InviteTheBotButton {...props} />,
-  SignupButton: ({ ...props }) => <SignupButton {...props} />
+  InviteTheBotButton: ({ ...props }) => <MdxInviteTheBotButton {...props} />,
+  SignupButton: ({ ...props }) => <MdxSignupButton {...props} />
 };
 
 export default CTAs;
