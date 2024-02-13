@@ -7,10 +7,10 @@ import PagesConfig from '@/config/pages';
 
 import ComputedPagesCtx from './ctx';
 
-export const getAllPages = async () => await PagesConfig.allPages();
+export const getAllPages = () => PagesConfig.allPages();
 
-export async function getPageByLanguageAndPathUnstrict(language: LanguageFlag, path: UnknownPagePath): Promise<MaybeNull<Page>> {
-  const allPages = await getAllPages();
+export function getPageByLanguageAndPathUnstrict(language: LanguageFlag, path: UnknownPagePath): MaybeNull<Page> {
+  const allPages = getAllPages();
   const matchingPage =
     allPages.find(({ language: currentLanguage, path: currentPath }) => currentPath === path && currentLanguage === language) ?? null;
 
@@ -23,6 +23,6 @@ export async function getPageByLanguageAndPathUnstrict(language: LanguageFlag, p
 
 // Stryker Workaround 2. Pointless static mutant.
 // Stryker disable all
-export const getPageByLanguageAndPathStrict = async <L extends PageLang>(lang: L, path: PagePath<L>): Promise<MaybeNull<Page>> =>
-  await getPageByLanguageAndPathUnstrict(lang as any, path as any);
+export const getPageByLanguageAndPathStrict = <L extends PageLang>(lang: L, path: PagePath<L>): MaybeNull<Page> =>
+  getPageByLanguageAndPathUnstrict(lang as any, path as any);
 // Stryker restore all

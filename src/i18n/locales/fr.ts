@@ -15,9 +15,9 @@ const SHARED: SharedVocabType = {
     'patch-notes': 'Notes de patch',
     'discord-bot': 'Bot Discord',
 
-    homepage: "Page d'accueil",
     dashboard: 'Dashboard',
 
+    homepage: 'Accueil',
     blog: 'Blog'
   },
   vocab: {
@@ -104,12 +104,6 @@ export default {
       main: 'Page principale',
       foo: 'Foo',
       bar: 'Bar'
-    }
-  },
-
-  'manual-SEO': {
-    homepage: {
-      'meta-description': "Metadescription Page d'accueil"
     }
   },
 

@@ -362,15 +362,16 @@ vi.mock('@/config/pages', async (orgImport) => {
   return {
     default: {
       ...mod.default,
-      allPages: async () => data as unknown as Promise<Page[]>,
-      ENABLE_DRAFTS_IN_PROD: false
+      allPages: () => data as unknown as Page[],
+      ENABLE_DRAFTS_IN_PROD: false,
+      SKIP_SSG: []
     } satisfies PagesConfigType
   };
 });
 
 describe('getPagesStaticParams (index notation)', () => {
-  it('should return static params according to the allPages mock', async () => {
-    const staticParams = await getPagesStaticParams();
+  it('should return static params according to the allPages mock', () => {
+    const staticParams = getPagesStaticParams();
 
     expect(staticParams).toStrictEqual([
       { [PageTaxonomy.PATH]: ['index'], [I18nTaxonomy.LANGUAGE]: 'fr' },

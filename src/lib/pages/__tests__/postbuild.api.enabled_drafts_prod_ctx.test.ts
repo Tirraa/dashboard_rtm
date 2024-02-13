@@ -15,28 +15,29 @@ vi.mock('@/config/pages', async (orgImport) => {
   return {
     default: {
       ...mod.default,
-      ENABLE_DRAFTS_IN_PROD: true
+      ENABLE_DRAFTS_IN_PROD: true,
+      SKIP_SSG: []
     } satisfies PagesConfigType
   };
 });
 
 describe('getPageByLanguageAndPathStrict', () => {
-  it('should return a valid page', async () => {
+  it('should return a valid page', () => {
     const root = PagesConfig.TESTING_ROOT;
     const targettedPath = `${root}/fake-page-00` as const;
     const language = DEFAULT_LANGUAGE;
-    const page = (await getPageByLanguageAndPathStrict(language, targettedPath)) as Page;
+    const page = getPageByLanguageAndPathStrict(language, targettedPath) as Page;
 
     expect(page.path).toBe(targettedPath);
     expect(page.root).toBe(root);
     expect(page.url).toBe('/' + language + ROUTES_ROOTS.WEBSITE + targettedPath);
   });
 
-  it('should return a valid page when picking a draft page in an authorized drafts CTX', async () => {
+  it('should return a valid page when picking a draft page in an authorized drafts CTX', () => {
     const root = PagesConfig.TESTING_ROOT;
     const targettedPath = `${root}/fake-draft-00` as const;
     const language = DEFAULT_LANGUAGE;
-    const page = (await getPageByLanguageAndPathStrict(language, targettedPath)) as Page;
+    const page = getPageByLanguageAndPathStrict(language, targettedPath) as Page;
 
     expect(page.path).toBe(targettedPath);
     expect(page.root).toBe(root);

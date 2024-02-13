@@ -107,12 +107,6 @@ export default {
     }
   },
 
-  'manual-SEO': {
-    homepage: {
-      'meta-description': 'This is the homepage metadescription'
-    }
-  },
-
   auth: {
     signup: SHARED['vocab']['sign-up'],
     logout: 'Logout',

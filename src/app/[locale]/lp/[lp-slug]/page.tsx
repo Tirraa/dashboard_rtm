@@ -22,12 +22,12 @@ export async function generateStaticParams() {
   return staticParams;
 }
 
-export default async function Page({ params }: LandingPageProps) {
+export default function Page({ params }: LandingPageProps) {
   const language = params[I18nTaxonomy.LANGUAGE];
   setStaticParamsLocale(language);
 
   const slug = params[LandingPageTaxonomy.SLUG];
-  const lp: MaybeNull<LandingPage> = await getLandingPageByLanguageAndSlugUnstrict(language, slug);
+  const lp: MaybeNull<LandingPage> = getLandingPageByLanguageAndSlugUnstrict(language, slug);
   if (!lp) notFound();
 
   return (

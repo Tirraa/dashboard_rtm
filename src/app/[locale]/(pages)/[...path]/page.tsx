@@ -14,16 +14,16 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export async function generateStaticParams() {
-  const staticParams = await getPagesStaticParams();
+  const staticParams = getPagesStaticParams();
   return staticParams;
 }
 
-export default async function Page({ params }: PageProps) {
+export default function Page({ params }: PageProps) {
   const language = params[I18nTaxonomy.LANGUAGE];
   setStaticParamsLocale(language);
 
   const path = params[PageTaxonomy.PATH].join('/');
-  const page = await getPageByLanguageAndPathUnstrict(language, path);
+  const page = getPageByLanguageAndPathUnstrict(language, path);
 
   if (!page) notFound();
   return (

@@ -68,12 +68,6 @@ export default {
     }
   },
 
-  'manual-SEO': {
-    homepage: {
-      'meta-description': _
-    }
-  },
-
   auth: {
     logout: _,
     signup: _,

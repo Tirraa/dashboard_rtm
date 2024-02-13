@@ -154,7 +154,7 @@ vi.mock('@/config/landingPages', async (orgImport) => {
   return {
     default: {
       ...mod.default,
-      allLandingPages: () => data as unknown as Promise<LandingPage[]>,
+      allLandingPages: () => data as unknown as LandingPage[],
       ENABLE_DRAFTS_IN_PROD: true
     } satisfies LandingPagesConfigType
   };

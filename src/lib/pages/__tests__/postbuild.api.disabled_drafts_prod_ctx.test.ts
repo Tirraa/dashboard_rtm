@@ -15,17 +15,18 @@ vi.mock('@/config/pages', async (orgImport) => {
   return {
     default: {
       ...mod.default,
-      ENABLE_DRAFTS_IN_PROD: false
+      ENABLE_DRAFTS_IN_PROD: false,
+      SKIP_SSG: []
     } satisfies PagesConfigType
   };
 });
 
 describe('getPageByLanguageAndPathStrict (happy paths)', () => {
-  it('should return a valid page', async () => {
+  it('should return a valid page', () => {
     const root = PagesConfig.TESTING_ROOT;
     const targettedPath = `${root}/fake-page-00` as const;
     const language = DEFAULT_LANGUAGE;
-    const page = (await getPageByLanguageAndPathStrict(language, targettedPath)) as Page;
+    const page = getPageByLanguageAndPathStrict(language, targettedPath) as Page;
 
     expect(page.path).toBe(targettedPath);
     expect(page.root).toBe(root);
@@ -34,11 +35,11 @@ describe('getPageByLanguageAndPathStrict (happy paths)', () => {
 });
 
 describe('getPageByLanguageAndPathStrict (unhappy paths)', () => {
-  it('should return NULL when picking a draft page in an unauthorized drafts CTX', async () => {
+  it('should return NULL when picking a draft page in an unauthorized drafts CTX', () => {
     const root = PagesConfig.TESTING_ROOT;
     const targettedPath = `${root}/fake-draft-00` as const;
     const language = DEFAULT_LANGUAGE;
-    const page = await getPageByLanguageAndPathStrict(language, targettedPath);
+    const page = getPageByLanguageAndPathStrict(language, targettedPath);
 
     expect(page).toBe(null);
   });

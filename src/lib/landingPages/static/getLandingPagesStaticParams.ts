@@ -4,13 +4,13 @@ import I18nTaxonomy from '##/config/taxonomies/i18n';
 
 import { getLandingPageByLanguageAndSlugUnstrict, getAllLandingPages } from '../api';
 
-async function getLandingPagesStaticParams() {
+function getLandingPagesStaticParams() {
   const staticParams = [];
-  const allLandingPages = await getAllLandingPages();
+  const allLandingPages = getAllLandingPages();
 
   for (const { language, slug } of allLandingPages) {
     if (!isValidLanguageFlag(language)) continue;
-    const matchedLp = await getLandingPageByLanguageAndSlugUnstrict(language, slug);
+    const matchedLp = getLandingPageByLanguageAndSlugUnstrict(language, slug);
     if (!matchedLp) continue;
     staticParams.push({ [I18nTaxonomy.LANGUAGE]: matchedLp.language, [LandingPageTaxonomy.SLUG]: matchedLp.slug });
   }

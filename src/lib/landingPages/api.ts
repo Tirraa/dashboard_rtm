@@ -7,10 +7,10 @@ import LandingPagesConfig from '@/config/landingPages';
 
 import ComputedLandingPagesCtx from './ctx';
 
-export const getAllLandingPages = async () => await LandingPagesConfig.allLandingPages();
+export const getAllLandingPages = () => LandingPagesConfig.allLandingPages();
 
-export async function getLandingPageByLanguageAndSlugUnstrict(language: LanguageFlag, slug: UnknownLandingPageSlug): Promise<MaybeNull<LandingPage>> {
-  const allLandingPages = await getAllLandingPages();
+export function getLandingPageByLanguageAndSlugUnstrict(language: LanguageFlag, slug: UnknownLandingPageSlug): MaybeNull<LandingPage> {
+  const allLandingPages = getAllLandingPages();
   const matchingLandingPage =
     allLandingPages.find(({ language: currentLanguage, slug: currentSlug }) => currentSlug === slug && currentLanguage === language) ?? null;
 
@@ -23,8 +23,6 @@ export async function getLandingPageByLanguageAndSlugUnstrict(language: Language
 
 // Stryker Workaround 2. Pointless static mutant.
 // Stryker disable all
-export const getLandingPageByLanguageAndSlugStrict = async <L extends LandingPageLang>(
-  lang: L,
-  slug: LandingPageSlug<L>
-): Promise<MaybeNull<LandingPage>> => await getLandingPageByLanguageAndSlugUnstrict(lang as any, slug as any);
+export const getLandingPageByLanguageAndSlugStrict = <L extends LandingPageLang>(lang: L, slug: LandingPageSlug<L>): MaybeNull<LandingPage> =>
+  getLandingPageByLanguageAndSlugUnstrict(lang as any, slug as any);
 // Stryker restore all

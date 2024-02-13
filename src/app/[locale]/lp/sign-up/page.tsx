@@ -1,6 +1,5 @@
 /* v8 ignore start */
 // Stryker disable all
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { Page } from 'contentlayer/generated';
 import type { I18nPageProps } from '@/types/Next';
 
@@ -19,7 +18,7 @@ export async function generateMetadata({ params }: I18nPageProps) {
   const globalT = await getServerSideI18n();
   const language = params[I18nTaxonomy.LANGUAGE];
 
-  const document = (await getPageByLanguageAndPathStrict(language as LanguageFlag, 'lp/sign-up')) as Page;
+  const document = getPageByLanguageAndPathStrict(language, 'lp/sign-up') as Page;
 
   const { vocab } = i18ns;
   const { metadescription: description, title: documentTitle } = document;
@@ -39,7 +38,7 @@ export default async function Page({ params }: I18nPageProps) {
   const session = await getServerSession();
   if (session) redirect(ROUTES_ROOTS.DASHBOARD);
 
-  const document = (await getPageByLanguageAndPathStrict(language as LanguageFlag, 'lp/sign-up')) as Page;
+  const document = getPageByLanguageAndPathStrict(language, 'lp/sign-up') as Page;
   return <MDX code={document.body.code} />;
 }
 // Stryker restore all

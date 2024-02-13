@@ -11,7 +11,6 @@ export enum ELanguagesFlag {
 const _i18nsBase = {
   blogCategories: 'blog-categories',
   pagesTitles: 'pages-titles',
-  manualSEO: 'manual-SEO',
   dashboard: 'dashboard',
   navbar: 'navbar',
   infos: '_infos',
