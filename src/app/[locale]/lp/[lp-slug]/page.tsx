@@ -17,17 +17,17 @@ export async function generateMetadata({ params }: LandingPageProps) {
   return metadatas;
 }
 
-export function generateStaticParams() {
-  const staticParams = getLandingPagesStaticParams();
+export async function generateStaticParams() {
+  const staticParams = await getLandingPagesStaticParams();
   return staticParams;
 }
 
-export default function Page({ params }: LandingPageProps) {
+export default async function Page({ params }: LandingPageProps) {
   const language = params[I18nTaxonomy.LANGUAGE];
   setStaticParamsLocale(language);
 
   const slug = params[LandingPageTaxonomy.SLUG];
-  const lp: MaybeNull<LandingPage> = getLandingPageByLanguageAndSlugUnstrict(language, slug);
+  const lp: MaybeNull<LandingPage> = await getLandingPageByLanguageAndSlugUnstrict(language, slug);
   if (!lp) notFound();
 
   return (

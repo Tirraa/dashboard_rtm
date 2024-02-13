@@ -21,11 +21,11 @@ vi.mock('@/config/landingPages', async (orgImport) => {
 });
 
 describe('getLandingPageByLanguageAndSlugStrict (happy paths)', () => {
-  it('should return a valid lp', () => {
+  it('should return a valid lp', async () => {
     const category = LandingPagesConfig.TESTING_CATEGORY;
     const targettedSlug = `${category}-fake-lp-00` as const;
     const language = DEFAULT_LANGUAGE;
-    const lp = getLandingPageByLanguageAndSlugStrict(language, targettedSlug) as LandingPage;
+    const lp = (await getLandingPageByLanguageAndSlugStrict(language, targettedSlug)) as LandingPage;
 
     expect(lp.category).toBe(category);
     expect(lp.slug).toBe(targettedSlug);
@@ -35,10 +35,10 @@ describe('getLandingPageByLanguageAndSlugStrict (happy paths)', () => {
 });
 
 describe('getLandingPageByLanguageAndSlugStrict (unhappy paths)', () => {
-  it('should return NULL when picking a draft lp in an unauthorized drafts CTX', () => {
+  it('should return NULL when picking a draft lp in an unauthorized drafts CTX', async () => {
     const targettedSlug = `${LandingPagesConfig.TESTING_CATEGORY}-fake-draft-lp-00` as const;
     const language = DEFAULT_LANGUAGE;
-    const lp = getLandingPageByLanguageAndSlugStrict(language, targettedSlug);
+    const lp = await getLandingPageByLanguageAndSlugStrict(language, targettedSlug);
 
     expect(lp).toBe(null);
   });

@@ -21,7 +21,7 @@ export function getLandingPagesStaticParams() {
 
 export async function getLandingPageMetadatas({ params }: LandingPageProps) {
   const [lang, slug] = [params[I18nTaxonomy.LANGUAGE], params[LandingPageTaxonomy.SLUG]];
-  const lp: MaybeNull<LandingPage> = getLandingPageByLanguageAndSlugUnstrict(lang, slug);
+  const lp: MaybeNull<LandingPage> = await getLandingPageByLanguageAndSlugUnstrict(lang, slug);
   if (!lp) notFound();
 
   const globalT = await getServerSideI18n();

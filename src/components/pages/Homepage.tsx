@@ -9,7 +9,10 @@ import { i18ns } from '##/config/i18n';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-const InviteTheBotButton = dynamic(() => import('../ui/cta/InviteTheBotButton'), { loading: () => <div className="min-h-[40px]" />, ssr: false });
+const InviteTheBotButton = dynamic(() => import('@/components/ui/cta/InviteTheBotButton'), {
+  loading: () => <div className="min-h-[40px]" />,
+  ssr: false
+});
 
 interface HomepageProps {}
 

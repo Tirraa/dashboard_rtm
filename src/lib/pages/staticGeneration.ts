@@ -12,14 +12,14 @@ import { i18ns } from '##/config/i18n';
 import doGetPagesStaticParams from './static/getPagesStaticParams';
 import { getPageByLanguageAndPathUnstrict } from './api';
 
-export function getPagesStaticParams() {
-  const pagesStaticParams = doGetPagesStaticParams();
+export async function getPagesStaticParams() {
+  const pagesStaticParams = await doGetPagesStaticParams();
   return pagesStaticParams;
 }
 
 export async function getPagesMetadatas({ params }: PageProps) {
   const [path, language] = [params[PageTaxonomy.PATH].join('/'), params[I18nTaxonomy.LANGUAGE]];
-  const page = getPageByLanguageAndPathUnstrict(language, path);
+  const page = await getPageByLanguageAndPathUnstrict(language, path);
   if (!page) notFound();
 
   const globalT = await getServerSideI18n();
