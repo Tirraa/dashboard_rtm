@@ -8,12 +8,14 @@ import type { FunctionComponent } from 'react';
 
 import { useEffect, useState } from 'react';
 
+// https://v3.gatsbyjs.com/docs/mdx/importing-and-using-components/#lazy-loading-components
 const MdxInviteTheBotButton: FunctionComponent<InviteTheBotButtonProps> = (props) => {
+  const placeholder = <div className="min-h-[40px]" />;
   const [Component, setComponent] = useState<MaybeNull<FunctionComponent<InviteTheBotButtonProps>>>(null);
   useEffect(() => {
     import('@/components/ui/cta/InviteTheBotButton').then((component) => setComponent(() => component.default));
   }, []);
-  if (Component === null) return '';
+  if (Component === null) return placeholder;
   return <Component {...props} />;
 };
 
