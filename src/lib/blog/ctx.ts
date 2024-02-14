@@ -1,4 +1,5 @@
 // Stryker disable all
+
 import BlogConfig from '@/config/blog';
 
 import ComputedNodeCtx from '../portable/node/env';
@@ -17,4 +18,5 @@ const ComputedBlogCtx: ComputedBlogCtxType = {
 } as const;
 
 export default ComputedBlogCtx;
+
 // Stryker restore all

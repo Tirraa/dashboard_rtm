@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { BlogCategoryPageProps } from '@/types/Blog';
 
 import CategoryRelatedSubcategoriesAndBlogPosts from '@/components/pages/blog/CategoryRelatedSubcategoriesAndBlogPosts';
@@ -30,5 +31,6 @@ export default function Page({ params }: BlogCategoryPageProps) {
     </div>
   );
 }
+
 // Stryker restore all
 /* v8 ignore stop */

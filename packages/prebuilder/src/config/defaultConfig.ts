@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type Config from '../types/Config';
 
 const defaultConfig: Required<Config> = {
@@ -12,5 +13,6 @@ const defaultConfig: Required<Config> = {
 };
 
 export default defaultConfig;
+
 // Stryker restore all
 /* v8 ignore stop */

@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { Element as hASTElement } from 'hast';
 
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -56,5 +57,6 @@ export default makeSource({
   contentDirPath,
   documentTypes
 });
+
 // Stryker restore all
 /* v8 ignore stop */

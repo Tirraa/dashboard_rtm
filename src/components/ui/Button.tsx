@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { VariantProps } from 'class-variance-authority';
 
 import { getLinkTarget } from '@rtm/shared-lib/react';
@@ -90,5 +91,6 @@ const Button: React.FunctionComponent<ButtonHoCProps> = ({
 };
 
 export { buttonVariants, Button };
+
 // Stryker restore all
 /* v8 ignore stop */

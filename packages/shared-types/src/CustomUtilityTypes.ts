@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 type SplitKeys<S extends string> = S extends `${infer Head}${KeySeparator}${infer Tail}` ? [Head, ...SplitKeys<Tail>] : [S];
 
 type JoinKeys<T extends string[]> = T extends []
@@ -37,5 +38,6 @@ export type CompareFun<T extends Couple<unknown>, CTX extends unknown[] = never>
   : (x1: T[0], x2: T[1], ...ctx: [...CTX]) => CompareFunReturnValue;
 
 type CompareFunReturnValue = number;
+
 // Stryker restore all
 /* v8 ignore stop */

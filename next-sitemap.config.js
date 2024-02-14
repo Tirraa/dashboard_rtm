@@ -1,6 +1,7 @@
 /* v8 ignore start */
 // Stryker disable all
 // @ts-check
+
 const DEFAULT_LANGUAGE = require('./interop/config/sitemap/defaultLanguageNextSitemapAdapter');
 const APP_PROTECTED_PATHS = require('./interop/config/sitemap/excludedRoutesPrefixesNextSitemapAdapter');
 
@@ -40,5 +41,6 @@ module.exports = {
 
   siteUrl
 };
+
 // Stryker restore all
 /* v8 ignore stop */

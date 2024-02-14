@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { Page } from 'contentlayer/generated';
 import type { I18nPageProps } from '@/types/Next';
 
@@ -41,5 +42,6 @@ export default async function Page({ params }: I18nPageProps) {
   const document = getPageByLanguageAndPathStrict(language, 'lp/sign-up') as Page;
   return <MDX code={document.body.code} />;
 }
+
 // Stryker restore all
 /* v8 ignore stop */

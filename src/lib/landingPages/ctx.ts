@@ -1,4 +1,5 @@
 // Stryker disable all
+
 import LandingPagesConfig from '@/config/landingPages';
 
 import ComputedNodeCtx from '../portable/node/env';
@@ -17,4 +18,5 @@ const ComputedLandingPagesCtx: ComputedLandingPagesCtxType = {
 } as const;
 
 export default ComputedLandingPagesCtx;
+
 // Stryker restore all

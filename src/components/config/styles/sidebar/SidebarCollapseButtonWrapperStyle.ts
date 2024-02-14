@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type IButtonStyleBase from '@/components/config/styles/types/IButtonStyleBase';
 
 import { cn } from '@/lib/tailwind';
@@ -12,5 +13,6 @@ const SidebarCollapseButtonWrapperStyle: IButtonStyleBase = {
 } as const;
 
 export default SidebarCollapseButtonWrapperStyle;
+
 // Stryker restore all
 /* v8 ignore stop */

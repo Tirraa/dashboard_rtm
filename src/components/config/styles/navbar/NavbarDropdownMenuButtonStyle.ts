@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type IButtonStyleBase from '@/components/config/styles/types/IButtonStyleBase';
 
 import { COMMONS } from '@/components/config/styles/navbar/NavbarButtonStyle';
@@ -16,5 +17,6 @@ const NavbarDropdownMenuButtonStyle: IButtonStyleBase = {
 export const NAVBAR_DROPDOWN_MENU_INNER_BUTTONS_CLASSLIST = 'flex items-center h-full px-4 py-2.5';
 
 export default NavbarDropdownMenuButtonStyle;
+
 // Stryker restore all
 /* v8 ignore stop */

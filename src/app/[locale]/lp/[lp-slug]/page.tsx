@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { LandingPageProps } from '@/types/LandingPage';
 import type { LandingPage } from 'contentlayer/generated';
@@ -36,5 +37,6 @@ export default function Page({ params }: LandingPageProps) {
     </main>
   );
 }
+
 // Stryker restore all
 /* v8 ignore stop */

@@ -3,4 +3,18 @@ title: Accueil
 metadescription: Metadescription Page d'accueil
 ---
 
-<Homepage />
+<div className="text-center">
+  <Image
+    src="/assets/rtm-txt-logo.svg"
+    className="m-auto"
+    height={69}
+    style={{
+      filter: 'invert(42%) sepia(7%) saturate(5518%) hue-rotate(189deg) brightness(92%) contrast(91%)'
+    }}
+    width={226}
+    alt="Logo de Rust Team Management"
+    priority
+  />
+  <h1 className="mt-2">Rust Team Management</h1>
+  <InviteTheBotButton />
+</div>

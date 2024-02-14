@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { LayoutBaseProps } from '@/types/Next';
 import type { FunctionComponent } from 'react';
 
@@ -37,5 +38,6 @@ const DocumentRoot: FunctionComponent<DocumentRootProps> = ({ disableTopLoader, 
 };
 
 export default DocumentRoot;
+
 // Stryker restore all
 /* v8 ignore stop */

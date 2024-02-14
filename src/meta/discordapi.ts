@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import bentocache, { keysFactory } from '@/config/bentocache';
 
 type FreshProfile = { epicFail?: boolean; avatar: string; id: string };
@@ -28,5 +29,6 @@ class DiscordApi implements IDiscordApi {
 
 const DISCORD_API = new DiscordApi();
 export default DISCORD_API;
+
 // Stryker restore all
 /* v8 ignore stop */

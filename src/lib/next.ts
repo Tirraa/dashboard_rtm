@@ -8,9 +8,11 @@ import { getPathnameWithoutI18nFlag, getPathnameMaybeI18nFlag } from './i18n';
 
 /* v8 ignore start */
 // Stryker disable all
+
 export const fcn = (f: NextFont): string => f.className;
 
 export const getMaybeI18nFlagFromRequest = (request: NextRequest) => getPathnameMaybeI18nFlag(request.nextUrl.pathname);
+
 // Stryker restore all
 /* v8 ignore stop */
 

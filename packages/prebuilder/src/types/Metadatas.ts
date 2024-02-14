@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 export type Page = {
   nestingLevelTwo: PathSegment | PageRoot | '';
   head: I18nLanguageFlag | PageRoot | '/';
@@ -40,5 +41,6 @@ export type Arborescence = ProcessedFile[];
 export type Path = string;
 export type PathSegment = string;
 export type Filename = string;
+
 // Stryker restore all
 /* v8 ignore stop */

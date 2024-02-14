@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import DashboardMainPage from '@/components/pages/dashboard/main';
 import { buildPageTitle } from '@rtm/shared-lib/str';
 import { getServerSideI18n } from '@/i18n/server';
@@ -15,5 +16,6 @@ export async function generateMetadata() {
 export default function Page() {
   return <DashboardMainPage />;
 }
+
 // Stryker restore all
 /* v8 ignore stop */

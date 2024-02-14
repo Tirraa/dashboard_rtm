@@ -19,6 +19,8 @@ const config = {
   timeoutMS: 300_000,
   incremental: true
 };
+
 export default config;
+
 // Stryker restore all
 /* v8 ignore stop */

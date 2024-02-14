@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import { capitalize } from 'inflection';
 
 import {
@@ -345,5 +346,6 @@ type VocabTokensWithGrammaticalVariants = Partial<Record<GrammaticalVariantsSumT
 export type VocabKey = keyof typeof DEFAULT_TRANSLATION;
 
 export default translations;
+
 // Stryker restore all
 /* v8 ignore stop */

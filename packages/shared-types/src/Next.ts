@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { NextMiddleware } from 'next/server';
 import type { ReactNode } from 'react';
 
@@ -21,5 +22,6 @@ export interface WithIsMobile {
 }
 
 export type MiddlewareFactory = (middleware: NextMiddleware) => NextMiddleware;
+
 // Stryker restore all
 /* v8 ignore stop */

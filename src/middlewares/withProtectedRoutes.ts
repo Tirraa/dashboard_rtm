@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { NextFetchEvent, NextMiddleware, NextRequest } from 'next/server';
 import type { MiddlewareFactory, AppPath } from '@rtm/shared-types/Next';
 import type { NextRequestWithAuth } from 'next-auth/middleware';
@@ -34,5 +35,6 @@ const withProtectedRoutes: MiddlewareFactory = (next: NextMiddleware) => async (
 };
 
 export default withProtectedRoutes;
+
 // Stryker restore all
 /* v8 ignore stop */

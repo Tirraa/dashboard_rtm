@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 type ButtonConfigType = {
   NOT_ACTIVE_CLASSNAME: string;
   ACTIVE_CLASSNAME: string;
@@ -14,5 +15,6 @@ const BUTTON_CONFIG: ButtonConfigType = {
 } as const;
 
 export default BUTTON_CONFIG;
+
 // Stryker restore all
 /* v8 ignore stop */

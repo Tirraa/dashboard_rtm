@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type IButtonStyleBase from '@/components/config/styles/types/IButtonStyleBase';
 
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
@@ -15,5 +16,6 @@ const NavbarButtonStyle: IButtonStyleBase = {
 } as const;
 
 export default NavbarButtonStyle;
+
 // Stryker restore all
 /* v8 ignore stop */

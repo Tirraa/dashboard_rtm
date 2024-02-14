@@ -23,6 +23,8 @@ export function getLandingPageByLanguageAndSlugUnstrict(language: LanguageFlag, 
 
 // Stryker Workaround 2. Pointless static mutant.
 // Stryker disable all
+
 export const getLandingPageByLanguageAndSlugStrict = <L extends LandingPageLang>(lang: L, slug: LandingPageSlug<L>): MaybeNull<LandingPage> =>
   getLandingPageByLanguageAndSlugUnstrict(lang as any, slug as any);
+
 // Stryker restore all

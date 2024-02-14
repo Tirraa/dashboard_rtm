@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 type LoaderConfigType = {
   BACKGROUND_COLOR: string;
   COLOR: string;
@@ -14,5 +15,6 @@ const LOADER_CONFIG: LoaderConfigType = {
 } as const;
 
 export default LOADER_CONFIG;
+
 // Stryker restore all
 /* v8 ignore stop */

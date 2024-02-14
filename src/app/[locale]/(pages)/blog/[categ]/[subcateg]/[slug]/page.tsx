@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { BlogPostPageProps, BlogPostType } from '@/types/Blog';
 
@@ -57,5 +58,6 @@ export default async function Page({ params }: BlogPostPageProps) {
     </>
   );
 }
+
 // Stryker restore all
 /* v8 ignore stop */

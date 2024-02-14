@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 type DiscordConfigType = {
   SUPPORT_SERVER_INVITE_LINK: string;
   BOT_INVITE_LINK: string;
@@ -12,5 +13,6 @@ const DISCORD_CONFIG: DiscordConfigType = {
 } as const;
 
 export default DISCORD_CONFIG;
+
 // Stryker restore all
 /* v8 ignore stop */

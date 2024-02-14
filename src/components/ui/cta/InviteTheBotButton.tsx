@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 'use client';
 
 import type { FunctionComponent } from 'react';
@@ -28,5 +29,6 @@ const InviteTheBotButton: FunctionComponent<InviteTheBotButtonProps> = () => {
 };
 
 export default InviteTheBotButton;
+
 // Stryker restore all
 /* v8 ignore stop */

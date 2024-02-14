@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { LocalesGetterConfigObjTypeConstraint, LocalesObjEntity, LocalesObj } from '@rtm/shared-types/I18n';
 
 import { LANGUAGES } from '##/config/i18n';
@@ -10,5 +11,6 @@ const GENERATED_LOCALES_OBJ = Object.fromEntries(
 ) as LocalesObj satisfies LocalesGetterConfigObjTypeConstraint;
 
 export default GENERATED_LOCALES_OBJ;
+
 // Stryker restore all
 /* v8 ignore stop */

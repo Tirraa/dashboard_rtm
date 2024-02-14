@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 'use client';
 
 import type { InviteTheBotButtonProps } from '@/components/ui/cta/InviteTheBotButton';
@@ -20,5 +21,6 @@ const MdxInviteTheBotButton: FunctionComponent<InviteTheBotButtonProps> = (props
 };
 
 export default MdxInviteTheBotButton;
+
 // Stryker restore all
 /* v8 ignore stop */

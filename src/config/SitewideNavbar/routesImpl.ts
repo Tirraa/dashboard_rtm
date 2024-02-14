@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { SitewideNavbarRoutesTitles, SitewideNavbarRoutes } from '@/config/SitewideNavbar/utils/RoutesMapping';
 
 import DISCORD_CONFIG from '@/config/discord';
@@ -29,5 +30,6 @@ export const SITEWIDE_NAVBAR_ROUTES_TITLES: SitewideNavbarRoutesTitles = {
 /* eslint-enable perfectionist/sort-objects */
 
 export default SITEWIDE_NAVBAR_ROUTES;
+
 // Stryker restore all
 /* v8 ignore stop */

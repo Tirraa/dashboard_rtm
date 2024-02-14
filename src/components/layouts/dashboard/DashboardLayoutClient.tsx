@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 'use client';
 
 import type { LayoutMinimalProps } from '@rtm/shared-types/Next';
@@ -37,5 +38,6 @@ const DashboardLayoutClient: FunctionComponent<DashboardLayoutClientProps> = ({ 
 };
 
 export default DashboardLayoutClient;
+
 // Stryker restore all
 /* v8 ignore stop */

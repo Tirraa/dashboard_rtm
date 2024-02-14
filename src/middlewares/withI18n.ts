@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { I18nMiddlewareConfig } from '@rtm/shared-types/I18n';
 import type { MiddlewareFactory } from '@rtm/shared-types/Next';
 import type { NextResponse, NextRequest } from 'next/server';
@@ -20,5 +21,6 @@ const i18nMiddleware = (request: NextRequest): NextResponse => i18nMiddlewareIns
 const withI18n: MiddlewareFactory = () => async (request: NextRequest) => i18nMiddleware(request);
 
 export default withI18n;
+
 // Stryker restore all
 /* v8 ignore stop */

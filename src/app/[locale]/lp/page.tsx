@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { I18nPageProps } from '@/types/Next';
 
 import { setStaticParamsLocale } from 'next-international/server';
@@ -18,5 +19,6 @@ export default function Page({ params }: I18nPageProps) {
 
   redirect(ROUTES_ROOTS.WEBSITE);
 }
+
 // Stryker restore all
 /* v8 ignore stop */

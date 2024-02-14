@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { UnknownLandingPageSlug } from '@/types/LandingPage';
 
 namespace LandingPageTaxonomy {
@@ -11,5 +12,6 @@ export type LandingPageTaxonomyType = {
 };
 
 export default LandingPageTaxonomy;
+
 // Stryker restore all
 /* v8 ignore stop */

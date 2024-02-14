@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { MaybeSessionUserField, MaybeSessionUser } from '@rtm/shared-types/CustomUtilityTypes';
 
 export type User = MaybeSessionUser<{
@@ -7,5 +8,6 @@ export type User = MaybeSessionUser<{
   image?: MaybeSessionUserField<string>;
   name?: MaybeSessionUserField<string>;
 }>;
+
 // Stryker restore all
 /* v8 ignore stop */

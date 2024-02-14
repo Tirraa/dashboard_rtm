@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { BlogSubcategoryFromUnknownCategory, UnknownBlogSlug, BlogCategory } from '@/types/Blog';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 
@@ -19,5 +20,6 @@ export type BlogTaxonomyType = {
 };
 
 export default BlogTaxonomy;
+
 // Stryker restore all
 /* v8 ignore stop */

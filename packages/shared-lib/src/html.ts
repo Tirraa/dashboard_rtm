@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import preserveKeyboardNavigation from './portable/html/preserveKeyboardNavigation';
 import computeHTMLElementHeight from './portable/html/computeHTMLElementHeight';
 import computeHTMLElementWidth from './portable/html/computeHTMLElementWidth';
@@ -19,5 +20,6 @@ export {
   resetScroll,
   scrollToTop
 };
+
 // Stryker restore all
 /* v8 ignore stop */

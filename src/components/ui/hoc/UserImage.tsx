@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { FunctionComponent, CSSProperties } from 'react';
 import type { WithClassname } from '@rtm/shared-types/Next';
 import type { User } from '@rtm/shared-types/Auth';
@@ -35,5 +36,6 @@ const UserImage: FunctionComponent<UserImageProps> = ({ height: heightValue, wid
 };
 
 export default UserImage;
+
 // Stryker restore all
 /* v8 ignore stop */

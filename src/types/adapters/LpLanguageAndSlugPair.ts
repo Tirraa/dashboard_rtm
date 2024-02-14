@@ -1,6 +1,7 @@
 /* v8 ignore start */
 // Stryker disable all
 //!\ TESTED VIA JEST-TSD
+
 import type DefaultLanguageToken from '@rtm/generated/DefaultLanguageToken';
 import type LandingPages from '@rtm/generated/LandingPages';
 import type { DefaultLanguage } from '##/config/i18n';
@@ -16,5 +17,6 @@ type LpLanguageAndSlugPair<__LandingPages extends object = LandingPages> = {
 }[keyof __LandingPages];
 
 export default LpLanguageAndSlugPair;
+
 // Stryker restore all
 /* v8 ignore stop */

@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { Page } from 'contentlayer/generated';
 import type { I18nPageProps } from '@/types/Next';
 
@@ -38,5 +39,6 @@ export default function Page({ params }: I18nPageProps) {
     </main>
   );
 }
+
 // Stryker restore all
 /* v8 ignore stop */

@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { DashboardRoutesIcons } from '@/config/DashboardSidebar/utils/IconsMapping';
 
 import { RxActivityLog, RxSketchLogo, RxDashboard } from 'react-icons/rx';
@@ -13,5 +14,6 @@ const SIDEBAR_ROUTES_ICONS: DashboardRoutesIcons = {
 /* eslint-enable perfectionist/sort-objects */
 
 export default SIDEBAR_ROUTES_ICONS;
+
 // Stryker restore all
 /* v8 ignore stop */

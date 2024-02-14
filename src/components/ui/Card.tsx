@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { TitleType } from '@rtm/shared-types/HTML';
 
 import { cn } from '@/lib/tailwind';
@@ -51,5 +52,6 @@ const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
 CardFooter.displayName = 'CardFooter';
 
 export { CardDescription, CardContent, CardFooter, CardHeader, CardTitle, Card };
+
 // Stryker restore all
 /* v8 ignore stop */

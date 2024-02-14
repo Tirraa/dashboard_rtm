@@ -1,6 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
-// NOTE: Nothing tricky here!
+
 import type { DocumentType } from 'contentlayer/source-files';
 
 import {
@@ -18,5 +18,6 @@ const filePathPattern = LANDING_PAGES_FOLDER + `/**/*.${EXT}`;
 const landingPagesDocumentType: DocumentType = defineDocumentType(() => ({ filePathPattern, computedFields, contentType, fields, name }) as const);
 
 export default landingPagesDocumentType;
+
 // Stryker restore all
 /* v8 ignore stop */

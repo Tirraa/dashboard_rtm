@@ -1,8 +1,9 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import formatMessage from './config/formatMessage';
 
-/* eslint-disable perfectionist/sort-imports */
+// eslint-disable-next-line perfectionist/sort-imports
 import type { MaybeUndefined, Couple } from '@rtm/shared-types/CustomUtilityTypes';
 
 import { ArgError } from 'arg';
@@ -11,30 +12,29 @@ import path from 'path';
 import type { MaybeEmptyErrorsDetectionFeedback, Arborescence, Path } from './types/Metadatas';
 import type { VocabKey } from './config/translations';
 
-import { ROOT_FOLDER_RELATIVE_PATH_FROM_PREBUILDER_CTX, FLAGS } from './config';
+import generateDefaultLanguageTokenType from './generators/defaultLanguageToken/defaultLanguageTokenType';
+import getPagesArchitectureMetadatas from './metadatas-builders/pagesArchitectureMetadatas';
 import getBlogArchitectureMetadatas from './metadatas-builders/blogArchitectureMetadatas';
 import generateBlogArchitectureType from './generators/blog/blogArchitectureType';
+import { ROOT_FOLDER_RELATIVE_PATH_FROM_PREBUILDER_CTX, FLAGS } from './config';
 import generateI18nBlogCategories from './generators/blog/i18nBlogCategories';
 import sysBlogSubcategoriesValidator from './validators/sysBlogSubcategories';
 import sysBlogCategoriesValidator from './validators/sysBlogCategories';
+import getLpMetadatas from './metadatas-builders/landingPagesMetadatas';
+import generateI18nPagesTitles from './generators/blog/i18nPagesTitles';
 import ArgumentsValidatorError from './errors/ArgumentsValidatorError';
+import { prefixFeedback, foldFeedbacks } from './lib/feedbacksMerge';
+import sysLpCategoriesValidator from './validators/sysLpCategories';
 import localesInfosValidator from './validators/localesInfos';
 import sysBlogSlugsValidator from './validators/sysBlogSlugs';
+import generateLandingPagesType from './generators/lp/lpType';
+import generatePagesType from './generators/pages/pagesType';
 import generateBlogType from './generators/blog/blogType';
-import { prefixFeedback, foldFeedbacks } from './lib/feedbacksMerge';
+import sysLpSlugsValidator from './validators/sysLpSlugs';
+import sysPagesValidator from './validators/sysPages';
 import parseArguments from './validators/arguments';
 import FeedbackError from './errors/FeedbackError';
 import BuilderError from './errors/BuilderError';
-import sysLpCategoriesValidator from './validators/sysLpCategories';
-import sysLpSlugsValidator from './validators/sysLpSlugs';
-import getLpMetadatas from './metadatas-builders/landingPagesMetadatas';
-import generateLandingPagesType from './generators/lp/lpType';
-import sysPagesValidator from './validators/sysPages';
-import getPagesArchitectureMetadatas from './metadatas-builders/pagesArchitectureMetadatas';
-import generatePagesType from './generators/pages/pagesType';
-import generateDefaultLanguageTokenType from './generators/defaultLanguageToken/defaultLanguageTokenType';
-import generateI18nPagesTitles from './generators/blog/i18nPagesTitles';
-/* eslint-enable perfectionist/sort-imports */
 
 // NOTE: The prebuilder is too greedy
 // https://github.com/Tirraa/dashboard_rtm/issues/78
@@ -363,5 +363,6 @@ async function processPrebuild() {
 }
 
 processPrebuild();
+
 // Stryker restore all
 /* v8 ignore stop */

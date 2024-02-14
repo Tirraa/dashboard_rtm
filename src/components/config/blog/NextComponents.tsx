@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import Image from 'next/image';
 
 const NextComponents: Record<PropertyKey, (...args: any[]) => JSX.Element> = {
@@ -8,5 +9,6 @@ const NextComponents: Record<PropertyKey, (...args: any[]) => JSX.Element> = {
 };
 
 export default NextComponents;
+
 // Stryker restore all
 /* v8 ignore stop */

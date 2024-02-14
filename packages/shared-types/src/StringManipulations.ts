@@ -5,5 +5,6 @@ import type { CompareFun, Couple } from '@rtm/shared-types/CustomUtilityTypes';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 
 export type StringsCompareFun = CompareFun<Couple<string>, [LanguageFlag]> | CompareFun<Couple<string>>;
+
 // Stryker restore all
 /* v8 ignore stop */

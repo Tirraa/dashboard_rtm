@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 class FeedbackError extends Error {
   constructor(message: string) {
     super(message);
@@ -8,5 +9,6 @@ class FeedbackError extends Error {
 }
 
 export default FeedbackError;
+
 // Stryker restore all
 /* v8 ignore stop */

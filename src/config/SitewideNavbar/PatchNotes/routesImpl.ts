@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { PatchNotesRoutesTitles, PatchNotesRoutes } from '@/config/SitewideNavbar/PatchNotes/utils/RoutesMapping';
 
 import { getSlashEnvelope } from '@/lib/str';
@@ -24,5 +25,6 @@ export const PATCH_NOTES_ROUTES_TITLES: PatchNotesRoutesTitles = {
 /* eslint-enable perfectionist/sort-objects */
 
 export default PATCH_NOTES_ROUTES;
+
 // Stryker restore all
 /* v8 ignore stop */

@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import { Inter } from 'next/font/google';
 
 export const fInter = Inter({
@@ -7,5 +8,6 @@ export const fInter = Inter({
   variable: '--font-sans',
   subsets: ['latin']
 });
+
 // Stryker restore all
 /* v8 ignore stop */

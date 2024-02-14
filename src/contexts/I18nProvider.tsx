@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 'use client';
 
 import type { WithChildren } from '@rtm/shared-types/Next';
@@ -19,5 +20,6 @@ const I18nProvider: FunctionComponent<I18nProviderProps> = ({ children, locale }
 );
 
 export default I18nProvider;
+
 // Stryker restore all
 /* v8 ignore stop */

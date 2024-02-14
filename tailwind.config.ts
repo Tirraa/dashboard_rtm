@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { DefaultColors } from 'tailwindcss/types/generated/colors';
 import type { Config } from 'tailwindcss';
 
@@ -105,5 +106,6 @@ const config = {
 } satisfies Config;
 
 export default config;
+
 // Stryker restore all
 /* v8 ignore stop */

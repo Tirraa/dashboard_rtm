@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import { createI18nClient } from 'next-international/client';
 
 import GENERATED_LOCALES_OBJ from './getLocales';
@@ -11,5 +12,6 @@ export const {
   useChangeLocale,
   useScopedI18n
 } = createI18nClient(GENERATED_LOCALES_OBJ);
+
 // Stryker restore all
 /* v8 ignore stop */

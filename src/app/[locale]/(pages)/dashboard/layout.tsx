@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { LayoutBaseProps } from '@/types/Next';
 
 import DashboardLayoutClient from '@/components/layouts/dashboard/DashboardLayoutClient';
@@ -19,5 +20,6 @@ export default async function DashboardLayout({ children, params }: DashboardLay
 
   return <DashboardLayoutClient>{children}</DashboardLayoutClient>;
 }
+
 // Stryker restore all
 /* v8 ignore stop */

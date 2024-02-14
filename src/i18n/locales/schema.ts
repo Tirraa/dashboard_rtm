@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { TypedLeafsJSONData } from '@rtm/shared-types/JSON';
 
 import blogCategories from '@rtm/generated/blogCategories';
@@ -86,5 +87,6 @@ export default {
 type NotScanned = '';
 type Scanned = '__SCANNED_ON_PREBUILD_FIELD__';
 type MaybeScanned = NotScanned | Scanned;
+
 // Stryker restore all
 /* v8 ignore stop */

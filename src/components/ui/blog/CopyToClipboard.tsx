@@ -9,7 +9,7 @@ import { useState, useRef } from 'react';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 
-interface CopyToClipboardProps extends WithChildren {}
+export interface CopyToClipboardProps extends WithChildren {}
 
 const CopyToClipboard: FunctionComponent<CopyToClipboardProps> = ({ children }) => {
   const textInputRef = useRef<HTMLDivElement>(null);

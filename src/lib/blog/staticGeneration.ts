@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type {
   BlogCategoriesAndSubcategoriesAssoc,
   BlogSubcategoryPageProps,
@@ -71,5 +72,6 @@ export async function getBlogPostMetadatas({ params }: BlogPostPageProps) {
 }
 
 export { blogSubcategoryGuard, blogCategoryGuard, blogPostGuard };
+
 // Stryker restore all
 /* v8 ignore stop */

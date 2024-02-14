@@ -43,6 +43,7 @@ export async function getSession(session: Session, token: JWT, __discordApi: IDi
 
 /* v8 ignore start */
 // Stryker disable all
+
 const authOptions: NextAuthOptions = {
   providers: [
     DiscordProvider({
@@ -64,5 +65,6 @@ const authOptions: NextAuthOptions = {
 };
 
 export default authOptions;
+
 // Stryker restore all
 /* v8 ignore stop */

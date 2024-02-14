@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { NextTopLoaderProps } from '@/components/layouts/base/NextTopLoader';
 
 const PROGRESSBAR_CONFIG: NextTopLoaderProps = {
@@ -12,5 +13,6 @@ const PROGRESSBAR_CONFIG: NextTopLoaderProps = {
 } as const;
 
 export default PROGRESSBAR_CONFIG;
+
 // Stryker restore all
 /* v8 ignore stop */

@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { FunctionComponent } from 'react';
 
 import ROUTES_ROOTS from '##/config/routes';
@@ -85,5 +86,6 @@ const DashboardBarPage: FunctionComponent<DashboardBarPageProps> = () => {
 };
 
 export default DashboardBarPage;
+
 // Stryker restore all
 /* v8 ignore stop */

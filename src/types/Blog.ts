@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { KeySeparator } from '@rtm/shared-types/CustomUtilityTypes';
 import type BlogArchitecture from '@rtm/generated/BlogArchitecture';
 import type { BlogTaxonomyType } from '##/config/taxonomies/blog';
@@ -57,5 +58,6 @@ type BlogStaticParamsValue = string;
 export type BlogStaticParams = Record<keyof BlogTaxonomyType, BlogStaticParamsValue>;
 
 export { type StrictBlog };
+
 // Stryker restore all
 /* v8 ignore stop */

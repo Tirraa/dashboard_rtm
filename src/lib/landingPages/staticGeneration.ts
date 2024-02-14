@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { LandingPageProps } from '@/types/LandingPage';
 import type { LandingPage } from 'contentlayer/generated';
@@ -32,5 +33,6 @@ export async function getLandingPageMetadatas({ params }: LandingPageProps) {
 
   return { description, title };
 }
+
 // Stryker restore all
 /* v8 ignore stop */

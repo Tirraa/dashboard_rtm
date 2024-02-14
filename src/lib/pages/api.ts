@@ -23,6 +23,8 @@ export function getPageByLanguageAndPathUnstrict(language: LanguageFlag, path: U
 
 // Stryker Workaround 2. Pointless static mutant.
 // Stryker disable all
+
 export const getPageByLanguageAndPathStrict = <L extends PageLang>(lang: L, path: PagePath<L>): MaybeNull<Page> =>
   getPageByLanguageAndPathUnstrict(lang as any, path as any);
+
 // Stryker restore all

@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
 import type { AppPath } from '@rtm/shared-types/Next';
 import type { ReactElement } from 'react';
@@ -10,5 +11,6 @@ export type RoutesDefinition<RoutesKeys extends RoutesKeysUnion> = Record<Routes
 export type RoutesTitles<RoutesKeys extends RoutesKeysUnion> = Record<RoutesKeys, I18nVocabTarget>;
 export type StronglyBindedReactElements<K extends RoutesKeysUnion> = Record<K, ReactElement>;
 export type WeaklyBindedReactElements<K extends PropertyKey> = Record<K, ReactElement>;
+
 // Stryker restore all
 /* v8 ignore stop */

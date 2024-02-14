@@ -1,6 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
-// NOTE: Nothing tricky here!
+
 import type { DocumentType } from 'contentlayer/source-files';
 
 import {
@@ -18,5 +18,6 @@ const filePathPattern = PAGES_FOLDER + `/**/*.${EXT}`;
 const pagesDocumentType: DocumentType = defineDocumentType(() => ({ filePathPattern, computedFields, contentType, fields, name }) as const);
 
 export default pagesDocumentType;
+
 // Stryker restore all
 /* v8 ignore stop */

@@ -1,8 +1,9 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { ImgHTMLAttributes, HTMLAttributes } from 'react';
 
-import CopyToClipboard from '@/components/ui/blog/CopyToClipboard';
+import MdxCopyToClipboard from '@/components/ui/blog/MdxCopyToClipboard';
 import { cn } from '@/lib/tailwind';
 
 /* eslint-disable perfectionist/sort-objects */
@@ -29,9 +30,9 @@ const PrimitiveComponents: Record<PropertyKey, (...args: any[]) => JSX.Element> 
     </div>
   ),
   pre: ({ className, ...props }) => (
-    <CopyToClipboard>
+    <MdxCopyToClipboard>
       <pre className={cn('mb-4 mt-6 overflow-x-auto rounded-lg px-4 py-4', className)} {...props} tabIndex={-1} />
-    </CopyToClipboard>
+    </MdxCopyToClipboard>
   ),
   /* eslint-disable perfectionist/sort-objects */
   h1: ({ className, ...props }) => (
@@ -71,5 +72,6 @@ const PrimitiveComponents: Record<PropertyKey, (...args: any[]) => JSX.Element> 
 /* eslint-enable perfectionist/sort-objects */
 
 export default PrimitiveComponents;
+
 // Stryker restore all
 /* v8 ignore stop */

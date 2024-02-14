@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { PageProps } from '@/types/Page';
 
 import PageTaxonomy from '##/config/taxonomies/pages';
@@ -30,5 +31,6 @@ export async function getPagesMetadatas({ params }: PageProps) {
 
   return { description, title };
 }
+
 // Stryker restore all
 /* v8 ignore stop */

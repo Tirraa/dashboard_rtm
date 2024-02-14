@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import formatMessage from 'format-message';
 
 import type { Locale } from './translations';
@@ -26,5 +27,6 @@ export const getCurrentLocale = () => Ctx.currentLocale;
 setup();
 
 export default formatMessage;
+
 // Stryker restore all
 /* v8 ignore stop */

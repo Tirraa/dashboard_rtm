@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 type Config = Partial<{
   i18nSubcategoriesRequiredExtraFields: string[];
   i18nCategoriesRequiredExtraFields: string[];
@@ -10,5 +11,6 @@ type Config = Partial<{
 }>;
 
 export default Config;
+
 // Stryker restore all
 /* v8 ignore stop */

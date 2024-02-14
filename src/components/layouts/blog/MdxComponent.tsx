@@ -1,17 +1,16 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { FunctionComponent, ReactNode } from 'react';
 
 import PrimitiveComponents from '@/components/config/blog/PrimitiveComponents';
 import NextComponents from '@/components/config/blog/NextComponents';
 import { useMDXComponent } from 'next-contentlayer/hooks';
-import Utils from '@/components/config/blog/Utils';
 import CTAs from '@/components/config/blog/CTAs';
 
 const components: Record<PropertyKey, (...args: any[]) => JSX.Element | ReactNode> = {
   ...PrimitiveComponents,
   ...NextComponents,
-  ...Utils,
   ...CTAs
 };
 
@@ -30,5 +29,6 @@ const MDX: FunctionComponent<MdxProps> = ({ code }) => {
 };
 
 export default MDX;
+
 // Stryker restore all
 /* v8 ignore stop */

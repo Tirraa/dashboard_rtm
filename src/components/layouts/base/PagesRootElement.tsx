@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import type { LayoutBaseProps } from '@/types/Next';
 import type { FunctionComponent } from 'react';
 
@@ -14,5 +15,6 @@ const PagesRootElement: FunctionComponent<HtmlElementProps> = ({ children, param
 );
 
 export default PagesRootElement;
+
 // Stryker restore all
 /* v8 ignore stop */

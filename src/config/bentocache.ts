@@ -1,5 +1,6 @@
 /* v8 ignore start */
 // Stryker disable all
+
 import { memoryDriver } from 'bentocache/drivers/memory';
 import { BentoCache, bentostore } from 'bentocache';
 
@@ -20,5 +21,6 @@ const bentocache = new BentoCache({
 });
 
 export default bentocache;
+
 // Stryker restore all
 /* v8 ignore stop */
