@@ -23,7 +23,7 @@ const i18nsBase: MakeI18nsBase<typeof _i18nsBase> = _i18nsBase;
 export const i18ns = {
   ...i18nsBase,
   dashboardPagesTitles: 'dashboard.pages-titles'
-} as const satisfies typeof i18nsBase & Record<string, I18nVocabScope>;
+} as const satisfies typeof i18nsBase & Record<PropertyKey, I18nVocabScope>;
 
 export const DEFAULT_LANGUAGE = DEFAULT_LANGUAGE_OBJ._infos.lng satisfies LanguageFlag;
 export const LANGUAGES: LanguageFlag[] = getEnumKeys(ELanguagesFlag);

@@ -26,7 +26,6 @@ export const SHARED_VOCAB_SCHEMA = {
 } as const satisfies TypedLeafsJSONData<NotScanned>;
 
 export default {
-  // eslint-disable-next-line perfectionist/sort-objects
   navbar: {
     'sr-only': {
       'close-language-switcher-menu': _,
@@ -69,14 +68,14 @@ export default {
     }
   },
 
+  _infos: {
+    lng: '__SCANNED_ON_PREBUILD_FIELD__'
+  },
+
   auth: {
     logout: _,
     signup: _,
     login: _
-  },
-
-  _infos: {
-    lng: '__SCANNED_ON_PREBUILD_FIELD__'
   },
 
   'pages-titles': SHARED_VOCAB_SCHEMA['pages-titles'],

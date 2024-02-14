@@ -20,6 +20,7 @@ const SHARED: SharedVocabType = {
 
     blog: 'Blog'
   },
+
   vocab: {
     brand: 'Rust Team Management',
     breadcrumbs: 'Breadcrumbs',
@@ -108,7 +109,7 @@ export default {
   },
 
   auth: {
-    signup: SHARED['vocab']['sign-up'],
+    signup: SHARED.vocab['sign-up'],
     logout: 'Logout',
     login: 'Login'
   },

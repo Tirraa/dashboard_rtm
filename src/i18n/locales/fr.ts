@@ -20,6 +20,7 @@ const SHARED: SharedVocabType = {
     homepage: 'Accueil',
     blog: 'Blog'
   },
+
   vocab: {
     brand: 'Rust Team Management',
     breadcrumbs: "Fil d'ariane",
