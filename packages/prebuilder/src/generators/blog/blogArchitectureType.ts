@@ -18,7 +18,7 @@ export default async function generateBlogArchitectureType(
     properties: Object.entries(blogArchitecture).map(([category, subcategories]) => ({
       type: Object.keys(subcategories)
         .map((subcategory) => `'${subcategory}'`)
-        .join(' | '),
+        .join('|'),
       name: `'${category}'`
     }))
   });

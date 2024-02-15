@@ -19,7 +19,7 @@ export default async function generateBlogType(
         {
           type: JSON.stringify(
             blogArchitecture,
-            (_, v) => (Array.isArray(v) ? v.map((slug) => `'${slug}'`).join(' | ') : v),
+            (_, v) => (Array.isArray(v) ? v.map((slug) => `'${slug}'`).join('|') : v),
             pretty ? 2 : undefined
           ).replace(/"'|'"/g, "'"),
           kind: StructureKind.TypeAlias,

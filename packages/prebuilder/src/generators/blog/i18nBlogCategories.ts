@@ -61,16 +61,16 @@ function generateTrailingTrivia(__PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS
     ' ' +
     (__PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS.length > 0
       ? [
-          `Record<${__PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS.map((field) => `'${field}'`).join(' | ')}, EmptyString>`,
+          `Record<${__PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS.map((field) => `'${field}'`).join('|')}, EmptyString>`,
           CategoriesMetadatasBaseProps
-        ].join(' | ')
+        ].join('|')
       : CategoriesMetadatasBaseProps);
 
   const SubcategoriesMetadatas =
     'type SubcategoriesMetadatas =' +
     ' ' +
     (__I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS.length > 0
-      ? `Record<${__I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS.map((field) => `'${field}'`).join(' | ')}, EmptyString>`
+      ? `Record<${__I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS.map((field) => `'${field}'`).join('|')}, EmptyString>`
       : 'EmptyString');
 
   return [
