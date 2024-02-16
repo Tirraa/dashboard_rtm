@@ -117,36 +117,36 @@ function printPrebuildReport({
 
   const [
     localesElapsedTime,
-    utilsElapsedTime,
     pagesTaxonomyElapsedTime,
     blogTaxonomyElapsedTime,
     lpTaxonomyElapsedTime,
     pagesCodegenElapsedTime,
     blogCodegenElapsedTime,
     lpCodegenElapsedTime,
+    utilsElapsedTime,
     totalGlobalElapsedTime
   ] = [
     computeDelay(localesCheckersStartTime, localesCheckersEndTime),
-    computeDelay(utilsCodegenStartTime, utilsCodegenEndTime),
     computeDelay(pagesTaxonomyCheckersStartTime, pagesTaxonomyCheckersEndTime),
     computeDelay(blogTaxonomyCheckersStartTime, blogTaxonomyCheckersEndTime),
     computeDelay(lpTaxonomyCheckersStartTime, lpTaxonomyCheckersEndTime),
     computeDelay(pagesCodegenStartTime, pagesCodegenEndTime),
     computeDelay(blogCodegenStartTime, blogCodegenEndTime),
     computeDelay(lpCodegenStartTime, lpCodegenEndTime),
+    computeDelay(utilsCodegenStartTime, utilsCodegenEndTime),
     computeDelay(globalStartTime, performance.now())
   ];
 
   (
     [
       ['validatedLocalesInfosBenchmark', localesElapsedTime],
-      ['generatedUtilTypesBenchmark', utilsElapsedTime],
       ['validatedPagesTaxonomyBenchmark', pagesTaxonomyElapsedTime],
       ['validatedBlogTaxonomyBenchmark', blogTaxonomyElapsedTime],
       ['validatedLpTaxonomyBenchmark', lpTaxonomyElapsedTime],
       ['pagesCodegenBenchmark', pagesCodegenElapsedTime],
       ['blogCodegenBenchmark', blogCodegenElapsedTime],
       ['lpCodegenBenchmark', lpCodegenElapsedTime],
+      ['generatedUtilTypesBenchmark', utilsElapsedTime],
       ['totalExecutionTimeBenchmark', totalGlobalElapsedTime]
     ] satisfies Couple<VocabKey, typeof IGNORED | string>[]
   ).forEach(([label, duration]) => {
