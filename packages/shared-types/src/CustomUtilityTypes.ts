@@ -24,7 +24,7 @@ export type KeySeparator = '.';
 export type DeepPathToLiteralKeys<DeepPath extends string> = JoinKeys<SplitKeys<DeepPath>>;
 
 // https://github.com/microsoft/TypeScript/issues/56080
-export type Couple<T1, T2 = never> = /*__CAST `never` TO__*/ [] & T2 extends never ? [T1, T1] : [T1, T2];
+export type Couple<Left, Right = never> = /*__CAST `never` TO__*/ [] & Right extends never ? [Left, Left] : [Left, Right];
 
 export type MaybeNull<T> = null | T;
 export type MaybeUndefined<T> = undefined | T;

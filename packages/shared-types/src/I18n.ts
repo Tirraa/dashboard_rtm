@@ -80,11 +80,12 @@ export type MakeI18nsBase<
   I18NS_CONST extends I18nsBase<__VocabType>,
   __VocabType extends UnknownVocabObj = VocabType,
   __FLIP extends object = FlipI18nsBase<I18NS_CONST, __VocabType>
-> = NamespacesKeys<__VocabType> extends keyof __FLIP
-  ? I18NS_CONST
-  : I18NS_CONST extends I18nsBase<__VocabType>
-    ? I18nsBaseDiff<ExpectedI18nsBaseValues<__VocabType>, GivenI18nsBaseValues<__FLIP>>
-    : never;
+> =
+  NamespacesKeys<__VocabType> extends keyof __FLIP
+    ? I18NS_CONST
+    : I18NS_CONST extends I18nsBase<__VocabType>
+      ? I18nsBaseDiff<ExpectedI18nsBaseValues<__VocabType>, GivenI18nsBaseValues<__FLIP>>
+      : never;
 
 export type { LanguageFlag };
 

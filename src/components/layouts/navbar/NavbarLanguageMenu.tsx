@@ -46,7 +46,7 @@ const NavbarLanguageMenu: FunctionComponent<NavbarLanguageMenuProps> = ({ isMobi
         <button className="h-full bg-transparent text-primary-foreground">{localesEmojis[currentLocale]}</button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className={cn('min-w-[125px] dark:border-card lg:relative ltr:lg:right-10 rtl:lg:left-10 lg:dark:border-inherit', {
+        className={cn('min-w-[125px] dark:border-card lg:relative lg:dark:border-inherit ltr:lg:right-10 rtl:lg:left-10', {
           'relative top-1': !isMobile
         })}
         aria-label={scopedT('language-switcher-menu')}
