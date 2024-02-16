@@ -67,14 +67,14 @@ export default {
     }
   },
 
+  _infos: {
+    lng: '__SCANNED_ON_PREBUILD_FIELD__'
+  },
+
   auth: {
     logout: _,
     signup: _,
     login: _
-  },
-
-  _infos: {
-    lng: '__SCANNED_ON_PREBUILD_FIELD__'
   },
 
   'pages-titles': SHARED_VOCAB_SCHEMA['pages-titles'],
