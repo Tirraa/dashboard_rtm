@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "arg": "^5.0.2",
-    "inflection": "^2.0.1",
+    "inflection": "^3.0.0",
     "format-message": "6.2.4",
     "ts-morph": "21.0.1"
   },

@@ -34,8 +34,8 @@ export type MaybeSessionUserField<T> = MaybeUndefined<T> | MaybeNull<T>;
 
 // https://github.com/microsoft/TypeScript/issues/56080
 export type CompareFun<T extends Couple<unknown>, CTX extends unknown[] = never> = /*__CAST `never` TO__*/ Function & CTX extends never
-  ? (x1: T[0], x2: T[1]) => CompareFunReturnValue
-  : (x1: T[0], x2: T[1], ...ctx: [...CTX]) => CompareFunReturnValue;
+  ? (left: T[0], right: T[1]) => CompareFunReturnValue
+  : (left: T[0], right: T[1], ...ctx: [...CTX]) => CompareFunReturnValue;
 
 type CompareFunReturnValue = number;
 

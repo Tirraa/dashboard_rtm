@@ -30,6 +30,7 @@ export default makeSource({
       rehypeSlug,
       [rehypeExternalLinks, { rel: ['nofollow'] }],
       [
+        // @ts-expect-error
         rehypePrettyCode,
         {
           onVisitLine(node: hASTElement) {

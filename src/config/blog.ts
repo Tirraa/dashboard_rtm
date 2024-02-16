@@ -3,8 +3,8 @@ import type { DatesCompareFun } from '@rtm/shared-types/DateManipulations';
 import type { PostsCollectionAssoc, BlogCategory } from '@/types/Blog';
 
 import { categoriesBlogDataAssoc } from '##/config/contentlayer/blog/documentTypes';
+import { compareDesc } from 'date-fns/compareDesc';
 import { compareAlphabetically } from '@/lib/str';
-import compareDesc from 'date-fns/compareDesc';
 
 export type BlogConfigType = {
   DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_SUBCATEGORIES_ON_BLOG_CATEGORY_PAGE: StringsCompareFun;
