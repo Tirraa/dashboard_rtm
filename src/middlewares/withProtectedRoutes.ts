@@ -2,13 +2,12 @@
 // Stryker disable all
 
 import type { NextFetchEvent, NextMiddleware, NextRequest } from 'next/server';
-import type { MiddlewareFactory, AppPath } from '@rtm/shared-types/Next';
+import type { MiddlewareFactory } from '@rtm/shared-types/Next';
 import type { NextRequestWithAuth } from 'next-auth/middleware';
 
+import isProtectedRoute from '@/lib/misc/isProtectedRoute';
 import { mainMiddlewaresChain } from '@/middlewaresChain';
 import { getMaybeI18nFlagFromRequest } from '@/lib/next';
-import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
-import { APP_PROTECTED_PATHS } from '@/middleware';
 import { withAuth } from 'next-auth/middleware';
 import ROUTES_ROOTS from '##/config/routes';
 
@@ -19,12 +18,6 @@ function authMiddleware(request: NextRequest) {
   return withAuth(mainMiddlewaresChain, {
     pages: { signIn: i18nPrefix + ROUTES_ROOTS.LANDING_PAGES + 'sign-up' }
   });
-}
-
-function isProtectedRoute(pathname: AppPath) {
-  const currentRoute = getPathnameWithoutI18nFlag(pathname);
-  const isProtectedRoute = APP_PROTECTED_PATHS.find((r) => currentRoute.startsWith(r));
-  return Boolean(isProtectedRoute);
 }
 
 const withProtectedRoutes: MiddlewareFactory = (next: NextMiddleware) => async (req: NextRequest, _next: NextFetchEvent) => {

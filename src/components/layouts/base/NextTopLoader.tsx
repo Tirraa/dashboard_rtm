@@ -6,6 +6,7 @@
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 
 import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
+import MobileDetect from 'mobile-detect';
 
 // A Next.js Top Loading Bar component made using nprogress, works with Next.js 13.
 // https://github.com/TheSGJ/nextjs-toploader
@@ -91,10 +92,8 @@ const NextTopLoader = ({
   );
 
   React.useEffect(() => {
-    const userAgent = navigator.userAgent.toLowerCase();
-    const onMobile = Boolean(
-      userAgent.match(/(ipad)|(iphone)|(ipod)|(android)|(webos)|(blackberry)|(tablet)|(kindle)|(playbook)|(silk)|(windows phone)/i)
-    );
+    const md = new MobileDetect(window.navigator.userAgent);
+    const onMobile = md.mobile() !== null || md.tablet() !== null;
 
     setIsOnMobileOrTablet(onMobile);
   }, []);

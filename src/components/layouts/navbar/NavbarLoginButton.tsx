@@ -6,9 +6,9 @@ import type { Session } from 'next-auth';
 
 import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
 import { SignalSlashIcon, KeyIcon } from '@heroicons/react/20/solid';
-import { useSession, signOut, signIn } from 'next-auth/react';
-import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
 import UserImage from '@/components/ui/hoc/UserImage';
+import { useSession, signIn } from 'next-auth/react';
+import handleSignOut from '@/lib/misc/handleSignOut';
 import { Button } from '@/components/ui/Button';
 import { useScopedI18n } from '@/i18n/client';
 import { usePathname } from 'next/navigation';
@@ -25,14 +25,6 @@ interface NavbarLoginButtonMobileProps {
 interface NavbarLoginButtonProps extends WithIsMobile {}
 
 const { SIZE_PX_VALUE: SIZE } = NAVBAR_ICON_STYLE;
-
-const handleSignOut = (currentUrl: string) => {
-  if (getPathnameWithoutI18nFlag(currentUrl).startsWith(ROUTES_ROOTS.DASHBOARD)) {
-    signOut({ callbackUrl: ROUTES_ROOTS.WEBSITE });
-    return;
-  }
-  signOut();
-};
 
 const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> = ({ currentPathname, session }) => {
   const scopedT = useScopedI18n(i18ns.auth);
