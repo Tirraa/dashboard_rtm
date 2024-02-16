@@ -3,8 +3,7 @@
 
 import type { TypedLeafsJSONData } from '@rtm/shared-types/JSON';
 
-import blogCategories from '@rtm/generated/blogCategories';
-import pagesTitles from '@rtm/generated/pagesTitles';
+import { blogCategories, pagesTitles } from '@rtm/generated';
 
 const _: NotScanned = '';
 

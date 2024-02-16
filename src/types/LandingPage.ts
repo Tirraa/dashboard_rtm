@@ -2,7 +2,7 @@
 // Stryker disable all
 
 import type { LandingPageTaxonomyType } from '##/config/taxonomies/landingPages';
-import type LandingPages from '@rtm/generated/LandingPages';
+import type { LandingPages } from '@rtm/generated';
 
 import type LpLanguageAndSlugPair from './adapters/LpLanguageAndSlugPair';
 import type { I18nParams } from './Next';

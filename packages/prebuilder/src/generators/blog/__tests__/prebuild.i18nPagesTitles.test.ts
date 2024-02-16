@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { FAKE_BLOG_METADATAS_A, FAKE_BLOG_METADATAS_B } from '𝕍/commons';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { describe, expect, it } from 'vitest';
+import { afterAll, describe, expect, it } from 'vitest';
 
 import generateI18nPagesTitles from '../i18nPagesTitles';
 
@@ -11,6 +11,10 @@ const __TARGET_FOLDER_ROOT = './packages/prebuilder/src/generators/blog/__tests_
 const __TARGET_FOLDER = __TARGET_FOLDER_ROOT + '/' + 'I18N_PAGES_TITLES';
 
 describe('generateI18nPagesTitles (formatted)', () => {
+  afterAll(async () => {
+    await fs.rm(__TARGET_FOLDER, { recursive: true });
+  });
+
   const pretty = true;
 
   it('should match snapshot', async () => {
@@ -39,6 +43,10 @@ describe('generateI18nPagesTitles (formatted)', () => {
 });
 
 describe('generateI18nPagesTitles (ugly)', () => {
+  afterAll(async () => {
+    await fs.rm(__TARGET_FOLDER, { recursive: true });
+  });
+
   const pretty = false;
 
   it('should match snapshot', async () => {

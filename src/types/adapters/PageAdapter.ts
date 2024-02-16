@@ -3,7 +3,7 @@
 //!\ TESTED VIA JEST-TSD
 
 import type { INDEX_TOKEN } from '##/lib/misc/contentlayerCornerCases';
-import type { PagesFromCodegenSchema } from '@rtm/generated/Pages';
+import type { PagesFromCodegenSchema } from '@rtm/generated';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { DefaultLanguage } from '##/config/i18n';
 

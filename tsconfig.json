@@ -18,7 +18,7 @@
       "@/*": ["src/*"],
       "𝕍/*": [".vitest/*"],
       "contentlayer/generated": [".contentlayer/generated"],
-      "@rtm/generated/*": [".rtm-generated/*"]
+      "@rtm/generated": [".rtm-generated"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".contentlayer/generated", ".rtm-generated", "vitest.config.mts"],

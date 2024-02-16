@@ -2,8 +2,7 @@
 // Stryker disable all
 //!\ TESTED VIA JEST-TSD
 
-import type DefaultLanguageToken from '@rtm/generated/DefaultLanguageToken';
-import type LandingPages from '@rtm/generated/LandingPages';
+import type { DefaultLanguageToken, LandingPages } from '@rtm/generated';
 import type { DefaultLanguage } from '##/config/i18n';
 
 // * ... Adapter (narrowing & rewriting)

@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { describe, expect, it } from 'vitest';
+import { afterAll, describe, expect, it } from 'vitest';
 
 import generateBlogArchitectureType from '../blogArchitectureType';
 
@@ -9,6 +9,10 @@ const __TARGET_FOLDER_ROOT = './packages/prebuilder/src/generators/blog/__tests_
 const __TARGET_FOLDER = __TARGET_FOLDER_ROOT + '/' + 'BLOG_ARCHITECTURE_TYPE';
 
 describe('generateBlogArchitectureType (formatted)', () => {
+  afterAll(async () => {
+    await fs.rm(__TARGET_FOLDER, { recursive: true });
+  });
+
   const pretty = true;
   it('should match snapshot', async () => {
     const targetFile = 'FAKE_EMPTY_BLOG_ARCHITECTURE_TYPE';
@@ -51,8 +55,12 @@ describe('generateBlogArchitectureType (formatted)', () => {
     expect(fileContent).toMatchSnapshot();
   });
 });
-
+fs.rm;
 describe('generateBlogArchitectureType (ugly)', () => {
+  afterAll(async () => {
+    await fs.rm(__TARGET_FOLDER, { recursive: true });
+  });
+
   const pretty = false;
   it('should match snapshot', async () => {
     const targetFile = 'FAKE_EMPTY_BLOG_ARCHITECTURE_TYPE';

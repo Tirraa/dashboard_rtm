@@ -2,7 +2,7 @@
 // Stryker disable all
 
 import type { PageTaxonomyType } from '##/config/taxonomies/pages';
-import type Pages from '@rtm/generated/Pages';
+import type { Pages } from '@rtm/generated';
 
 import type PageAdapter from './adapters/PageAdapter';
 import type { I18nParams } from './Next';

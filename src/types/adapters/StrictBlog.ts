@@ -2,9 +2,8 @@
 // Stryker disable all
 //!\ TESTED VIA JEST-TSD
 
-import type DefaultLanguageToken from '@rtm/generated/DefaultLanguageToken';
+import type { DefaultLanguageToken, Blog } from '@rtm/generated';
 import type { DefaultLanguage } from '##/config/i18n';
-import type Blog from '@rtm/generated/Blog';
 
 // * ... Adapter (rewriting)
 type StrictBlog<__Blog extends object = Blog> = {

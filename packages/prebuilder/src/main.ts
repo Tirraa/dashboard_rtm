@@ -3,7 +3,8 @@
 
 import formatMessage from './config/formatMessage';
 
-// eslint-disable-next-line perfectionist/sort-imports
+// NOTE: formatMessage import MUST be at the top of the file
+
 import type { MaybeUndefined, Couple } from '@rtm/shared-types/CustomUtilityTypes';
 
 import { ArgError } from 'arg';
@@ -29,12 +30,15 @@ import localesInfosValidator from './validators/localesInfos';
 import sysBlogSlugsValidator from './validators/sysBlogSlugs';
 import generateLandingPagesType from './generators/lp/lpType';
 import generatePagesType from './generators/pages/pagesType';
+import generateIndexFile from './generators/index/indexFile';
 import generateBlogType from './generators/blog/blogType';
 import sysLpSlugsValidator from './validators/sysLpSlugs';
 import sysPagesValidator from './validators/sysPages';
 import parseArguments from './validators/arguments';
 import FeedbackError from './errors/FeedbackError';
 import BuilderError from './errors/BuilderError';
+
+/* eslint-enable import/first */
 
 // NOTE: The prebuilder is too greedy
 // https://github.com/Tirraa/dashboard_rtm/issues/78
@@ -209,6 +213,7 @@ async function lpTaxonomyValidator(LP_FOLDER: Path): Promise<MaybeEmptyErrorsDet
 async function generateUtilTypes() {
   utilsCodegenStartTime = performance.now();
   await generateDefaultLanguageTokenType();
+  await generateIndexFile();
   utilsCodegenEndTime = performance.now();
 }
 

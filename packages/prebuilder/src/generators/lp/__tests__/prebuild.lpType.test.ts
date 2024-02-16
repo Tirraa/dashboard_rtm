@@ -1,23 +1,27 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { INDEX_TOKEN } from '##/lib/builders/unifiedImport';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { describe, expect, it } from 'vitest';
+import { afterAll, describe, expect, it } from 'vitest';
 
 import generateLandingPagesType from '../lpType';
 
-const fs = require('fs');
+const fs = require('fs/promises');
 
 const __TARGET_FOLDER_ROOT = './packages/prebuilder/src/generators/lp/__tests__/FAKE_CODEGEN';
 const __TARGET_FOLDER = __TARGET_FOLDER_ROOT + '/' + 'LP_TYPE';
 
 describe('generateLandingPagesType (formatted)', () => {
+  afterAll(async () => {
+    await fs.rm(__TARGET_FOLDER, { recursive: true });
+  });
+
   const pretty = true;
 
   it('should match snapshot', async () => {
     const targetFile = 'FAKE_EMPTY_LP_TYPE';
     await generateLandingPagesType({}, pretty, targetFile, __TARGET_FOLDER);
 
-    const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 
@@ -45,19 +49,23 @@ describe('generateLandingPagesType (formatted)', () => {
       __TARGET_FOLDER
     );
 
-    const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 });
 
 describe('generateLandingPagesType (ugly)', () => {
+  afterAll(async () => {
+    await fs.rm(__TARGET_FOLDER, { recursive: true });
+  });
+
   const pretty = false;
 
   it('should match snapshot', async () => {
     const targetFile = 'FAKE_EMPTY_LP_TYPE';
     await generateLandingPagesType({}, pretty, targetFile, __TARGET_FOLDER);
 
-    const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 
@@ -85,7 +93,7 @@ describe('generateLandingPagesType (ugly)', () => {
       __TARGET_FOLDER
     );
 
-    const fileContent = fs.readFileSync(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
+    const fileContent = await fs.readFile(`${__TARGET_FOLDER}/${targetFile}.ts`, 'utf8');
     expect(fileContent).toMatchSnapshot();
   });
 });

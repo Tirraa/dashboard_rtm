@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { INDEX_TOKEN } from '##/lib/builders/unifiedImport';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { describe, expect, it } from 'vitest';
+import { afterAll, describe, expect, it } from 'vitest';
 
 import generateBlogType from '../blogType';
 
@@ -11,6 +11,10 @@ const __TARGET_FOLDER_ROOT = './packages/prebuilder/src/generators/blog/__tests_
 const __TARGET_FOLDER = __TARGET_FOLDER_ROOT + '/' + 'BLOG_TYPE';
 
 describe('generateBlogType (formatted)', () => {
+  afterAll(async () => {
+    await fs.rm(__TARGET_FOLDER, { recursive: true });
+  });
+
   const pretty = true;
   it('should match snapshot', async () => {
     const targetFile = 'FAKE_EMPTY_BLOG_TYPE';
@@ -60,6 +64,10 @@ describe('generateBlogType (formatted)', () => {
 });
 
 describe('generateBlogType (ugly)', () => {
+  afterAll(async () => {
+    await fs.rm(__TARGET_FOLDER, { recursive: true });
+  });
+
   const pretty = false;
   it('should match snapshot', async () => {
     const targetFile = 'FAKE_EMPTY_BLOG_TYPE';

@@ -1,5 +1,4 @@
 import { beforeAll, afterAll, describe, expect, it, vi } from 'vitest';
-// eslint-disable-next-line import/no-extraneous-dependencies
 
 import computeHTMLElementHeight from '../computeHTMLElementHeight';
 import computeHTMLElementWidth from '../computeHTMLElementWidth';

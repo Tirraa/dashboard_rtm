@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { describe, expect, it } from 'vitest';
+import { afterAll, describe, expect, it } from 'vitest';
 
 import type { Page } from '../../../types/Metadatas';
 
@@ -41,6 +41,10 @@ describe('Hard-coded values safety check', () => {
 });
 
 describe('generatePagesType (formatted)', () => {
+  afterAll(async () => {
+    await fs.rm(__TARGET_FOLDER, { recursive: true });
+  });
+
   const pretty = true;
   it('should match snapshot', async () => {
     const targetFile = 'FAKE_EMPTY_PAGES_TYPE';
@@ -150,6 +154,10 @@ describe('generatePagesType (formatted)', () => {
 });
 
 describe('generatePagesType (ugly)', () => {
+  afterAll(async () => {
+    await fs.rm(__TARGET_FOLDER, { recursive: true });
+  });
+
   const pretty = false;
   it('should match snapshot', async () => {
     const targetFile = 'FAKE_EMPTY_PAGES_TYPE';

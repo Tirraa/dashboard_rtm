@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { FAKE_BLOG_METADATAS_A, FAKE_BLOG_METADATAS_B } from '𝕍/commons';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { describe, expect, it } from 'vitest';
+import { afterAll, describe, expect, it } from 'vitest';
 
 import generateI18nBlogCategories from '../i18nBlogCategories';
 
@@ -25,6 +25,10 @@ const __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS_EMPTY: string[] = [];
 const EMPTY_METADATAS = {};
 
 describe('generateI18nBlogCategories (formatted)', () => {
+  afterAll(async () => {
+    await fs.rm(__TARGET_FOLDER, { recursive: true });
+  });
+
   const pretty = true;
   it('should match snapshot', async () => {
     const targetFile = 'FAKE_EMPTY_BLOG_CATEGORIES_MIN';
@@ -163,6 +167,10 @@ describe('generateI18nBlogCategories (formatted)', () => {
 });
 
 describe('generateI18nBlogCategories (ugly)', () => {
+  afterAll(async () => {
+    await fs.rm(__TARGET_FOLDER, { recursive: true });
+  });
+
   const pretty = false;
   it('should match snapshot', async () => {
     const targetFile = 'FAKE_EMPTY_BLOG_CATEGORIES_MIN';
