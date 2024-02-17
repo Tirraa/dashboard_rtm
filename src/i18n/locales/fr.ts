@@ -40,6 +40,7 @@ export default {
         'meta-description': 'Metadescription Patch-notes -> Bot Discord (bis)',
         title: SHARED['pages-titles']['discord-bot-bis']
       },
+
       'dashboard-bis': {
         'meta-description': 'Metadescription Patch-notes -> Dashboard (bis)',
         title: SHARED['pages-titles']['dashboard-bis']
@@ -54,6 +55,7 @@ export default {
         'meta-description': 'Metadescription Patch-notes -> Bot Discord',
         title: SHARED['pages-titles']['discord-bot']
       },
+
       dashboard: {
         'meta-description': 'Metadescription Patch-notes -> Dashboard',
         title: SHARED['pages-titles'].dashboard
@@ -77,6 +79,7 @@ export default {
       'language-switcher-menu': 'Choix de la langue',
       'hamburger-menu': 'Sections du site'
     },
+
     assistance: 'Support'
   },
 
@@ -85,6 +88,7 @@ export default {
     'sr-only': {
       'brand-logo': `${capitalize(SHARED.vocab.logo)} de ${SHARED.vocab.brand}`
     },
+
     'copy-to-clipboard': 'Copier dans le presse-papiers',
     'no-blog-post': 'Rien à afficher ici !',
     'invite-the-bot': 'Inviter le bot',
@@ -101,6 +105,7 @@ export default {
       'show-sidebar': 'Afficher la barre latérale',
       'hide-sidebar': 'Masquer la barre latérale'
     },
+
     'pages-titles': {
       main: 'Page principale',
       foo: 'Foo',

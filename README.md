@@ -10,13 +10,15 @@
 
 [https://dashboard-rtm.vercel.app/](https://dashboard-rtm.vercel.app/)
 
-### For newbies
+### Getting started
 
 #### Start project
 
 ##### Initialize project
 
 `$ make initialize`
+
+(See also: [🥖 _Initialiser le projet_](https://www.youtube.com/watch?v=glfaad1h4GM))
 
 ##### Dev mode
 

@@ -36,6 +36,7 @@ export default {
       'switch-to-dark-mode': _,
       'hamburger-menu': _
     },
+
     assistance: _
   },
 
@@ -44,6 +45,7 @@ export default {
     'sr-only': {
       'brand-logo': _
     },
+
     'copy-to-clipboard': _,
     'invite-the-bot': _,
     'no-blog-post': _,
@@ -60,6 +62,7 @@ export default {
       'hide-sidebar': _,
       'show-sidebar': _
     },
+
     'pages-titles': {
       main: _,
       foo: _,
