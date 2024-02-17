@@ -221,4 +221,4 @@ export type AllBlogFields = typeof _ALL_BLOG_FIELDS;
 export type BlogFields = MakeFields<_BlogFields>;
 export type BlogComputedFields = typeof BLOG_DOCUMENTS_COMPUTED_FIELDS;
 export type BlogDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof BlogComputedFields>;
-export type BlogDocumentsTypesMetadatas = Record<BlogDocumentsTypesKeys, BlogDocumentsConfigTypeMetadatas<BlogDocumentsTypesKeys>>;
+export type BlogDocumentsTypesMetadatas = Record<BlogDocumentsTypesKeys, BlogDocumentsConfigTypeMetadatas>;

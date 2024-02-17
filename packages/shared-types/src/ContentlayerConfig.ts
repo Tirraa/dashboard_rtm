@@ -63,9 +63,8 @@ type NarrowedFieldDefs = Record<string, FieldDef>;
 
 export type ComputedFieldsArtifact<T extends NarrowedFieldDefs> = Partial<{ [K in keyof T]: ComputedField<T[K]['type']> }>;
 
-export type BlogDocumentsConfigTypeMetadatas<Name extends TypeName = TypeName> = {
+export type BlogDocumentsConfigTypeMetadatas = {
   categoryFolder: CategoryFolder;
-  name: Name;
 };
 
 // Stryker restore all

@@ -16,25 +16,31 @@ import { defineDocumentType } from '../adapters';
 
 const documentsTypesMetadatas: BlogDocumentsTypesMetadatas = {
   TestingPost: {
-    categoryFolder: 'blog-testing-category',
-    name: 'TestingPost'
+    categoryFolder: 'blog-testing-category'
   },
   PatchPostBis: {
-    categoryFolder: 'patch-notes-bis',
-    name: 'PatchPostBis'
+    categoryFolder: 'patch-notes-bis'
   },
   PatchPost: {
-    categoryFolder: 'patch-notes',
-    name: 'PatchPost'
+    categoryFolder: 'patch-notes'
   }
 } as const;
 
-const blogDocumentTypes: DocumentType[] = Object.values(documentsTypesMetadatas).reduce(
-  (acc, documentTypeMetadatas) => {
-    const { categoryFolder, name } = documentTypeMetadatas;
+const blogDocumentTypes: DocumentType[] = Object.entries(documentsTypesMetadatas).reduce(
+  (acc, [name, documentTypeMetadatas]) => {
+    const { categoryFolder } = documentTypeMetadatas;
     const filePathPattern = BLOG_POSTS_FOLDER + '/' + categoryFolder + `/**/*.${EXT}`;
     acc.push(
-      defineDocumentType(() => ({ filePathPattern, computedFields, contentType, fields, name }) as const satisfies AtomicContentlayerDocumentConfig)
+      defineDocumentType(
+        () =>
+          ({
+            name: name as keyof typeof documentsTypesMetadatas,
+            filePathPattern,
+            computedFields,
+            contentType,
+            fields
+          }) as const satisfies AtomicContentlayerDocumentConfig
+      )
     );
     return acc;
   },
