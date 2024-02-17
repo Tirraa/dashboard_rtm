@@ -11,6 +11,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const nextConfig = {
   async redirects() {
     return [
+      /* eslint-disable perfectionist/sort-objects */
       {
         source: '/:lng/index',
         destination: '/:lng',
@@ -20,7 +21,18 @@ const nextConfig = {
         source: '/index',
         destination: '/',
         permanent: true
+      },
+      {
+        source: '/:lng/lp',
+        destination: '/:lng',
+        permanent: true
+      },
+      {
+        source: '/lp',
+        destination: '/',
+        permanent: true
       }
+      /* eslint-enable perfectionist/sort-objects */
     ];
   },
 
