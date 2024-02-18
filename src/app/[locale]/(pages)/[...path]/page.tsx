@@ -1,13 +1,13 @@
 import type { PageProps } from '@/types/Page';
 
 import { getPagesStaticParams, getPagesMetadatas } from '@/lib/pages/staticGeneration';
+import isSkippedPath from '@/lib/pages/static/helpers/isSkippedPath';
 import { getPageByLanguageAndPathUnstrict } from '@/lib/pages/api';
 import { setStaticParamsLocale } from 'next-international/server';
 import MDX from '@/components/layouts/blog/MdxComponent';
 import PageTaxonomy from '##/config/taxonomies/pages';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { notFound } from 'next/navigation';
-import PagesConfig from '@/config/pages';
 
 export async function generateMetadata({ params }: PageProps) {
   const metadatas = await getPagesMetadatas({ params });
@@ -24,12 +24,11 @@ export default function Page({ params }: PageProps) {
   setStaticParamsLocale(language);
 
   const path = params[PageTaxonomy.PATH].join('/');
-  if (PagesConfig.SKIP_SSG.paths.includes(path as any)) notFound();
-  if (PagesConfig.SKIP_SSG.prefixes.some((p) => path.startsWith(p))) notFound();
+  if (isSkippedPath(path)) notFound();
 
   const page = getPageByLanguageAndPathUnstrict(language, path);
-
   if (!page) notFound();
+
   return (
     <main className="max-w-full">
       <MDX code={page.body.code} />

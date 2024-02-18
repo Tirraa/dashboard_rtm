@@ -45,6 +45,7 @@ async function blogCategoryPageBuilder(posts: BlogPostType[], category: BlogCate
     let isLast = false;
     const max = Object.entries(postsCollectionsSnippets).length;
     let counter = 0;
+
     for (const [subcategory, posts] of Object.entries(postsCollectionsSnippets)) {
       ++counter;
       isLast = counter >= max;
@@ -90,6 +91,7 @@ async function blogCategoryPageBuilder(posts: BlogPostType[], category: BlogCate
       result.push(section);
       if (!isLast && !showMoreLink && max > 1) result.push(sep);
     }
+
     return result;
   }
 

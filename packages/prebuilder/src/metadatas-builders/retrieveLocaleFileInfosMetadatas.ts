@@ -22,6 +22,7 @@ async function buildLocaleFileMetadatasFromLocaleFile(localeFilePath: string): P
 
   const localeInfosInner = getRawDataFromBracesDeclaration(localeFileContent, startIndex);
   if (!localeInfosInner) throw error;
+
   try {
     const obj: I18nJSONPart = objInnerToObj(localeInfosInner);
     return obj;

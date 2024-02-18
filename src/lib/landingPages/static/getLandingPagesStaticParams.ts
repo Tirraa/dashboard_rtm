@@ -10,10 +10,13 @@ function getLandingPagesStaticParams() {
 
   for (const { language, slug } of allLandingPages) {
     if (!isValidLanguageFlag(language)) continue;
+
     const matchedLp = getLandingPageByLanguageAndSlugUnstrict(language, slug);
     if (!matchedLp) continue;
+
     staticParams.push({ [I18nTaxonomy.LANGUAGE]: matchedLp.language, [LandingPageTaxonomy.SLUG]: matchedLp.slug });
   }
+
   return staticParams;
 }
 
