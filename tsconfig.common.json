@@ -1,5 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
+
   "compilerOptions": {
     "allowJs": true,
     "skipLibCheck": true,
@@ -9,5 +10,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
+
   "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }

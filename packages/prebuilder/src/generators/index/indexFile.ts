@@ -23,13 +23,15 @@ const matchingNames = [
   PAGES_TITLES_CONST_STR
 ];
 
+const PATH_PREFIX = './';
+
 const importsAndExports = matchingNames.map((name) => ({
-  path: './' + name,
+  path: PATH_PREFIX + name,
   isDefault: true,
   name
 }));
 
-importsAndExports.push({ name: PAGES_FROM_CODEGEN_SCHEMA_TYPE_STR, path: './' + PAGES_TYPE_STR, isDefault: false });
+importsAndExports.push({ name: PAGES_FROM_CODEGEN_SCHEMA_TYPE_STR, path: PATH_PREFIX + PAGES_TYPE_STR, isDefault: false });
 
 export default async function generateIndexFile(__TARGET_FOLDER: string = GENERATIONS_TARGET_FOLDER) {
   const project = new Project();

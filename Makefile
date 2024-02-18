@@ -68,7 +68,8 @@ mutations-tests: clean-codegen clean-stryker-cache initialize
 check-coding-style:
 	$(PM) ci:format-check
 	$(PM) ci:lint
-	$(PM) ci:typecheck
+	$(PM) ci:typecheck-project
+	$(PM) ci:typecheck-tests
 
 # @Alias
 vercel-ci-build-command:
