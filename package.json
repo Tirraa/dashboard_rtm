@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky",
     "prebuild": "pnpm --filter @rtm/prebuilder start --blog-posts-folder ./content/blog --i18n-locales-schema ./src/i18n/locales/schema.ts --lp-folder ./content/landing-pages --pages-folder ./content/pages --pretty-codegen",
     "build": "next build",
     "postbuild": "next-sitemap",
