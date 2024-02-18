@@ -33,6 +33,7 @@ const blogDocumentTypes: DocumentType[] = Object.entries(documentsTypesMetadatas
     acc.push(
       defineDocumentType(
         () =>
+          /* v8 ignore start */
           ({
             name: name as keyof typeof documentsTypesMetadatas,
             filePathPattern,
@@ -40,6 +41,7 @@ const blogDocumentTypes: DocumentType[] = Object.entries(documentsTypesMetadatas
             contentType,
             fields
           }) as const satisfies AtomicContentlayerDocumentConfig
+        /* v8 ignore stop */
       )
     );
     return acc;

@@ -15,8 +15,8 @@ vi.mock('@/config/pages', async (orgImport) => {
   return {
     default: {
       ...mod.default,
-      ENABLE_DRAFTS_IN_PROD: true,
-      SKIP_SSG: []
+      SKIP_SSG: { prefixes: [], paths: [] },
+      ENABLE_DRAFTS_IN_PROD: true
     } satisfies PagesConfigType
   };
 });

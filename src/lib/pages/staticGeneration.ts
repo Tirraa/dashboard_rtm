@@ -21,7 +21,8 @@ export function getPagesStaticParams() {
 
 export async function getPagesMetadatas({ params }: PageProps) {
   const [path, language] = [params[PageTaxonomy.PATH].join('/'), params[I18nTaxonomy.LANGUAGE]];
-  if (PagesConfig.SKIP_SSG.includes(path as any)) notFound();
+  if (PagesConfig.SKIP_SSG.paths.includes(path as any)) notFound();
+  if (PagesConfig.SKIP_SSG.prefixes.some((p) => path.startsWith(p))) notFound();
 
   const page = getPageByLanguageAndPathUnstrict(language, path);
   if (!page) notFound();

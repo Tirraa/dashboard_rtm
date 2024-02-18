@@ -11,7 +11,9 @@ function getPagesStaticParams() {
 
   for (const { language, path } of allPages) {
     if (!isValidLanguageFlag(language)) continue;
-    if (PagesConfig.SKIP_SSG.includes(path as any)) continue;
+    if (PagesConfig.SKIP_SSG.paths.includes(path as any)) continue;
+    if (PagesConfig.SKIP_SSG.prefixes.some((p) => path.startsWith(p))) continue;
+
     const page = getPageByLanguageAndPathUnstrict(language, path);
     if (!page) continue;
     staticParams.push({ [PageTaxonomy.PATH]: page.path.split('/'), [I18nTaxonomy.LANGUAGE]: page.language });

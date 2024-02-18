@@ -24,7 +24,8 @@ export default function Page({ params }: PageProps) {
   setStaticParamsLocale(language);
 
   const path = params[PageTaxonomy.PATH].join('/');
-  if (PagesConfig.SKIP_SSG.includes(path as any)) notFound();
+  if (PagesConfig.SKIP_SSG.paths.includes(path as any)) notFound();
+  if (PagesConfig.SKIP_SSG.prefixes.some((p) => path.startsWith(p))) notFound();
 
   const page = getPageByLanguageAndPathUnstrict(language, path);
 

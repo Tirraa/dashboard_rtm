@@ -58,13 +58,31 @@ vi.mock('@/config/pages', async (orgImport) => {
       language: 'en',
       draft: false,
       type: 'Page'
+    },
+    {
+      _raw: {
+        sourceFilePath: 'pages/en/skipped/nesting-2/page-00.mdx',
+        flattenedPath: 'pages/en/skipped/nesting-2/page-00',
+        sourceFileDir: 'pages/en/skipped/nesting-2',
+        sourceFileName: 'page-00.mdx',
+        contentType: 'mdx'
+      },
+      _id: 'pages/en/skipped/nesting-2/page-00.mdx',
+      metadescription: 'Test page metadescription',
+      url: '/en/skipped/nesting-2/page-00',
+      title: 'Test Page - Nesting 2 (EN)',
+      path: 'skipped/nesting-2/page-00',
+      root: 'skipped',
+      language: 'en',
+      draft: false,
+      type: 'Page'
     }
   ] satisfies Omit<Page, 'body'>[];
 
   return {
     default: {
       ...mod.default,
-      SKIP_SSG: ['page-00'] as unknown as PagePath<any>[],
+      SKIP_SSG: { paths: ['page-00'] as unknown as PagePath<any>[], prefixes: ['skipped'] },
       allPages: () => data as unknown as Page[],
       ENABLE_DRAFTS_IN_PROD: true
     } satisfies PagesConfigType
