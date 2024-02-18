@@ -9,7 +9,7 @@ function getFlattenedPathWithUnkownRootFolder(flattenedPath: string) {
     throw new InvalidArgumentsError(
       getFlattenedPathWithUnkownRootFolder.name,
       { flattenedPath },
-      (firstSlashIndex === -1 ? `Can't find any '/' in flattenedPath` : `Can't find anything after the first '/' in flattenedPath`) +
+      (firstSlashIndex === -1 ? "Can't find any '/' in flattenedPath" : "Can't find anything after the first '/' in flattenedPath") +
         ". Maybe you just don't need to use this function?"
     );
   }

@@ -31,7 +31,7 @@ function buildBlogPostUrl(post: DocumentToCompute): AppPath {
   if (filepathWithoutExt.endsWith(INDEX_TOKEN)) pathParts.push(INDEX_TOKEN);
 
   if (pathParts.length !== 3 && pathParts.length !== 4) {
-    throw new InvalidArgumentsError(buildBlogPostUrl.name, { path }, `Invalid path! Expected 3 or 4 parts, but got: ${pathParts.length}.`);
+    throw new InvalidArgumentsError(buildBlogPostUrl.name, { path }, 'Invalid path! Expected 3 or 4 parts, but got: ' + pathParts.length);
   }
 
   if (pathParts.length <= OPTIONAL_LOCALE_PART_INDEX + 1) {
