@@ -13,16 +13,6 @@ const nextConfig = {
     return [
       /* eslint-disable perfectionist/sort-objects */
       {
-        source: '/:lng/index',
-        destination: '/:lng',
-        permanent: true
-      },
-      {
-        source: '/index',
-        destination: '/',
-        permanent: true
-      },
-      {
         source: '/:lng/lp',
         destination: '/:lng',
         permanent: true

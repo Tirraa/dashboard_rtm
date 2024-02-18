@@ -8,6 +8,7 @@ import { buildPageTitle } from '@rtm/shared-lib/str';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSideI18n } from '@/i18n/server';
 import { notFound } from 'next/navigation';
+import PagesConfig from '@/config/pages';
 import { i18ns } from '##/config/i18n';
 
 import doGetPagesStaticParams from './static/getPagesStaticParams';
@@ -20,6 +21,8 @@ export function getPagesStaticParams() {
 
 export async function getPagesMetadatas({ params }: PageProps) {
   const [path, language] = [params[PageTaxonomy.PATH].join('/'), params[I18nTaxonomy.LANGUAGE]];
+  if (PagesConfig.SKIP_SSG.includes(path as any)) notFound();
+
   const page = getPageByLanguageAndPathUnstrict(language, path);
   if (!page) notFound();
 
