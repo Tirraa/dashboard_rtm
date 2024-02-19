@@ -354,7 +354,7 @@ async function processPrebuild() {
     } = retrievedValuesFromArgs as Required<typeof retrievedValuesFromArgs>;
 
     const printBenchmark = () => printPrebuilderDoneMsg(() => SKIP_BENCHMARKS || printPrebuildReport(clocks));
-    const localesFolder: MaybeNull<Path> = !SKIP_LOCALES_INFOS && !NO_I18N ? dirname(I18N_LOCALES_SCHEMA_FILEPATH) : null;
+    const localesFolder: MaybeNull<Path> = !SKIP_LOCALES_INFOS || !NO_I18N ? dirname(I18N_LOCALES_SCHEMA_FILEPATH) : null;
 
     async function genLoop() {
       async function firstShot() {
