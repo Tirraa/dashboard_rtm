@@ -388,7 +388,6 @@ async function genLoop(
         resetBenchmarkClocks();
         await procedure();
         printBenchmark();
-        SKIP_BENCHMARKS || console.log();
       } catch (e) {
         console.error((e as Error).message);
       }

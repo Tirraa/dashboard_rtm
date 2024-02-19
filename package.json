@@ -13,7 +13,7 @@
     "build": "next build",
     "postbuild": "next-sitemap",
     "dev": "next dev",
-    "dev-with-rtm-toolchain": "make dev-with-rtm-toolchain",
+    "dev-with-rtm-tools": "make dev-with-rtm-tools",
     "start": "next start",
     "lint": "next lint",
     "test": "make test",
