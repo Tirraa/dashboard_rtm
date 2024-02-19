@@ -18,7 +18,7 @@ vi.mock('../ctx', async (orgImport) => {
 
 describe('getLandingPageByLanguageAndSlugStrict (unhappy paths)', () => {
   it('should return null, given testing category in not testing ctx', () => {
-    const lp = getLandingPageByLanguageAndSlugStrict(DEFAULT_LANGUAGE, `${LandingPagesConfig.TESTING_CATEGORY}-fake-lp-00`);
+    const lp = getLandingPageByLanguageAndSlugStrict({ slug: `${LandingPagesConfig.TESTING_CATEGORY}-fake-lp-00`, lang: DEFAULT_LANGUAGE });
     expect(lp).toBe(null);
   });
 });

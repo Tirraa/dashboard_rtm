@@ -25,7 +25,7 @@ describe('getLandingPageByLanguageAndSlugStrict', () => {
     const category = LandingPagesConfig.TESTING_CATEGORY;
     const targettedSlug = `${category}-fake-lp-00` as const;
     const language = DEFAULT_LANGUAGE;
-    const lp = getLandingPageByLanguageAndSlugStrict(language, targettedSlug) as LandingPage;
+    const lp = getLandingPageByLanguageAndSlugStrict({ slug: targettedSlug, lang: language }) as LandingPage;
 
     expect(lp.category).toBe(category);
     expect(lp.slug).toBe(targettedSlug);
@@ -37,7 +37,7 @@ describe('getLandingPageByLanguageAndSlugStrict', () => {
     const category = LandingPagesConfig.TESTING_CATEGORY;
     const targettedSlug = `${category}-fake-draft-lp-00` as const;
     const language = DEFAULT_LANGUAGE;
-    const lp = getLandingPageByLanguageAndSlugStrict(language, targettedSlug) as LandingPage;
+    const lp = getLandingPageByLanguageAndSlugStrict({ slug: targettedSlug, lang: language }) as LandingPage;
 
     expect(lp.category).toBe(category);
     expect(lp.slug).toBe(targettedSlug);
