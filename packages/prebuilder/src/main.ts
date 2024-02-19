@@ -327,6 +327,95 @@ async function lpGenerationProcedure(NO_LP: boolean, LP_FOLDER: Path, PRETTY_COD
   await generateLpCode(LP_FOLDER, PRETTY_CODEGEN);
 }
 
+async function genLoop(
+  NO_BLOG: boolean,
+  NO_LP: boolean,
+  NO_PAGES: boolean,
+  NO_I18N: boolean,
+  SKIP_LOCALES_INFOS: boolean,
+  I18N_LOCALES_SCHEMA_FILEPATH: Path,
+  BLOG_POSTS_FOLDER: Path,
+  LP_FOLDER: Path,
+  PAGES_FOLDER: Path,
+  PRETTY_CODEGEN: boolean,
+  WATCH: boolean,
+  SKIP_BENCHMARKS: boolean
+) {
+  const printBenchmark = () => printPrebuilderDoneMsg(() => SKIP_BENCHMARKS || printPrebuildReport(clocks));
+  const localesFolder: MaybeNull<Path> = !SKIP_LOCALES_INFOS || !NO_I18N ? dirname(I18N_LOCALES_SCHEMA_FILEPATH) : null;
+
+  async function firstShot() {
+    const NO_CONTENTLAYER_RELATED_FEATURES = NO_BLOG && NO_LP && NO_PAGES;
+
+    const localesValidatorFeedback: MaybeEmptyErrorsDetectionFeedback =
+      localesFolder !== null ? await validateLocales(localesFolder, I18N_LOCALES_SCHEMA_FILEPATH) : '';
+
+    if (NO_CONTENTLAYER_RELATED_FEATURES) {
+      if (localesValidatorFeedback) throw new FeedbackError(localesValidatorFeedback);
+      printBenchmark();
+      return;
+    }
+
+    const pagesFeedbackPromise = getPagesFeedbackPromise(NO_PAGES, PAGES_FOLDER);
+    const blogFeedbackPromise = getBlogFeedbackPromise(NO_BLOG, BLOG_POSTS_FOLDER);
+    const lpFeedbackPromise = getLpFeedbackPromise(NO_LP, LP_FOLDER);
+    const [pagesCheckerResult, blogFeedback, lpFeedback] = await Promise.all([pagesFeedbackPromise, blogFeedbackPromise, lpFeedbackPromise]);
+
+    const { feedback: pagesCheckerFeedback } = pagesCheckerResult;
+
+    const ERROR_PREFIX = formatMessage('failedToPassThePrebuild' satisfies VocabKey);
+    const feedback = prefixFeedback(foldFeedbacks(localesValidatorFeedback, pagesCheckerFeedback, blogFeedback, lpFeedback), ERROR_PREFIX + '\n');
+    if (feedback) throw new FeedbackError(feedback);
+
+    const { arborescence: pagesArborescence } = pagesCheckerResult;
+
+    await Promise.all([
+      (!NO_PAGES && generatePagesCode(pagesArborescence, PRETTY_CODEGEN)) || generatePhonyPagesCode(),
+      (!NO_BLOG && generateBlogCode(BLOG_POSTS_FOLDER, PRETTY_CODEGEN)) || generatePhonyBlogCode(),
+      (!NO_LP && generateLpCode(LP_FOLDER, PRETTY_CODEGEN)) || generatePhonyLpCode(),
+      generateUtilTypes()
+    ]);
+
+    printBenchmark();
+  }
+
+  await firstShot();
+  if (WATCH) initializeWatchers();
+
+  function initializeWatchers() {
+    async function asyncProcedurePlayer(procedure: () => Promise<void>) {
+      try {
+        resetBenchmarkClocks();
+        await procedure();
+        printBenchmark();
+        SKIP_BENCHMARKS || console.log();
+      } catch (e) {
+        console.error((e as Error).message);
+      }
+    }
+
+    if (localesFolder !== null) {
+      watch(localesFolder, async () => await asyncProcedurePlayer(() => localesValidationProcedure(localesFolder, I18N_LOCALES_SCHEMA_FILEPATH)));
+    }
+
+    if (!NO_PAGES) {
+      watch(PAGES_FOLDER, async () => await asyncProcedurePlayer(() => pagesGenerationProcedure(NO_PAGES, PAGES_FOLDER, PRETTY_CODEGEN)));
+    }
+
+    if (!NO_BLOG) {
+      watch(BLOG_POSTS_FOLDER, async () => await asyncProcedurePlayer(() => blogGenerationProcedure(NO_BLOG, BLOG_POSTS_FOLDER, PRETTY_CODEGEN)));
+    }
+
+    if (!NO_LP) {
+      watch(LP_FOLDER, async () => await asyncProcedurePlayer(() => lpGenerationProcedure(NO_LP, LP_FOLDER, PRETTY_CODEGEN)));
+    }
+
+    console.log();
+    console.log(formatMessage('watchersReady' satisfies VocabKey));
+    console.log();
+  }
+}
+
 /**
  * @throws {FeedbackError}
  * @effect {Benchmark}
@@ -353,83 +442,20 @@ async function processPrebuild() {
       [FLAGS.WATCH]: WATCH
     } = retrievedValuesFromArgs as Required<typeof retrievedValuesFromArgs>;
 
-    const printBenchmark = () => printPrebuilderDoneMsg(() => SKIP_BENCHMARKS || printPrebuildReport(clocks));
-    const localesFolder: MaybeNull<Path> = !SKIP_LOCALES_INFOS || !NO_I18N ? dirname(I18N_LOCALES_SCHEMA_FILEPATH) : null;
-
-    async function genLoop() {
-      async function firstShot() {
-        const NO_CONTENTLAYER_RELATED_FEATURES = NO_BLOG && NO_LP && NO_PAGES;
-
-        const localesValidatorFeedback: MaybeEmptyErrorsDetectionFeedback =
-          localesFolder !== null ? await validateLocales(localesFolder, I18N_LOCALES_SCHEMA_FILEPATH) : '';
-
-        if (NO_CONTENTLAYER_RELATED_FEATURES) {
-          if (localesValidatorFeedback) throw new FeedbackError(localesValidatorFeedback);
-          printBenchmark();
-          return;
-        }
-
-        const pagesFeedbackPromise = getPagesFeedbackPromise(NO_PAGES, PAGES_FOLDER);
-        const blogFeedbackPromise = getBlogFeedbackPromise(NO_BLOG, BLOG_POSTS_FOLDER);
-        const lpFeedbackPromise = getLpFeedbackPromise(NO_LP, LP_FOLDER);
-        const [pagesCheckerResult, blogFeedback, lpFeedback] = await Promise.all([pagesFeedbackPromise, blogFeedbackPromise, lpFeedbackPromise]);
-
-        const { feedback: pagesCheckerFeedback } = pagesCheckerResult;
-
-        const ERROR_PREFIX = formatMessage('failedToPassThePrebuild' satisfies VocabKey);
-        const feedback = prefixFeedback(foldFeedbacks(localesValidatorFeedback, pagesCheckerFeedback, blogFeedback, lpFeedback), ERROR_PREFIX + '\n');
-        if (feedback) throw new FeedbackError(feedback);
-
-        const { arborescence: pagesArborescence } = pagesCheckerResult;
-
-        await Promise.all([
-          (!NO_PAGES && generatePagesCode(pagesArborescence, PRETTY_CODEGEN)) || generatePhonyPagesCode(),
-          (!NO_BLOG && generateBlogCode(BLOG_POSTS_FOLDER, PRETTY_CODEGEN)) || generatePhonyBlogCode(),
-          (!NO_LP && generateLpCode(LP_FOLDER, PRETTY_CODEGEN)) || generatePhonyLpCode(),
-          generateUtilTypes()
-        ]);
-
-        printBenchmark();
-      }
-
-      await firstShot();
-      if (WATCH) initializeWatchers();
-
-      function initializeWatchers() {
-        async function asyncProcedurePlayer(procedure: () => Promise<void>) {
-          try {
-            resetBenchmarkClocks();
-            await procedure();
-            printBenchmark();
-            SKIP_BENCHMARKS || console.log();
-          } catch (e) {
-            console.error((e as Error).message);
-          }
-        }
-
-        if (localesFolder !== null) {
-          watch(localesFolder, async () => await asyncProcedurePlayer(() => localesValidationProcedure(localesFolder, I18N_LOCALES_SCHEMA_FILEPATH)));
-        }
-
-        if (!NO_PAGES) {
-          watch(PAGES_FOLDER, async () => await asyncProcedurePlayer(() => pagesGenerationProcedure(NO_PAGES, PAGES_FOLDER, PRETTY_CODEGEN)));
-        }
-
-        if (!NO_BLOG) {
-          watch(BLOG_POSTS_FOLDER, async () => await asyncProcedurePlayer(() => blogGenerationProcedure(NO_BLOG, BLOG_POSTS_FOLDER, PRETTY_CODEGEN)));
-        }
-
-        if (!NO_LP) {
-          watch(LP_FOLDER, async () => await asyncProcedurePlayer(() => lpGenerationProcedure(NO_LP, LP_FOLDER, PRETTY_CODEGEN)));
-        }
-
-        console.log();
-        console.log(formatMessage('watchersReady' satisfies VocabKey));
-        console.log();
-      }
-    }
-
-    await genLoop();
+    await genLoop(
+      NO_BLOG,
+      NO_LP,
+      NO_PAGES,
+      NO_I18N,
+      SKIP_LOCALES_INFOS,
+      I18N_LOCALES_SCHEMA_FILEPATH,
+      BLOG_POSTS_FOLDER,
+      LP_FOLDER,
+      PAGES_FOLDER,
+      PRETTY_CODEGEN,
+      WATCH,
+      SKIP_BENCHMARKS
+    );
   } catch (error) {
     logError(error);
     process.exit(1);
