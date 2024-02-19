@@ -1,4 +1,4 @@
-.PHONY: all install build prebuild test coverage coverage-all mutations-tests check-coding-style vercel-ci-build-command build-contentlayer prebuild-rtm initialize-env initialize watch-prebuild-rtm clean-codegen clean-stryker-cache clean-prebuilder-dist clean-node-modules clean-coverage-report clean fclean re re-using-pm-cache re-using-next-cache simulate-deploy simulate-deploy-discarding-build-cache
+.PHONY: all install build prebuild test coverage coverage-all mutations-tests check-coding-style dev-with-rtm-toolchain vercel-ci-build-command build-contentlayer prebuild-rtm initialize-env initialize watch-prebuild-rtm clean-codegen clean-stryker-cache clean-prebuilder-dist clean-node-modules clean-coverage-report clean fclean re re-using-pm-cache re-using-next-cache simulate-deploy simulate-deploy-discarding-build-cache
 
 MAKEFLAGS += --silent
 
