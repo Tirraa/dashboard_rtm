@@ -12,7 +12,7 @@ describe('getPageByLanguageAndPathStrict (happy paths)', () => {
     const root = PagesConfig.TESTING_ROOT;
     const targettedPath = `${root}/fake-page-00` as const;
     const language = DEFAULT_LANGUAGE;
-    const page = getPageByLanguageAndPathStrict(language, targettedPath) as Page;
+    const page = getPageByLanguageAndPathStrict({ path: targettedPath, lang: language }) as Page;
 
     expect(page.path).toBe(targettedPath);
     expect(page.root).toBe(root);
@@ -23,7 +23,7 @@ describe('getPageByLanguageAndPathStrict (happy paths)', () => {
     const root = PagesConfig.TESTING_ROOT;
     const targettedPath = `${root}/fake-nesting` as const;
     const language = DEFAULT_LANGUAGE;
-    const page = getPageByLanguageAndPathStrict(language, targettedPath) as Page;
+    const page = getPageByLanguageAndPathStrict({ path: targettedPath, lang: language }) as Page;
 
     expect(page.path).toBe(targettedPath);
     expect(page.root).toBe(root);
@@ -35,7 +35,7 @@ describe('getPageByLanguageAndPathStrict (unhappy paths)', () => {
   it('should return null, given invalid path', () => {
     const targettedPath = '__INVALID__TARGETTED_SLUG__' as const;
     // @ts-expect-error
-    const page = getPageByLanguageAndPathStrict(DEFAULT_LANGUAGE, targettedPath);
+    const page = getPageByLanguageAndPathStrict({ lang: DEFAULT_LANGUAGE, path: targettedPath });
 
     expect(page).toBe(null);
   });
@@ -43,7 +43,7 @@ describe('getPageByLanguageAndPathStrict (unhappy paths)', () => {
   it('should return null, given invalid language', () => {
     const targettedPath = `${PagesConfig.TESTING_ROOT}/fake-page-00` as const;
     // @ts-expect-error
-    const page = getPageByLanguageAndPathStrict('__INVALID_LANGUAGE__', targettedPath);
+    const page = getPageByLanguageAndPathStrict({ lang: '__INVALID_LANGUAGE__', path: targettedPath });
 
     expect(page).toBe(null);
   });

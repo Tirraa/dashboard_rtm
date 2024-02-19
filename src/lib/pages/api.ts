@@ -1,5 +1,5 @@
-import type { UnknownPagePath, PageLang, PagePath } from '@/types/Page';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { UnknownPagePath, LangAndPathPair } from '@/types/Page';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { Page } from 'contentlayer/generated';
 
@@ -24,7 +24,7 @@ export function getPageByLanguageAndPathUnstrict(language: LanguageFlag, path: U
 // Stryker Workaround 2. Pointless static mutant.
 // Stryker disable all
 
-export const getPageByLanguageAndPathStrict = <L extends PageLang>(lang: L, path: PagePath<L>): MaybeNull<Page> =>
+export const getPageByLanguageAndPathStrict = ({ lang, path }: LangAndPathPair): MaybeNull<Page> =>
   getPageByLanguageAndPathUnstrict(lang as any, path as any);
 
 // Stryker restore all

@@ -18,7 +18,7 @@ vi.mock('../ctx', async (orgImport) => {
 
 describe('getPageByLanguageAndPathStrict (unhappy paths)', () => {
   it('should return null, given testing path in not testing ctx', () => {
-    const page = getPageByLanguageAndPathStrict(DEFAULT_LANGUAGE, `${PagesConfig.TESTING_ROOT}/fake-page-00`);
+    const page = getPageByLanguageAndPathStrict({ path: `${PagesConfig.TESTING_ROOT}/fake-page-00`, lang: DEFAULT_LANGUAGE });
     expect(page).toBe(null);
   });
 });

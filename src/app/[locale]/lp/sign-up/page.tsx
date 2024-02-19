@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: I18nPageProps) {
   const globalT = await getServerSideI18n();
   const language = params[I18nTaxonomy.LANGUAGE];
 
-  const document = getPageByLanguageAndPathStrict(language, 'lp/sign-up') as Page;
+  const document = getPageByLanguageAndPathStrict({ path: 'lp/sign-up', lang: language }) as Page;
 
   const { vocab } = i18ns;
   const { metadescription: description, title: documentTitle } = document;
@@ -39,7 +39,7 @@ export default async function Page({ params }: I18nPageProps) {
   const session = await getServerSession();
   if (session) redirect(ROUTES_ROOTS.DASHBOARD);
 
-  const document = getPageByLanguageAndPathStrict(language, 'lp/sign-up') as Page;
+  const document = getPageByLanguageAndPathStrict({ path: 'lp/sign-up', lang: language }) as Page;
   return <MDX code={document.body.code} />;
 }
 
