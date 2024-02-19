@@ -336,6 +336,7 @@ export default async function parseArguments() {
       [FLAGS.NO_BLOG]: Boolean,
       [FLAGS.NO_I18N]: Boolean,
       [FLAGS.NO_LP]: Boolean,
+      [FLAGS.WATCH]: Boolean,
       [FLAGS.LANG]: String
     },
     { permissive: true }

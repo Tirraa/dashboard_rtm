@@ -27,6 +27,7 @@ export const FLAGS = {
   NO_BLOG: '--no-blog',
   NO_I18N: '--no-i18n',
   NO_LP: '--no-lp',
+  WATCH: '--watch',
   LANG: '--lang'
 } as const satisfies Record<PropertyKey, string>;
 
