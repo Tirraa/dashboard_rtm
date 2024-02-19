@@ -68,7 +68,9 @@ let clocks = {} as Partial<{
   globalStartTime: number;
 }>;
 
-const resetBenchmarkClocks = () => (clocks = {});
+function resetBenchmarkClocks(): void {
+  clocks = {};
+}
 
 const moveToRoot = () => process.chdir(join(__dirname, ROOT_FOLDER_RELATIVE_PATH_FROM_PREBUILDER_CTX));
 
