@@ -1,5 +1,6 @@
-import type { UnknownLandingPageSlug, LandingPageLang, LandingPageSlug } from '@/types/LandingPage';
+import type LpLanguageAndSlugPair from '@/types/adapters/LpLanguageAndSlugPair';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { UnknownLandingPageSlug } from '@/types/LandingPage';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { LandingPage } from 'contentlayer/generated';
 
@@ -24,7 +25,7 @@ export function getLandingPageByLanguageAndSlugUnstrict(language: LanguageFlag, 
 // Stryker Workaround 2. Pointless static mutant.
 // Stryker disable all
 
-export const getLandingPageByLanguageAndSlugStrict = <L extends LandingPageLang>(lang: L, slug: LandingPageSlug<L>): MaybeNull<LandingPage> =>
+export const getLandingPageByLanguageAndSlugStrict = ({ lang, slug }: LpLanguageAndSlugPair): MaybeNull<LandingPage> =>
   getLandingPageByLanguageAndSlugUnstrict(lang as any, slug as any);
 
 // Stryker restore all

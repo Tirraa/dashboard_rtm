@@ -90,7 +90,7 @@ export async function getBlogPostUnstrict(
 export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict<C extends keyof StrictBlog>(
   category: C,
   subcategory: keyof StrictBlog[C],
-  language: keyof StrictBlog[C][keyof StrictBlog[C]]
+  language: keyof StrictBlog[C][keyof StrictBlog[C]] | LanguageFlag
 ): Promise<BlogPostType[]> {
   const allPosts: BlogPostType[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(
     category as any,
