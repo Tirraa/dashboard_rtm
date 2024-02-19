@@ -22,9 +22,9 @@ vi.mock('@/config/blog', async (orgImport) => {
 
 describe('blogSubcategoryShouldTriggerNotFound', () => {
   it('should return false only when the list is not empty', async () => {
-    const [category, subcategory, targettedSlug] = [BlogConfig.TESTING_CATEGORY, TESTING_BLOG_FAKE_SUBCATEGORY, 'fake-post-01' as const];
-    const language = DEFAULT_LANGUAGE;
-    const post = (await getBlogPostStrict(category, subcategory, language, targettedSlug)) as BlogPostType;
+    const [category, subcategory, slug] = [BlogConfig.TESTING_CATEGORY, TESTING_BLOG_FAKE_SUBCATEGORY, 'fake-post-01' as const];
+    const lang = DEFAULT_LANGUAGE;
+    const post = (await getBlogPostStrict({ subcategory, category, lang, slug })) as BlogPostType;
 
     expect(blogSubcategoryShouldTriggerNotFound([])).toBe(true);
     expect(blogSubcategoryShouldTriggerNotFound([post])).toBe(false);

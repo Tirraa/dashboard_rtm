@@ -1,4 +1,4 @@
-import type { BlogSubcategoryFromUnknownCategory, UnknownBlogSlug, BlogCategory, BlogPostType, StrictBlog } from '@/types/Blog';
+import type { BlogSubcategoryFromUnknownCategory, UnknownBlogSlug, StrictBlogPost, BlogCategory, BlogPostType, StrictBlog } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { IsoDateTimeString } from 'contentlayer/core';
@@ -100,17 +100,8 @@ export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict<C
   return allPosts;
 }
 
-export async function getBlogPostStrict<
-  Category extends keyof StrictBlog,
-  Subcategory extends keyof StrictBlog[Category],
-  Language extends keyof StrictBlog[Category][keyof StrictBlog[Category]]
->(
-  category: Category,
-  subcategory: Subcategory,
-  language: Language,
-  targettedSlug: StrictBlog[Category][Subcategory][Language]
-): Promise<MaybeNull<BlogPostType>> {
-  const post: MaybeNull<BlogPostType> = await getBlogPostUnstrict(category as any, subcategory as any, targettedSlug as any, language as any);
+export async function getBlogPostStrict({ subcategory, category, lang, slug }: StrictBlogPost): Promise<MaybeNull<BlogPostType>> {
+  const post: MaybeNull<BlogPostType> = await getBlogPostUnstrict(category as any, subcategory as any, slug as any, lang as any);
   return post;
 }
 

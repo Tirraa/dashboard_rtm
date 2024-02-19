@@ -57,6 +57,19 @@ export type PostsCollectionAssoc = Record<BlogCategory, AllPostsGetter>;
 type BlogStaticParamsValue = string;
 export type BlogStaticParams = Record<keyof BlogTaxonomyType, BlogStaticParamsValue>;
 
+export type StrictBlogPost = {
+  [Category in keyof StrictBlog]: {
+    [Subcategory in keyof StrictBlog[Category]]: {
+      [Language in keyof StrictBlog[Category][Subcategory]]: {
+        slug: StrictBlog[Category][Subcategory][Language];
+        subcategory: Subcategory;
+        category: Category;
+        lang: Language;
+      };
+    }[keyof StrictBlog[Category][Subcategory]];
+  }[keyof StrictBlog[Category]];
+}[keyof StrictBlog];
+
 export { type StrictBlog };
 
 // Stryker restore all
