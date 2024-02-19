@@ -102,6 +102,8 @@ const DEFAULT_TRANSLATION = {
   i18n: 'i18n',
   lp: 'landing pages',
 
+  watchersReady: 'Prebuilder watchers are ready!',
+
   pagesCodegenBenchmark: 'Generated pages related code in ~{duration}s',
   blogCodegenBenchmark: 'Generated blog related code in ~{duration}s',
   lpCodegenBenchmark: 'Generated landing pages related code in ~{duration}s',
@@ -210,6 +212,8 @@ const translations = {
     blog: 'blog',
     i18n: 'i18n',
     lp: 'landing pages',
+
+    watchersReady: 'La mise sur écoute du prebuilder est prête !',
 
     pagesCodegenBenchmark: 'Code relatif aux pages généré en ~{duration}s',
     blogCodegenBenchmark: 'Code relatif au blog généré en ~{duration}s',
