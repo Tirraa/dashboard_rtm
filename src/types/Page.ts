@@ -23,19 +23,15 @@ type StrictPage = {
   [Category in keyof Pages]: PageAdapter<Pages[Category][number]>;
 }[keyof Pages];
 
-type ExtractLangAndPath<URL extends string> = URL extends `/${infer Lang}/${infer Path}`
+export type ExtractLangAndPath<__URL extends string = StrictPage['url']> = __URL extends `/${infer Lang}/${infer Path}`
   ? { lang: Lang; path: Path }
-  : URL extends `/${infer Lang}`
+  : __URL extends `/${infer Lang}`
     ? { path: IndexToken; lang: Lang }
     : never;
 
-type PagesUrl = StrictPage['url'];
-
-export type LangAndPathPair = ExtractLangAndPath<PagesUrl>;
+export type LangAndPathPair = ExtractLangAndPath;
 
 export type PagePath = StrictPage['path'];
-
-// extends `/${infer Lang}/${infer Path}` ? {lang: Lang, path: Path} : never;
 
 // Stryker restore all
 /* v8 ignore stop */
