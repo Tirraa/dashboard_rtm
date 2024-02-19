@@ -23,13 +23,13 @@ type StrictPage = {
   [Category in keyof Pages]: PageAdapter<Pages[Category][number]>;
 }[keyof Pages];
 
-export type ExtractLangAndPath<__URL extends string = StrictPage['url']> = __URL extends `/${infer Lang}/${infer Path}`
+export type MakePagesLangAndPathPairs<__URL extends string = StrictPage['url']> = __URL extends `/${infer Lang}/${infer Path}`
   ? { lang: Lang; path: Path }
   : __URL extends `/${infer Lang}`
     ? { path: IndexToken; lang: Lang }
     : never;
 
-export type LangAndPathPair = ExtractLangAndPath;
+export type LangAndPathPair = MakePagesLangAndPathPairs;
 
 export type PagePath = StrictPage['path'];
 
