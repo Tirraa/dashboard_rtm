@@ -71,6 +71,10 @@ check-coding-style:
 	$(PM) ci:typecheck-project
 	$(PM) ci:typecheck-tests
 
+# @Override
+dev-with-rtm-toolchain:
+	$(PM) concurrently "\"$(PM) dev\"" "\"$(PM) prebuild --watch\""
+
 # @Alias
 vercel-ci-build-command:
 	$(PM) ci:vercel-build-command
