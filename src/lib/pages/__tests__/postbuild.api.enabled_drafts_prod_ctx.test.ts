@@ -26,7 +26,7 @@ describe('getPageByLanguageAndPathStrict', () => {
     const root = PagesConfig.TESTING_ROOT;
     const targettedPath = `${root}/fake-page-00` as const;
     const language = DEFAULT_LANGUAGE;
-    const page = getPageByLanguageAndPathStrict(language, targettedPath) as Page;
+    const page = getPageByLanguageAndPathStrict({ path: targettedPath, lang: language }) as Page;
 
     expect(page.path).toBe(targettedPath);
     expect(page.root).toBe(root);
@@ -37,7 +37,7 @@ describe('getPageByLanguageAndPathStrict', () => {
     const root = PagesConfig.TESTING_ROOT;
     const targettedPath = `${root}/fake-draft-00` as const;
     const language = DEFAULT_LANGUAGE;
-    const page = getPageByLanguageAndPathStrict(language, targettedPath) as Page;
+    const page = getPageByLanguageAndPathStrict({ path: targettedPath, lang: language }) as Page;
 
     expect(page.path).toBe(targettedPath);
     expect(page.root).toBe(root);

@@ -16,7 +16,7 @@ import { cn } from '@/lib/tailwind';
 
 export async function generateMetadata({ params }: I18nPageProps) {
   const language = params[I18nTaxonomy.LANGUAGE];
-  const document = getPageByLanguageAndPathStrict(language, 'index') as Page;
+  const document = getPageByLanguageAndPathStrict({ lang: language, path: 'index' }) as Page;
   const globalT = await getServerSideI18n();
   const { vocab } = i18ns;
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), document.title, true);
@@ -31,7 +31,7 @@ export function generateStaticParams() {
 export default function Page({ params }: I18nPageProps) {
   const language = params[I18nTaxonomy.LANGUAGE];
   setStaticParamsLocale(language);
-  const document = getPageByLanguageAndPathStrict(language, 'index') as Page;
+  const document = getPageByLanguageAndPathStrict({ lang: language, path: 'index' }) as Page;
 
   return (
     <main className={cn('flex flex-1 flex-col justify-center', MAIN_CLS)}>

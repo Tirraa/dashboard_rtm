@@ -4,7 +4,7 @@ import type { Page } from 'contentlayer/generated';
 import { allPages } from 'contentlayer/generated';
 
 export type PagesConfigType = {
-  SKIP_SSG: { paths: PagePath<any>[]; prefixes: string[] };
+  SKIP_SSG: { prefixes: string[]; paths: PagePath[] };
   TESTING_ROOT: typeof TESTING_ROOT;
   ENABLE_DRAFTS_IN_PROD: boolean;
   allPages: () => Page[];
