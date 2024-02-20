@@ -14,7 +14,7 @@ export function generateStaticParams() {
   return getStaticParams();
 }
 
-export default async function DashboardLayout({ children, params }: DashboardLayoutProps) {
+export default function DashboardLayout({ children, params }: DashboardLayoutProps) {
   const language = params[I18nTaxonomy.LANGUAGE];
   setStaticParamsLocale(language);
 

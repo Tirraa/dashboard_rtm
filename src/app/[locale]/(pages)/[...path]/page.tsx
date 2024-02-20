@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: PageProps) {
   return metadatas;
 }
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   const staticParams = getPagesStaticParams();
   return staticParams;
 }

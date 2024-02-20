@@ -14,6 +14,7 @@ const MdxInviteTheBotButton: FunctionComponent<InviteTheBotButtonProps> = (props
   const placeholder = <div className="min-h-[40px]" />;
   const [Component, setComponent] = useState<MaybeNull<FunctionComponent<InviteTheBotButtonProps>>>(null);
   useEffect(() => {
+    // eslint-disable-next-line promise/catch-or-return
     import('@/components/ui/cta/InviteTheBotButton').then((component) => setComponent(() => component.default));
   }, []);
   if (Component === null) return placeholder;

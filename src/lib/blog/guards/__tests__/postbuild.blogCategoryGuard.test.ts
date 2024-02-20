@@ -19,11 +19,11 @@ describe('blogCategoryGuard', () => {
     ).resolves.not.toThrow();
   });
 
-  it('should throw not found error, given invalid category', async () => {
+  it('should throw not found error, given invalid category', () => {
     expect.assertions(1);
 
     try {
-      await blogCategoryGuard({
+      blogCategoryGuard({
         params: {
           // @ts-expect-error
           [BlogTaxonomy.CATEGORY]: '__INVALID_CATEGORY__',
