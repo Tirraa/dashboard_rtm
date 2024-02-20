@@ -82,9 +82,9 @@
   "devDependencies": {
     "@commitlint/config-conventional": "^18.1.0",
     "@commitlint/cz-commitlint": "^18.2.0",
-    "@stryker-mutator/api": "^8.2.2",
-    "@stryker-mutator/core": "^8.2.2",
-    "@stryker-mutator/typescript-checker": "^8.2.2",
+    "@stryker-mutator/api": "^8.2.5",
+    "@stryker-mutator/core": "^8.2.5",
+    "@stryker-mutator/typescript-checker": "^8.2.5",
     "@stryker-mutator/vitest-runner": "^8.2.2",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
