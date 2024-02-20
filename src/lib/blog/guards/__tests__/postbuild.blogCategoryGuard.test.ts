@@ -9,7 +9,7 @@ import blogCategoryGuard from '../blogCategoryGuard';
 
 describe('blogCategoryGuard', () => {
   it('should not throw not found error, given valid category', () => {
-    expect(
+    expect(() =>
       blogCategoryGuard({
         params: {
           [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
