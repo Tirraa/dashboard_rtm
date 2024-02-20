@@ -9,6 +9,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // eslint-disable-next-line require-await
   async redirects() {
     return [
       /* eslint-disable perfectionist/sort-objects */
