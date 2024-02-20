@@ -9,7 +9,7 @@ let lastEventTimestamp: number | null = null;
 
 const DEBOUNCE_THRESHOLD = 250;
 
-async function handleEvent(callback: () => void) {
+function handleEvent(callback: () => void) {
   const currentTimestamp = Date.now();
 
   if (lastEventTimestamp !== null && currentTimestamp - lastEventTimestamp < DEBOUNCE_THRESHOLD) return;

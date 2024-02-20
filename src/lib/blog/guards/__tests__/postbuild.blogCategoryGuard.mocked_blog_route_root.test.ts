@@ -26,8 +26,8 @@ vi.mock('##/config/routes', async (orgImport) => {
 
 describe('blogPostGuard', () => {
   it('should not throw, given valid input', async () => {
-    await expect(
-      blogPostGuard({
+    expect(
+      await blogPostGuard({
         params: {
           [BlogTaxonomy.SUBCATEGORY]: TESTING_BLOG_FAKE_SUBCATEGORY,
           [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
