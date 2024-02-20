@@ -96,7 +96,7 @@ describe('stackMiddlewares', () => {
   });
 
   it('returns the final response correctly', async () => {
-    const middleware: MiddlewareFactory = (next) => async (req, evt) => next(req, evt);
+    const middleware: MiddlewareFactory = (next) => (req, evt) => next(req, evt);
     const stackedMiddleware = stackMiddlewares([middleware]);
     const response = await stackedMiddleware(fakeRequest, fakeEvent);
 

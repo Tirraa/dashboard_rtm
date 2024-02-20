@@ -12,14 +12,24 @@ module.exports = {
     '@typescript-eslint/consistent-type-imports': [ERROR, { fixStyle: 'separate-type-imports' }],
     'import/no-extraneous-dependencies': [ERROR, { devDependencies: false }],
     'import/consistent-type-specifier-style': [ERROR, 'prefer-top-level'],
-
     'unused-imports/no-unused-imports': ERROR,
 
     'import/no-duplicates': ERROR,
+
     'no-unreachable': ERROR,
+    'require-await': ERROR,
     'no-unused-vars': OFF,
     'import/first': ERROR
   },
+
+  extends: [
+    'next/core-web-vitals',
+    'plugin:promise/recommended',
+    'plugin:perfectionist/recommended-alphabetical',
+    'plugin:perfectionist/recommended-natural',
+    'plugin:perfectionist/recommended-line-length'
+  ],
+
   overrides: [
     {
       rules: {
@@ -27,13 +37,6 @@ module.exports = {
       },
       files: ['vitest.config.ts', '*.test.ts', '*.test.tsx', '*.test-d.ts', '*Adapter.js']
     }
-  ],
-
-  extends: [
-    'next/core-web-vitals',
-    'plugin:perfectionist/recommended-alphabetical',
-    'plugin:perfectionist/recommended-natural',
-    'plugin:perfectionist/recommended-line-length'
   ],
 
   plugins: ['@typescript-eslint', 'import', 'unused-imports', 'only-error', 'perfectionist']

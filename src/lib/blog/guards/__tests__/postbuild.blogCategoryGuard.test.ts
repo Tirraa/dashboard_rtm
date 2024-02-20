@@ -8,22 +8,22 @@ import BlogConfig from '@/config/blog';
 import blogCategoryGuard from '../blogCategoryGuard';
 
 describe('blogCategoryGuard', () => {
-  it('should not throw not found error, given valid category', async () => {
-    await expect(
+  it('should not throw not found error, given valid category', () => {
+    expect(() =>
       blogCategoryGuard({
         params: {
           [BlogTaxonomy.CATEGORY]: BlogConfig.TESTING_CATEGORY,
           [I18nTaxonomy.LANGUAGE]: DEFAULT_LANGUAGE
         }
       })
-    ).resolves.not.toThrow();
+    ).not.toThrow();
   });
 
-  it('should throw not found error, given invalid category', async () => {
+  it('should throw not found error, given invalid category', () => {
     expect.assertions(1);
 
     try {
-      await blogCategoryGuard({
+      blogCategoryGuard({
         params: {
           // @ts-expect-error
           [BlogTaxonomy.CATEGORY]: '__INVALID_CATEGORY__',

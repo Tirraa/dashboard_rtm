@@ -15,6 +15,7 @@ const MdxSignupButton: FunctionComponent<SignUpButtonProps> = (props) => {
   const placeholder = <div className="min-h-[44px]" />;
   const [Component, setComponent] = useState<MaybeNull<FunctionComponent<SignUpButtonProps>>>(null);
   useEffect(() => {
+    // eslint-disable-next-line promise/catch-or-return
     import('@/components/ui/cta/SignupButton').then((component) => setComponent(() => component.default));
   }, []);
   if (Component === null) return placeholder;

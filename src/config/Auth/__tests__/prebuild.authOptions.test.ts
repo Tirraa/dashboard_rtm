@@ -90,6 +90,7 @@ describe('getDiscordProfilePicture (rate limited)', () => {
 describe('getDiscordProfilePicture', () => {
   it('should return a PNG Discord avatar URL, given a plain avatar/id couple', async () => {
     const fakeDiscordApi: IDiscordApi = {
+      // eslint-disable-next-line require-await
       getFreshProfile: async () => {
         return {
           avatar: 'FAKE_AVATAR',
@@ -103,6 +104,7 @@ describe('getDiscordProfilePicture', () => {
 
   it('should return a GIF Discord avatar URL, given an avatar field starting with "a_"', async () => {
     const fakeDiscordApi: IDiscordApi = {
+      // eslint-disable-next-line require-await
       getFreshProfile: async () => {
         return {
           avatar: 'a_FAKE_AVATAR',
@@ -116,6 +118,7 @@ describe('getDiscordProfilePicture', () => {
 
   it('should return null, given empty avatar field', async () => {
     const fakeDiscordApi: IDiscordApi = {
+      // eslint-disable-next-line require-await
       getFreshProfile: async () => {
         return {
           id: 'FAKE_ID',
@@ -129,6 +132,7 @@ describe('getDiscordProfilePicture', () => {
 
   it('should return null, given empty id field', async () => {
     const fakeDiscordApi: IDiscordApi = {
+      // eslint-disable-next-line require-await
       getFreshProfile: async () => {
         return {
           avatar: 'FAKE_AVATAR',
@@ -142,6 +146,7 @@ describe('getDiscordProfilePicture', () => {
 
   it('should return null, given both empty id and avatar fields', async () => {
     const fakeDiscordApi: IDiscordApi = {
+      // eslint-disable-next-line require-await
       getFreshProfile: async () => {
         return {
           avatar: '',
@@ -166,6 +171,7 @@ describe('Caching test', () => {
 
     const FAKE_ID = 'FAKE_ID';
     const fakeDiscordApi: IDiscordApi = {
+      // eslint-disable-next-line require-await
       getFreshProfile: async () => {
         return {
           avatar: 'a_FAKE_AVATAR',
@@ -205,6 +211,7 @@ describe('Caching test', () => {
 
     const FAKE_ID = 'FAKE_ID';
     const fakeDiscordApi: IDiscordApi = {
+      // eslint-disable-next-line require-await
       getFreshProfile: async () => {
         return {
           avatar: 'a_FAKE_AVATAR',
@@ -241,6 +248,7 @@ describe('Caching test', () => {
 
     const FAKE_ID = 'FAKE_ID';
     const fakeDiscordApi: IDiscordApi = {
+      // eslint-disable-next-line require-await
       getFreshProfile: async () => {
         return {
           avatar: 'a_FAKE_AVATAR',
@@ -277,6 +285,7 @@ describe('Caching test', () => {
 
     const FAKE_ID = 'FAKE_ID';
     const fakeDiscordApi: IDiscordApi = {
+      // eslint-disable-next-line require-await
       getFreshProfile: async () => {
         return {
           avatar: '',

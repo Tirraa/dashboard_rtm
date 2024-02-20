@@ -10,7 +10,7 @@ import { setStaticParamsLocale } from 'next-international/server';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 
 export async function generateMetadata({ params }: BlogCategoryPageProps) {
-  await blogCategoryGuard({ params });
+  blogCategoryGuard({ params });
   const blogCategoryMetadatas = await getBlogCategoryMetadatas({ params });
   return blogCategoryMetadatas;
 }

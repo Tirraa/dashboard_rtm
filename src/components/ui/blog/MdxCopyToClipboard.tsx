@@ -15,6 +15,7 @@ const MdxCopyToClipboard: FunctionComponent<CopyToClipboardProps> = (props) => {
   const placeholder = <div className="code-block relative">{props.children}</div>;
   const [Component, setComponent] = useState<MaybeNull<FunctionComponent<CopyToClipboardProps>>>(null);
   useEffect(() => {
+    // eslint-disable-next-line promise/catch-or-return
     import('@/components/ui/blog/CopyToClipboard').then((component) => setComponent(() => component.default));
   }, []);
   if (Component === null) return placeholder;

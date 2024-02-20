@@ -19,7 +19,7 @@ export async function generateMetadata() {
   return { description, title };
 }
 
-export default async function NotFoundPage() {
+export default function NotFoundPage() {
   const language = getCurrentLocale();
 
   const params: I18nParams = { [I18nTaxonomy.LANGUAGE]: language };
