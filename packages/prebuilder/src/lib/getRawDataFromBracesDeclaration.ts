@@ -1,4 +1,6 @@
+// eslint-disable-next-line no-magic-numbers
 export default function getRawDataFromBracesDeclaration(fileContent: string, startIndex: number = 0): string | null {
+  // eslint-disable-next-line no-magic-numbers
   if (startIndex < 0) return null;
 
   let openBracesDepth = 0;
@@ -9,10 +11,12 @@ export default function getRawDataFromBracesDeclaration(fileContent: string, sta
     const currentChar = fileContent[i];
 
     if (currentChar === '{') {
+      // eslint-disable-next-line no-magic-numbers
       if (openBracesDepth === 0) rawDataStartIndex = i + 1;
       ++openBracesDepth;
     } else if (currentChar === '}') {
       --openBracesDepth;
+      // eslint-disable-next-line no-magic-numbers
       if (openBracesDepth === 0) {
         rawDataEndIndex = i;
         break;
@@ -20,6 +24,7 @@ export default function getRawDataFromBracesDeclaration(fileContent: string, sta
     }
   }
 
+  // eslint-disable-next-line no-magic-numbers
   if (rawDataEndIndex === -1) return null;
 
   const extractedContent = fileContent.substring(rawDataStartIndex, rawDataEndIndex);

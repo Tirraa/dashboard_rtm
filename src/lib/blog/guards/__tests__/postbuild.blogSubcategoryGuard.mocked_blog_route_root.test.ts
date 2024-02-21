@@ -10,6 +10,7 @@ import BlogConfig from '@/config/blog';
 
 import blogSubcategoryGuard from '../blogSubcategoryGuard';
 
+// eslint-disable-next-line no-magic-numbers
 const getUrlFromDigest = (digest: string): string => digest.substring(indexOfNthOccurrence(digest, ';', 2) + 1, indexOfNthOccurrence(digest, ';', 3));
 
 vi.mock('##/config/routes', async (orgImport) => {
@@ -38,6 +39,7 @@ describe('blogSubcategoryGuard', () => {
   });
 
   it('should throw redirect error, given invalid category and valid subcategory', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const category = '__INVALID_CATEGORY__';
@@ -58,6 +60,7 @@ describe('blogSubcategoryGuard', () => {
   });
 
   it('should throw redirect error, given invalid category and subcategory', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const category = '__INVALID_CATEGORY__';
@@ -79,6 +82,7 @@ describe('blogSubcategoryGuard', () => {
   });
 
   it('should throw redirect error, given valid category and invalid subcategory', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     try {

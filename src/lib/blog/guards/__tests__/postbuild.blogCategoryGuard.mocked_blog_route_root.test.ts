@@ -10,6 +10,7 @@ import BlogConfig from '@/config/blog';
 
 import blogPostGuard from '../blogPostGuard';
 
+// eslint-disable-next-line no-magic-numbers
 const getUrlFromDigest = (digest: string): string => digest.substring(indexOfNthOccurrence(digest, ';', 2) + 1, indexOfNthOccurrence(digest, ';', 3));
 
 vi.mock('##/config/routes', async (orgImport) => {
@@ -39,6 +40,7 @@ describe('blogPostGuard', () => {
   });
 
   it('should throw redirect error, given invalid slug', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     try {
@@ -58,6 +60,7 @@ describe('blogPostGuard', () => {
   });
 
   it('should throw redirect error, given invalid subcategory', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     try {
@@ -78,6 +81,7 @@ describe('blogPostGuard', () => {
   });
 
   it('should throw redirect error, given invalid category', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const category = '__INVALID_CATEGORY__';
@@ -99,6 +103,7 @@ describe('blogPostGuard', () => {
   });
 
   it('should throw redirect error, given invalid slug and invalid subcategory', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     try {
@@ -119,6 +124,7 @@ describe('blogPostGuard', () => {
   });
 
   it('should throw redirect error, given invalid slug and invalid category', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const category = '__INVALID_CATEGORY__';
@@ -140,6 +146,7 @@ describe('blogPostGuard', () => {
   });
 
   it('should throw redirect error, given invalid slug, invalid category, and invalid subcategory', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const category = '__INVALID_CATEGORY__';

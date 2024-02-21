@@ -23,6 +23,7 @@ const EMPTY_FEEDBACK = '';
 
 describe('sysPagesValidator', () => {
   it('should throw ENOENT, given invalid path', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
     try {

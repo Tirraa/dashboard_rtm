@@ -12,6 +12,7 @@ import {
 function buildPageLanguageFlagFromStr(flattenedPath: string): LanguageFlag {
   const maybeLanguageEnvelopeEndSlashIndex = flattenedPath.indexOf('/');
 
+  // eslint-disable-next-line no-magic-numbers
   const maybeLanguage = flattenedPath.substring(0, maybeLanguageEnvelopeEndSlashIndex);
   if (isValidLanguageFlag(maybeLanguage)) return maybeLanguage;
 
@@ -25,6 +26,7 @@ function buildPageLanguageFlag(page: DocumentToCompute): LanguageFlag {
   const path = getFlattenedPathWithoutRootFolder(transformedFlattenedPath, PAGES_FOLDER);
 
   const maybeLanguageEnvelopeEndSlashIndex = path.indexOf('/');
+  // eslint-disable-next-line no-magic-numbers
   if (maybeLanguageEnvelopeEndSlashIndex === -1) return DEFAULT_LANGUAGE;
 
   const language = buildPageLanguageFlagFromStr(path);

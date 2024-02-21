@@ -16,6 +16,7 @@ describe('surroundString', () => {
 
   it("should return 'barbar', given '' as input and 'bar' as envelope", () => {
     const envelope = 'bar';
+    // eslint-disable-next-line no-magic-numbers
     expect(surroundString('', envelope)).toBe(envelope.repeat(2));
   });
 });

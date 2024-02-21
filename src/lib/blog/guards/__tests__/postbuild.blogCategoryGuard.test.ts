@@ -20,6 +20,7 @@ describe('blogCategoryGuard', () => {
   });
 
   it('should throw not found error, given invalid category', () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
     try {

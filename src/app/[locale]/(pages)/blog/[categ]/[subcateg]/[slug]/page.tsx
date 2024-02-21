@@ -37,6 +37,7 @@ export default async function Page({ params }: BlogPostPageProps) {
   if (!post) notFound();
 
   const MIN_DEPTH = 3;
+  // eslint-disable-next-line no-magic-numbers
   const depth = countCharacter(ROUTES_ROOTS.BLOG, '/') - 1 + MIN_DEPTH;
 
   return (

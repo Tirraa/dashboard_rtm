@@ -40,6 +40,8 @@ const CopyToClipboard: FunctionComponent<CopyToClipboardProps> = ({ children }) 
     if (textInputInstance && textInputInstance.textContent !== null) navigator.clipboard.writeText(textInputInstance.textContent);
     if (currentCoroutine) clearTimeout(currentCoroutine);
 
+    const MS_DELAY = 750;
+
     currentCoroutine = setTimeout(() => {
       if (!currentCoroutine) return;
       setCopied(false);
@@ -47,7 +49,7 @@ const CopyToClipboard: FunctionComponent<CopyToClipboardProps> = ({ children }) 
       if (copyBtnInstance) copyBtnInstance.blur();
       clearTimeout(currentCoroutine);
       currentCoroutine = null;
-    }, 750);
+    }, MS_DELAY);
   };
 
   return (

@@ -6,6 +6,7 @@ import { MAX_BLOG_TAXONOMY_LEN, MAX_PAGE_TAXONOMY_LEN, MAX_LP_TAXONOMY_LEN } fro
 
 describe('isValidPageTaxonomy', () => {
   it('should return false, given invalid taxonomies', () => {
+    // eslint-disable-next-line no-magic-numbers
     const tooLong = 'w'.repeat(MAX_PAGE_TAXONOMY_LEN + 1);
 
     expect(isValidPageTaxonomy('_$!§%&/()=?')).toBe(false);
@@ -25,6 +26,7 @@ describe('isValidPageTaxonomy', () => {
 
 describe('isValidBlogTaxonomy', () => {
   it('should return false, given invalid taxonomies', () => {
+    // eslint-disable-next-line no-magic-numbers
     const tooLong = 'w'.repeat(MAX_BLOG_TAXONOMY_LEN + 1);
 
     expect(isValidBlogTaxonomy('_$!§%&/()=?')).toBe(false);
@@ -44,6 +46,7 @@ describe('isValidBlogTaxonomy', () => {
 
 describe('isValidLpTaxonomy', () => {
   it('should return false, given invalid taxonomies', () => {
+    // eslint-disable-next-line no-magic-numbers
     const tooLong = 'w'.repeat(MAX_LP_TAXONOMY_LEN + 1);
 
     expect(isValidLpTaxonomy('_$!§%&/()=?')).toBe(false);

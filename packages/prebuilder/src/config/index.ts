@@ -39,7 +39,8 @@ export const I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = [...MY_I18N_CATEG
 export const I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = [...MY_I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS, 'title', 'meta-description'];
 
 export const LIST_ELEMENT_PREFIX: string = '\n - ';
-export const TS_MORPH_FORMATTER_SETTINGS = { ensureNewLineAtEndOfFile: true, indentSize: 2 } as const satisfies FormatCodeSettings;
+export const TAB_SIZE = 2;
+export const TS_MORPH_FORMATTER_SETTINGS = { ensureNewLineAtEndOfFile: true, indentSize: TAB_SIZE } as const satisfies FormatCodeSettings;
 
 export const PAGE_FILE_EXT: string = '.mdx';
 export const BLOG_POST_FILE_EXT: string = '.mdx';

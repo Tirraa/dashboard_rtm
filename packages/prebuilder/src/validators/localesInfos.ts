@@ -47,18 +47,22 @@ export default async function localesInfosValidator(localesFolder: Path, i18nSch
     }
   }
 
+  // eslint-disable-next-line no-magic-numbers
   if (localeFileInfosValidatorFeedbacks.length > 0) {
     feedback +=
+      // eslint-disable-next-line no-magic-numbers
       localeFileInfosValidatorFeedbacks.length > 1
         ? `${LIST_ELEMENT_PREFIX}${localeFileInfosValidatorFeedbacks
             .map((localeFileInfosValidatorFeedback) =>
               localeFileInfosValidatorFeedback.replaceAll(
                 '\n',
+                // eslint-disable-next-line no-magic-numbers
                 '\n' + ' '.repeat(LIST_ELEMENT_PREFIX.length - LIST_ELEMENT_PREFIX.split('\n').length + 1)
               )
             )
             .join(LIST_ELEMENT_PREFIX)}` + '\n'
-        : localeFileInfosValidatorFeedbacks[0] + '\n';
+        : // eslint-disable-next-line no-magic-numbers
+          localeFileInfosValidatorFeedbacks[0] + '\n';
   }
   return feedback;
 }

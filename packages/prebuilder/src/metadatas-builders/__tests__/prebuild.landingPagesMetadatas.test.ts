@@ -9,6 +9,7 @@ const VALID_LP_FOLDER_PATH = './packages/prebuilder/src/metadatas-builders/__tes
 
 describe('getLpMetadatas', () => {
   it('should throw ENOENT, given invalid path', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
     try {

@@ -12,9 +12,12 @@ import {
 
 function buildLandingPageLanguageFlagFromStr(flattenedPath: string): UnknownLanguageFlag {
   const envelopeBeginSlashIndex = flattenedPath.indexOf('/');
+  // eslint-disable-next-line no-magic-numbers
   const envelopeEndSlashIndex = indexOfNthOccurrence(flattenedPath, '/', 2);
 
+  // eslint-disable-next-line no-magic-numbers
   if (envelopeBeginSlashIndex !== -1 && envelopeEndSlashIndex !== -1) {
+    // eslint-disable-next-line no-magic-numbers
     const language = flattenedPath.substring(envelopeBeginSlashIndex + 1, envelopeEndSlashIndex);
     return language;
   }

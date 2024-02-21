@@ -41,6 +41,7 @@ describe('parseArguments unhappy paths (sys)', () => {
   });
 
   it('should throw, given valid args schema, but invalid schema path (not a file)', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -63,6 +64,7 @@ describe('parseArguments unhappy paths (sys)', () => {
   });
 
   it('should throw, given valid args schema, but invalid pages folder path (not a directory)', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -84,6 +86,7 @@ describe('parseArguments unhappy paths (sys)', () => {
   });
 
   it('should throw, given valid args schema, but invalid posts folder path (not a directory)', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -105,6 +108,7 @@ describe('parseArguments unhappy paths (sys)', () => {
   });
 
   it('should throw, given valid args schema, but invalid lp folder path (not a directory)', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -127,6 +131,7 @@ describe('parseArguments unhappy paths (sys)', () => {
   });
 
   it("should throw, given valid args schema, but invalid schema path (can't open)", async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -149,6 +154,7 @@ describe('parseArguments unhappy paths (sys)', () => {
   });
 
   it("should throw, given valid args schema, but invalid pages folder path (can't open)", async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -171,6 +177,7 @@ describe('parseArguments unhappy paths (sys)', () => {
   });
 
   it("should throw, given valid args schema, but invalid posts folder path (can't open)", async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -193,6 +200,7 @@ describe('parseArguments unhappy paths (sys)', () => {
   });
 
   it("should throw, given valid args schema, but invalid lp folder path (can't open)", async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -249,6 +257,7 @@ describe('parseArguments unhappy paths (invalid args combinators: both disabling
   });
 
   it('should throw, given conflicting args (both any i18n option & no i18n option)', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -271,6 +280,7 @@ describe('parseArguments unhappy paths (invalid args combinators: both disabling
   });
 
   it('should throw, given conflicting args (both any pages option & no pages option)', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -293,6 +303,7 @@ describe('parseArguments unhappy paths (invalid args combinators: both disabling
   });
 
   it('should throw, given conflicting args (both any blog option & no blog option)', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -315,6 +326,7 @@ describe('parseArguments unhappy paths (invalid args combinators: both disabling
   });
 
   it('should throw, given conflicting args (both any lp option & no lp option)', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -343,6 +355,7 @@ describe('parseArguments unhappy paths (invalid omissions: omitting a tool argum
   });
 
   it('should throw, given invalid args (omitting i18n locales schema filepath option without no i18n option)', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -363,6 +376,7 @@ describe('parseArguments unhappy paths (invalid omissions: omitting a tool argum
   });
 
   it('should throw, given invalid args (omitting pages folder option without no pages option)', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -384,6 +398,7 @@ describe('parseArguments unhappy paths (invalid omissions: omitting a tool argum
   });
 
   it('should throw, given invalid args (omitting blog folder option without no blog option)', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -405,6 +420,7 @@ describe('parseArguments unhappy paths (invalid omissions: omitting a tool argum
   });
 
   it('should throw, given invalid args (omitting lp folder option without no lp option)', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -432,6 +448,7 @@ describe('parseArguments unhappy paths (invalid args combinators: breaking depen
   });
 
   it('should throw, given conflicting args (both any pages option & no i18n option)', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -453,6 +470,7 @@ describe('parseArguments unhappy paths (invalid args combinators: breaking depen
   });
 
   it('should throw, given conflicting args (both any blog option & no i18n option)', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
@@ -474,6 +492,7 @@ describe('parseArguments unhappy paths (invalid args combinators: breaking depen
   });
 
   it('should throw, given conflicting args (both any lp option & no i18n option)', async () => {
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(2);
 
     const argvSpy = vi.spyOn(process, 'argv', 'get');
