@@ -9,7 +9,7 @@ import type { DefaultLanguage } from '##/config/i18n';
 import type { IndexToken } from '../Page';
 
 type PathSeparator = '/';
-type TopLevelRoot = '/';
+export type TopLevelRoot = '/';
 
 // * ... Adapter (narrowing & rewriting)
 type PageAdapter<P extends PagesFromCodegenSchema> = P extends { head: LanguageFlag }
@@ -18,7 +18,9 @@ type PageAdapter<P extends PagesFromCodegenSchema> = P extends { head: LanguageF
         path: P['path'] extends `${infer Head}${PathSeparator}${IndexToken}`
           ? Head extends `${DefaultLanguage}/${infer Tail}`
             ? Tail
-            : never
+            : Head extends DefaultLanguage
+              ? IndexToken
+              : never
           : P['pathWithoutHead'];
         url: P['url'] extends `${infer Head}${PathSeparator}${IndexToken}` ? Head : P['url'];
         root: P['nestingLevelTwo'] extends '' ? TopLevelRoot : P['nestingLevelTwo'];

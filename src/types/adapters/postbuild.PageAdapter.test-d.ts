@@ -5,7 +5,9 @@ import type { DefaultLanguage } from '##/config/i18n';
 import { describe, it } from 'vitest';
 import { expectType } from 'jest-tsd';
 
+import type { TopLevelRoot } from './PageAdapter';
 import type PageAdapter from './PageAdapter';
+import type { IndexToken } from '../Page';
 
 const _ = {};
 
@@ -63,19 +65,19 @@ describe('PageAdapter (Valid alternative language)', () => {
     expectType<{
       url: `/${ValidAlternativeLanguage}/page-00`;
       lang: ValidAlternativeLanguage;
+      root: TopLevelRoot;
       path: 'page-00';
-      root: '/';
     }>(fake);
   });
 
   it('should pass (Valid alternative language narrowing, index notation)', () => {
     const fake = _ as PageAdapter<{
-      path: `${ValidAlternativeLanguage}/testing-pages-root/fake-nesting/index`;
-      url: `/${ValidAlternativeLanguage}/testing-pages-root/fake-nesting/index`;
-      pathWithoutHead: 'testing-pages-root/fake-nesting/index';
+      path: `${ValidAlternativeLanguage}/testing-pages-root/fake-nesting/${IndexToken}`;
+      url: `/${ValidAlternativeLanguage}/testing-pages-root/fake-nesting/${IndexToken}`;
+      pathWithoutHead: `testing-pages-root/fake-nesting/${IndexToken}`;
       nestingLevelTwo: 'testing-pages-root';
       head: ValidAlternativeLanguage;
-      tail: 'index';
+      tail: IndexToken;
     }>;
 
     expectType<{
@@ -128,28 +130,28 @@ describe('PageAdapter (Default Language inference)', () => {
     const fake = _ as PageAdapter<{
       pathWithoutHead: 'page-00';
       nestingLevelTwo: '';
+      head: TopLevelRoot;
       path: 'page-00';
       url: '/page-00';
       tail: 'page-00';
-      head: '/';
     }>;
 
     expectType<{
       url: `/${DefaultLanguage}/page-00`;
       lang: DefaultLanguage;
+      root: TopLevelRoot;
       path: 'page-00';
-      root: '/';
     }>(fake);
   });
 
   it('should pass (default language narrowing, index notation)', () => {
     const fake = _ as PageAdapter<{
-      path: 'testing-pages-root/fake-nesting/index';
-      url: '/testing-pages-root/fake-nesting/index';
-      pathWithoutHead: 'fake-nesting/index';
+      path: `testing-pages-root/fake-nesting/${IndexToken}`;
+      url: `/testing-pages-root/fake-nesting/${IndexToken}`;
+      pathWithoutHead: `fake-nesting/${IndexToken}`;
       nestingLevelTwo: 'fake-nesting';
       head: 'testing-pages-root';
-      tail: 'index';
+      tail: IndexToken;
     }>;
 
     expectType<{
@@ -211,19 +213,19 @@ describe('PageAdapter (explicit Default Language)', () => {
     expectType<{
       url: `/${DefaultLanguage}/page-00`;
       lang: DefaultLanguage;
+      root: TopLevelRoot;
       path: 'page-00';
-      root: '/';
     }>(fake);
   });
 
   it('should pass (explicit default language narrowing, index notation)', () => {
     const fake = _ as PageAdapter<{
-      path: `${DefaultLanguage}/testing-pages-root/fake-nesting/index`;
-      url: `/${DefaultLanguage}/testing-pages-root/fake-nesting/index`;
-      pathWithoutHead: 'testing-pages-root/fake-nesting/index';
+      path: `${DefaultLanguage}/testing-pages-root/fake-nesting/${IndexToken}`;
+      url: `/${DefaultLanguage}/testing-pages-root/fake-nesting/${IndexToken}`;
+      pathWithoutHead: `testing-pages-root/fake-nesting/${IndexToken}`;
       nestingLevelTwo: 'testing-pages-root';
       head: DefaultLanguage;
-      tail: 'index';
+      tail: IndexToken;
     }>;
 
     expectType<{
@@ -231,6 +233,66 @@ describe('PageAdapter (explicit Default Language)', () => {
       path: 'testing-pages-root/fake-nesting';
       root: 'testing-pages-root';
       lang: DefaultLanguage;
+    }>(fake);
+  });
+});
+
+describe('PageAdapter (Default Language inference, top root level index notation)', () => {
+  it('should pass (default language narrowing, top root level index notation)', () => {
+    const fake = _ as PageAdapter<{
+      pathWithoutHead: IndexToken;
+      url: `/${IndexToken}`;
+      nestingLevelTwo: '';
+      head: TopLevelRoot;
+      path: IndexToken;
+      tail: IndexToken;
+    }>;
+
+    expectType<{
+      url: `/${DefaultLanguage}`;
+      lang: DefaultLanguage;
+      root: TopLevelRoot;
+      path: IndexToken;
+    }>(fake);
+  });
+});
+
+describe('PageAdapter (explicit Default Language, top root level index notation)', () => {
+  it('should pass (explicit default language narrowing, top root level index notation)', () => {
+    const fake = _ as PageAdapter<{
+      path: `${DefaultLanguage}/${IndexToken}`;
+      url: `/${DefaultLanguage}/${IndexToken}`;
+      pathWithoutHead: IndexToken;
+      head: DefaultLanguage;
+      nestingLevelTwo: '';
+      tail: IndexToken;
+    }>;
+
+    expectType<{
+      url: `/${DefaultLanguage}`;
+      lang: DefaultLanguage;
+      root: TopLevelRoot;
+      path: IndexToken;
+    }>(fake);
+  });
+});
+
+describe('PageAdapter (Valid alternative language, top root level index notation)', () => {
+  it('should pass (valid alternative language narrowing, top root level index notation)', () => {
+    const fake = _ as PageAdapter<{
+      path: `${ValidAlternativeLanguage}/${IndexToken}`;
+      url: `/${ValidAlternativeLanguage}/${IndexToken}`;
+      head: ValidAlternativeLanguage;
+      pathWithoutHead: IndexToken;
+      nestingLevelTwo: '';
+      tail: IndexToken;
+    }>;
+
+    expectType<{
+      url: `/${ValidAlternativeLanguage}`;
+      lang: ValidAlternativeLanguage;
+      root: TopLevelRoot;
+      path: IndexToken;
     }>(fake);
   });
 });
