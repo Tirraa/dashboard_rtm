@@ -16,8 +16,28 @@ from typing import Tuple, TypeAlias, Type
 
 PrintSideEffect: TypeAlias = Type[None]
 
+def normalize_tsprune_output() -> str:
+    """I love Windows..."""
+    if os.name == "nt":
+        # pylint: disable-next=import-outside-toplevel
+        from pathlib import Path
+        tsprune_output_content = sys.stdin.read()
+        tsprune_output_content_lines = tsprune_output_content.split("\n")
+        normalized_output_lines = []
+        for line in tsprune_output_content_lines:
+            line_path = Path(line)
+            normalized_line = line_path.as_posix()
+            if normalized_line.startswith("/"):
+                normalized_line = normalized_line[1:]
+            if normalized_line == '.':
+                continue
+            normalized_output_lines.append(normalized_line)
+        normalized_output = "\n".join(normalized_output_lines)
+        return normalized_output
+    return sys.stdin.read()
+
 TIMER_PIPELINE_START: float = time.monotonic()
-TSPRUNE_OUTPUT: str = sys.stdin.read()
+TSPRUNE_OUTPUT: str = normalize_tsprune_output()
 TIMER_SANITIZING_START: float = time.monotonic()
 QUIET_CTX = "--quiet" in sys.argv[1:]
 DIR: str = os.path.dirname(os.path.abspath(__file__))
