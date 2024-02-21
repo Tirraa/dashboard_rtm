@@ -1,12 +1,15 @@
 import type { MaybeEmptyErrorsDetectionFeedback, Filename, Path } from '../types/Metadatas';
 import type { VocabKey } from '../config/translations';
 
+import { LIST_ELEMENT_PREFIX, MAX_LP_TAXONOMY_LEN, LP_FILE_EXT } from '../config';
 import traverseAndMapFilepaths from '../lib/traverseAndMapFilepaths';
-import { LIST_ELEMENT_PREFIX, LP_FILE_EXT } from '../config';
 import { isValidLpTaxonomy } from './taxonomyConvention';
 import formatMessage from '../config/formatMessage';
 
-export default async function sysLpSlugsValidator(lpFolder: Path): Promise<MaybeEmptyErrorsDetectionFeedback> {
+export default async function sysLpSlugsValidator(
+  lpFolder: Path,
+  __MAX_LEN: number = MAX_LP_TAXONOMY_LEN
+): Promise<MaybeEmptyErrorsDetectionFeedback> {
   let feedback = '';
 
   const foldersWithDefects: Record<Path, Filename[]> = {};
@@ -18,7 +21,7 @@ export default async function sysLpSlugsValidator(lpFolder: Path): Promise<Maybe
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const slug = maybeSlug.slice(0, -LP_FILE_EXT.length);
-    if (!isValidLpTaxonomy(slug)) {
+    if (!isValidLpTaxonomy(slug, __MAX_LEN)) {
       if (!foldersWithDefects[directory]) foldersWithDefects[directory] = [];
       foldersWithDefects[directory].push(slug);
     }

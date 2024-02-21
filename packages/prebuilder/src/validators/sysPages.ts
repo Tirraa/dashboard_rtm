@@ -1,9 +1,9 @@
 import type { MaybeEmptyErrorsDetectionFeedback, Arborescence, Filename, Path } from '../types/Metadatas';
 import type { VocabKey } from '../config/translations';
 
+import { MAX_PAGE_TAXONOMY_LEN, LIST_ELEMENT_PREFIX, PAGE_FILE_EXT } from '../config';
 import traverseAndMapFilepaths from '../lib/traverseAndMapFilepaths';
 import buildArborescence from '../metadatas-builders/arborescence';
-import { LIST_ELEMENT_PREFIX, PAGE_FILE_EXT } from '../config';
 import { isValidPageTaxonomy } from './taxonomyConvention';
 import { foldFeedbacks } from '../lib/feedbacksMerge';
 import formatMessage from '../config/formatMessage';
@@ -41,7 +41,10 @@ function buildNestingsFeedback(nestingsDefects: Path[]): MaybeEmptyErrorsDetecti
   return feedback;
 }
 
-export default async function sysPagesValidator(pagesFolder: Path): Promise<{
+export default async function sysPagesValidator(
+  pagesFolder: Path,
+  __MAX_LEN: number = MAX_PAGE_TAXONOMY_LEN
+): Promise<{
   feedback: MaybeEmptyErrorsDetectionFeedback;
   arborescence: Arborescence;
 }> {
@@ -55,7 +58,7 @@ export default async function sysPagesValidator(pagesFolder: Path): Promise<{
   for (const { directoriesChain, filename } of arborescence) {
     for (let i = 0; i < directoriesChain.length; i++) {
       const currentNesting = directoriesChain[i];
-      if (!isValidPageTaxonomy(currentNesting)) {
+      if (!isValidPageTaxonomy(currentNesting, __MAX_LEN)) {
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         const currentPath = path.join(pagesFolderPrefix, ...directoriesChain.slice(0, i + 1));
         nestingsDefects.add(currentPath + ' ' + '(' + currentNesting + ')');
@@ -68,7 +71,7 @@ export default async function sysPagesValidator(pagesFolder: Path): Promise<{
     const currentSlugPath = directoriesChain.length <= 0 ? path.normalize(pagesFolderPrefix) : path.join(pagesFolderPrefix, ...directoriesChain);
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const slug = filename.slice(0, -PAGE_FILE_EXT.length);
-    if (!isValidPageTaxonomy(slug)) {
+    if (!isValidPageTaxonomy(slug, __MAX_LEN)) {
       if (foldersWithSlugDefects[currentSlugPath] === undefined) foldersWithSlugDefects[currentSlugPath] = [];
       foldersWithSlugDefects[currentSlugPath].push(slug);
     }
