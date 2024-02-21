@@ -8,6 +8,7 @@ import { throwIfForbiddenToUseIndexErrorBlogCtx, getPathWithIndexSuffix } from '
  */
 function buildBlogPostSlugFromStr(flattenedPath: string, sourceFilePath: string): UnknownBlogSlug {
   const slugBuilder = (flattenedPath: string, lastSlashIndex: number): UnknownBlogSlug =>
+    // eslint-disable-next-line no-magic-numbers
     flattenedPath.substring(lastSlashIndex + 1) as UnknownBlogSlug;
 
   const transformedFlattenedPath = getPathWithIndexSuffix(flattenedPath, sourceFilePath);

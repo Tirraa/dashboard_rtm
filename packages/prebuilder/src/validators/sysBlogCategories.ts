@@ -20,10 +20,12 @@ export default async function sysBlogCategoriesValidator(postsFolder: Path): Pro
     if (!isValidBlogTaxonomy(category)) categoriesWithDefects.push(category);
   }
 
+  // eslint-disable-next-line no-magic-numbers
   if (categoriesWithDefects.length > 0) {
     feedback +=
       formatMessage('invalidCategories' satisfies VocabKey, { count: categoriesWithDefects.length }) +
       ' ' +
+      // eslint-disable-next-line no-magic-numbers
       (categoriesWithDefects.length === 1 ? `${categoriesWithDefects}` : `${LIST_ELEMENT_PREFIX}${categoriesWithDefects.join(LIST_ELEMENT_PREFIX)}`) +
       '\n' +
       formatMessage('blogNamingConstraint' satisfies VocabKey) +

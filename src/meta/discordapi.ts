@@ -21,7 +21,8 @@ class DiscordApi implements IDiscordApi {
     } catch {
       const cachedURL = await bentocache.get(keysFactory.discordProfilePicture(sub));
       if (cachedURL) return { avatar: cachedURL, id: sub };
-      const randint = Math.floor(Math.random() * 6);
+      const MAX = 6;
+      const randint = Math.floor(Math.random() * MAX);
       return { avatar: `https://cdn.discordapp.com/embed/avatars/${randint}.png`, epicFail: true, id: sub };
     }
   }

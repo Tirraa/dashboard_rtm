@@ -5,7 +5,9 @@ import countCharacter from '../countCharacter';
 
 describe('countCharacter', () => {
   it('should return a positive value, given strings containing the searched char', () => {
+    // eslint-disable-next-line no-magic-numbers
     expect(countCharacter('aa    bbqsklqjdkqjdkqjd   aa   qlj,dqkdjqkdjkbb', 'a')).toBe(4);
+    // eslint-disable-next-line no-magic-numbers
     expect(countCharacter('aa    bbqsklqjdkqjdkqjd   aa   qlj,dqkdjqkdjkbb', '$')).toBe(0);
   });
 

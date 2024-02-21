@@ -4,6 +4,7 @@ import { LANGUAGES } from '##/config/i18n';
 import isValidLanguageFlag from '../isValidLanguageFlag';
 
 describe('isValidLanguageFlag', () => {
+  // eslint-disable-next-line no-magic-numbers
   const FIRST_LANG = LANGUAGES[0];
 
   it('should return true for valid language flag', () => expect(isValidLanguageFlag(FIRST_LANG)).toBe(true));

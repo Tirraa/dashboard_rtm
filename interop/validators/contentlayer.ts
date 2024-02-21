@@ -22,6 +22,7 @@ function validateContentlayerConfig(documentTypes: DocumentType<string>[]) {
   }
 
   const duplicates = Array.from(duplicatesSet);
+  // eslint-disable-next-line no-magic-numbers
   if (duplicates.length > 0) throw new ContentlayerDuplicateTypesError(duplicates);
 }
 

@@ -101,10 +101,13 @@ const NextTopLoader = ({
   React.useEffect(() => {
     nProgress.configure({
       showSpinner: showSpinner ?? true,
+      // eslint-disable-next-line no-magic-numbers
       minimum: initialPosition ?? 0.08,
+      // eslint-disable-next-line no-magic-numbers
       trickleSpeed: crawlSpeed ?? 200,
       easing: easing ?? 'ease',
       trickle: crawl ?? true,
+      // eslint-disable-next-line no-magic-numbers
       speed: speed ?? 200
     });
 

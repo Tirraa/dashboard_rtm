@@ -36,6 +36,7 @@ export default async function sysBlogSubcategoriesValidator(postsFolder: Path): 
     feedback +=
       formatMessage('invalidSubcategories' satisfies VocabKey, { count: defects.length, categoryWithDefects }) +
       ' ' +
+      // eslint-disable-next-line no-magic-numbers
       (defects.length === 1 ? `${defects}` : `${LIST_ELEMENT_PREFIX}${defects.join(LIST_ELEMENT_PREFIX)}`) +
       '\n' +
       formatMessage('blogNamingConstraint' satisfies VocabKey) +

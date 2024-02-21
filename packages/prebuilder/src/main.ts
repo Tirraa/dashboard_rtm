@@ -98,9 +98,11 @@ function printPrebuildReport({
   lpCodegenEndTime,
   globalStartTime
 }: typeof clocks) {
+  // eslint-disable-next-line no-magic-numbers
   const IGNORED = -1 as const;
 
   const computeDelay = (maybeStart: MaybeUndefined<number>, maybeEnd: MaybeUndefined<number>) =>
+    // eslint-disable-next-line no-magic-numbers
     maybeStart === undefined || maybeEnd === undefined ? IGNORED : (Math.abs(maybeEnd - maybeStart) / 1e3).toFixed(BENCHMARK_ACCURACY);
 
   const [
@@ -459,6 +461,7 @@ async function processPrebuild() {
     );
   } catch (error) {
     logError(error);
+    // eslint-disable-next-line no-magic-numbers
     process.exit(1);
   }
 }

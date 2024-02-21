@@ -11,6 +11,7 @@ const EXCLUDED_ROUTES_PREFIXES = ['/favicon.ico', '/icon.svg', '/apple-icon.png'
 
 const siteUrl = process.env.NEXT_SITEMAP_SITE_URL;
 
+// eslint-disable-next-line no-magic-numbers
 const getPathWithoutI18nPart = (path) => path.substring(path.indexOf('/', path.indexOf('/') + 1));
 
 const isIgnoredPath = (path) =>

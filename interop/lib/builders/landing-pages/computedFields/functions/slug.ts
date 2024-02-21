@@ -9,6 +9,7 @@ import buildLandingPageCategory from './category';
  */
 function buildLandingPageSlugFromStr(flattenedPath: string): UnknownLandingPageSlug {
   const slugBuilder = (flattenedPath: string, lastSlashIndex: number): UnknownLandingPageSlug =>
+    // eslint-disable-next-line no-magic-numbers
     flattenedPath.substring(lastSlashIndex + 1) as UnknownLandingPageSlug;
 
   const lastSlashIndex = flattenedPath.lastIndexOf('/');

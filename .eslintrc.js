@@ -2,6 +2,7 @@
 // Stryker disable all
 // @ts-check
 
+// eslint-disable-next-line no-magic-numbers
 const [_OFF, _WARN, _ERROR] = [0, 1, 2];
 const [OFF, , ERROR] = [_OFF, _WARN, _ERROR];
 
@@ -13,8 +14,8 @@ module.exports = {
     'import/no-extraneous-dependencies': [ERROR, { devDependencies: false }],
     'import/consistent-type-specifier-style': [ERROR, 'prefer-top-level'],
     'unused-imports/no-unused-imports': ERROR,
-
     'import/no-duplicates': ERROR,
+    'no-magic-numbers': ERROR,
 
     'no-unreachable': ERROR,
     'require-await': ERROR,

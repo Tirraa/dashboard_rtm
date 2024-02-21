@@ -40,6 +40,7 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict (happy paths)
       TESTING_BLOG_FAKE_SUBCATEGORY,
       'posts' satisfies BlogFakeLanguageType
     );
+    // eslint-disable-next-line no-magic-numbers
     expect(postsCollection.length).toBe(5);
   });
 
@@ -50,6 +51,7 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict (happy paths)
       DEFAULT_LANGUAGE
     );
 
+    // eslint-disable-next-line no-magic-numbers
     expect(postsCollection.length).toBe(4);
   });
 });
@@ -138,12 +140,14 @@ describe('isValidBlogCategoryAndSubcategoryPairInAnyLanguage', () => {
 
 describe('getSlicedBlogPostDescription', () => {
   it('should slice description, given a too long description', () => {
+    // eslint-disable-next-line no-magic-numbers
     const description = '$'.repeat(BlogConfig.BLOG_POST_PREVIEW_DESCRIPTION_CHARACTERS_LIMIT + 1);
     const slicedDescription = getSlicedBlogPostDescription(description);
     expect(slicedDescription.length).toBe(BlogConfig.BLOG_POST_PREVIEW_DESCRIPTION_CHARACTERS_LIMIT);
   });
 
   it("should not slice description, given a description that doesn't exceed the limit", () => {
+    // eslint-disable-next-line no-magic-numbers
     const description = '$'.repeat(BlogConfig.BLOG_POST_PREVIEW_DESCRIPTION_CHARACTERS_LIMIT - 1);
     const slicedDescription = getSlicedBlogPostDescription(description);
     expect(description).toStrictEqual(slicedDescription);
@@ -157,6 +161,7 @@ describe('getAllBlogPostsByCategoryAndLanguage (happy paths)', () => {
       'drafts' as const satisfies BlogFakeLanguageType as any
     )) as BlogPostType[];
 
+    /* eslint-disable no-magic-numbers */
     expect(posts.length).toBe(3);
 
     expect(posts[0].draft).toBe(true);
@@ -203,6 +208,7 @@ describe('getAllBlogPostsByCategoryAndLanguage (happy paths)', () => {
     expect(posts[2].category).toBe(BlogConfig.TESTING_CATEGORY);
     expect(posts[2].slug).toBe('fake-draft-03');
     expect(posts[2].url).toBe('/drafts' + ROUTES_ROOTS.BLOG + `${BlogConfig.TESTING_CATEGORY}/fake-subcategory/fake-draft-03`);
+    /* eslint-enable no-magic-numbers */
   });
 });
 
@@ -214,6 +220,7 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict (happy path
       'posts' as const satisfies BlogFakeLanguageType as any
     );
 
+    /* eslint-disable no-magic-numbers */
     expect(posts.length).toBe(5);
 
     expect(posts[0].draft).toBe(false);
@@ -290,5 +297,6 @@ describe('getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict (happy path
     expect(posts[4].category).toBe(BlogConfig.TESTING_CATEGORY);
     expect(posts[4].slug).toBe(`${INDEX_TOKEN}`);
     expect(posts[4].url).toBe('/posts' + ROUTES_ROOTS.BLOG + `${BlogConfig.TESTING_CATEGORY}/fake-subcategory/${INDEX_TOKEN}`);
+    /* eslint-enable no-magic-numbers */
   });
 });
