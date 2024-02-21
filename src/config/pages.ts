@@ -4,7 +4,7 @@ import type { Page } from 'contentlayer/generated';
 import { allPages } from 'contentlayer/generated';
 
 export type PagesConfigType = {
-  SKIP_SSG: { prefixes: string[]; paths: PagePath[] };
+  SKIP_AUTOMOUNT: { prefixes: string[]; paths: PagePath[] };
   TESTING_ROOT: typeof TESTING_ROOT;
   ENABLE_DRAFTS_IN_PROD: boolean;
   allPages: () => Page[];
@@ -12,7 +12,7 @@ export type PagesConfigType = {
 
 const TESTING_ROOT = 'testing-pages-root' as const satisfies PageRoot;
 const PagesConfig: PagesConfigType = {
-  SKIP_SSG: { paths: ['index'], prefixes: [] },
+  SKIP_AUTOMOUNT: { paths: ['index'], prefixes: [] },
   ENABLE_DRAFTS_IN_PROD: false,
   allPages: () => allPages,
   TESTING_ROOT

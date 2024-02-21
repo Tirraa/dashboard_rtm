@@ -243,8 +243,8 @@ vi.mock('@/config/pages', async (orgImport) => {
   return {
     default: {
       ...mod.default,
+      SKIP_AUTOMOUNT: { prefixes: [], paths: [] },
       allPages: () => data as unknown as Page[],
-      SKIP_SSG: { prefixes: [], paths: [] },
       ENABLE_DRAFTS_IN_PROD: false
     } satisfies PagesConfigType
   };

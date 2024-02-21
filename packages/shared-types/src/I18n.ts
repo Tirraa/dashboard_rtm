@@ -68,7 +68,7 @@ type NamespacesKeys<__VocabType extends UnknownVocabObj = VocabType> = {
 }[keyof __VocabType];
 
 type FlipI18nsBase<I18NS_CONST extends I18nsBase<__VocabType>, __VocabType extends UnknownVocabObj = VocabType> = {
-  [P in keyof I18NS_CONST as I18NS_CONST[P]]: P;
+  [K in keyof I18NS_CONST as I18NS_CONST[K]]: K;
 };
 
 type ExpectedI18nsBaseValues<__VocabType extends UnknownVocabObj = VocabType> = Record<NamespacesKeys<__VocabType>, unknown>;

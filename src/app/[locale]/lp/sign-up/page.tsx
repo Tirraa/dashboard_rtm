@@ -4,9 +4,9 @@
 import type { Page } from 'contentlayer/generated';
 import type { I18nPageProps } from '@/types/Next';
 
-import { getServerSideI18n, getStaticParams } from '@/i18n/server';
 import { setStaticParamsLocale } from 'next-international/server';
 import { getPageByLanguageAndPathStrict } from '@/lib/pages/api';
+import { getStaticParams, getScopedI18n } from '@/i18n/server';
 import MDX from '@/components/layouts/blog/MdxComponent';
 import { buildPageTitle } from '@rtm/shared-lib/str';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
@@ -16,14 +16,13 @@ import { redirect } from 'next/navigation';
 import { i18ns } from '##/config/i18n';
 
 export async function generateMetadata({ params }: I18nPageProps) {
-  const globalT = await getServerSideI18n();
+  const scopedT = await getScopedI18n(i18ns.vocab);
   const language = params[I18nTaxonomy.LANGUAGE];
 
   const document = getPageByLanguageAndPathStrict({ path: 'lp/sign-up', lang: language }) as Page;
 
-  const { vocab } = i18ns;
   const { metadescription: description, title: documentTitle } = document;
-  const title = buildPageTitle(globalT(`${vocab}.brand-short`), documentTitle);
+  const title = buildPageTitle(scopedT('brand-short'), documentTitle);
 
   return { description, title };
 }

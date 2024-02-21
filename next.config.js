@@ -15,12 +15,12 @@ const nextConfig = {
       /* eslint-disable perfectionist/sort-objects */
       {
         source: '/:lng/lp',
-        destination: '/:lng',
+        destination: '/:lng/lp/sign-up',
         permanent: true
       },
       {
         source: '/lp',
-        destination: '/',
+        destination: '/lp/sign-up',
         permanent: true
       }
       /* eslint-enable perfectionist/sort-objects */
