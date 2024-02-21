@@ -40,7 +40,8 @@ describe('sysLpSlugsValidator', () => {
   });
 
   it('should produce an error feedback, given a path to a folder with several invalid lp slugs', async () => {
-    const feedback = await sysLpSlugsValidator(INVALID_LP_FOLDER_CONTAINING_SEVERAL_INVALID_LP_SLUGS);
+    const LIMIT = 36;
+    const feedback = await sysLpSlugsValidator(INVALID_LP_FOLDER_CONTAINING_SEVERAL_INVALID_LP_SLUGS, LIMIT);
     expect(feedback.toLowerCase().includes(INVALID_SLUG_NEEDLE)).toBe(true);
     expect(feedback.toLowerCase().includes(INVALID_SLUGS_NEEDLE)).toBe(true);
   });

@@ -44,7 +44,8 @@ describe('sysPagesValidator', () => {
   });
 
   it('should produce an error feedback, given a path to a folder with several invalid page slugs', async () => {
-    const { feedback } = await sysPagesValidator(INVALID_PAGES_FOLDER_CONTAINING_SEVERAL_INVALID_PAGE_SLUGS);
+    const LIMIT = 36;
+    const { feedback } = await sysPagesValidator(INVALID_PAGES_FOLDER_CONTAINING_SEVERAL_INVALID_PAGE_SLUGS, LIMIT);
     expect(feedback.toLowerCase().includes(INVALID_SLUG_NEEDLE)).toBe(true);
     expect(feedback.toLowerCase().includes(INVALID_SLUGS_NEEDLE)).toBe(true);
   });
