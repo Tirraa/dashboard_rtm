@@ -11,6 +11,8 @@ import { cn } from '@/lib/tailwind';
 
 export interface CopyToClipboardProps extends WithChildren {}
 
+const MS_DELAY = 750;
+
 const CopyToClipboard: FunctionComponent<CopyToClipboardProps> = ({ children }) => {
   const textInputRef = useRef<HTMLDivElement>(null);
   const copyBtnRef = useRef<HTMLButtonElement>(null);
@@ -39,8 +41,6 @@ const CopyToClipboard: FunctionComponent<CopyToClipboardProps> = ({ children }) 
     setCopied(true);
     if (textInputInstance && textInputInstance.textContent !== null) navigator.clipboard.writeText(textInputInstance.textContent);
     if (currentCoroutine) clearTimeout(currentCoroutine);
-
-    const MS_DELAY = 750;
 
     currentCoroutine = setTimeout(() => {
       if (!currentCoroutine) return;

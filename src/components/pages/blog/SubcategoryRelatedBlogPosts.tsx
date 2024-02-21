@@ -30,7 +30,7 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
   const postsCollection: BlogPostType[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(category, subcategory, language);
 
   if (blogSubcategoryShouldTriggerNotFound(postsCollection)) notFound();
-  // eslint-disable-next-line no-magic-numbers
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   else if (postsCollection.length === 0) return <BlogPostsNotFound />;
 
   const narrowedCategoryAndSubcategoryAssoc = `${category}.${subcategory}` as BlogCategoriesAndSubcategoriesAssoc;

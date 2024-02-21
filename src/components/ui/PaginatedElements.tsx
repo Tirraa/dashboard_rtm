@@ -30,9 +30,9 @@ export interface PaginatedElementsProps extends PaginatedElementsBodyWrapperProp
 }
 
 function initializeCurrentPage(pageFromUrl: number, maxPage: number) {
-  // eslint-disable-next-line no-magic-numbers
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (isNaN(pageFromUrl)) return 1;
-  // eslint-disable-next-line no-magic-numbers
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (pageFromUrl < 1) return 1;
   if (pageFromUrl > maxPage) return maxPage;
   return pageFromUrl;
@@ -54,14 +54,14 @@ const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   useEffect(() => setIsMounted(true), []);
   const dir = isMounted ? getDirection() : 'ltr';
 
-  // eslint-disable-next-line no-magic-numbers
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const pagesRange = pagesRangeValue ?? 3;
 
   const pagesAmount = forcedPagesAmount ?? computePagesAmount(paginatedElements.length, elementsPerPage);
   const unsafePageFromUrl = searchParams.get('page');
   const pageFromUrl = initializeCurrentPage(Number(unsafePageFromUrl), pagesAmount);
 
-  // eslint-disable-next-line no-magic-numbers
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const startIndex = (pageFromUrl - 1) * elementsPerPage;
   const endIndex = startIndex + elementsPerPage;
   const currentElements = paginatedElements.slice(startIndex, endIndex);
@@ -74,7 +74,7 @@ const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   const nextAndPrevIconsClassList = 'w-10 h-10 lg:w-8 lg:h-7 flex items-centers justify-center bg-accent rounded-md';
 
   function handlePageClick(event: { selected: number }) {
-    // eslint-disable-next-line no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const page = event.selected + 1;
     const q = createURLSearchParams({ page });
     router.push(q, { scroll: false });
@@ -95,7 +95,7 @@ const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
           </span>
         }
         nextLinkClassName={cn('flex items-center justify-center rounded-md', { 'pointer-events-none opacity-50': pageFromUrl >= pagesAmount })}
-        // eslint-disable-next-line no-magic-numbers
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         previousLinkClassName={cn('flex items-center justify-center rounded-md', { 'pointer-events-none opacity-50': pageFromUrl <= 1 })}
         pageLinkClassName="flex items-center justify-center hover:bg-accent p-2 px-4 lg:p-1 lg:px-3 rounded-md"
         ariaLabelBuilder={(pageNumber) => `${capitalize(scopedT('page'))} ${pageNumber}`}
@@ -106,7 +106,7 @@ const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
         previousAriaLabel={scopedT('prev')}
         nextAriaLabel={scopedT('next')}
         onPageChange={handlePageClick}
-        // eslint-disable-next-line no-magic-numbers
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         forcePage={pageFromUrl - 1}
         pageCount={pagesAmount}
         breakLabel="..."

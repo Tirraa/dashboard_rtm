@@ -34,7 +34,7 @@ export default makeSource({
         rehypePrettyCode,
         {
           onVisitLine(node: hASTElement) {
-            // eslint-disable-next-line no-magic-numbers
+            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
             if (node.children.length === 0) node.children = [{ type: 'text', value: ' ' }];
           },
           onVisitHighlightedLine(node: hASTElement) {

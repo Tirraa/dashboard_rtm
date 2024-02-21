@@ -26,7 +26,7 @@ const { isNotActiveClassList, isActiveClassList } = SidebarButtonStyle;
 
 function sidebarBtnsGenerator(currentPathname: AppPath): ReactNode[] {
   const keys = Object.keys(DASHBOARD_ROUTES_SIDEBAR_COMPONENTS);
-  // eslint-disable-next-line no-magic-numbers
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const lastKey = keys[keys.length - 1];
   const sidebarBtnsSeparator = <hr className="m-auto my-2 hidden w-5/6 lg:block" />;
 

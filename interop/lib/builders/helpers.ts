@@ -6,7 +6,7 @@ import { ForbiddenToUseIndexError, getPathWithoutExtension, indexOfNthOccurrence
 function throwIfForbiddenToUseIndexError(sourceFilePath: string, minRequiredSlashAmount: number) {
   const filepathWithoutExt = getPathWithoutExtension(sourceFilePath);
 
-  // eslint-disable-next-line no-magic-numbers
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (filepathWithoutExt.endsWith(INDEX_TOKEN) && indexOfNthOccurrence(filepathWithoutExt, '/', minRequiredSlashAmount) === -1) {
     throw new ForbiddenToUseIndexError();
   }
@@ -15,13 +15,13 @@ function throwIfForbiddenToUseIndexError(sourceFilePath: string, minRequiredSlas
 /**
  * @throws {ForbiddenToUseIndexError}
  */
-// eslint-disable-next-line no-magic-numbers
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
 export const throwIfForbiddenToUseIndexErrorBlogCtx = (sourceFilePath: string) => throwIfForbiddenToUseIndexError(sourceFilePath, 3);
 
 /**
  * @throws {ForbiddenToUseIndexError}
  */
-// eslint-disable-next-line no-magic-numbers
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
 export const throwIfForbiddenToUseIndexErrorLpCtx = (sourceFilePath: string) => throwIfForbiddenToUseIndexError(sourceFilePath, 2);
 
 export function getPathWithIndexSuffix(path: string, sourceFilePath: string): string {

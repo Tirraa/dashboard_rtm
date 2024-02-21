@@ -7,7 +7,7 @@ import { throwIfForbiddenToUseIndexErrorBlogCtx, getFlattenedPathWithoutRootFold
  * @throws {InvalidArgumentsError}
  */
 function buildBlogPostCategoryFromStr(path: string): BlogCategory {
-  // eslint-disable-next-line no-magic-numbers
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const categBuilder = (path: string, firstSlashIndex: number): BlogCategory => path.substring(0, firstSlashIndex) as BlogCategory;
 
   const firstSlashIndex = path.indexOf('/');

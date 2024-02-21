@@ -13,14 +13,14 @@ import {
 function buildBlogPostLanguageFlagFromStr(path: string, sourceFilePath: string): LanguageFlag | string {
   const transformedPath = getPathWithIndexSuffix(path, sourceFilePath);
 
-  // eslint-disable-next-line no-magic-numbers
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const envelopeBeginSlashIndex = indexOfNthOccurrence(transformedPath, '/', 2);
-  // eslint-disable-next-line no-magic-numbers
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const envelopeEndSlashIndex = indexOfNthOccurrence(transformedPath, '/', 3);
 
-  // eslint-disable-next-line no-magic-numbers
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (envelopeBeginSlashIndex !== -1 && envelopeEndSlashIndex !== -1) {
-    // eslint-disable-next-line no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const language = transformedPath.substring(envelopeBeginSlashIndex + 1, envelopeEndSlashIndex);
     return language;
   }

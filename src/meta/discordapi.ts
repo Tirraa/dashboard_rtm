@@ -9,6 +9,8 @@ export interface IDiscordApi {
   getFreshProfile(sub: string): Promise<FreshProfile>;
 }
 
+const MAX_DEFAULT_AVATAR_ID = 6;
+
 class DiscordApi implements IDiscordApi {
   async getFreshProfile(sub: string): Promise<FreshProfile> {
     try {
@@ -21,8 +23,7 @@ class DiscordApi implements IDiscordApi {
     } catch {
       const cachedURL = await bentocache.get(keysFactory.discordProfilePicture(sub));
       if (cachedURL) return { avatar: cachedURL, id: sub };
-      const MAX = 6;
-      const randint = Math.floor(Math.random() * MAX);
+      const randint = Math.floor(Math.random() * MAX_DEFAULT_AVATAR_ID);
       return { avatar: `https://cdn.discordapp.com/embed/avatars/${randint}.png`, epicFail: true, id: sub };
     }
   }

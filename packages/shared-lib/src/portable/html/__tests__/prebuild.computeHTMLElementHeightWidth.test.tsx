@@ -39,9 +39,9 @@ describe('computeHTMLElementHeight/computeHTMLElementWidth', () => {
   });
 
   it('should return the correct height/width of an element', () => {
-    // eslint-disable-next-line no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     expect(computeHTMLElementHeight(fakeElement)).toBe(2165);
-    // eslint-disable-next-line no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     expect(computeHTMLElementWidth(fakeElement)).toBe(3730);
   });
 });

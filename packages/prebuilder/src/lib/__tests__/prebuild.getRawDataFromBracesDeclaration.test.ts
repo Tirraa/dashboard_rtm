@@ -39,11 +39,11 @@ describe('getRawDataFromBracesDeclaration', () => {
 
   it('should pass, given any string, with startIndex', () => {
     const padding_1 = ' ';
-    // eslint-disable-next-line no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const padding_2 = ' '.repeat(2);
-    // eslint-disable-next-line no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const padding_3 = ' '.repeat(3);
-    // eslint-disable-next-line no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const padding_4 = ' '.repeat(4);
 
     expect(getRawDataFromBracesDeclaration(padding_1 + '{}', padding_1.length)).toBe('');
@@ -55,7 +55,7 @@ describe('getRawDataFromBracesDeclaration', () => {
     expect(getRawDataFromBracesDeclaration(padding_1 + JSON.stringify(OBJ_C), padding_1.length)).toBe(
       '"baz":{"foo":"bar","bar":"foo"},"bar":{"foo":"foo","bar":"bar"},"foo":"bar"'
     );
-    // eslint-disable-next-line no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     expect(getRawDataFromBracesDeclaration(`{foo:{bar: 'baz';}}`, 1)).toBe("bar: 'baz';");
   });
 });

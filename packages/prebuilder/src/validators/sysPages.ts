@@ -18,7 +18,7 @@ function buildSlugsFeedback(foldersWithDefects: Record<Path, Filename[]>) {
     feedback +=
       formatMessage('invalidSlugs' satisfies VocabKey, { count: defects.length, folderWithDefects }) +
       ' ' +
-      // eslint-disable-next-line no-magic-numbers
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       (defects.length === 1 ? `${defects}` : `${LIST_ELEMENT_PREFIX}${defects.join(LIST_ELEMENT_PREFIX)}`) +
       '\n' +
       formatMessage('pagesNamingConstraint' satisfies VocabKey) +
@@ -28,12 +28,12 @@ function buildSlugsFeedback(foldersWithDefects: Record<Path, Filename[]>) {
 }
 
 function buildNestingsFeedback(nestingsDefects: Path[]): MaybeEmptyErrorsDetectionFeedback {
-  // eslint-disable-next-line no-magic-numbers
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (nestingsDefects.length <= 0) return '';
   const feedback =
     formatMessage('invalidNestings' satisfies VocabKey, { count: nestingsDefects.length }) +
     ' ' +
-    // eslint-disable-next-line no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     (nestingsDefects.length === 1 ? `${nestingsDefects}` : `${LIST_ELEMENT_PREFIX}${nestingsDefects.join(LIST_ELEMENT_PREFIX)}`) +
     '\n' +
     formatMessage('pagesNamingConstraint' satisfies VocabKey) +
@@ -56,7 +56,7 @@ export default async function sysPagesValidator(pagesFolder: Path): Promise<{
     for (let i = 0; i < directoriesChain.length; i++) {
       const currentNesting = directoriesChain[i];
       if (!isValidPageTaxonomy(currentNesting)) {
-        // eslint-disable-next-line no-magic-numbers
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         const currentPath = path.join(pagesFolderPrefix, ...directoriesChain.slice(0, i + 1));
         nestingsDefects.add(currentPath + ' ' + '(' + currentNesting + ')');
       }
@@ -64,9 +64,9 @@ export default async function sysPagesValidator(pagesFolder: Path): Promise<{
 
     if (!filename.endsWith(PAGE_FILE_EXT)) continue;
 
-    // eslint-disable-next-line no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const currentSlugPath = directoriesChain.length <= 0 ? path.normalize(pagesFolderPrefix) : path.join(pagesFolderPrefix, ...directoriesChain);
-    // eslint-disable-next-line no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const slug = filename.slice(0, -PAGE_FILE_EXT.length);
     if (!isValidPageTaxonomy(slug)) {
       if (foldersWithSlugDefects[currentSlugPath] === undefined) foldersWithSlugDefects[currentSlugPath] = [];

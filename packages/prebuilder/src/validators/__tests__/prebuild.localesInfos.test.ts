@@ -36,7 +36,7 @@ describe('localesInfosValidator', () => {
   });
 
   it('should throw ENOENT, given invalid localesFolder', async () => {
-    // eslint-disable-next-line no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     expect.assertions(2);
 
     try {

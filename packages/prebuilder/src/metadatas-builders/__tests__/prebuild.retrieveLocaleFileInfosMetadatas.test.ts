@@ -15,7 +15,7 @@ const INVALID_I18N_LOCALE_FILEPATH_EMPTY_INFOS =
 
 describe('retrieveLocaleFileInfosMetadatas', () => {
   it('should throw ENOENT, given invalid locale filepath', async () => {
-    // eslint-disable-next-line no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     expect.assertions(1);
 
     try {

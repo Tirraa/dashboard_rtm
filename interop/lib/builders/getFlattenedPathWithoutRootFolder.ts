@@ -5,17 +5,17 @@ import { InvalidArgumentsError } from './unifiedImport';
  */
 function getFlattenedPathWithUnkownRootFolder(flattenedPath: string) {
   const firstSlashIndex = flattenedPath.indexOf('/');
-  // eslint-disable-next-line no-magic-numbers
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (firstSlashIndex === -1 || flattenedPath.length - 1 <= firstSlashIndex) {
     throw new InvalidArgumentsError(
       getFlattenedPathWithUnkownRootFolder.name,
       { flattenedPath },
-      // eslint-disable-next-line no-magic-numbers
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       (firstSlashIndex === -1 ? "Can't find any '/' in flattenedPath" : "Can't find anything after the first '/' in flattenedPath") +
         ". Maybe you just don't need to use this function?"
     );
   }
-  // eslint-disable-next-line no-magic-numbers
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   return flattenedPath.substring(firstSlashIndex + 1);
 }
 

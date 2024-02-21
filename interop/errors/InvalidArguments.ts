@@ -6,7 +6,7 @@ class InvalidArgumentsError extends Error {
   constructor(method: string, args: object, hint: string = '') {
     const _hint = hint.trim();
     const message =
-      // eslint-disable-next-line no-magic-numbers
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       `Impossible to ${method} with:\n${JSON.stringify(args, null, 2)}` +
       (_hint ? '\n' + _hint + (!endsWithChars(_hint, PUNCTUATION) ? '.' : '') : '');
     super(message);

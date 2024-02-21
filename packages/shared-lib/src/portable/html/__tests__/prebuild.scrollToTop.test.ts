@@ -11,7 +11,7 @@ describe('scrollToTop', () => {
 
   it('should call window.scrollTo with 0, 0', () => {
     scrollToTop();
-    // eslint-disable-next-line no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     expect(global.scrollTo).toHaveBeenCalledWith(0, 0);
   });
 
@@ -20,7 +20,7 @@ describe('scrollToTop', () => {
     const spy = vi.spyOn(fakeDiv, 'scrollTo');
 
     scrollToTop(fakeDiv);
-    // eslint-disable-next-line no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     expect(spy).toHaveBeenCalledWith(0, 0);
   });
 });

@@ -3,7 +3,7 @@
 
 class ContentlayerDuplicateTypesError extends Error {
   constructor(duplicates: unknown[]) {
-    // eslint-disable-next-line no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     super(`[${duplicates.join(', ')}] ${duplicates.length > 1 ? 'are' : 'is'} defined several times.`);
     this.name = 'ContentlayerDuplicateTypesError';
   }

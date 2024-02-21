@@ -16,7 +16,7 @@ export default async function sysBlogSlugsValidator(postsFolder: Path): Promise<
     const maybeSlug = filename;
     if (!maybeSlug.endsWith(BLOG_POST_FILE_EXT)) continue;
 
-    // eslint-disable-next-line no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const slug = maybeSlug.slice(0, -BLOG_POST_FILE_EXT.length);
     if (!isValidBlogTaxonomy(slug)) {
       if (!foldersWithDefects[directory]) foldersWithDefects[directory] = [];
@@ -29,7 +29,7 @@ export default async function sysBlogSlugsValidator(postsFolder: Path): Promise<
     feedback +=
       formatMessage('invalidSlugs' satisfies VocabKey, { count: defects.length, folderWithDefects }) +
       ' ' +
-      // eslint-disable-next-line no-magic-numbers
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       (defects.length === 1 ? `${defects}` : `${LIST_ELEMENT_PREFIX}${defects.join(LIST_ELEMENT_PREFIX)}`) +
       '\n' +
       formatMessage('blogNamingConstraint' satisfies VocabKey) +

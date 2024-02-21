@@ -27,6 +27,8 @@ export async function generateStaticParams() {
   return staticParams;
 }
 
+const CUSTOM_CRUMB_MIN_DEPTH = 3;
+
 export default async function Page({ params }: BlogPostPageProps) {
   const language = params[I18nTaxonomy.LANGUAGE];
   setStaticParamsLocale(language);
@@ -36,9 +38,8 @@ export default async function Page({ params }: BlogPostPageProps) {
   const post: MaybeNull<BlogPostType> = await getBlogPostUnstrict(category, subcategory, slug, language);
   if (!post) notFound();
 
-  const MIN_DEPTH = 3;
-  // eslint-disable-next-line no-magic-numbers
-  const depth = countCharacter(ROUTES_ROOTS.BLOG, '/') - 1 + MIN_DEPTH;
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const depth = countCharacter(ROUTES_ROOTS.BLOG, '/') - 1 + CUSTOM_CRUMB_MIN_DEPTH;
 
   return (
     <>

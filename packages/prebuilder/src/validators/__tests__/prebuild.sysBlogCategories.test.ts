@@ -19,7 +19,7 @@ const EMPTY_FEEDBACK = '';
 
 describe('sysBlogCategoriesValidator', () => {
   it('should throw ENOENT, given invalid path', async () => {
-    // eslint-disable-next-line no-magic-numbers
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     expect.assertions(1);
 
     try {
