@@ -1,15 +1,18 @@
 import type { MaybeEmptyErrorsDetectionFeedback, BlogSubcategory, BlogCategory, Path } from '../types/Metadatas';
 import type { VocabKey } from '../config/translations';
 
+import { MAX_BLOG_TAXONOMY_LEN, LIST_ELEMENT_PREFIX } from '../config';
 import { isValidBlogTaxonomy } from './taxonomyConvention';
 import formatMessage from '../config/formatMessage';
-import { LIST_ELEMENT_PREFIX } from '../config';
 
 // https://github.com/vitest-dev/vitest/discussions/2484
 const fs = require('fs/promises');
 const path = require('path');
 
-export default async function sysBlogSubcategoriesValidator(postsFolder: Path): Promise<MaybeEmptyErrorsDetectionFeedback> {
+export default async function sysBlogSubcategoriesValidator(
+  postsFolder: Path,
+  __MAX_LEN: number = MAX_BLOG_TAXONOMY_LEN
+): Promise<MaybeEmptyErrorsDetectionFeedback> {
   let feedback = '';
 
   const categoriesWithDefects: Record<BlogCategory, BlogSubcategory[]> = {};
@@ -23,7 +26,7 @@ export default async function sysBlogSubcategoriesValidator(postsFolder: Path): 
     for (const maybeSubcategory of maybeSubcategories) {
       if (!maybeSubcategory.isDirectory()) continue;
       const subcategory = maybeSubcategory.name;
-      if (!isValidBlogTaxonomy(subcategory)) {
+      if (!isValidBlogTaxonomy(subcategory, __MAX_LEN)) {
         if (categoriesWithDefects[category] === undefined) categoriesWithDefects[category] = [];
         categoriesWithDefects[category].push(subcategory);
       }

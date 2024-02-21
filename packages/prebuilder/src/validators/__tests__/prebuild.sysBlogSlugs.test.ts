@@ -40,7 +40,8 @@ describe('sysBlogSlugsValidator', () => {
   });
 
   it('should produce an error feedback, given a path to a folder with several invalid blog slugs', async () => {
-    const feedback = await sysBlogSlugsValidator(INVALID_BLOG_POSTS_FOLDER_CONTAINING_SEVERAL_INVALID_BLOG_SLUGS);
+    const LIMIT = 36;
+    const feedback = await sysBlogSlugsValidator(INVALID_BLOG_POSTS_FOLDER_CONTAINING_SEVERAL_INVALID_BLOG_SLUGS, LIMIT);
     expect(feedback.toLowerCase().includes(INVALID_SLUG_NEEDLE)).toBe(true);
     expect(feedback.toLowerCase().includes(INVALID_SLUGS_NEEDLE)).toBe(true);
   });

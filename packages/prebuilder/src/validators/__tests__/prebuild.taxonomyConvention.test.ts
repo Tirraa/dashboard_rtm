@@ -2,12 +2,11 @@
 import { describe, expect, it } from 'vitest';
 
 import { isValidBlogTaxonomy, isValidPageTaxonomy, isValidLpTaxonomy } from '../taxonomyConvention';
-import { MAX_BLOG_TAXONOMY_LEN, MAX_PAGE_TAXONOMY_LEN, MAX_LP_TAXONOMY_LEN } from '../../config';
 
 describe('isValidPageTaxonomy', () => {
   it('should return false, given invalid taxonomies', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const tooLong = 'w'.repeat(MAX_PAGE_TAXONOMY_LEN + 1);
+    const TOO_LONG_SIZE = 3;
+    const tooLong = 'w'.repeat(TOO_LONG_SIZE);
 
     expect(isValidPageTaxonomy('_$!§%&/()=?')).toBe(false);
     expect(isValidPageTaxonomy('0_$!§%&/()=?')).toBe(false);
@@ -15,7 +14,8 @@ describe('isValidPageTaxonomy', () => {
     expect(isValidPageTaxonomy('_foo-bar_$!§%&/()=?')).toBe(false);
     expect(isValidPageTaxonomy('_foo-bar')).toBe(false);
     expect(isValidPageTaxonomy('$foo-bar')).toBe(false);
-    expect(isValidPageTaxonomy(tooLong)).toBe(false);
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    expect(isValidPageTaxonomy(tooLong, TOO_LONG_SIZE - 1)).toBe(false);
   });
 
   it('should return true, given valid taxonomies', () => {
@@ -26,8 +26,8 @@ describe('isValidPageTaxonomy', () => {
 
 describe('isValidBlogTaxonomy', () => {
   it('should return false, given invalid taxonomies', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const tooLong = 'w'.repeat(MAX_BLOG_TAXONOMY_LEN + 1);
+    const TOO_LONG_SIZE = 3;
+    const tooLong = 'w'.repeat(TOO_LONG_SIZE);
 
     expect(isValidBlogTaxonomy('_$!§%&/()=?')).toBe(false);
     expect(isValidBlogTaxonomy('0_$!§%&/()=?')).toBe(false);
@@ -35,7 +35,8 @@ describe('isValidBlogTaxonomy', () => {
     expect(isValidBlogTaxonomy('_foo-bar_$!§%&/()=?')).toBe(false);
     expect(isValidBlogTaxonomy('_foo-bar')).toBe(false);
     expect(isValidBlogTaxonomy('$foo-bar')).toBe(false);
-    expect(isValidBlogTaxonomy(tooLong)).toBe(false);
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    expect(isValidBlogTaxonomy(tooLong, TOO_LONG_SIZE - 1)).toBe(false);
   });
 
   it('should return true, given valid taxonomies', () => {
@@ -46,8 +47,8 @@ describe('isValidBlogTaxonomy', () => {
 
 describe('isValidLpTaxonomy', () => {
   it('should return false, given invalid taxonomies', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const tooLong = 'w'.repeat(MAX_LP_TAXONOMY_LEN + 1);
+    const TOO_LONG_SIZE = 3;
+    const tooLong = 'w'.repeat(TOO_LONG_SIZE);
 
     expect(isValidLpTaxonomy('_$!§%&/()=?')).toBe(false);
     expect(isValidLpTaxonomy('0_$!§%&/()=?')).toBe(false);
@@ -55,7 +56,8 @@ describe('isValidLpTaxonomy', () => {
     expect(isValidLpTaxonomy('_foo-bar_$!§%&/()=?')).toBe(false);
     expect(isValidLpTaxonomy('_foo-bar')).toBe(false);
     expect(isValidLpTaxonomy('$foo-bar')).toBe(false);
-    expect(isValidLpTaxonomy(tooLong)).toBe(false);
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    expect(isValidLpTaxonomy(tooLong, TOO_LONG_SIZE - 1)).toBe(false);
   });
 
   it('should return true, given valid taxonomies', () => {

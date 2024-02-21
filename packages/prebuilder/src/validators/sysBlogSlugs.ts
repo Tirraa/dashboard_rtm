@@ -1,12 +1,15 @@
 import type { MaybeEmptyErrorsDetectionFeedback, Filename, Path } from '../types/Metadatas';
 import type { VocabKey } from '../config/translations';
 
+import { MAX_BLOG_TAXONOMY_LEN, LIST_ELEMENT_PREFIX, BLOG_POST_FILE_EXT } from '../config';
 import traverseAndMapFilepaths from '../lib/traverseAndMapFilepaths';
-import { LIST_ELEMENT_PREFIX, BLOG_POST_FILE_EXT } from '../config';
 import { isValidBlogTaxonomy } from './taxonomyConvention';
 import formatMessage from '../config/formatMessage';
 
-export default async function sysBlogSlugsValidator(postsFolder: Path): Promise<MaybeEmptyErrorsDetectionFeedback> {
+export default async function sysBlogSlugsValidator(
+  postsFolder: Path,
+  __MAX_LEN: number = MAX_BLOG_TAXONOMY_LEN
+): Promise<MaybeEmptyErrorsDetectionFeedback> {
   let feedback = '';
 
   const foldersWithDefects: Record<Path, Filename[]> = {};
@@ -18,7 +21,7 @@ export default async function sysBlogSlugsValidator(postsFolder: Path): Promise<
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const slug = maybeSlug.slice(0, -BLOG_POST_FILE_EXT.length);
-    if (!isValidBlogTaxonomy(slug)) {
+    if (!isValidBlogTaxonomy(slug, __MAX_LEN)) {
       if (!foldersWithDefects[directory]) foldersWithDefects[directory] = [];
       foldersWithDefects[directory].push(slug);
     }

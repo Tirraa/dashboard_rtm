@@ -1,14 +1,17 @@
 import type { MaybeEmptyErrorsDetectionFeedback, Path } from '../types/Metadatas';
 import type { VocabKey } from '../config/translations';
 
+import { MAX_BLOG_TAXONOMY_LEN, LIST_ELEMENT_PREFIX } from '../config';
 import { isValidBlogTaxonomy } from './taxonomyConvention';
 import formatMessage from '../config/formatMessage';
-import { LIST_ELEMENT_PREFIX } from '../config';
 
 // https://github.com/vitest-dev/vitest/discussions/2484
 const fs = require('fs/promises');
 
-export default async function sysBlogCategoriesValidator(postsFolder: Path): Promise<MaybeEmptyErrorsDetectionFeedback> {
+export default async function sysBlogCategoriesValidator(
+  postsFolder: Path,
+  __MAX_LEN: number = MAX_BLOG_TAXONOMY_LEN
+): Promise<MaybeEmptyErrorsDetectionFeedback> {
   let feedback = '';
 
   const categoriesWithDefects = [];
@@ -17,7 +20,7 @@ export default async function sysBlogCategoriesValidator(postsFolder: Path): Pro
   for (const maybeCategory of maybeCategories) {
     if (!maybeCategory.isDirectory()) continue;
     const category = maybeCategory.name;
-    if (!isValidBlogTaxonomy(category)) categoriesWithDefects.push(category);
+    if (!isValidBlogTaxonomy(category, __MAX_LEN)) categoriesWithDefects.push(category);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers

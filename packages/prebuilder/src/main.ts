@@ -289,11 +289,17 @@ function getLpFeedbackPromise(NO_LP: boolean, LP_FOLDER: Path) {
   return lpFeedbackPromise;
 }
 
+/**
+ * @throws {FeedbackError}
+ */
 async function localesValidationProcedure(localesFolder: Path, I18N_LOCALES_SCHEMA_FILEPATH: Path) {
   const localesValidatorFeedback = await validateLocales(localesFolder, I18N_LOCALES_SCHEMA_FILEPATH);
   if (localesValidatorFeedback) throw new FeedbackError(localesValidatorFeedback);
 }
 
+/**
+ * @throws {FeedbackError}
+ */
 async function pagesGenerationProcedure(NO_PAGES: boolean, PAGES_FOLDER: Path, PRETTY_CODEGEN: boolean) {
   const pagesFeedbackPromise = getPagesFeedbackPromise(NO_PAGES, PAGES_FOLDER);
   const pagesCheckerResult = await pagesFeedbackPromise;
@@ -309,6 +315,9 @@ async function pagesGenerationProcedure(NO_PAGES: boolean, PAGES_FOLDER: Path, P
   await generatePagesCode(pagesArborescence, PRETTY_CODEGEN);
 }
 
+/**
+ * @throws {FeedbackError}
+ */
 async function blogGenerationProcedure(NO_BLOG: boolean, BLOG_POSTS_FOLDER: Path, PRETTY_CODEGEN: boolean) {
   const blogFeedbackPromise = getBlogFeedbackPromise(NO_BLOG, BLOG_POSTS_FOLDER);
   const blogFeedback = await blogFeedbackPromise;
@@ -320,6 +329,9 @@ async function blogGenerationProcedure(NO_BLOG: boolean, BLOG_POSTS_FOLDER: Path
   await generateBlogCode(BLOG_POSTS_FOLDER, PRETTY_CODEGEN);
 }
 
+/**
+ * @throws {FeedbackError}
+ */
 async function lpGenerationProcedure(NO_LP: boolean, LP_FOLDER: Path, PRETTY_CODEGEN: boolean) {
   const lpFeedbackPromise = getLpFeedbackPromise(NO_LP, LP_FOLDER);
   const lpFeedback = await lpFeedbackPromise;
@@ -331,6 +343,9 @@ async function lpGenerationProcedure(NO_LP: boolean, LP_FOLDER: Path, PRETTY_COD
   await generateLpCode(LP_FOLDER, PRETTY_CODEGEN);
 }
 
+/**
+ * @throws {FeedbackError}
+ */
 async function genLoop(
   NO_BLOG: boolean,
   NO_LP: boolean,
