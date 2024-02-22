@@ -4,13 +4,13 @@
 import type { Page } from 'contentlayer/generated';
 import type { I18nPageProps } from '@/types/Next';
 
+import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
 import { setStaticParamsLocale } from 'next-international/server';
 import { getPageByLanguageAndPathStrict } from '@/lib/pages/api';
 import { MAIN_CLS } from '@/components/config/styles/main';
 import MDX from '@/components/layouts/blog/MdxComponent';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
-import { buildPageTitle } from '@rtm/shared-lib/str';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 

@@ -12,12 +12,9 @@ import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getScopedI18n } from '@/i18n/server';
-import GithubSlugger from 'github-slugger';
 import { notFound } from 'next/navigation';
 import { i18ns } from '##/config/i18n';
 import BlogConfig from '@/config/blog';
-
-const slugger = new GithubSlugger();
 
 const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> = async ({ params }) => {
   const [category, subcategory, language] = [params[BlogTaxonomy.CATEGORY], params[BlogTaxonomy.SUBCATEGORY], params[I18nTaxonomy.LANGUAGE]];
@@ -34,10 +31,7 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
   else if (postsCollection.length === 0) return <BlogPostsNotFound />;
 
   const narrowedCategoryAndSubcategoryAssoc = `${category}.${subcategory}` as BlogCategoriesAndSubcategoriesAssoc;
-  const [title, curSubcategTitle] = [
-    scopedT(`${narrowedCategoryAndSubcategoryAssoc}.title`),
-    scopedT(`${narrowedCategoryAndSubcategoryAssoc}.title`)
-  ];
+  const title = scopedT(`${narrowedCategoryAndSubcategoryAssoc}.title`);
 
   const paginatedElements = postsCollection
     .sort((post1, post2) =>
@@ -46,7 +40,7 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
     .map((post) => <BlogPostPreview key={`${post._raw.flattenedPath}-paginated-blog-post`} language={language} post={post} />);
 
   return (
-    <section id={slugger.slug(curSubcategTitle)} className="w-full">
+    <section className="w-full">
       <h1 className="mb-2 ltr:text-left rtl:text-right">{title}</h1>
       {/* {ToDo} https://github.com/Tirraa/dashboard_rtm/issues/41 */}
       <MaybePaginatedElements

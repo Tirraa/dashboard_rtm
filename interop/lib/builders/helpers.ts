@@ -3,11 +3,11 @@ import { ForbiddenToUseIndexError, getPathWithoutExtension, indexOfNthOccurrence
 /**
  * @throws {ForbiddenToUseIndexError}
  */
-function throwIfForbiddenToUseIndexError(sourceFilePath: string, minRequiredSlashAmount: number) {
+function throwIfForbiddenToUseIndexError(sourceFilePath: string, minRequiredSlashesAmount: number) {
   const filepathWithoutExt = getPathWithoutExtension(sourceFilePath);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  if (filepathWithoutExt.endsWith(INDEX_TOKEN) && indexOfNthOccurrence(filepathWithoutExt, '/', minRequiredSlashAmount) === -1) {
+  if (filepathWithoutExt.endsWith(INDEX_TOKEN) && indexOfNthOccurrence(filepathWithoutExt, '/', minRequiredSlashesAmount) === -1) {
     throw new ForbiddenToUseIndexError();
   }
 }

@@ -3,7 +3,7 @@
 import type { WithChildren } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
-import { getRefCurrentPtr } from '@rtm/shared-lib/react';
+import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
 import { getClientSideI18n } from '@/i18n/client';
 import { useState, useRef } from 'react';
 import { i18ns } from '##/config/i18n';

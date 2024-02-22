@@ -3,8 +3,8 @@
 
 import type { PageProps } from '@/types/Page';
 
+import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
 import PageTaxonomy from '##/config/taxonomies/pages';
-import { buildPageTitle } from '@rtm/shared-lib/str';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSideI18n } from '@/i18n/server';
 import { notFound } from 'next/navigation';

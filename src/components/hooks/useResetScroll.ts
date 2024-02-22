@@ -1,7 +1,7 @@
 import type { HookDepsArrayPrimitives } from '@rtm/shared-types/React';
 import type { RefObject } from 'react';
 
-import { resetScroll } from '@rtm/shared-lib/html';
+import resetScroll from '@rtm/shared-lib/portable/html/resetScroll';
 import { useLayoutEffect } from 'react';
 
 interface ResetScrollOptions {

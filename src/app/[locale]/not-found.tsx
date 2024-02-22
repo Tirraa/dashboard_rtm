@@ -4,9 +4,9 @@
 import type { I18nParams } from '@/types/Next';
 
 import PagesRootElement from '@/components/layouts/base/PagesRootElement';
+import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
 import { getCurrentLocale, getScopedI18n } from '@/i18n/server';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
-import { buildPageTitle } from '@rtm/shared-lib/str';
 import NotFound from '@/components/pages/Notfound';
 import { i18ns } from '##/config/i18n';
 

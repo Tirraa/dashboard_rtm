@@ -5,7 +5,7 @@ import type { AtomicNavDataEntity } from '@/types/NavData';
 import type { AppPath } from '@rtm/shared-types/Next';
 
 import NavbarButtonStyle from '@/components/config/styles/navbar/NavbarButtonStyle';
-import { getLinkTarget } from '@rtm/shared-lib/react';
+import getLinkTarget from '@rtm/shared-lib/portable/react/getLinkTarget';
 import { getClientSideI18n } from '@/i18n/client';
 import { Button } from '@/components/ui/Button';
 import { hrefMatchesPathname } from '@/lib/str';

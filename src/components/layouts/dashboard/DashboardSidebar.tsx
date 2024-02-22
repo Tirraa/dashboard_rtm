@@ -8,8 +8,8 @@ import { computeHTMLElementHeight, computeHTMLElementWidth, getDirection } from 
 import DASHBOARD_ROUTES, { DASHBOARD_ROUTES_TITLES } from '@/config/DashboardSidebar/routesImpl';
 import DASHBOARD_ROUTES_SIDEBAR_COMPONENTS from '@/config/DashboardSidebar/utils/IconsMapping';
 import SidebarButtonStyle from '@/components/config/styles/sidebar/SidebarButtonStyle';
+import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
 import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
-import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { useMediaQuery } from '@react-hook/media-query';
 import { useEffect, useState, useRef } from 'react';
 import { getBreakpoint, cn } from '@/lib/tailwind';

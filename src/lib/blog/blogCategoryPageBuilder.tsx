@@ -2,11 +2,11 @@ import type { BlogCategoriesAndSubcategoriesAssoc, BlogSubcategoryFromUnknownCat
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { ReactElement, ReactNode } from 'react';
 
+import buildPathFromParts from '@rtm/shared-lib/portable/str/buildPathFromParts';
 import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
 import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
-import { buildPathFromParts } from '@rtm/shared-lib/str';
 import { getServerSideI18n } from '@/i18n/server';
 import { Button } from '@/components/ui/Button';
 import GithubSlugger from 'github-slugger';

@@ -1,10 +1,10 @@
-import type { MiddlewareFactory, AppPath } from '@rtm/shared-types/Next';
+import type { MiddlewareFactory } from '@rtm/shared-types/Next';
 import type { NextMiddleware, NextRequest } from 'next/server';
 import type { NextFont } from 'next/dist/compiled/@next/font';
 
 import { NextResponse } from 'next/server';
 
-import { getPathnameWithoutI18nFlag, getPathnameMaybeI18nFlag } from './i18n';
+import { getPathnameMaybeI18nFlag } from './i18n';
 
 /* v8 ignore start */
 // Stryker disable all
@@ -25,12 +25,4 @@ export function stackMiddlewares(functions: MiddlewareFactory[] = [], index = 0)
     return currentMiddleware(nextMiddleware);
   }
   return () => NextResponse.next();
-}
-
-export function getPathParts(pathname: AppPath) {
-  let pathnameWithoutI18nFlag = getPathnameWithoutI18nFlag(pathname);
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  if (pathnameWithoutI18nFlag.charAt(0) === '/') pathnameWithoutI18nFlag = pathnameWithoutI18nFlag.substring(1);
-
-  return pathnameWithoutI18nFlag.split('/');
 }

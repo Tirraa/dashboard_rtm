@@ -21,6 +21,7 @@
     "./portable/misc/isEmptyObject": "./src/portable/misc/isEmptyObject.ts",
     "./portable/react/getLinkTarget": "./src/portable/react/getLinkTarget.ts",
     "./portable/react/getRefCurrentPtr": "./src/portable/react/getRefCurrentPtr.ts",
+    "./portable/str/buildPathFromParts": "./src/portable/str/buildPathFromParts.ts",
     "./portable/str/buildAbsolutePathFromParts": "./src/portable/str/buildAbsolutePathFromParts.ts",
     "./portable/str/buildPageTitle": "./src/portable/str/buildPageTitle.ts",
     "./portable/str/deleteLeadingSlashes": "./src/portable/str/deleteLeadingSlashes.ts",
@@ -75,6 +76,9 @@
       ],
       "portable/react/getRefCurrentPtr": [
         "./src/portable/react/getRefCurrentPtr.ts"
+      ],
+      "portable/str/buildPathFromParts": [
+        "./src/portable/str/buildPathFromParts.ts"
       ],
       "portable/str/buildAbsolutePathFromParts": [
         "./src/portable/str/buildAbsolutePathFromParts.ts"

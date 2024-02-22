@@ -5,8 +5,8 @@ import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { LandingPageProps } from '@/types/LandingPage';
 import type { LandingPage } from 'contentlayer/generated';
 
+import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
 import LandingPageTaxonomy from '##/config/taxonomies/landingPages';
-import { buildPageTitle } from '@rtm/shared-lib/str';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSideI18n } from '@/i18n/server';
 import { notFound } from 'next/navigation';

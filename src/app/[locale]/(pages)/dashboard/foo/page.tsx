@@ -1,8 +1,8 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
 import DashboardFooPage from '@/components/pages/dashboard/foo';
-import { buildPageTitle } from '@rtm/shared-lib/str';
 import { getServerSideI18n } from '@/i18n/server';
 import { i18ns } from '##/config/i18n';
 

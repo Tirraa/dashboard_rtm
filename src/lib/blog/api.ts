@@ -4,7 +4,7 @@ import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { IsoDateTimeString } from 'contentlayer/core';
 import type { AppPath } from '@rtm/shared-types/Next';
 
-import { buildAbsolutePathFromParts } from '@rtm/shared-lib/str';
+import buildAbsolutePathFromParts from '@rtm/shared-lib/portable/str/buildAbsolutePathFromParts';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import ROUTES_ROOTS from '##/config/routes';
 import { LANGUAGES } from '##/config/i18n';

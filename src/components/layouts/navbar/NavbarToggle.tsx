@@ -4,9 +4,9 @@ import type { NavbarItems } from '@/types/NavData';
 import type { FunctionComponent } from 'react';
 
 import { DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem, DropdownMenu } from '@/components/ui/DropdownMenu';
-import { preserveKeyboardNavigation } from '@rtm/shared-lib/html';
+import preserveKeyboardNavigation from '@rtm/shared-lib/portable/html/preserveKeyboardNavigation';
+import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
 import { getClientSideI18n, useScopedI18n } from '@/i18n/client';
-import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { useMediaQuery } from '@react-hook/media-query';
 import { useEffect, useState, useRef } from 'react';
 import { getBreakpoint } from '@/lib/tailwind';

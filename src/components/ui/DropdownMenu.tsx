@@ -6,9 +6,9 @@
 import type { WithDeepResetOnLgBreakpointEvents } from '@rtm/shared-types/Next';
 
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
+import getDirection from '@rtm/shared-lib/portable/html/getDirection';
 import { ChevronRight, Circle, Check } from 'lucide-react';
 import { useMediaQuery } from '@react-hook/media-query';
-import { getDirection } from '@rtm/shared-lib/html';
 import { getBreakpoint, cn } from '@/lib/tailwind';
 import { getBodyContainer } from '@/lib/html';
 import * as React from 'react';

@@ -11,9 +11,9 @@ import type {
 } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 
+import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
-import { buildPageTitle } from '@rtm/shared-lib/str';
 import { getServerSideI18n } from '@/i18n/server';
 import { i18ns } from '##/config/i18n';
 

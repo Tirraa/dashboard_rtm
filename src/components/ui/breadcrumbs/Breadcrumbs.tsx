@@ -5,12 +5,11 @@ import type { CustomCrumbs } from '@rtm/shared-types/Breadcrumbs';
 import type { FunctionComponent, ReactNode } from 'react';
 import type { getScopedI18n } from '@/i18n/server';
 
-import { buildAbsolutePathFromParts } from '@rtm/shared-lib/str';
+import buildAbsolutePathFromParts from '@rtm/shared-lib/portable/str/buildAbsolutePathFromParts';
 import { useCurrentLocale, useScopedI18n } from '@/i18n/client';
-import { SHARED_VOCAB_SCHEMA } from '@/i18n/locales/schema';
+import getPathParts from '@/lib/misc/getPathParts';
 import { usePathname } from 'next/navigation';
 import ROUTES_ROOTS from '##/config/routes';
-import { getPathParts } from '@/lib/next';
 import { i18ns } from '##/config/i18n';
 
 import HomepageCrumb from './custom/HomepageCrumb';
@@ -53,9 +52,6 @@ function crumbsGenerator(
         if (customComponent.depth === depth + 1) return customComponent.jsx;
       }
     }
-
-    const missingLabel = !Object.keys(SHARED_VOCAB_SCHEMA['pages-titles']).includes(pathParts[depth]);
-    if (missingLabel) throw new Error(`Missing pages-titles (${currentLocale}) label: ${pathParts[depth]}`);
 
     const label = scopedT(pathParts[depth] as PagesTitlesKey);
     return <Crumb isLeaf={isLeaf} label={label} href={href} />;

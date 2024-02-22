@@ -4,11 +4,11 @@
 import type { Page } from 'contentlayer/generated';
 import type { I18nPageProps } from '@/types/Next';
 
+import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
 import { setStaticParamsLocale } from 'next-international/server';
 import { getPageByLanguageAndPathStrict } from '@/lib/pages/api';
 import { getStaticParams, getScopedI18n } from '@/i18n/server';
 import MDX from '@/components/layouts/blog/MdxComponent';
-import { buildPageTitle } from '@rtm/shared-lib/str';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSession } from 'next-auth';
 import ROUTES_ROOTS from '##/config/routes';
