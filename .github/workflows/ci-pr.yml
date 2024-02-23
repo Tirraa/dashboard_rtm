@@ -119,6 +119,10 @@ jobs:
         run: make install
       - name: Create .env
         run: cp .env_example .env
+      - name: Discard linting and typecheck from standard Next.js build process
+        run: |
+          echo "export IGNORE_BUILD_ERRORS=true" >> $GITHUB_ENV
+          echo "export IGNORE_ESLINT_DURING_BUILDS=true" >> $GITHUB_ENV
       - name: Build
         run: make
 
@@ -194,5 +198,9 @@ jobs:
           cache: 'pnpm'
       - name: Create .env
         run: cp .env_example .env
+      - name: Discard linting and typecheck from standard Next.js build process
+        run: |
+          echo "export IGNORE_BUILD_ERRORS=true" >> $GITHUB_ENV
+          echo "export IGNORE_ESLINT_DURING_BUILDS=true" >> $GITHUB_ENV
       - name: Run simulation
         run: make simulate-deploy-discarding-build-cache
