@@ -7,6 +7,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true'
 });
 
+const ignoreBuildErrors = process.env.IGNORE_BUILD_ERRORS === 'true';
+const ignoreEslintDuringBuilds = process.env.IGNORE_ESLINT_DURING_BUILDS === 'true';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // eslint-disable-next-line require-await
@@ -27,8 +30,16 @@ const nextConfig = {
     ];
   },
 
+  eslint: {
+    ignoreDuringBuilds: ignoreEslintDuringBuilds
+  },
+
   images: {
     domains: ['cdn.discordapp.com']
+  },
+
+  typescript: {
+    ignoreBuildErrors
   },
 
   reactStrictMode: true,
