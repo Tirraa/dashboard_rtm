@@ -21,6 +21,16 @@ describe('url', () => {
     expect(
       buildPageUrl({
         _raw: {
+          sourceFilePath: PAGES_FOLDER + `/foo/bar/${leaf}/${INDEX_TOKEN}` + EXT,
+          flattenedPath: PAGES_FOLDER + `/foo/bar/${leaf}`
+        },
+        _id: '_'
+      })
+    ).toBe(ROUTES_ROOTS.WEBSITE + `${DEFAULT_LANGUAGE}/foo/bar/${leaf}`);
+
+    expect(
+      buildPageUrl({
+        _raw: {
           sourceFilePath: PAGES_FOLDER + `/foo/bar/${leaf}` + EXT,
           flattenedPath: PAGES_FOLDER + `/foo/bar/${leaf}`
         },
