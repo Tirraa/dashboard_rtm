@@ -16,7 +16,7 @@ describe('url', () => {
         },
         _id: '_'
       })
-    ).toBe(ROUTES_ROOTS.WEBSITE + DEFAULT_LANGUAGE + '/' + INDEX_TOKEN);
+    ).toBe(ROUTES_ROOTS.WEBSITE + DEFAULT_LANGUAGE);
 
     expect(
       buildPageUrl({
@@ -48,7 +48,7 @@ describe('url', () => {
         },
         _id: '_'
       })
-    ).toBe(ROUTES_ROOTS.WEBSITE + DEFAULT_LANGUAGE + '/' + INDEX_TOKEN);
+    ).toBe(ROUTES_ROOTS.WEBSITE + DEFAULT_LANGUAGE);
 
     expect(
       buildPageUrl({
