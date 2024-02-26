@@ -14,9 +14,10 @@ export type DashboardRoutesIcons = Record<keyof DashboardRoutes, ComponentType<I
 const createSidebarComponent = (__SidebarIcon: ComponentType<IconBaseProps>) => <DashboardSidebarButton __SidebarIcon={__SidebarIcon} />;
 
 const computedDashboardRoutesSidebarComponents = {} as DashboardRoutesSidebarReactElements;
-Object.entries(SIDEBAR_ROUTES_ICONS).forEach(
-  ([k, icon]) => (computedDashboardRoutesSidebarComponents[k as DashboardRoutesKeys] = createSidebarComponent(icon))
-);
+
+for (const [k, icon] of Object.entries(SIDEBAR_ROUTES_ICONS)) {
+  computedDashboardRoutesSidebarComponents[k as DashboardRoutesKeys] = createSidebarComponent(icon);
+}
 
 const DASHBOARD_ROUTES_SIDEBAR_COMPONENTS: DashboardRoutesSidebarReactElements = computedDashboardRoutesSidebarComponents;
 

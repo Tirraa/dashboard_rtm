@@ -27,7 +27,7 @@ export default async function sysBlogSlugsValidator(
     }
   }
 
-  Object.entries(foldersWithDefects).forEach(([folderWithDefects, defects]) => {
+  for (const [folderWithDefects, defects] of Object.entries(foldersWithDefects)) {
     if (feedback) feedback += '\n';
     feedback +=
       formatMessage('invalidSlugs' satisfies VocabKey, { count: defects.length, folderWithDefects }) +
@@ -37,6 +37,6 @@ export default async function sysBlogSlugsValidator(
       '\n' +
       formatMessage('blogNamingConstraint' satisfies VocabKey) +
       '\n';
-  });
+  }
   return feedback;
 }
