@@ -4,12 +4,14 @@ import { INVALID_NESTINGS_NEEDLE, INVALID_NESTING_NEEDLE, INVALID_SLUGS_NEEDLE, 
 import { describe, expect, it, vi } from 'vitest';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { INVALID_PATH } from '𝕍/commons';
-import path from 'path';
 
 import type { VocabKey } from '../../config/translations';
 
 import formatMessage from '../../config/formatMessage';
 import sysPagesValidator from '../sysPages';
+
+// https://github.com/vitest-dev/vitest/discussions/2484
+const path = require('path');
 
 const VALID_PAGES_FOLDER = path.normalize('./packages/prebuilder/src/validators/__tests__/fake_pages_folders/valid_fake_pages_folder');
 

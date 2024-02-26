@@ -264,6 +264,12 @@ importers:
 
   packages/prebuilder:
     dependencies:
+      '@babel/core':
+        specifier: ^7.23.9
+        version: 7.23.9
+      '@babel/parser':
+        specifier: ^7.23.9
+        version: 7.23.9
       arg:
         specifier: ^5.0.2
         version: 5.0.2

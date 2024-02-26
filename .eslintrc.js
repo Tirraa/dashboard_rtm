@@ -20,7 +20,8 @@ module.exports = {
     'no-unreachable': ERROR,
     'require-await': ERROR,
     'no-unused-vars': OFF,
-    'import/first': ERROR
+    'import/first': ERROR,
+    'no-eval': ERROR
   },
 
   extends: [

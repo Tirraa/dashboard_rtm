@@ -3,6 +3,7 @@ import { afterAll, describe, expect, it } from 'vitest';
 
 import generateIndexFile from '../indexFile';
 
+// https://github.com/vitest-dev/vitest/discussions/2484
 const fs = require('fs/promises');
 
 const __TARGET_FOLDER_ROOT = './packages/prebuilder/src/generators/index/__tests__/FAKE_CODEGEN';

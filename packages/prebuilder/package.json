@@ -9,11 +9,13 @@
     "start": "tsc --build && node prebuilder-dist/src/main.js"
   },
   "dependencies": {
+    "@babel/core": "^7.23.9",
+    "@babel/parser": "^7.23.9",
     "arg": "^5.0.2",
-    "inflection": "^3.0.0",
+    "chokidar": "^3.6.0",
     "format-message": "6.2.4",
-    "ts-morph": "21.0.1",
-    "chokidar": "^3.6.0"
+    "inflection": "^3.0.0",
+    "ts-morph": "21.0.1"
   },
   "devDependencies": {
     "@rtm/shared-types": "*",

@@ -5,6 +5,7 @@ import type { Page } from '../../../types/Metadatas';
 
 import generatePagesType, { HARDCODED_FALLBACK_TYPE_FIELDS } from '../pagesType';
 
+// https://github.com/vitest-dev/vitest/discussions/2484
 const fs = require('fs/promises');
 
 const __TARGET_FOLDER_ROOT = './packages/prebuilder/src/generators/pages/__tests__/FAKE_CODEGEN';

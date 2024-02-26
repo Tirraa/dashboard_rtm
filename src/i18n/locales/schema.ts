@@ -76,17 +76,17 @@ export default {
     login: _
   },
 
-  _infos: {
-    lng: '__SCANNED_ON_PREBUILD_FIELD__'
-  },
-
   'pages-titles': SHARED_VOCAB_SCHEMA['pages-titles'],
+
+  _infos: {
+    lng: '__SCANNED__'
+  },
 
   'blog-categories': blogCategories
 } as const satisfies TypedLeafsJSONData<MaybeScanned>;
 
 type NotScanned = '';
-type Scanned = '__SCANNED_ON_PREBUILD_FIELD__';
+type Scanned = '__SCANNED__';
 type MaybeScanned = NotScanned | Scanned;
 
 // Stryker restore all

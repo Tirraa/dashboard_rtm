@@ -5,6 +5,7 @@ import { afterAll, describe, expect, it } from 'vitest';
 
 import generateI18nBlogCategories from '../i18nBlogCategories';
 
+// https://github.com/vitest-dev/vitest/discussions/2484
 const fs = require('fs/promises');
 
 const __TARGET_FOLDER_ROOT = './packages/prebuilder/src/generators/blog/__tests__/FAKE_CODEGEN';
