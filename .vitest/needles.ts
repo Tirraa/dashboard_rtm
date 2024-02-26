@@ -16,3 +16,7 @@ export const INVALID_SLUG_NEEDLE = 'invalid slug '; // NOTE: do NOT remove the t
 export const INVALID_SLUGS_NEEDLE = 'invalid slugs '; // NOTE: do NOT remove the trailing space
 export const INVALID_NESTING_NEEDLE = 'invalid nesting:';
 export const INVALID_NESTINGS_NEEDLE = 'invalid nestings:';
+
+// NOTE: please, let those needles case untouched
+
+export const UGLY_STRATEGY_DETECTED_NEEDLE = 'Ugly index strategy detected!';

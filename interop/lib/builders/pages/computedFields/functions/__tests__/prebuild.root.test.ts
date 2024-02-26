@@ -5,7 +5,7 @@ import buildPageRoot from '../root';
 
 describe('root', () => {
   const root = 'root';
-  it('should return the top level root, given a valid input', () => {
+  it('should return the top-level root, given a valid input', () => {
     expect(
       buildPageRoot({
         _raw: {
@@ -34,7 +34,7 @@ describe('root', () => {
     ).toBe(root);
   });
 
-  it('should return the top level root, given a valid input (with default language root)', () => {
+  it('should return the top-level root, given a valid input (with default language root)', () => {
     expect(
       buildPageRoot({
         _raw: {
@@ -63,7 +63,7 @@ describe('root', () => {
     ).toBe(root);
   });
 
-  it('should return the top level root, given a flattenedPath corresponding to index notation', () => {
+  it('should return the top-level root, given a flattenedPath corresponding to index notation', () => {
     expect(
       buildPageRoot({
         _raw: {
