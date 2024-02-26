@@ -10,11 +10,13 @@ import {
   MAX_PAGE_TAXONOMY_LEN,
   MAX_LP_TAXONOMY_LEN,
   BUGTRACKER_URL,
+  PAGE_FILE_EXT,
   DOC_URL,
   FLAGS
 } from '.';
 
 const KNOWN_OPTIONS = Object.values(FLAGS).join(', ');
+export const INDEX_TOKEN = 'index';
 
 export const DEFAULT_LOCALE = 'en' as const satisfies Locale;
 
@@ -201,7 +203,15 @@ const DEFAULT_TRANSLATION = {
   theLocaleSchemaIsNotFile: 'The locale schema file you indicated is NOT a file!',
 
   unhandledError: 'Unhandled error!' + '\n' + '{error}' + '\n\n' + `RTFM: ${DOC_URL}` + '\n' + `Bugtracker: ${BUGTRACKER_URL}` + '\n',
-  prebuildDone: `... ${capitalize(VOCAB_TOKENS.en.N_SINGULAR.PREBUILD)} done.`
+  prebuildDone: `... ${capitalize(VOCAB_TOKENS.en.N_SINGULAR.PREBUILD)} done.`,
+
+  uglyIndexStrategyWarning: `{count, plural,
+      =0 {__NEVER__}
+      =1 {Ugly index strategy detected!}
+      other {{count} ugly index strategies detected!}
+    }`,
+  uglyIndexStrategyWarningMsg: `[${capitalize(VOCAB_TOKENS.en.N_SINGULAR.WARNING)}] ''{file}'' should be renamed '${INDEX_TOKEN}${PAGE_FILE_EXT}' and moved into {folder}/`,
+  uglyIndexStrategyWarningJustMoveMsg: `[${capitalize(VOCAB_TOKENS.en.N_SINGULAR.WARNING)}] ''{file}'' should be moved into {folder}/`
 } as const;
 /* eslint-enable perfectionist/sort-objects */
 
@@ -318,8 +328,17 @@ const translations = {
       '\n' +
       `Bugtracker : ${BUGTRACKER_URL}` +
       '\n',
-    prebuildDone: `... ${capitalize(VOCAB_TOKENS.fr.M_SINGULAR.PREBUILD)} terminé.`
+    prebuildDone: `... ${capitalize(VOCAB_TOKENS.fr.M_SINGULAR.PREBUILD)} terminé.`,
+
+    uglyIndexStrategyWarning: `{count, plural,
+      =0 {__NEVER__}
+      =1 {Mauvaise stratégie d'index détectée !}
+      other {{count} mauvaises stratégies d'index détectées !}
+    }`,
+    uglyIndexStrategyWarningMsg: `[${capitalize(VOCAB_TOKENS.fr.N_SINGULAR.WARNING)}] ''{file}'' devrait être renommé '${INDEX_TOKEN}${PAGE_FILE_EXT}' et déplacé dans {folder}/`,
+    uglyIndexStrategyWarningJustMoveMsg: `[${capitalize(VOCAB_TOKENS.en.N_SINGULAR.WARNING)}] ''{file}'' devrait être déplacé dans {folder}/`
   },
+
   [DEFAULT_LOCALE]: DEFAULT_TRANSLATION
 } as const satisfies Record<Locale, Record<VocabKey, string>>;
 /* eslint-enable perfectionist/sort-objects */

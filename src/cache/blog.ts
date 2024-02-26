@@ -20,7 +20,11 @@ async function buildSubcategoriesSet(category: BlogCategory, language: LanguageF
     const emptySet = new Set<BlogSubcategoryFromUnknownCategory>();
     return emptySet;
   }
-  relatedPosts.forEach(({ subcategory }) => subcategoriesSet.add(subcategory as BlogSubcategoryFromUnknownCategory));
+
+  for (const { subcategory } of relatedPosts) {
+    subcategoriesSet.add(subcategory as BlogSubcategoryFromUnknownCategory);
+  }
+
   return subcategoriesSet;
 }
 

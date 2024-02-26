@@ -1,4 +1,5 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "make install",
   "buildCommand": "make vercel-ci-build-command"
 }

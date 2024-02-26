@@ -33,11 +33,11 @@ async function blogCategoryPageBuilder(posts: BlogPostType[], category: BlogCate
   }
 
   function buildPostsCollectionsSnippets() {
-    Object.entries(histogram).forEach(([subcategory, posts2]) => {
+    for (const [subcategory, posts2] of Object.entries(histogram)) {
       postsCollectionsSnippets[subcategory as BlogSubcategoryFromUnknownCategory] = posts2.map((post) => (
         <BlogPostPreview key={`${post._raw.flattenedPath}-post-snippet`} isNotOnBlogSubcategoryPage language={language} post={post} />
       ));
-    });
+    }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers

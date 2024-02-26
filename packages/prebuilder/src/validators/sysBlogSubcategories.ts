@@ -33,7 +33,7 @@ export default async function sysBlogSubcategoriesValidator(
     }
   }
 
-  Object.entries(categoriesWithDefects).forEach(([categoryWithDefects, defects]) => {
+  for (const [categoryWithDefects, defects] of Object.entries(categoriesWithDefects)) {
     if (feedback) feedback += '\n';
 
     feedback +=
@@ -44,6 +44,6 @@ export default async function sysBlogSubcategoriesValidator(
       '\n' +
       formatMessage('blogNamingConstraint' satisfies VocabKey) +
       '\n';
-  });
+  }
   return feedback;
 }

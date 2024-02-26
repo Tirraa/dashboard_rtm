@@ -1,12 +1,13 @@
 import arg from 'arg';
 
-import type { MaybeEmptyErrorsDetectionFeedback, ErrorsDetectionFeedback, Path } from '../types/Metadatas';
+import type { MaybeEmptyErrorsDetectionFeedback, ErrorsDetectionFeedback } from '../types/Metadatas';
 import type { VocabKey, Locale } from '../config/translations';
 
 import { UNKNOWN_LOCALE_FALLBACK_MSG, LOCALES } from '../config/translations';
 import ArgumentsValidatorError from '../errors/ArgumentsValidatorError';
 import { prefixFeedback, foldFeedbacks } from '../lib/feedbacksMerge';
 import formatMessage, { changeLocale } from '../config/formatMessage';
+import fileExists from '../lib/fileExists';
 import { FLAGS } from '../config';
 
 // https://github.com/vitest-dev/vitest/discussions/2484
@@ -225,15 +226,6 @@ function crashIfArgumentsAreInvalid({ ...args }) {
   throw new ArgumentsValidatorError(prefixFeedback(feedback, getErrorPrefix() + '\n' + formatMessage('optionsAreInvalid' satisfies VocabKey) + '\n'));
 }
 
-async function fileExists(path: Path) {
-  try {
-    await fs.access(path);
-    return true;
-  } catch (error) {
-    return false;
-  }
-}
-
 /**
  * @throws {ArgumentsValidatorError}
  */
@@ -324,6 +316,9 @@ async function crashIfFilesDoesNotExist({ ...args }) {
   await Promise.all([checkI18n(), checkPages(), checkBlog(), checkLp()]);
 }
 
+/**
+ * @effect {Warn}
+ */
 export default async function parseArguments() {
   const args = arg(
     {
