@@ -7,6 +7,7 @@ import type { getScopedI18n } from '@/i18n/server';
 
 import buildAbsolutePathFromParts from '@rtm/shared-lib/portable/str/buildAbsolutePathFromParts';
 import { useCurrentLocale, useScopedI18n } from '@/i18n/client';
+import { PAGES_TITLES } from '@/i18n/locales/schema';
 import getPathParts from '@/lib/misc/getPathParts';
 import { usePathname } from 'next/navigation';
 import ROUTES_ROOTS from '##/config/routes';
@@ -52,6 +53,9 @@ function crumbsGenerator(
         if (customComponent.depth === depth + 1) return customComponent.jsx;
       }
     }
+
+    const missingLabel = !Object.keys(PAGES_TITLES).includes(pathParts[depth]);
+    if (missingLabel) throw new Error(`Missing pages-titles label: ${pathParts[depth]}`);
 
     const label = scopedT(pathParts[depth] as PagesTitlesKey);
     return <Crumb isLeaf={isLeaf} label={label} href={href} />;

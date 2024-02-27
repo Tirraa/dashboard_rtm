@@ -2,7 +2,7 @@ import { parse } from '@babel/parser';
 
 import type { I18nJSONPart } from '../types/Metadatas';
 
-export function objInnerToObj(objInner: string): I18nJSONPart {
+export function localesInfosInnerToObj(objInner: string): I18nJSONPart {
   let res = {};
   try {
     const obj = JSON.parse('{\n' + objInner + '\n}');
@@ -20,7 +20,7 @@ export function objInnerToObj(objInner: string): I18nJSONPart {
         const objExpression = parsedObject.program.body[0].expression;
         const obj: I18nJSONPart = objExpression.properties.reduce((accumulator: I18nJSONPart, prop) => {
           if (prop.type === 'ObjectProperty') {
-            let key: string;
+            let key: string = '';
             if (prop.key.type === 'Identifier') {
               key = prop.key.name;
             } else if (prop.key.type === 'StringLiteral') {
@@ -29,7 +29,7 @@ export function objInnerToObj(objInner: string): I18nJSONPart {
               throw new Error(`Unsupported key type: ${prop.key.type}`);
             }
 
-            let value: string | null = null;
+            let value: string = '';
             if (prop.value.type === 'StringLiteral') {
               value = prop.value.value;
             } else {

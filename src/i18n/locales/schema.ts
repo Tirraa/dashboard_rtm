@@ -7,6 +7,13 @@ import { blogCategories, pagesTitles } from '@rtm/generated';
 
 const _: NotScanned = '';
 
+export const PAGES_TITLES = {
+  ...pagesTitles,
+
+  homepage: _,
+  blog: _
+} as const;
+
 export const SHARED_VOCAB_SCHEMA = {
   vocab: {
     breadcrumbs: _,
@@ -16,12 +23,7 @@ export const SHARED_VOCAB_SCHEMA = {
     page: _
   },
 
-  'pages-titles': {
-    ...pagesTitles,
-
-    homepage: _,
-    blog: _
-  }
+  'pages-titles': PAGES_TITLES
 } as const satisfies TypedLeafsJSONData<NotScanned>;
 
 export default {

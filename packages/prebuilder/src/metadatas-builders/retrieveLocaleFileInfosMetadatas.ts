@@ -4,8 +4,8 @@ import type { I18nJSONPart } from '../types/Metadatas';
 import getRawDataFromBracesDeclaration from '../lib/getRawDataFromBracesDeclaration';
 import { LOCALES_INFOS_OBJ_NEEDLE } from '../config';
 import formatMessage from '../config/formatMessage';
+import { localesInfosInnerToObj } from '../lib/etc';
 import BuilderError from '../errors/BuilderError';
-import { objInnerToObj } from '../lib/etc';
 
 const ERROR_SUFFIX = formatMessage('interruptedThePrebuilder' satisfies VocabKey);
 
@@ -24,7 +24,7 @@ async function buildLocaleFileMetadatasFromLocaleFile(localeFilePath: string): P
   if (!localeInfosInner) throw error;
 
   try {
-    const obj: I18nJSONPart = objInnerToObj(localeInfosInner);
+    const obj: I18nJSONPart = localesInfosInnerToObj(localeInfosInner);
     return obj;
   } catch {
     throw error;
