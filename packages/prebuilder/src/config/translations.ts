@@ -15,6 +15,9 @@ import {
   FLAGS
 } from '.';
 
+// https://github.com/vitest-dev/vitest/discussions/2484
+const path = require('path');
+
 const KNOWN_OPTIONS = Object.values(FLAGS).join(', ');
 export const INDEX_TOKEN = 'index';
 
@@ -210,8 +213,8 @@ const DEFAULT_TRANSLATION = {
       =1 {Ugly index strategy detected!}
       other {{count} ugly index strategies detected!}
     }`,
-  uglyIndexStrategyWarningMsg: `[${capitalize(VOCAB_TOKENS.en.N_SINGULAR.WARNING)}] ''{file}'' should be renamed '${INDEX_TOKEN}${PAGE_FILE_EXT}' and moved into {folder}/`,
-  uglyIndexStrategyWarningJustMoveMsg: `[${capitalize(VOCAB_TOKENS.en.N_SINGULAR.WARNING)}] ''{file}'' should be moved into {folder}/`
+  uglyIndexStrategyWarningMsg: `[${capitalize(VOCAB_TOKENS.en.N_SINGULAR.WARNING)}] ''{file}'' should be renamed '${INDEX_TOKEN}${PAGE_FILE_EXT}' and moved into {folder}${path.sep}`,
+  uglyIndexStrategyWarningJustMoveMsg: `[${capitalize(VOCAB_TOKENS.en.N_SINGULAR.WARNING)}] ''{file}'' should be moved into {folder}${path.sep}`
 } as const;
 /* eslint-enable perfectionist/sort-objects */
 
@@ -335,8 +338,8 @@ const translations = {
       =1 {Mauvaise stratégie d'index détectée !}
       other {{count} mauvaises stratégies d'index détectées !}
     }`,
-    uglyIndexStrategyWarningMsg: `[${capitalize(VOCAB_TOKENS.fr.N_SINGULAR.WARNING)}] ''{file}'' devrait être renommé '${INDEX_TOKEN}${PAGE_FILE_EXT}' et déplacé dans {folder}/`,
-    uglyIndexStrategyWarningJustMoveMsg: `[${capitalize(VOCAB_TOKENS.en.N_SINGULAR.WARNING)}] ''{file}'' devrait être déplacé dans {folder}/`
+    uglyIndexStrategyWarningMsg: `[${capitalize(VOCAB_TOKENS.fr.N_SINGULAR.WARNING)}] ''{file}'' devrait être renommé '${INDEX_TOKEN}${PAGE_FILE_EXT}' et déplacé dans {folder}${path.sep}`,
+    uglyIndexStrategyWarningJustMoveMsg: `[${capitalize(VOCAB_TOKENS.en.N_SINGULAR.WARNING)}] ''{file}'' devrait être déplacé dans {folder}${path.sep}`
   },
 
   [DEFAULT_LOCALE]: DEFAULT_TRANSLATION
