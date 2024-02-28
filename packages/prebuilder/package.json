@@ -18,6 +18,7 @@
     "ts-morph": "21.0.1"
   },
   "devDependencies": {
+    "@babel/types": "^7.24.0",
     "@rtm/shared-types": "*",
     "typescript": "^5.3.0"
   },

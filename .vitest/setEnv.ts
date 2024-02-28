@@ -1,6 +1,6 @@
 const NODE_ENV = 'test';
 
-// @ts-expect-error
+// @ts-ignore
 process.env.NODE_ENV = NODE_ENV;
 
 export default NODE_ENV;

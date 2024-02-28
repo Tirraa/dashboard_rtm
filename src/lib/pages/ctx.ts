@@ -2,15 +2,13 @@
 
 import PagesConfig from '@/config/pages';
 
-import ComputedNodeCtx from '../portable/node/env';
-
 type ComputedPagesCtxType = {
   ALLOWED_DRAFTS: boolean;
   TESTING: boolean;
 };
 
-const TESTING = ComputedNodeCtx.TEST;
-const ALLOWED_DRAFTS = PagesConfig.ENABLE_DRAFTS_IN_PROD || ComputedNodeCtx.DEV;
+const TESTING = process.env.NODE_ENV === 'test';
+const ALLOWED_DRAFTS = PagesConfig.ENABLE_DRAFTS_IN_PROD || process.env.NODE_ENV === 'development';
 
 const ComputedPagesCtx: ComputedPagesCtxType = {
   ALLOWED_DRAFTS,
