@@ -6,17 +6,17 @@ import { indexedBlogTagOptions, InvalidBlogTag } from '../../../unifiedImport';
 /**
  * @throws {InvalidBlogTag}
  */
-function buildBlogTagsIndexesFromPostObj(post: DocumentToCompute): number[] {
+function buildBlogTagsIndexesFromPostObj(post: DocumentToCompute, __INDEXED_BLOG_TAG_OPTIONS: Record<BlogTag, number>): number[] {
   const tagsArray = post.tags._array as BlogTag[];
   const res: number[] = [];
   const defects: string[] = [];
 
   for (const tag of tagsArray) {
-    if (indexedBlogTagOptions[tag] === undefined) {
+    if (__INDEXED_BLOG_TAG_OPTIONS[tag] === undefined) {
       defects.push(tag);
       continue;
     }
-    res.push(indexedBlogTagOptions[tag]);
+    res.push(__INDEXED_BLOG_TAG_OPTIONS[tag]);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -25,6 +25,8 @@ function buildBlogTagsIndexesFromPostObj(post: DocumentToCompute): number[] {
   return res.sort((a, b) => a - b);
 }
 
-const buildBlogTagsIndexes = (post: DocumentToCompute): number[] => buildBlogTagsIndexesFromPostObj(post);
+// {ToDo} Write tests
+const buildBlogTagsIndexes = (post: DocumentToCompute, __INDEXED_BLOG_TAG_OPTIONS: Record<BlogTag, number> = indexedBlogTagOptions): number[] =>
+  buildBlogTagsIndexesFromPostObj(post, __INDEXED_BLOG_TAG_OPTIONS);
 
 export default buildBlogTagsIndexes;
