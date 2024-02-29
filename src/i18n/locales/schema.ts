@@ -3,6 +3,7 @@
 
 import type { TypedLeafsJSONData } from '@rtm/shared-types/JSON';
 
+import { blogTagOptionsVocabSchema } from '##/config/contentlayer/blog/blogTags';
 import { blogCategories, pagesTitles } from '@rtm/generated';
 
 const _: NotScanned = '';
@@ -80,10 +81,11 @@ export default {
 
   'pages-titles': SHARED_VOCAB_SCHEMA['pages-titles'],
 
+  'blog-tags': blogTagOptionsVocabSchema,
+
   _infos: {
     lng: '__SCANNED__'
   },
-
   'blog-categories': blogCategories
 } as const satisfies TypedLeafsJSONData<MaybeScanned>;
 

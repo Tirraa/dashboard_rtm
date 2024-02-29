@@ -119,6 +119,11 @@ export default {
     login: 'Connexion'
   },
 
+  'blog-tags': {
+    tag_one: 'Tag 1',
+    tag_two: 'Tag 2'
+  },
+
   'pages-titles': SHARED['pages-titles']
 } as const satisfies VocabType;
 /* v8 ignore stop */

@@ -16,6 +16,7 @@ import {
   buildBlogPostCategory,
   buildPageLanguageFlag,
   buildLandingPageSlug,
+  buildBlogTagsIndexes,
   buildLandingPageUrl,
   buildBlogPostSlug,
   buildBlogPostUrl,
@@ -23,6 +24,7 @@ import {
   buildPagePath,
   buildPageUrl
 } from '../../lib/builders';
+import { blogTagOptions } from './blog/blogTags';
 
 export const PAGES_FOLDER = 'pages';
 export const BLOG_POSTS_FOLDER = 'blog';
@@ -33,6 +35,22 @@ export const DOCUMENTS_CONTENT_TYPE: DocumentContentType = 'mdx';
 export const DOCUMENTS_CONTENT_EXTENSION = 'mdx';
 
 const _ALL_BLOG_FIELDS = {
+  tags: {
+    of: {
+      options: blogTagOptions,
+      type: 'enum'
+    },
+    required: false,
+    type: 'list',
+    default: []
+  },
+  tagsIndexes: {
+    of: {
+      type: 'number'
+    },
+    required: true,
+    type: 'list'
+  },
   draft: {
     type: 'boolean',
     required: false,
@@ -147,6 +165,7 @@ export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
   subcategory: { resolve: (post) => buildBlogPostSubcategory(post), type: 'string' },
   language: { resolve: (post) => buildBlogPostLanguageFlag(post), type: 'string' },
   category: { resolve: (post) => buildBlogPostCategory(post), type: 'string' },
+  tagsIndexes: { resolve: (post) => buildBlogTagsIndexes(post), type: 'list' },
   slug: { resolve: (post) => buildBlogPostSlug(post), type: 'string' },
   url: { resolve: (post) => buildBlogPostUrl(post), type: 'string' }
 } as const satisfies ComputedFieldsArtifact<AllBlogFields> satisfies ComputedFields;
@@ -155,11 +174,12 @@ export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
 /* v8 ignore stop */
 
 export const BLOG_DOCUMENTS_FIELDS = {
-  draft: { type: 'boolean', required: false, default: false },
-  metadescription: { type: 'string', required: true },
-  description: { required: false, type: 'string' },
-  title: { type: 'string', required: true },
-  date: { required: true, type: 'date' }
+  metadescription: _ALL_BLOG_FIELDS.metadescription,
+  description: _ALL_BLOG_FIELDS.description,
+  draft: _ALL_BLOG_FIELDS.draft,
+  title: _ALL_BLOG_FIELDS.title,
+  tags: _ALL_BLOG_FIELDS.tags,
+  date: _ALL_BLOG_FIELDS.date
 } as const satisfies DocumentsFields;
 
 export const BLOG_POST_SCHEMA_CONFIG: ContentlayerDocumentsConfigType<BlogPostSchemaKey> = {
@@ -183,9 +203,9 @@ export const LANDING_PAGES_DOCUMENTS_COMPUTED_FIELDS = {
 /* v8 ignore stop */
 
 export const LANDING_PAGES_DOCUMENTS_FIELDS = {
-  draft: { type: 'boolean', required: false, default: false },
-  metadescription: { type: 'string', required: true },
-  title: { type: 'string', required: true }
+  metadescription: _ALL_LANDING_PAGES_FIELDS.metadescription,
+  draft: _ALL_LANDING_PAGES_FIELDS.draft,
+  title: _ALL_LANDING_PAGES_FIELDS.title
 } as const satisfies DocumentsFields<_AllLandingPagesFields, _LandingPagesDocumentsComputedFieldsKeys>;
 
 /* v8 ignore start */
@@ -202,9 +222,9 @@ export const PAGES_DOCUMENTS_COMPUTED_FIELDS = {
 /* v8 ignore stop */
 
 export const PAGES_DOCUMENTS_FIELDS = {
-  draft: { type: 'boolean', required: false, default: false },
-  metadescription: { type: 'string', required: true },
-  title: { type: 'string', required: true }
+  metadescription: _ALL_PAGES_FIELDS.metadescription,
+  draft: _ALL_PAGES_FIELDS.draft,
+  title: _ALL_PAGES_FIELDS.title
 } as const satisfies DocumentsFields<_AllPagesFields, _PagesDocumentsComputedFieldsKeys>;
 
 export type BlogDocumentsTypesKeys = 'PatchPostBis' | 'TestingPost' | 'PatchPost';

@@ -4,6 +4,7 @@ import buildBlogPostSubcategory from './blog/computedFields/functions/subcategor
 import buildBlogPostLanguageFlag from './blog/computedFields/functions/language';
 import buildLandingPageSlug from './landing-pages/computedFields/functions/slug';
 import buildLandingPageUrl from './landing-pages/computedFields/functions/url';
+import buildBlogTagsIndexes from './blog/computedFields/functions/tagsIndexes';
 import buildPageLanguageFlag from './pages/computedFields/functions/language';
 import buildBlogPostCategory from './blog/computedFields/functions/category';
 import buildBlogPostSlug from './blog/computedFields/functions/slug';
@@ -20,6 +21,7 @@ export {
   buildBlogPostCategory,
   buildPageLanguageFlag,
   buildLandingPageSlug,
+  buildBlogTagsIndexes,
   buildLandingPageUrl,
   buildBlogPostSlug,
   buildBlogPostUrl,
