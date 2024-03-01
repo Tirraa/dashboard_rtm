@@ -1,7 +1,7 @@
 import damerauLevenshtein from '../lib/misc/damerauLevenshtein';
 import { blogTagOptions } from '../lib/builders/unifiedImport';
 
-const DAMERAU_LEVENSHTEIN_THRESHOLD = 3;
+const DAMERAU_LEVENSHTEIN_THRESHOLD = 4;
 const TAB_SIZE = 2;
 
 // {ToDo} Write tests

@@ -60,17 +60,29 @@ describe('damerauLevenshtein', () => {
 
 describe('damerauLevenshtein (early termination)', () => {
   it('should pass, cat and dog, early terminating at 2', () => {
-    const maxScore = 2;
-    const distance = damerauLevenshtein('cat', 'dog', maxScore);
+    const threshold = 2;
+    const distance = damerauLevenshtein('cat', 'dog', threshold);
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    expect(distance).toBe(maxScore + 1);
+    expect(distance).toBe(threshold + 1);
   });
 
-  it('should pass, cat and dog, early terminating at 0, should always return 0', () => {
-    const maxScore = 0;
-    const distance = damerauLevenshtein('cat', 'dog', maxScore);
+  it('should pass, cat and dog, early terminating at 2 (no early terminate)', () => {
+    const threshold = 2;
+    const [a, b] = ['a', 'b'];
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const s = a.repeat(threshold + 1);
+    const distance = damerauLevenshtein(s + a, s + b, threshold);
 
-    expect(distance).toBe(maxScore);
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    expect(distance).toBe(1);
+  });
+
+  it('should pass, cat and dog, early terminating at 0, should always return 1 (0 + 1)', () => {
+    const threshold = 0;
+    const distance = damerauLevenshtein('cat', 'dog', threshold);
+
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    expect(distance).toBe(threshold + 1);
   });
 });
