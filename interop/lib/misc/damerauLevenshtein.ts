@@ -1,18 +1,20 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-function damerauLevenshtein(s1: string, s2: string): number {
+function damerauLevenshtein(s1: string, s2: string, maxScore: number = -1): number {
+  if (maxScore === 0) return 0;
+
   const [s1len, s2len] = [s1.length, s2.length];
   const matrix: number[][] = Array.from({ length: s1len + 1 }, () => new Array(s2len + 1).fill(0));
 
-  for (let i: number = 1; i <= s1len; i++) {
+  for (let i = 1; i <= s1len; i++) {
     matrix[i][0] = i;
   }
 
-  for (let j: number = 1; j <= s2len; j++) {
+  for (let j = 1; j <= s2len; j++) {
     matrix[0][j] = j;
   }
 
-  for (let i: number = 1; i <= s1len; i++) {
-    for (let j: number = 1; j <= s2len; j++) {
+  for (let i = 1; i <= s1len; i++) {
+    for (let j = 1; j <= s2len; j++) {
       if (s1[i - 1] === s2[j - 1]) {
         matrix[i][j] = matrix[i - 1][j - 1];
       } else {
@@ -21,6 +23,8 @@ function damerauLevenshtein(s1: string, s2: string): number {
           matrix[i][j] = Math.min(matrix[i][j], matrix[i - 2][j - 2] + 1);
         }
       }
+
+      if (0 < maxScore && maxScore < matrix[i][j]) return maxScore + 1;
     }
   }
 

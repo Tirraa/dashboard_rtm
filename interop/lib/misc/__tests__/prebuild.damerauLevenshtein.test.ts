@@ -57,3 +57,20 @@ describe('damerauLevenshtein', () => {
     expect(distance).toBe(3);
   });
 });
+
+describe('damerauLevenshtein (early termination)', () => {
+  it('should pass, cat and dog, early terminating at 2', () => {
+    const maxScore = 2;
+    const distance = damerauLevenshtein('cat', 'dog', maxScore);
+
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    expect(distance).toBe(maxScore + 1);
+  });
+
+  it('should pass, cat and dog, early terminating at 0, should always return 0', () => {
+    const maxScore = 0;
+    const distance = damerauLevenshtein('cat', 'dog', maxScore);
+
+    expect(distance).toBe(maxScore);
+  });
+});
