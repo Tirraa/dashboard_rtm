@@ -1,10 +1,10 @@
+import { blogTagOptions, EMPTY_BULLET, TAB_SIZE } from '../lib/builders/unifiedImport';
 import damerauLevenshtein from '../lib/misc/damerauLevenshtein';
-import { blogTagOptions } from '../lib/builders/unifiedImport';
 
 const DAMERAU_LEVENSHTEIN_THRESHOLD = 4;
-const TAB_SIZE = 2;
 
-const tabulation = ' '.repeat(TAB_SIZE);
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+const tabulation = EMPTY_BULLET + ' '.repeat(TAB_SIZE - 1);
 const doesNotExist = "doesn't exist";
 const doNotExist = "don't exist";
 const didYouMean = 'did you mean';

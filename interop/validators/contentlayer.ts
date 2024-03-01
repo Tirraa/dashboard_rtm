@@ -1,4 +1,4 @@
-import type { MaybeUndefined } from '@rtm/shared-types/CustomUtilityTypes';
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { DocumentType } from 'contentlayer/source-files';
 
 import ContentlayerDuplicateBlogTagsError from './errors/ContentlayerDuplicateBlogTagsError';
@@ -7,7 +7,7 @@ import { blogTagOptions } from '../../interop/lib/builders/unifiedImport';
 
 const getDocumentTypeName = (documentType: DocumentType<string>) => documentType.def().name;
 
-function validateContentlayerConfigDocumentTypes(documentTypes: DocumentType<string>[]): MaybeUndefined<ContentlayerDuplicateTypesError> {
+function validateContentlayerConfigDocumentTypes(documentTypes: DocumentType<string>[]): MaybeNull<ContentlayerDuplicateTypesError> {
   const documentTypesMemory: unknown[] = [];
   const duplicatesSet = new Set<unknown>();
 
@@ -24,10 +24,10 @@ function validateContentlayerConfigDocumentTypes(documentTypes: DocumentType<str
   const duplicates = Array.from(duplicatesSet);
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (duplicates.length > 0) return new ContentlayerDuplicateTypesError(duplicates);
-  return undefined;
+  return null;
 }
 
-function validateContentlayerBlogTagsList(__BLOG_TAGS_OPTIONS: readonly string[]): MaybeUndefined<ContentlayerDuplicateBlogTagsError> {
+function validateContentlayerBlogTagsList(__BLOG_TAGS_OPTIONS: readonly string[]): MaybeNull<ContentlayerDuplicateBlogTagsError> {
   const blogTagsMemory: unknown[] = [];
   const duplicatesSet = new Set<unknown>();
 
@@ -42,7 +42,7 @@ function validateContentlayerBlogTagsList(__BLOG_TAGS_OPTIONS: readonly string[]
   const duplicates = Array.from(duplicatesSet);
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (duplicates.length > 0) return new ContentlayerDuplicateBlogTagsError(duplicates);
-  return undefined;
+  return null;
 }
 
 /**
@@ -52,7 +52,7 @@ function validateContentlayerConfig(documentTypes: DocumentType<string>[], __BLO
   const maybeDuplicateTypesError = validateContentlayerConfigDocumentTypes(documentTypes);
   const maybeDuplicateBlogTagsError = validateContentlayerBlogTagsList(__BLOG_TAGS_OPTIONS);
 
-  const mergedErrors = [maybeDuplicateTypesError, maybeDuplicateBlogTagsError].filter((e) => e !== undefined);
+  const mergedErrors = [maybeDuplicateTypesError, maybeDuplicateBlogTagsError].filter((e) => e !== null);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (mergedErrors.length > 0) throw mergedErrors;
