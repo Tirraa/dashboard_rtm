@@ -8,6 +8,7 @@ const tabulation = ' '.repeat(TAB_SIZE);
 const doesNotExist = "doesn't exist";
 const doNotExist = "don't exist";
 const didYouMean = 'did you mean';
+const noSuggestionFound = 'No suggestion found';
 
 // {ToDo} Write tests
 
@@ -122,11 +123,11 @@ function buildHint(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: readonly stri
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (invalidTagsNotInScoresMap.length === 1) {
-    invalidTagsNotInScoresMapFeedback = tabulation + `“${invalidTagsNotInScoresMap}” ${doesNotExist}.`;
+    invalidTagsNotInScoresMapFeedback = tabulation + `“${invalidTagsNotInScoresMap}” ${doesNotExist}. ${noSuggestionFound}.`;
   }
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   else if (invalidTagsNotInScoresMap.length > 1) {
-    invalidTagsNotInScoresMapFeedback = tabulation + `[“${invalidTagsNotInScoresMap.join('”, “')}”] ${doNotExist}.`;
+    invalidTagsNotInScoresMapFeedback = tabulation + `[“${invalidTagsNotInScoresMap.join('”, “')}”] ${doNotExist}. ${noSuggestionFound}.`;
   }
 
   const scoresMapFeedback = buildFeedback(scoresMap);

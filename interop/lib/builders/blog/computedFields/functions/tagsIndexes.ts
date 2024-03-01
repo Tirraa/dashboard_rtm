@@ -11,7 +11,12 @@ function buildBlogTagsIndexesFromPostObj(post: DocumentToCompute, __INDEXED_BLOG
   const res: number[] = [];
   const defects: string[] = [];
 
-  for (const tag of tagsArray) {
+  // {ToDo} Also check for duplicates here, throw both errors in a list if needed
+  tagsArray;
+
+  const tagsArrayUniq = Array.from(new Set<string>(post.tags._array as BlogTag[])) as BlogTag[];
+
+  for (const tag of tagsArrayUniq) {
     if (__INDEXED_BLOG_TAG_OPTIONS[tag] === undefined) {
       defects.push(tag);
       continue;
