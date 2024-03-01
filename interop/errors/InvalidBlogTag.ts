@@ -4,6 +4,11 @@ import { blogTagOptions } from '../lib/builders/unifiedImport';
 const DAMERAU_LEVENSHTEIN_THRESHOLD = 4;
 const TAB_SIZE = 2;
 
+const tabulation = ' '.repeat(TAB_SIZE);
+const doesNotExist = "doesn't exist";
+const doNotExist = "don't exist";
+const didYouMean = 'did you mean';
+
 // {ToDo} Write tests
 
 type ScoresMap = Record<string, Record<string, number>>;
@@ -79,11 +84,10 @@ function buildStartingWithMap(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: re
 
 function buildFeedback(scoresMap: ScoresMap): string {
   const feedbacks = [];
-  const didYouMean = 'did you mean';
 
   for (const key of Object.keys(scoresMap)) {
     const suggestions = scoresMap[key];
-    const keyDoesNotExist = ' '.repeat(TAB_SIZE) + `“${key}” doesn't exist`;
+    const keyDoesNotExist = tabulation + `“${key}” ${doesNotExist}`;
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     if (Object.keys(suggestions).length === 0) {
@@ -113,7 +117,24 @@ function buildHint(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: readonly stri
   const startingWithMap = onlyBestScoresMap(buildStartingWithMap(invalidBlogTags, __BLOG_TAGS_OPTIONS));
   const scoresMap = mergeScoresMaps(damerauMap, startingWithMap);
 
-  return buildFeedback(scoresMap);
+  const invalidTagsNotInScoresMap = invalidBlogTags.filter((tag) => !(tag in scoresMap));
+  let invalidTagsNotInScoresMapFeedback = '';
+
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  if (invalidTagsNotInScoresMap.length === 1) {
+    invalidTagsNotInScoresMapFeedback = tabulation + `“${invalidTagsNotInScoresMap}” ${doesNotExist}.`;
+  }
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  else if (invalidTagsNotInScoresMap.length > 1) {
+    invalidTagsNotInScoresMapFeedback = tabulation + `[“${invalidTagsNotInScoresMap.join('”, “')}”] ${doNotExist}.`;
+  }
+
+  const scoresMapFeedback = buildFeedback(scoresMap);
+  if (invalidTagsNotInScoresMapFeedback) {
+    if (scoresMapFeedback) return [scoresMapFeedback, invalidTagsNotInScoresMapFeedback].join('\n');
+    return invalidTagsNotInScoresMapFeedback;
+  }
+  return scoresMapFeedback;
 }
 
 class InvalidBlogTag extends Error {
