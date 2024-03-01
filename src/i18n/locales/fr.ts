@@ -23,8 +23,9 @@ const SHARED: SharedVocabType = {
 
   vocab: {
     brand: 'Rust Team Management',
-    breadcrumbs: "Fil d'ariane",
-    'sign-up': 'Inscription',
+    breadcrumbs: "fil d'ariane",
+    'sign-up': "s'inscrire",
+    draft: 'ébauche',
     logo: 'logo',
     page: 'page'
   }
@@ -114,8 +115,8 @@ export default {
   },
 
   auth: {
+    signup: SHARED['vocab']['sign-up'],
     logout: 'Déconnexion',
-    signup: "S'inscrire",
     login: 'Connexion'
   },
 

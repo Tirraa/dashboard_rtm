@@ -12,6 +12,7 @@ import getPathParts from '@/lib/misc/getPathParts';
 import { usePathname } from 'next/navigation';
 import ROUTES_ROOTS from '##/config/routes';
 import { i18ns } from '##/config/i18n';
+import { capitalize } from '@/lib/str';
 
 import HomepageCrumb from './custom/HomepageCrumb';
 import CrumbSeparator from './CrumbSeparator';
@@ -81,8 +82,9 @@ const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = ({ withHomepageElement:
   const currentLocale = useCurrentLocale();
 
   if (pathname === ROUTES_ROOTS.WEBSITE) return withHomepageElement ? <HomepageCrumb isLeaf /> : null;
+
   return (
-    <nav aria-label={scopedT2('breadcrumbs')} className={className}>
+    <nav aria-label={capitalize(scopedT2('breadcrumbs'))} className={className}>
       <ol className="flex w-fit flex-wrap justify-center gap-y-1 rounded-lg bg-accent bg-opacity-75 px-3 py-2 lg:justify-normal">
         {crumbsGenerator(pathParts, withHomepageElement, scopedT, currentLocale, customCrumbs)}
       </ol>

@@ -20,6 +20,7 @@ export const SHARED_VOCAB_SCHEMA = {
     breadcrumbs: _,
     'sign-up': _,
     brand: _,
+    draft: _,
     logo: _,
     page: _
   },
