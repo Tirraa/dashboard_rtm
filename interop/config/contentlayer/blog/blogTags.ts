@@ -16,7 +16,7 @@ export const blogTagOptionsVocabSchema = blogTagOptions.reduce(
     acc[tag] = emptyString;
     return acc;
   },
-  {} as { [key: string]: string }
-) as Record<(typeof blogTagOptions)[number], EmptyString>;
+  {} as Record<string, string>
+) as Record<BlogTag, EmptyString>;
 
 export type BlogTag = (typeof blogTagOptions)[number];
