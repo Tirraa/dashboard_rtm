@@ -1,7 +1,9 @@
 type EmptyString = '';
 const emptyString: EmptyString = '';
 
-export const blogTagOptions = ['tag_one', 'tag_two'] as const;
+const _blogTagOptions = ['tag_one', 'tag_two'] as const;
+
+export const blogTagOptions = [..._blogTagOptions].sort() as readonly BlogTag[];
 
 export const indexedBlogTagOptions = blogTagOptions.reduce(
   (acc, tag, index) => {
@@ -19,4 +21,4 @@ export const blogTagOptionsVocabSchema = blogTagOptions.reduce(
   {} as Record<string, string>
 ) as Record<BlogTag, EmptyString>;
 
-export type BlogTag = (typeof blogTagOptions)[number];
+export type BlogTag = (typeof _blogTagOptions)[number];
