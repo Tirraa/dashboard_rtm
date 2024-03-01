@@ -43,11 +43,11 @@ function mergeScoresMaps(scoresMap1: ScoresMap, scoresMap2: ScoresMap): ScoresMa
   return mergedScoresMap;
 }
 
-function buildDamerauMap(invalidBlogTags: string[]) {
+function buildDamerauMap(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: readonly string[]) {
   const damerauMap = {} as ScoresMap;
 
   for (const invalidTag of invalidBlogTags) {
-    for (const blogTag of blogTagOptions) {
+    for (const blogTag of __BLOG_TAGS_OPTIONS) {
       const score = damerauLevenshtein(invalidTag, blogTag);
       if (score > DAMERAU_LEVENSHTEIN_THRESHOLD) continue;
 
@@ -59,11 +59,11 @@ function buildDamerauMap(invalidBlogTags: string[]) {
   return damerauMap;
 }
 
-function buildStartingWithMap(invalidBlogTags: string[]) {
+function buildStartingWithMap(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: readonly string[]) {
   const startingWithMap = {} as ScoresMap;
 
   for (const invalidTag of invalidBlogTags) {
-    for (const blogTag of blogTagOptions) {
+    for (const blogTag of __BLOG_TAGS_OPTIONS) {
       const startsWith = blogTag.startsWith(invalidTag);
       if (!startsWith) continue;
 
@@ -79,11 +79,11 @@ function buildStartingWithMap(invalidBlogTags: string[]) {
 
 function buildFeedback(scoresMap: ScoresMap): string {
   const feedbacks = [];
+  const didYouMean = 'did you mean';
 
   for (const key of Object.keys(scoresMap)) {
     const suggestions = scoresMap[key];
     const keyDoesNotExist = ' '.repeat(TAB_SIZE) + `“${key}” doesn't exist`;
-    const didYouMean = 'did you mean';
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     if (Object.keys(suggestions).length === 0) {
@@ -108,19 +108,19 @@ function buildFeedback(scoresMap: ScoresMap): string {
   return errorMessage;
 }
 
-function buildHint(invalidBlogTags: string[]) {
-  const damerauMap = onlyBestScoresMap(buildDamerauMap(invalidBlogTags));
-  const startingWithMap = onlyBestScoresMap(buildStartingWithMap(invalidBlogTags));
+function buildHint(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: readonly string[]) {
+  const damerauMap = onlyBestScoresMap(buildDamerauMap(invalidBlogTags, __BLOG_TAGS_OPTIONS));
+  const startingWithMap = onlyBestScoresMap(buildStartingWithMap(invalidBlogTags, __BLOG_TAGS_OPTIONS));
   const scoresMap = mergeScoresMaps(damerauMap, startingWithMap);
 
   return buildFeedback(scoresMap);
 }
 
 class InvalidBlogTag extends Error {
-  constructor(invalidBlogTags: string[]) {
+  constructor(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: readonly string[] = blogTagOptions) {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const tag = invalidBlogTags.length === 1 ? 'tag' : 'tags';
-    const message = `Invalid blog ${tag} detected!` + '\n' + buildHint(invalidBlogTags);
+    const message = `Invalid blog ${tag} detected!` + '\n' + buildHint(invalidBlogTags, __BLOG_TAGS_OPTIONS);
     super(message);
     this.name = 'InvalidBlogTagError';
   }
