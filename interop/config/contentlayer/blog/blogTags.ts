@@ -1,7 +1,7 @@
 type EmptyString = '';
 const emptyString: EmptyString = '';
 
-const _blogTagOptions = ['tag_one', 'tag_two'] as const;
+const _blogTagOptions = ['tag_one', 'tag_two'] as const satisfies string[];
 
 export const blogTagOptions = [..._blogTagOptions].sort() as readonly BlogTag[];
 
@@ -10,7 +10,7 @@ export const indexedBlogTagOptions = blogTagOptions.reduce(
     acc[tag] = index;
     return acc;
   },
-  {} as { [key: string]: number }
+  {} as Record<string, number>
 ) as Record<BlogTag, number>;
 
 export const blogTagOptionsVocabSchema = blogTagOptions.reduce(
