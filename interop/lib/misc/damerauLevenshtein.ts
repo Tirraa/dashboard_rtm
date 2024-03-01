@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 function damerauLevenshtein(s1: string, s2: string): number {
-  const s1len = s1.length;
-  const s2len = s2.length;
+  const [s1len, s2len] = [s1.length, s2.length];
   const matrix: number[][] = Array.from({ length: s1len + 1 }, () => new Array(s2len + 1).fill(0));
 
   for (let i: number = 1; i <= s1len; i++) {
@@ -24,6 +23,7 @@ function damerauLevenshtein(s1: string, s2: string): number {
       }
     }
   }
+
   return matrix[s1len][s2len];
 }
 /* eslint-enable @typescript-eslint/no-magic-numbers */
