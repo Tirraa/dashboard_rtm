@@ -47,9 +47,14 @@ const NavbarThemeButton: FunctionComponent<NavbarLoginButtonProps> = () => {
     []
   );
 
-  if (!isMounted) return null;
-
   const className = 'h-full w-fit text-primary-foreground';
+
+  const placeholder = (
+    <Button withTransparentBackground className={className} size="icon">
+      <svg height={SIZE} width={SIZE} />
+    </Button>
+  );
+  if (!isMounted) return placeholder;
 
   if (changeThemeValue === DEFAULT_VARIANT || theme === DEFAULT_DARK_VARIANT) {
     return (
