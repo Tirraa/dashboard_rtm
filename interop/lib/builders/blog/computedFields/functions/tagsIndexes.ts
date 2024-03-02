@@ -2,9 +2,21 @@ import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 
-import { indexedBlogTagOptions, BlogTagDuplicates, InvalidBlogTag, BULLET } from '../../../unifiedImport';
+import {
+  DAMERAU_LEVENSHTEIN_THRESHOLD,
+  indexedBlogTagOptions,
+  BlogTagDuplicates,
+  InvalidBlogTag,
+  blogTagOptions,
+  BULLET
+} from '../../../unifiedImport';
 
-function validateTagNames(tagsArrayUniq: BlogTag[], __INDEXED_BLOG_TAG_OPTIONS: Record<BlogTag, number>): MaybeNull<InvalidBlogTag> {
+function validateTagNames(
+  tagsArrayUniq: BlogTag[],
+  __INDEXED_BLOG_TAG_OPTIONS: Record<string, number>,
+  __BLOG_TAGS_OPTIONS: readonly string[],
+  __DAMERAU_THRESHOLD: number
+): MaybeNull<InvalidBlogTag> {
   const defects: string[] = [];
 
   for (const tag of tagsArrayUniq) {
@@ -15,7 +27,7 @@ function validateTagNames(tagsArrayUniq: BlogTag[], __INDEXED_BLOG_TAG_OPTIONS: 
   }
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  if (defects.length > 0) return new InvalidBlogTag(defects);
+  if (defects.length > 0) return new InvalidBlogTag(defects, __BLOG_TAGS_OPTIONS, __DAMERAU_THRESHOLD);
   return null;
 }
 
@@ -40,11 +52,15 @@ function validateTagNoDuplicates(tagsArray: BlogTag[]): MaybeNull<BlogTagDuplica
 /**
  * @throws {[InvalidBlogTag, BlogTagDuplicates]}
  */
-function buildBlogTagsIndexesFromPostObj(post: DocumentToCompute, __INDEXED_BLOG_TAG_OPTIONS: Record<BlogTag, number>): number[] {
-  const tagsArray = post.tags._array as BlogTag[];
-  const tagsArrayUniq = Array.from(new Set<string>(tagsArray as BlogTag[])) as BlogTag[];
+function buildBlogTagsIndexesFromPostObj(
+  tagsArray: BlogTag[],
+  __INDEXED_BLOG_TAG_OPTIONS: Record<string, number>,
+  __BLOG_TAGS_OPTIONS: readonly string[],
+  __DAMERAU_THRESHOLD: number
+): number[] {
+  const tagsArrayUniq = Array.from(new Set<BlogTag>(tagsArray));
 
-  const maybeValidateTagNamesError = validateTagNames(tagsArrayUniq, __INDEXED_BLOG_TAG_OPTIONS);
+  const maybeValidateTagNamesError = validateTagNames(tagsArrayUniq, __INDEXED_BLOG_TAG_OPTIONS, __BLOG_TAGS_OPTIONS, __DAMERAU_THRESHOLD);
   const maybeValidateTagNoDuplicatesError = validateTagNoDuplicates(tagsArray);
 
   const mergedErrors = [maybeValidateTagNamesError, maybeValidateTagNoDuplicatesError].filter((e) => e !== null);
@@ -58,8 +74,11 @@ function buildBlogTagsIndexesFromPostObj(post: DocumentToCompute, __INDEXED_BLOG
   return res.sort((a, b) => a - b);
 }
 
-// {ToDo} Write tests
-const buildBlogTagsIndexes = (post: DocumentToCompute, __INDEXED_BLOG_TAG_OPTIONS: Record<BlogTag, number> = indexedBlogTagOptions): number[] =>
-  buildBlogTagsIndexesFromPostObj(post, __INDEXED_BLOG_TAG_OPTIONS);
+const buildBlogTagsIndexes = (
+  post: DocumentToCompute,
+  __INDEXED_BLOG_TAG_OPTIONS: Record<string, number> = indexedBlogTagOptions,
+  __BLOG_TAGS_OPTIONS: readonly string[] = blogTagOptions,
+  __DAMERAU_THRESHOLD: number = DAMERAU_LEVENSHTEIN_THRESHOLD
+): number[] => buildBlogTagsIndexesFromPostObj(post.tags._array as BlogTag[], __INDEXED_BLOG_TAG_OPTIONS, __BLOG_TAGS_OPTIONS, __DAMERAU_THRESHOLD);
 
 export default buildBlogTagsIndexes;

@@ -10,7 +10,7 @@ const fakeBlogTags = [
   'overlap_test_one_long',
   'overlap_test_one_long_long',
   'overlap_test_one_long_long_long'
-];
+] as const;
 
 describe('InvalidBlogTag (unknown tags)', () => {
   it('should generate an error message with hint (1 unknown tag)', () => {
