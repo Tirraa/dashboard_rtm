@@ -38,7 +38,7 @@ function validateTagNoDuplicates(tagsArray: BlogTag[]): MaybeNull<BlogTagDuplica
 }
 
 /**
- * @throws {InvalidBlogTag}
+ * @throws {[InvalidBlogTag, BlogTagDuplicates]}
  */
 function buildBlogTagsIndexesFromPostObj(post: DocumentToCompute, __INDEXED_BLOG_TAG_OPTIONS: Record<BlogTag, number>): number[] {
   const tagsArray = post.tags._array as BlogTag[];

@@ -1,31 +1,24 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-function damerauLevenshtein(s1: string, s2: string, threshold: number = -1): number {
+function damerauLevenshtein(s1: string, s2: string): number {
   if (s1 === s2) return 0;
-  if (threshold === 0) return 1;
 
   const [s1len, s2len] = [s1.length, s2.length];
   const matrix: number[][] = Array.from({ length: s1len + 1 }, () => new Array(s2len + 1).fill(0));
-  let currentMinDistance = Number.MAX_VALUE;
 
-  for (let i = 1; i <= s1len; i++) matrix[i][0] = i;
+  for (let y = 1; y <= s1len; y++) matrix[y][0] = y;
+  for (let x = 1; x <= s2len; x++) matrix[0][x] = x;
 
-  for (let j = 1; j <= s2len; j++) matrix[0][j] = j;
-
-  for (let i = 1; i <= s1len; i++) {
-    for (let j = 1; j <= s2len; j++) {
-      if (s1[i - 1] === s2[j - 1]) {
-        matrix[i][j] = matrix[i - 1][j - 1];
+  for (let y = 1; y <= s1len; y++) {
+    for (let x = 1; x <= s2len; x++) {
+      if (s1[y - 1] === s2[x - 1]) {
+        matrix[y][x] = matrix[y - 1][x - 1];
       } else {
-        matrix[i][j] = 1 + Math.min(matrix[i - 1][j], matrix[i][j - 1], matrix[i - 1][j - 1]);
-        if (i > 1 && j > 1 && s1[i - 1] === s2[j - 2] && s1[i - 2] === s2[j - 1]) {
-          matrix[i][j] = Math.min(matrix[i][j], matrix[i - 2][j - 2] + 1);
+        matrix[y][x] = 1 + Math.min(matrix[y - 1][x], matrix[y][x - 1], matrix[y - 1][x - 1]);
+        if (y > 1 && x > 1 && s1[y - 1] === s2[x - 2] && s1[y - 2] === s2[x - 1]) {
+          matrix[y][x] = Math.min(matrix[y][x], matrix[y - 2][x - 2] + 1);
         }
       }
-
-      if (matrix[i][j] < currentMinDistance) currentMinDistance = matrix[i][j];
     }
-
-    if (0 < threshold && threshold < currentMinDistance) return threshold + 1;
   }
 
   return matrix[s1len][s2len];

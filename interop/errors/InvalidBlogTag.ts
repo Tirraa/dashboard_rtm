@@ -10,8 +10,6 @@ const doNotExist = "don't exist";
 const didYouMean = 'did you mean';
 const noSuggestionFound = 'No suggestion found';
 
-// {ToDo} Write tests
-
 type ScoresMap = Record<string, Record<string, number>>;
 
 function onlyBestScoresMap(scoresMap: ScoresMap): ScoresMap {
@@ -28,34 +26,34 @@ function onlyBestScoresMap(scoresMap: ScoresMap): ScoresMap {
   return res;
 }
 
-function mergeScoresMaps(scoresMap1: ScoresMap, scoresMap2: ScoresMap): ScoresMap {
+function mergeScoresMaps(scoresMap1: ScoresMap, scoresMap2: ScoresMap, invalidBlogTags: string[]): ScoresMap {
   const mergedScoresMap: ScoresMap = {};
 
-  for (const key of Object.keys(scoresMap1)) {
-    const values1 = scoresMap1[key];
-    const values2 = scoresMap2[key];
+  for (const invalidTag of invalidBlogTags) {
+    const values1 = scoresMap1[invalidTag];
+    const values2 = scoresMap2[invalidTag];
 
-    if (values2) {
-      mergedScoresMap[key] = Object.keys(values1).length >= Object.keys(values2).length ? values1 : values2;
-    } else {
-      mergedScoresMap[key] = values1;
+    if (values1 !== undefined) {
+      if (!mergedScoresMap[invalidTag]) mergedScoresMap[invalidTag] = {};
+      Object.assign(mergedScoresMap[invalidTag], values1);
     }
-  }
 
-  for (const key of Object.keys(scoresMap2)) {
-    if (!mergedScoresMap[key]) mergedScoresMap[key] = scoresMap2[key];
+    if (values2 !== undefined) {
+      if (!mergedScoresMap[invalidTag]) mergedScoresMap[invalidTag] = {};
+      Object.assign(mergedScoresMap[invalidTag], values2);
+    }
   }
 
   return mergedScoresMap;
 }
 
-function buildDamerauMap(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: readonly string[]) {
+function buildDamerauMap(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: readonly string[], __DAMERAU_THRESHOLD: number) {
   const damerauMap = {} as ScoresMap;
 
   for (const invalidTag of invalidBlogTags) {
     for (const blogTag of __BLOG_TAGS_OPTIONS) {
-      const score = damerauLevenshtein(invalidTag, blogTag, DAMERAU_LEVENSHTEIN_THRESHOLD);
-      if (score > DAMERAU_LEVENSHTEIN_THRESHOLD) continue;
+      const score = damerauLevenshtein(invalidTag, blogTag);
+      if (score > __DAMERAU_THRESHOLD) continue;
 
       if (!damerauMap[invalidTag]) damerauMap[invalidTag] = {};
       damerauMap[invalidTag][blogTag] = score;
@@ -90,12 +88,6 @@ function buildFeedback(scoresMap: ScoresMap): string {
     const suggestions = scoresMap[key];
     const keyDoesNotExist = tabulation + `“${key}” ${doesNotExist}`;
 
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (Object.keys(suggestions).length === 0) {
-      feedbacks.push(keyDoesNotExist + '.');
-      continue;
-    }
-
     const sortedSuggestions = Object.entries(suggestions)
       .sort(([, score1], [, score2]) => score1 - score2)
       .map(([suggestion]) => suggestion);
@@ -113,10 +105,10 @@ function buildFeedback(scoresMap: ScoresMap): string {
   return errorMessage;
 }
 
-function buildHint(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: readonly string[]) {
-  const damerauMap = onlyBestScoresMap(buildDamerauMap(invalidBlogTags, __BLOG_TAGS_OPTIONS));
-  const startingWithMap = onlyBestScoresMap(buildStartingWithMap(invalidBlogTags, __BLOG_TAGS_OPTIONS));
-  const scoresMap = mergeScoresMaps(damerauMap, startingWithMap);
+function buildHint(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: readonly string[], __DAMERAU_THRESHOLD: number) {
+  const damerauMap = onlyBestScoresMap(buildDamerauMap(invalidBlogTags, __BLOG_TAGS_OPTIONS, __DAMERAU_THRESHOLD));
+  const startingWithMap = buildStartingWithMap(invalidBlogTags, __BLOG_TAGS_OPTIONS);
+  const scoresMap = mergeScoresMaps(damerauMap, startingWithMap, invalidBlogTags);
 
   const invalidTagsNotInScoresMap = invalidBlogTags.filter((tag) => !(tag in scoresMap));
   let invalidTagsNotInScoresMapFeedback = '';
@@ -139,10 +131,14 @@ function buildHint(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: readonly stri
 }
 
 class InvalidBlogTag extends Error {
-  constructor(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: readonly string[] = blogTagOptions) {
+  constructor(
+    invalidBlogTags: string[],
+    __BLOG_TAGS_OPTIONS: readonly string[] = blogTagOptions,
+    __DAMERAU_THRESHOLD: number = DAMERAU_LEVENSHTEIN_THRESHOLD
+  ) {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const tag = invalidBlogTags.length === 1 ? 'tag' : 'tags';
-    const message = `Invalid blog ${tag} detected!` + '\n' + buildHint(invalidBlogTags, __BLOG_TAGS_OPTIONS);
+    const message = `Invalid blog ${tag} detected!` + '\n' + buildHint(invalidBlogTags, __BLOG_TAGS_OPTIONS, __DAMERAU_THRESHOLD);
     super(message);
     this.name = 'InvalidBlogTagError';
   }
