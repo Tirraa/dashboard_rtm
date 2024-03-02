@@ -2,8 +2,10 @@
 // Stryker disable all
 
 import type { NextMiddleware } from 'next/server';
+import type { Session } from 'next-auth';
 import type { ReactNode } from 'react';
 
+import type { MaybeNull } from './CustomUtilityTypes';
 import type { ClassName } from './React';
 
 export type AppPath = string;
@@ -12,6 +14,10 @@ export type AppPathAsIs = AppPath;
 
 export type WithChildren = { children: ReactNode };
 export interface LayoutMinimalProps extends WithChildren {}
+
+export interface WithSession {
+  session: MaybeNull<Session>;
+}
 
 export interface WithClassname extends ClassName {}
 

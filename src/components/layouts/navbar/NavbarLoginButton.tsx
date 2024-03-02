@@ -1,8 +1,7 @@
 'use client';
 
-import type { WithIsMobile } from '@rtm/shared-types/Next';
+import type { WithIsMobile, WithSession } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
-import type { Session } from 'next-auth';
 
 import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
 import { SignalSlashIcon, KeyIcon } from '@heroicons/react/20/solid';
@@ -17,8 +16,7 @@ import { i18ns } from '##/config/i18n';
 
 import NavbarButton from './NavbarButton';
 
-interface NavbarLoginButtonMobileProps {
-  session: Session | null;
+interface NavbarLoginButtonMobileProps extends WithSession {
   currentPathname: string;
 }
 

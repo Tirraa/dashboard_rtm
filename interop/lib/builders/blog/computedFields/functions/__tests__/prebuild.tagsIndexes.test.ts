@@ -1,4 +1,4 @@
-import type { DocumentToCompute } from 'packages/shared-types/src/ContentlayerConfig';
+import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 
 import { describe, expect, it } from 'vitest';
 
