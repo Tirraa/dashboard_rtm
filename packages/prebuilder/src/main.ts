@@ -74,11 +74,17 @@ function resetBenchmarkClocks(): void {
 
 const moveToRoot = () => process.chdir(join(__dirname, ROOT_FOLDER_RELATIVE_PATH_FROM_PREBUILDER_CTX));
 
+/**
+ * @effect {Prints Log}
+ */
 function printPrebuilderDoneMsg(sideEffectAtExit?: () => void) {
   console.log(formatMessage('prebuildDone' satisfies VocabKey));
   if (typeof sideEffectAtExit === 'function') sideEffectAtExit();
 }
 
+/**
+ * @effect {Prints Log}
+ */
 function printPrebuildReport({
   pagesTaxonomyCheckersStartTime,
   blogTaxonomyCheckersStartTime,
@@ -259,6 +265,9 @@ async function generatePhonyLpCode() {
   await generateLandingPagesType({}, false);
 }
 
+/**
+ * @effect {Prints Error}
+ */
 function logError(error: unknown) {
   const isErrorHandled = HANDLED_ERRORS_TYPES.some((errorType) => error instanceof errorType);
 
@@ -402,6 +411,9 @@ async function genLoop(
   if (WATCH) initializeWatchers();
 
   function initializeWatchers() {
+    /**
+     * @effect {Prints Error}
+     */
     async function asyncProcedurePlayer(procedure: () => Promise<void>) {
       try {
         resetBenchmarkClocks();

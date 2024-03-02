@@ -4,7 +4,11 @@
 class ContentlayerDuplicateBlogTagsError extends Error {
   constructor(duplicates: unknown[]) {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    super(`[${duplicates.join(', ')}] ${duplicates.length > 1 ? 'are' : 'is'} defined several times.`);
+    const prefix = duplicates.length > 1 ? `[“${duplicates.join('”, “')}”]` : `“${duplicates[0]}”`;
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const verb = duplicates.length > 1 ? 'are' : 'is';
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    super(prefix + ' ' + verb + ' ' + 'defined several times.');
     this.name = 'ContentlayerDuplicateBlogTagsError';
   }
 }
