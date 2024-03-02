@@ -106,11 +106,22 @@ describe('InvalidBlogTag (both suggestions and unknown tags)', () => {
   });
 
   it('should generate an error message with hint (overlap, Damerau Levenshtein and StartsWith combination)', () => {
-    const unknownTags = ['overlap_test_'];
+    const unknownTag = 'overlap_test_';
     const damerauThreshold = 3;
-    const FAKE_ERROR = new InvalidBlogTag(unknownTags, fakeBlogTags, damerauThreshold);
+    const FAKE_ERROR = new InvalidBlogTag([unknownTag], fakeBlogTags, damerauThreshold);
 
     expect(FAKE_ERROR.message).toBe(`Invalid blog tag detected!
 ◦ “overlap_test_” doesn't exist, did you mean: “overlap_tset_”, or “overlap_test_one”, or “overlap_test_one_long”, or “overlap_test_one_long_long”, or “overlap_test_one_long_long_long”?`);
+  });
+});
+
+describe('InvalidBlogTag (empty string)', () => {
+  it('should generate an error message with full hint', () => {
+    const unknownTag = '';
+    const damerauThreshold = 3;
+    const FAKE_ERROR = new InvalidBlogTag([unknownTag], fakeBlogTags, damerauThreshold);
+
+    expect(FAKE_ERROR.message).toBe(`Invalid blog tag detected!
+◦ “” doesn't exist, did you mean: “fake_tag_one”, or “fake_tag_two”, or “overlap_tset_”, or “overlap_test_one”, or “overlap_test_one_long”, or “overlap_test_one_long_long”, or “overlap_test_one_long_long_long”?`);
   });
 });

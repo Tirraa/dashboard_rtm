@@ -52,6 +52,9 @@ function buildDamerauMap(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: readonl
 
   for (const invalidTag of invalidBlogTags) {
     for (const blogTag of __BLOG_TAGS_OPTIONS) {
+      const stringsLengthDiff = Math.abs(invalidTag.length - blogTag.length);
+      if (stringsLengthDiff > __DAMERAU_THRESHOLD) continue;
+
       const score = damerauLevenshtein(invalidTag, blogTag);
       if (score > __DAMERAU_THRESHOLD) continue;
 
