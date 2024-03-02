@@ -6,21 +6,22 @@
 import type { FunctionComponent } from 'react';
 
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
-import { getClientSideI18n } from '@/i18n/client';
 import { Button } from '@/components/ui/Button';
+import { useScopedI18n } from '@/i18n/client';
 import ROUTES_ROOTS from '##/config/routes';
 import { signIn } from 'next-auth/react';
 import { i18ns } from '##/config/i18n';
+import { capitalize } from '@/lib/str';
 
 export interface SignUpButtonProps {}
 
 const SignupButton: FunctionComponent<SignUpButtonProps> = () => {
-  const globalT = getClientSideI18n();
+  const scopedT = useScopedI18n(i18ns.auth);
   const className = BUTTON_CONFIG.CLASSNAME;
 
   return (
     <Button onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} className={className} size="lg">
-      {globalT(`${i18ns.auth}.signup`)}
+      {capitalize(scopedT('signup'))}
     </Button>
   );
 };

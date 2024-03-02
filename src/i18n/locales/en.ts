@@ -23,16 +23,15 @@ const SHARED: SharedVocabType = {
 
   vocab: {
     brand: 'Rust Team Management',
-    breadcrumbs: 'Breadcrumbs',
-    'sign-up': 'Sign up',
+    breadcrumbs: 'breadcrumbs',
+    'sign-up': 'sign up',
+    draft: 'draft',
     logo: 'logo',
     page: 'page'
   }
 } as const;
 
 export default {
-  _infos: { lng: 'en' },
-
   // eslint-disable-next-line perfectionist/sort-objects
   'blog-categories': {
     'patch-notes-bis': {
@@ -119,6 +118,13 @@ export default {
     login: 'Login'
   },
 
-  'pages-titles': SHARED['pages-titles']
+  'blog-tags': {
+    tag_one: 'Tag 1',
+    tag_two: 'Tag 2'
+  },
+
+  'pages-titles': SHARED['pages-titles'],
+
+  _infos: { lng: 'en' }
 } as const satisfies VocabType;
 /* v8 ignore stop */

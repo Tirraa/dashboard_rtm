@@ -1,7 +1,7 @@
 /* v8 ignore start */
 // Stryker disable all
 
-class ContentlayerDuplicateTypesError extends Error {
+class BlogTagDuplicates extends Error {
   constructor(duplicates: unknown[]) {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const prefix = duplicates.length > 1 ? `[“${duplicates.join('”, “')}”]` : `“${duplicates[0]}”`;
@@ -9,11 +9,11 @@ class ContentlayerDuplicateTypesError extends Error {
     const verb = duplicates.length > 1 ? 'are' : 'is';
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     super(prefix + ' ' + verb + ' ' + 'defined several times.');
-    this.name = 'ContentlayerDuplicateTypesError';
+    this.name = 'BlogTagDuplicatesError';
   }
 }
 
-export default ContentlayerDuplicateTypesError;
+export default BlogTagDuplicates;
 
 // Stryker restore all
 /* v8 ignore stop */

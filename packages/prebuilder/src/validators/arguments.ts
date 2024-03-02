@@ -317,7 +317,7 @@ async function crashIfFilesDoesNotExist({ ...args }) {
 }
 
 /**
- * @effect {Warn}
+ * @effect {Prints Warning}
  */
 export default async function parseArguments() {
   const args = arg(

@@ -12,6 +12,7 @@ const _i18nsBase = {
   blogCategories: 'blog-categories',
   pagesTitles: 'pages-titles',
   dashboard: 'dashboard',
+  blogTags: 'blog-tags',
   navbar: 'navbar',
   infos: '_infos',
   vocab: 'vocab',

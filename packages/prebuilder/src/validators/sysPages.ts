@@ -29,9 +29,8 @@ function buildSlugsFeedback(foldersWithDefects: Record<Path, Filename[]>) {
   return feedback;
 }
 
-// {ToDo} Write tests
 /**
- * @effect {Warn}
+ * @effect {Prints Warning}
  */
 function warnIfUglyIndexStrategy(indexStrategyDefects: Record<Path, Filename>) {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
