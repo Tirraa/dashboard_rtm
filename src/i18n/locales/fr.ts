@@ -121,6 +121,7 @@ export default {
   },
 
   'blog-tags': {
+    tag_three: 'Tag 3',
     tag_one: 'Tag 1',
     tag_two: 'Tag 2'
   },

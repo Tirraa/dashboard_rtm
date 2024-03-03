@@ -1,7 +1,7 @@
 type EmptyString = '';
 const emptyString: EmptyString = '';
 
-const _blogTagOptions = ['tag_one', 'tag_two'] as const satisfies string[];
+const _blogTagOptions = ['tag_one', 'tag_two', 'tag_three'] as const satisfies string[];
 
 export const blogTagOptions = [..._blogTagOptions].sort() as readonly BlogTag[];
 

@@ -35,6 +35,15 @@ export const DOCUMENTS_CONTENT_TYPE: DocumentContentType = 'mdx';
 export const DOCUMENTS_CONTENT_EXTENSION = 'mdx';
 
 const _ALL_BLOG_FIELDS = {
+  sortedTags: {
+    of: {
+      options: blogTagOptions,
+      type: 'enum'
+    },
+    required: false,
+    type: 'list',
+    default: []
+  },
   tags: {
     of: {
       options: blogTagOptions,
@@ -166,6 +175,7 @@ export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
   language: { resolve: (post) => buildBlogPostLanguageFlag(post), type: 'string' },
   category: { resolve: (post) => buildBlogPostCategory(post), type: 'string' },
   tagsIndexes: { resolve: (post) => buildBlogTagsIndexes(post), type: 'list' },
+  sortedTags: { resolve: (post) => post.tags._array.toSorted(), type: 'list' },
   slug: { resolve: (post) => buildBlogPostSlug(post), type: 'string' },
   url: { resolve: (post) => buildBlogPostUrl(post), type: 'string' }
 } as const satisfies ComputedFieldsArtifact<AllBlogFields> satisfies ComputedFields;
