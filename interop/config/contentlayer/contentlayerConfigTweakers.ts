@@ -173,9 +173,9 @@ const _ALL_PAGES_FIELDS = {
 export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
   subcategory: { resolve: (post) => buildBlogPostSubcategory(post), type: 'string' },
   language: { resolve: (post) => buildBlogPostLanguageFlag(post), type: 'string' },
+  sortedTags: { resolve: (post) => [...post.tags._array].sort(), type: 'list' },
   category: { resolve: (post) => buildBlogPostCategory(post), type: 'string' },
   tagsIndexes: { resolve: (post) => buildBlogTagsIndexes(post), type: 'list' },
-  sortedTags: { resolve: (post) => post.tags._array.toSorted(), type: 'list' },
   slug: { resolve: (post) => buildBlogPostSlug(post), type: 'string' },
   url: { resolve: (post) => buildBlogPostUrl(post), type: 'string' }
 } as const satisfies ComputedFieldsArtifact<AllBlogFields> satisfies ComputedFields;

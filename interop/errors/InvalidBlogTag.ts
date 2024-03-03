@@ -11,7 +11,11 @@ const doNotExist = "don't exist";
 const didYouMean = 'did you mean';
 const noSuggestionFound = 'No suggestion found';
 
-type ScoresMap = Record<string, Record<string, number>>;
+type Tag = string;
+type InvalidTag = string;
+type ValidTagSuggestion = Tag;
+type Score = number;
+type ScoresMap = Record<InvalidTag, Record<ValidTagSuggestion, Score>>;
 
 function onlyBestScoresMap(scoresMap: ScoresMap): ScoresMap {
   const res: ScoresMap = {};
@@ -27,7 +31,7 @@ function onlyBestScoresMap(scoresMap: ScoresMap): ScoresMap {
   return res;
 }
 
-function mergeScoresMaps(scoresMap1: ScoresMap, scoresMap2: ScoresMap, invalidBlogTags: string[]): ScoresMap {
+function mergeScoresMaps(scoresMap1: ScoresMap, scoresMap2: ScoresMap, invalidBlogTags: InvalidTag[]): ScoresMap {
   const mergedScoresMap: ScoresMap = {};
 
   for (const invalidTag of invalidBlogTags) {
@@ -48,7 +52,7 @@ function mergeScoresMaps(scoresMap1: ScoresMap, scoresMap2: ScoresMap, invalidBl
   return mergedScoresMap;
 }
 
-function buildDamerauMap(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: readonly string[], __DAMERAU_THRESHOLD: number) {
+function buildDamerauMap(invalidBlogTags: InvalidTag[], __BLOG_TAGS_OPTIONS: readonly Tag[], __DAMERAU_THRESHOLD: number) {
   const damerauMap = {} as ScoresMap;
 
   for (const invalidTag of invalidBlogTags) {
@@ -67,7 +71,7 @@ function buildDamerauMap(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: readonl
   return damerauMap;
 }
 
-function buildStartingWithMap(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: readonly string[]) {
+function buildStartingWithMap(invalidBlogTags: InvalidTag[], __BLOG_TAGS_OPTIONS: readonly Tag[]) {
   const startingWithMap = {} as ScoresMap;
 
   for (const invalidTag of invalidBlogTags) {
@@ -109,7 +113,7 @@ function buildFeedback(scoresMap: ScoresMap): string {
   return errorMessage;
 }
 
-function buildHint(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: readonly string[], __DAMERAU_THRESHOLD: number) {
+function buildHint(invalidBlogTags: InvalidTag[], __BLOG_TAGS_OPTIONS: readonly Tag[], __DAMERAU_THRESHOLD: number) {
   const damerauMap = onlyBestScoresMap(buildDamerauMap(invalidBlogTags, __BLOG_TAGS_OPTIONS, __DAMERAU_THRESHOLD));
   const startingWithMap = buildStartingWithMap(invalidBlogTags, __BLOG_TAGS_OPTIONS);
   const scoresMap = mergeScoresMaps(damerauMap, startingWithMap, invalidBlogTags);
@@ -136,8 +140,8 @@ function buildHint(invalidBlogTags: string[], __BLOG_TAGS_OPTIONS: readonly stri
 
 class InvalidBlogTag extends Error {
   constructor(
-    invalidBlogTags: string[],
-    __BLOG_TAGS_OPTIONS: readonly string[] = blogTagOptions,
+    invalidBlogTags: InvalidTag[],
+    __BLOG_TAGS_OPTIONS: readonly Tag[] = blogTagOptions,
     __DAMERAU_THRESHOLD: number = DAMERAU_LEVENSHTEIN_THRESHOLD
   ) {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
