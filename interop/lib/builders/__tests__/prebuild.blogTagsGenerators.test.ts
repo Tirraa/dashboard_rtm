@@ -22,7 +22,7 @@ describe('generateBlogTagOptionsVocabSchema', () => {
 });
 
 describe('generateIndexedBlogTagOptions', () => {
-  it('should return a valid vocab schema, given blog tags options', () => {
+  it('should return a valid indexes dictionnary, given blog tags options', () => {
     expect(generateIndexedBlogTagOptions(FAKE_BLOG_TAGS_OPTIONS as any)).toStrictEqual({
       tag_three: 2,
       tag_one: 0,
