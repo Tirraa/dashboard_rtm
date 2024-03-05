@@ -5,11 +5,13 @@ import { generateBlogTagOptionsVocabSchema, generateIndexedBlogTagOptions } from
 type EmptyString = '';
 
 const emptyString: EmptyString = '';
-const FAKE_BLOG_TAGS_OPTIONS: string[] = ['tag_one', 'tag_two', 'tag_three'] as const;
+const FAKE_BLOG_TAGS_OPTIONS = ['tag_one', 'tag_two', 'tag_three'] as const satisfies string[];
 
 describe('generateBlogTagOptionsVocabSchema', () => {
+  const blogTagOptionsVocabSchema = generateBlogTagOptionsVocabSchema(FAKE_BLOG_TAGS_OPTIONS);
+
   it('should return a valid vocab schema, given blog tags options', () => {
-    expect(generateBlogTagOptionsVocabSchema(FAKE_BLOG_TAGS_OPTIONS as any)).toStrictEqual({
+    expect(blogTagOptionsVocabSchema).toStrictEqual({
       tag_three: emptyString,
       tag_one: emptyString,
       tag_two: emptyString
@@ -23,7 +25,9 @@ describe('generateBlogTagOptionsVocabSchema', () => {
 
 describe('generateIndexedBlogTagOptions', () => {
   it('should return a valid indexes dictionnary, given blog tags options', () => {
-    expect(generateIndexedBlogTagOptions(FAKE_BLOG_TAGS_OPTIONS as any)).toStrictEqual({
+    const indexedBlogTagOptions = generateIndexedBlogTagOptions(FAKE_BLOG_TAGS_OPTIONS);
+
+    expect(indexedBlogTagOptions).toStrictEqual({
       tag_three: 2,
       tag_one: 0,
       tag_two: 1
