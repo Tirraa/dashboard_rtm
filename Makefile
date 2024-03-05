@@ -65,7 +65,7 @@ mutations-tests: clean-codegen clean-stryker-cache initialize
 	$(PM) mutations-tests:run
 
 # @Override
-check-coding-style:
+check-coding-style: prebuild-rtm build-contentlayer
 	$(PM) ci:format-check
 	$(PM) ci:lint
 	$(PM) ci:typecheck-project
