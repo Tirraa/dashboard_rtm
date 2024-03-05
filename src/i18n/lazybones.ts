@@ -1,3 +1,4 @@
+import type { EmptyString } from '@rtm/shared-types/CustomUtilityTypes';
 import type { TypedLeafsJSONData } from '@rtm/shared-types/JSON';
 import type { VocabObjValue } from '@rtm/shared-types/I18n';
 
@@ -16,5 +17,3 @@ export const SHARED_TESTING_BLOG_SUBCATEGORIES_PAGES_TITLES = {
   'blog-testing-category': _,
   'fake-subcategory': _
 } as const satisfies TypedLeafsJSONData<VocabObjValue>;
-
-type EmptyString = '';

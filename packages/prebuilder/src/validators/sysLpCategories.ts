@@ -1,4 +1,4 @@
-import type { MaybeEmptyErrorsDetectionFeedback, Path } from '../types/Metadatas';
+import type { MaybeEmptyErrorsDetectionFeedback, ErrorsDetectionFeedback, Path } from '../types/Metadatas';
 import type { VocabKey } from '../config/translations';
 
 import { LIST_ELEMENT_PREFIX, MAX_LP_TAXONOMY_LEN } from '../config';
@@ -12,7 +12,7 @@ export default async function sysLpCategoriesValidator(
   lpFolder: Path,
   __MAX_LEN: number = MAX_LP_TAXONOMY_LEN
 ): Promise<MaybeEmptyErrorsDetectionFeedback> {
-  let feedback = '';
+  let feedback: ErrorsDetectionFeedback = '';
 
   const categoriesWithDefects = [];
   const maybeCategories = await fs.readdir(lpFolder, { withFileTypes: true });

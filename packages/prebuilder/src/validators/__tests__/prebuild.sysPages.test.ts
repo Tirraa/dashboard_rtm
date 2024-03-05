@@ -1,3 +1,5 @@
+import type { EmptyString } from '@rtm/shared-types/CustomUtilityTypes';
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { INVALID_NESTINGS_NEEDLE, INVALID_NESTING_NEEDLE, INVALID_SLUGS_NEEDLE, INVALID_SLUG_NEEDLE } from '𝕍/needles';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -47,7 +49,7 @@ const INVALID_PAGES_FOLDER_CONTAINING_SEVERAL_INVALID_PAGE_NESTINGS = path.norma
   './packages/prebuilder/src/validators/__tests__/fake_pages_folders/invalid_fake_pages_folder_several_invalid_nestings'
 );
 
-const EMPTY_FEEDBACK = '';
+const EMPTY_FEEDBACK: EmptyString = '';
 
 describe('sysPagesValidator', () => {
   it('should throw ENOENT, given invalid path', async () => {

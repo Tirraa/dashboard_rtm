@@ -43,3 +43,5 @@ type CompareFunReturnValue = number;
 
 // Stryker restore all
 /* v8 ignore stop */
+
+export type EmptyString = '';

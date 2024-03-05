@@ -1,3 +1,5 @@
+import type { EmptyString } from '@rtm/shared-types/CustomUtilityTypes';
+
 // @ts-expect-error
 import BuilderError from '@rtm/prebuilder/errors/BuilderError';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -27,7 +29,7 @@ const INVALID_LOCALES_FOLDER_EMPTY_LNG_FIELD = './packages/prebuilder/src/valida
 const INVALID_I18N_LOCALES_SCHEMA_FILEPATH_EMPTY_LNG_FIELD =
   './packages/prebuilder/src/validators/__tests__/fake_locales/invalid_fake_locales_empty_lng_field/schema.ts';
 
-const EMPTY_FEEDBACK = '';
+const EMPTY_FEEDBACK: EmptyString = '';
 
 describe('localesInfosValidator', () => {
   it('should not produce error feedback, given valid inputs', async () => {

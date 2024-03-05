@@ -1,4 +1,5 @@
-type EmptyString = '';
+import type { EmptyString } from '@rtm/shared-types/CustomUtilityTypes';
+
 const emptyString: EmptyString = '';
 
 export const generateIndexedBlogTagOptions = <T extends readonly string[]>(blogTagOptions: T): Record<T[number], number> =>

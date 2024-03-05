@@ -118,7 +118,7 @@ function buildHint(invalidBlogTags: InvalidTag[], __BLOG_TAGS_OPTIONS: readonly 
   const startingWithMap = buildStartingWithMap(invalidBlogTags, __BLOG_TAGS_OPTIONS);
   const scoresMap = mergeScoresMaps(damerauMap, startingWithMap, invalidBlogTags);
 
-  const invalidTagsNotInScoresMap = invalidBlogTags.filter((tag) => !(tag in scoresMap));
+  const invalidTagsNotInScoresMap: InvalidTag[] = invalidBlogTags.filter((tag) => !(tag in scoresMap));
   let invalidTagsNotInScoresMapFeedback = '';
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers

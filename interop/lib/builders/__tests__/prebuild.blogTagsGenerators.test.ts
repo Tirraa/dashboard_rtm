@@ -1,8 +1,8 @@
+import type { EmptyString } from '@rtm/shared-types/CustomUtilityTypes';
+
 import { describe, expect, it } from 'vitest';
 
 import { generateBlogTagOptionsVocabSchema, generateIndexedBlogTagOptions } from '../blogTagsGenerators';
-
-type EmptyString = '';
 
 const emptyString: EmptyString = '';
 const FAKE_BLOG_TAGS_OPTIONS = ['tag_one', 'tag_two', 'tag_three'] as const satisfies string[];

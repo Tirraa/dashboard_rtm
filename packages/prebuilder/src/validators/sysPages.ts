@@ -1,4 +1,4 @@
-import type { MaybeEmptyErrorsDetectionFeedback, Arborescence, PathSegment, Filename, Path } from '../types/Metadatas';
+import type { MaybeEmptyErrorsDetectionFeedback, ErrorsDetectionFeedback, Arborescence, PathSegment, Filename, Path } from '../types/Metadatas';
 import type { VocabKey } from '../config/translations';
 
 import { MAX_PAGE_TAXONOMY_LEN, LIST_ELEMENT_PREFIX, PAGE_FILE_EXT } from '../config';
@@ -14,7 +14,7 @@ import fileExists from '../lib/fileExists';
 const path = require('path');
 
 function buildSlugsFeedback(foldersWithDefects: Record<Path, Filename[]>) {
-  let feedback = '';
+  let feedback: ErrorsDetectionFeedback = '';
   for (const [folderWithDefects, defects] of Object.entries(foldersWithDefects)) {
     if (feedback) feedback += '\n';
     feedback +=

@@ -1,6 +1,7 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import type { EmptyString } from '@rtm/shared-types/CustomUtilityTypes';
 import type { I18nParams } from '@/types/Next';
 
 import PagesRootElement from '@/components/layouts/base/PagesRootElement';
@@ -14,7 +15,7 @@ export async function generateMetadata() {
   const scopedT = await getScopedI18n(i18ns.vocab);
 
   const title = buildPageTitle(scopedT('brand-short'), scopedT('404'));
-  const description = '';
+  const description: EmptyString = '';
 
   return { description, title };
 }
