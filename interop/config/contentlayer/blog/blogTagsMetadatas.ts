@@ -1,4 +1,4 @@
-import { generateBlogTagOptionsVocabSchema, generateIndexedBlogTagOptions } from '../../../lib/builders/unifiedImport';
+import { generateBlogTagOptionsVocabSchema, generateIndexedBlogTagOptions } from '../../../lib/builders/blogTagsGenerators';
 
 export const indexedBlogTagOptions = generateIndexedBlogTagOptions();
 
