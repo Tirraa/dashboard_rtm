@@ -1,3 +1,4 @@
+import type { EmptyString } from '@rtm/shared-types/CustomUtilityTypes';
 import type { WriterFunction } from 'ts-morph';
 
 import { VariableDeclarationKind, StructureKind, Project, Writers } from 'ts-morph';
@@ -15,7 +16,7 @@ import {
   TAB_SIZE
 } from '../../config';
 
-const emptyString = '';
+const emptyString: EmptyString = '';
 const PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS = I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS.map(
   (field) => I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS_PREFIX + field
 );

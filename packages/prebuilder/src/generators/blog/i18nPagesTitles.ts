@@ -1,3 +1,4 @@
+import type { EmptyString } from '@rtm/shared-types/CustomUtilityTypes';
 import type { WriterFunction } from 'ts-morph';
 
 import { VariableDeclarationKind, StructureKind, Project, Writers } from 'ts-morph';
@@ -12,7 +13,7 @@ import {
   TAB_SIZE
 } from '../../config';
 
-const emptyString = '';
+const emptyString: EmptyString = '';
 
 export default async function generateI18nPagesTitles(
   blogArchitecture: CategoriesMetadatas,

@@ -1,3 +1,5 @@
+import type { EmptyString } from '@rtm/shared-types/CustomUtilityTypes';
+
 import { describe, expect, it } from 'vitest';
 
 import damerauLevenshtein from '../damerauLevenshtein';
@@ -5,7 +7,7 @@ import damerauLevenshtein from '../damerauLevenshtein';
 // https://github.com/aldebaran/libport/blob/master/tests/libport/damerau-levenshtein-distance.cc
 
 describe('damerauLevenshtein', () => {
-  const emptyString = '';
+  const emptyString: EmptyString = '';
 
   it('should pass, empty strings', () => {
     const distance = damerauLevenshtein(emptyString, emptyString);

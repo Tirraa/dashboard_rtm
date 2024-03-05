@@ -1,4 +1,4 @@
-import type { MaybeEmptyErrorsDetectionFeedback, BlogSubcategory, BlogCategory, Path } from '../types/Metadatas';
+import type { MaybeEmptyErrorsDetectionFeedback, ErrorsDetectionFeedback, BlogSubcategory, BlogCategory, Path } from '../types/Metadatas';
 import type { VocabKey } from '../config/translations';
 
 import { MAX_BLOG_TAXONOMY_LEN, LIST_ELEMENT_PREFIX } from '../config';
@@ -13,7 +13,7 @@ export default async function sysBlogSubcategoriesValidator(
   postsFolder: Path,
   __MAX_LEN: number = MAX_BLOG_TAXONOMY_LEN
 ): Promise<MaybeEmptyErrorsDetectionFeedback> {
-  let feedback = '';
+  let feedback: ErrorsDetectionFeedback = '';
 
   const categoriesWithDefects: Record<BlogCategory, BlogSubcategory[]> = {};
   const categoriesCollection = await fs.readdir(postsFolder, { withFileTypes: true });

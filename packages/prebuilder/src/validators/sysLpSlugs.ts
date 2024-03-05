@@ -1,4 +1,4 @@
-import type { MaybeEmptyErrorsDetectionFeedback, Filename, Path } from '../types/Metadatas';
+import type { MaybeEmptyErrorsDetectionFeedback, ErrorsDetectionFeedback, Filename, Path } from '../types/Metadatas';
 import type { VocabKey } from '../config/translations';
 
 import { LIST_ELEMENT_PREFIX, MAX_LP_TAXONOMY_LEN, LP_FILE_EXT } from '../config';
@@ -10,7 +10,7 @@ export default async function sysLpSlugsValidator(
   lpFolder: Path,
   __MAX_LEN: number = MAX_LP_TAXONOMY_LEN
 ): Promise<MaybeEmptyErrorsDetectionFeedback> {
-  let feedback = '';
+  let feedback: ErrorsDetectionFeedback = '';
 
   const foldersWithDefects: Record<Path, Filename[]> = {};
   const filesCollection = await traverseAndMapFilepaths(lpFolder);

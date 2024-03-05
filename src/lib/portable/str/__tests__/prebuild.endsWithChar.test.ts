@@ -1,3 +1,5 @@
+import type { EmptyString } from '@rtm/shared-types/CustomUtilityTypes';
+
 import { describe, expect, it } from 'vitest';
 
 import endsWithChars from '../endsWithChar';
@@ -18,7 +20,7 @@ describe('endsWithChar', () => {
   });
 
   it('should return false, given endChars is empty', () => {
-    const endChars = '';
+    const endChars: EmptyString = '';
     expect(endsWithChars('foo bar abc', endChars)).toBe(false);
     expect(endsWithChars('foo bar acb', endChars)).toBe(false);
     expect(endsWithChars('foo bar cba', endChars)).toBe(false);

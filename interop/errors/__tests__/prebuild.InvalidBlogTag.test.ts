@@ -1,3 +1,5 @@
+import type { EmptyString } from '@rtm/shared-types/CustomUtilityTypes';
+
 import { describe, expect, it } from 'vitest';
 
 import InvalidBlogTag from '../InvalidBlogTag';
@@ -117,7 +119,7 @@ describe('InvalidBlogTag (both suggestions and unknown tags)', () => {
 
 describe('InvalidBlogTag (empty string)', () => {
   it('should generate an error message with full hint', () => {
-    const unknownTag = '';
+    const unknownTag: EmptyString = '';
     const damerauThreshold = 3;
     const FAKE_ERROR = new InvalidBlogTag([unknownTag], fakeBlogTags, damerauThreshold);
 

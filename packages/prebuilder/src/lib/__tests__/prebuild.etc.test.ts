@@ -1,3 +1,5 @@
+import type { EmptyString } from '@rtm/shared-types/CustomUtilityTypes';
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { describe, expect, it } from 'vitest';
 
@@ -81,7 +83,7 @@ describe('localesInfosInnerToObj', () => {
   });
 
   it('should return empty object, given empty string input', () => {
-    const objInner = '';
+    const objInner: EmptyString = '';
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     expect(localesInfosInnerToObj(objInner as string)).toStrictEqual({});
   });

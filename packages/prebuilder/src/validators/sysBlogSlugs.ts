@@ -1,4 +1,4 @@
-import type { MaybeEmptyErrorsDetectionFeedback, Filename, Path } from '../types/Metadatas';
+import type { MaybeEmptyErrorsDetectionFeedback, ErrorsDetectionFeedback, Filename, Path } from '../types/Metadatas';
 import type { VocabKey } from '../config/translations';
 
 import { MAX_BLOG_TAXONOMY_LEN, LIST_ELEMENT_PREFIX, BLOG_POST_FILE_EXT } from '../config';
@@ -10,7 +10,7 @@ export default async function sysBlogSlugsValidator(
   postsFolder: Path,
   __MAX_LEN: number = MAX_BLOG_TAXONOMY_LEN
 ): Promise<MaybeEmptyErrorsDetectionFeedback> {
-  let feedback = '';
+  let feedback: ErrorsDetectionFeedback = '';
 
   const foldersWithDefects: Record<Path, Filename[]> = {};
   const filesCollection = await traverseAndMapFilepaths(postsFolder);

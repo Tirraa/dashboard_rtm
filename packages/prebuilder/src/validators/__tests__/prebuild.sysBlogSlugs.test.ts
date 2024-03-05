@@ -1,3 +1,5 @@
+import type { EmptyString } from '@rtm/shared-types/CustomUtilityTypes';
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { INVALID_SLUGS_NEEDLE, INVALID_SLUG_NEEDLE } from '𝕍/needles';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -15,7 +17,7 @@ const INVALID_BLOG_POSTS_FOLDER_CONTAINING_ONE_INVALID_BLOG_SLUG =
 const INVALID_BLOG_POSTS_FOLDER_CONTAINING_SEVERAL_INVALID_BLOG_SLUGS =
   './packages/prebuilder/src/validators/__tests__/fake_posts_folders/invalid_fake_posts_folder_several_invalid_blog_slugs';
 
-const EMPTY_FEEDBACK = '';
+const EMPTY_FEEDBACK: EmptyString = '';
 
 describe('sysBlogSlugsValidator', () => {
   it('should throw ENOENT, given invalid path', async () => {
