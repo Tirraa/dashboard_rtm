@@ -1,11 +1,12 @@
 import { throwIfForbiddenToUseIndexErrorBlogCtx, throwIfForbiddenToUseIndexErrorLpCtx, getPathWithIndexSuffix } from './helpers';
 import { LANDING_PAGES_FOLDER, BLOG_POSTS_FOLDER, PAGES_FOLDER } from '../../config/contentlayer/contentlayerConfigTweakers';
 import getPathWithoutExtension from '../../../packages/shared-lib/src/portable/str/getPathWithoutExtension';
-import { indexedBlogTagOptions, blogTagOptions } from '../../config/contentlayer/blog/blogTags';
 import InvalidBlogTag, { DAMERAU_LEVENSHTEIN_THRESHOLD } from '../../errors/InvalidBlogTag';
+import { indexedBlogTagOptions } from '../../config/contentlayer/blog/blogTagsMetadatas';
 import indexOfNthOccurrence from '../../../src/lib/portable/str/indexOfNthOccurrence';
 import isValidLanguageFlag from '../../../src/lib/portable/i18n/isValidLanguageFlag';
 import getFlattenedPathWithoutRootFolder from './getFlattenedPathWithoutRootFolder';
+import { blogTagOptions } from '../../config/contentlayer/blog/blogTags';
 import ForbiddenToUseIndexError from '../../errors/ForbiddenToUseIndex';
 import { INDEX_TOKEN, BULLET } from '../misc/contentlayerCornerCases';
 import capitalize from '../../../src/lib/portable/str/capitalize';

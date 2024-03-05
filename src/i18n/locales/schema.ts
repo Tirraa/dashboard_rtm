@@ -3,7 +3,7 @@
 
 import type { TypedLeafsJSONData } from '@rtm/shared-types/JSON';
 
-import { blogTagOptionsVocabSchema } from '##/config/contentlayer/blog/blogTags';
+import { blogTagOptionsVocabSchema } from '##/config/contentlayer/blog/blogTagsMetadatas';
 import { blogCategories, pagesTitles } from '@rtm/generated';
 
 const _: NotScanned = '';
