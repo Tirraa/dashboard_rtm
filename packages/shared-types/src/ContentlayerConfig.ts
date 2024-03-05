@@ -2,14 +2,8 @@
 // Stryker disable all
 //!\ TESTED VIA JEST-TSD
 
-import type {
-  BlogDocumentsComputedFieldsKeys,
-  BlogDocumentsTypesKeys,
-  BlogComputedFields,
-  AllBlogFields,
-  BlogFields
-} from '##/config/contentlayer/contentlayerConfigTweakers';
 import type { DocumentContentType, ComputedFields, FieldDefs, FieldDef } from 'contentlayer/source-files';
+import type { BlogDocumentsTypesKeys } from '##/config/contentlayer/contentlayerConfigTweakers';
 import type { FieldDefType, Document } from 'contentlayer/core';
 
 type ContentlayerContentType = { contentType: DocumentContentType };
@@ -24,8 +18,8 @@ export type DocumentsConfigTypeContentlayerMetadatas<Name extends string> = {
 };
 
 export type DocumentsConfigType<
-  __Fields extends DocumentsFields = BlogFields,
-  __ComputedFields extends ComputedFields = BlogComputedFields,
+  __Fields extends DocumentsFields = {},
+  __ComputedFields extends ComputedFields = {},
   __TypeName extends string = TypeName
 > = DocumentsConfigTypeContentlayerMetadatas<__TypeName> & {
   computedFields: __ComputedFields;
@@ -33,24 +27,18 @@ export type DocumentsConfigType<
 };
 
 export type DocumentsFields<
-  __AllFields extends Record<string, unknown> & FieldDefs = AllBlogFields,
-  __DocumentsComputedFieldsKeys extends keyof __AllFields = BlogDocumentsComputedFieldsKeys
+  __AllFields extends Record<string, unknown> & FieldDefs = {},
+  __DocumentsComputedFieldsKeys extends keyof __AllFields = keyof {}
 > = Omit<__AllFields, __DocumentsComputedFieldsKeys>;
 
 type AtomicBlogDocumentConfig = DocumentsConfigType;
 export type AtomicContentlayerDocumentConfig = AtomicBlogDocumentConfig & ContentlayerContentType;
-export type ContentlayerDocumentsConfigType<__TypeName extends string = TypeName, __AllBlogFields extends FieldDefs = AllBlogFields> = {
+export type ContentlayerDocumentsConfigType<__TypeName extends string = TypeName, __AllBlogFields extends FieldDefs = {}> = {
   fields: __AllBlogFields;
 } & ContentlayerContentType &
   DocumentsConfigTypeContentlayerMetadatas<__TypeName>;
 
-export type MakeDocumentsAllFieldsSumType<T extends keyof __AllFields, __AllFields extends FieldDefs = AllBlogFields> = T;
-
-export type MakeFields<
-  T extends DocumentsFields<__AllFields, __DocumentsComputedFieldsKeys>,
-  __AllFields extends Record<string, unknown> & FieldDefs = AllBlogFields,
-  __DocumentsComputedFieldsKeys extends keyof __AllFields = BlogDocumentsComputedFieldsKeys
-> = T;
+export type MakeDocumentsAllFieldsSumType<T extends keyof __AllFields, __AllFields extends FieldDefs = {}> = T;
 
 export type DocumentToCompute = Document;
 

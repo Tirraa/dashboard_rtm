@@ -7,8 +7,7 @@ import type {
   DocumentsConfigTypeContentlayerMetadatas,
   ContentlayerDocumentsConfigType,
   MakeDocumentsAllFieldsSumType,
-  DocumentsFields,
-  MakeFields
+  DocumentsFields
 } from '../ContentlayerConfig';
 
 describe('ContentlayerConfig walkthrough', () => {
@@ -100,16 +99,13 @@ describe('ContentlayerConfig walkthrough', () => {
 
   type _AllFakeFields = typeof _FAKE_ALL_FIELDS;
   type _FakeComputedFields = typeof FAKE_COMPUTED_FIELDS;
-  type _FakeFields = typeof FAKE_FIELDS;
   type FakeDocumentsTypesKeys = 'FakePost1' | 'FakePost2';
   type FakeSchemaKey = typeof FAKE_SCHEMA_KEY;
   type FakeDocumentsTypesMetadatas = Record<FakeDocumentsTypesKeys, DocumentsConfigTypeContentlayerMetadatas<FakeDocumentsTypesKeys>>;
 
   type FakeDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _FakeComputedFields, _AllFakeFields>;
-  type FakeFields = MakeFields<_FakeFields, _AllFakeFields, keyof _FakeComputedFields>;
 
   it('should pass, otherwise it means that the type constructors are broken', () => {
     expectAssignable<FakeDocumentsComputedFieldsKeys>('foo' as keyof typeof FAKE_COMPUTED_FIELDS);
-    expectAssignable<FakeFields>(FAKE_FIELDS);
   });
 });

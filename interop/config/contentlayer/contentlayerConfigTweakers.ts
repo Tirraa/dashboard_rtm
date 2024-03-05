@@ -3,8 +3,7 @@ import type {
   ContentlayerDocumentsConfigType,
   MakeDocumentsAllFieldsSumType,
   ComputedFieldsArtifact,
-  DocumentsFields,
-  MakeFields
+  DocumentsFields
 } from '@rtm/shared-types/ContentlayerConfig';
 import type { DocumentContentType, ComputedFields, FieldDefs } from 'contentlayer/source-files';
 
@@ -178,7 +177,7 @@ export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
   tagsIndexes: { resolve: (post) => buildBlogTagsIndexes(post), type: 'list' },
   slug: { resolve: (post) => buildBlogPostSlug(post), type: 'string' },
   url: { resolve: (post) => buildBlogPostUrl(post), type: 'string' }
-} as const satisfies ComputedFieldsArtifact<AllBlogFields> satisfies ComputedFields;
+} as const satisfies ComputedFieldsArtifact<_AllBlogFields> satisfies ComputedFields;
 
 // Stryker restore all
 /* v8 ignore stop */
@@ -190,7 +189,7 @@ export const BLOG_DOCUMENTS_FIELDS = {
   title: _ALL_BLOG_FIELDS.title,
   tags: _ALL_BLOG_FIELDS.tags,
   date: _ALL_BLOG_FIELDS.date
-} as const satisfies DocumentsFields;
+} as const satisfies DocumentsFields<_AllBlogFields, _BlogDocumentsComputedFieldsKeys>;
 
 export const BLOG_POST_SCHEMA_CONFIG: ContentlayerDocumentsConfigType<BlogPostSchemaKey> = {
   contentType: DOCUMENTS_CONTENT_EXTENSION,
@@ -237,18 +236,17 @@ export const PAGES_DOCUMENTS_FIELDS = {
   title: _ALL_PAGES_FIELDS.title
 } as const satisfies DocumentsFields<_AllPagesFields, _PagesDocumentsComputedFieldsKeys>;
 
-export type BlogDocumentsTypesKeys = 'PatchPostBis' | 'TestingPost' | 'PatchPost';
 type BlogPostSchemaKey = 'BlogPostSchema';
 
-type _BlogFields = typeof BLOG_DOCUMENTS_FIELDS;
+export type BlogDocumentsTypesKeys = 'PatchPostBis' | 'TestingPost' | 'PatchPost';
+export type BlogDocumentsTypesMetadatas = Record<BlogDocumentsTypesKeys, BlogDocumentsConfigTypeMetadatas>;
+
+type _AllBlogFields = typeof _ALL_BLOG_FIELDS;
 type _AllPagesFields = typeof _ALL_PAGES_FIELDS;
 type _AllLandingPagesFields = typeof _ALL_LANDING_PAGES_FIELDS;
+type _BlogComputedFields = typeof BLOG_DOCUMENTS_COMPUTED_FIELDS;
 type _PagesComputedFields = typeof PAGES_DOCUMENTS_COMPUTED_FIELDS;
 type _LandingPagesComputedFields = typeof LANDING_PAGES_DOCUMENTS_COMPUTED_FIELDS;
+type _BlogDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _BlogComputedFields, _AllBlogFields>;
 type _PagesDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _PagesComputedFields, _AllPagesFields>;
 type _LandingPagesDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _LandingPagesComputedFields, _AllLandingPagesFields>;
-export type AllBlogFields = typeof _ALL_BLOG_FIELDS;
-export type BlogFields = MakeFields<_BlogFields>;
-export type BlogComputedFields = typeof BLOG_DOCUMENTS_COMPUTED_FIELDS;
-export type BlogDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof BlogComputedFields>;
-export type BlogDocumentsTypesMetadatas = Record<BlogDocumentsTypesKeys, BlogDocumentsConfigTypeMetadatas>;
