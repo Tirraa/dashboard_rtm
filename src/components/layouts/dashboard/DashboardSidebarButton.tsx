@@ -1,6 +1,7 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import type { MaybeObjectValue, MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { FunctionComponent, ComponentType } from 'react';
 import type { IconBaseProps } from 'react-icons';
 
@@ -14,9 +15,9 @@ const { sidebarIconProps } = SidebarButtonStyle;
 const ICON_PROPS = { ...sidebarIconProps };
 
 const DashboardSidebarButton: FunctionComponent<DashboardSidebarButtonProps> = ({ __SidebarIcon }) => {
-  const pSize = ICON_PROPS.size;
-  const size = typeof pSize === 'number' ? pSize : typeof pSize === 'string' ? parseFloat(pSize) : null;
-  const sizeInPx = size ? size + 'px' : null;
+  const pSize: MaybeObjectValue<string | number> = ICON_PROPS.size;
+  const size: MaybeNull<number> = typeof pSize === 'number' ? pSize : typeof pSize === 'string' ? parseFloat(pSize) : null;
+  const sizeInPx: MaybeNull<string> = size ? size + 'px' : null;
 
   return <__SidebarIcon {...ICON_PROPS} style={sizeInPx !== null ? { height: sizeInPx, width: sizeInPx } : undefined} />;
 };
