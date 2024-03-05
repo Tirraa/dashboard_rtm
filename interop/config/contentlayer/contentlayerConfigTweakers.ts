@@ -170,13 +170,13 @@ const _ALL_PAGES_FIELDS = {
 // Stryker disable all
 
 export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
-  subcategory: { resolve: (post) => buildBlogPostSubcategory(post), type: 'string' },
-  language: { resolve: (post) => buildBlogPostLanguageFlag(post), type: 'string' },
-  sortedTags: { resolve: (post) => [...post.tags._array].sort(), type: 'list' },
-  category: { resolve: (post) => buildBlogPostCategory(post), type: 'string' },
-  tagsIndexes: { resolve: (post) => buildBlogTagsIndexes(post), type: 'list' },
-  slug: { resolve: (post) => buildBlogPostSlug(post), type: 'string' },
-  url: { resolve: (post) => buildBlogPostUrl(post), type: 'string' }
+  subcategory: { resolve: (post) => buildBlogPostSubcategory(post), type: _ALL_BLOG_FIELDS.subcategory.type },
+  sortedTags: { resolve: (post) => [...post.tags._array].sort(), type: _ALL_BLOG_FIELDS.sortedTags.type },
+  tagsIndexes: { resolve: (post) => buildBlogTagsIndexes(post), type: _ALL_BLOG_FIELDS.tagsIndexes.type },
+  language: { resolve: (post) => buildBlogPostLanguageFlag(post), type: _ALL_BLOG_FIELDS.language.type },
+  category: { resolve: (post) => buildBlogPostCategory(post), type: _ALL_BLOG_FIELDS.category.type },
+  slug: { resolve: (post) => buildBlogPostSlug(post), type: _ALL_BLOG_FIELDS.slug.type },
+  url: { resolve: (post) => buildBlogPostUrl(post), type: _ALL_BLOG_FIELDS.url.type }
 } as const satisfies ComputedFieldsArtifact<_AllBlogFields> satisfies ComputedFields;
 
 // Stryker restore all
@@ -202,10 +202,10 @@ export const BLOG_POST_SCHEMA_CONFIG: ContentlayerDocumentsConfigType<BlogPostSc
 // Stryker disable all
 
 export const LANDING_PAGES_DOCUMENTS_COMPUTED_FIELDS = {
-  language: { resolve: (lp) => buildLandingPageLanguageFlag(lp), type: 'string' },
-  category: { resolve: (lp) => buildLandingPageCategory(lp), type: 'string' },
-  slug: { resolve: (lp) => buildLandingPageSlug(lp), type: 'string' },
-  url: { resolve: (lp) => buildLandingPageUrl(lp), type: 'string' }
+  language: { resolve: (lp) => buildLandingPageLanguageFlag(lp), type: _ALL_LANDING_PAGES_FIELDS.language.type },
+  category: { resolve: (lp) => buildLandingPageCategory(lp), type: _ALL_LANDING_PAGES_FIELDS.category.type },
+  slug: { resolve: (lp) => buildLandingPageSlug(lp), type: _ALL_LANDING_PAGES_FIELDS.slug.type },
+  url: { resolve: (lp) => buildLandingPageUrl(lp), type: _ALL_LANDING_PAGES_FIELDS.url.type }
 } as const satisfies ComputedFieldsArtifact<_AllLandingPagesFields> satisfies ComputedFields;
 
 // Stryker restore all
@@ -221,10 +221,10 @@ export const LANDING_PAGES_DOCUMENTS_FIELDS = {
 // Stryker disable all
 
 export const PAGES_DOCUMENTS_COMPUTED_FIELDS = {
-  language: { resolve: (page) => buildPageLanguageFlag(page), type: 'string' },
-  path: { resolve: (page) => buildPagePath(page), type: 'string' },
-  root: { resolve: (page) => buildPageRoot(page), type: 'string' },
-  url: { resolve: (page) => buildPageUrl(page), type: 'string' }
+  language: { resolve: (page) => buildPageLanguageFlag(page), type: _ALL_PAGES_FIELDS.language.type },
+  path: { resolve: (page) => buildPagePath(page), type: _ALL_PAGES_FIELDS.path.type },
+  root: { resolve: (page) => buildPageRoot(page), type: _ALL_PAGES_FIELDS.root.type },
+  url: { resolve: (page) => buildPageUrl(page), type: _ALL_PAGES_FIELDS.url.type }
 } as const satisfies ComputedFieldsArtifact<_AllPagesFields> satisfies ComputedFields;
 
 // Stryker restore all
