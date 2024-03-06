@@ -7,6 +7,7 @@ import type { FunctionComponent } from 'react';
 import { getBlogPostPathWithoutI18nPart, getSlicedBlogPostDescription } from '@/lib/blog/api';
 import { getCurrentLocale, getScopedI18n } from '@/i18n/server';
 import { i18ns } from '##/config/i18n';
+import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
 import { CardDescription, CardContent, CardHeader, CardFooter, CardTitle, Card } from '../Card';
@@ -27,6 +28,8 @@ async function tagsGenerator({ tags }: BlogPostType) {
 
 const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotOnBlogSubcategoryPage, language, post }) => {
   const descriptionSnippet = post.description ? getSlicedBlogPostDescription(post.description) : getSlicedBlogPostDescription(post.metadescription);
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const hasTags = post.tags.length > 0;
 
   return (
     <article>
@@ -43,11 +46,14 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
               <BlogPostDate className="bg-secondary p-1 text-black dark:text-white" language={language} post={post} />
             </CardDescription>
           </CardHeader>
-          <CardContent className="p-6 pb-3 pt-0">
+          <CardContent
+            className={cn('p-6 pt-0', {
+              'pb-3': hasTags
+            })}
+          >
             <div className="break-word text-sm [&>*:last-child]:mb-0 [&>*]:mb-3">{descriptionSnippet}</div>
           </CardContent>
-          {/* eslint-disable-next-line @typescript-eslint/no-magic-numbers */}
-          {post.tags.length > 0 && <CardFooter className="flex gap-2">{await tagsGenerator(post)}</CardFooter>}
+          {hasTags && <CardFooter className="flex gap-2">{await tagsGenerator(post)}</CardFooter>}
         </Card>
       </Link>
     </article>
