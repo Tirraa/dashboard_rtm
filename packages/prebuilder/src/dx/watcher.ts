@@ -7,7 +7,7 @@ import type { Path } from '../types/Metadatas';
 
 let lastEventTimestamp: number | null = null;
 
-const DEBOUNCE_THRESHOLD = 250;
+const DEBOUNCE_THRESHOLD = 10;
 
 function handleEvent(callback: () => void) {
   const currentTimestamp = Date.now();
