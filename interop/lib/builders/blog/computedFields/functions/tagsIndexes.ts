@@ -71,7 +71,7 @@ function buildBlogTagsIndexesFromPostObj(
   const res: number[] = [];
   for (const tag of tagsArrayUniq) res.push(__INDEXED_BLOG_TAG_OPTIONS[tag]);
 
-  return res.sort((a, b) => a - b);
+  return res;
 }
 
 const buildBlogTagsIndexes = (

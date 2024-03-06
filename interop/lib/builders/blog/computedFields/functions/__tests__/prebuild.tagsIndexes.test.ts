@@ -29,7 +29,7 @@ describe('buildBlogTagsIndexes (happy path)', () => {
     const tagsIndexes = buildBlogTagsIndexes(partialFakePost, fakeIndexedBlogTagOptions, fakeBlogTags, damerauThreshold);
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    expect(tagsIndexes).toStrictEqual([0, 1]);
+    expect(tagsIndexes).toStrictEqual([1, 0]);
   });
 });
 
