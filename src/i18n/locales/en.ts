@@ -112,16 +112,16 @@ export default {
     }
   },
 
+  'blog-tags': {
+    xylophone: 'Xylophone',
+    bagpipes: 'Bagpipes',
+    cello: 'Cello'
+  },
+
   auth: {
     signup: SHARED.vocab['sign-up'],
     logout: 'Logout',
     login: 'Login'
-  },
-
-  'blog-tags': {
-    tag_three: 'Tag 3',
-    tag_one: 'Tag 1',
-    tag_two: 'Tag 2'
   },
 
   'pages-titles': SHARED['pages-titles'],

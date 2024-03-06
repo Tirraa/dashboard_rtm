@@ -121,9 +121,9 @@ export default {
   },
 
   'blog-tags': {
-    tag_three: 'Tag 3',
-    tag_one: 'Tag 1',
-    tag_two: 'Tag 2'
+    xylophone: 'Xylophone',
+    bagpipes: 'Cornemuse',
+    cello: 'Violoncelle'
   },
 
   'pages-titles': SHARED['pages-titles']

@@ -1,20 +1,31 @@
 /* v8 ignore start */
 // Stryker disable all
 
-import type { BlogPostProps } from '@/types/Blog';
+import type { BlogPostProps, BlogPostType } from '@/types/Blog';
 import type { FunctionComponent } from 'react';
 
 import { getBlogPostPathWithoutI18nPart, getSlicedBlogPostDescription } from '@/lib/blog/api';
+import { getCurrentLocale, getScopedI18n } from '@/i18n/server';
+import { i18ns } from '##/config/i18n';
 import Link from 'next/link';
 
-import { CardDescription, CardContent, CardHeader, CardTitle, Card } from '../Card';
+import { CardDescription, CardContent, CardHeader, CardFooter, CardTitle, Card } from '../Card';
 import BlogPostDate from './BlogPostDate';
+import { Badge } from '../badge';
 
 interface BlogPostPreviewProps extends BlogPostProps {
   isNotOnBlogSubcategoryPage?: boolean;
 }
 
-const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = ({ isNotOnBlogSubcategoryPage, language, post }) => {
+async function tagsGenerator({ tags }: BlogPostType) {
+  const scopedT = await getScopedI18n(i18ns.blogTags);
+  const currentLocale = getCurrentLocale();
+
+  const sortedTagsByCurrentLocale = tags.sort((a, b) => a.localeCompare(b, currentLocale));
+  return sortedTagsByCurrentLocale.map((tag) => <Badge key={tag}>{scopedT(tag)}</Badge>);
+}
+
+const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotOnBlogSubcategoryPage, language, post }) => {
   const descriptionSnippet = post.description ? getSlicedBlogPostDescription(post.description) : getSlicedBlogPostDescription(post.metadescription);
 
   return (
@@ -32,9 +43,11 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = ({ isNotOnBlogS
               <BlogPostDate className="bg-secondary p-1 text-black dark:text-white" language={language} post={post} />
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-6 pb-3 pt-0">
             <div className="break-word text-sm [&>*:last-child]:mb-0 [&>*]:mb-3">{descriptionSnippet}</div>
           </CardContent>
+          {/* eslint-disable-next-line @typescript-eslint/no-magic-numbers */}
+          {post.sortedTags.length > 0 && <CardFooter className="flex gap-2">{await tagsGenerator(post)}</CardFooter>}
         </Card>
       </Link>
     </article>
