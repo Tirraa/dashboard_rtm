@@ -34,15 +34,6 @@ export const DOCUMENTS_CONTENT_TYPE: DocumentContentType = 'mdx';
 export const DOCUMENTS_CONTENT_EXTENSION = 'mdx';
 
 const _ALL_BLOG_FIELDS = {
-  sortedTags: {
-    of: {
-      options: blogTagOptions,
-      type: 'enum'
-    },
-    required: false,
-    type: 'list',
-    default: []
-  },
   tags: {
     of: {
       options: blogTagOptions,
@@ -171,7 +162,6 @@ const _ALL_PAGES_FIELDS = {
 
 export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
   subcategory: { resolve: (post) => buildBlogPostSubcategory(post), type: _ALL_BLOG_FIELDS.subcategory.type },
-  sortedTags: { resolve: (post) => [...post.tags._array].sort(), type: _ALL_BLOG_FIELDS.sortedTags.type },
   tagsIndexes: { resolve: (post) => buildBlogTagsIndexes(post), type: _ALL_BLOG_FIELDS.tagsIndexes.type },
   language: { resolve: (post) => buildBlogPostLanguageFlag(post), type: _ALL_BLOG_FIELDS.language.type },
   category: { resolve: (post) => buildBlogPostCategory(post), type: _ALL_BLOG_FIELDS.category.type },

@@ -47,7 +47,7 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
             <div className="break-word text-sm [&>*:last-child]:mb-0 [&>*]:mb-3">{descriptionSnippet}</div>
           </CardContent>
           {/* eslint-disable-next-line @typescript-eslint/no-magic-numbers */}
-          {post.sortedTags.length > 0 && <CardFooter className="flex gap-2">{await tagsGenerator(post)}</CardFooter>}
+          {post.tags.length > 0 && <CardFooter className="flex gap-2">{await tagsGenerator(post)}</CardFooter>}
         </Card>
       </Link>
     </article>
