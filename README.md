@@ -24,6 +24,10 @@
 
 `$ make prebuild-rtm && make dev`
 
+##### Dev mode using RTM tools
+
+`$ make dev-with-rtm-tools`
+
 ##### Prod mode
 
 `$ make && make start`

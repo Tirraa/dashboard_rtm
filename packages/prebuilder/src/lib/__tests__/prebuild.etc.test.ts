@@ -9,7 +9,7 @@ import { localesInfosInnerToObj } from '../etc';
 describe('localesInfosInnerToObj', () => {
   it('should return an obj when parsing succeeds', () => {
     const objInner = '"foo": "bar"';
-    expect(localesInfosInnerToObj(objInner as string)).toStrictEqual({ foo: 'bar' });
+    expect(localesInfosInnerToObj(objInner)).toStrictEqual({ foo: 'bar' });
   });
 
   it('should return an obj, given a valid obj inner', () => {
@@ -45,51 +45,51 @@ describe('localesInfosInnerToObj', () => {
   it('should return an obj, given a valid obj inner (literals)', () => {
     const objInner = "foo: 'bar', bar: 'foo'";
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    expect(localesInfosInnerToObj(objInner as string)).toStrictEqual({ foo: 'bar', bar: 'foo' });
+    expect(localesInfosInnerToObj(objInner)).toStrictEqual({ foo: 'bar', bar: 'foo' });
   });
 
   it('should return an obj, given a valid obj inner (string literals)', () => {
     const objInner = "'foo': 'bar', 'bar': 'foo'";
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    expect(localesInfosInnerToObj(objInner as string)).toStrictEqual({ foo: 'bar', bar: 'foo' });
+    expect(localesInfosInnerToObj(objInner)).toStrictEqual({ foo: 'bar', bar: 'foo' });
   });
 
   it('should throw when Babel parsing fails', () => {
     const objInner = 'foo: bar';
-    expect(() => localesInfosInnerToObj(objInner as string)).toThrow();
+    expect(() => localesInfosInnerToObj(objInner)).toThrow();
   });
 
   it('should throw, given an invalid obj inner (numeric literals)', () => {
     const objInner = "2172183: 'bar', 211838173: 'foo'";
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    expect(() => localesInfosInnerToObj(objInner as string)).toThrow();
+    expect(() => localesInfosInnerToObj(objInner)).toThrow();
   });
 
   it('should throw, given an invalid obj inner (int values)', () => {
     const objInner = 'foo: 45, bar: 12';
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    expect(() => localesInfosInnerToObj(objInner as string)).toThrow();
+    expect(() => localesInfosInnerToObj(objInner)).toThrow();
   });
 
   it('should throw when encountering unsupported value type', () => {
     const objInner = 'foo: /regex/';
-    expect(() => localesInfosInnerToObj(objInner as string)).toThrow();
+    expect(() => localesInfosInnerToObj(objInner)).toThrow();
   });
 
   it('should throw, given stupid input (random number)', () => {
     const objInner = '88909988799';
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    expect(() => localesInfosInnerToObj(objInner as string)).toThrow();
+    expect(() => localesInfosInnerToObj(objInner)).toThrow();
   });
 
   it('should return empty object, given empty string input', () => {
     const objInner: EmptyString = '';
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    expect(localesInfosInnerToObj(objInner as string)).toStrictEqual({});
+    expect(localesInfosInnerToObj(objInner)).toStrictEqual({});
   });
 
   it('should throw when JSON parsing fails', () => {
     const objInner = 'invalid json';
-    expect(() => localesInfosInnerToObj(objInner as string)).toThrow();
+    expect(() => localesInfosInnerToObj(objInner)).toThrow();
   });
 });

@@ -41,7 +41,7 @@ export type CompareFun<T extends Couple<unknown>, CTX extends unknown[] = never>
 
 type CompareFunReturnValue = number;
 
+export type EmptyString = '';
+
 // Stryker restore all
 /* v8 ignore stop */
-
-export type EmptyString = '';
