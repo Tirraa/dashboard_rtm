@@ -30,7 +30,7 @@ export default async function generateI18nPagesTitles(
   }
 
   const initializerWriterFunction: WriterFunction = Writers.assertion(
-    JSON.stringify(pagesTitles, null, pretty ? TAB_SIZE : undefined).replace(/""|''|``/g, '_'),
+    JSON.stringify(pagesTitles, null, pretty ? TAB_SIZE : undefined).replace(/""/g, '_'),
     'const'
   );
 

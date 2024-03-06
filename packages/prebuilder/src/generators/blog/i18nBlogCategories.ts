@@ -101,7 +101,7 @@ export default async function generateI18nBlogCategories(
       generateSchema(blogArchitecture, __PREFIXED_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS, __I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS),
       null,
       pretty ? TAB_SIZE : undefined
-    ).replace(/""|''|``/g, '_'),
+    ).replace(/""/g, '_'),
     'const satisfies BlogCategoriesArtifact;\n'
   );
 
