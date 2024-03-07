@@ -26,6 +26,7 @@ function buildSlugsFeedback(foldersWithDefects: Record<Path, Filename[]>) {
       formatMessage('pagesNamingConstraint' satisfies VocabKey) +
       '\n';
   }
+
   return feedback;
 }
 
@@ -87,9 +88,7 @@ async function hasUglyIndexStrategy(filename: Filename, directoriesChain: PathSe
   const directoryPath = directoriesChain.length <= 0 ? pagesFolderPrefix + suffix : path.join(pagesFolderPrefix, ...directoriesChain) + suffix;
 
   const hasUglyIndexStrategy = await fileExists(directoryPath);
-  if (hasUglyIndexStrategy) return true;
-
-  return false;
+  return hasUglyIndexStrategy;
 }
 
 export default async function sysPagesValidator(

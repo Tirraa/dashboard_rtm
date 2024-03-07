@@ -34,5 +34,6 @@ export default async function sysBlogCategoriesValidator(
       formatMessage('blogNamingConstraint' satisfies VocabKey) +
       '\n';
   }
+
   return feedback;
 }

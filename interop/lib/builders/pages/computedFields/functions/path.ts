@@ -20,6 +20,7 @@ function buildPagePath(page: DocumentToCompute): AppPath {
     if (documentPathWithoutLanguage === '') return INDEX_TOKEN;
     return documentPathWithoutLanguage;
   }
+
   return documentPath;
 }
 

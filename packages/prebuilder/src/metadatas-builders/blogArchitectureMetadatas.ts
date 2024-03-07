@@ -65,6 +65,5 @@ async function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): Pro
 
 export default async function getBlogArchitectureMetadatas(postsFolder: string): Promise<CategoriesMetadatas> {
   const blogArchitectureSysMetadata = await buildCategoriesMetadatasFromPostsFolder(postsFolder);
-
   return blogArchitectureSysMetadata;
 }

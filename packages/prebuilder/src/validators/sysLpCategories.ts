@@ -34,5 +34,6 @@ export default async function sysLpCategoriesValidator(
       formatMessage('lpNamingConstraint' satisfies VocabKey) +
       '\n';
   }
+
   return feedback;
 }

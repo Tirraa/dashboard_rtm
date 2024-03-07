@@ -4,6 +4,7 @@ import type { WithClassname } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
 import { isValidBlogCategoryAndSubcategoryPair, getBlogPostUnstrict } from '@/lib/blog/api';
+import tagsGenerator from '@/components/ui/blog/tagsGenerator';
 import BlogPostDate from '@/components/ui/blog/BlogPostDate';
 import MDX from '@/components/layouts/blog/MdxComponent';
 import BlogTaxonomy from '##/config/taxonomies/blog';
@@ -14,17 +15,23 @@ import { cn } from '@/lib/tailwind';
 interface BlogPostInnerProps extends BlogPostProps {}
 interface _BlogPostPageProps extends BlogPostPageProps, Partial<WithClassname> {}
 
-const BlogPostInner: FunctionComponent<BlogPostInnerProps> = ({ className: classNameValue, language, post }) => (
-  <section className={cn('mx-12 w-auto max-w-[730px]', classNameValue)}>
-    <div className="mb-4 text-center">
-      <BlogPostDate language={language} post={post} />
-      <h1 className="mt-2">{post.title}</h1>
-    </div>
-    <div className="max-w-full">
-      <MDX code={post.body.code} />
-    </div>
-  </section>
-);
+const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className: classNameValue, language, post }) => {
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const hasTags = post.tags.length > 0;
+
+  return (
+    <section className={cn('mx-12 w-auto max-w-[730px]', classNameValue)}>
+      <div className="mb-4 text-center">
+        <h1>{post.title}</h1>
+        <BlogPostDate language={language} post={post} />
+        {hasTags && <div className="mt-1 flex flex-wrap justify-center gap-2">{await tagsGenerator(post)}</div>}
+      </div>
+      <div className="max-w-full">
+        <MDX code={post.body.code} />
+      </div>
+    </section>
+  );
+};
 
 const BlogPost: FunctionComponent<_BlogPostPageProps> = async ({ className: classNameValue, params }) => {
   const [category, subcategory, language] = [params[BlogTaxonomy.CATEGORY], params[BlogTaxonomy.SUBCATEGORY], params[I18nTaxonomy.LANGUAGE]];

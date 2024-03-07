@@ -12,6 +12,7 @@ import I18nTaxonomy from '##/config/taxonomies/i18n';
 export async function generateMetadata({ params }: BlogSubcategoryPageProps) {
   await blogSubcategoryGuard({ params });
   const blogSubcategoryMetadatas = await getBlogSubcategoryMetadatas({ params });
+
   return blogSubcategoryMetadatas;
 }
 
@@ -26,7 +27,7 @@ export default function Page({ params }: BlogSubcategoryPageProps) {
 
   return (
     <div className="mx-8 flex flex-col items-center lg:mx-auto lg:max-w-[750px]">
-      <Breadcrumbs className="w-fit self-start py-4" />
+      <Breadcrumbs className="my-4 w-fit self-start" />
       <SubcategoryRelatedBlogPosts params={params} />
     </div>
   );

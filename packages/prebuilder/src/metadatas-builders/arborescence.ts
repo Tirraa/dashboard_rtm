@@ -21,5 +21,6 @@ export default function buildArborescence(arborescenceMap: File[], rootFolder: P
     const arborescenceElement: ProcessedFile = { directoriesChain, filename };
     arborescence.push(arborescenceElement);
   }
+
   return arborescence;
 }

@@ -64,5 +64,6 @@ export default async function localesInfosValidator(localesFolder: Path, i18nSch
         : // eslint-disable-next-line @typescript-eslint/no-magic-numbers
           localeFileInfosValidatorFeedbacks[0] + '\n';
   }
+
   return feedback;
 }

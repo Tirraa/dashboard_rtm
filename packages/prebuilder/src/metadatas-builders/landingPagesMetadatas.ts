@@ -49,11 +49,11 @@ async function buildLpMetadatasFromLpFolder(lpFolder: string): Promise<LpMetadat
       }
     }
   }
+
   return metadatas;
 }
 
 export default async function getLpMetadatas(lpFolder: string): Promise<LpMetadatas> {
   const blogLpMetadata = await buildLpMetadatasFromLpFolder(lpFolder);
-
   return blogLpMetadata;
 }

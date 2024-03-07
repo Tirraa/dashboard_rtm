@@ -24,6 +24,7 @@ function generatePagesFromCodegenSchemaTypeContent(pagesArchitecture: PagesMetad
 
   const typeAcc = [];
   for (const field of fields) typeAcc.push(`"${field}"` + ':' + 'string');
+
   const schemaStr = typeAcc.join(';') + ';';
   return schemaStr;
 }

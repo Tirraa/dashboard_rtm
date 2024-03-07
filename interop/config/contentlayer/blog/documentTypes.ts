@@ -44,6 +44,7 @@ const blogDocumentTypes: DocumentType[] = Object.entries(documentsTypesMetadatas
         /* v8 ignore stop */
       )
     );
+
     return acc;
   },
   [defineDocumentType(() => BLOG_POST_SCHEMA_CONFIG)]

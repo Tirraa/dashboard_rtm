@@ -38,5 +38,6 @@ export default async function sysLpSlugsValidator(
       formatMessage('lpNamingConstraint' satisfies VocabKey) +
       '\n';
   }
+
   return feedback;
 }

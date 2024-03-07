@@ -38,5 +38,6 @@ export default async function sysBlogSlugsValidator(
       formatMessage('blogNamingConstraint' satisfies VocabKey) +
       '\n';
   }
+
   return feedback;
 }

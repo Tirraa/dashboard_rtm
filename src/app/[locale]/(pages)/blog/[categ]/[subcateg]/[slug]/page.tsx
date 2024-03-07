@@ -19,6 +19,7 @@ import { notFound } from 'next/navigation';
 export async function generateMetadata({ params }: BlogPostPageProps) {
   await blogPostGuard({ params });
   const blogPostMetadatas = await getBlogPostMetadatas({ params });
+
   return blogPostMetadatas;
 }
 
@@ -51,7 +52,7 @@ export default async function Page({ params }: BlogPostPageProps) {
               depth
             }
           ]}
-          className="w-fit self-start py-4"
+          className="my-4 w-fit self-start"
         />
       </div>
       <div className="mx-4 flex flex-col items-center lg:mx-24">

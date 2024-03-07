@@ -21,6 +21,7 @@ function getPropValue(prop: ObjectProperty) {
   if (prop.value.type !== 'StringLiteral') {
     throw new Error(`Unsupported value type: ${prop.value.type}`);
   }
+
   return prop.value.value;
 }
 
@@ -58,5 +59,6 @@ export function localesInfosInnerToObj(objInner: string): I18nJSONPart {
       throw babelError;
     }
   }
+
   return res;
 }

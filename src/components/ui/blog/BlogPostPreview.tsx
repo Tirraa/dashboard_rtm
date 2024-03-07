@@ -43,7 +43,7 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
           >
             <div className="break-word text-sm [&>*:last-child]:mb-0 [&>*]:mb-3">{descriptionSnippet}</div>
           </CardContent>
-          {hasTags && <CardFooter className="flex gap-2">{await tagsGenerator(post)}</CardFooter>}
+          {hasTags && <CardFooter className="flex flex-wrap gap-2">{await tagsGenerator(post)}</CardFooter>}
         </Card>
       </Link>
     </article>

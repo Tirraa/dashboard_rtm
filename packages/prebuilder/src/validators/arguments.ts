@@ -113,6 +113,7 @@ function getIncorrectOptionsFeedbacks({
       })
     );
   }
+
   return incorrectOptionsFeedbacks;
 }
 
@@ -159,6 +160,7 @@ function getBreakingDependenciesFeedbacks({
         formatMessage('disableBothI18nAndLpAnalysisMaybeAdvice' satisfies VocabKey)
     );
   }
+
   return breakingDependenciesFeedbacks;
 }
 

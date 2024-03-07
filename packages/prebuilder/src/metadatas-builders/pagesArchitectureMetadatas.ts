@@ -69,5 +69,6 @@ export default function getPagesArchitectureMetadatas(arborescence: Arborescence
     });
     /* eslint-enable perfectionist/sort-objects */
   }
+
   return metadatas;
 }

@@ -55,7 +55,8 @@ const authOptions: NextAuthOptions = {
 
   callbacks: {
     async session({ session, token }) {
-      return await getSession(session, token);
+      const s = await getSession(session, token);
+      return s;
     }
   },
 
