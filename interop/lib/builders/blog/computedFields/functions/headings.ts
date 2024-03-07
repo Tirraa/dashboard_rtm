@@ -6,7 +6,6 @@ import GithubSlugger from 'github-slugger';
 const MAX_HEADING_DEPTH = 6;
 const MATCHER = /^#+/;
 
-// {ToDo} Write tests
 function buildBlogPostHeadingsFromPostObj(post: DocumentToCompute): DocumentHeading[] {
   const slugger = new GithubSlugger();
   const markdown = post.body.raw as string;
