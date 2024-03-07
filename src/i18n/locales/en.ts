@@ -24,6 +24,7 @@ const SHARED: SharedVocabType = {
   vocab: {
     brand: 'Rust Team Management',
     breadcrumbs: 'breadcrumbs',
+    toc: 'Table of contents',
     'sign-up': 'sign up',
     draft: 'draft',
     logo: 'logo',
