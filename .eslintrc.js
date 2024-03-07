@@ -15,6 +15,7 @@ module.exports = {
     'import/consistent-type-specifier-style': [ERROR, 'prefer-top-level'],
     '@typescript-eslint/no-magic-numbers': ERROR,
     'unused-imports/no-unused-imports': ERROR,
+    'react/jsx-no-useless-fragment': ERROR,
     'import/no-duplicates': ERROR,
 
     'no-unreachable': ERROR,
@@ -41,7 +42,7 @@ module.exports = {
     }
   ],
 
-  plugins: ['@typescript-eslint', 'import', 'unused-imports', 'only-error', 'perfectionist']
+  plugins: ['@typescript-eslint', 'import', 'unused-imports', 'only-error', 'perfectionist', 'react']
 };
 
 // Stryker restore all

@@ -12,5 +12,5 @@ export default function Page({ params }: I18nPageProps) {
   const language = params[I18nTaxonomy.LANGUAGE];
   setStaticParamsLocale(language);
 
-  return <>{'{ToDo}'}</>;
+  return <p>ToDo</p>;
 }

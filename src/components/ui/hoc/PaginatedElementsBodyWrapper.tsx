@@ -23,7 +23,7 @@ interface IPaginatedElementsBodyWrapperProps extends PaginatedElementsBodyWrappe
  * @implements {IPaginatedElementsBodyWrapperProps}
  */
 const PaginatedElementsBodyWrapper: FunctionComponent<IPaginatedElementsBodyWrapperProps> = ({ paginatedElementsBodyWrapperProps, children }) => {
-  if (!paginatedElementsBodyWrapperProps) return <>{children}</>;
+  if (!paginatedElementsBodyWrapperProps) return children;
 
   const {
     flexDirection: flexDirectionValue,
