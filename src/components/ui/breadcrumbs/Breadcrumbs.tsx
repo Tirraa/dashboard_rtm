@@ -83,7 +83,7 @@ const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = ({ withHomepageElement:
 
   return (
     <nav aria-label={capitalize(scopedT2('breadcrumbs'))} className={className}>
-      <ol className="flex w-fit flex-wrap justify-center gap-y-1 rounded-lg bg-accent bg-opacity-75 px-3 py-2 lg:justify-normal">
+      <ol className="flex w-fit flex-wrap justify-center gap-y-1 rounded-lg bg-accent bg-opacity-75 px-3 py-2 text-center lg:justify-normal">
         {crumbsGenerator(pathParts, withHomepageElement, scopedT, customCrumbs)}
       </ol>
     </nav>

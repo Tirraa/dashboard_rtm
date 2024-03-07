@@ -24,7 +24,7 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className:
       <div className="mb-4 text-center">
         <h1>{post.title}</h1>
         <BlogPostDate language={language} post={post} />
-        {hasTags && <div className="mt-1 flex flex-wrap justify-center gap-2">{await tagsGenerator(post)}</div>}
+        {hasTags && <div className="mt-1 flex flex-wrap justify-center gap-2 md:mx-auto md:w-fit md:justify-normal">{await tagsGenerator(post)}</div>}
       </div>
       <div className="max-w-full">
         <MDX code={post.body.code} />
