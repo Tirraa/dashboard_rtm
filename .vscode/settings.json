@@ -4,15 +4,25 @@
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
   "editor.wordWrap": "on",
-  "typescript.referencesCodeLens.enabled": true,
+
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
+
+  "typescript.referencesCodeLens.enabled": true,
+
   "grammarly.selectors": [
     {
       "language": "markdown",
       "scheme": "file",
       "pattern": "**/*.md"
     }
+  ],
+
+  "tailwindCSS.experimental.classRegex": [
+    ["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["clsx\\(([^]*)\\)", "(?:'|\"|`)([^\"'`]*)(?:'|\"|`)"],
+    ["(?:twMerge|twJoin)\\(([^;]*)[\\);]", "[`'\"`]([^'\"`;]*)[`'\"`]"]
   ]
 }
