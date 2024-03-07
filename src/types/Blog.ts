@@ -1,7 +1,9 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import type { badlyTypedBlogHeadings } from '##/config/contentlayer/contentlayerConfigTweakers';
 import type { KeySeparator } from '@rtm/shared-types/CustomUtilityTypes';
+import type { DocumentHeading } from '@rtm/shared-types/Documents';
 import type { BlogTaxonomyType } from '##/config/taxonomies/blog';
 import type { BlogPostSchema } from 'contentlayer/generated';
 import type { WithClassname } from '@rtm/shared-types/Next';
@@ -12,8 +14,12 @@ import type { BlogArchitecture } from '@rtm/generated';
 import type StrictBlog from './adapters/StrictBlog';
 import type { I18nParams } from './Next';
 
-type ContentlayerPhantomType = 'type';
-export type BlogPostType = Omit<BlogPostSchema, ContentlayerPhantomType>;
+type ContentlayerPhantomTypeKey = 'type';
+// NOTE: Bypassing Contentlayer's DSL ugly 'json' type resulting in the 'any' type
+type BadlyTypedHeadingsTypeKey = typeof badlyTypedBlogHeadings;
+export type BlogPostType = Omit<BlogPostSchema, ContentlayerPhantomTypeKey | BadlyTypedHeadingsTypeKey> & {
+  [badlyTypedBlogHeadings]: DocumentHeading[];
+};
 
 export type BlogCategory = keyof BlogArchitecture;
 export type BlogSubcategoryFromUnknownCategory = BlogArchitecture[BlogCategory];

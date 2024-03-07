@@ -12,6 +12,7 @@ import {
   buildBlogPostLanguageFlag,
   buildBlogPostSubcategory,
   buildLandingPageCategory,
+  buildBlogPostHeadings,
   buildBlogPostCategory,
   buildPageLanguageFlag,
   buildLandingPageSlug,
@@ -43,6 +44,7 @@ const _ALL_BLOG_FIELDS = {
     type: 'list',
     default: []
   },
+
   tagsIndexes: {
     of: {
       type: 'number'
@@ -50,43 +52,61 @@ const _ALL_BLOG_FIELDS = {
     required: true,
     type: 'list'
   },
+
+  headings: {
+    of: {
+      type: 'json'
+    },
+    type: 'list',
+    default: []
+  },
+
   draft: {
     type: 'boolean',
     required: false,
     default: false
   },
+
   metadescription: {
     type: 'string',
     required: true
   },
+
   description: {
     required: false,
     type: 'string'
   },
+
   subcategory: {
     type: 'string',
     required: true
   },
+
   category: {
     type: 'string',
     required: true
   },
+
   language: {
     type: 'string',
     required: true
   },
+
   title: {
     type: 'string',
     required: true
   },
+
   slug: {
     type: 'string',
     required: true
   },
+
   url: {
     type: 'string',
     required: true
   },
+
   date: {
     required: true,
     type: 'date'
@@ -165,6 +185,7 @@ export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
   tagsIndexes: { resolve: (post) => buildBlogTagsIndexes(post), type: _ALL_BLOG_FIELDS.tagsIndexes.type },
   language: { resolve: (post) => buildBlogPostLanguageFlag(post), type: _ALL_BLOG_FIELDS.language.type },
   category: { resolve: (post) => buildBlogPostCategory(post), type: _ALL_BLOG_FIELDS.category.type },
+  headings: { resolve: (post) => buildBlogPostHeadings(post), type: _ALL_BLOG_FIELDS.headings.type },
   slug: { resolve: (post) => buildBlogPostSlug(post), type: _ALL_BLOG_FIELDS.slug.type },
   url: { resolve: (post) => buildBlogPostUrl(post), type: _ALL_BLOG_FIELDS.url.type }
 } as const satisfies ComputedFieldsArtifact<_AllBlogFields> satisfies ComputedFields;
@@ -240,3 +261,5 @@ type _LandingPagesComputedFields = typeof LANDING_PAGES_DOCUMENTS_COMPUTED_FIELD
 type _BlogDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _BlogComputedFields, _AllBlogFields>;
 type _PagesDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _PagesComputedFields, _AllPagesFields>;
 type _LandingPagesDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _LandingPagesComputedFields, _AllLandingPagesFields>;
+
+export const badlyTypedBlogHeadings = 'headings' as const satisfies keyof typeof _ALL_BLOG_FIELDS;
