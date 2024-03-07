@@ -19,6 +19,7 @@ export default async function generateBlogType(
         {
           type: JSON.stringify(
             blogArchitecture,
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             (_, v) => (Array.isArray(v) ? v.map((slug) => `'${slug}'`).join('|') : v),
             pretty ? TAB_SIZE : undefined
           ).replace(/"'|'"/g, "'"),

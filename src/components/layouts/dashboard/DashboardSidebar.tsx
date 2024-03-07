@@ -1,7 +1,7 @@
 'use client';
 
 import type { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/RoutesMapping';
-import type { FunctionComponent, ReactElement, ReactNode } from 'react';
+import type { FunctionComponent, ReactElement } from 'react';
 import type { AppPath } from '@rtm/shared-types/Next';
 
 import { computeHTMLElementHeight, computeHTMLElementWidth, getDirection } from '@rtm/shared-lib/html';
@@ -24,7 +24,7 @@ interface DashboardSidebarProps {}
 
 const { isNotActiveClassList, isActiveClassList } = SidebarButtonStyle;
 
-function sidebarBtnsGenerator(currentPathname: AppPath): ReactNode[] {
+function sidebarBtnsGenerator(currentPathname: AppPath): ReactElement[] {
   const keys = Object.keys(DASHBOARD_ROUTES_SIDEBAR_COMPONENTS);
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const lastKey = keys[keys.length - 1];

@@ -1,29 +1,19 @@
 /* v8 ignore start */
 // Stryker disable all
 
-import type { BlogPostProps, BlogPostType } from '@/types/Blog';
+import type { BlogPostProps } from '@/types/Blog';
 import type { FunctionComponent } from 'react';
 
 import { getBlogPostPathWithoutI18nPart, getSlicedBlogPostDescription } from '@/lib/blog/api';
-import { getCurrentLocale, getScopedI18n } from '@/i18n/server';
-import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
 import { CardDescription, CardContent, CardHeader, CardFooter, CardTitle, Card } from '../Card';
+import tagsGenerator from './tagsGenerator';
 import BlogPostDate from './BlogPostDate';
-import { Badge } from '../badge';
 
 interface BlogPostPreviewProps extends BlogPostProps {
   isNotOnBlogSubcategoryPage?: boolean;
-}
-
-async function tagsGenerator({ tags }: BlogPostType) {
-  const scopedT = await getScopedI18n(i18ns.blogTags);
-  const currentLocale = getCurrentLocale();
-
-  const sortedTagsByCurrentLocale = tags.sort((a, b) => a.localeCompare(b, currentLocale));
-  return sortedTagsByCurrentLocale.map((tag) => <Badge key={tag}>{scopedT(tag)}</Badge>);
 }
 
 const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotOnBlogSubcategoryPage, language, post }) => {

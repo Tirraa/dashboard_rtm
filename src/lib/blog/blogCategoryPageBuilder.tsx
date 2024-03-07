@@ -1,6 +1,6 @@
 import type { BlogCategoriesAndSubcategoriesAssoc, BlogSubcategoryFromUnknownCategory, BlogCategory, BlogPostType } from '@/types/Blog';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
-import type { ReactElement, ReactNode } from 'react';
+import type { ReactElement } from 'react';
 
 import buildPathFromParts from '@rtm/shared-lib/portable/str/buildPathFromParts';
 import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
@@ -17,7 +17,11 @@ import Link from 'next/link';
 
 const slugger = new GithubSlugger();
 
-async function blogCategoryPageBuilder(posts: BlogPostType[], category: BlogCategory, language: LanguageFlag): Promise<ReactElement | ReactNode[]> {
+async function blogCategoryPageBuilder(
+  posts: BlogPostType[],
+  category: BlogCategory,
+  language: LanguageFlag
+): Promise<ReactElement[] | ReactElement> {
   function buildHistogram() {
     for (const post of posts) {
       const curSubcateg = post.subcategory as BlogSubcategoryFromUnknownCategory;
@@ -43,8 +47,8 @@ async function blogCategoryPageBuilder(posts: BlogPostType[], category: BlogCate
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const isEmptySnippets = () => Object.values(postsCollectionsSnippets).every((posts2) => posts2.length === 0);
 
-  function contentGenerator(): ReactNode[] {
-    const result: ReactNode[] = [];
+  function contentGenerator(): ReactElement[] {
+    const result: ReactElement[] = [];
     let isLast = false;
     const max = Object.entries(postsCollectionsSnippets).length;
     let counter = 0;
@@ -118,7 +122,7 @@ async function blogCategoryPageBuilder(posts: BlogPostType[], category: BlogCate
 
   const [histogram, postsCollectionsSnippets] = [
     Object.fromEntries(entries) as Record<BlogSubcategoryFromUnknownCategory, BlogPostType[]>,
-    Object.fromEntries(sortedEntries) as Record<BlogSubcategoryFromUnknownCategory, ReactNode[]>
+    Object.fromEntries(sortedEntries) as Record<BlogSubcategoryFromUnknownCategory, ReactElement[]>
   ];
   const limit = BlogConfig.DISPLAYED_BLOG_POSTS_PER_SUBCATEGORY_ON_BLOG_CATEGORY_PAGE_LIMIT;
 
@@ -126,7 +130,7 @@ async function blogCategoryPageBuilder(posts: BlogPostType[], category: BlogCate
   buildPostsCollectionsSnippets();
   if (isEmptySnippets()) return <BlogPostsNotFound />;
 
-  const result: ReactNode[] = contentGenerator();
+  const result: ReactElement[] = contentGenerator();
   return result;
 }
 

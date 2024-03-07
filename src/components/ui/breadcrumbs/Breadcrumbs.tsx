@@ -1,14 +1,14 @@
 'use client';
 
-import type { PagesTitlesKey, LanguageFlag } from '@rtm/shared-types/I18n';
 import type { CustomCrumbs } from '@rtm/shared-types/Breadcrumbs';
-import type { FunctionComponent, ReactNode } from 'react';
+import type { PagesTitlesKey } from '@rtm/shared-types/I18n';
+import type { FunctionComponent, ReactElement } from 'react';
 import type { getScopedI18n } from '@/i18n/server';
 
 import buildAbsolutePathFromParts from '@rtm/shared-lib/portable/str/buildAbsolutePathFromParts';
-import { useCurrentLocale, useScopedI18n } from '@/i18n/client';
 import { PAGES_TITLES } from '@/i18n/locales/schema';
 import getPathParts from '@/lib/misc/getPathParts';
+import { useScopedI18n } from '@/i18n/client';
 import { usePathname } from 'next/navigation';
 import ROUTES_ROOTS from '##/config/routes';
 import { i18ns } from '##/config/i18n';
@@ -28,9 +28,8 @@ function crumbsGenerator(
   pathParts: string[],
   withHomepageElement: boolean,
   scopedT: Awaited<ReturnType<typeof getScopedI18n<typeof i18ns.pagesTitles>>>,
-  currentLocale: LanguageFlag,
   customCrumbs?: CustomCrumbs
-): ReactNode[] {
+): ReactElement[] {
   function buildCurrentPath(pathParts: string[], depth: number) {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const currentPathParts = pathParts.slice(0, depth + 1);
@@ -38,7 +37,7 @@ function crumbsGenerator(
     return currentPath;
   }
 
-  const crumbs: ReactNode[] = withHomepageElement
+  const crumbs: ReactElement[] = withHomepageElement
     ? [
         <>
           <HomepageCrumb />
@@ -79,14 +78,13 @@ const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = ({ withHomepageElement:
   const { pagesTitles, vocab } = i18ns;
   const scopedT = useScopedI18n(pagesTitles);
   const scopedT2 = useScopedI18n(vocab);
-  const currentLocale = useCurrentLocale();
 
   if (pathname === ROUTES_ROOTS.WEBSITE) return withHomepageElement ? <HomepageCrumb isLeaf /> : null;
 
   return (
     <nav aria-label={capitalize(scopedT2('breadcrumbs'))} className={className}>
       <ol className="flex w-fit flex-wrap justify-center gap-y-1 rounded-lg bg-accent bg-opacity-75 px-3 py-2 lg:justify-normal">
-        {crumbsGenerator(pathParts, withHomepageElement, scopedT, currentLocale, customCrumbs)}
+        {crumbsGenerator(pathParts, withHomepageElement, scopedT, customCrumbs)}
       </ol>
     </nav>
   );

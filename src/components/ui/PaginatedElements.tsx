@@ -1,7 +1,7 @@
 'use client';
 
+import type { FunctionComponent, ReactElement } from 'react';
 import type { FlexJustify } from '@rtm/shared-types/HTML';
-import type { FunctionComponent, ReactNode } from 'react';
 
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/20/solid';
 import { createURLSearchParams, getDirection } from '@rtm/shared-lib/html';
@@ -23,7 +23,7 @@ const ReactPaginate = dynamic(() => import('react-paginate'), { ssr: false });
 export interface PaginatedElementsProps extends PaginatedElementsBodyWrapperProps {
   paginationButtonsPosition?: 'bottom' | 'top';
   paginationButtonsJustify?: FlexJustify;
-  paginatedElements: ReactNode[];
+  paginatedElements: ReactElement[];
   elementsPerPage: number;
   pagesAmount?: number;
   pagesRange?: number;

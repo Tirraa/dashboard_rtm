@@ -9,7 +9,7 @@ const [OFF, , ERROR] = [_OFF, _WARN, _ERROR];
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   rules: {
-    '@typescript-eslint/no-unused-vars': [ERROR, { ignoreRestSiblings: false, args: 'after-used', vars: 'all' }],
+    '@typescript-eslint/no-unused-vars': [ERROR, { ignoreRestSiblings: false, args: 'all', vars: 'all' }],
     '@typescript-eslint/consistent-type-imports': [ERROR, { fixStyle: 'separate-type-imports' }],
     'import/no-extraneous-dependencies': [ERROR, { devDependencies: false }],
     'import/consistent-type-specifier-style': [ERROR, 'prefer-top-level'],

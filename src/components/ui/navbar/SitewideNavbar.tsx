@@ -1,6 +1,6 @@
 'use client';
 
-import type { FunctionComponent, ReactNode } from 'react';
+import type { FunctionComponent, ReactElement } from 'react';
 import type { NavbarItems } from '@/types/NavData';
 
 import { NAVBAR_EXTRAS_COMPONENTS_DESKTOP, NAVBAR_EXTRAS_COMPONENTS_MOBILE } from '@/config/SitewideNavbar/Extras/utils/ComponentsMapping';
@@ -23,14 +23,14 @@ interface SitewideNavbarProps {}
 const { LOGO_SIZE_PX_VALUE } = NAVBAR_STYLE;
 const navbarExtrasForMobileClassNameBase = 'h-[40px]';
 
-const buildNavbarExtrasForDesktop: () => ReactNode[] = () =>
+const buildNavbarExtrasForDesktop: () => ReactElement[] = () =>
   Object.values(NAVBAR_EXTRAS_COMPONENTS_DESKTOP).map((jsx, index) => (
     <li key={`${index}-navbar-extra-desktop`} className="flex h-fit w-fit p-[2px]">
       {jsx}
     </li>
   ));
 
-const buildNavbarExtrasForMobile: () => ReactNode[] = () =>
+const buildNavbarExtrasForMobile: () => ReactElement[] = () =>
   Object.values(NAVBAR_EXTRAS_COMPONENTS_MOBILE).map((jsx, index) => (
     <li className={navbarExtrasForMobileClassNameBase} key={`${index}-navbar-extra-mobile`}>
       {jsx}
