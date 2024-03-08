@@ -16,7 +16,7 @@ import BlogPostTocCollapseButton, { COLLAPSE_BUTTON_HEIGTH_IN_PX } from './BlogP
 
 const NIL_IDX = -1;
 const HIGHLIGHT_INITIAL_STATE: ActiveHighlightMetas = { idx: NIL_IDX, slug: '' } as const;
-const CHIPI_CHIPI_CHAPA_CHAPA: number = 100;
+const CHIPI_CHIPI_CHAPA_CHAPA: number = 192;
 
 const visibleElements = {} as Record<HeadingSlug, HeadingSlugIdx>;
 let killNextObservableUpdate = false;
@@ -226,6 +226,36 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
           // eslint-disable-next-line @typescript-eslint/no-magic-numbers
           Object.keys(visibleElements).length === 0 && scrollDirection === 'up' && !upOffCamWaitForNextObservable;
 
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        if (Object.keys(visibleElements).length === 0) {
+          const elements = [];
+
+          for (const { slug } of headings) {
+            const elm = document.getElementById(slug);
+            if (elm) elements.push(elm);
+          }
+
+          const closest = getClosestUpElement(elements);
+
+          if (!closest) return;
+
+          const idx = headings.findIndex((heading) => heading.slug === closest.id);
+          if (oldIdx.current !== idx && scrollDirection === 'up') {
+            const hl: ActiveHighlightMetas = { slug: headings[idx].slug, idx };
+            oldIdx.current = hl.idx;
+            oldSlug.current = hl.slug;
+
+            headingsRef.current?.scrollTo({
+              top: (headingsRef.current?.children[idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA,
+              behavior: 'smooth'
+            });
+
+            setHighlight({ ...hl });
+            setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
+            return;
+          }
+        }
+
         if (killNextObservableUpdate) {
           killNextObservableUpdate = false;
           return;
@@ -290,7 +320,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         setHighlight({ ...first });
         setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
       },
-      { rootMargin: -navbarHeight + 'px 0px 0px 0px', threshold: 0.5 }
+      { rootMargin: `${-navbarHeight}px 0px 0px 0px`, threshold: 0.5 }
     );
 
     for (const heading of headings) {
