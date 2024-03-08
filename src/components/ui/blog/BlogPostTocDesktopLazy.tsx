@@ -19,7 +19,7 @@ const BlogPostTocDesktopLazy: FunctionComponent<BlogPostTocDesktopProps> = ({ he
 
   return (
     <Card className="align-center ml-4 hidden h-fit w-60 border-black bg-black text-secondary dark:border-card dark:bg-card dark:text-foreground lg:block rtl:ml-0 rtl:mr-4">
-      <CardHeader>
+      <CardHeader className="relative z-10 bg-card">
         <CardTitle className="text-center">{title}</CardTitle>
       </CardHeader>
       <CardContent>
