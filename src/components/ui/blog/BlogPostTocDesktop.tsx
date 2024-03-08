@@ -52,7 +52,6 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
 
   const scopedT = useScopedI18n(i18ns.vocab);
 
-  // * ... Scroll effect
   useEffect(() => {
     function handleScroll() {
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -69,8 +68,10 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
 
       if (preparedForcedActiveSlug.current.slug === newForcedHighlight.slug) return;
       preparedForcedActiveSlug.current = { ...newForcedHighlight };
-      oldIdx.current = newForcedHighlight.idx;
-      oldSlug.current = newForcedHighlight.slug;
+      if (newForcedHighlight.idx !== NIL_IDX) {
+        oldIdx.current = newForcedHighlight.idx;
+        oldSlug.current = newForcedHighlight.slug;
+      }
       setHighlight({ ...newForcedHighlight });
     }
 
@@ -80,7 +81,6 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
     return () => window.removeEventListener('scroll', handleScroll);
   }, [headings, preparedForcedActiveSlug]);
 
-  // * ... Scroll end effect
   useEffect(() => {
     function handleScrollEnd() {
       preparedForcedActiveSlug.current = HIGHLIGHT_INITIAL_STATE;
@@ -91,7 +91,6 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
     return () => window.removeEventListener('scrollend', handleScrollEnd);
   }, [preparedForcedActiveSlug]);
 
-  // * ... Hashchange effect
   useEffect(() => {
     function handleHashChange() {
       const giveUp = () => !preparedForcedActiveSlug.current.slug;
@@ -110,7 +109,6 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, [setForcedHighlight, preparedForcedActiveSlug]);
 
-  // * ... Collapse
   useEffect(() => {
     const tocInstance = getRefCurrentPtr(tocRef);
     const headingsInstance = getRefCurrentPtr(headingsRef);
@@ -148,7 +146,6 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
     applyCollapsedStyles();
   }, [isCollapsed, tocRef, headingsRef]);
 
-  // * ... Highlighting
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -191,12 +188,15 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
           oldSlug.current = first.slug;
           setHighlight({ ...first });
           setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
-        } else if (shouldScrollUpUpdate()) {
-          oldIdx.current = last.idx;
-          oldSlug.current = last.slug;
-          setHighlight({ ...last });
-          setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
+          return;
         }
+
+        if (!shouldScrollUpUpdate()) return;
+
+        oldIdx.current = last.idx;
+        oldSlug.current = last.slug;
+        setHighlight({ ...last });
+        setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
       },
       { rootMargin: '-10% 0px', threshold: 1 }
     );
