@@ -32,11 +32,11 @@ const visibleElements = {} as Record<HeadingSlug, HeadingSlugIdx>;
 const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headings }) => {
   const scrollDirection = useScrollDirection();
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const [state, setState] = useState<{ highlight: ActiveSlugMetas; isCollapsed: boolean }>({
+  const [state, setState] = useState<{ forcedHighlight: ActiveSlugMetas; highlight: ActiveSlugMetas; isCollapsed: boolean }>({
+    forcedHighlight: HIGHLIGHT_INITIAL_STATE,
     highlight: HIGHLIGHT_INITIAL_STATE,
     isCollapsed: false
   });
-  const forcedActiveSlug = useRef<ActiveSlugMetas>(HIGHLIGHT_INITIAL_STATE);
   const preparedForcedActiveSlug = useRef<ActiveSlugMetas>(HIGHLIGHT_INITIAL_STATE);
   const wasCollapsed = useRef<boolean>(false);
   const tocRef = useRef<HTMLDivElement>(null);
@@ -51,7 +51,7 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
   // * ... Scroll effect
   useEffect(() => {
     function handleScroll() {
-      // console.log("You're scrolling! I should release the forced active slug");
+      setState((prev) => ({ ...prev, forcedHighlight: HIGHLIGHT_INITIAL_STATE }));
     }
 
     window.addEventListener('scroll', handleScroll);
@@ -62,7 +62,11 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
   // * ... Scroll end effect
   useEffect(() => {
     function handleScrollEnd() {
-      // console.log("You don't scroll anymore (or clicked on a link of the toc! I should check if I have a forced active slug and then set it.");
+      if (!preparedForcedActiveSlug.current.slug) return;
+
+      const forcedHighlight = { ...preparedForcedActiveSlug.current };
+      preparedForcedActiveSlug.current = HIGHLIGHT_INITIAL_STATE;
+      setState((prev) => ({ ...prev, highlight: forcedHighlight, forcedHighlight }));
     }
 
     window.addEventListener('scrollend', handleScrollEnd);
@@ -113,7 +117,7 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
     () => {
       const observer = new IntersectionObserver(
         (entries) => {
-          // ToDo: return if there is a forced slug
+          if (state.forcedHighlight.slug) return;
 
           let first: ActiveSlugMetas = HIGHLIGHT_INITIAL_STATE;
           let last: ActiveSlugMetas = HIGHLIGHT_INITIAL_STATE;
@@ -137,11 +141,9 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
           const lastIdx = last.idx;
 
           if (firstIdx !== NIL_IDX && scrollDirection === 'down' && (oldIdx === NIL_IDX || oldIdx < firstIdx)) {
-            console.log('Setting to first, ie:', first);
-            setState((prev) => ({ ...prev, activeSlug: first }));
+            setState((prev) => ({ ...prev, highlight: first }));
           } else if (lastIdx !== NIL_IDX && scrollDirection === 'up' && (oldIdx === NIL_IDX || oldIdx > lastIdx)) {
-            console.log('Setting to last, ie:', last);
-            setState((prev) => ({ ...prev, activeSlug: last }));
+            setState((prev) => ({ ...prev, highlight: last }));
           }
         },
         { rootMargin: '-30% 0px' }
@@ -167,8 +169,7 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
         {headings.map((heading, idx) => (
           <li
             className={cn('list-none text-sm font-bold transition-colors duration-200 ease-in-out hover:text-primary', {
-              'text-primary':
-                forcedActiveSlug.current.slug === heading.slug || (!forcedActiveSlug.current.slug && state.highlight.slug === heading.slug),
+              'text-primary': state.forcedHighlight.slug === heading.slug || (!state.forcedHighlight.slug && state.highlight.slug === heading.slug),
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
               'ml-6 font-normal': heading.depth === 5,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -182,7 +183,6 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
               <Link
                 onClick={() => {
                   preparedForcedActiveSlug.current = { slug: heading.slug, idx };
-                  // ToDo update the state with forcedActiveSlug
                 }}
                 href={`#${heading.slug}`}
               >
