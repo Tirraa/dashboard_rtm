@@ -14,7 +14,7 @@ import Link from 'next/link';
 
 import BlogPostTocCollapseButton, { COLLAPSE_BUTTON_HEIGTH_IN_PX } from './BlogPostTocCollapseButton';
 
-type ActiveSlugMetas = { slug: string; idx: number };
+type ActiveHighlightMetas = { slug: string; idx: number };
 
 interface BlogPostTocDesktopProps {
   headings: DocumentHeading[];
@@ -22,7 +22,7 @@ interface BlogPostTocDesktopProps {
 
 const NIL_IDX = -1;
 
-const HIGHLIGHT_INITIAL_STATE: ActiveSlugMetas = { idx: NIL_IDX, slug: '' } as const;
+const HIGHLIGHT_INITIAL_STATE: ActiveHighlightMetas = { idx: NIL_IDX, slug: '' } as const;
 
 type HeadingSlug = string;
 type HeadingSlugIdx = number;
@@ -32,12 +32,12 @@ const visibleElements = {} as Record<HeadingSlug, HeadingSlugIdx>;
 const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headings }) => {
   const scrollDirection = useScrollDirection();
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const [state, setState] = useState<{ forcedHighlight: ActiveSlugMetas; highlight: ActiveSlugMetas; isCollapsed: boolean }>({
+  const [state, setState] = useState<{ forcedHighlight: ActiveHighlightMetas; highlight: ActiveHighlightMetas; isCollapsed: boolean }>({
     forcedHighlight: HIGHLIGHT_INITIAL_STATE,
     highlight: HIGHLIGHT_INITIAL_STATE,
     isCollapsed: false
   });
-  const preparedForcedActiveSlug = useRef<ActiveSlugMetas>(HIGHLIGHT_INITIAL_STATE);
+  const preparedForcedActiveSlug = useRef<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
   const wasCollapsed = useRef<boolean>(false);
   const tocRef = useRef<HTMLDivElement>(null);
   const headingsRef = useRef<HTMLOListElement>(null);
@@ -51,20 +51,33 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
   // * ... Scroll effect
   useEffect(() => {
     function handleScroll() {
-      setState((prev) => ({ ...prev, forcedHighlight: HIGHLIGHT_INITIAL_STATE }));
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const atTop = window.scrollY === 0;
+      const atBottom = window.scrollY + window.innerHeight === document.documentElement.scrollHeight;
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const forcedHighlight: ActiveHighlightMetas = atTop
+        ? // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          { slug: headings[0].slug, idx: 0 }
+        : atBottom
+          ? // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+            { slug: headings[headings.length - 1].slug, idx: headings.length - 1 }
+          : HIGHLIGHT_INITIAL_STATE;
+
+      setState((prev) => ({ ...prev, forcedHighlight }));
     }
 
     window.addEventListener('scroll', handleScroll);
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [headings]);
 
   // * ... Scroll end effect
   useEffect(() => {
     function handleScrollEnd() {
       if (!preparedForcedActiveSlug.current.slug) return;
 
-      const forcedHighlight = { ...preparedForcedActiveSlug.current };
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const forcedHighlight: ActiveHighlightMetas = { ...preparedForcedActiveSlug.current };
       preparedForcedActiveSlug.current = HIGHLIGHT_INITIAL_STATE;
       setState((prev) => ({ ...prev, highlight: forcedHighlight, forcedHighlight }));
     }
@@ -119,8 +132,8 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
         (entries) => {
           if (state.forcedHighlight.slug) return;
 
-          let first: ActiveSlugMetas = HIGHLIGHT_INITIAL_STATE;
-          let last: ActiveSlugMetas = HIGHLIGHT_INITIAL_STATE;
+          let first: ActiveHighlightMetas = HIGHLIGHT_INITIAL_STATE;
+          let last: ActiveHighlightMetas = HIGHLIGHT_INITIAL_STATE;
 
           for (const entry of entries) {
             const slug = entry.target.id;
@@ -141,12 +154,14 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
           const lastIdx = last.idx;
 
           if (firstIdx !== NIL_IDX && scrollDirection === 'down' && (oldIdx === NIL_IDX || oldIdx < firstIdx)) {
+            console.log('Down update!');
             setState((prev) => ({ ...prev, highlight: first }));
           } else if (lastIdx !== NIL_IDX && scrollDirection === 'up' && (oldIdx === NIL_IDX || oldIdx > lastIdx)) {
+            console.log('Up update!');
             setState((prev) => ({ ...prev, highlight: last }));
           }
         },
-        { rootMargin: '-30% 0px' }
+        { rootMargin: '-10% 0px', threshold: 1 }
       );
 
       for (const heading of headings) {
@@ -157,7 +172,7 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
       return () => observer.disconnect();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [scrollDirection]
   );
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
