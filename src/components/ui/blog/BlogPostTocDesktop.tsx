@@ -18,12 +18,14 @@ interface BlogPostTocDesktopProps {
 }
 
 const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headings }) => {
+  const [activeSlug, setActiveSlug] = useState<string>('');
   const wasCollapsed = useRef<boolean>(false);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(wasCollapsed.current);
   const tocRef = useRef<HTMLDivElement>(null);
   const headingsRef = useRef<HTMLOListElement>(null);
 
   const scopedT = useScopedI18n(i18ns.vocab);
+
   useEffect(() => {
     const tocInstance = getRefCurrentPtr(tocRef);
     const headingsInstance = getRefCurrentPtr(headingsRef);
@@ -61,6 +63,28 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
     applyCollapsedStyles();
   }, [isCollapsed, tocRef, headingsRef]);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry?.isIntersecting) setActiveSlug(entry.target.id);
+        }
+      },
+      {
+        rootMargin: '-30% 0px'
+      }
+    );
+
+    if (!isCollapsed) {
+      headings.forEach((heading) => {
+        const element = document.getElementById(heading.slug);
+        if (element) observer.observe(element);
+      });
+    }
+
+    return () => observer.disconnect();
+  }, [headings, isCollapsed]);
+
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (headings.length === 0) return null;
 
@@ -69,7 +93,8 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
       <ol className="list-none space-y-3" ref={headingsRef}>
         {headings.map((heading) => (
           <li
-            className={cn('list-none text-sm font-bold transition-colors duration-200 ease-in-out hover:text-accent-foreground', {
+            className={cn('list-none text-sm font-bold transition-colors duration-200 ease-in-out hover:text-primary', {
+              'text-primary': activeSlug === heading.slug,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
               'ml-6 font-normal': heading.depth === 5,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
