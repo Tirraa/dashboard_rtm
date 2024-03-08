@@ -176,7 +176,6 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
         if (preparedForcedActiveSlug.current.slug) return;
 
         let first: ActiveHighlightMetas = HIGHLIGHT_INITIAL_STATE;
-        let last: ActiveHighlightMetas = HIGHLIGHT_INITIAL_STATE;
 
         for (const entry of entries) {
           const slug = entry.target.id;
@@ -189,18 +188,16 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
 
         for (const [slug, idx] of Object.entries(visibleElements)) {
           if (first.idx === NIL_IDX || idx < first.idx) first = { slug, idx };
-          if (last.idx === NIL_IDX || idx > last.idx) last = { slug, idx };
         }
 
         const _oldIdx = oldIdx.current;
         const firstIdx = first.idx;
-        const lastIdx = last.idx;
 
         const shouldScrollDownUpdate = () =>
           oldSlug.current !== first.slug && firstIdx !== NIL_IDX && scrollDirection === 'down' && (_oldIdx === NIL_IDX || _oldIdx <= firstIdx);
 
         const shouldScrollUpUpdate = () =>
-          oldSlug.current !== last.slug && lastIdx !== NIL_IDX && scrollDirection === 'up' && (_oldIdx === NIL_IDX || _oldIdx >= lastIdx);
+          oldSlug.current !== first.slug && firstIdx !== NIL_IDX && scrollDirection === 'up' && (_oldIdx === NIL_IDX || _oldIdx >= firstIdx);
 
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         const shouldScrollUpUpdateOffCamCase = () =>
@@ -248,12 +245,12 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
           return;
         } else upOffCamWaitForNextObservable = false;
 
-        oldIdx.current = last.idx;
-        oldSlug.current = last.slug;
-        setHighlight({ ...last });
+        oldIdx.current = first.idx;
+        oldSlug.current = first.slug;
+        setHighlight({ ...first });
         setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
       },
-      { rootMargin: -navbarHeight + 'px 0px 0px 0px', threshold: 1 }
+      { rootMargin: -navbarHeight + 'px 0px 0px 0px', threshold: 0.5 }
     );
 
     for (const heading of headings) {
