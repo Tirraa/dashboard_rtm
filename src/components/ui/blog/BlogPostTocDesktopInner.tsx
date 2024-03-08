@@ -3,10 +3,11 @@ import type { FunctionComponent } from 'react';
 import { useScrollDirection } from '@/components/hooks/useScrollDirection';
 import { computeHTMLElementHeight } from '@rtm/shared-lib/html';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
+import { useMediaQuery } from '@react-hook/media-query';
 import { useEffect, useState, useRef } from 'react';
+import { getBreakpoint, cn } from '@/lib/tailwind';
 import { useRouter } from 'next/navigation';
 import { getNavbar } from '@/lib/html';
-import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
 import type { BlogPostTocDesktopProps } from './BlogPostTocDesktop';
@@ -57,6 +58,7 @@ interface BlogPostTocDesktopInnerProps extends BlogPostTocDesktopProps {
 }
 
 const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({ setIsCollapsed, isCollapsed, ariaLabel, headings }) => {
+  const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
   const router = useRouter();
   const scrollDirection = useScrollDirection();
   const [highlight, setHighlight] = useState<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
@@ -65,6 +67,21 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const oldSlug = useRef<string>('');
   const tocRef = useRef<HTMLDivElement>(null);
   const headingsRef = useRef<HTMLOListElement>(null);
+
+  useEffect(() => {
+    if (!isLargeScreen) return;
+
+    const headingsInstance = getRefCurrentPtr(headingsRef);
+    if (!headingsInstance) return;
+
+    const HTMLElement = headingsRef.current?.children[oldIdx.current];
+    if (!HTMLElement) return;
+
+    headingsInstance.scrollTo({
+      top: (HTMLElement as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA,
+      behavior: 'smooth'
+    });
+  }, [isLargeScreen]);
 
   useEffect(() => {
     function handleScroll() {
@@ -134,10 +151,11 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     if (!tocInstance || !headingsInstance) return;
 
     function updateScrollOnUncollapse() {
-      const HTMLElement = headingsRef.current?.children[oldIdx.current] as HTMLElement;
+      const HTMLElement = headingsRef.current?.children[oldIdx.current];
+      if (!HTMLElement) return;
 
       headingsInstance.scrollTo({
-        top: HTMLElement.offsetTop - CHIPI_CHIPI_CHAPA_CHAPA,
+        top: (HTMLElement as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA,
         behavior: 'smooth'
       });
     }
