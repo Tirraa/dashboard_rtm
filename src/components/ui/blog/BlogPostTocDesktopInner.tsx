@@ -132,13 +132,11 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
     function applyUncollapsedStyles() {
       tocInstance.style.marginTop = '0';
-      headingsInstance.style.opacity = '';
       wasCollapsed.current = false;
     }
 
     function applyCollapsedStyles() {
       tocInstance.style.marginTop = '-' + (computeHTMLElementHeight(tocInstance) + COLLAPSE_BUTTON_HEIGTH_IN_PX) + 'px';
-      headingsInstance.style.opacity = '0';
       wasCollapsed.current = true;
     }
 

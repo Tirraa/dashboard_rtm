@@ -18,9 +18,12 @@ const BlogPostTocDesktopLazy: FunctionComponent<BlogPostTocDesktopProps> = ({ he
   const title = scopedT('toc');
 
   return (
-    <Card className="align-center ml-4 hidden h-fit w-60 border-black bg-black text-secondary dark:border-card dark:bg-card dark:text-foreground lg:block rtl:ml-0 rtl:mr-4">
-      <CardHeader className="relative z-10 bg-card">
-        <CardTitle className="text-center">{title}</CardTitle>
+    <Card
+      className="align-center ml-4 hidden h-fit w-60 border-none bg-black text-secondary dark:bg-card dark:text-foreground lg:block rtl:ml-0 rtl:mr-4"
+      style={{ clipPath: 'inset(1px 0% -30px 0%)' }}
+    >
+      <CardHeader className="relative z-10 rounded-lg bg-black dark:bg-card">
+        <CardTitle className="px-2 text-center">{title}</CardTitle>
       </CardHeader>
       <CardContent>
         <BlogPostTocDesktopInner headings={headings} ariaLabel={title} />
