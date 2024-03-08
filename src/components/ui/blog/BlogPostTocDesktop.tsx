@@ -8,6 +8,7 @@ import { computeHTMLElementHeight } from '@rtm/shared-lib/html';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { useEffect, useState, useRef } from 'react';
 import { useScopedI18n } from '@/i18n/client';
+import { useRouter } from 'next/navigation';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
@@ -40,6 +41,7 @@ const useForcedHighlight = () => {
 };
 
 const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headings }) => {
+  const router = useRouter();
   const scrollDirection = useScrollDirection();
   const [highlight, setHighlight] = useState<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
@@ -68,10 +70,10 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
 
       if (preparedForcedActiveSlug.current.slug === newForcedHighlight.slug) return;
       preparedForcedActiveSlug.current = { ...newForcedHighlight };
-      if (newForcedHighlight.idx !== NIL_IDX) {
-        oldIdx.current = newForcedHighlight.idx;
-        oldSlug.current = newForcedHighlight.slug;
-      }
+      if (newForcedHighlight.idx === NIL_IDX) return;
+
+      oldIdx.current = newForcedHighlight.idx;
+      oldSlug.current = newForcedHighlight.slug;
       setHighlight({ ...newForcedHighlight });
     }
 
@@ -104,9 +106,9 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
       setHighlight({ ...preparedForcedActiveSlug.current });
     }
 
-    window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('my-hashchange', handleHashChange);
 
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('my-hashchange', handleHashChange);
   }, [setForcedHighlight, preparedForcedActiveSlug]);
 
   useEffect(() => {
@@ -233,10 +235,11 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
                 onClick={(event) => {
                   event.preventDefault();
                   preparedForcedActiveSlug.current = { slug: heading.slug, idx };
-                  window.dispatchEvent(new Event('hashchange'));
-                  document.getElementById(heading.slug)?.scrollIntoView();
+                  window.dispatchEvent(new Event('my-hashchange'));
+                  router.replace('#' + heading.slug, { scroll: true });
                 }}
                 href={`#${heading.slug}`}
+                replace
               >
                 {heading.content}
               </Link>
