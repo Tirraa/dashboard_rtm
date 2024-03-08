@@ -4,23 +4,19 @@ import type { WithClassname } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
 import { isValidBlogCategoryAndSubcategoryPair, getBlogPostUnstrict } from '@/lib/blog/api';
-import { CardContent, CardHeader, CardTitle, Card } from '@/components/ui/Card';
 import BlogPostTocDesktop from '@/components/ui/blog/BlogPostTocDesktop';
 import tagsGenerator from '@/components/ui/blog/tagsGenerator';
 import BlogPostDate from '@/components/ui/blog/BlogPostDate';
 import MDX from '@/components/layouts/blog/MdxComponent';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
-import { getScopedI18n } from '@/i18n/server';
 import { notFound } from 'next/navigation';
-import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 
 interface BlogPostInnerProps extends BlogPostProps {}
 interface _BlogPostPageProps extends BlogPostPageProps, Partial<WithClassname> {}
 
 const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className: classNameValue, language, post }) => {
-  const scopedT = await getScopedI18n(i18ns.vocab);
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const hasTags = post.tags.length > 0;
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -35,18 +31,7 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className:
       </header>
       <div className="flex max-w-full">
         <MDX code={post.body.code} />
-        {showToC && (
-          <aside className="sticky top-16 h-0 hover:opacity-100 lg:block lg:w-0">
-            <Card className="align-center ml-4 hidden h-fit w-60 border-black bg-black text-secondary dark:border-card dark:bg-card dark:text-foreground lg:block rtl:ml-0 rtl:mr-4">
-              <CardHeader>
-                <CardTitle className="text-center">{scopedT('toc')}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <BlogPostTocDesktop headings={post.headings} />
-              </CardContent>
-            </Card>
-          </aside>
-        )}
+        {showToC && <BlogPostTocDesktop headings={post.headings} />}
       </div>
     </section>
   );

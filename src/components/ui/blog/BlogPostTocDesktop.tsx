@@ -15,6 +15,7 @@ import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
 import BlogPostTocCollapseButton, { COLLAPSE_BUTTON_HEIGTH_IN_PX } from './BlogPostTocCollapseButton';
+import { CardContent, CardHeader, CardTitle, Card } from '../Card';
 
 type ActiveHighlightMetas = { slug: string; idx: number };
 
@@ -58,7 +59,7 @@ function getClosestUpElement(elements: HTMLElement[]) {
   return closest;
 }
 
-const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headings }) => {
+const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopProps> = ({ headings }) => {
   const router = useRouter();
   const scrollDirection = useScrollDirection();
   const [highlight, setHighlight] = useState<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
@@ -308,5 +309,22 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
 
 type HeadingSlug = string;
 type HeadingSlugIdx = number;
+
+const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headings }) => {
+  const scopedT = useScopedI18n(i18ns.vocab);
+
+  return (
+    <aside className="sticky top-16 h-0 hover:opacity-100 lg:block lg:w-0">
+      <Card className="align-center ml-4 hidden h-fit w-60 border-black bg-black text-secondary dark:border-card dark:bg-card dark:text-foreground lg:block rtl:ml-0 rtl:mr-4">
+        <CardHeader>
+          <CardTitle className="text-center">{scopedT('toc')}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <BlogPostTocDesktopInner headings={headings} />
+        </CardContent>
+      </Card>
+    </aside>
+  );
+};
 
 export default BlogPostTocDesktop;
