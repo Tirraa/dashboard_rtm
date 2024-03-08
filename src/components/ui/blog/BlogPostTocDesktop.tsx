@@ -27,12 +27,25 @@ const HIGHLIGHT_INITIAL_STATE: ActiveHighlightMetas = { idx: NIL_IDX, slug: '' }
 const visibleElements = {} as Record<HeadingSlug, HeadingSlugIdx>;
 let killNextObservableUpdate = false;
 
+const useForcedHighlight = () => {
+  const [forcedHighlight, setForcedHighlight] = useState<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
+  const preparedForcedActiveSlug = useRef<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
+
+  const setForcedHighlightAndHighlight = (value: ActiveHighlightMetas) => {
+    preparedForcedActiveSlug.current = value;
+    setForcedHighlight(value);
+  };
+
+  return { setForcedHighlight: setForcedHighlightAndHighlight, preparedForcedActiveSlug, forcedHighlight };
+};
+
 const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headings }) => {
   const scrollDirection = useScrollDirection();
   const [highlight, setHighlight] = useState<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
-  const [forcedHighlight, setForcedHighlight] = useState<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
-  const preparedForcedActiveSlug = useRef<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
+  const { preparedForcedActiveSlug, setForcedHighlight, forcedHighlight } = useForcedHighlight();
+  const oldIdx = useRef<number>(NIL_IDX);
+  const oldSlug = useRef<string>('');
   const wasCollapsed = useRef<boolean>(false);
   const tocRef = useRef<HTMLDivElement>(null);
   const headingsRef = useRef<HTMLOListElement>(null);
@@ -56,6 +69,8 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
 
       if (preparedForcedActiveSlug.current.slug === newForcedHighlight.slug) return;
       preparedForcedActiveSlug.current = { ...newForcedHighlight };
+      oldIdx.current = newForcedHighlight.idx;
+      oldSlug.current = newForcedHighlight.slug;
       setHighlight({ ...newForcedHighlight });
     }
 
@@ -63,7 +78,7 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
     handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [headings]);
+  }, [headings, preparedForcedActiveSlug]);
 
   // * ... Scroll end effect
   useEffect(() => {
@@ -74,30 +89,26 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
     window.addEventListener('scrollend', handleScrollEnd);
 
     return () => window.removeEventListener('scrollend', handleScrollEnd);
-  }, []);
+  }, [preparedForcedActiveSlug]);
 
   // * ... Hashchange effect
-  useEffect(
-    () => {
-      function handleHashChange() {
-        const giveUp = () =>
-          !preparedForcedActiveSlug.current.slug ||
-          (highlight.slug === forcedHighlight.slug && preparedForcedActiveSlug.current.slug === forcedHighlight.slug);
+  useEffect(() => {
+    function handleHashChange() {
+      const giveUp = () => !preparedForcedActiveSlug.current.slug;
 
-        if (giveUp()) return;
+      if (giveUp()) return;
 
-        killNextObservableUpdate = true;
-        setForcedHighlight({ ...preparedForcedActiveSlug.current });
-        setHighlight({ ...preparedForcedActiveSlug.current });
-      }
+      killNextObservableUpdate = true;
+      oldIdx.current = preparedForcedActiveSlug.current.idx;
+      oldSlug.current = preparedForcedActiveSlug.current.slug;
+      setForcedHighlight({ ...preparedForcedActiveSlug.current });
+      setHighlight({ ...preparedForcedActiveSlug.current });
+    }
 
-      window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('hashchange', handleHashChange);
 
-      return () => window.removeEventListener('hashchange', handleHashChange);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, [setForcedHighlight, preparedForcedActiveSlug]);
 
   // * ... Collapse
   useEffect(() => {
@@ -138,65 +149,65 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
   }, [isCollapsed, tocRef, headingsRef]);
 
   // * ... Highlighting
-  useEffect(
-    () => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          if (preparedForcedActiveSlug.current.slug) return;
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (preparedForcedActiveSlug.current.slug) return;
 
-          let first: ActiveHighlightMetas = HIGHLIGHT_INITIAL_STATE;
-          let last: ActiveHighlightMetas = HIGHLIGHT_INITIAL_STATE;
+        let first: ActiveHighlightMetas = HIGHLIGHT_INITIAL_STATE;
+        let last: ActiveHighlightMetas = HIGHLIGHT_INITIAL_STATE;
 
-          for (const entry of entries) {
-            const slug = entry.target.id;
-            if (entry.isIntersecting) {
-              visibleElements[slug] = headings.findIndex((heading) => heading.slug === slug);
-            } else {
-              delete visibleElements[slug];
-            }
+        for (const entry of entries) {
+          const slug = entry.target.id;
+          if (entry.isIntersecting) {
+            visibleElements[slug] = headings.findIndex((heading) => heading.slug === slug);
+          } else {
+            delete visibleElements[slug];
           }
+        }
 
-          for (const [slug, idx] of Object.entries(visibleElements)) {
-            if (first.idx === NIL_IDX || idx < first.idx) first = { slug, idx };
-            if (last.idx === NIL_IDX || idx > last.idx) last = { slug, idx };
-          }
+        for (const [slug, idx] of Object.entries(visibleElements)) {
+          if (first.idx === NIL_IDX || idx < first.idx) first = { slug, idx };
+          if (last.idx === NIL_IDX || idx > last.idx) last = { slug, idx };
+        }
 
-          const oldIdx = highlight.idx;
-          const firstIdx = first.idx;
-          const lastIdx = last.idx;
+        const _oldIdx = oldIdx.current;
+        const firstIdx = first.idx;
+        const lastIdx = last.idx;
 
-          const shouldScrollDownUpdate = () =>
-            highlight.slug !== first.slug && firstIdx !== NIL_IDX && scrollDirection === 'down' && (oldIdx === NIL_IDX || oldIdx <= firstIdx);
+        const shouldScrollDownUpdate = () =>
+          oldSlug.current !== first.slug && firstIdx !== NIL_IDX && scrollDirection === 'down' && (_oldIdx === NIL_IDX || _oldIdx <= firstIdx);
 
-          const shouldScrollUpUpdate = () =>
-            highlight.slug !== last.slug && lastIdx !== NIL_IDX && scrollDirection === 'up' && (oldIdx === NIL_IDX || oldIdx >= lastIdx);
+        const shouldScrollUpUpdate = () =>
+          oldSlug.current !== last.slug && lastIdx !== NIL_IDX && scrollDirection === 'up' && (_oldIdx === NIL_IDX || _oldIdx >= lastIdx);
 
-          if (killNextObservableUpdate) {
-            killNextObservableUpdate = false;
-            return;
-          }
+        if (killNextObservableUpdate) {
+          killNextObservableUpdate = false;
+          return;
+        }
 
-          if (shouldScrollDownUpdate()) {
-            setHighlight({ ...first });
-            setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
-          } else if (shouldScrollUpUpdate()) {
-            setHighlight({ ...last });
-            setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
-          }
-        },
-        { rootMargin: '-10% 0px', threshold: 1 }
-      );
+        if (shouldScrollDownUpdate()) {
+          oldIdx.current = first.idx;
+          oldSlug.current = first.slug;
+          setHighlight({ ...first });
+          setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
+        } else if (shouldScrollUpUpdate()) {
+          oldIdx.current = last.idx;
+          oldSlug.current = last.slug;
+          setHighlight({ ...last });
+          setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
+        }
+      },
+      { rootMargin: '-10% 0px', threshold: 1 }
+    );
 
-      for (const heading of headings) {
-        const element = document.getElementById(heading.slug);
-        if (element) observer.observe(element);
-      }
+    for (const heading of headings) {
+      const element = document.getElementById(heading.slug);
+      if (element) observer.observe(element);
+    }
 
-      return () => observer.disconnect();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [scrollDirection, preparedForcedActiveSlug.current.slug]
-  );
+    return () => observer.disconnect();
+  }, [headings, preparedForcedActiveSlug, setForcedHighlight, scrollDirection]);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (headings.length === 0) return null;
