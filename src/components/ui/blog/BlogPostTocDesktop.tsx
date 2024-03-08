@@ -40,6 +40,23 @@ const useForcedHighlight = () => {
   return { setForcedHighlight: setForcedHighlightAndHighlight, preparedForcedActiveSlug, forcedHighlight };
 };
 
+function getClosestUpElement(elements: HTMLElement[]) {
+  let closest = null;
+  let closestDistance = Infinity;
+
+  for (const element of elements) {
+    const distance = window.scrollY - element.offsetTop;
+
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    if (0 < distance && distance < closestDistance) {
+      closest = element;
+      closestDistance = distance;
+    }
+  }
+
+  return closest;
+}
+
 const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headings }) => {
   const router = useRouter();
   const scrollDirection = useScrollDirection();
@@ -180,6 +197,9 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
         const shouldScrollUpUpdate = () =>
           oldSlug.current !== last.slug && lastIdx !== NIL_IDX && scrollDirection === 'up' && (_oldIdx === NIL_IDX || _oldIdx >= lastIdx);
 
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        const shouldScrollUpUpdateOffCamCase = () => Object.keys(visibleElements).length === 0 && scrollDirection === 'up';
+
         if (killNextObservableUpdate) {
           killNextObservableUpdate = false;
           return;
@@ -193,7 +213,29 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
           return;
         }
 
-        if (!shouldScrollUpUpdate()) return;
+        const upOffCamCtx = shouldScrollUpUpdateOffCamCase();
+        if (!shouldScrollUpUpdate() && !upOffCamCtx) return;
+
+        if (upOffCamCtx) {
+          const elements = [];
+
+          for (const { slug } of headings) {
+            const elm = document.getElementById(slug);
+            if (elm) elements.push(elm);
+          }
+
+          const closest = getClosestUpElement(elements);
+
+          if (!closest) return;
+
+          const idx = headings.findIndex((heading) => heading.slug === closest.id);
+          const hl: ActiveHighlightMetas = { slug: headings[idx].slug, idx };
+          oldIdx.current = hl.idx;
+          oldSlug.current = hl.slug;
+          setHighlight({ ...hl });
+          setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
+          return;
+        }
 
         oldIdx.current = last.idx;
         oldSlug.current = last.slug;
