@@ -320,7 +320,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         setHighlight({ ...first });
         setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
       },
-      { rootMargin: `${-navbarHeight}px 0px 0px 0px`, threshold: 0.5 }
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      { rootMargin: `${-navbarHeight}px 0px ${-navbarHeight * 2}px 0px`, threshold: 0.5 }
     );
 
     for (const heading of headings) {
