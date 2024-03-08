@@ -3,6 +3,7 @@
 import type { DocumentHeading } from '@rtm/shared-types/Documents';
 import type { FunctionComponent } from 'react';
 
+import { useScrollDirection } from '@/components/hooks/useScrollDirection';
 import { computeHTMLElementHeight } from '@rtm/shared-lib/html';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { useEffect, useState, useRef } from 'react';
@@ -13,19 +14,57 @@ import Link from 'next/link';
 
 import BlogPostTocCollapseButton, { COLLAPSE_BUTTON_HEIGTH_IN_PX } from './BlogPostTocCollapseButton';
 
+type ActiveSlugMetas = { slug: string; idx: number };
+
 interface BlogPostTocDesktopProps {
   headings: DocumentHeading[];
 }
 
+const NIL_IDX = -1;
+
+const ACTIVE_SLUG_INITIAL_STATE: ActiveSlugMetas = { idx: NIL_IDX, slug: '' } as const;
+
+type HeadingSlug = string;
+type HeadingSlugIdx = number;
+
+const visibleElements = {} as Record<HeadingSlug, HeadingSlugIdx>;
+
 const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headings }) => {
-  const [activeSlug, setActiveSlug] = useState<string>('');
+  const scrollDirection = useScrollDirection();
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const [state, setState] = useState<{ activeSlug: ActiveSlugMetas }>({ activeSlug: ACTIVE_SLUG_INITIAL_STATE });
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
+  const forcedActiveSlug = useRef<ActiveSlugMetas>(ACTIVE_SLUG_INITIAL_STATE);
+  const preparedForcedActiveSlug = useRef<ActiveSlugMetas>(ACTIVE_SLUG_INITIAL_STATE);
   const wasCollapsed = useRef<boolean>(false);
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(wasCollapsed.current);
   const tocRef = useRef<HTMLDivElement>(null);
   const headingsRef = useRef<HTMLOListElement>(null);
 
   const scopedT = useScopedI18n(i18ns.vocab);
 
+  // * ... Scroll effect
+  useEffect(() => {
+    function handleScroll() {
+      // console.log("You're scrolling! I should release the forced active slug");
+    }
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // * ... Scroll end effect
+  useEffect(() => {
+    function handleScrollEnd() {
+      // console.log("You don't scroll anymore (or clicked on a link of the toc! I should check if I have a forced active slug and then set it.");
+    }
+
+    window.addEventListener('scrollend', handleScrollEnd);
+
+    return () => window.removeEventListener('scrollend', handleScrollEnd);
+  }, []);
+
+  // * ... Collapse
   useEffect(() => {
     const tocInstance = getRefCurrentPtr(tocRef);
     const headingsInstance = getRefCurrentPtr(headingsRef);
@@ -63,27 +102,55 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
     applyCollapsedStyles();
   }, [isCollapsed, tocRef, headingsRef]);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry?.isIntersecting) setActiveSlug(entry.target.id);
-        }
-      },
-      {
-        rootMargin: '-30% 0px'
-      }
-    );
+  // * ... Highlighting
+  useEffect(
+    () => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          // ToDo: return if there is a forced slug
 
-    if (!isCollapsed) {
-      headings.forEach((heading) => {
+          let first: ActiveSlugMetas = ACTIVE_SLUG_INITIAL_STATE;
+          let last: ActiveSlugMetas = ACTIVE_SLUG_INITIAL_STATE;
+
+          for (const entry of entries) {
+            const slug = entry.target.id;
+            if (entry.isIntersecting) {
+              visibleElements[slug] = headings.findIndex((heading) => heading.slug === slug);
+            } else {
+              delete visibleElements[slug];
+            }
+          }
+
+          for (const [slug, idx] of Object.entries(visibleElements)) {
+            if (first.idx === NIL_IDX || idx < first.idx) first = { slug, idx };
+            if (last.idx === NIL_IDX || idx > last.idx) last = { slug, idx };
+          }
+
+          const oldIdx = state.activeSlug.idx;
+          const firstIdx = first.idx;
+          const lastIdx = last.idx;
+
+          if (firstIdx !== NIL_IDX && scrollDirection === 'down' && (oldIdx === NIL_IDX || oldIdx < firstIdx)) {
+            console.log('Setting to first, ie:', first);
+            setState((prev) => ({ ...prev, activeSlug: first }));
+          } else if (lastIdx !== NIL_IDX && scrollDirection === 'up' && (oldIdx === NIL_IDX || oldIdx > lastIdx)) {
+            console.log('Setting to last, ie:', last);
+            setState((prev) => ({ ...prev, activeSlug: last }));
+          }
+        },
+        { rootMargin: '-30% 0px' }
+      );
+
+      for (const heading of headings) {
         const element = document.getElementById(heading.slug);
         if (element) observer.observe(element);
-      });
-    }
+      }
 
-    return () => observer.disconnect();
-  }, [headings, isCollapsed]);
+      return () => observer.disconnect();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (headings.length === 0) return null;
@@ -91,10 +158,11 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
   return (
     <nav className="flex flex-col items-center self-start" aria-label={scopedT('toc')} ref={tocRef}>
       <ol className="list-none space-y-3" ref={headingsRef}>
-        {headings.map((heading) => (
+        {headings.map((heading, idx) => (
           <li
             className={cn('list-none text-sm font-bold transition-colors duration-200 ease-in-out hover:text-primary', {
-              'text-primary': activeSlug === heading.slug,
+              'text-primary':
+                forcedActiveSlug.current.slug === heading.slug || (!forcedActiveSlug.current.slug && state.activeSlug.slug === heading.slug),
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
               'ml-6 font-normal': heading.depth === 5,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -104,7 +172,17 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
             })}
             key={heading.slug}
           >
-            {(!isCollapsed && <Link href={`#${heading.slug}`}>{heading.content}</Link>) || (
+            {(!isCollapsed && (
+              <Link
+                onClick={() => {
+                  preparedForcedActiveSlug.current = { slug: heading.slug, idx };
+                  // ToDo update the state with forcedActiveSlug
+                }}
+                href={`#${heading.slug}`}
+              >
+                {heading.content}
+              </Link>
+            )) || (
               <p className="cursor-default select-none" aria-hidden="true">
                 {heading.content}
               </p>
