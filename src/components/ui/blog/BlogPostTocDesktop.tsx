@@ -22,7 +22,7 @@ interface BlogPostTocDesktopProps {
 
 const NIL_IDX = -1;
 
-const ACTIVE_SLUG_INITIAL_STATE: ActiveSlugMetas = { idx: NIL_IDX, slug: '' } as const;
+const HIGHLIGHT_INITIAL_STATE: ActiveSlugMetas = { idx: NIL_IDX, slug: '' } as const;
 
 type HeadingSlug = string;
 type HeadingSlugIdx = number;
@@ -32,15 +32,21 @@ const visibleElements = {} as Record<HeadingSlug, HeadingSlugIdx>;
 const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headings }) => {
   const scrollDirection = useScrollDirection();
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const [state, setState] = useState<{ activeSlug: ActiveSlugMetas }>({ activeSlug: ACTIVE_SLUG_INITIAL_STATE });
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
-  const forcedActiveSlug = useRef<ActiveSlugMetas>(ACTIVE_SLUG_INITIAL_STATE);
-  const preparedForcedActiveSlug = useRef<ActiveSlugMetas>(ACTIVE_SLUG_INITIAL_STATE);
+  const [state, setState] = useState<{ highlight: ActiveSlugMetas; isCollapsed: boolean }>({
+    highlight: HIGHLIGHT_INITIAL_STATE,
+    isCollapsed: false
+  });
+  const forcedActiveSlug = useRef<ActiveSlugMetas>(HIGHLIGHT_INITIAL_STATE);
+  const preparedForcedActiveSlug = useRef<ActiveSlugMetas>(HIGHLIGHT_INITIAL_STATE);
   const wasCollapsed = useRef<boolean>(false);
   const tocRef = useRef<HTMLDivElement>(null);
   const headingsRef = useRef<HTMLOListElement>(null);
 
   const scopedT = useScopedI18n(i18ns.vocab);
+
+  function setIsCollapsed(isCollapsed: boolean) {
+    setState((prev) => ({ ...prev, isCollapsed }));
+  }
 
   // * ... Scroll effect
   useEffect(() => {
@@ -85,7 +91,7 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
       wasCollapsed.current = true;
     }
 
-    if (!isCollapsed) {
+    if (!state.isCollapsed) {
       if (!wasCollapsed.current) {
         tocInstance.classList.remove(...EFFECT_CLASSES);
         headingsInstance.classList.remove(...EFFECT_CLASSES);
@@ -100,7 +106,7 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
     if (wasCollapsed.current) tocInstance.classList.remove(...EFFECT_CLASSES);
     else tocInstance.classList.add(...EFFECT_CLASSES);
     applyCollapsedStyles();
-  }, [isCollapsed, tocRef, headingsRef]);
+  }, [state.isCollapsed, tocRef, headingsRef]);
 
   // * ... Highlighting
   useEffect(
@@ -109,8 +115,8 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
         (entries) => {
           // ToDo: return if there is a forced slug
 
-          let first: ActiveSlugMetas = ACTIVE_SLUG_INITIAL_STATE;
-          let last: ActiveSlugMetas = ACTIVE_SLUG_INITIAL_STATE;
+          let first: ActiveSlugMetas = HIGHLIGHT_INITIAL_STATE;
+          let last: ActiveSlugMetas = HIGHLIGHT_INITIAL_STATE;
 
           for (const entry of entries) {
             const slug = entry.target.id;
@@ -126,7 +132,7 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
             if (last.idx === NIL_IDX || idx > last.idx) last = { slug, idx };
           }
 
-          const oldIdx = state.activeSlug.idx;
+          const oldIdx = state.highlight.idx;
           const firstIdx = first.idx;
           const lastIdx = last.idx;
 
@@ -162,7 +168,7 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
           <li
             className={cn('list-none text-sm font-bold transition-colors duration-200 ease-in-out hover:text-primary', {
               'text-primary':
-                forcedActiveSlug.current.slug === heading.slug || (!forcedActiveSlug.current.slug && state.activeSlug.slug === heading.slug),
+                forcedActiveSlug.current.slug === heading.slug || (!forcedActiveSlug.current.slug && state.highlight.slug === heading.slug),
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
               'ml-6 font-normal': heading.depth === 5,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -172,7 +178,7 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
             })}
             key={heading.slug}
           >
-            {(!isCollapsed && (
+            {(!state.isCollapsed && (
               <Link
                 onClick={() => {
                   preparedForcedActiveSlug.current = { slug: heading.slug, idx };
@@ -190,7 +196,7 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
           </li>
         ))}
       </ol>
-      <BlogPostTocCollapseButton setIsCollapsed={setIsCollapsed} className="relative top-5" isCollapsed={isCollapsed} />
+      <BlogPostTocCollapseButton setIsCollapsed={setIsCollapsed} isCollapsed={state.isCollapsed} className="relative top-5" />
     </nav>
   );
 };
