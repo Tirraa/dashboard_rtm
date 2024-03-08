@@ -10,6 +10,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useScopedI18n } from '@/i18n/client';
 import { useRouter } from 'next/navigation';
 import { i18ns } from '##/config/i18n';
+import { getNavbar } from '@/lib/html';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
@@ -22,7 +23,6 @@ interface BlogPostTocDesktopProps {
 }
 
 const NIL_IDX = -1;
-
 const HIGHLIGHT_INITIAL_STATE: ActiveHighlightMetas = { idx: NIL_IDX, slug: '' } as const;
 
 const visibleElements = {} as Record<HeadingSlug, HeadingSlugIdx>;
@@ -167,6 +167,10 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
   }, [isCollapsed, tocRef, headingsRef]);
 
   useEffect(() => {
+    const navbarElement = getNavbar();
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const navbarHeight = navbarElement ? computeHTMLElementHeight(navbarElement) : 0;
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (preparedForcedActiveSlug.current.slug) return;
@@ -249,7 +253,7 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
         setHighlight({ ...last });
         setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
       },
-      { rootMargin: '-10% 0px', threshold: 1 }
+      { rootMargin: -navbarHeight + 'px 0px 0px 0px', threshold: 1 }
     );
 
     for (const heading of headings) {
