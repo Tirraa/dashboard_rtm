@@ -75,6 +75,13 @@ export default {
     }
   },
 
+  blogToc: {
+    'sr-only': {
+      'hide-toc': _,
+      'show-toc': _
+    }
+  },
+
   auth: {
     logout: _,
     signup: _,

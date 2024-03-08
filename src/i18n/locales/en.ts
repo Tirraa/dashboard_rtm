@@ -113,6 +113,13 @@ export default {
     }
   },
 
+  blogToc: {
+    'sr-only': {
+      'hide-toc': 'Hide the table of contents',
+      'show-toc': 'Show the table of contents'
+    }
+  },
+
   'blog-tags': {
     xylophone: 'Xylophone',
     bagpipes: 'Bagpipes',

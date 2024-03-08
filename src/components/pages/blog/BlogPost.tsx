@@ -5,9 +5,9 @@ import type { FunctionComponent } from 'react';
 
 import { isValidBlogCategoryAndSubcategoryPair, getBlogPostUnstrict } from '@/lib/blog/api';
 import { CardContent, CardHeader, CardTitle, Card } from '@/components/ui/Card';
+import BlogPostTocDesktop from '@/components/ui/blog/BlogPostTocDesktop';
 import tagsGenerator from '@/components/ui/blog/tagsGenerator';
 import BlogPostDate from '@/components/ui/blog/BlogPostDate';
-import BlogPostToc from '@/components/ui/blog/BlogPostToc';
 import MDX from '@/components/layouts/blog/MdxComponent';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
@@ -36,16 +36,16 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className:
       <div className="flex max-w-full">
         <MDX code={post.body.code} />
         {showToC && (
-          <div className="sticky top-16 h-0 hover:opacity-100 lg:block lg:w-0">
-            <Card className="align-center ml-4 hidden h-fit w-60 justify-center border-black bg-black text-secondary dark:border-card dark:bg-card dark:text-foreground lg:block">
+          <aside className="sticky top-16 h-0 hover:opacity-100 lg:block lg:w-0">
+            <Card className="align-center ml-4 hidden h-fit w-60 border-black bg-black text-secondary dark:border-card dark:bg-card dark:text-foreground lg:block rtl:ml-0 rtl:mr-4">
               <CardHeader>
                 <CardTitle className="text-center">{scopedT('toc')}</CardTitle>
               </CardHeader>
               <CardContent>
-                <BlogPostToc post={post} />
+                <BlogPostTocDesktop headings={post.headings} />
               </CardContent>
             </Card>
-          </div>
+          </aside>
         )}
       </div>
     </section>
