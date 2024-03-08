@@ -11,7 +11,7 @@ import { cn } from '@/lib/tailwind';
 export const COLLAPSE_BUTTON_HEIGTH_IN_PX: number = 30;
 
 interface BlogPostTocCollapseButtonProps {
-  setIsCollapsed: Function;
+  setIsCollapsed: (isCollapsed: boolean) => unknown;
   isCollapsed: boolean;
   className: string;
 }

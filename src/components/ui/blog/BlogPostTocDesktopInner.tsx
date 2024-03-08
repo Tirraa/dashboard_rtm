@@ -50,18 +50,18 @@ function getClosestUpElement(elements: HTMLElement[]) {
 }
 
 interface BlogPostTocDesktopInnerProps extends BlogPostTocDesktopProps {
+  setIsCollapsed: (isCollapsed: boolean) => unknown;
+  isCollapsed: boolean;
   ariaLabel: string;
 }
 
-const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({ ariaLabel, headings }) => {
+const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({ setIsCollapsed, isCollapsed, ariaLabel, headings }) => {
   const router = useRouter();
   const scrollDirection = useScrollDirection();
   const [highlight, setHighlight] = useState<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
   const { preparedForcedActiveSlug, setForcedHighlight, forcedHighlight } = useForcedHighlight();
   const oldIdx = useRef<number>(NIL_IDX);
   const oldSlug = useRef<string>('');
-  const wasCollapsed = useRef<boolean>(false);
   const tocRef = useRef<HTMLDivElement>(null);
   const headingsRef = useRef<HTMLOListElement>(null);
 
@@ -85,6 +85,11 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
       oldIdx.current = newForcedHighlight.idx;
       oldSlug.current = newForcedHighlight.slug;
+      headingsRef.current?.scrollTo({
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        top: (headingsRef.current?.children[newForcedHighlight.idx] as HTMLElement).offsetTop - 100,
+        behavior: 'smooth'
+      });
       setHighlight({ ...newForcedHighlight });
     }
 
@@ -128,32 +133,18 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
     if (!tocInstance || !headingsInstance) return;
 
-    const EFFECT_CLASSES = ['transition-all', 'duration-300'];
-
     function applyUncollapsedStyles() {
       tocInstance.style.marginTop = '0';
-      wasCollapsed.current = false;
     }
 
     function applyCollapsedStyles() {
       tocInstance.style.marginTop = '-' + (computeHTMLElementHeight(tocInstance) + COLLAPSE_BUTTON_HEIGTH_IN_PX) + 'px';
-      wasCollapsed.current = true;
     }
 
     if (!isCollapsed) {
-      if (!wasCollapsed.current) {
-        tocInstance.classList.remove(...EFFECT_CLASSES);
-        headingsInstance.classList.remove(...EFFECT_CLASSES);
-      } else {
-        tocInstance.classList.add(...EFFECT_CLASSES);
-        headingsInstance.classList.add(...EFFECT_CLASSES);
-      }
-
       applyUncollapsedStyles();
       return;
     }
-    if (wasCollapsed.current) tocInstance.classList.remove(...EFFECT_CLASSES);
-    else tocInstance.classList.add(...EFFECT_CLASSES);
     applyCollapsedStyles();
   }, [isCollapsed, tocRef, headingsRef]);
 
@@ -205,6 +196,13 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
           oldIdx.current = first.idx;
           oldSlug.current = first.slug;
+
+          headingsRef.current?.scrollTo({
+            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+            top: (headingsRef.current?.children[first.idx] as HTMLElement).offsetTop - 100,
+            behavior: 'smooth'
+          });
+
           setHighlight({ ...first });
           setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
           return;
@@ -231,6 +229,13 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
           const hl: ActiveHighlightMetas = { slug: headings[idx].slug, idx };
           oldIdx.current = hl.idx;
           oldSlug.current = hl.slug;
+
+          headingsRef.current?.scrollTo({
+            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+            top: (headingsRef.current?.children[idx] as HTMLElement).offsetTop - 100,
+            behavior: 'smooth'
+          });
+
           setHighlight({ ...hl });
           setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
           return;
@@ -238,6 +243,13 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
         oldIdx.current = first.idx;
         oldSlug.current = first.slug;
+
+        headingsRef.current?.scrollTo({
+          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          top: (headingsRef.current?.children[first.idx] as HTMLElement).offsetTop - 100,
+          behavior: 'smooth'
+        });
+
         setHighlight({ ...first });
         setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
       },
@@ -256,11 +268,11 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   if (headings.length === 0) return null;
 
   return (
-    <nav className="flex flex-col items-center self-start" aria-label={ariaLabel} ref={tocRef}>
-      <ol className="list-none space-y-3" ref={headingsRef}>
+    <nav className="flex flex-col items-center self-start transition-[margin-top] duration-300" aria-label={ariaLabel} ref={tocRef}>
+      <ol className="max-h-[50vw] w-full list-none space-y-3 overflow-auto pl-6 rtl:pl-0 rtl:pr-6" ref={headingsRef}>
         {headings.map((heading, idx) => (
           <li
-            className={cn('list-none text-sm font-bold transition-colors duration-200 ease-in-out hover:text-primary', {
+            className={cn('w-fit list-none text-sm font-bold transition-colors duration-200 ease-in-out hover:text-primary', {
               'text-primary': forcedHighlight.slug === heading.slug || (!forcedHighlight.slug && highlight.slug === heading.slug),
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
               'ml-6 font-normal': heading.depth === 5,
@@ -292,7 +304,11 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
           </li>
         ))}
       </ol>
-      <BlogPostTocCollapseButton setIsCollapsed={setIsCollapsed} className="relative top-5" isCollapsed={isCollapsed} />
+      <BlogPostTocCollapseButton
+        className={cn('relative top-6 z-10', { 'top-4': isCollapsed })}
+        setIsCollapsed={setIsCollapsed}
+        isCollapsed={isCollapsed}
+      />
     </nav>
   );
 };
