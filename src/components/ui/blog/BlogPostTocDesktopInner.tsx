@@ -15,6 +15,7 @@ import BlogPostTocCollapseButton, { COLLAPSE_BUTTON_HEIGTH_IN_PX } from './BlogP
 
 const NIL_IDX = -1;
 const HIGHLIGHT_INITIAL_STATE: ActiveHighlightMetas = { idx: NIL_IDX, slug: '' } as const;
+const CHIPI_CHIPI_CHAPA_CHAPA: number = 100;
 
 const visibleElements = {} as Record<HeadingSlug, HeadingSlugIdx>;
 let killNextObservableUpdate = false;
@@ -86,8 +87,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       oldIdx.current = newForcedHighlight.idx;
       oldSlug.current = newForcedHighlight.slug;
       headingsRef.current?.scrollTo({
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        top: (headingsRef.current?.children[newForcedHighlight.idx] as HTMLElement).offsetTop - 100,
+        top: (headingsRef.current?.children[newForcedHighlight.idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA,
         behavior: 'smooth'
       });
       setHighlight({ ...newForcedHighlight });
@@ -133,6 +133,15 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
     if (!tocInstance || !headingsInstance) return;
 
+    function updateScrollOnUncollapse() {
+      const HTMLElement = headingsRef.current?.children[oldIdx.current] as HTMLElement;
+
+      headingsInstance.scrollTo({
+        top: HTMLElement.offsetTop - CHIPI_CHIPI_CHAPA_CHAPA,
+        behavior: 'smooth'
+      });
+    }
+
     function applyUncollapsedStyles() {
       tocInstance.style.marginTop = '0';
     }
@@ -143,9 +152,15 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
     if (!isCollapsed) {
       applyUncollapsedStyles();
+      if (oldIdx.current === NIL_IDX) return;
+
+      tocInstance.addEventListener('transitionend', updateScrollOnUncollapse);
       return;
     }
+
     applyCollapsedStyles();
+
+    return () => tocInstance.removeEventListener('transitionend', updateScrollOnUncollapse);
   }, [isCollapsed, tocRef, headingsRef]);
 
   useEffect(() => {
@@ -198,8 +213,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
           oldSlug.current = first.slug;
 
           headingsRef.current?.scrollTo({
-            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-            top: (headingsRef.current?.children[first.idx] as HTMLElement).offsetTop - 100,
+            top: (headingsRef.current?.children[first.idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA,
             behavior: 'smooth'
           });
 
@@ -231,8 +245,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
           oldSlug.current = hl.slug;
 
           headingsRef.current?.scrollTo({
-            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-            top: (headingsRef.current?.children[idx] as HTMLElement).offsetTop - 100,
+            top: (headingsRef.current?.children[idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA,
             behavior: 'smooth'
           });
 
@@ -245,8 +258,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         oldSlug.current = first.slug;
 
         headingsRef.current?.scrollTo({
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-          top: (headingsRef.current?.children[first.idx] as HTMLElement).offsetTop - 100,
+          top: (headingsRef.current?.children[first.idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA,
           behavior: 'smooth'
         });
 
@@ -269,7 +281,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
   return (
     <nav className="flex flex-col items-center self-start transition-[margin-top] duration-300" aria-label={ariaLabel} ref={tocRef}>
-      <ol className="max-h-[50vw] w-full list-none space-y-3 overflow-auto pl-6 rtl:pl-0 rtl:pr-6" ref={headingsRef}>
+      <ol className="max-h-[40vh] w-full list-none space-y-3 overflow-auto pl-6 rtl:pl-0 rtl:pr-6" ref={headingsRef}>
         {headings.map((heading, idx) => (
           <li
             className={cn('w-fit list-none text-sm font-bold transition-colors duration-200 ease-in-out hover:text-primary', {
