@@ -24,19 +24,13 @@ const NIL_IDX = -1;
 
 const HIGHLIGHT_INITIAL_STATE: ActiveHighlightMetas = { idx: NIL_IDX, slug: '' } as const;
 
-type HeadingSlug = string;
-type HeadingSlugIdx = number;
-
 const visibleElements = {} as Record<HeadingSlug, HeadingSlugIdx>;
 
 const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headings }) => {
   const scrollDirection = useScrollDirection();
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const [state, setState] = useState<{ forcedHighlight: ActiveHighlightMetas; highlight: ActiveHighlightMetas; isCollapsed: boolean }>({
-    forcedHighlight: HIGHLIGHT_INITIAL_STATE,
-    highlight: HIGHLIGHT_INITIAL_STATE,
-    isCollapsed: false
-  });
+  const [highlight, setHighlight] = useState<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
+  const [forcedHighlight, setForcedHighlight] = useState<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
   const preparedForcedActiveSlug = useRef<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
   const wasCollapsed = useRef<boolean>(false);
   const tocRef = useRef<HTMLDivElement>(null);
@@ -44,48 +38,73 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
 
   const scopedT = useScopedI18n(i18ns.vocab);
 
-  function setIsCollapsed(isCollapsed: boolean) {
-    setState((prev) => ({ ...prev, isCollapsed }));
-  }
-
   // * ... Scroll effect
-  useEffect(() => {
-    function handleScroll() {
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      const atTop = window.scrollY === 0;
-      const atBottom = window.scrollY + window.innerHeight === document.documentElement.scrollHeight;
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      const forcedHighlight: ActiveHighlightMetas = atTop
-        ? // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-          { slug: headings[0].slug, idx: 0 }
-        : atBottom
+  useEffect(
+    () => {
+      function handleScroll() {
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        const atTop = window.scrollY === 0;
+        const atBottom = window.scrollY + window.innerHeight === document.documentElement.scrollHeight;
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        const newForcedHighlight: ActiveHighlightMetas = atTop
           ? // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-            { slug: headings[headings.length - 1].slug, idx: headings.length - 1 }
-          : HIGHLIGHT_INITIAL_STATE;
+            { slug: headings[0].slug, idx: 0 }
+          : atBottom
+            ? // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+              { slug: headings[headings.length - 1].slug, idx: headings.length - 1 }
+            : HIGHLIGHT_INITIAL_STATE;
 
-      setState((prev) => ({ ...prev, forcedHighlight }));
-    }
+        if (preparedForcedActiveSlug.current.slug === newForcedHighlight.slug) return;
+        preparedForcedActiveSlug.current = { ...newForcedHighlight };
+        setHighlight({ ...newForcedHighlight });
+      }
 
-    window.addEventListener('scroll', handleScroll);
+      window.addEventListener('scroll', handleScroll);
+      handleScroll();
 
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [headings]);
+      return () => window.removeEventListener('scroll', handleScroll);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   // * ... Scroll end effect
-  useEffect(() => {
-    function handleScrollEnd() {
-      if (!preparedForcedActiveSlug.current.slug) return;
+  useEffect(
+    () => {
+      function handleScrollEnd() {
+        preparedForcedActiveSlug.current = HIGHLIGHT_INITIAL_STATE;
+      }
 
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      const forcedHighlight: ActiveHighlightMetas = { ...preparedForcedActiveSlug.current };
-      preparedForcedActiveSlug.current = HIGHLIGHT_INITIAL_STATE;
-      setState((prev) => ({ ...prev, highlight: forcedHighlight, forcedHighlight }));
-    }
+      window.addEventListener('scrollend', handleScrollEnd);
 
-    window.addEventListener('scrollend', handleScrollEnd);
+      return () => window.removeEventListener('scrollend', handleScrollEnd);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
-    return () => window.removeEventListener('scrollend', handleScrollEnd);
-  }, []);
+  // * ... Hashchange effect
+  useEffect(
+    () => {
+      function handleHashChange() {
+        const giveUp = () =>
+          !preparedForcedActiveSlug.current.slug ||
+          (highlight.slug === forcedHighlight.slug && preparedForcedActiveSlug.current.slug === forcedHighlight.slug);
+
+        if (giveUp()) return;
+
+        console.log('Updating state: handle hash change!'); // Seems OK
+        setForcedHighlight({ ...preparedForcedActiveSlug.current });
+        setHighlight({ ...preparedForcedActiveSlug.current });
+      }
+
+      window.addEventListener('hashchange', handleHashChange);
+
+      return () => window.removeEventListener('hashchange', handleHashChange);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   // * ... Collapse
   useEffect(() => {
@@ -108,7 +127,7 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
       wasCollapsed.current = true;
     }
 
-    if (!state.isCollapsed) {
+    if (!isCollapsed) {
       if (!wasCollapsed.current) {
         tocInstance.classList.remove(...EFFECT_CLASSES);
         headingsInstance.classList.remove(...EFFECT_CLASSES);
@@ -123,14 +142,14 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
     if (wasCollapsed.current) tocInstance.classList.remove(...EFFECT_CLASSES);
     else tocInstance.classList.add(...EFFECT_CLASSES);
     applyCollapsedStyles();
-  }, [state.isCollapsed, tocRef, headingsRef]);
+  }, [isCollapsed, tocRef, headingsRef]);
 
   // * ... Highlighting
   useEffect(
     () => {
       const observer = new IntersectionObserver(
         (entries) => {
-          if (state.forcedHighlight.slug) return;
+          if (preparedForcedActiveSlug.current.slug) return;
 
           let first: ActiveHighlightMetas = HIGHLIGHT_INITIAL_STATE;
           let last: ActiveHighlightMetas = HIGHLIGHT_INITIAL_STATE;
@@ -149,16 +168,22 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
             if (last.idx === NIL_IDX || idx > last.idx) last = { slug, idx };
           }
 
-          const oldIdx = state.highlight.idx;
+          const oldIdx = highlight.idx;
           const firstIdx = first.idx;
           const lastIdx = last.idx;
 
-          if (firstIdx !== NIL_IDX && scrollDirection === 'down' && (oldIdx === NIL_IDX || oldIdx < firstIdx)) {
-            console.log('Down update!');
-            setState((prev) => ({ ...prev, highlight: first }));
-          } else if (lastIdx !== NIL_IDX && scrollDirection === 'up' && (oldIdx === NIL_IDX || oldIdx > lastIdx)) {
-            console.log('Up update!');
-            setState((prev) => ({ ...prev, highlight: last }));
+          const shouldScrollDownUpdate = () =>
+            highlight.slug !== first.slug && firstIdx !== NIL_IDX && scrollDirection === 'down' && (oldIdx === NIL_IDX || oldIdx <= firstIdx);
+
+          const shouldScrollUpUpdate = () =>
+            highlight.slug !== last.slug && lastIdx !== NIL_IDX && scrollDirection === 'up' && (oldIdx === NIL_IDX || oldIdx >= lastIdx);
+
+          if (shouldScrollDownUpdate()) {
+            setHighlight({ ...first });
+            setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
+          } else if (shouldScrollUpUpdate()) {
+            setHighlight({ ...last });
+            setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
           }
         },
         { rootMargin: '-10% 0px', threshold: 1 }
@@ -172,7 +197,7 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
       return () => observer.disconnect();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [scrollDirection]
+    [scrollDirection, preparedForcedActiveSlug.current.slug]
   );
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -184,7 +209,7 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
         {headings.map((heading, idx) => (
           <li
             className={cn('list-none text-sm font-bold transition-colors duration-200 ease-in-out hover:text-primary', {
-              'text-primary': state.forcedHighlight.slug === heading.slug || (!state.forcedHighlight.slug && state.highlight.slug === heading.slug),
+              'text-primary': forcedHighlight.slug === heading.slug || (!forcedHighlight.slug && highlight.slug === heading.slug),
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
               'ml-6 font-normal': heading.depth === 5,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -194,10 +219,13 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
             })}
             key={heading.slug}
           >
-            {(!state.isCollapsed && (
+            {(!isCollapsed && (
               <Link
-                onClick={() => {
+                onClick={(event) => {
+                  event.preventDefault();
                   preparedForcedActiveSlug.current = { slug: heading.slug, idx };
+                  window.dispatchEvent(new Event('hashchange'));
+                  document.getElementById(heading.slug)?.scrollIntoView();
                 }}
                 href={`#${heading.slug}`}
               >
@@ -211,9 +239,12 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
           </li>
         ))}
       </ol>
-      <BlogPostTocCollapseButton setIsCollapsed={setIsCollapsed} isCollapsed={state.isCollapsed} className="relative top-5" />
+      <BlogPostTocCollapseButton setIsCollapsed={setIsCollapsed} className="relative top-5" isCollapsed={isCollapsed} />
     </nav>
   );
 };
+
+type HeadingSlug = string;
+type HeadingSlugIdx = number;
 
 export default BlogPostTocDesktop;
