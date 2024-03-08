@@ -25,6 +25,7 @@ const NIL_IDX = -1;
 const HIGHLIGHT_INITIAL_STATE: ActiveHighlightMetas = { idx: NIL_IDX, slug: '' } as const;
 
 const visibleElements = {} as Record<HeadingSlug, HeadingSlugIdx>;
+let killNextObservableUpdate = false;
 
 const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headings }) => {
   const scrollDirection = useScrollDirection();
@@ -39,49 +40,41 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
   const scopedT = useScopedI18n(i18ns.vocab);
 
   // * ... Scroll effect
-  useEffect(
-    () => {
-      function handleScroll() {
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        const atTop = window.scrollY === 0;
-        const atBottom = window.scrollY + window.innerHeight === document.documentElement.scrollHeight;
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        const newForcedHighlight: ActiveHighlightMetas = atTop
+  useEffect(() => {
+    function handleScroll() {
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const atTop = window.scrollY === 0;
+      const atBottom = window.scrollY + window.innerHeight === document.documentElement.scrollHeight;
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const newForcedHighlight: ActiveHighlightMetas = atTop
+        ? // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          { slug: headings[0].slug, idx: 0 }
+        : atBottom
           ? // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-            { slug: headings[0].slug, idx: 0 }
-          : atBottom
-            ? // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-              { slug: headings[headings.length - 1].slug, idx: headings.length - 1 }
-            : HIGHLIGHT_INITIAL_STATE;
+            { slug: headings[headings.length - 1].slug, idx: headings.length - 1 }
+          : HIGHLIGHT_INITIAL_STATE;
 
-        if (preparedForcedActiveSlug.current.slug === newForcedHighlight.slug) return;
-        preparedForcedActiveSlug.current = { ...newForcedHighlight };
-        setHighlight({ ...newForcedHighlight });
-      }
+      if (preparedForcedActiveSlug.current.slug === newForcedHighlight.slug) return;
+      preparedForcedActiveSlug.current = { ...newForcedHighlight };
+      setHighlight({ ...newForcedHighlight });
+    }
 
-      window.addEventListener('scroll', handleScroll);
-      handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
 
-      return () => window.removeEventListener('scroll', handleScroll);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [headings]);
 
   // * ... Scroll end effect
-  useEffect(
-    () => {
-      function handleScrollEnd() {
-        preparedForcedActiveSlug.current = HIGHLIGHT_INITIAL_STATE;
-      }
+  useEffect(() => {
+    function handleScrollEnd() {
+      preparedForcedActiveSlug.current = HIGHLIGHT_INITIAL_STATE;
+    }
 
-      window.addEventListener('scrollend', handleScrollEnd);
+    window.addEventListener('scrollend', handleScrollEnd);
 
-      return () => window.removeEventListener('scrollend', handleScrollEnd);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+    return () => window.removeEventListener('scrollend', handleScrollEnd);
+  }, []);
 
   // * ... Hashchange effect
   useEffect(
@@ -93,7 +86,7 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
 
         if (giveUp()) return;
 
-        console.log('Updating state: handle hash change!'); // Seems OK
+        killNextObservableUpdate = true;
         setForcedHighlight({ ...preparedForcedActiveSlug.current });
         setHighlight({ ...preparedForcedActiveSlug.current });
       }
@@ -177,6 +170,11 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
 
           const shouldScrollUpUpdate = () =>
             highlight.slug !== last.slug && lastIdx !== NIL_IDX && scrollDirection === 'up' && (oldIdx === NIL_IDX || oldIdx >= lastIdx);
+
+          if (killNextObservableUpdate) {
+            killNextObservableUpdate = false;
+            return;
+          }
 
           if (shouldScrollDownUpdate()) {
             setHighlight({ ...first });
