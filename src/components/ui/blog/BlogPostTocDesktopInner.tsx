@@ -61,6 +61,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
   const router = useRouter();
   const scrollDirection = useScrollDirection();
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const [, setForceUpdate] = useState<number>(0);
   const [highlight, setHighlight] = useState<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
   const { preparedForcedActiveSlug, setForcedHighlight, forcedHighlight } = useForcedHighlight();
   const oldIdx = useRef<number>(NIL_IDX);
@@ -81,6 +83,11 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       top: (HTMLElement as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA,
       behavior: 'smooth'
     });
+
+    killNextObservableUpdate = false;
+    upOffCamWaitForNextObservable = false;
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    setForceUpdate((prev) => prev + 1);
   }, [isLargeScreen]);
 
   useEffect(() => {
