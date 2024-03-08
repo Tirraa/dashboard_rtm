@@ -27,6 +27,7 @@ const HIGHLIGHT_INITIAL_STATE: ActiveHighlightMetas = { idx: NIL_IDX, slug: '' }
 
 const visibleElements = {} as Record<HeadingSlug, HeadingSlugIdx>;
 let killNextObservableUpdate = false;
+let upOffCamWaitForNextObservable = false;
 
 const useForcedHighlight = () => {
   const [forcedHighlight, setForcedHighlight] = useState<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
@@ -198,7 +199,9 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
           oldSlug.current !== last.slug && lastIdx !== NIL_IDX && scrollDirection === 'up' && (_oldIdx === NIL_IDX || _oldIdx >= lastIdx);
 
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        const shouldScrollUpUpdateOffCamCase = () => Object.keys(visibleElements).length === 0 && scrollDirection === 'up';
+        const shouldScrollUpUpdateOffCamCase = () =>
+          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          Object.keys(visibleElements).length === 0 && scrollDirection === 'up' && !upOffCamWaitForNextObservable;
 
         if (killNextObservableUpdate) {
           killNextObservableUpdate = false;
@@ -206,6 +209,8 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
         }
 
         if (shouldScrollDownUpdate()) {
+          upOffCamWaitForNextObservable = false;
+
           oldIdx.current = first.idx;
           oldSlug.current = first.slug;
           setHighlight({ ...first });
@@ -228,6 +233,8 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
 
           if (!closest) return;
 
+          upOffCamWaitForNextObservable = true;
+
           const idx = headings.findIndex((heading) => heading.slug === closest.id);
           const hl: ActiveHighlightMetas = { slug: headings[idx].slug, idx };
           oldIdx.current = hl.idx;
@@ -235,7 +242,7 @@ const BlogPostTocDesktop: FunctionComponent<BlogPostTocDesktopProps> = ({ headin
           setHighlight({ ...hl });
           setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
           return;
-        }
+        } else upOffCamWaitForNextObservable = false;
 
         oldIdx.current = last.idx;
         oldSlug.current = last.slug;
