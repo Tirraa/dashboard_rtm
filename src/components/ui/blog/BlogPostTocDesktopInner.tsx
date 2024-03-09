@@ -16,7 +16,7 @@ import BlogPostTocCollapseButton, { COLLAPSE_BUTTON_HEIGTH_IN_PX } from './BlogP
 
 const NIL_IDX = -1;
 const HIGHLIGHT_INITIAL_STATE: ActiveHighlightMetas = { idx: NIL_IDX, slug: '' } as const;
-const CHIPI_CHIPI_CHAPA_CHAPA: number = 192;
+const CHIPI_CHIPI_CHAPA_CHAPA_IN_PX: number = 192;
 
 const visibleElements = {} as Record<HeadingSlug, HeadingSlugIdx>;
 let killNextObservableUpdate = false;
@@ -76,11 +76,11 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     const headingsInstance = getRefCurrentPtr(headingsRef);
     if (!headingsInstance) return;
 
-    const HTMLElement = headingsRef.current?.children[oldIdx.current];
+    const HTMLElement = headingsInstance.children[oldIdx.current];
     if (!HTMLElement) return;
 
     headingsInstance.scrollTo({
-      top: (HTMLElement as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA,
+      top: (HTMLElement as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
       behavior: 'smooth'
     });
 
@@ -110,8 +110,10 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
       oldIdx.current = newForcedHighlight.idx;
       oldSlug.current = newForcedHighlight.slug;
-      headingsRef.current?.scrollTo({
-        top: (headingsRef.current?.children[newForcedHighlight.idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA,
+      const headingsInstance = getRefCurrentPtr(headingsRef);
+
+      headingsInstance.scrollTo({
+        top: (headingsInstance.children[newForcedHighlight.idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
         behavior: 'smooth'
       });
       setHighlight({ ...newForcedHighlight });
@@ -158,11 +160,11 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     if (!tocInstance || !headingsInstance) return;
 
     function updateScrollOnUncollapse() {
-      const HTMLElement = headingsRef.current?.children[oldIdx.current];
+      const HTMLElement = headingsInstance.children[oldIdx.current];
       if (!HTMLElement) return;
 
       headingsInstance.scrollTo({
-        top: (HTMLElement as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA,
+        top: (HTMLElement as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
         behavior: 'smooth'
       });
     }
@@ -245,8 +247,10 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
             oldIdx.current = hl.idx;
             oldSlug.current = hl.slug;
 
-            headingsRef.current?.scrollTo({
-              top: (headingsRef.current?.children[idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA,
+            const headingsInstance = getRefCurrentPtr(headingsRef);
+
+            headingsInstance.scrollTo({
+              top: (headingsInstance.children[idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
               behavior: 'smooth'
             });
 
@@ -266,9 +270,10 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
           oldIdx.current = first.idx;
           oldSlug.current = first.slug;
+          const headingsInstance = getRefCurrentPtr(headingsRef);
 
-          headingsRef.current?.scrollTo({
-            top: (headingsRef.current?.children[first.idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA,
+          headingsInstance.scrollTo({
+            top: (headingsInstance.children[first.idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
             behavior: 'smooth'
           });
 
@@ -298,9 +303,10 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
           const hl: ActiveHighlightMetas = { slug: headings[idx].slug, idx };
           oldIdx.current = hl.idx;
           oldSlug.current = hl.slug;
+          const headingsInstance = getRefCurrentPtr(headingsRef);
 
-          headingsRef.current?.scrollTo({
-            top: (headingsRef.current?.children[idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA,
+          headingsInstance.scrollTo({
+            top: (headingsInstance.children[idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
             behavior: 'smooth'
           });
 
@@ -311,9 +317,10 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
         oldIdx.current = first.idx;
         oldSlug.current = first.slug;
+        const headingsInstance = getRefCurrentPtr(headingsRef);
 
-        headingsRef.current?.scrollTo({
-          top: (headingsRef.current?.children[first.idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA,
+        headingsInstance.scrollTo({
+          top: (headingsInstance.children[first.idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
           behavior: 'smooth'
         });
 
