@@ -227,7 +227,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     applyCollapsedStyles();
 
     return () => tocInstance.removeEventListener('transitionend', updateScrollOnUncollapse);
-  }, [isCollapsed, tocRef, headingsRef]);
+  }, [isCollapsed]);
 
   useEffect(() => {
     const navbarElement = getNavbar();
@@ -380,24 +380,32 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     return () => observer.disconnect();
   }, [headings, preparedForcedActiveSlug, setForcedHighlight, scrollDirection]);
 
-  useEffect(() => {
-    function handleResize() {
-      if (!isLargeScreen) return;
+  useEffect(
+    () => {
+      function handleResize() {
+        if (!isLargeScreen) return;
 
-      killNextObservableUpdate = false;
-      upOffCamWaitForNextObservable = false;
+        killNextObservableUpdate = false;
+        upOffCamWaitForNextObservable = false;
 
+        inferCurrentHighlight();
+      }
+
+      window.addEventListener('resize', handleResize);
+
+      return () => window.removeEventListener('resize', handleResize);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isLargeScreen]
+  );
+
+  useEffect(
+    () => {
       inferCurrentHighlight();
-    }
-
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, [isLargeScreen, inferCurrentHighlight]);
-
-  useEffect(() => {
-    inferCurrentHighlight();
-  }, [inferCurrentHighlight]);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (headings.length === 0) return null;
