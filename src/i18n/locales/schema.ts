@@ -22,7 +22,8 @@ export const SHARED_VOCAB_SCHEMA = {
     brand: _,
     draft: _,
     logo: _,
-    page: _
+    page: _,
+    toc: _
   },
 
   'pages-titles': PAGES_TITLES
@@ -71,6 +72,13 @@ export default {
       main: _,
       foo: _,
       bar: _
+    }
+  },
+
+  blogToc: {
+    'sr-only': {
+      'hide-toc': _,
+      'show-toc': _
     }
   },
 

@@ -24,6 +24,7 @@ const SHARED: SharedVocabType = {
   vocab: {
     brand: 'Rust Team Management',
     breadcrumbs: 'breadcrumbs',
+    toc: 'table of contents',
     'sign-up': 'sign up',
     draft: 'draft',
     logo: 'logo',
@@ -109,6 +110,13 @@ export default {
       main: 'Main',
       foo: 'Foo',
       bar: 'Bar'
+    }
+  },
+
+  blogToc: {
+    'sr-only': {
+      'hide-toc': `Hide the ${SHARED.vocab.toc}`,
+      'show-toc': `Show the ${SHARED.vocab.toc}`
     }
   },
 

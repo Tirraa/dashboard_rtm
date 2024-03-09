@@ -2,7 +2,8 @@
 // Stryker disable all
 
 const ELEMENTS_ID = {
-  BODY_CONTAINER: 'the-top'
+  SITEWIDE_NAVBAR: '--sitewide-navbar',
+  BODY_CONTAINER: '--top'
 } as const;
 
 export default ELEMENTS_ID;

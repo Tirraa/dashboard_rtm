@@ -12,6 +12,7 @@ import NavbarToggle from '@/components/layouts/navbar/NavbarToggle';
 import getComputedNavData from '@/lib/misc/getComputedNavData';
 import NavbarElement from '@/components/ui/hoc/NavbarElement';
 import { getClientSideI18n } from '@/i18n/client';
+import ELEMENTS_ID from '@/config/elementsId';
 import ROUTES_ROOTS from '##/config/routes';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
@@ -71,7 +72,10 @@ const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
   );
 
   return (
-    <nav className="max-w-screen min-w-screen sticky inset-x-0 top-0 z-30 flex h-auto w-screen select-none items-center justify-center bg-black backdrop-blur-lg backdrop-saturate-150 dark:bg-card">
+    <nav
+      className="max-w-screen min-w-screen sticky inset-x-0 top-0 z-30 flex h-auto w-screen select-none items-center justify-center bg-black backdrop-blur-lg backdrop-saturate-150 dark:bg-card"
+      id={ELEMENTS_ID.SITEWIDE_NAVBAR}
+    >
       <header className="max-w-screen relative z-30 flex h-[82px] w-screen flex-row flex-nowrap items-center justify-between gap-4 px-5">
         {navbarBrand}
 

@@ -13,6 +13,7 @@ const _i18nsBase = {
   pagesTitles: 'pages-titles',
   dashboard: 'dashboard',
   blogTags: 'blog-tags',
+  blogToc: 'blogToc',
   navbar: 'navbar',
   infos: '_infos',
   vocab: 'vocab',

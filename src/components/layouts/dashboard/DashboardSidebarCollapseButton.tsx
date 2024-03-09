@@ -10,7 +10,7 @@ import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 
 interface DashboardSidebarCollapseButtonProps {
-  setIsCollapsed: Function;
+  setIsCollapsed: (isCollapsed: boolean) => unknown;
   isCollapsed: boolean;
 }
 
