@@ -9,6 +9,7 @@ import { getBreakpoint } from '@/lib/tailwind';
 import { useScopedI18n } from '@/i18n/client';
 import { useEffect, useState } from 'react';
 import { i18ns } from '##/config/i18n';
+import { capitalize } from '@/lib/str';
 
 import type { BlogPostTocDesktopInnerProps } from './BlogPostTocDesktopInner';
 
@@ -21,7 +22,7 @@ export interface BlogPostTocDesktopProps {
 
 const BlogPostTocDesktopLazy: FunctionComponent<BlogPostTocDesktopProps> = ({ headings }) => {
   const scopedT = useScopedI18n(i18ns.vocab);
-  const title = scopedT('toc');
+  const title = capitalize(scopedT('toc'));
 
   const placeholder = null;
   const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);

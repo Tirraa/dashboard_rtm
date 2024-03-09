@@ -454,7 +454,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
                   window.dispatchEvent(new Event('my-hashchange'));
                   router.replace('#' + heading.slug, { scroll: true });
                 }}
-                href={`#${heading.slug}`}
+                href={'#' + heading.slug}
                 replace
               >
                 {heading.content}

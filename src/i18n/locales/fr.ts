@@ -24,7 +24,7 @@ const SHARED: SharedVocabType = {
   vocab: {
     brand: 'Rust Team Management',
     breadcrumbs: "fil d'ariane",
-    toc: 'Table des matières',
+    toc: 'table des matières',
     'sign-up': "s'inscrire",
     draft: 'ébauche',
     logo: 'logo',
@@ -115,8 +115,8 @@ export default {
 
   blogToc: {
     'sr-only': {
-      'show-toc': 'Afficher la table des matières',
-      'hide-toc': 'Masquer la table des matières'
+      'show-toc': `Afficher la ${SHARED.vocab.toc}`,
+      'hide-toc': `Masquer la ${SHARED.vocab.toc}`
     }
   },
 
