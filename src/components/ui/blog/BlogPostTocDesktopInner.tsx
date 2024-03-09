@@ -162,7 +162,13 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
     if (!tocInstance || !headingsInstance) return;
 
-    function updateScrollOnUncollapse() {
+    function updateScrollOnUncollapse(event: TransitionEvent) {
+      const target = event.target as HTMLElement;
+      if (target.tagName !== 'NAV') {
+        event.stopPropagation();
+        return;
+      }
+
       const HTMLElement = headingsInstance.children[oldIdx.current];
       if (!HTMLElement) return;
 
@@ -170,8 +176,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         top: (HTMLElement as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
         behavior: 'smooth'
       });
-
-      tocInstance.removeEventListener('transitionend', updateScrollOnUncollapse);
     }
 
     function applyUncollapsedStyles() {
@@ -186,7 +190,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       applyUncollapsedStyles();
       if (oldIdx.current === NIL_IDX) return;
 
-      tocInstance.addEventListener('transitionend', updateScrollOnUncollapse);
+      tocInstance.addEventListener('transitionend', (event) => updateScrollOnUncollapse(event));
       return;
     }
 
@@ -355,7 +359,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         if (elm) elements.push(elm);
       }
 
-      console.log(bottomDeadZone);
       const closest = getClosestUpElement(elements, true);
 
       if (!closest) return;
