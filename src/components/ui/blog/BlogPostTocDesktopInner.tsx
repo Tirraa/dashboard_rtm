@@ -166,6 +166,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         top: (HTMLElement as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
         behavior: 'smooth'
       });
+
+      tocInstance.removeEventListener('transitionend', updateScrollOnUncollapse);
     }
 
     function applyUncollapsedStyles() {
