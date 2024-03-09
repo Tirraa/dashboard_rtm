@@ -395,13 +395,9 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     return () => window.removeEventListener('resize', handleResize);
   }, [isLargeScreen, inferCurrentHighlight]);
 
-  useEffect(
-    () => {
-      inferCurrentHighlight();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+  useEffect(() => {
+    inferCurrentHighlight();
+  }, [inferCurrentHighlight]);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (headings.length === 0) return null;
