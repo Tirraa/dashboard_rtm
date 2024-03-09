@@ -4,8 +4,7 @@ import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { DocumentHeading } from '@rtm/shared-types/Documents';
 import type { FunctionComponent } from 'react';
 
-import { useMediaQuery } from '@react-hook/media-query';
-import { getBreakpoint } from '@/lib/tailwind';
+import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { useScopedI18n } from '@/i18n/client';
 import { useEffect, useState } from 'react';
 import { i18ns } from '##/config/i18n';
@@ -25,7 +24,7 @@ const BlogPostTocDesktopLazy: FunctionComponent<BlogPostTocDesktopProps> = ({ he
   const title = capitalize(scopedT('toc'));
 
   const placeholder = null;
-  const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
+  const isLargeScreen = useIsLargeScreen();
 
   const [Component, setComponent] = useState<MaybeNull<FunctionComponent<BlogPostTocDesktopInnerProps>>>(null);
 

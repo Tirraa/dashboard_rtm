@@ -10,12 +10,12 @@ import DASHBOARD_ROUTES_SIDEBAR_COMPONENTS from '@/config/DashboardSidebar/utils
 import SidebarButtonStyle from '@/components/config/styles/sidebar/SidebarButtonStyle';
 import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
 import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
-import { useMediaQuery } from '@react-hook/media-query';
+import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { useEffect, useState, useRef } from 'react';
-import { getBreakpoint, cn } from '@/lib/tailwind';
 import { hrefMatchesPathname } from '@/lib/str';
 import { usePathname } from 'next/navigation';
 import ROUTES_ROOTS from '##/config/routes';
+import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
 import DashboardSidebarCollapseButton from './DashboardSidebarCollapseButton';
@@ -54,7 +54,7 @@ const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => {
   const wasCollapsed = useRef<boolean>(false);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(wasCollapsed.current);
   const sidebarRef = useRef<HTMLDivElement>(null);
-  const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
+  const isLargeScreen = useIsLargeScreen();
   const currentLocale = useCurrentLocale();
   const currentPathname = usePathname();
 

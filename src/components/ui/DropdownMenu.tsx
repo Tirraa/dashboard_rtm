@@ -8,10 +8,11 @@ import type { WithDeepResetOnLgBreakpointEvents } from '@rtm/shared-types/Next';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import getDirection from '@rtm/shared-lib/portable/html/getDirection';
 import { ChevronRight, Circle, Check } from 'lucide-react';
-import { useMediaQuery } from '@react-hook/media-query';
-import { getBreakpoint, cn } from '@/lib/tailwind';
 import { getBodyContainer } from '@/lib/html';
+import { cn } from '@/lib/tailwind';
 import * as React from 'react';
+
+import useIsLargeScreen from '../hooks/useIsLargeScreen';
 
 type DropdownMenuExtensions = Partial<WithDeepResetOnLgBreakpointEvents>;
 
@@ -29,7 +30,7 @@ const DropdownMenu: React.FunctionComponent<DropdownMenuPrimitive.DropdownMenuPr
 }) => {
   const [isMounted, setIsMounted] = React.useState<boolean>(false);
   React.useEffect(() => setIsMounted(true), []);
-  const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
+  const isLargeScreen = useIsLargeScreen();
 
   React.useEffect(() => {
     const EFFECT_CLASSES = ['select-none'];

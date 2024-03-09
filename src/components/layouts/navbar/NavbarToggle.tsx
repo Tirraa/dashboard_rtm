@@ -6,10 +6,9 @@ import type { FunctionComponent } from 'react';
 import { DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem, DropdownMenu } from '@/components/ui/DropdownMenu';
 import preserveKeyboardNavigation from '@rtm/shared-lib/portable/html/preserveKeyboardNavigation';
 import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
+import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { getClientSideI18n, useScopedI18n } from '@/i18n/client';
-import { useMediaQuery } from '@react-hook/media-query';
 import { useEffect, useState, useRef } from 'react';
-import { getBreakpoint } from '@/lib/tailwind';
 import { i18ns } from '##/config/i18n';
 
 interface NavbarToggleProps {
@@ -37,7 +36,7 @@ const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const onOpenChange = (opened: boolean) => setIsOpened(opened);
 
-  const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
+  const isLargeScreen = useIsLargeScreen();
   const scopedT = useScopedI18n(`${i18ns.navbar}.sr-only`);
 
   const togglerRef = useRef<HTMLButtonElement>(null);

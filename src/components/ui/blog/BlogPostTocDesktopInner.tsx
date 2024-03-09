@@ -1,13 +1,13 @@
 import type { FunctionComponent } from 'react';
 
 import { useScrollDirection } from '@/components/hooks/useScrollDirection';
+import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { useCallback, useEffect, useState, useRef } from 'react';
 import { computeHTMLElementHeight } from '@rtm/shared-lib/html';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
-import { useMediaQuery } from '@react-hook/media-query';
-import { getBreakpoint, cn } from '@/lib/tailwind';
 import { useRouter } from 'next/navigation';
 import { getNavbar } from '@/lib/html';
+import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
 import type { BlogPostTocDesktopProps } from './BlogPostTocDesktop';
@@ -63,7 +63,7 @@ export interface BlogPostTocDesktopInnerProps extends BlogPostTocDesktopProps {
 const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({ ariaLabel, headings }) => {
   const [isMagnetized, setIsMagnetized] = useState<boolean>(false);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
-  const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
+  const isLargeScreen = useIsLargeScreen();
   const router = useRouter();
   const scrollDirection = useScrollDirection();
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers

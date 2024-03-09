@@ -9,12 +9,11 @@ import NavbarDropdownMenuButtonStyle, {
 import { DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem, DropdownMenu } from '@/components/ui/DropdownMenu';
 import NavbarDropdownButtonIconStyle from '@/components/config/styles/navbar/NavbarDropdownButtonIconStyle';
 import { getRefCurrentPtr, getLinkTarget } from '@rtm/shared-lib/react';
+import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
-import { useMediaQuery } from '@react-hook/media-query';
 import { useEffect, useState, useRef } from 'react';
 import { getClientSideI18n } from '@/i18n/client';
 import { hrefMatchesPathname } from '@/lib/str';
-import { getBreakpoint } from '@/lib/tailwind';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
@@ -56,7 +55,7 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities, triggerRef: RefO
 const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ embeddedEntities, path: href, i18nTitle }) => {
   const currentPathname = usePathname();
   const globalT = getClientSideI18n();
-  const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
+  const isLargeScreen = useIsLargeScreen();
   const triggerRef = useRef<HTMLButtonElement>(null);
 
   const title = globalT(i18nTitle);
