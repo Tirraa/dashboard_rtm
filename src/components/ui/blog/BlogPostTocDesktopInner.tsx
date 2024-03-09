@@ -73,6 +73,36 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const tocRef = useRef<HTMLDivElement>(null);
   const headingsRef = useRef<HTMLOListElement>(null);
 
+  function inferCurrentHighlight() {
+    const elements: HTMLElement[] = [];
+
+    for (const { slug } of headings) {
+      const elm = document.getElementById(slug);
+      if (elm) elements.push(elm);
+    }
+
+    const closest = getClosestUpElement(elements, true);
+
+    if (!closest) return;
+
+    const idx = headings.findIndex((heading) => heading.slug === closest.id);
+    if (oldIdx.current !== idx) {
+      const hl: ActiveHighlightMetas = { slug: headings[idx].slug, idx };
+      oldIdx.current = hl.idx;
+      oldSlug.current = hl.slug;
+
+      const headingsInstance = getRefCurrentPtr(headingsRef);
+
+      headingsInstance.scrollTo({
+        top: (headingsInstance.children[idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
+        behavior: 'smooth'
+      });
+
+      setHighlight({ ...hl });
+      setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
+    }
+  }
+
   useEffect(() => {
     if (!isLargeScreen) return;
 
@@ -352,33 +382,26 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
   useEffect(
     () => {
-      const elements: HTMLElement[] = [];
+      function handleResize() {
+        if (!isLargeScreen) return;
 
-      for (const { slug } of headings) {
-        const elm = document.getElementById(slug);
-        if (elm) elements.push(elm);
+        killNextObservableUpdate = false;
+        upOffCamWaitForNextObservable = false;
+
+        inferCurrentHighlight();
       }
 
-      const closest = getClosestUpElement(elements, true);
+      window.addEventListener('resize', handleResize);
 
-      if (!closest) return;
+      return () => window.removeEventListener('resize', handleResize);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
-      const idx = headings.findIndex((heading) => heading.slug === closest.id);
-      if (oldIdx.current !== idx) {
-        const hl: ActiveHighlightMetas = { slug: headings[idx].slug, idx };
-        oldIdx.current = hl.idx;
-        oldSlug.current = hl.slug;
-
-        const headingsInstance = getRefCurrentPtr(headingsRef);
-
-        headingsInstance.scrollTo({
-          top: (headingsInstance.children[idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
-          behavior: 'smooth'
-        });
-
-        setHighlight({ ...hl });
-        setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
-      }
+  useEffect(
+    () => {
+      inferCurrentHighlight();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
