@@ -125,6 +125,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
   useEffect(() => {
     function handleScroll() {
+      if (!isLargeScreen) return;
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       const atTop = window.scrollY === 0;
       const atBottom = window.scrollY + window.innerHeight === document.documentElement.scrollHeight;
@@ -156,20 +157,22 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [headings, preparedForcedActiveSlug]);
+  }, [headings, preparedForcedActiveSlug, isLargeScreen]);
 
   useEffect(() => {
     function handleScrollEnd() {
+      if (!isLargeScreen) return;
       preparedForcedActiveSlug.current = HIGHLIGHT_INITIAL_STATE;
     }
 
     window.addEventListener('scrollend', handleScrollEnd);
 
     return () => window.removeEventListener('scrollend', handleScrollEnd);
-  }, [preparedForcedActiveSlug]);
+  }, [preparedForcedActiveSlug, isLargeScreen]);
 
   useEffect(() => {
     function handleHashChange() {
+      if (!isLargeScreen) return;
       const giveUp = () => !preparedForcedActiveSlug.current.slug;
 
       if (giveUp()) return;
@@ -184,9 +187,11 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     window.addEventListener('my-hashchange', handleHashChange);
 
     return () => window.removeEventListener('my-hashchange', handleHashChange);
-  }, [setForcedHighlight, preparedForcedActiveSlug]);
+  }, [setForcedHighlight, preparedForcedActiveSlug, isLargeScreen]);
 
   useEffect(() => {
+    if (!isLargeScreen) return;
+
     const tocInstance = getRefCurrentPtr(tocRef);
     const headingsInstance = getRefCurrentPtr(headingsRef);
 
@@ -227,9 +232,11 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     applyCollapsedStyles();
 
     return () => tocInstance.removeEventListener('transitionend', updateScrollOnUncollapse);
-  }, [isCollapsed]);
+  }, [isCollapsed, isLargeScreen]);
 
   useEffect(() => {
+    if (!isLargeScreen) return;
+
     const navbarElement = getNavbar();
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const navbarHeight = navbarElement ? computeHTMLElementHeight(navbarElement) : 0;
@@ -237,7 +244,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     bottomDeadZone = navbarHeight * 2;
     topDeadZone = navbarHeight;
 
-    const observer = new IntersectionObserver(
+    let observer = new IntersectionObserver(
       (entries) => {
         if (preparedForcedActiveSlug.current.slug) return;
 
@@ -378,7 +385,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     }
 
     return () => observer.disconnect();
-  }, [headings, preparedForcedActiveSlug, setForcedHighlight, scrollDirection]);
+  }, [headings, preparedForcedActiveSlug, setForcedHighlight, scrollDirection, isLargeScreen]);
 
   useEffect(
     () => {
