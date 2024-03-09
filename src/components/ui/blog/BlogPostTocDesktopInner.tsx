@@ -129,7 +129,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       const atTop = window.scrollY === 0;
       const atBottom = window.scrollY + window.innerHeight === document.documentElement.scrollHeight;
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       const newForcedHighlight: ActiveHighlightMetas = atTop
         ? // eslint-disable-next-line @typescript-eslint/no-magic-numbers
           { slug: headings[0].slug, idx: 0 }
@@ -272,7 +271,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         const shouldScrollUpUpdate = () =>
           oldSlug.current !== first.slug && firstIdx !== NIL_IDX && scrollDirection === 'up' && (_oldIdx === NIL_IDX || _oldIdx >= firstIdx);
 
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         const shouldScrollUpUpdateOffCamCase = () =>
           // eslint-disable-next-line @typescript-eslint/no-magic-numbers
           Object.keys(visibleElements).length === 0 && scrollDirection === 'up' && !upOffCamWaitForNextObservable;
