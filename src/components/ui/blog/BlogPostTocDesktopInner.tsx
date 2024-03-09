@@ -1,10 +1,10 @@
 import type { FunctionComponent } from 'react';
 
 import { useScrollDirection } from '@/components/hooks/useScrollDirection';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { computeHTMLElementHeight } from '@rtm/shared-lib/html';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { useMediaQuery } from '@react-hook/media-query';
-import { useEffect, useState, useRef } from 'react';
 import { getBreakpoint, cn } from '@/lib/tailwind';
 import { useRouter } from 'next/navigation';
 import { getNavbar } from '@/lib/html';
@@ -73,7 +73,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const tocRef = useRef<HTMLDivElement>(null);
   const headingsRef = useRef<HTMLOListElement>(null);
 
-  function inferCurrentHighlight() {
+  const inferCurrentHighlight = useCallback(() => {
     const elements: HTMLElement[] = [];
 
     for (const { slug } of headings) {
@@ -101,7 +101,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       setHighlight({ ...hl });
       setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
     }
-  }
+  }, [headings, setForcedHighlight]);
 
   useEffect(() => {
     if (!isLargeScreen) return;
@@ -380,24 +380,20 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     return () => observer.disconnect();
   }, [headings, preparedForcedActiveSlug, setForcedHighlight, scrollDirection]);
 
-  useEffect(
-    () => {
-      function handleResize() {
-        if (!isLargeScreen) return;
+  useEffect(() => {
+    function handleResize() {
+      if (!isLargeScreen) return;
 
-        killNextObservableUpdate = false;
-        upOffCamWaitForNextObservable = false;
+      killNextObservableUpdate = false;
+      upOffCamWaitForNextObservable = false;
 
-        inferCurrentHighlight();
-      }
+      inferCurrentHighlight();
+    }
 
-      window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize);
 
-      return () => window.removeEventListener('resize', handleResize);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isLargeScreen, inferCurrentHighlight]);
 
   useEffect(
     () => {
