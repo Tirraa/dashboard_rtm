@@ -51,13 +51,12 @@ function getClosestUpElement(elements: HTMLElement[]) {
   return closest;
 }
 
-interface BlogPostTocDesktopInnerProps extends BlogPostTocDesktopProps {
-  setIsCollapsed: (isCollapsed: boolean) => unknown;
-  isCollapsed: boolean;
+export interface BlogPostTocDesktopInnerProps extends BlogPostTocDesktopProps {
   ariaLabel: string;
 }
 
-const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({ setIsCollapsed, isCollapsed, ariaLabel, headings }) => {
+const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({ ariaLabel, headings }) => {
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
   const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
   const router = useRouter();
   const scrollDirection = useScrollDirection();

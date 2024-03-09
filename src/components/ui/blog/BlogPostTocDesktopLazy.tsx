@@ -1,16 +1,19 @@
 'use client';
 
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { DocumentHeading } from '@rtm/shared-types/Documents';
 import type { FunctionComponent } from 'react';
 
+import { useMediaQuery } from '@react-hook/media-query';
+import { getBreakpoint } from '@/lib/tailwind';
 import { useScopedI18n } from '@/i18n/client';
+import { useEffect, useState } from 'react';
 import { i18ns } from '##/config/i18n';
-import { cn } from '@/lib/tailwind';
-import { useState } from 'react';
+
+import type { BlogPostTocDesktopInnerProps } from './BlogPostTocDesktopInner';
 
 import { COLLAPSE_BUTTON_HEIGTH_IN_PX } from './BlogPostTocCollapseButton';
 import { CardContent, CardHeader, CardTitle, Card } from '../Card';
-import BlogPostTocDesktopInner from './BlogPostTocDesktopInner';
 
 export interface BlogPostTocDesktopProps {
   headings: DocumentHeading[];
@@ -19,7 +22,19 @@ export interface BlogPostTocDesktopProps {
 const BlogPostTocDesktopLazy: FunctionComponent<BlogPostTocDesktopProps> = ({ headings }) => {
   const scopedT = useScopedI18n(i18ns.vocab);
   const title = scopedT('toc');
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
+
+  const placeholder = null;
+  const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
+
+  const [Component, setComponent] = useState<MaybeNull<FunctionComponent<BlogPostTocDesktopInnerProps>>>(null);
+
+  useEffect(() => {
+    if (!isLargeScreen || Component !== null) return;
+    // eslint-disable-next-line promise/catch-or-return
+    import('./BlogPostTocDesktopInner').then((component) => setComponent(() => component.default));
+  });
+
+  if (Component === null) return placeholder;
 
   return (
     <Card
@@ -29,12 +44,8 @@ const BlogPostTocDesktopLazy: FunctionComponent<BlogPostTocDesktopProps> = ({ he
       <CardHeader className="relative z-10 rounded-lg bg-black dark:bg-card">
         <CardTitle className="px-2 text-center">{title}</CardTitle>
       </CardHeader>
-      <CardContent
-        className={cn('p-0 pb-6', {
-          'pb-4': isCollapsed
-        })}
-      >
-        <BlogPostTocDesktopInner setIsCollapsed={setIsCollapsed} isCollapsed={isCollapsed} headings={headings} ariaLabel={title} />
+      <CardContent className={'p-0 pb-6'}>
+        <Component headings={headings} ariaLabel={title} />
       </CardContent>
     </Card>
   );
