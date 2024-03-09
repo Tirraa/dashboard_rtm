@@ -13,12 +13,18 @@ export const COLLAPSE_BUTTON_HEIGTH_IN_PX: number = 30;
 interface BlogPostTocCollapseButtonProps {
   setIsCollapsed: (isCollapsed: boolean) => unknown;
   isCollapsed: boolean;
+  isDisabled?: boolean;
   className: string;
 }
 
 const { isNotActiveClassList: btnIconIsNotActiveClassList, isActiveClassList: btnIconIsActiveClassList } = DesktopBlogTocCollapseButtonIconStyle;
 
-const BlogPostTocCollapseButton: FunctionComponent<BlogPostTocCollapseButtonProps> = ({ className: classNameValue, setIsCollapsed, isCollapsed }) => {
+const BlogPostTocCollapseButton: FunctionComponent<BlogPostTocCollapseButtonProps> = ({
+  className: classNameValue,
+  setIsCollapsed,
+  isCollapsed,
+  isDisabled
+}) => {
   const className = classNameValue ?? '';
 
   const tocCollapseBtnIconClassList = isCollapsed ? btnIconIsActiveClassList : btnIconIsNotActiveClassList;
@@ -32,16 +38,26 @@ const BlogPostTocCollapseButton: FunctionComponent<BlogPostTocCollapseButtonProp
 
   return (
     <div className="h-0">
-      <button
-        className={cn(tocCollapseBtnClassList, 'hidden lg:inline', className)}
-        style={{ height: COLLAPSE_BUTTON_HEIGTH_IN_PX + 'px' }}
-        onClick={() => setIsCollapsed(!isCollapsed)}
-        aria-expanded={ariaExpanded}
-        aria-label={ariaLabel}
-        type={type}
-      >
-        <ArrowSmallDownIcon className={tocCollapseBtnIconClassList} height={SIZE_PX_VALUE} width={SIZE_PX_VALUE} />
-      </button>
+      {(!isDisabled && (
+        <button
+          className={cn(tocCollapseBtnClassList, 'hidden lg:inline', className)}
+          style={{ height: COLLAPSE_BUTTON_HEIGTH_IN_PX + 'px' }}
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          aria-expanded={ariaExpanded}
+          aria-label={ariaLabel}
+          type={type}
+        >
+          <ArrowSmallDownIcon className={tocCollapseBtnIconClassList} height={SIZE_PX_VALUE} width={SIZE_PX_VALUE} />
+        </button>
+      )) || (
+        <div
+          className={cn(tocCollapseBtnClassList, 'hidden cursor-default lg:inline', className)}
+          style={{ height: COLLAPSE_BUTTON_HEIGTH_IN_PX + 'px' }}
+          aria-hidden="true"
+        >
+          <ArrowSmallDownIcon className={tocCollapseBtnIconClassList} height={SIZE_PX_VALUE} width={SIZE_PX_VALUE} />
+        </div>
+      )}
     </div>
   );
 };

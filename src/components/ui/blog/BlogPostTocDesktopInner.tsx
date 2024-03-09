@@ -17,6 +17,7 @@ import BlogPostTocCollapseButton, { COLLAPSE_BUTTON_HEIGTH_IN_PX } from './BlogP
 const NIL_IDX = -1;
 const HIGHLIGHT_INITIAL_STATE: ActiveHighlightMetas = { idx: NIL_IDX, slug: '' } as const;
 const CHIPI_CHIPI_CHAPA_CHAPA_IN_PX: number = 192;
+const MAGNETIZED_NAVBAR_Y_SCROLL_THRESHOLD_IN_PX: number = 192;
 
 const visibleElements = {} as Record<HeadingSlug, HeadingSlugIdx>;
 let killNextObservableUpdate = false;
@@ -60,6 +61,7 @@ export interface BlogPostTocDesktopInnerProps extends BlogPostTocDesktopProps {
 }
 
 const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({ ariaLabel, headings }) => {
+  const [isMagnetized, setIsMagnetized] = useState<boolean>(false);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
   const isLargeScreen = useMediaQuery(`(min-width: ${getBreakpoint('lg')}px)`);
   const router = useRouter();
@@ -124,8 +126,21 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   }, [isLargeScreen]);
 
   useEffect(() => {
+    function handleNavbarAndTocOverlap() {
+      const scrollPosition = window.scrollY;
+
+      if (scrollPosition >= MAGNETIZED_NAVBAR_Y_SCROLL_THRESHOLD_IN_PX) {
+        setIsMagnetized(true);
+      } else {
+        setIsMagnetized(false);
+        setIsCollapsed(false);
+      }
+    }
+
     function handleScroll() {
       if (!isLargeScreen) return;
+      handleNavbarAndTocOverlap();
+
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       const atTop = window.scrollY === 0;
       const atBottom = window.scrollY + window.innerHeight === document.documentElement.scrollHeight;
@@ -452,11 +467,21 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
           </li>
         ))}
       </ol>
-      <BlogPostTocCollapseButton
-        className={cn('relative top-6 z-10', { 'top-4': isCollapsed })}
-        setIsCollapsed={setIsCollapsed}
-        isCollapsed={isCollapsed}
-      />
+      {(isMagnetized && (
+        <BlogPostTocCollapseButton
+          className={cn('relative top-6 z-10 opacity-100 transition-opacity duration-200', { 'top-4': isCollapsed })}
+          setIsCollapsed={setIsCollapsed}
+          isCollapsed={isCollapsed}
+        />
+      )) || (
+        <BlogPostTocCollapseButton
+          className={cn('relative top-6 z-10 opacity-0 transition-opacity duration-200', { 'top-4': isCollapsed })}
+          setIsCollapsed={setIsCollapsed}
+          isCollapsed={isCollapsed}
+          aria-hidden="true"
+          isDisabled
+        />
+      )}
     </nav>
   );
 };
