@@ -22,6 +22,9 @@ const visibleElements = {} as Record<HeadingSlug, HeadingSlugIdx>;
 let killNextObservableUpdate = false;
 let upOffCamWaitForNextObservable = false;
 
+let bottomDeadZone = 0;
+let topDeadZone = 0;
+
 const useForcedHighlight = () => {
   const [forcedHighlight, setForcedHighlight] = useState<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
   const preparedForcedActiveSlug = useRef<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
@@ -34,12 +37,13 @@ const useForcedHighlight = () => {
   return { setForcedHighlight: setForcedHighlightAndHighlight, preparedForcedActiveSlug, forcedHighlight };
 };
 
-function getClosestUpElement(elements: HTMLElement[]) {
+function getClosestUpElement(elements: HTMLElement[], fromScreenBottom: boolean = false) {
   let closest = null;
   let closestDistance = Infinity;
 
+  const yStart = fromScreenBottom ? window.scrollY + window.innerHeight - bottomDeadZone : window.scrollY;
   for (const element of elements) {
-    const distance = window.scrollY - element.offsetTop;
+    const distance = yStart - element.offsetTop;
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     if (0 < distance && distance < closestDistance) {
@@ -195,6 +199,9 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     const navbarElement = getNavbar();
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const navbarHeight = navbarElement ? computeHTMLElementHeight(navbarElement) : 0;
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    bottomDeadZone = navbarHeight * 2;
+    topDeadZone = navbarHeight;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -328,8 +335,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         setHighlight({ ...first });
         setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
       },
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      { rootMargin: `${-navbarHeight}px 0px ${-navbarHeight * 2}px 0px`, threshold: 0.5 }
+      { rootMargin: `${-topDeadZone}px 0px ${-bottomDeadZone}px 0px`, threshold: 0.5 }
     );
 
     for (const heading of headings) {
@@ -339,6 +345,41 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
     return () => observer.disconnect();
   }, [headings, preparedForcedActiveSlug, setForcedHighlight, scrollDirection]);
+
+  useEffect(
+    () => {
+      const elements: HTMLElement[] = [];
+
+      for (const { slug } of headings) {
+        const elm = document.getElementById(slug);
+        if (elm) elements.push(elm);
+      }
+
+      console.log(bottomDeadZone);
+      const closest = getClosestUpElement(elements, true);
+
+      if (!closest) return;
+
+      const idx = headings.findIndex((heading) => heading.slug === closest.id);
+      if (oldIdx.current !== idx) {
+        const hl: ActiveHighlightMetas = { slug: headings[idx].slug, idx };
+        oldIdx.current = hl.idx;
+        oldSlug.current = hl.slug;
+
+        const headingsInstance = getRefCurrentPtr(headingsRef);
+
+        headingsInstance.scrollTo({
+          top: (headingsInstance.children[idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
+          behavior: 'smooth'
+        });
+
+        setHighlight({ ...hl });
+        setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (headings.length === 0) return null;
