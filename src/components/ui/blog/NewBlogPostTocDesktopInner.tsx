@@ -2,9 +2,9 @@ import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { FunctionComponent } from 'react';
 
 import { useScrollDirection } from '@/components/hooks/useScrollDirection';
+import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
-import { getRefCurrentPtr } from 'packages/shared-lib/src/react';
-import { useCallback, useEffect, useState, useRef } from 'react';
+import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import Link from 'next/link';
 
 import type { BlogPostTocDesktopProps } from './BlogPostTocDesktopLazy';
@@ -78,6 +78,16 @@ const NewBlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps
     if (firstVisibleHeadingSlug) setCurrentHeading(firstVisibleHeadingSlug);
   }, [getFirstVisibleHeadingSlug]);
 
+  const slugAndIndexAssoc = useMemo(() => {
+    return headings.reduce(
+      (indexed, { slug }, idx) => {
+        indexed[slug] = idx;
+        return indexed;
+      },
+      {} as Record<HeadingSlug, HeadingSlugIdx>
+    );
+  }, [headings]);
+
   useEffect(() => {
     if (!isLargeScreen) return;
 
@@ -88,7 +98,7 @@ const NewBlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps
         for (const entry of entries) {
           const slug = entry.target.id;
           if (entry.isIntersecting) {
-            visibleElementsInstance[slug] = headings.findIndex((heading) => heading.slug === slug);
+            visibleElementsInstance[slug] = slugAndIndexAssoc[slug];
           } else {
             delete visibleElementsInstance[slug];
           }
@@ -110,7 +120,7 @@ const NewBlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps
     return () => {
       if (observerInstance) observerInstance.disconnect();
     };
-  }, [headings, isLargeScreen]);
+  }, [headings, isLargeScreen, slugAndIndexAssoc]);
 
   useEffect(() => {
     if (!isLargeScreen) return;
