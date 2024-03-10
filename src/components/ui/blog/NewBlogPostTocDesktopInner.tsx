@@ -61,6 +61,18 @@ const NewBlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps
     return firstSlug;
   }, []);
 
+  const handleScrollUp = useCallback(() => {
+    const visibleElementsInstance = getRefCurrentPtr(visibleElements);
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    if (Object.keys(visibleElementsInstance).length === 0) {
+      const closestUpHeading = getClosestUpHeading();
+      if (closestUpHeading) setCurrentHeading(closestUpHeading.id);
+      return;
+    }
+    const firstVisibleHeadingSlug = getFirstVisibleHeadingSlug();
+    if (firstVisibleHeadingSlug) setCurrentHeading(firstVisibleHeadingSlug);
+  }, [getFirstVisibleHeadingSlug]);
+
   const handleScrollDown = useCallback(() => {
     const firstVisibleHeadingSlug = getFirstVisibleHeadingSlug();
     if (firstVisibleHeadingSlug) setCurrentHeading(firstVisibleHeadingSlug);
@@ -103,21 +115,38 @@ const NewBlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps
   useEffect(() => {
     if (!isLargeScreen) return;
 
+    if (scrollDirection === 'up') window.addEventListener('scroll', handleScrollUp);
     if (scrollDirection === 'down') window.addEventListener('scroll', handleScrollDown);
 
     return () => {
+      window.removeEventListener('scroll', handleScrollUp);
       window.removeEventListener('scroll', handleScrollDown);
     };
-  }, [isLargeScreen, scrollDirection, handleScrollDown]);
+  }, [isLargeScreen, scrollDirection, handleScrollDown, handleScrollUp]);
+
+  useEffect(() => {
+    if (!isLargeScreen) return;
+
+    const handleResize = () => {
+      const closestUpHeading = getClosestUpHeading();
+      if (closestUpHeading) setCurrentHeading(closestUpHeading.id);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isLargeScreen]);
+
+  useEffect(() => {
+    currentHeadingRef.current = currentHeading;
+  }, [currentHeading]);
 
   useEffect(() => {
     const closestUpHeading = getClosestUpHeading();
     if (closestUpHeading) setCurrentHeading(closestUpHeading.id);
   }, []);
-
-  useEffect(() => {
-    currentHeadingRef.current = currentHeading;
-  }, [currentHeading]);
 
   return (
     <nav className="flex flex-col items-center self-start transition-[margin-top] duration-300" aria-label={ariaLabel}>
