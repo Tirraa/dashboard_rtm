@@ -5,6 +5,7 @@ import { useScrollDirection } from '@/components/hooks/useScrollDirection';
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
+import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
 import type { BlogPostTocDesktopProps } from './BlogPostTocDesktopLazy';
@@ -14,21 +15,42 @@ export interface BlogPostTocDesktopInnerProps extends BlogPostTocDesktopProps {
 }
 
 const NIL_IDX = -1;
-const VIEWPORT_DEAD_ZONE_ON_Y_AXIS_IN_PERCENT = 20;
+const VIEWPORT_DEAD_ZONE_ON_Y_AXIS_IN_PERCENT = 15;
 
-function getClosestUpHeading(): MaybeNull<HTMLElement> {
+function getClosestUpHeadingFromBottom(): MaybeNull<HTMLElement> {
   const headingsFromDOM = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')) as HTMLElement[];
   let closestHeading = null;
   let closestDistance = Infinity;
   const viewportHeight = window.innerHeight;
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const bottomDeadZonePixels = (viewportHeight * VIEWPORT_DEAD_ZONE_ON_Y_AXIS_IN_PERCENT) / 100;
-  const yStart = window.scrollY + viewportHeight - bottomDeadZonePixels;
+  const deadZoneInPx = (viewportHeight * VIEWPORT_DEAD_ZONE_ON_Y_AXIS_IN_PERCENT) / 100;
+  const yStart = window.scrollY + viewportHeight - deadZoneInPx;
 
   for (const heading of headingsFromDOM) {
     const distance = yStart - heading.offsetTop;
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (0 < distance && distance < closestDistance) {
+    if (0 <= distance && distance <= closestDistance) {
+      closestHeading = heading;
+      closestDistance = distance;
+    }
+  }
+
+  return closestHeading;
+}
+
+function getClosestUpHeadingFromTop(): MaybeNull<HTMLElement> {
+  const headingsFromDOM = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')) as HTMLElement[];
+  let closestHeading = null;
+  let closestDistance = -Infinity;
+  const viewportHeight = window.innerHeight;
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const deadZoneInPx = (viewportHeight * VIEWPORT_DEAD_ZONE_ON_Y_AXIS_IN_PERCENT) / 100;
+  const yStart = window.scrollY + deadZoneInPx;
+
+  for (const heading of headingsFromDOM) {
+    const distance = yStart - heading.offsetTop;
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    if (0 >= distance && distance >= closestDistance) {
       closestHeading = heading;
       closestDistance = distance;
     }
@@ -45,38 +67,8 @@ const NewBlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps
   const visibleElements = useRef<VisibleElements>({});
   const headingsRef = useRef<HTMLOListElement>(null);
   const currentHeadingRef = useRef<HeadingSlug>(currentHeading);
-
-  const getFirstVisibleHeadingSlug = useCallback(() => {
-    let firstSlug = '';
-    let minIndex = NIL_IDX;
-    const visibleElementsInstance = getRefCurrentPtr(visibleElements);
-
-    for (const [slug, currentIndex] of Object.entries(visibleElementsInstance)) {
-      if (currentIndex !== undefined && (currentIndex < minIndex || minIndex === NIL_IDX)) {
-        firstSlug = slug;
-        minIndex = currentIndex;
-      }
-    }
-
-    return firstSlug;
-  }, []);
-
-  const handleScrollUp = useCallback(() => {
-    const visibleElementsInstance = getRefCurrentPtr(visibleElements);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (Object.keys(visibleElementsInstance).length === 0) {
-      const closestUpHeading = getClosestUpHeading();
-      if (closestUpHeading) setCurrentHeading(closestUpHeading.id);
-      return;
-    }
-    const firstVisibleHeadingSlug = getFirstVisibleHeadingSlug();
-    if (firstVisibleHeadingSlug) setCurrentHeading(firstVisibleHeadingSlug);
-  }, [getFirstVisibleHeadingSlug]);
-
-  const handleScrollDown = useCallback(() => {
-    const firstVisibleHeadingSlug = getFirstVisibleHeadingSlug();
-    if (firstVisibleHeadingSlug) setCurrentHeading(firstVisibleHeadingSlug);
-  }, [getFirstVisibleHeadingSlug]);
+  const isHeadingForcedRef = useRef<boolean>(false);
+  const forcedHeadingSlugRef = useRef<HeadingSlug>('');
 
   const slugAndIndexAssoc = useMemo(() => {
     return headings.reduce(
@@ -87,6 +79,71 @@ const NewBlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps
       {} as Record<HeadingSlug, HeadingSlugIdx>
     );
   }, [headings]);
+
+  const getFirstVisibleHeadingSlug = useCallback(() => {
+    let firstSlug = '';
+    let minIndex = NIL_IDX;
+    const visibleElementsInstance = getRefCurrentPtr(visibleElements);
+
+    for (const slug of Object.keys(visibleElementsInstance)) {
+      const currentIndex = slugAndIndexAssoc[slug];
+      if (currentIndex < minIndex || minIndex === NIL_IDX) {
+        firstSlug = slug;
+        minIndex = currentIndex;
+      }
+    }
+
+    return firstSlug;
+  }, [slugAndIndexAssoc]);
+
+  const handleScrollUp = useCallback(() => {
+    if (scrollDirection !== 'up') return;
+    if (!isLargeScreen || isHeadingForcedRef.current) return;
+
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const atTop = window.scrollY === 0;
+    if (atTop) {
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const veryFirstHeadingSlug = headings[0].slug;
+      setCurrentHeading(veryFirstHeadingSlug);
+      return;
+    }
+
+    const visibleElementsInstance = getRefCurrentPtr(visibleElements);
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    if (Object.keys(visibleElementsInstance).length === 0) {
+      const infered = getClosestUpHeadingFromBottom();
+      if (infered) setCurrentHeading(infered.id);
+      return;
+    }
+
+    const firstVisibleHeadingSlug = getFirstVisibleHeadingSlug();
+
+    if (forcedHeadingSlugRef.current) {
+      const newIdx = slugAndIndexAssoc[firstVisibleHeadingSlug];
+      const oldIdx = slugAndIndexAssoc[forcedHeadingSlugRef.current];
+      if (newIdx <= oldIdx) forcedHeadingSlugRef.current = '';
+      else return;
+    }
+
+    if (firstVisibleHeadingSlug) setCurrentHeading(firstVisibleHeadingSlug);
+  }, [headings, getFirstVisibleHeadingSlug, isLargeScreen, scrollDirection, slugAndIndexAssoc]);
+
+  const handleScrollDown = useCallback(() => {
+    if (scrollDirection !== 'down') return;
+    if (!isLargeScreen || isHeadingForcedRef.current) return;
+
+    const atBottom = window.scrollY + window.innerHeight === document.documentElement.scrollHeight;
+    if (atBottom) {
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const veryLastHeadingSlug = headings[headings.length - 1].slug;
+      setCurrentHeading(veryLastHeadingSlug);
+      return;
+    }
+
+    const firstVisibleHeadingSlug = getFirstVisibleHeadingSlug();
+    if (firstVisibleHeadingSlug) setCurrentHeading(firstVisibleHeadingSlug);
+  }, [headings, getFirstVisibleHeadingSlug, isLargeScreen, scrollDirection]);
 
   useEffect(() => {
     if (!isLargeScreen) return;
@@ -125,21 +182,21 @@ const NewBlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps
   useEffect(() => {
     if (!isLargeScreen) return;
 
-    if (scrollDirection === 'up') window.addEventListener('scroll', handleScrollUp);
-    if (scrollDirection === 'down') window.addEventListener('scroll', handleScrollDown);
+    window.addEventListener('scroll', handleScrollUp);
+    window.addEventListener('scroll', handleScrollDown);
 
     return () => {
       window.removeEventListener('scroll', handleScrollUp);
       window.removeEventListener('scroll', handleScrollDown);
     };
-  }, [isLargeScreen, scrollDirection, handleScrollDown, handleScrollUp]);
+  }, [isLargeScreen, handleScrollDown, handleScrollUp]);
 
   useEffect(() => {
     if (!isLargeScreen) return;
 
     const handleResize = () => {
-      const closestUpHeading = getClosestUpHeading();
-      if (closestUpHeading) setCurrentHeading(closestUpHeading.id);
+      const infered = getClosestUpHeadingFromBottom();
+      if (infered) setCurrentHeading(infered.id);
     };
 
     window.addEventListener('resize', handleResize);
@@ -150,20 +207,59 @@ const NewBlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps
   }, [isLargeScreen]);
 
   useEffect(() => {
+    function handleScrollEnd() {
+      if (!isLargeScreen) return;
+      isHeadingForcedRef.current = false;
+    }
+
+    window.addEventListener('scrollend', handleScrollEnd);
+
+    return () => window.removeEventListener('scrollend', handleScrollEnd);
+  }, [isLargeScreen]);
+
+  useEffect(() => {
     currentHeadingRef.current = currentHeading;
   }, [currentHeading]);
 
   useEffect(() => {
-    const closestUpHeading = getClosestUpHeading();
-    if (closestUpHeading) setCurrentHeading(closestUpHeading.id);
-  }, []);
+    const infered1 = getClosestUpHeadingFromTop();
+    if (infered1) {
+      setCurrentHeading(infered1.id);
+      return;
+    }
+
+    const infered2 = getClosestUpHeadingFromBottom();
+    if (infered2) {
+      setCurrentHeading(infered2.id);
+      return;
+    }
+  }, [getFirstVisibleHeadingSlug]);
 
   return (
     <nav className="flex flex-col items-center self-start transition-[margin-top] duration-300" aria-label={ariaLabel}>
       <ol className="max-h-[40vh] w-full list-none space-y-3 overflow-auto pl-6 rtl:pl-0 rtl:pr-6" ref={headingsRef}>
         {headings.map((heading) => (
-          <li key={heading.slug}>
-            <Link className={heading.slug === currentHeading ? 'text-primary' : ''} href={`#${heading.slug}`}>
+          <li
+            className={cn('w-fit list-none text-sm font-bold transition-colors duration-200 ease-in-out hover:text-primary', {
+              'text-primary': currentHeading === heading.slug,
+              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+              'ml-6 font-normal': heading.depth === 5,
+              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+              'ml-2 font-normal': heading.depth === 3,
+              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+              'ml-4 font-normal': heading.depth === 4
+            })}
+            key={heading.slug}
+          >
+            <Link
+              onClick={() => {
+                forcedHeadingSlugRef.current = heading.slug;
+                isHeadingForcedRef.current = true;
+                setCurrentHeading(heading.slug);
+              }}
+              className={heading.slug === currentHeading ? 'text-primary' : ''}
+              href={`#${heading.slug}`}
+            >
               {heading.content}
             </Link>
           </li>
