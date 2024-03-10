@@ -16,9 +16,17 @@ export interface BlogPostTocDesktopInnerProps extends BlogPostTocDesktopProps {
 
 const NIL_IDX = -1;
 const VIEWPORT_DEAD_ZONE_ON_Y_AXIS_IN_PERCENT = 15;
+const TOC_SCROLL_TOP_OFFSET_IN_PX: number = 192;
+
+const getAllDocumentHeadingsFromDOM = () => {
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const h1 = Array.from(document.querySelectorAll('h1')).slice(1);
+  const hN = Array.from(document.querySelectorAll('h2, h3, h4, h5, h6'));
+  return [...h1, ...hN] as HTMLElement[];
+};
 
 function getClosestUpHeadingFromBottom(): MaybeNull<HTMLElement> {
-  const headingsFromDOM = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')) as HTMLElement[];
+  const headingsFromDOM = getAllDocumentHeadingsFromDOM();
   let closestHeading = null;
   let closestDistance = Infinity;
   const viewportHeight = window.innerHeight;
@@ -39,7 +47,7 @@ function getClosestUpHeadingFromBottom(): MaybeNull<HTMLElement> {
 }
 
 function getClosestUpHeadingFromTop(): MaybeNull<HTMLElement> {
-  const headingsFromDOM = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')) as HTMLElement[];
+  const headingsFromDOM = getAllDocumentHeadingsFromDOM();
   let closestHeading = null;
   let closestDistance = -Infinity;
   const viewportHeight = window.innerHeight;
@@ -220,6 +228,21 @@ const NewBlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps
   useEffect(() => {
     currentHeadingRef.current = currentHeading;
   }, [currentHeading]);
+
+  useEffect(() => {
+    if (!isLargeScreen) return;
+
+    const headingsInstance = getRefCurrentPtr(headingsRef);
+    if (!headingsInstance) return;
+
+    const idx = slugAndIndexAssoc[currentHeading];
+    if (idx === undefined) return;
+
+    headingsInstance.scrollTo({
+      top: (headingsInstance.children[idx] as HTMLElement).offsetTop - TOC_SCROLL_TOP_OFFSET_IN_PX,
+      behavior: 'smooth'
+    });
+  }, [currentHeading, isLargeScreen, slugAndIndexAssoc]);
 
   useEffect(() => {
     const infered1 = getClosestUpHeadingFromTop();
