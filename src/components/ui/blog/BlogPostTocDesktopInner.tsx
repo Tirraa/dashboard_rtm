@@ -258,7 +258,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     bottomDeadZone = navbarHeight * 2;
     topDeadZone = navbarHeight;
 
-    let observer = new IntersectionObserver(
+    const observer = new IntersectionObserver(
       (entries) => {
         if (preparedForcedActiveSlug.current.slug) return;
 

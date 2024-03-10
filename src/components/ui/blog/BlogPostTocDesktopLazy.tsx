@@ -31,7 +31,7 @@ const BlogPostTocDesktopLazy: FunctionComponent<BlogPostTocDesktopProps> = ({ he
   useEffect(() => {
     if (!isLargeScreen || Component !== null) return;
     // eslint-disable-next-line promise/catch-or-return
-    import('./BlogPostTocDesktopInner').then((component) => setComponent(() => component.default));
+    import('./NewBlogPostTocDesktopInner').then((component) => setComponent(() => component.default));
   });
 
   if (Component === null) return placeholder;
