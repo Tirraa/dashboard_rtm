@@ -3,12 +3,15 @@ import type { FunctionComponent } from 'react';
 
 import { useScrollDirection } from '@/components/hooks/useScrollDirection';
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
+import { computeHTMLElementHeight } from 'packages/shared-lib/src/html';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
 import type { BlogPostTocDesktopProps } from './BlogPostTocDesktopLazy';
+
+import BlogPostTocCollapseButton, { COLLAPSE_BUTTON_HEIGTH_IN_PX } from './BlogPostTocCollapseButton';
 
 export interface BlogPostTocDesktopInnerProps extends BlogPostTocDesktopProps {
   ariaLabel: string;
@@ -17,6 +20,7 @@ export interface BlogPostTocDesktopInnerProps extends BlogPostTocDesktopProps {
 const NIL_IDX = -1;
 const VIEWPORT_DEAD_ZONE_ON_Y_AXIS_IN_PERCENT = 15;
 const TOC_SCROLL_TOP_OFFSET_IN_PX: number = 192;
+const MAGNETIZED_NAVBAR_Y_SCROLL_THRESHOLD_IN_PX: number = 192;
 
 const getAllDocumentHeadingsFromDOM = () => {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -70,10 +74,13 @@ function getClosestUpHeadingFromTop(): MaybeNull<HTMLElement> {
 const NewBlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({ ariaLabel, headings }) => {
   const isLargeScreen = useIsLargeScreen();
   const [currentHeading, setCurrentHeading] = useState<HeadingSlug>('');
+  const [isMagnetized, setIsMagnetized] = useState<boolean>(false);
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
   const scrollDirection = useScrollDirection();
   const observer = useRef<MaybeNull<IntersectionObserver>>(null);
   const visibleElements = useRef<VisibleElements>({});
   const headingsRef = useRef<HTMLOListElement>(null);
+  const tocRef = useRef<HTMLDivElement>(null);
   const currentHeadingRef = useRef<HeadingSlug>(currentHeading);
   const isHeadingForcedRef = useRef<boolean>(false);
   const forcedHeadingSlugRef = useRef<HeadingSlug>('');
@@ -103,6 +110,17 @@ const NewBlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps
 
     return firstSlug;
   }, [slugAndIndexAssoc]);
+
+  const handleMagnetization = useCallback(() => {
+    const scrollPosition = window.scrollY;
+
+    if (scrollPosition >= MAGNETIZED_NAVBAR_Y_SCROLL_THRESHOLD_IN_PX) {
+      setIsMagnetized(true);
+    } else {
+      setIsMagnetized(false);
+      setIsCollapsed(false);
+    }
+  }, []);
 
   const handleScrollUp = useCallback(() => {
     if (scrollDirection !== 'up') return;
@@ -190,14 +208,16 @@ const NewBlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps
   useEffect(() => {
     if (!isLargeScreen) return;
 
+    window.addEventListener('scroll', handleMagnetization);
     window.addEventListener('scroll', handleScrollUp);
     window.addEventListener('scroll', handleScrollDown);
 
     return () => {
+      window.removeEventListener('scroll', handleMagnetization);
       window.removeEventListener('scroll', handleScrollUp);
       window.removeEventListener('scroll', handleScrollDown);
     };
-  }, [isLargeScreen, handleScrollDown, handleScrollUp]);
+  }, [isLargeScreen, handleScrollDown, handleScrollUp, handleMagnetization]);
 
   useEffect(() => {
     if (!isLargeScreen) return;
@@ -245,6 +265,56 @@ const NewBlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps
   }, [currentHeading, isLargeScreen, slugAndIndexAssoc]);
 
   useEffect(() => {
+    if (!isLargeScreen) return;
+
+    const tocInstance = getRefCurrentPtr(tocRef);
+    if (!tocInstance) return;
+
+    function updateScrollOnUncollapse(event: TransitionEvent) {
+      const target = event.target as HTMLElement;
+      if (target.tagName !== 'NAV') {
+        event.stopPropagation();
+        return;
+      }
+
+      const headingsInstance = getRefCurrentPtr(headingsRef);
+      if (!headingsInstance) return;
+
+      const idx = slugAndIndexAssoc[currentHeading];
+      if (idx === undefined) return;
+
+      const HTMLElement = headingsInstance.children[idx];
+      if (!HTMLElement) return;
+
+      headingsInstance.scrollTo({
+        top: (HTMLElement as HTMLElement).offsetTop - TOC_SCROLL_TOP_OFFSET_IN_PX,
+        behavior: 'smooth'
+      });
+    }
+
+    function applyUncollapsedStyles() {
+      tocInstance.style.marginTop = '0';
+    }
+
+    function applyCollapsedStyles() {
+      tocInstance.style.marginTop = '-' + (computeHTMLElementHeight(tocInstance) + COLLAPSE_BUTTON_HEIGTH_IN_PX) + 'px';
+    }
+
+    if (!isCollapsed) {
+      applyUncollapsedStyles();
+      const idx = slugAndIndexAssoc[currentHeading];
+      if (idx === undefined) return;
+
+      tocInstance.addEventListener('transitionend', (event) => updateScrollOnUncollapse(event));
+      return;
+    }
+
+    applyCollapsedStyles();
+
+    return () => tocInstance.removeEventListener('transitionend', updateScrollOnUncollapse);
+  }, [isCollapsed, isLargeScreen, currentHeading, slugAndIndexAssoc]);
+
+  useEffect(() => {
     const infered1 = getClosestUpHeadingFromTop();
     if (infered1) {
       setCurrentHeading(infered1.id);
@@ -256,10 +326,12 @@ const NewBlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps
       setCurrentHeading(infered2.id);
       return;
     }
-  }, [getFirstVisibleHeadingSlug]);
+  }, [getFirstVisibleHeadingSlug, handleMagnetization]);
+
+  useEffect(() => handleMagnetization(), [handleMagnetization]);
 
   return (
-    <nav className="flex flex-col items-center self-start transition-[margin-top] duration-300" aria-label={ariaLabel}>
+    <nav className="flex flex-col items-center self-start transition-[margin-top] duration-300" aria-label={ariaLabel} ref={tocRef}>
       <ol className="max-h-[40vh] w-full list-none space-y-3 overflow-auto pl-6 rtl:pl-0 rtl:pr-6" ref={headingsRef}>
         {headings.map((heading) => (
           <li
@@ -274,20 +346,42 @@ const NewBlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps
             })}
             key={heading.slug}
           >
-            <Link
-              onClick={() => {
-                forcedHeadingSlugRef.current = heading.slug;
-                isHeadingForcedRef.current = true;
-                setCurrentHeading(heading.slug);
-              }}
-              className={heading.slug === currentHeading ? 'text-primary' : ''}
-              href={`#${heading.slug}`}
-            >
-              {heading.content}
-            </Link>
+            {(!isCollapsed && (
+              <Link
+                onClick={() => {
+                  forcedHeadingSlugRef.current = heading.slug;
+                  isHeadingForcedRef.current = true;
+                  setCurrentHeading(heading.slug);
+                }}
+                className={heading.slug === currentHeading ? 'text-primary' : ''}
+                href={`#${heading.slug}`}
+                replace
+              >
+                {heading.content}
+              </Link>
+            )) || (
+              <p className="cursor-default select-none" aria-hidden="true">
+                {heading.content}
+              </p>
+            )}
           </li>
         ))}
       </ol>
+      {(isMagnetized && (
+        <BlogPostTocCollapseButton
+          className={cn('relative top-6 z-10 opacity-100 transition-opacity duration-200', { 'top-4': isCollapsed })}
+          setIsCollapsed={setIsCollapsed}
+          isCollapsed={isCollapsed}
+        />
+      )) || (
+        <BlogPostTocCollapseButton
+          className={cn('relative top-6 z-10 opacity-0 transition-opacity duration-200', { 'top-4': isCollapsed })}
+          setIsCollapsed={setIsCollapsed}
+          isCollapsed={isCollapsed}
+          aria-hidden="true"
+          isDisabled
+        />
+      )}
     </nav>
   );
 };
