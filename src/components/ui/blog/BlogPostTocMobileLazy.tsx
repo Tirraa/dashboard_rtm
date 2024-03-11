@@ -20,7 +20,7 @@ const BlogPostTocDesktopLazy: FunctionComponent<BlogPostTocDesktopProps> = ({ he
   const scopedT = useScopedI18n(i18ns.vocab);
   const title = capitalize(scopedT('toc'));
 
-  const placeholder = null;
+  const placeholder = <div className="min-h-[62px]" />;
   const isLargeScreen = useIsLargeScreen();
 
   const [Component, setComponent] = useState<MaybeNull<FunctionComponent<BlogPostTocDesktopInnerProps>>>(null);
