@@ -8,13 +8,11 @@ import BlogPostTocDesktop from '@/components/ui/blog/BlogPostTocDesktop';
 import BlogPostTocMobile from '@/components/ui/blog/BlogPostTocMobile';
 import tagsGenerator from '@/components/ui/blog/tagsGenerator';
 import BlogPostDate from '@/components/ui/blog/BlogPostDate';
+import MDX from '@/components/layouts/blog/MdxComponent';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { notFound } from 'next/navigation';
 import { cn } from '@/lib/tailwind';
-import dynamic from 'next/dynamic';
-
-const MDX = dynamic(() => import('@/components/layouts/blog/MdxComponent'));
 
 interface BlogPostInnerProps extends BlogPostProps {}
 interface _BlogPostPageProps extends BlogPostPageProps, Partial<WithClassname> {}
