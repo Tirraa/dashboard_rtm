@@ -105,6 +105,19 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     );
   }, [headings]);
 
+  const inferCurrentHeadingOnInitialize = useCallback(() => {
+    const infered1 = getClosestUpHeadingFromTop();
+    if (infered1) {
+      setCurrentHeading(infered1.id);
+      return;
+    }
+
+    const infered2 = getClosestUpHeadingFromBottom();
+    if (!infered2) return;
+
+    setCurrentHeading(infered2.id);
+  }, []);
+
   const getFirstVisibleHeadingSlug = useCallback(() => {
     let firstSlug = '';
     let minIndex = NIL_IDX;
@@ -252,8 +265,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     if (!isLargeScreen) return;
 
     const handleResize = () => {
-      const infered = getClosestUpHeadingFromBottom();
-      if (infered) setCurrentHeading(infered.id);
+      inferCurrentHeadingOnInitialize();
     };
 
     window.addEventListener('resize', handleResize);
@@ -261,7 +273,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [isLargeScreen]);
+  }, [isLargeScreen, inferCurrentHeadingOnInitialize]);
 
   useEffect(() => {
     currentHeadingRef.current = currentHeading;
@@ -336,18 +348,11 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     [isCollapsed]
   );
 
-  useEffect(() => {
-    const infered1 = getClosestUpHeadingFromTop();
-    if (infered1) {
-      setCurrentHeading(infered1.id);
-      return;
-    }
-
-    const infered2 = getClosestUpHeadingFromBottom();
-    if (!infered2) return;
-
-    setCurrentHeading(infered2.id);
-  }, []);
+  useEffect(
+    () => inferCurrentHeadingOnInitialize(),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   useEffect(() => handleMagnetization(), [handleMagnetization]);
 
