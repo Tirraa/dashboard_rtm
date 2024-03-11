@@ -1,8 +1,9 @@
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { FunctionComponent } from 'react';
 
 import { useScrollDirection } from '@/components/hooks/useScrollDirection';
+import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
-import { useCallback, useEffect, useState, useRef } from 'react';
 import { computeHTMLElementHeight } from '@rtm/shared-lib/html';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { useRouter } from 'next/navigation';
@@ -10,100 +11,260 @@ import { getNavbar } from '@/lib/html';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
-import type { BlogPostTocDesktopProps } from './BlogPostTocDesktop';
+import type { BlogPostTocDesktopProps } from './BlogPostTocDesktopLazy';
 
 import BlogPostTocCollapseButton, { COLLAPSE_BUTTON_HEIGTH_IN_PX } from './BlogPostTocCollapseButton';
-
-const NIL_IDX = -1;
-const HIGHLIGHT_INITIAL_STATE: ActiveHighlightMetas = { idx: NIL_IDX, slug: '' } as const;
-const CHIPI_CHIPI_CHAPA_CHAPA_IN_PX: number = 192;
-const MAGNETIZED_NAVBAR_Y_SCROLL_THRESHOLD_IN_PX: number = 192;
-
-const visibleElements = {} as Record<HeadingSlug, HeadingSlugIdx>;
-let killNextObservableUpdate = false;
-let upOffCamWaitForNextObservable = false;
-
-let bottomDeadZone = 0;
-let topDeadZone = 0;
-
-const useForcedHighlight = () => {
-  const [forcedHighlight, setForcedHighlight] = useState<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
-  const preparedForcedActiveSlug = useRef<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
-
-  const setForcedHighlightAndHighlight = (value: ActiveHighlightMetas) => {
-    preparedForcedActiveSlug.current = value;
-    setForcedHighlight(value);
-  };
-
-  return { setForcedHighlight: setForcedHighlightAndHighlight, preparedForcedActiveSlug, forcedHighlight };
-};
-
-function getClosestUpElement(elements: HTMLElement[], fromScreenBottom: boolean = false) {
-  let closest = null;
-  let closestDistance = Infinity;
-
-  const yStart = fromScreenBottom ? window.scrollY + window.innerHeight - bottomDeadZone : window.scrollY;
-  for (const element of elements) {
-    const distance = yStart - element.offsetTop;
-
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (0 < distance && distance < closestDistance) {
-      closest = element;
-      closestDistance = distance;
-    }
-  }
-
-  return closest;
-}
 
 export interface BlogPostTocDesktopInnerProps extends BlogPostTocDesktopProps {
   ariaLabel: string;
 }
 
+const navbarElement = getNavbar();
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+const navbarHeight = navbarElement ? computeHTMLElementHeight(navbarElement) : 0;
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+const BOTTOM_DEAD_ZONE_PX = navbarHeight * 2;
+const TOP_DEAD_ZONE_PX = navbarHeight;
+
+const NIL_IDX = -1;
+const TOC_SCROLL_TOP_OFFSET_IN_PX: number = 192;
+const MAGNETIZED_NAVBAR_Y_SCROLL_THRESHOLD_IN_PX: number = 192;
+
+const getAllDocumentHeadingsFromDOM = () => {
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const h1 = Array.from(document.querySelectorAll('h1')).slice(1);
+  const hN = Array.from(document.querySelectorAll('h2, h3, h4, h5, h6'));
+  return [...h1, ...hN] as HTMLElement[];
+};
+
+function getClosestUpHeadingFromBottom(): MaybeNull<HTMLElement> {
+  const headingsFromDOM = getAllDocumentHeadingsFromDOM();
+  let closestHeading = null;
+  let closestDistance = Infinity;
+  const viewportHeight = window.innerHeight;
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const yStart = window.scrollY + viewportHeight - BOTTOM_DEAD_ZONE_PX;
+
+  for (const heading of headingsFromDOM) {
+    const distance = yStart - heading.offsetTop;
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    if (0 <= distance && distance <= closestDistance) {
+      closestHeading = heading;
+      closestDistance = distance;
+    }
+  }
+
+  return closestHeading;
+}
+
+function getClosestUpHeadingFromTop(): MaybeNull<HTMLElement> {
+  const headingsFromDOM = getAllDocumentHeadingsFromDOM();
+  let closestHeading = null;
+  let closestDistance = -Infinity;
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const yStart = window.scrollY + TOP_DEAD_ZONE_PX;
+  const yMax = window.scrollY + window.innerHeight;
+
+  for (const heading of headingsFromDOM) {
+    if (heading.offsetTop > yMax) continue;
+    const distance = yStart - heading.offsetTop;
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    if (0 >= distance && distance >= closestDistance) {
+      closestHeading = heading;
+      closestDistance = distance;
+    }
+  }
+
+  return closestHeading;
+}
+
 const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({ ariaLabel, headings }) => {
+  const router = useRouter();
+  const isLargeScreen = useIsLargeScreen();
+  const scrollDirection = useScrollDirection();
+  const [currentHeading, setCurrentHeading] = useState<HeadingSlug>('');
   const [isMagnetized, setIsMagnetized] = useState<boolean>(false);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
-  const isLargeScreen = useIsLargeScreen();
-  const router = useRouter();
-  const scrollDirection = useScrollDirection();
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const [, setForceUpdate] = useState<number>(0);
-  const [highlight, setHighlight] = useState<ActiveHighlightMetas>(HIGHLIGHT_INITIAL_STATE);
-  const { preparedForcedActiveSlug, setForcedHighlight, forcedHighlight } = useForcedHighlight();
-  const oldIdx = useRef<number>(NIL_IDX);
-  const oldSlug = useRef<string>('');
-  const tocRef = useRef<HTMLDivElement>(null);
+
+  const observer = useRef<MaybeNull<IntersectionObserver>>(null);
+  const visibleElements = useRef<VisibleElements>({});
   const headingsRef = useRef<HTMLOListElement>(null);
+  const tocRef = useRef<HTMLDivElement>(null);
+  const currentHeadingRef = useRef<HeadingSlug>(currentHeading);
+  const forcedHeadingSlugRef = useRef<HeadingSlug>('');
+  const muteUpdatesUntilScrollEnd = useRef<boolean>(false);
 
-  const inferCurrentHighlight = useCallback(() => {
-    const elements: HTMLElement[] = [];
+  const slugAndIndexAssoc = useMemo(() => {
+    return headings.reduce(
+      (indexed, { slug }, idx) => {
+        indexed[slug] = idx;
+        return indexed;
+      },
+      {} as Record<HeadingSlug, HeadingSlugIdx>
+    );
+  }, [headings]);
 
-    for (const { slug } of headings) {
-      const elm = document.getElementById(slug);
-      if (elm) elements.push(elm);
+  const getFirstVisibleHeadingSlug = useCallback(() => {
+    let firstSlug = '';
+    let minIndex = NIL_IDX;
+    const visibleElementsInstance = getRefCurrentPtr(visibleElements);
+
+    for (const slug of Object.keys(visibleElementsInstance)) {
+      const currentIndex = slugAndIndexAssoc[slug];
+      if (currentIndex < minIndex || minIndex === NIL_IDX) {
+        firstSlug = slug;
+        minIndex = currentIndex;
+      }
     }
 
-    const closest = getClosestUpElement(elements, true);
+    return firstSlug;
+  }, [slugAndIndexAssoc]);
 
-    if (!closest) return;
+  const handleMagnetization = useCallback(() => {
+    const scrollPosition = window.scrollY;
 
-    const idx = headings.findIndex((heading) => heading.slug === closest.id);
-    if (oldIdx.current !== idx) {
-      const hl: ActiveHighlightMetas = { slug: headings[idx].slug, idx };
-      oldIdx.current = hl.idx;
-      oldSlug.current = hl.slug;
-
-      const headingsInstance = getRefCurrentPtr(headingsRef);
-
-      headingsInstance.scrollTo({
-        top: (headingsInstance.children[idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
-        behavior: 'smooth'
-      });
-
-      setHighlight({ ...hl });
-      setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
+    if (scrollPosition >= MAGNETIZED_NAVBAR_Y_SCROLL_THRESHOLD_IN_PX) {
+      setIsMagnetized(true);
+    } else {
+      setIsMagnetized(false);
+      setIsCollapsed(false);
     }
-  }, [headings, setForcedHighlight]);
+  }, []);
+
+  const handleScrollUp = useCallback(() => {
+    if (scrollDirection !== 'up' || !isLargeScreen || muteUpdatesUntilScrollEnd.current) return;
+
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const atTop = window.scrollY === 0;
+    if (atTop) {
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const veryFirstHeadingSlug = headings[0].slug;
+      forcedHeadingSlugRef.current = '';
+      setCurrentHeading(veryFirstHeadingSlug);
+      return;
+    }
+
+    const visibleElementsInstance = getRefCurrentPtr(visibleElements);
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    if (Object.keys(visibleElementsInstance).length === 0) {
+      const infered = getClosestUpHeadingFromBottom();
+      if (infered) setCurrentHeading(infered.id);
+      return;
+    }
+
+    const firstVisibleHeadingSlug = getFirstVisibleHeadingSlug();
+
+    if (forcedHeadingSlugRef.current) {
+      const newIdx = slugAndIndexAssoc[firstVisibleHeadingSlug];
+      const oldIdx = slugAndIndexAssoc[forcedHeadingSlugRef.current];
+      if (newIdx <= oldIdx) forcedHeadingSlugRef.current = '';
+      else return;
+    }
+
+    if (firstVisibleHeadingSlug) setCurrentHeading(firstVisibleHeadingSlug);
+  }, [headings, getFirstVisibleHeadingSlug, isLargeScreen, scrollDirection, slugAndIndexAssoc]);
+
+  const handleScrollDown = useCallback(() => {
+    if (scrollDirection !== 'down' || !isLargeScreen || muteUpdatesUntilScrollEnd.current) return;
+
+    const atBottom = window.scrollY + window.innerHeight === document.documentElement.scrollHeight;
+    if (atBottom) {
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const veryLastHeadingSlug = headings[headings.length - 1].slug;
+      forcedHeadingSlugRef.current = '';
+      setCurrentHeading(veryLastHeadingSlug);
+      return;
+    }
+
+    const firstVisibleHeadingSlug = getFirstVisibleHeadingSlug();
+
+    if (forcedHeadingSlugRef.current) {
+      const newIdx = slugAndIndexAssoc[firstVisibleHeadingSlug];
+      const oldIdx = slugAndIndexAssoc[forcedHeadingSlugRef.current];
+      if (newIdx >= oldIdx) forcedHeadingSlugRef.current = '';
+      else return;
+    }
+
+    if (firstVisibleHeadingSlug) setCurrentHeading(firstVisibleHeadingSlug);
+  }, [headings, getFirstVisibleHeadingSlug, isLargeScreen, scrollDirection, slugAndIndexAssoc]);
+
+  useEffect(() => {
+    function handleScrollEnd() {
+      if (!isLargeScreen) return;
+      muteUpdatesUntilScrollEnd.current = false;
+    }
+
+    window.addEventListener('scrollend', handleScrollEnd);
+
+    return () => window.removeEventListener('scrollend', handleScrollEnd);
+  }, [isLargeScreen]);
+
+  useEffect(() => {
+    if (!isLargeScreen) return;
+
+    const visibleElementsInstance = getRefCurrentPtr(visibleElements);
+
+    observer.current = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const slug = entry.target.id;
+          if (entry.isIntersecting) {
+            visibleElementsInstance[slug] = slugAndIndexAssoc[slug];
+          } else {
+            delete visibleElementsInstance[slug];
+          }
+        }
+      },
+      {
+        rootMargin: `-${TOP_DEAD_ZONE_PX}px 0px -${BOTTOM_DEAD_ZONE_PX}px 0px`,
+        threshold: 0.5
+      }
+    );
+
+    const observerInstance = getRefCurrentPtr(observer);
+
+    for (const heading of headings) {
+      const element: MaybeNull<HTMLElement> = document.getElementById(heading.slug);
+      if (element) observerInstance.observe(element);
+    }
+
+    return () => {
+      if (observerInstance) observerInstance.disconnect();
+    };
+  }, [headings, isLargeScreen, slugAndIndexAssoc]);
+
+  useEffect(() => {
+    if (!isLargeScreen) return;
+
+    window.addEventListener('scroll', handleMagnetization);
+    window.addEventListener('scroll', handleScrollUp);
+    window.addEventListener('scroll', handleScrollDown);
+
+    return () => {
+      window.removeEventListener('scroll', handleMagnetization);
+      window.removeEventListener('scroll', handleScrollUp);
+      window.removeEventListener('scroll', handleScrollDown);
+    };
+  }, [isLargeScreen, handleScrollDown, handleScrollUp, handleMagnetization]);
+
+  useEffect(() => {
+    if (!isLargeScreen) return;
+
+    const handleResize = () => {
+      const infered = getClosestUpHeadingFromBottom();
+      if (infered) setCurrentHeading(infered.id);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isLargeScreen]);
+
+  useEffect(() => {
+    currentHeadingRef.current = currentHeading;
+  }, [currentHeading]);
 
   useEffect(() => {
     if (!isLargeScreen) return;
@@ -111,105 +272,20 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     const headingsInstance = getRefCurrentPtr(headingsRef);
     if (!headingsInstance) return;
 
-    const HTMLElement = headingsInstance.children[oldIdx.current];
-    if (!HTMLElement) return;
+    const idx = slugAndIndexAssoc[currentHeading];
+    if (idx === undefined) return;
 
     headingsInstance.scrollTo({
-      top: (HTMLElement as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
+      top: (headingsInstance.children[idx] as HTMLElement).offsetTop - TOC_SCROLL_TOP_OFFSET_IN_PX,
       behavior: 'smooth'
     });
-
-    killNextObservableUpdate = false;
-    upOffCamWaitForNextObservable = false;
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    setForceUpdate((prev) => prev + 1);
-  }, [isLargeScreen]);
-
-  useEffect(() => {
-    function handleNavbarAndTocOverlap() {
-      const scrollPosition = window.scrollY;
-
-      if (scrollPosition >= MAGNETIZED_NAVBAR_Y_SCROLL_THRESHOLD_IN_PX) {
-        setIsMagnetized(true);
-      } else {
-        setIsMagnetized(false);
-        setIsCollapsed(false);
-      }
-    }
-
-    function handleScroll() {
-      if (!isLargeScreen) return;
-      handleNavbarAndTocOverlap();
-
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      const atTop = window.scrollY === 0;
-      const atBottom = window.scrollY + window.innerHeight === document.documentElement.scrollHeight;
-      const newForcedHighlight: ActiveHighlightMetas = atTop
-        ? // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-          { slug: headings[0].slug, idx: 0 }
-        : atBottom
-          ? // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-            { slug: headings[headings.length - 1].slug, idx: headings.length - 1 }
-          : HIGHLIGHT_INITIAL_STATE;
-
-      if (preparedForcedActiveSlug.current.slug === newForcedHighlight.slug) return;
-      preparedForcedActiveSlug.current = { ...newForcedHighlight };
-      if (newForcedHighlight.idx === NIL_IDX) return;
-
-      oldIdx.current = newForcedHighlight.idx;
-      oldSlug.current = newForcedHighlight.slug;
-      const headingsInstance = getRefCurrentPtr(headingsRef);
-
-      headingsInstance.scrollTo({
-        top: (headingsInstance.children[newForcedHighlight.idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
-        behavior: 'smooth'
-      });
-      setHighlight({ ...newForcedHighlight });
-    }
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [headings, preparedForcedActiveSlug, isLargeScreen]);
-
-  useEffect(() => {
-    function handleScrollEnd() {
-      if (!isLargeScreen) return;
-      preparedForcedActiveSlug.current = HIGHLIGHT_INITIAL_STATE;
-    }
-
-    window.addEventListener('scrollend', handleScrollEnd);
-
-    return () => window.removeEventListener('scrollend', handleScrollEnd);
-  }, [preparedForcedActiveSlug, isLargeScreen]);
-
-  useEffect(() => {
-    function handleHashChange() {
-      if (!isLargeScreen) return;
-      const giveUp = () => !preparedForcedActiveSlug.current.slug;
-
-      if (giveUp()) return;
-
-      killNextObservableUpdate = true;
-      oldIdx.current = preparedForcedActiveSlug.current.idx;
-      oldSlug.current = preparedForcedActiveSlug.current.slug;
-      setForcedHighlight({ ...preparedForcedActiveSlug.current });
-      setHighlight({ ...preparedForcedActiveSlug.current });
-    }
-
-    window.addEventListener('my-hashchange', handleHashChange);
-
-    return () => window.removeEventListener('my-hashchange', handleHashChange);
-  }, [setForcedHighlight, preparedForcedActiveSlug, isLargeScreen]);
+  }, [currentHeading, isLargeScreen, slugAndIndexAssoc]);
 
   useEffect(() => {
     if (!isLargeScreen) return;
 
     const tocInstance = getRefCurrentPtr(tocRef);
-    const headingsInstance = getRefCurrentPtr(headingsRef);
-
-    if (!tocInstance || !headingsInstance) return;
+    if (!tocInstance) return;
 
     function updateScrollOnUncollapse(event: TransitionEvent) {
       const target = event.target as HTMLElement;
@@ -218,11 +294,17 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         return;
       }
 
-      const HTMLElement = headingsInstance.children[oldIdx.current];
+      const headingsInstance = getRefCurrentPtr(headingsRef);
+      if (!headingsInstance) return;
+
+      const idx = slugAndIndexAssoc[currentHeading];
+      if (idx === undefined) return;
+
+      const HTMLElement = headingsInstance.children[idx];
       if (!HTMLElement) return;
 
       headingsInstance.scrollTo({
-        top: (HTMLElement as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
+        top: (HTMLElement as HTMLElement).offsetTop - TOC_SCROLL_TOP_OFFSET_IN_PX,
         behavior: 'smooth'
       });
     }
@@ -237,7 +319,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
     if (!isCollapsed) {
       applyUncollapsedStyles();
-      if (oldIdx.current === NIL_IDX) return;
+      const idx = slugAndIndexAssoc[currentHeading];
+      if (idx === undefined) return;
 
       tocInstance.addEventListener('transitionend', (event) => updateScrollOnUncollapse(event));
       return;
@@ -246,197 +329,30 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     applyCollapsedStyles();
 
     return () => tocInstance.removeEventListener('transitionend', updateScrollOnUncollapse);
-  }, [isCollapsed, isLargeScreen]);
+  }, [isCollapsed, isLargeScreen, currentHeading, slugAndIndexAssoc]);
 
   useEffect(() => {
-    if (!isLargeScreen) return;
-
-    const navbarElement = getNavbar();
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const navbarHeight = navbarElement ? computeHTMLElementHeight(navbarElement) : 0;
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    bottomDeadZone = navbarHeight * 2;
-    topDeadZone = navbarHeight;
-
-    let observer = new IntersectionObserver(
-      (entries) => {
-        if (preparedForcedActiveSlug.current.slug) return;
-
-        let first: ActiveHighlightMetas = HIGHLIGHT_INITIAL_STATE;
-
-        for (const entry of entries) {
-          const slug = entry.target.id;
-          if (entry.isIntersecting) {
-            visibleElements[slug] = headings.findIndex((heading) => heading.slug === slug);
-          } else {
-            delete visibleElements[slug];
-          }
-        }
-
-        for (const [slug, idx] of Object.entries(visibleElements)) {
-          if (first.idx === NIL_IDX || idx < first.idx) first = { slug, idx };
-        }
-
-        const _oldIdx = oldIdx.current;
-        const firstIdx = first.idx;
-
-        const shouldScrollDownUpdate = () =>
-          oldSlug.current !== first.slug && firstIdx !== NIL_IDX && scrollDirection === 'down' && (_oldIdx === NIL_IDX || _oldIdx <= firstIdx);
-
-        const shouldScrollUpUpdate = () =>
-          oldSlug.current !== first.slug && firstIdx !== NIL_IDX && scrollDirection === 'up' && (_oldIdx === NIL_IDX || _oldIdx >= firstIdx);
-
-        const shouldScrollUpUpdateOffCamCase = () =>
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-          Object.keys(visibleElements).length === 0 && scrollDirection === 'up' && !upOffCamWaitForNextObservable;
-
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        if (Object.keys(visibleElements).length === 0) {
-          const elements = [];
-
-          for (const { slug } of headings) {
-            const elm = document.getElementById(slug);
-            if (elm) elements.push(elm);
-          }
-
-          const closest = getClosestUpElement(elements);
-
-          if (!closest) return;
-
-          const idx = headings.findIndex((heading) => heading.slug === closest.id);
-          if (oldIdx.current !== idx && scrollDirection === 'up') {
-            const hl: ActiveHighlightMetas = { slug: headings[idx].slug, idx };
-            oldIdx.current = hl.idx;
-            oldSlug.current = hl.slug;
-
-            const headingsInstance = getRefCurrentPtr(headingsRef);
-
-            headingsInstance.scrollTo({
-              top: (headingsInstance.children[idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
-              behavior: 'smooth'
-            });
-
-            setHighlight({ ...hl });
-            setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
-            return;
-          }
-        }
-
-        if (killNextObservableUpdate) {
-          killNextObservableUpdate = false;
-          return;
-        }
-
-        if (shouldScrollDownUpdate()) {
-          upOffCamWaitForNextObservable = false;
-
-          oldIdx.current = first.idx;
-          oldSlug.current = first.slug;
-          const headingsInstance = getRefCurrentPtr(headingsRef);
-
-          headingsInstance.scrollTo({
-            top: (headingsInstance.children[first.idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
-            behavior: 'smooth'
-          });
-
-          setHighlight({ ...first });
-          setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
-          return;
-        }
-
-        const upOffCamCtx = shouldScrollUpUpdateOffCamCase();
-        if (!shouldScrollUpUpdate() && !upOffCamCtx) return;
-
-        if (upOffCamCtx) {
-          const elements = [];
-
-          for (const { slug } of headings) {
-            const elm = document.getElementById(slug);
-            if (elm) elements.push(elm);
-          }
-
-          const closest = getClosestUpElement(elements);
-
-          if (!closest) return;
-
-          upOffCamWaitForNextObservable = true;
-
-          const idx = headings.findIndex((heading) => heading.slug === closest.id);
-          const hl: ActiveHighlightMetas = { slug: headings[idx].slug, idx };
-          oldIdx.current = hl.idx;
-          oldSlug.current = hl.slug;
-          const headingsInstance = getRefCurrentPtr(headingsRef);
-
-          headingsInstance.scrollTo({
-            top: (headingsInstance.children[idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
-            behavior: 'smooth'
-          });
-
-          setHighlight({ ...hl });
-          setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
-          return;
-        } else upOffCamWaitForNextObservable = false;
-
-        oldIdx.current = first.idx;
-        oldSlug.current = first.slug;
-        const headingsInstance = getRefCurrentPtr(headingsRef);
-
-        headingsInstance.scrollTo({
-          top: (headingsInstance.children[first.idx] as HTMLElement).offsetTop - CHIPI_CHIPI_CHAPA_CHAPA_IN_PX,
-          behavior: 'smooth'
-        });
-
-        setHighlight({ ...first });
-        setForcedHighlight({ ...HIGHLIGHT_INITIAL_STATE });
-      },
-      { rootMargin: `${-topDeadZone}px 0px ${-bottomDeadZone}px 0px`, threshold: 0.5 }
-    );
-
-    for (const heading of headings) {
-      const element = document.getElementById(heading.slug);
-      if (element) observer.observe(element);
+    const infered1 = getClosestUpHeadingFromTop();
+    if (infered1) {
+      setCurrentHeading(infered1.id);
+      return;
     }
 
-    return () => observer.disconnect();
-  }, [headings, preparedForcedActiveSlug, setForcedHighlight, scrollDirection, isLargeScreen]);
+    const infered2 = getClosestUpHeadingFromBottom();
+    if (!infered2) return;
 
-  useEffect(
-    () => {
-      function handleResize() {
-        if (!isLargeScreen) return;
+    setCurrentHeading(infered2.id);
+  }, []);
 
-        killNextObservableUpdate = false;
-        upOffCamWaitForNextObservable = false;
-
-        inferCurrentHighlight();
-      }
-
-      window.addEventListener('resize', handleResize);
-
-      return () => window.removeEventListener('resize', handleResize);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isLargeScreen]
-  );
-
-  useEffect(
-    () => {
-      inferCurrentHighlight();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
-
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  if (headings.length === 0) return null;
+  useEffect(() => handleMagnetization(), [handleMagnetization]);
 
   return (
     <nav className="flex flex-col items-center self-start transition-[margin-top] duration-300" aria-label={ariaLabel} ref={tocRef}>
       <ol className="max-h-[40vh] w-full list-none space-y-3 overflow-auto pl-6 rtl:pl-0 rtl:pr-6" ref={headingsRef}>
-        {headings.map((heading, idx) => (
+        {headings.map((heading) => (
           <li
             className={cn('w-fit list-none text-sm font-bold transition-colors duration-200 ease-in-out hover:text-primary', {
-              'text-primary': forcedHighlight.slug === heading.slug || (!forcedHighlight.slug && highlight.slug === heading.slug),
+              'text-primary': currentHeading === heading.slug,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
               'ml-6 font-normal': heading.depth === 5,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -450,11 +366,16 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
               <Link
                 onClick={(event) => {
                   event.preventDefault();
-                  preparedForcedActiveSlug.current = { slug: heading.slug, idx };
-                  window.dispatchEvent(new Event('my-hashchange'));
-                  router.replace('#' + heading.slug, { scroll: true });
+                  const elem = document.getElementById(heading.slug);
+                  if (!elem) return;
+                  forcedHeadingSlugRef.current = heading.slug;
+                  muteUpdatesUntilScrollEnd.current = true;
+                  router.replace('#' + heading.slug, { scroll: false });
+                  setCurrentHeading(forcedHeadingSlugRef.current);
+                  window.scrollTo({ top: elem.offsetTop - TOC_SCROLL_TOP_OFFSET_IN_PX, behavior: 'smooth' });
                 }}
-                href={'#' + heading.slug}
+                className={heading.slug === currentHeading ? 'text-primary' : ''}
+                href={`#${heading.slug}`}
                 replace
               >
                 {heading.content}
@@ -486,9 +407,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   );
 };
 
+export default BlogPostTocDesktopInner;
+
 type HeadingSlug = string;
 type HeadingSlugIdx = number;
-
-type ActiveHighlightMetas = { slug: string; idx: number };
-
-export default BlogPostTocDesktopInner;
+type VisibleElements = Record<HeadingSlug, HeadingSlugIdx>;
