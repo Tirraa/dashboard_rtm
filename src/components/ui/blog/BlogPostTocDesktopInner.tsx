@@ -28,8 +28,6 @@ const TOP_DEAD_ZONE_PX = navbarHeight;
 
 const NIL_IDX = -1;
 const TOC_SCROLL_TOP_OFFSET_IN_PX: number = 192;
-// {ToDo} This can't work: the height of the title, blog tags, etc is unpredictable. Compute this intersection dynamically.
-const MAGNETIZED_NAVBAR_Y_SCROLL_THRESHOLD_IN_PX: number = 192;
 
 const getAllDocumentHeadingsFromDOM = () => {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -43,7 +41,6 @@ function getClosestUpHeadingFromBottom(): MaybeNull<HTMLElement> {
   let closestHeading = null;
   let closestDistance = Infinity;
   const viewportHeight = window.innerHeight;
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const yStart = window.scrollY + viewportHeight - BOTTOM_DEAD_ZONE_PX;
 
   for (const heading of headingsFromDOM) {
@@ -62,13 +59,11 @@ function getClosestUpHeadingFromTop(): MaybeNull<HTMLElement> {
   const headingsFromDOM = getAllDocumentHeadingsFromDOM();
   let closestHeading = null;
   let closestDistance = -Infinity;
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const yStart = window.scrollY + TOP_DEAD_ZONE_PX;
-  const yMax = window.scrollY + window.innerHeight;
+  const [yMin, yMax] = [window.scrollY + TOP_DEAD_ZONE_PX, window.scrollY + window.innerHeight - BOTTOM_DEAD_ZONE_PX];
 
   for (const heading of headingsFromDOM) {
     if (heading.offsetTop > yMax) continue;
-    const distance = yStart - heading.offsetTop;
+    const distance = yMin - heading.offsetTop;
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     if (0 >= distance && distance >= closestDistance) {
       closestHeading = heading;
@@ -87,8 +82,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const [isMagnetized, setIsMagnetized] = useState<boolean>(false);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
 
-  const observer = useRef<MaybeNull<IntersectionObserver>>(null);
-  const visibleElements = useRef<VisibleElements>({});
+  const headingsObserver = useRef<MaybeNull<IntersectionObserver>>(null);
+  const visibleHeadings = useRef<VisibleHeadings>({});
   const headingsRef = useRef<HTMLOListElement>(null);
   const tocRef = useRef<HTMLDivElement>(null);
   const currentHeadingRef = useRef<HeadingSlug>(currentHeading);
@@ -121,9 +116,9 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const getFirstVisibleHeadingSlug = useCallback(() => {
     let firstSlug = '';
     let minIndex = NIL_IDX;
-    const visibleElementsInstance = getRefCurrentPtr(visibleElements);
+    const visibleHeadingsInstance = getRefCurrentPtr(visibleHeadings);
 
-    for (const slug of Object.keys(visibleElementsInstance)) {
+    for (const slug of Object.keys(visibleHeadingsInstance)) {
       const currentIndex = slugAndIndexAssoc[slug];
       if (currentIndex < minIndex || minIndex === NIL_IDX) {
         firstSlug = slug;
@@ -135,15 +130,20 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   }, [slugAndIndexAssoc]);
 
   const handleMagnetization = useCallback(() => {
-    const scrollPosition = window.scrollY;
+    const visibleHeadingsInstance = getRefCurrentPtr(visibleHeadings);
+    const headingsObserverInstance = getRefCurrentPtr(headingsObserver);
 
-    if (scrollPosition >= MAGNETIZED_NAVBAR_Y_SCROLL_THRESHOLD_IN_PX) {
+    if (headingsObserverInstance === null) return;
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const magnetizationTrigger = visibleHeadingsInstance[headings[0].slug] === undefined;
+
+    if (magnetizationTrigger) {
       setIsMagnetized(true);
     } else {
       setIsMagnetized(false);
       setIsCollapsed(false);
     }
-  }, []);
+  }, [headings]);
 
   const handleScrollUp = useCallback(() => {
     if (scrollDirection !== 'up' || !isLargeScreen || muteUpdatesUntilScrollEnd.current) return;
@@ -158,9 +158,9 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       return;
     }
 
-    const visibleElementsInstance = getRefCurrentPtr(visibleElements);
+    const visibleHeadingsInstance = getRefCurrentPtr(visibleHeadings);
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (Object.keys(visibleElementsInstance).length === 0) {
+    if (Object.keys(visibleHeadingsInstance).length === 0) {
       const infered = getClosestUpHeadingFromBottom();
       if (infered) setCurrentHeading(infered.id);
       return;
@@ -216,64 +216,36 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   useEffect(() => {
     if (!isLargeScreen) return;
 
-    const visibleElementsInstance = getRefCurrentPtr(visibleElements);
+    const visibleHeadingsInstance = getRefCurrentPtr(visibleHeadings);
 
-    observer.current = new IntersectionObserver(
+    headingsObserver.current = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           const slug = entry.target.id;
           if (entry.isIntersecting) {
-            visibleElementsInstance[slug] = slugAndIndexAssoc[slug];
+            visibleHeadingsInstance[slug] = slugAndIndexAssoc[slug];
           } else {
-            delete visibleElementsInstance[slug];
+            delete visibleHeadingsInstance[slug];
           }
         }
       },
       {
         rootMargin: `-${TOP_DEAD_ZONE_PX}px 0px -${BOTTOM_DEAD_ZONE_PX}px 0px`,
-        threshold: 0.5
+        threshold: 1
       }
     );
 
-    const observerInstance = getRefCurrentPtr(observer);
+    const headingsObserverInstance = getRefCurrentPtr(headingsObserver);
 
     for (const heading of headings) {
       const element: MaybeNull<HTMLElement> = document.getElementById(heading.slug);
-      if (element) observerInstance.observe(element);
+      if (element) headingsObserverInstance.observe(element);
     }
 
     return () => {
-      if (observerInstance) observerInstance.disconnect();
+      if (headingsObserverInstance) headingsObserverInstance.disconnect();
     };
-  }, [headings, isLargeScreen, slugAndIndexAssoc]);
-
-  useEffect(() => {
-    if (!isLargeScreen) return;
-
-    window.addEventListener('scroll', handleMagnetization);
-    window.addEventListener('scroll', handleScrollUp);
-    window.addEventListener('scroll', handleScrollDown);
-
-    return () => {
-      window.removeEventListener('scroll', handleMagnetization);
-      window.removeEventListener('scroll', handleScrollUp);
-      window.removeEventListener('scroll', handleScrollDown);
-    };
-  }, [isLargeScreen, handleScrollDown, handleScrollUp, handleMagnetization]);
-
-  useEffect(() => {
-    if (!isLargeScreen) return;
-
-    const handleResize = () => {
-      inferCurrentHeadingOnInitialize();
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [isLargeScreen, inferCurrentHeadingOnInitialize]);
+  }, [headings, isLargeScreen, slugAndIndexAssoc, handleMagnetization]);
 
   useEffect(() => {
     currentHeadingRef.current = currentHeading;
@@ -349,12 +321,47 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   );
 
   useEffect(
-    () => inferCurrentHeadingOnInitialize(),
+    () => {
+      inferCurrentHeadingOnInitialize();
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const firstHeading = document.getElementById(headings[0].slug);
+      if (!firstHeading) return;
+
+      const [yMin, yMax] = [window.scrollY + TOP_DEAD_ZONE_PX, window.scrollY + window.innerHeight - BOTTOM_DEAD_ZONE_PX];
+      const visibleFirstHeading = yMax >= firstHeading.offsetTop && firstHeading.offsetTop >= yMin;
+      if (!visibleFirstHeading) setIsMagnetized(true);
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
-  useEffect(() => handleMagnetization(), [handleMagnetization]);
+  useEffect(() => {
+    if (!isLargeScreen) return;
+
+    const handleResize = () => {
+      inferCurrentHeadingOnInitialize();
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isLargeScreen, inferCurrentHeadingOnInitialize]);
+
+  useEffect(() => {
+    if (!isLargeScreen) return;
+
+    window.addEventListener('scroll', handleMagnetization);
+    window.addEventListener('scroll', handleScrollUp);
+    window.addEventListener('scroll', handleScrollDown);
+
+    return () => {
+      window.removeEventListener('scroll', handleMagnetization);
+      window.removeEventListener('scroll', handleScrollUp);
+      window.removeEventListener('scroll', handleScrollDown);
+    };
+  }, [isLargeScreen, handleScrollDown, handleScrollUp, handleMagnetization]);
 
   return (
     <nav className="flex flex-col items-center self-start transition-[margin-top] duration-300" aria-label={ariaLabel} ref={tocRef}>
@@ -421,4 +428,4 @@ export default BlogPostTocDesktopInner;
 
 type HeadingSlug = string;
 type HeadingSlugIdx = number;
-type VisibleElements = Record<HeadingSlug, HeadingSlugIdx>;
+type VisibleHeadings = Record<HeadingSlug, HeadingSlugIdx>;
