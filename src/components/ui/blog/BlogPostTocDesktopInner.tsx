@@ -281,55 +281,59 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     });
   }, [currentHeading, isLargeScreen, slugAndIndexAssoc]);
 
-  useEffect(() => {
-    if (!isLargeScreen) return;
+  useEffect(
+    () => {
+      if (!isLargeScreen) return;
 
-    const tocInstance = getRefCurrentPtr(tocRef);
-    if (!tocInstance) return;
+      const tocInstance = getRefCurrentPtr(tocRef);
+      if (!tocInstance) return;
 
-    function updateScrollOnUncollapse(event: TransitionEvent) {
-      const target = event.target as HTMLElement;
-      if (target.tagName !== 'NAV') {
-        event.stopPropagation();
+      function updateScrollOnUncollapse(event: TransitionEvent) {
+        const target = event.target as HTMLElement;
+        if (target.tagName !== 'NAV') {
+          event.stopPropagation();
+          return;
+        }
+
+        const headingsInstance = getRefCurrentPtr(headingsRef);
+        if (!headingsInstance) return;
+
+        const idx = slugAndIndexAssoc[currentHeading];
+        if (idx === undefined) return;
+
+        const HTMLElement = headingsInstance.children[idx];
+        if (!HTMLElement) return;
+
+        headingsInstance.scrollTo({
+          top: (HTMLElement as HTMLElement).offsetTop - TOC_SCROLL_TOP_OFFSET_IN_PX,
+          behavior: 'smooth'
+        });
+      }
+
+      function applyUncollapsedStyles() {
+        tocInstance.style.marginTop = '0';
+      }
+
+      function applyCollapsedStyles() {
+        tocInstance.style.marginTop = '-' + (computeHTMLElementHeight(tocInstance) + COLLAPSE_BUTTON_HEIGTH_IN_PX) + 'px';
+      }
+
+      if (!isCollapsed) {
+        applyUncollapsedStyles();
+        const idx = slugAndIndexAssoc[currentHeading];
+        if (idx === undefined) return;
+
+        tocInstance.addEventListener('transitionend', (event) => updateScrollOnUncollapse(event));
         return;
       }
 
-      const headingsInstance = getRefCurrentPtr(headingsRef);
-      if (!headingsInstance) return;
+      applyCollapsedStyles();
 
-      const idx = slugAndIndexAssoc[currentHeading];
-      if (idx === undefined) return;
-
-      const HTMLElement = headingsInstance.children[idx];
-      if (!HTMLElement) return;
-
-      headingsInstance.scrollTo({
-        top: (HTMLElement as HTMLElement).offsetTop - TOC_SCROLL_TOP_OFFSET_IN_PX,
-        behavior: 'smooth'
-      });
-    }
-
-    function applyUncollapsedStyles() {
-      tocInstance.style.marginTop = '0';
-    }
-
-    function applyCollapsedStyles() {
-      tocInstance.style.marginTop = '-' + (computeHTMLElementHeight(tocInstance) + COLLAPSE_BUTTON_HEIGTH_IN_PX) + 'px';
-    }
-
-    if (!isCollapsed) {
-      applyUncollapsedStyles();
-      const idx = slugAndIndexAssoc[currentHeading];
-      if (idx === undefined) return;
-
-      tocInstance.addEventListener('transitionend', (event) => updateScrollOnUncollapse(event));
-      return;
-    }
-
-    applyCollapsedStyles();
-
-    return () => tocInstance.removeEventListener('transitionend', updateScrollOnUncollapse);
-  }, [isCollapsed, isLargeScreen, currentHeading, slugAndIndexAssoc]);
+      return () => tocInstance.removeEventListener('transitionend', updateScrollOnUncollapse);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isCollapsed]
+  );
 
   useEffect(() => {
     const infered1 = getClosestUpHeadingFromTop();
