@@ -4,10 +4,12 @@ import { getPagesStaticParams, getPagesMetadatas } from '@/lib/pages/staticGener
 import isSkippedPath from '@/lib/pages/static/helpers/isSkippedPath';
 import { getPageByLanguageAndPathUnstrict } from '@/lib/pages/api';
 import { setStaticParamsLocale } from 'next-international/server';
-import MDX from '@/components/layouts/blog/MdxComponent';
 import PageTaxonomy from '##/config/taxonomies/pages';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { notFound } from 'next/navigation';
+import dynamic from 'next/dynamic';
+
+const MDX = dynamic(() => import('@/components/layouts/blog/MdxComponent'), { ssr: true });
 
 export async function generateMetadata({ params }: PageProps) {
   const metadatas = await getPagesMetadatas({ params });

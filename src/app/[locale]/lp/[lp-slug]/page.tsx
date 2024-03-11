@@ -9,9 +9,11 @@ import { getLandingPagesStaticParams, getLandingPageMetadatas } from '@/lib/land
 import { getLandingPageByLanguageAndSlugUnstrict } from '@/lib/landingPages/api';
 import LandingPageTaxonomy from '##/config/taxonomies/landingPages';
 import { setStaticParamsLocale } from 'next-international/server';
-import MDX from '@/components/layouts/blog/MdxComponent';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { notFound } from 'next/navigation';
+import dynamic from 'next/dynamic';
+
+const MDX = dynamic(() => import('@/components/layouts/blog/MdxComponent'), { ssr: true });
 
 export async function generateMetadata({ params }: LandingPageProps) {
   const metadatas = await getLandingPageMetadatas({ params });
