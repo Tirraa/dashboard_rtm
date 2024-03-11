@@ -28,6 +28,7 @@ const TOP_DEAD_ZONE_PX = navbarHeight;
 
 const NIL_IDX = -1;
 const TOC_SCROLL_TOP_OFFSET_IN_PX: number = 192;
+// {ToDo} This can't work: the height of the title, blog tags, etc is unpredictable. Compute this intersection dynamically.
 const MAGNETIZED_NAVBAR_Y_SCROLL_THRESHOLD_IN_PX: number = 192;
 
 const getAllDocumentHeadingsFromDOM = () => {
