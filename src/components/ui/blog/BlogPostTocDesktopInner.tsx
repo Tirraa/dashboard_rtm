@@ -78,7 +78,7 @@ function getClosestUpHeadingFromTop(): MaybeNull<HTMLElement> {
   return closestHeading;
 }
 
-const NewBlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({ ariaLabel, headings }) => {
+const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({ ariaLabel, headings }) => {
   const router = useRouter();
   const isLargeScreen = useIsLargeScreen();
   const scrollDirection = useScrollDirection();
@@ -407,7 +407,7 @@ const NewBlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps
   );
 };
 
-export default NewBlogPostTocDesktopInner;
+export default BlogPostTocDesktopInner;
 
 type HeadingSlug = string;
 type HeadingSlugIdx = number;
