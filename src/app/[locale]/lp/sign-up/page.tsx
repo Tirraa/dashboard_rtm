@@ -8,12 +8,14 @@ import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
 import { setStaticParamsLocale } from 'next-international/server';
 import { getPageByLanguageAndPathStrict } from '@/lib/pages/api';
 import { getStaticParams, getScopedI18n } from '@/i18n/server';
-import MDX from '@/components/layouts/blog/MdxComponent';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSession } from 'next-auth';
 import ROUTES_ROOTS from '##/config/routes';
 import { redirect } from 'next/navigation';
 import { i18ns } from '##/config/i18n';
+import dynamic from 'next/dynamic';
+
+const MDX = dynamic(() => import('@/components/layouts/blog/MdxComponent'));
 
 export async function generateMetadata({ params }: I18nPageProps) {
   const scopedT = await getScopedI18n(i18ns.vocab);

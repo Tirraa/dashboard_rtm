@@ -9,10 +9,12 @@ import { getServerSideI18n, getStaticParams } from '@/i18n/server';
 import { setStaticParamsLocale } from 'next-international/server';
 import { getPageByLanguageAndPathStrict } from '@/lib/pages/api';
 import { MAIN_CLS } from '@/components/config/styles/main';
-import MDX from '@/components/layouts/blog/MdxComponent';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
+import dynamic from 'next/dynamic';
+
+const MDX = dynamic(() => import('@/components/layouts/blog/MdxComponent'));
 
 export async function generateMetadata({ params }: I18nPageProps) {
   const language = params[I18nTaxonomy.LANGUAGE];
