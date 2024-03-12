@@ -129,22 +129,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     return firstSlug;
   }, [slugAndIndexAssoc]);
 
-  const handleMagnetization = useCallback(() => {
-    const visibleHeadingsInstance = getRefCurrentPtr(visibleHeadings);
-    const headingsObserverInstance = getRefCurrentPtr(headingsObserver);
-
-    if (headingsObserverInstance === null) return;
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const magnetizationTrigger = visibleHeadingsInstance[headings[0].slug] === undefined;
-
-    if (magnetizationTrigger) {
-      setIsMagnetized(true);
-    } else {
-      setIsMagnetized(false);
-      setIsCollapsed(false);
-    }
-  }, [headings]);
-
   const handleScrollUp = useCallback(() => {
     if (scrollDirection !== 'up' || !isLargeScreen || muteUpdatesUntilScrollEnd.current) return;
 
@@ -202,6 +186,18 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     if (firstVisibleHeadingSlug) setCurrentHeading(firstVisibleHeadingSlug);
   }, [headings, getFirstVisibleHeadingSlug, isLargeScreen, scrollDirection, slugAndIndexAssoc]);
 
+  const handleMagnetization = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const firstHeading = document.getElementById(headings[0].slug);
+    if (!firstHeading) return;
+
+    const TOP_DELTA_IN_PX = 1;
+    const [yMin, yMax] = [window.scrollY + TOP_DEAD_ZONE_PX - TOP_DELTA_IN_PX, window.scrollY + window.innerHeight - BOTTOM_DEAD_ZONE_PX];
+    const visibleFirstHeading = yMax >= firstHeading.offsetTop && firstHeading.offsetTop >= yMin;
+    if (!visibleFirstHeading) setIsMagnetized(true);
+    else setIsMagnetized(false);
+  }, [headings]);
+
   useEffect(() => {
     function handleScrollEnd() {
       if (!isLargeScreen) return;
@@ -231,7 +227,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       },
       {
         rootMargin: `-${TOP_DEAD_ZONE_PX}px 0px -${BOTTOM_DEAD_ZONE_PX}px 0px`,
-        threshold: 1
+        threshold: 0.5
       }
     );
 
@@ -323,13 +319,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   useEffect(
     () => {
       inferCurrentHeadingOnInitialize();
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      const firstHeading = document.getElementById(headings[0].slug);
-      if (!firstHeading) return;
-
-      const [yMin, yMax] = [window.scrollY + TOP_DEAD_ZONE_PX, window.scrollY + window.innerHeight - BOTTOM_DEAD_ZONE_PX];
-      const visibleFirstHeading = yMax >= firstHeading.offsetTop && firstHeading.offsetTop >= yMin;
-      if (!visibleFirstHeading) setIsMagnetized(true);
+      handleMagnetization();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
