@@ -9,7 +9,9 @@ import DocumentRoot from '@/components/layouts/base/DocumentRoot';
 interface HtmlElementProps extends LayoutBaseProps {}
 
 const LandingPagesRootElement: FunctionComponent<HtmlElementProps> = ({ children, params }) => (
-  <DocumentRoot params={params}>{children}</DocumentRoot>
+  <DocumentRoot disableGoToTopButton params={params}>
+    {children}
+  </DocumentRoot>
 );
 
 export default LandingPagesRootElement;

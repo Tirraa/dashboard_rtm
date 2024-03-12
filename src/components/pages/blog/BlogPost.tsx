@@ -6,7 +6,6 @@ import type { FunctionComponent } from 'react';
 import { isValidBlogCategoryAndSubcategoryPair, getBlogPostUnstrict } from '@/lib/blog/api';
 import BlogPostTocDesktop from '@/components/ui/blog/BlogPostTocDesktop';
 import BlogPostTocMobile from '@/components/ui/blog/BlogPostTocMobile';
-import GoToTopButtonLazy from '@/components/ui/misc/GoToTopButtonLazy';
 import tagsGenerator from '@/components/ui/blog/tagsGenerator';
 import BlogPostDate from '@/components/ui/blog/BlogPostDate';
 import MDX from '@/components/layouts/blog/MdxComponent';
@@ -25,23 +24,18 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className:
   const showToC = post.headings.length > 1;
 
   return (
-    <>
-      <section className={cn('mx-12 w-auto max-w-[730px] lg:w-[45vw]', classNameValue)}>
-        <header className="mb-4 p-2 text-center">
-          <h1>{post.title}</h1>
-          <BlogPostDate language={language} post={post} />
-          {hasTags && (
-            <div className="mt-1 flex flex-wrap justify-center gap-2 md:mx-auto md:w-fit md:justify-normal">{await tagsGenerator(post)}</div>
-          )}
-        </header>
-        <div className="flex max-w-full flex-col lg:flex-row">
-          {showToC && <BlogPostTocMobile headings={post.headings} />}
-          <MDX code={post.body.code} />
-          {showToC && <BlogPostTocDesktop headings={post.headings} />}
-        </div>
-      </section>
-      <GoToTopButtonLazy />
-    </>
+    <section className={cn('mx-12 w-auto max-w-[730px] lg:w-[45vw]', classNameValue)}>
+      <header className="mb-4 p-2 text-center">
+        <h1>{post.title}</h1>
+        <BlogPostDate language={language} post={post} />
+        {hasTags && <div className="mt-1 flex flex-wrap justify-center gap-2 md:mx-auto md:w-fit md:justify-normal">{await tagsGenerator(post)}</div>}
+      </header>
+      <div className="flex max-w-full flex-col lg:flex-row">
+        {showToC && <BlogPostTocMobile headings={post.headings} />}
+        <MDX code={post.body.code} />
+        {showToC && <BlogPostTocDesktop headings={post.headings} />}
+      </div>
+    </section>
   );
 };
 

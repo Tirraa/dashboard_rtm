@@ -15,13 +15,15 @@ import { getServerSession } from 'next-auth';
 import dynamic from 'next/dynamic';
 
 const NextTopLoader = dynamic(() => import('./NextTopLoader'), { ssr: false });
+const GoToTopButton = dynamic(() => import('@/components/ui/misc/GoToTopButton'), { ssr: false });
 
 interface DocumentRootProps extends LayoutBaseProps {
+  disableGoToTopButton?: boolean;
   disableTopLoader?: boolean;
   withNavbar?: boolean;
 }
 
-const DocumentRoot: FunctionComponent<DocumentRootProps> = async ({ disableTopLoader, withNavbar, children, params }) => {
+const DocumentRoot: FunctionComponent<DocumentRootProps> = async ({ disableGoToTopButton, disableTopLoader, withNavbar, children, params }) => {
   const language = params[I18nTaxonomy.LANGUAGE];
   const session = await getServerSession();
 
@@ -32,6 +34,7 @@ const DocumentRoot: FunctionComponent<DocumentRootProps> = async ({ disableTopLo
           {!disableTopLoader && <NextTopLoader {...PROGRESSBAR_CONFIG} />}
           {withNavbar && <SitewideNavbar />}
           {children}
+          {!disableGoToTopButton && <GoToTopButton />}
         </Providers>
       </div>
       <SpeedInsights />
