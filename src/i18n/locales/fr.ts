@@ -86,7 +86,8 @@ export default {
   vocab: {
     ...SHARED.vocab,
     'sr-only': {
-      'brand-logo': `${capitalize(SHARED.vocab.logo)} de ${SHARED.vocab.brand}`
+      'brand-logo': `${capitalize(SHARED.vocab.logo)} de ${SHARED.vocab.brand}`,
+      goToTop: 'Remonter en haut de la page'
     },
 
     'copy-to-clipboard': 'Copier dans le presse-papiers',
@@ -121,7 +122,7 @@ export default {
   },
 
   auth: {
-    signup: SHARED['vocab']['sign-up'],
+    signup: SHARED.vocab['sign-up'],
     logout: 'Déconnexion',
     login: 'Connexion'
   },

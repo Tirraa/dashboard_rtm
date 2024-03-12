@@ -2,8 +2,12 @@
 
 import type { FunctionComponent } from 'react';
 
+import { computeHTMLElementHeight } from 'packages/shared-lib/src/html';
+import { getRefCurrentPtr } from 'packages/shared-lib/src/react';
 import { ArrowUpIcon } from '@heroicons/react/20/solid';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { useScopedI18n } from '@/i18n/client';
+import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 
 export interface GoToTopButtonProps {
@@ -14,7 +18,10 @@ const SCROLL_Y_THRESHOLD_DEFAULT = 400;
 
 const GoToTopButton: FunctionComponent<GoToTopButtonProps> = ({ scrollYthreshold: scrollYthresholdValue }) => {
   const [isShown, setIsShown] = useState<boolean>(false);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const scopedT = useScopedI18n(i18ns.srOnly);
 
+  const ariaLabel = scopedT('goToTop');
   const scrollYthreshold = scrollYthresholdValue ?? SCROLL_Y_THRESHOLD_DEFAULT;
 
   useEffect(() => {
@@ -33,14 +40,25 @@ const GoToTopButton: FunctionComponent<GoToTopButtonProps> = ({ scrollYthreshold
     setIsShown(window.scrollY > scrollYthreshold);
   }, [scrollYthreshold]);
 
+  useEffect(() => {
+    const btnInstance = getRefCurrentPtr(btnRef);
+    if (!btnInstance) return;
+
+    if (isShown) {
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      btnInstance.style.transform = '';
+      return;
+    }
+
+    const btnHeight = computeHTMLElementHeight(btnInstance);
+    btnInstance.style.transform = `translateY(${btnHeight}px)`;
+  }, [isShown]);
+
   return (
     <button
       className={cn(
-        'fixed bottom-0 right-0 m-2 h-10 w-10 rounded-md bg-card p-2 text-lg font-bold opacity-65 transition-opacity duration-200 ease-in-out',
-        {
-          'cursor-pointer hover:opacity-100 focus:opacity-100': isShown,
-          'cursor-default opacity-0': !isShown
-        }
+        'fixed bottom-0 right-0 m-2 h-10 w-10 cursor-pointer rounded-md bg-card p-2 text-lg font-bold opacity-65 transition-all duration-200 ease-in-out',
+        { 'hover:opacity-100 focus:opacity-100': isShown }
       )}
       onClick={
         isShown
@@ -51,6 +69,9 @@ const GoToTopButton: FunctionComponent<GoToTopButtonProps> = ({ scrollYthreshold
               })
           : undefined
       }
+      aria-hidden={!isShown}
+      aria-label={ariaLabel}
+      ref={btnRef}
     >
       <ArrowUpIcon />
     </button>

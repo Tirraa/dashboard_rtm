@@ -48,7 +48,8 @@ export default {
   vocab: {
     ...SHARED_VOCAB_SCHEMA.vocab,
     'sr-only': {
-      'brand-logo': _
+      'brand-logo': _,
+      goToTop: _
     },
 
     'copy-to-clipboard': _,
@@ -95,6 +96,7 @@ export default {
   _infos: {
     lng: '__SCANNED__'
   },
+
   'blog-categories': blogCategories
 } as const satisfies TypedLeafsJSONData<MaybeScanned>;
 

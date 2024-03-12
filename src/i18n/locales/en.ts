@@ -86,7 +86,8 @@ export default {
   vocab: {
     ...SHARED.vocab,
     'sr-only': {
-      'brand-logo': `${capitalize(SHARED.vocab.brand)}'s ${SHARED.vocab.logo}`
+      'brand-logo': `${capitalize(SHARED.vocab.brand)}'s ${SHARED.vocab.logo}`,
+      goToTop: 'Go to the top of the page'
     },
 
     'no-blog-post': 'Nobody here but us chickens!',
