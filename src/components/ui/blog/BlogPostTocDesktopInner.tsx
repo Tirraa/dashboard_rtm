@@ -406,7 +406,10 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
     const handleHashchange = () => {
       const heading = getCurrentHeadingSlugFromHash();
-      if (heading !== null) setCurrentHeading(heading);
+      if (heading !== null) {
+        forcedHeadingSlugRef.current = heading;
+        setCurrentHeading(heading);
+      }
     };
 
     window.addEventListener('hashchange', handleHashchange);
