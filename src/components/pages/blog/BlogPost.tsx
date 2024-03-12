@@ -13,9 +13,12 @@ import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { notFound } from 'next/navigation';
 import { cn } from '@/lib/tailwind';
+import dynamic from 'next/dynamic';
 
 interface BlogPostInnerProps extends BlogPostProps {}
 interface _BlogPostPageProps extends BlogPostPageProps, Partial<WithClassname> {}
+
+const GoToTopButton = dynamic(() => import('@/components/ui/misc/goToTopButton'), { ssr: false });
 
 const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className: classNameValue, language, post }) => {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -24,18 +27,23 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className:
   const showToC = post.headings.length > 1;
 
   return (
-    <section className={cn('mx-12 w-auto max-w-[730px] lg:w-[45vw]', classNameValue)}>
-      <header className="mb-4 p-2 text-center">
-        <h1>{post.title}</h1>
-        <BlogPostDate language={language} post={post} />
-        {hasTags && <div className="mt-1 flex flex-wrap justify-center gap-2 md:mx-auto md:w-fit md:justify-normal">{await tagsGenerator(post)}</div>}
-      </header>
-      <div className="flex max-w-full flex-col lg:flex-row">
-        {showToC && <BlogPostTocMobile headings={post.headings} />}
-        <MDX code={post.body.code} />
-        {showToC && <BlogPostTocDesktop headings={post.headings} />}
-      </div>
-    </section>
+    <>
+      <section className={cn('mx-12 w-auto max-w-[730px] lg:w-[45vw]', classNameValue)}>
+        <header className="mb-4 p-2 text-center">
+          <h1>{post.title}</h1>
+          <BlogPostDate language={language} post={post} />
+          {hasTags && (
+            <div className="mt-1 flex flex-wrap justify-center gap-2 md:mx-auto md:w-fit md:justify-normal">{await tagsGenerator(post)}</div>
+          )}
+        </header>
+        <div className="flex max-w-full flex-col lg:flex-row">
+          {showToC && <BlogPostTocMobile headings={post.headings} />}
+          <MDX code={post.body.code} />
+          {showToC && <BlogPostTocDesktop headings={post.headings} />}
+        </div>
+      </section>
+      <GoToTopButton />
+    </>
   );
 };
 
