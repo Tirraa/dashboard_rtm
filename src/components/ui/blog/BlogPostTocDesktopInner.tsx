@@ -382,7 +382,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       <ol className="max-h-[40vh] w-full list-none space-y-3 overflow-auto pl-6 rtl:pl-0 rtl:pr-6" ref={headingsRef}>
         {headings.map((heading) => (
           <li
-            className={cn('w-fit list-none text-sm font-bold transition-colors duration-200 ease-in-out hover:text-primary', {
+            className={cn('w-fit list-none text-sm font-bold transition-colors duration-200 ease-in-out hover:text-primary focus:text-primary', {
               'text-primary': currentHeading === heading.slug,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
               'ml-6 font-normal': heading.depth === 5,
