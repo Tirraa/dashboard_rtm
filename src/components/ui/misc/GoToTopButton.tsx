@@ -4,8 +4,8 @@ import type { FunctionComponent } from 'react';
 
 import { computeHTMLElementHeight } from 'packages/shared-lib/src/html';
 import { getRefCurrentPtr } from 'packages/shared-lib/src/react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { ArrowUpIcon } from '@heroicons/react/20/solid';
-import { useEffect, useState, useRef } from 'react';
 import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
@@ -18,15 +18,26 @@ const SCROLL_Y_THRESHOLD_DEFAULT = 400;
 
 const GoToTopButton: FunctionComponent<GoToTopButtonProps> = ({ scrollYthreshold: scrollYthresholdValue }) => {
   const [isShown, setIsShown] = useState<boolean>(false);
-  const btnRef = useRef<HTMLButtonElement>(null);
   const scopedT = useScopedI18n(i18ns.srOnly);
 
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const skipUpdateUntilScrollEnd = useRef<boolean>(false);
+  const scrollYthreshold = useRef<number>(scrollYthresholdValue ?? SCROLL_Y_THRESHOLD_DEFAULT);
+
   const ariaLabel = scopedT('goToTop');
-  const scrollYthreshold = scrollYthresholdValue ?? SCROLL_Y_THRESHOLD_DEFAULT;
+
+  const onClickFn = useCallback(() => {
+    skipUpdateUntilScrollEnd.current = true;
+    window.scrollTo({
+      behavior: 'smooth',
+      top: 0
+    });
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsShown(window.scrollY > scrollYthreshold);
+      if (skipUpdateUntilScrollEnd.current) return;
+      setIsShown(window.scrollY > scrollYthreshold.current);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -34,11 +45,25 @@ const GoToTopButton: FunctionComponent<GoToTopButtonProps> = ({ scrollYthreshold
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [scrollYthreshold]);
+  }, []);
 
   useEffect(() => {
-    setIsShown(window.scrollY > scrollYthreshold);
-  }, [scrollYthreshold]);
+    const handleScrollEnd = () => {
+      if (!skipUpdateUntilScrollEnd.current) return;
+      skipUpdateUntilScrollEnd.current = false;
+      setIsShown(window.scrollY > scrollYthreshold.current);
+    };
+
+    window.addEventListener('scrollend', handleScrollEnd);
+
+    return () => {
+      window.removeEventListener('scrollend', handleScrollEnd);
+    };
+  }, []);
+
+  useEffect(() => {
+    setIsShown(window.scrollY > scrollYthreshold.current);
+  }, []);
 
   useEffect(() => {
     const btnInstance = getRefCurrentPtr(btnRef);
@@ -57,20 +82,13 @@ const GoToTopButton: FunctionComponent<GoToTopButtonProps> = ({ scrollYthreshold
   return (
     <button
       className={cn(
-        'fixed bottom-0 right-0 m-2 h-10 w-10 cursor-pointer rounded-md bg-card p-2 text-lg font-bold opacity-65 transition-all duration-200 ease-in-out',
-        { 'hover:opacity-100 focus:opacity-100': isShown }
+        'fixed bottom-0 right-0 m-2 h-10 w-10 cursor-pointer rounded-md bg-card p-2 text-lg font-bold opacity-0 transition-all duration-200 ease-in-out',
+        { 'opacity-65 hover:opacity-100 focus:opacity-100': isShown }
       )}
-      onClick={
-        isShown
-          ? () =>
-              window.scrollTo({
-                behavior: 'smooth',
-                top: 0
-              })
-          : undefined
-      }
+      onClick={isShown ? onClickFn : undefined}
       aria-hidden={!isShown}
       aria-label={ariaLabel}
+      disabled={!isShown}
       ref={btnRef}
     >
       <ArrowUpIcon />
