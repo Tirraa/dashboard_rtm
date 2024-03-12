@@ -41,6 +41,8 @@ const getAllDocumentHeadingsFromDOM = () => {
 };
 const headingsFromDOM = getAllDocumentHeadingsFromDOM();
 
+const getTotalVerticalScrollDistance = () => Math.ceil(window.scrollY + window.innerHeight);
+
 function getClosestUpHeadingFromBottom(): MaybeNull<HTMLElement> {
   let closestHeading = null;
   let closestDistance = Infinity;
@@ -63,7 +65,7 @@ function getClosestUpHeadingFromTop(): MaybeNull<HTMLElement> {
   const headingsFromDOM = getAllDocumentHeadingsFromDOM();
   let closestHeading = null;
   let closestDistance = -Infinity;
-  const [yMin, yMax] = [window.scrollY + TOP_DEAD_ZONE_PX, window.scrollY + window.innerHeight - BOTTOM_DEAD_ZONE_PX];
+  const [yMin, yMax] = [window.scrollY + TOP_DEAD_ZONE_PX, getTotalVerticalScrollDistance() - BOTTOM_DEAD_ZONE_PX];
 
   for (const heading of headingsFromDOM) {
     if (heading.offsetTop > yMax) continue;
@@ -90,7 +92,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const visibleHeadings = useRef<VisibleHeadings>({});
   const headingsRef = useRef<HTMLOListElement>(null);
   const tocRef = useRef<HTMLDivElement>(null);
-  const currentHeadingRef = useRef<HeadingSlug>(currentHeading);
   const forcedHeadingSlugRef = useRef<HeadingSlug>('');
   const muteUpdatesUntilScrollEnd = useRef<boolean>(false);
 
@@ -119,7 +120,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
       if (!expectedToBeInViewport) return maybeHeadingSlug;
 
-      const [yMin, yMax] = [window.scrollY, window.scrollY + window.innerHeight];
+      const [yMin, yMax] = [window.scrollY, getTotalVerticalScrollDistance()];
       const headingIsInViewport = yMax >= heading.offsetTop && heading.offsetTop >= yMin;
       return !headingIsInViewport ? null : maybeHeadingSlug;
     },
@@ -224,7 +225,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const handleScrollDown = useCallback(() => {
     if (scrollDirection !== 'down' || !isLargeScreen || muteUpdatesUntilScrollEnd.current) return;
 
-    const atBottom = Math.ceil(window.scrollY + window.innerHeight) >= document.documentElement.scrollHeight;
+    const atBottom = getTotalVerticalScrollDistance() >= document.documentElement.scrollHeight;
     if (atBottom) {
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       const veryLastHeadingSlug = headings[headings.length - 1].slug;
@@ -252,7 +253,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     if (!firstHeading) return;
 
     const TOP_DELTA_IN_PX = 1;
-    const [yMin, yMax] = [window.scrollY + TOP_DEAD_ZONE_PX - TOP_DELTA_IN_PX, window.scrollY + window.innerHeight - BOTTOM_DEAD_ZONE_PX];
+    const [yMin, yMax] = [window.scrollY + TOP_DEAD_ZONE_PX - TOP_DELTA_IN_PX, getTotalVerticalScrollDistance() - BOTTOM_DEAD_ZONE_PX];
     const visibleFirstHeading = yMax >= firstHeading.offsetTop && firstHeading.offsetTop >= yMin;
     if (!visibleFirstHeading) setIsMagnetized(true);
     else setIsMagnetized(false);
@@ -302,10 +303,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       if (headingsObserverInstance) headingsObserverInstance.disconnect();
     };
   }, [headings, isLargeScreen, slugAndIndexAssoc, handleMagnetization]);
-
-  useEffect(() => {
-    currentHeadingRef.current = currentHeading;
-  }, [currentHeading]);
 
   useEffect(() => {
     if (!isMagnetized) setIsCollapsed(false);
