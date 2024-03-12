@@ -39,9 +39,9 @@ const getAllDocumentHeadingsFromDOM = () => {
   const hN = Array.from(document.querySelectorAll('h2, h3, h4, h5, h6'));
   return [...h1, ...hN] as HTMLElement[];
 };
+const headingsFromDOM = getAllDocumentHeadingsFromDOM();
 
 function getClosestUpHeadingFromBottom(): MaybeNull<HTMLElement> {
-  const headingsFromDOM = getAllDocumentHeadingsFromDOM();
   let closestHeading = null;
   let closestDistance = Infinity;
   const viewportHeight = window.innerHeight;
@@ -479,21 +479,18 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
           </li>
         ))}
       </ol>
-      {(isMagnetized && (
+      {
         <BlogPostTocCollapseButton
-          className={cn('relative top-6 z-10 opacity-100 transition-opacity duration-200', { 'top-4': isCollapsed })}
+          className={cn('relative top-6 z-10 opacity-100 transition-opacity duration-200', {
+            'opacity-0': !isMagnetized,
+            'top-4': isCollapsed
+          })}
           setIsCollapsed={setIsCollapsed}
+          aria-hidden={!isMagnetized}
+          isDisabled={!isMagnetized}
           isCollapsed={isCollapsed}
         />
-      )) || (
-        <BlogPostTocCollapseButton
-          className={cn('relative top-6 z-10 opacity-0 transition-opacity duration-200', { 'top-4': isCollapsed })}
-          setIsCollapsed={setIsCollapsed}
-          isCollapsed={isCollapsed}
-          aria-hidden="true"
-          isDisabled
-        />
-      )}
+      }
     </nav>
   );
 };
