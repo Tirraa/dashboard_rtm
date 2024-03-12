@@ -224,7 +224,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const handleScrollDown = useCallback(() => {
     if (scrollDirection !== 'down' || !isLargeScreen || muteUpdatesUntilScrollEnd.current) return;
 
-    const atBottom = window.scrollY + window.innerHeight === document.documentElement.scrollHeight;
+    const atBottom = Math.ceil(window.scrollY + window.innerHeight) >= document.documentElement.scrollHeight;
     if (atBottom) {
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       const veryLastHeadingSlug = headings[headings.length - 1].slug;
