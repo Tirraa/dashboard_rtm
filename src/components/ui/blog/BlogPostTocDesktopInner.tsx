@@ -100,22 +100,27 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     );
   }, [headings]);
 
-  const getCurrentHeadingSlugFromHash: () => MaybeNull<HeadingSlug> = useCallback(() => {
-    const hash = window.location.hash;
-    if (!hash) return null;
+  const getCurrentHeadingSlugFromHash: (expectedToBeInViewport?: boolean) => MaybeNull<HeadingSlug> = useCallback(
+    (expectedToBeInViewport: boolean = false) => {
+      const hash = window.location.hash;
+      if (!hash) return null;
 
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const maybeHeadingSlug = hash.substring(1);
-    const maybeHeadingSlugIdx = slugAndIndexAssoc[maybeHeadingSlug];
-    if (maybeHeadingSlugIdx === undefined) return null;
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const maybeHeadingSlug = hash.substring(1);
+      const maybeHeadingSlugIdx = slugAndIndexAssoc[maybeHeadingSlug];
+      if (maybeHeadingSlugIdx === undefined) return null;
 
-    const heading = document.getElementById(headings[maybeHeadingSlugIdx].slug);
-    if (!heading) return null;
+      const heading = document.getElementById(headings[maybeHeadingSlugIdx].slug);
+      if (!heading) return null;
 
-    const [yMin, yMax] = [window.scrollY, window.scrollY + window.innerHeight];
-    const headingIsInViewport = yMax >= heading.offsetTop && heading.offsetTop >= yMin;
-    return !headingIsInViewport ? null : maybeHeadingSlug;
-  }, [slugAndIndexAssoc, headings]);
+      if (!expectedToBeInViewport) return maybeHeadingSlug;
+
+      const [yMin, yMax] = [window.scrollY, window.scrollY + window.innerHeight];
+      const headingIsInViewport = yMax >= heading.offsetTop && heading.offsetTop >= yMin;
+      return !headingIsInViewport ? null : maybeHeadingSlug;
+    },
+    [slugAndIndexAssoc, headings]
+  );
 
   const inferCurrentHeadingRegardlessIntersectionObserver: () => MaybeNull<HTMLElement> = useCallback(() => {
     const infered1 = getClosestUpHeadingFromTop();
@@ -373,7 +378,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
   useEffect(
     () => {
-      const maybeHeadingSlugFromHash = getCurrentHeadingSlugFromHash();
+      const maybeHeadingSlugFromHash = getCurrentHeadingSlugFromHash(true);
       if (maybeHeadingSlugFromHash) setCurrentHeading(maybeHeadingSlugFromHash);
       else inferCurrentHeadingRegardlessIntersectionObserver();
       handleMagnetization();
@@ -395,6 +400,21 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       window.removeEventListener('resize', handleResize);
     };
   }, [isLargeScreen, inferCurrentHeadingRegardlessIntersectionObserver]);
+
+  useEffect(() => {
+    if (!isLargeScreen) return;
+
+    const handleHashchange = () => {
+      const heading = getCurrentHeadingSlugFromHash();
+      if (heading !== null) setCurrentHeading(heading);
+    };
+
+    window.addEventListener('hashchange', handleHashchange);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashchange);
+    };
+  }, [isLargeScreen, getCurrentHeadingSlugFromHash]);
 
   useEffect(() => {
     if (!isLargeScreen) return;
