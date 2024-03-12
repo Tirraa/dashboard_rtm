@@ -10,6 +10,10 @@ import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 
+// https://github.com/argyleink/scrollyfills?tab=readme-ov-file#polyfills
+// eslint-disable-next-line import/no-extraneous-dependencies
+require('scrollyfills').scrollend;
+
 export interface GoToTopButtonProps {
   scrollYthreshold?: number;
 }

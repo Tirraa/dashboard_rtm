@@ -258,6 +258,9 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: ^0.5.6
         version: 0.5.11(prettier@3.2.5)
+      scrollyfills:
+        specifier: ^1.0.0
+        version: 1.0.0
       ts-prune:
         specifier: 0.10.3
         version: 0.10.3
@@ -8906,6 +8909,10 @@ packages:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
     dependencies:
       loose-envify: 1.4.0
+
+  /scrollyfills@1.0.0:
+    resolution: {integrity: sha512-2Wwwgx5KoAqhmix+q3/HzcJfZm42k5XOcXcXu5L6vsEDxeCcorbSMshZtwQQxqGeowWf3/8RSGVswmwqOB+utw==}
+    dev: true
 
   /section-matter@1.0.0:
     resolution: {integrity: sha512-vfD3pmTzGpufjScBh50YHKzEu2lxBWhVEHsNGoEXmCmn2hKGfeNLYMzCJpe8cD7gqX7TJluOVpBkAequ6dgMmA==}

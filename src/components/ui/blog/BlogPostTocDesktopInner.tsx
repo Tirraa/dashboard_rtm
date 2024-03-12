@@ -15,6 +15,10 @@ import type { BlogPostTocDesktopProps } from './BlogPostTocDesktopLazy';
 
 import BlogPostTocCollapseButton, { COLLAPSE_BUTTON_HEIGTH_IN_PX } from './BlogPostTocCollapseButton';
 
+// https://github.com/argyleink/scrollyfills?tab=readme-ov-file#polyfills
+// eslint-disable-next-line import/no-extraneous-dependencies
+require('scrollyfills').scrollend;
+
 export interface BlogPostTocDesktopInnerProps extends BlogPostTocDesktopProps {
   ariaLabel: string;
 }
