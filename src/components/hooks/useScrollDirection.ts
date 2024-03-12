@@ -1,17 +1,19 @@
 // https://www.robinwieruch.de/react-hook-scroll-direction/
 
-import * as React from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 const THRESHOLD = 0;
 
-const useScrollDirection = () => {
-  const [scrollDirection, setScrollDirection] = React.useState<'down' | 'up'>('down');
+type ScrollDirection = 'down' | 'up';
 
-  const blocking = React.useRef(false);
+const useScrollDirection = (): [ScrollDirection, React.Dispatch<React.SetStateAction<ScrollDirection>>] => {
+  const [scrollDirection, setScrollDirection] = useState<ScrollDirection>('down');
+
+  const blocking = useRef(false);
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const prevScrollY = React.useRef(0);
+  const prevScrollY = useRef(0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     prevScrollY.current = window.pageYOffset;
 
     const updateScrollDirection = () => {
@@ -39,9 +41,9 @@ const useScrollDirection = () => {
     window.addEventListener('scroll', onScroll);
 
     return () => window.removeEventListener('scroll', onScroll);
-  }, [scrollDirection]);
+  }, []);
 
-  return scrollDirection;
+  return [scrollDirection, setScrollDirection];
 };
 
 export { useScrollDirection };
