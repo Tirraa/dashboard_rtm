@@ -6,7 +6,7 @@ import { ArrowUpIcon } from '@heroicons/react/20/solid';
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/tailwind';
 
-interface GoToTopButtonProps {
+export interface GoToTopButtonProps {
   scrollYthreshold?: number;
 }
 

@@ -6,6 +6,7 @@ import type { FunctionComponent } from 'react';
 import { isValidBlogCategoryAndSubcategoryPair, getBlogPostUnstrict } from '@/lib/blog/api';
 import BlogPostTocDesktop from '@/components/ui/blog/BlogPostTocDesktop';
 import BlogPostTocMobile from '@/components/ui/blog/BlogPostTocMobile';
+import GoToTopButtonLazy from '@/components/ui/misc/GoToTopButtonLazy';
 import tagsGenerator from '@/components/ui/blog/tagsGenerator';
 import BlogPostDate from '@/components/ui/blog/BlogPostDate';
 import MDX from '@/components/layouts/blog/MdxComponent';
@@ -13,12 +14,9 @@ import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { notFound } from 'next/navigation';
 import { cn } from '@/lib/tailwind';
-import dynamic from 'next/dynamic';
 
 interface BlogPostInnerProps extends BlogPostProps {}
 interface _BlogPostPageProps extends BlogPostPageProps, Partial<WithClassname> {}
-
-const GoToTopButton = dynamic(() => import('@/components/ui/misc/goToTopButton'), { ssr: false });
 
 const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className: classNameValue, language, post }) => {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -42,7 +40,7 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className:
           {showToC && <BlogPostTocDesktop headings={post.headings} />}
         </div>
       </section>
-      <GoToTopButton />
+      <GoToTopButtonLazy />
     </>
   );
 };
