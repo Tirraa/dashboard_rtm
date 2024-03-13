@@ -45,7 +45,7 @@ const BlogPostTocDesktopLazy: FunctionComponent<SharedBlogPostTocProps> = ({ hea
       >
         <CardTitle className="px-2 text-center">{title}</CardTitle>
       </CardHeader>
-      <CardContent className={'p-0 pb-6'}>
+      <CardContent className="mt-[-2px] p-0 pb-6">
         <Component setIsMagnetized={setIsMagnetized} isMagnetized={isMagnetized} headings={headings} ariaLabel={title} />
       </CardContent>
     </Card>
