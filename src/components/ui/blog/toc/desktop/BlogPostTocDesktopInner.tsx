@@ -466,7 +466,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
                   muteUpdatesUntilScrollEnd.current = true;
                   router.replace('#' + heading.slug, { scroll: false });
                   setCurrentHeading(forcedHeadingSlugRef.current);
-                  window.scrollTo({ top: elem.offsetTop - TOC_SCROLL_TOP_OFFSET_IN_PX, behavior: 'smooth' });
+                  window.scrollTo({ top: elem.offsetTop - TOC_SCROLL_TOP_OFFSET_IN_PX, behavior: 'instant' });
                 }}
                 className={heading.slug === currentHeading ? 'text-primary' : ''}
                 href={`#${heading.slug}`}
