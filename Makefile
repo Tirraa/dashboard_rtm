@@ -2,6 +2,8 @@
 
 MAKEFLAGS += --silent
 
+# NOTE: since MAKEFLAGS are set with --silent, the `@` annotations will be used to indicate effects
+
 #==============
 # § I. CONFIG
 #==============
@@ -66,10 +68,15 @@ mutations-tests: clean-codegen clean-stryker-cache initialize
 
 # @Override
 check-coding-style: prebuild-rtm build-contentlayer
-	$(PM) ci:format-check
-	$(PM) ci:lint
-	$(PM) ci:typecheck-project
-	$(PM) ci:typecheck-tests
+	@{ \
+	    exit_status=0; \
+	    $(PM) ci:format-check || exit_status=$$((exit_status | $$?)); \
+	    $(PM) ci:lint || exit_status=$$((exit_status | $$?)); \
+	    $(PM) ci:typecheck-project || exit_status=$$((exit_status | $$?)); \
+	    $(PM) ci:typecheck-tests || exit_status=$$((exit_status | $$?)); \
+	    $(PM) ts-prune || exit_status=$$((exit_status | $$?)); \
+      if [ $$exit_status -ne 0 ]; then exit $$exit_status; fi \
+	}
 
 # @Override
 dev-with-rtm-tools:
@@ -82,7 +89,7 @@ vercel-ci-build-command:
 # @Alias
 build-contentlayer:
 	$(PM) contentlayer build
-	echo "^ DON'T WORRY if you see a stupid error: https://github.com/contentlayerdev/contentlayer/issues/495"
+	@echo "^ DON'T WORRY if you see a stupid error: https://github.com/contentlayerdev/contentlayer/issues/495"
 
 # @Alias
 prebuild-rtm:
