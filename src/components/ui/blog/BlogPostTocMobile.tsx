@@ -4,11 +4,11 @@ import type { FunctionComponent } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import type { BlogPostTocDesktopProps } from './BlogPostTocDesktopLazy';
+import type { SharedBlogPostTocProps } from './BlogPostTocDesktop';
 
 const BlogPostTocMobileLazy = dynamic(() => import('./BlogPostTocMobileLazy'), { loading: () => <div className="min-h-[62px]" />, ssr: false });
 
-interface BlogPostTocMobileProps extends BlogPostTocDesktopProps {}
+interface BlogPostTocMobileProps extends SharedBlogPostTocProps {}
 
 const BlogPostTocMobile: FunctionComponent<BlogPostTocMobileProps> = ({ headings }) => <BlogPostTocMobileLazy headings={headings} />;
 

@@ -1,7 +1,6 @@
 'use client';
 
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
-import type { DocumentHeading } from '@rtm/shared-types/Documents';
 import type { FunctionComponent } from 'react';
 
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
@@ -10,20 +9,17 @@ import { useEffect, useState } from 'react';
 import { i18ns } from '##/config/i18n';
 import { capitalize } from '@/lib/str';
 
-import type { BlogPostTocDesktopInnerProps } from './BlogPostTocDesktopInner';
+import type { BlogPostTocMobileInnerProps } from './BlogPostTocMobileInner';
+import type { SharedBlogPostTocProps } from './BlogPostTocDesktop';
 
-export interface BlogPostTocDesktopProps {
-  headings: DocumentHeading[];
-}
-
-const BlogPostTocDesktopLazy: FunctionComponent<BlogPostTocDesktopProps> = ({ headings }) => {
+const BlogPostTocDesktopLazy: FunctionComponent<SharedBlogPostTocProps> = ({ headings }) => {
   const scopedT = useScopedI18n(i18ns.vocab);
   const title = capitalize(scopedT('toc'));
 
   const placeholder = <div className="min-h-[62px]" />;
   const isLargeScreen = useIsLargeScreen();
 
-  const [Component, setComponent] = useState<MaybeNull<FunctionComponent<BlogPostTocDesktopInnerProps>>>(null);
+  const [Component, setComponent] = useState<MaybeNull<FunctionComponent<BlogPostTocMobileInnerProps>>>(null);
 
   useEffect(() => {
     if (isLargeScreen || Component !== null) return;

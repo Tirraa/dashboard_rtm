@@ -6,11 +6,11 @@ import { i18ns } from '##/config/i18n';
 import { capitalize } from '@/lib/str';
 import Link from 'next/link';
 
-import type { BlogPostTocDesktopProps } from './BlogPostTocDesktopLazy';
+import type { SharedBlogPostTocInnerProps } from './BlogPostTocDesktopInner';
 
 import { AccordionContent, AccordionTrigger, AccordionItem, Accordion } from '../accordion';
 
-interface BlogPostTocMobileProps extends BlogPostTocDesktopProps {}
+export interface BlogPostTocMobileInnerProps extends SharedBlogPostTocInnerProps {}
 
 const accordionContentGenerator = (headings: DocumentHeading[]): ReactElement[] =>
   headings.map((heading) => (
@@ -21,7 +21,7 @@ const accordionContentGenerator = (headings: DocumentHeading[]): ReactElement[] 
     </AccordionContent>
   ));
 
-const BlogPostTocMobileInner: FunctionComponent<BlogPostTocMobileProps> = ({ headings }) => {
+const BlogPostTocMobileInner: FunctionComponent<BlogPostTocMobileInnerProps> = ({ headings }) => {
   const scopedT = useScopedI18n(i18ns.vocab);
   const title = capitalize(scopedT('toc'));
 

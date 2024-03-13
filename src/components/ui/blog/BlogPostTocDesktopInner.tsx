@@ -11,7 +11,7 @@ import { getNavbar } from '@/lib/html';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
-import type { BlogPostTocDesktopProps } from './BlogPostTocDesktopLazy';
+import type { SharedBlogPostTocProps } from './BlogPostTocDesktop';
 
 import BlogPostTocCollapseButton, { COLLAPSE_BUTTON_HEIGTH_IN_PX } from './BlogPostTocCollapseButton';
 
@@ -19,8 +19,13 @@ import BlogPostTocCollapseButton, { COLLAPSE_BUTTON_HEIGTH_IN_PX } from './BlogP
 // eslint-disable-next-line import/no-extraneous-dependencies
 require('scrollyfills').scrollend;
 
-export interface BlogPostTocDesktopInnerProps extends BlogPostTocDesktopProps {
+export interface SharedBlogPostTocInnerProps extends SharedBlogPostTocProps {
   ariaLabel: string;
+}
+
+export interface BlogPostTocDesktopInnerProps extends SharedBlogPostTocInnerProps {
+  setIsMagnetized: (state: boolean) => unknown;
+  isMagnetized: boolean;
 }
 
 const navbarElement = getNavbar();
@@ -80,15 +85,15 @@ function getClosestUpHeadingFromTop(): MaybeNull<HTMLElement> {
   return closestHeading;
 }
 
-const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({ ariaLabel, headings }) => {
+const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({ setIsMagnetized, isMagnetized, ariaLabel, headings }) => {
   const router = useRouter();
   const isLargeScreen = useIsLargeScreen();
   const [scrollDirection, setScrollDirection] = useScrollDirection();
   const [currentHeading, setCurrentHeading] = useState<HeadingSlug>('');
-  const [isMagnetized, setIsMagnetized] = useState<boolean>(false);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
 
   const headingsObserver = useRef<MaybeNull<IntersectionObserver>>(null);
+  const firstHeadingObserver = useRef<MaybeNull<IntersectionObserver>>(null);
   const visibleHeadings = useRef<VisibleHeadings>({});
   const headingsRef = useRef<HTMLOListElement>(null);
   const tocRef = useRef<HTMLDivElement>(null);
@@ -248,16 +253,29 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   }, [headings, getFirstVisibleHeadingSlug, isLargeScreen, scrollDirection, slugAndIndexAssoc]);
 
   const handleMagnetization = useCallback(() => {
+    if (!isLargeScreen) return;
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const firstHeading = document.getElementById(headings[0].slug);
     if (!firstHeading) return;
 
-    const TOP_DELTA_IN_PX = 1;
-    const [yMin, yMax] = [window.scrollY + TOP_DEAD_ZONE_PX - TOP_DELTA_IN_PX, getTotalVerticalScrollDistance() - BOTTOM_DEAD_ZONE_PX];
-    const visibleFirstHeading = yMax >= firstHeading.offsetTop && firstHeading.offsetTop >= yMin;
-    if (!visibleFirstHeading) setIsMagnetized(true);
-    else setIsMagnetized(false);
-  }, [headings]);
+    firstHeadingObserver.current = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) setIsMagnetized(!entry.isIntersecting);
+      },
+      {
+        rootMargin: `-${TOP_DEAD_ZONE_PX}px 0px -${BOTTOM_DEAD_ZONE_PX}px 0px`,
+        threshold: 1
+      }
+    );
+
+    const firstHeadingObserverInstance = getRefCurrentPtr(firstHeadingObserver);
+
+    firstHeadingObserverInstance.observe(firstHeading);
+
+    return () => {
+      if (firstHeadingObserverInstance) firstHeadingObserverInstance.disconnect();
+    };
+  }, [headings, isLargeScreen, setIsMagnetized]);
 
   useEffect(() => {
     function handleScrollEnd() {
