@@ -9,7 +9,7 @@ interface SharedBlogPostTocInnerProps extends SharedBlogPostTocProps {
 }
 
 export interface BlogPostTocDesktopInnerProps extends SharedBlogPostTocInnerProps {
-  setIsMagnetized: (state: boolean) => unknown;
+  setIsMagnetized: (isMagnetized: boolean) => unknown;
   isMagnetized: boolean;
 }
 
