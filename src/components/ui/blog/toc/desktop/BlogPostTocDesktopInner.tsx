@@ -341,10 +341,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
       function updateScrollOnUncollapse(event: TransitionEvent) {
         const target = event.target as HTMLElement;
-        if (target.tagName !== 'NAV') {
-          event.stopPropagation();
-          return;
-        }
+        if (target.tagName !== 'NAV') return;
 
         const headingsInstance = getRefCurrentPtr(headingsRef);
         if (!headingsInstance) return;
