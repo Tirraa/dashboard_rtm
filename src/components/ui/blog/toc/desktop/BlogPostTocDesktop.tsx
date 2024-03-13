@@ -1,15 +1,12 @@
 'use client';
 
-import type { DocumentHeading } from '@rtm/shared-types/Documents';
 import type { FunctionComponent } from 'react';
 
 import dynamic from 'next/dynamic';
 
-const BlogPostTocDesktopLazy = dynamic(() => import('./BlogPostTocDesktopLazy'), { ssr: false });
+import type { SharedBlogPostTocProps } from '../types';
 
-export interface SharedBlogPostTocProps {
-  headings: DocumentHeading[];
-}
+const BlogPostTocDesktopLazy = dynamic(() => import('./BlogPostTocDesktopLazy'), { ssr: false });
 
 const BlogPostTocDesktop: FunctionComponent<SharedBlogPostTocProps> = ({ headings }) => {
   return (

@@ -3,6 +3,7 @@
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { FunctionComponent } from 'react';
 
+import { CardContent, CardHeader, CardTitle, Card } from '@/components/ui/Card';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { useScopedI18n } from '@/i18n/client';
 import { useEffect, useState } from 'react';
@@ -10,11 +11,9 @@ import { i18ns } from '##/config/i18n';
 import { capitalize } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
 
-import type { BlogPostTocDesktopInnerProps } from './BlogPostTocDesktopInner';
-import type { SharedBlogPostTocProps } from './BlogPostTocDesktop';
+import type { BlogPostTocDesktopInnerProps, SharedBlogPostTocProps } from '../types';
 
 import { COLLAPSE_BUTTON_HEIGTH_IN_PX } from './BlogPostTocCollapseButton';
-import { CardContent, CardHeader, CardTitle, Card } from '../Card';
 
 const BlogPostTocDesktopLazy: FunctionComponent<SharedBlogPostTocProps> = ({ headings }) => {
   const scopedT = useScopedI18n(i18ns.vocab);

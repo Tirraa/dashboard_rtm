@@ -1,16 +1,13 @@
 import type { DocumentHeading } from '@rtm/shared-types/Documents';
 import type { FunctionComponent, ReactElement } from 'react';
 
+import { AccordionContent, AccordionTrigger, AccordionItem, Accordion } from '@/components/ui/Accordion';
 import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
 import { capitalize } from '@/lib/str';
 import Link from 'next/link';
 
-import type { SharedBlogPostTocInnerProps } from './BlogPostTocDesktopInner';
-
-import { AccordionContent, AccordionTrigger, AccordionItem, Accordion } from '../accordion';
-
-export interface BlogPostTocMobileInnerProps extends SharedBlogPostTocInnerProps {}
+import type { BlogPostTocMobileInnerProps } from '../types';
 
 const accordionContentGenerator = (headings: DocumentHeading[]): ReactElement[] =>
   headings.map((heading) => (

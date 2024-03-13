@@ -11,22 +11,13 @@ import { getNavbar } from '@/lib/html';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
-import type { SharedBlogPostTocProps } from './BlogPostTocDesktop';
+import type { BlogPostTocDesktopInnerProps } from '../types';
 
 import BlogPostTocCollapseButton, { COLLAPSE_BUTTON_HEIGTH_IN_PX } from './BlogPostTocCollapseButton';
 
 // https://github.com/argyleink/scrollyfills?tab=readme-ov-file#polyfills
 // eslint-disable-next-line import/no-extraneous-dependencies
 require('scrollyfills').scrollend;
-
-export interface SharedBlogPostTocInnerProps extends SharedBlogPostTocProps {
-  ariaLabel: string;
-}
-
-export interface BlogPostTocDesktopInnerProps extends SharedBlogPostTocInnerProps {
-  setIsMagnetized: (state: boolean) => unknown;
-  isMagnetized: boolean;
-}
 
 const navbarElement = getNavbar();
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers

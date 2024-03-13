@@ -4,7 +4,7 @@ import type { FunctionComponent } from 'react';
 
 import dynamic from 'next/dynamic';
 
-import type { SharedBlogPostTocProps } from './BlogPostTocDesktop';
+import type { SharedBlogPostTocProps } from '../types';
 
 const BlogPostTocMobileLazy = dynamic(() => import('./BlogPostTocMobileLazy'), { loading: () => <div className="min-h-[62px]" />, ssr: false });
 

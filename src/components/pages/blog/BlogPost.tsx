@@ -4,8 +4,8 @@ import type { WithClassname } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
 import { isValidBlogCategoryAndSubcategoryPair, getBlogPostUnstrict } from '@/lib/blog/api';
-import BlogPostTocDesktop from '@/components/ui/blog/BlogPostTocDesktop';
-import BlogPostTocMobile from '@/components/ui/blog/BlogPostTocMobile';
+import BlogPostTocDesktop from '@/components/ui/blog/toc/desktop/BlogPostTocDesktop';
+import BlogPostTocMobile from '@/components/ui/blog/toc/mobile/BlogPostTocMobile';
 import tagsGenerator from '@/components/ui/blog/tagsGenerator';
 import BlogPostDate from '@/components/ui/blog/BlogPostDate';
 import MDX from '@/components/layouts/blog/MdxComponent';

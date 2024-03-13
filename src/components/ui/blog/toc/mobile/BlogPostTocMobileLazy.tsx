@@ -9,8 +9,7 @@ import { useEffect, useState } from 'react';
 import { i18ns } from '##/config/i18n';
 import { capitalize } from '@/lib/str';
 
-import type { BlogPostTocMobileInnerProps } from './BlogPostTocMobileInner';
-import type { SharedBlogPostTocProps } from './BlogPostTocDesktop';
+import type { BlogPostTocMobileInnerProps, SharedBlogPostTocProps } from '../types';
 
 const BlogPostTocDesktopLazy: FunctionComponent<SharedBlogPostTocProps> = ({ headings }) => {
   const scopedT = useScopedI18n(i18ns.vocab);
