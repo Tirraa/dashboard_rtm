@@ -1,8 +1,8 @@
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { FunctionComponent } from 'react';
 
-import { useScrollDirection } from '@/components/hooks/useScrollDirection';
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
+import useScrollDirection from '@/components/hooks/useScrollDirection';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { computeHTMLElementHeight } from '@rtm/shared-lib/html';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
