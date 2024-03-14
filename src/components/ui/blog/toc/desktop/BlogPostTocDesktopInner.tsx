@@ -75,12 +75,18 @@ function getClosestUpHeadingFromTop(): MaybeNull<HTMLElement> {
   return closestHeading;
 }
 
-const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({ setIsMagnetized, isMagnetized, ariaLabel, headings }) => {
+const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({
+  setIsMagnetized,
+  setIsCollapsed,
+  isMagnetized,
+  isCollapsed,
+  ariaLabel,
+  headings
+}) => {
   const router = useRouter();
   const isLargeScreen = useIsLargeScreen();
   const [scrollDirection, setScrollDirection] = useScrollDirection();
   const [currentHeading, setCurrentHeading] = useState<HeadingSlug>('');
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
 
   const headingsObserver = useRef<MaybeNull<IntersectionObserver>>(null);
   const firstHeadingObserver = useRef<MaybeNull<IntersectionObserver>>(null);
@@ -314,7 +320,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
   useEffect(() => {
     if (!isMagnetized) setIsCollapsed(false);
-  }, [isMagnetized]);
+  }, [isMagnetized, setIsCollapsed]);
 
   useEffect(() => {
     if (!isLargeScreen) return;
