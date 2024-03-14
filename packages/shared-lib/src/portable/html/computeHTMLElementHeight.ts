@@ -1,3 +1,4 @@
+// NOTE: includeMargins is a debt for now, remove it in the future if it's not needed
 function computeHTMLElementHeight(htmlElement: HTMLElement, includeMargins: boolean = false): number {
   const { height } = htmlElement.getBoundingClientRect();
   if (!includeMargins) return height;

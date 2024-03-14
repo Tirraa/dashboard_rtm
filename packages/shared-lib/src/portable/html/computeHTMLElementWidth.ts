@@ -1,3 +1,4 @@
+// NOTE: includeMargins is a debt for now, remove it in the future if it's not needed
 function computeHTMLElementWidth(htmlElement: HTMLElement, includeMargins: boolean = false): number {
   const { width } = htmlElement.getBoundingClientRect();
   if (!includeMargins) return width;
