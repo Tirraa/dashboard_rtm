@@ -19,15 +19,15 @@ import BlogPostTocCollapseButton, { COLLAPSE_BUTTON_HEIGTH_IN_PX } from './BlogP
 // eslint-disable-next-line import/no-extraneous-dependencies
 require('scrollyfills').scrollend;
 
-const navbarElement = getNavbar();
+const navbarElement: MaybeNull<HTMLElement> = getNavbar();
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-const navbarHeight = navbarElement ? navbarElement.getBoundingClientRect().height : 0;
+const navbarHeight: number = navbarElement ? navbarElement.getBoundingClientRect().height : 0;
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-const BOTTOM_DEAD_ZONE_PX = navbarHeight * 2;
-const TOP_DEAD_ZONE_PX = navbarHeight;
+const BOTTOM_DEAD_ZONE_PX: number = navbarHeight * 2;
+const TOP_DEAD_ZONE_PX: number = navbarHeight;
 
-const NIL_IDX = -1;
-const TOC_SCROLL_TOP_OFFSET_IN_PX: number = 192;
+const NIL_IDX: number = -1;
+const TOC_SCROLL_TOP_OFFSET_IN_PX: number = 172;
 
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 const isAtTop = () => window.scrollY === 0;
@@ -541,10 +541,10 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
   return (
     <nav className="flex flex-col items-center self-start transition-[margin-top] duration-300" aria-label={ariaLabel} ref={tocRef}>
-      <ol className="mb-1 max-h-[40vh] w-full list-none space-y-3 overflow-auto pl-6 rtl:pl-0 rtl:pr-6" ref={headingsRef}>
+      <ol className="mb-1 max-h-[354px] w-full list-none space-y-3 overflow-auto px-4" ref={headingsRef}>
         {headings.map((heading) => (
           <li
-            className={cn('w-fit list-none text-sm font-bold text-white transition-colors duration-200 ease-in-out', {
+            className={cn('w-fit list-none text-sm font-bold text-white transition-all duration-200 ease-in-out', {
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
               'mt-2': heading.slug === currentHeading && slugAndIndexAssoc[heading.slug] === 0,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -591,11 +591,11 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
                   if (Math.trunc(scrollYStart) === Math.trunc(scrollYEnd)) window.dispatchEvent(new Event('scrollend'));
                 }}
-                className={cn('transition-all', {
+                className={cn('block transition-all', {
                   'rounded-md bg-primary p-1 font-bold': heading.slug === currentHeading,
                   'hover:underline focus:text-primary': heading.slug !== currentHeading,
                   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-                  'pb-1': slugAndIndexAssoc[heading.slug] === headings.length - 1
+                  'p-1': slugAndIndexAssoc[heading.slug] === headings.length - 1
                 })}
                 href={`#${heading.slug}`}
                 replace
