@@ -35,8 +35,7 @@ const isAtTop = () => window.scrollY === 0;
 const getTotalVerticalScrollDistance = () => Math.ceil(window.scrollY + window.innerHeight);
 
 const getAllDocumentHeadingsFromDOM = () => {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const h1 = Array.from(document.querySelectorAll('h1')).slice(1);
+  const h1 = Array.from(document.querySelectorAll('h1'));
   const hN = Array.from(document.querySelectorAll('h2, h3, h4, h5, h6'));
   return [...h1, ...hN] as HTMLElement[];
 };
@@ -62,7 +61,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const forcedHeadingSlugRef = useRef<HeadingSlug>('');
   const muteUpdatesUntilScrollEnd = useRef<boolean>(false);
 
-  const headingsFromDOM = getAllDocumentHeadingsFromDOM();
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const headingsFromDOM = getAllDocumentHeadingsFromDOM().slice(1);
 
   const slugAndIndexAssoc = useMemo(() => {
     return headings.reduce(
@@ -513,13 +513,15 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         {headings.map((heading) => (
           <li
             className={cn('w-fit list-none text-sm font-bold transition-colors duration-200 ease-in-out hover:text-primary focus:text-primary', {
+              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+              'font-medium': 3 <= heading.depth && heading.depth <= 6,
               'text-primary': currentHeading === heading.slug,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-              'ml-6 font-normal': heading.depth === 5,
+              'ml-6': heading.depth === 5,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-              'ml-2 font-normal': heading.depth === 3,
+              'ml-2': heading.depth === 3,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-              'ml-4 font-normal': heading.depth === 4
+              'ml-4': heading.depth === 4
             })}
             key={heading.slug}
           >
