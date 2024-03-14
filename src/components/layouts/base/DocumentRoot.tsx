@@ -12,6 +12,7 @@ import I18nTaxonomy from '##/config/taxonomies/i18n';
 import ELEMENTS_ID from '@/config/elementsId';
 import Providers from '@/contexts/Providers';
 import { getServerSession } from 'next-auth';
+import Footer from '@/components/ui/Footer';
 import dynamic from 'next/dynamic';
 
 const NextTopLoader = dynamic(() => import('./NextTopLoader'), { ssr: false });
@@ -21,9 +22,17 @@ interface DocumentRootProps extends LayoutBaseProps {
   disableGoToTopButton?: boolean;
   disableTopLoader?: boolean;
   withNavbar?: boolean;
+  withFooter?: boolean;
 }
 
-const DocumentRoot: FunctionComponent<DocumentRootProps> = async ({ disableGoToTopButton, disableTopLoader, withNavbar, children, params }) => {
+const DocumentRoot: FunctionComponent<DocumentRootProps> = async ({
+  disableGoToTopButton,
+  disableTopLoader,
+  withNavbar,
+  withFooter,
+  children,
+  params
+}) => {
   const language = params[I18nTaxonomy.LANGUAGE];
   const session = await getServerSession();
 
@@ -34,6 +43,7 @@ const DocumentRoot: FunctionComponent<DocumentRootProps> = async ({ disableGoToT
           {!disableTopLoader && <NextTopLoader {...PROGRESSBAR_CONFIG} />}
           {withNavbar && <SitewideNavbar />}
           {children}
+          {withFooter && <Footer />}
           {!disableGoToTopButton && <GoToTopButton />}
         </Providers>
       </div>

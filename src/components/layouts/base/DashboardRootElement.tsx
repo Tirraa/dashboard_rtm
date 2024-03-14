@@ -8,13 +8,13 @@ import DocumentRoot from '@/components/layouts/base/DocumentRoot';
 
 interface HtmlElementProps extends LayoutBaseProps {}
 
-const PagesRootElement: FunctionComponent<HtmlElementProps> = ({ children, params }) => (
-  <DocumentRoot params={params} withNavbar withFooter>
+const DashboardRootElement: FunctionComponent<HtmlElementProps> = ({ children, params }) => (
+  <DocumentRoot disableGoToTopButton params={params} withNavbar>
     {children}
   </DocumentRoot>
 );
 
-export default PagesRootElement;
+export default DashboardRootElement;
 
 // Stryker restore all
 /* v8 ignore stop */
