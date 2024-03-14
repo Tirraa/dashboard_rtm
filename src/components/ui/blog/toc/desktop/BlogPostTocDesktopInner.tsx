@@ -21,7 +21,7 @@ require('scrollyfills').scrollend;
 
 const navbarElement = getNavbar();
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-const navbarHeight = navbarElement ? computeHTMLElementHeight(navbarElement) : 0;
+const navbarHeight = navbarElement ? computeHTMLElementHeight(navbarElement, true) : 0;
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 const BOTTOM_DEAD_ZONE_PX = navbarHeight * 2;
 const TOP_DEAD_ZONE_PX = navbarHeight;
@@ -363,7 +363,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       }
 
       function applyCollapsedStyles() {
-        tocInstance.style.marginTop = '-' + (computeHTMLElementHeight(tocInstance) + COLLAPSE_BUTTON_HEIGTH_IN_PX) + 'px';
+        const height = computeHTMLElementHeight(tocInstance);
+        tocInstance.style.marginTop = '-' + (height + COLLAPSE_BUTTON_HEIGTH_IN_PX) + 'px';
       }
 
       if (!isCollapsed) {

@@ -40,8 +40,12 @@ describe('computeHTMLElementHeight/computeHTMLElementWidth', () => {
 
   it('should return the correct height/width of an element', () => {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    expect(computeHTMLElementHeight(fakeElement)).toBe(2165);
+    expect(computeHTMLElementHeight(fakeElement)).toBe(1234);
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    expect(computeHTMLElementWidth(fakeElement)).toBe(3730);
+    expect(computeHTMLElementHeight(fakeElement, true)).toBe(2165);
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    expect(computeHTMLElementWidth(fakeElement)).toBe(2500);
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    expect(computeHTMLElementWidth(fakeElement, true)).toBe(3730);
   });
 });
