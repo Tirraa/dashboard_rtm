@@ -1,4 +1,4 @@
-import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { MaybeUndefined, MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { FunctionComponent } from 'react';
 
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
@@ -77,9 +77,16 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   );
 
   const releaseOldHeadingFocus = useCallback(() => {
-    const maybeCurrentlyFocusedHeading = headingsFromDOM.find((heading) => heading === document.activeElement);
+    const headingsRefInstance = getRefCurrentPtr(headingsRef);
+    const maybeCurrentlyFocusedHeadingParent = Array.from(headingsRefInstance.children).find((headingLi) =>
+      Array.from(headingLi.children).find((child) => child === document.activeElement)
+    ) as MaybeUndefined<Element>;
+
+    if (!maybeCurrentlyFocusedHeadingParent) return;
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const maybeCurrentlyFocusedHeading = maybeCurrentlyFocusedHeadingParent.children[0] as MaybeUndefined<HTMLElement>;
     if (maybeCurrentlyFocusedHeading) maybeCurrentlyFocusedHeading.blur();
-  }, [headingsFromDOM]);
+  }, []);
 
   const releaseOldHeadingFocusAndSetCurrentHeading = useCallback(
     (newCurrentHeading: HeadingSlug) => {
