@@ -514,10 +514,13 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       <ol className="max-h-[40vh] w-full list-none space-y-3 overflow-auto pl-6 rtl:pl-0 rtl:pr-6" ref={headingsRef}>
         {headings.map((heading) => (
           <li
-            className={cn('w-fit list-none text-sm font-bold transition-colors duration-200 ease-in-out hover:text-primary focus:text-primary', {
+            className={cn('w-fit list-none text-sm font-bold text-white transition-colors duration-200 ease-in-out', {
+              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+              'mt-2': heading.slug === currentHeading && slugAndIndexAssoc[heading.slug] === 0,
+              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+              'mb-2': slugAndIndexAssoc[heading.slug] === headings.length - 1,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
               'font-medium': 3 <= heading.depth && heading.depth <= 6,
-              'text-primary': currentHeading === heading.slug,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
               'ml-6': heading.depth === 5,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -560,7 +563,10 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
                   if (Math.trunc(scrollYStart) === Math.trunc(scrollYEnd)) window.dispatchEvent(new Event('scrollend'));
                 }}
-                className={heading.slug === currentHeading ? 'text-primary' : ''}
+                className={cn('transition-all', {
+                  'rounded-md bg-primary p-1 font-bold': heading.slug === currentHeading,
+                  'hover:underline focus:text-primary': heading.slug !== currentHeading
+                })}
                 href={`#${heading.slug}`}
                 replace
               >
