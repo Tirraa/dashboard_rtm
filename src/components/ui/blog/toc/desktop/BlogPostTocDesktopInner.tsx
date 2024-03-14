@@ -32,56 +32,14 @@ const TOC_SCROLL_TOP_OFFSET_IN_PX: number = 192;
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 const isAtTop = () => window.scrollY === 0;
 
-/**
- * @DANGER {Fired at import only, can be stale}
- */
+const getTotalVerticalScrollDistance = () => Math.ceil(window.scrollY + window.innerHeight);
+
 const getAllDocumentHeadingsFromDOM = () => {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const h1 = Array.from(document.querySelectorAll('h1')).slice(1);
   const hN = Array.from(document.querySelectorAll('h2, h3, h4, h5, h6'));
   return [...h1, ...hN] as HTMLElement[];
 };
-
-const headingsFromDOM = getAllDocumentHeadingsFromDOM();
-
-const getTotalVerticalScrollDistance = () => Math.ceil(window.scrollY + window.innerHeight);
-
-function getClosestUpHeadingFromBottom(): MaybeNull<HTMLElement> {
-  let closestHeading = null;
-  let closestDistance = Infinity;
-  const viewportHeight = window.innerHeight;
-  const yStart = window.scrollY + viewportHeight - BOTTOM_DEAD_ZONE_PX;
-
-  for (const heading of headingsFromDOM) {
-    const distance = yStart - heading.offsetTop;
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (0 <= distance && distance <= closestDistance) {
-      closestHeading = heading;
-      closestDistance = distance;
-    }
-  }
-
-  return closestHeading;
-}
-
-function getClosestUpHeadingFromTop(): MaybeNull<HTMLElement> {
-  const headingsFromDOM = getAllDocumentHeadingsFromDOM();
-  let closestHeading = null;
-  let closestDistance = -Infinity;
-  const [yMin, yMax] = [window.scrollY + TOP_DEAD_ZONE_PX, getTotalVerticalScrollDistance() - BOTTOM_DEAD_ZONE_PX];
-
-  for (const heading of headingsFromDOM) {
-    if (heading.offsetTop > yMax) continue;
-    const distance = yMin - heading.offsetTop;
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (0 >= distance && distance >= closestDistance) {
-      closestHeading = heading;
-      closestDistance = distance;
-    }
-  }
-
-  return closestHeading;
-}
 
 const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({
   setIsMagnetized,
@@ -104,6 +62,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const forcedHeadingSlugRef = useRef<HeadingSlug>('');
   const muteUpdatesUntilScrollEnd = useRef<boolean>(false);
 
+  const headingsFromDOM = getAllDocumentHeadingsFromDOM();
+
   const slugAndIndexAssoc = useMemo(() => {
     return headings.reduce(
       (indexed, { slug }, idx) => {
@@ -113,6 +73,42 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       {} as Record<HeadingSlug, HeadingSlugIdx>
     );
   }, [headings]);
+
+  const getClosestUpHeadingFromBottom = useCallback((): MaybeNull<HTMLElement> => {
+    let closestHeading = null;
+    let closestDistance = Infinity;
+    const viewportHeight = window.innerHeight;
+    const yStart = window.scrollY + viewportHeight - BOTTOM_DEAD_ZONE_PX;
+
+    for (const heading of headingsFromDOM) {
+      const distance = yStart - heading.offsetTop;
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      if (0 <= distance && distance <= closestDistance) {
+        closestHeading = heading;
+        closestDistance = distance;
+      }
+    }
+
+    return closestHeading;
+  }, [headingsFromDOM]);
+
+  const getClosestUpHeadingFromTop = useCallback((): MaybeNull<HTMLElement> => {
+    let closestHeading = null;
+    let closestDistance = -Infinity;
+    const [yMin, yMax] = [window.scrollY + TOP_DEAD_ZONE_PX, getTotalVerticalScrollDistance() - BOTTOM_DEAD_ZONE_PX];
+
+    for (const heading of headingsFromDOM) {
+      if (heading.offsetTop > yMax) continue;
+      const distance = yMin - heading.offsetTop;
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      if (0 >= distance && distance >= closestDistance) {
+        closestHeading = heading;
+        closestDistance = distance;
+      }
+    }
+
+    return closestHeading;
+  }, [headingsFromDOM]);
 
   const getCurrentHeadingSlugFromHash: (expectedToBeInViewport?: boolean) => MaybeNull<HeadingSlug> = useCallback(
     (expectedToBeInViewport: boolean = false) => {
@@ -166,7 +162,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
     setCurrentHeading(infered2.id);
     return infered2;
-  }, [headings, slugAndIndexAssoc, setScrollDirection]);
+  }, [headings, slugAndIndexAssoc, setScrollDirection, getClosestUpHeadingFromBottom, getClosestUpHeadingFromTop]);
 
   const getFirstVisibleHeadingSlug = useCallback(() => {
     let firstSlug: MaybeNull<HeadingSlug> = null;
@@ -202,7 +198,12 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     if (Object.keys(visibleHeadingsInstance).length === 0) {
       const infered = getClosestUpHeadingFromBottom();
-      if (!infered) return;
+      if (!infered) {
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        const veryFirstHeadingSlug = headings[0].slug;
+        setCurrentHeading(veryFirstHeadingSlug);
+        return;
+      }
 
       const inferedHeading = infered.id;
 
@@ -232,7 +233,15 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     }
 
     setCurrentHeading(firstVisibleHeadingSlug);
-  }, [headings, getFirstVisibleHeadingSlug, isLargeScreen, scrollDirection, slugAndIndexAssoc, inferCurrentHeadingRegardlessIntersectionObserver]);
+  }, [
+    headings,
+    getFirstVisibleHeadingSlug,
+    isLargeScreen,
+    scrollDirection,
+    slugAndIndexAssoc,
+    inferCurrentHeadingRegardlessIntersectionObserver,
+    getClosestUpHeadingFromBottom
+  ]);
 
   const isAtBottom = useCallback(() => getTotalVerticalScrollDistance() >= document.documentElement.scrollHeight, []);
 
@@ -395,6 +404,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
           top: (HTMLElement as HTMLElement).offsetTop - TOC_SCROLL_TOP_OFFSET_IN_PX,
           behavior: 'smooth'
         });
+
+        tocInstance.removeEventListener('transitionend', (event) => updateScrollOnUncollapse(event));
       }
 
       function applyUncollapsedStyles() {
