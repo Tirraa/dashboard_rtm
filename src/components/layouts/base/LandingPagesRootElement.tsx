@@ -1,18 +1,14 @@
 /* v8 ignore start */
 // Stryker disable all
 
-import type { LayoutBaseProps } from '@/types/Next';
+import type { WithChildren } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
 import DocumentRoot from '@/components/layouts/base/DocumentRoot';
 
-interface HtmlElementProps extends LayoutBaseProps {}
+interface HtmlElementProps extends WithChildren {}
 
-const LandingPagesRootElement: FunctionComponent<HtmlElementProps> = ({ children, params }) => (
-  <DocumentRoot disableGoToTopButton params={params}>
-    {children}
-  </DocumentRoot>
-);
+const LandingPagesRootElement: FunctionComponent<HtmlElementProps> = ({ children }) => <DocumentRoot disableGoToTopButton>{children}</DocumentRoot>;
 
 export default LandingPagesRootElement;
 

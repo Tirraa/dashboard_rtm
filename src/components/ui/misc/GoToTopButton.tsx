@@ -2,8 +2,8 @@
 
 import type { FunctionComponent } from 'react';
 
-import { getRefCurrentPtr } from 'packages/shared-lib/src/react';
 import { useCallback, useEffect, useState, useRef } from 'react';
+import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { ArrowUpIcon } from '@heroicons/react/20/solid';
 import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
