@@ -9,6 +9,7 @@ import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 
+// {ToDo} Remove this if, one day, this bug is fixed: https://bugs.webkit.org/show_bug.cgi?id=201556
 // https://github.com/argyleink/scrollyfills?tab=readme-ov-file#polyfills
 // eslint-disable-next-line import/no-extraneous-dependencies
 require('scrollyfills').scrollend;

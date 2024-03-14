@@ -14,6 +14,7 @@ import type { BlogPostTocDesktopInnerProps } from '../types';
 
 import BlogPostTocCollapseButton, { COLLAPSE_BUTTON_HEIGTH_IN_PX } from './BlogPostTocCollapseButton';
 
+// {ToDo} Remove this if, one day, this bug is fixed: https://bugs.webkit.org/show_bug.cgi?id=201556
 // https://github.com/argyleink/scrollyfills?tab=readme-ov-file#polyfills
 // eslint-disable-next-line import/no-extraneous-dependencies
 require('scrollyfills').scrollend;
@@ -31,12 +32,16 @@ const TOC_SCROLL_TOP_OFFSET_IN_PX: number = 192;
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 const isAtTop = () => window.scrollY === 0;
 
+/**
+ * @DANGER {Fired at import only, can be stale}
+ */
 const getAllDocumentHeadingsFromDOM = () => {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const h1 = Array.from(document.querySelectorAll('h1')).slice(1);
   const hN = Array.from(document.querySelectorAll('h2, h3, h4, h5, h6'));
   return [...h1, ...hN] as HTMLElement[];
 };
+
 const headingsFromDOM = getAllDocumentHeadingsFromDOM();
 
 const getTotalVerticalScrollDistance = () => Math.ceil(window.scrollY + window.innerHeight);
@@ -131,6 +136,9 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     [slugAndIndexAssoc, headings]
   );
 
+  /**
+   * @effect {May tweak Scroll Direction state and set a forced heading}
+   */
   const inferCurrentHeadingRegardlessIntersectionObserver: () => MaybeNull<HTMLElement> = useCallback(() => {
     const infered1 = getClosestUpHeadingFromTop();
 
@@ -142,19 +150,14 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       if (midViewportHeight < inferedElementYTopInViewport) {
         const idx = slugAndIndexAssoc[inferedElementHeading];
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        if (idx === 0) {
-          setCurrentHeading(inferedElementHeading);
-          return infered1;
-        }
+        if (idx === 0) return infered1;
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         const rescueHeading = headings[idx - 1].slug;
         forcedHeadingSlugRef.current = rescueHeading;
         setScrollDirection('up');
-        setCurrentHeading(rescueHeading);
         const infered3 = document.getElementById(rescueHeading);
         return infered3;
       }
-      setCurrentHeading(inferedElementHeading);
       return infered1;
     }
 
@@ -181,6 +184,9 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     return firstSlug;
   }, [slugAndIndexAssoc]);
 
+  /**
+   * @effect {May tweak Current Heading state & reset forced heading}
+   */
   const handleScrollUp = useCallback(() => {
     if (scrollDirection !== 'up' || !isLargeScreen || muteUpdatesUntilScrollEnd.current) return;
 
@@ -230,6 +236,9 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
   const isAtBottom = useCallback(() => getTotalVerticalScrollDistance() >= document.documentElement.scrollHeight, []);
 
+  /**
+   * @effect {May tweak Current Heading state & reset forced heading}
+   */
   const handleScrollDown = useCallback(() => {
     if (scrollDirection !== 'down' || !isLargeScreen || muteUpdatesUntilScrollEnd.current) return;
 
@@ -254,8 +263,12 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     setCurrentHeading(firstVisibleHeadingSlug);
   }, [headings, getFirstVisibleHeadingSlug, isLargeScreen, scrollDirection, slugAndIndexAssoc, isAtBottom]);
 
+  /**
+   * @effect {Tweaks isMagnetized state}
+   */
   const handleMagnetization = useCallback(() => {
     if (!isLargeScreen) return;
+
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const firstHeading = document.getElementById(headings[0].slug);
     if (!firstHeading) return;
@@ -279,6 +292,9 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     };
   }, [headings, isLargeScreen, setIsMagnetized]);
 
+  /**
+   * @effect {Listen scrollend event to unmute updates}
+   */
   useEffect(() => {
     function handleScrollEnd() {
       if (!isLargeScreen) return;
@@ -290,6 +306,9 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     return () => window.removeEventListener('scrollend', handleScrollEnd);
   }, [isLargeScreen]);
 
+  /**
+   * @effect {Mutates visibleHeadings ref}
+   */
   useEffect(() => {
     if (!isLargeScreen) return;
 
@@ -324,10 +343,16 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     };
   }, [headings, isLargeScreen, slugAndIndexAssoc, handleMagnetization]);
 
+  /**
+   * @effect {Tweaks isCollapsed state, depending on isMagnetized state}
+   */
   useEffect(() => {
     if (!isMagnetized) setIsCollapsed(false);
   }, [isMagnetized, setIsCollapsed]);
 
+  /**
+   * @effect {ToC autoscroll}
+   */
   useEffect(() => {
     if (!isLargeScreen) return;
 
@@ -343,6 +368,9 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     });
   }, [currentHeading, isLargeScreen, slugAndIndexAssoc]);
 
+  /**
+   * @effect {ToC autoscroll on uncollapse}
+   */
   useEffect(
     () => {
       if (!isLargeScreen) return;
@@ -395,22 +423,15 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     [isCollapsed]
   );
 
-  useEffect(
-    () => {
-      const maybeHeadingSlugFromHash = getCurrentHeadingSlugFromHash(true);
-      if (maybeHeadingSlugFromHash) setCurrentHeading(maybeHeadingSlugFromHash);
-      else inferCurrentHeadingRegardlessIntersectionObserver();
-      handleMagnetization();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
-
+  /**
+   * @effect {Resize Listener, may tweak Current Heading state}
+   */
   useEffect(() => {
     if (!isLargeScreen) return;
 
     const handleResize = () => {
-      inferCurrentHeadingRegardlessIntersectionObserver();
+      const maybeInferedHeading = inferCurrentHeadingRegardlessIntersectionObserver();
+      if (maybeInferedHeading) setCurrentHeading(maybeInferedHeading.id);
     };
 
     window.addEventListener('resize', handleResize);
@@ -420,6 +441,9 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     };
   }, [isLargeScreen, inferCurrentHeadingRegardlessIntersectionObserver]);
 
+  /**
+   * @effect {Hash change Listener, may tweak Current Heading state}
+   */
   useEffect(() => {
     if (!isLargeScreen) return;
 
@@ -438,6 +462,9 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     };
   }, [isLargeScreen, getCurrentHeadingSlugFromHash]);
 
+  /**
+   * @effect {Scroll listeners checkpoint}
+   */
   useEffect(() => {
     if (!isLargeScreen) return;
 
@@ -451,6 +478,23 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       window.removeEventListener('scroll', handleScrollDown);
     };
   }, [isLargeScreen, handleScrollDown, handleScrollUp, handleMagnetization]);
+
+  /**
+   * @effect {Initializer}
+   */
+  useEffect(
+    () => {
+      const maybeHeadingSlugFromHash = getCurrentHeadingSlugFromHash(true);
+      if (maybeHeadingSlugFromHash) setCurrentHeading(maybeHeadingSlugFromHash);
+      else {
+        const maybeInferedHeading = inferCurrentHeadingRegardlessIntersectionObserver();
+        if (maybeInferedHeading) setCurrentHeading(maybeInferedHeading.id);
+      }
+      handleMagnetization();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   return (
     <nav className="flex flex-col items-center self-start transition-[margin-top] duration-300" aria-label={ariaLabel} ref={tocRef}>
@@ -499,7 +543,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
                   window.scrollTo({ behavior: 'instant', top: scrollYTarget });
                   const scrollYEnd = window.scrollY;
 
-                  if (Math.ceil(scrollYStart) === Math.ceil(scrollYEnd)) window.dispatchEvent(new Event('scrollend'));
+                  if (Math.trunc(scrollYStart) === Math.trunc(scrollYEnd)) window.dispatchEvent(new Event('scrollend'));
                 }}
                 className={heading.slug === currentHeading ? 'text-primary' : ''}
                 href={`#${heading.slug}`}
