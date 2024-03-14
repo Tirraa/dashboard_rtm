@@ -1,6 +1,7 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import type { WithClassname } from '@rtm/shared-types/Next';
 import type { FunctionComponent, ReactNode } from 'react';
 
 import PrimitiveComponents from '@/components/config/blog/PrimitiveComponents';
@@ -15,8 +16,7 @@ const components: Record<PropertyKey, (...args: any[]) => JSX.Element | ReactNod
   ...CTAs
 };
 
-interface MdxProps {
-  className?: string;
+interface MdxProps extends Partial<WithClassname> {
   code: string;
 }
 

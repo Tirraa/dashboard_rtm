@@ -224,6 +224,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       const oldScrollY = lastScrollY.current;
       lastScrollY.current = currentScrollY;
 
+      if (!isLargeScreen) return;
+
       if (currentScrollY > oldScrollY) {
         setScrollDirection('down');
         const handleScrollDownInstance = getRefCurrentPtr(handleScrollDownRef);
@@ -231,7 +233,13 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         return;
       }
 
-      if (!Boolean(forced) && (scrollDirection !== 'up' || !isLargeScreen || muteUpdatesUntilScrollEnd.current)) return;
+      const isForced = Boolean(forced);
+      let skip = false;
+
+      if (isForced) skip = false;
+      else if (scrollDirection !== 'up' || muteUpdatesUntilScrollEnd.current) skip = true;
+
+      if (skip) return;
 
       if (isAtTop()) {
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -300,6 +308,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       const oldScrollY = lastScrollY.current;
       lastScrollY.current = currentScrollY;
 
+      if (!isLargeScreen) return;
+
       if (currentScrollY < oldScrollY) {
         setScrollDirection('up');
         const handleScrollUpInstance = getRefCurrentPtr(handleScrollUpRef);
@@ -307,7 +317,13 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         return;
       }
 
-      if (!Boolean(forced) && (scrollDirection !== 'down' || !isLargeScreen || muteUpdatesUntilScrollEnd.current)) return;
+      const isForced = Boolean(forced);
+      let skip = false;
+
+      if (isForced) skip = false;
+      else if (scrollDirection !== 'down' || muteUpdatesUntilScrollEnd.current) skip = true;
+
+      if (skip) return;
 
       if (isAtBottom()) {
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -382,12 +398,22 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     function handleScrollEnd() {
       if (!isLargeScreen) return;
       muteUpdatesUntilScrollEnd.current = false;
+      if (scrollDirection === 'up') {
+        const handleScrollUpInstance = getRefCurrentPtr(handleScrollUpRef);
+        if (handleScrollUpInstance) handleScrollUpInstance(true);
+        return;
+      }
+
+      if (scrollDirection !== 'down') return;
+
+      const handleScrollDownInstance = getRefCurrentPtr(handleScrollDownRef);
+      if (handleScrollDownInstance) handleScrollDownInstance(true);
     }
 
     window.addEventListener('scrollend', handleScrollEnd);
 
     return () => window.removeEventListener('scrollend', handleScrollEnd);
-  }, [isLargeScreen]);
+  }, [isLargeScreen, scrollDirection]);
 
   /**
    * @effect {Mutates visibleHeadings ref}

@@ -1,5 +1,6 @@
 'use client';
 
+import type { WithClassname } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
 import DesktopBlogTocCollapseButtonIconStyle, { SIZE_PX_VALUE } from '@/components/config/styles/blogToc/desktopTocCollapseButtonIconStyle';
@@ -10,11 +11,10 @@ import { cn } from '@/lib/tailwind';
 
 export const COLLAPSE_BUTTON_HEIGTH_IN_PX: number = 30;
 
-interface BlogPostTocCollapseButtonProps {
+interface BlogPostTocCollapseButtonProps extends Partial<WithClassname> {
   setIsCollapsed: (isCollapsed: boolean) => unknown;
   isCollapsed: boolean;
   isDisabled?: boolean;
-  className: string;
 }
 
 const { isNotActiveClassList: btnIconIsNotActiveClassList, isActiveClassList: btnIconIsActiveClassList } = DesktopBlogTocCollapseButtonIconStyle;
