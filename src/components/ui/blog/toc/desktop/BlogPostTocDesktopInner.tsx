@@ -211,8 +211,12 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       return;
     }
 
-    const firstVisibleHeadingSlug = getFirstVisibleHeadingSlug();
-    if (firstVisibleHeadingSlug === null) return;
+    let firstVisibleHeadingSlug = getFirstVisibleHeadingSlug();
+    if (firstVisibleHeadingSlug === null) {
+      const rescueHeading = inferCurrentHeadingRegardlessIntersectionObserver();
+      if (rescueHeading) firstVisibleHeadingSlug = rescueHeading.id;
+      else return;
+    }
 
     if (forcedHeadingSlugRef.current) {
       const newIdx = slugAndIndexAssoc[firstVisibleHeadingSlug];
@@ -222,7 +226,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     }
 
     setCurrentHeading(firstVisibleHeadingSlug);
-  }, [headings, getFirstVisibleHeadingSlug, isLargeScreen, scrollDirection, slugAndIndexAssoc]);
+  }, [headings, getFirstVisibleHeadingSlug, isLargeScreen, scrollDirection, slugAndIndexAssoc, inferCurrentHeadingRegardlessIntersectionObserver]);
 
   const isAtBottom = useCallback(() => getTotalVerticalScrollDistance() >= document.documentElement.scrollHeight, []);
 
