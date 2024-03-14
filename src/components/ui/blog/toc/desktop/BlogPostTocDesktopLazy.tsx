@@ -42,7 +42,8 @@ const BlogPostTocDesktopLazy: FunctionComponent<SharedBlogPostTocProps> = ({ hea
       <CardHeader
         className={cn('relative z-10 rounded-b-none rounded-t-lg bg-black transition-[border-radius] duration-150 dark:bg-card', {
           'rounded-t-none': isMagnetized,
-          'rounded-b-lg': isCollapsed
+          'rounded-b-lg': isCollapsed,
+          'delay-200': !isMagnetized
         })}
       >
         <CardTitle className="px-2 text-center">{title}</CardTitle>

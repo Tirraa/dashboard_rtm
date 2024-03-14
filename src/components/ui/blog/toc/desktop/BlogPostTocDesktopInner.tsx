@@ -471,10 +471,12 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
                   const { slug } = heading;
                   const elem = document.getElementById(slug);
                   if (!elem) return;
+
                   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-                  if (slugAndIndexAssoc[slug] === headings.length - 1 && isAtBottom()) {
+                  if (slug === headings[headings.length - 1].slug && isAtBottom()) {
                     router.replace('#' + slug, { scroll: false });
                     setCurrentHeading(slug);
+                    forcedHeadingSlugRef.current = '';
                     return;
                   }
 
@@ -483,13 +485,17 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
                   router.replace('#' + slug, { scroll: false });
                   setCurrentHeading(forcedHeadingSlugRef.current);
                   const scrollYStart = window.scrollY;
-                  const scrollYTarget = elem.offsetTop - TOC_SCROLL_TOP_OFFSET_IN_PX;
+                  let scrollYTarget = elem.offsetTop - TOC_SCROLL_TOP_OFFSET_IN_PX;
+
+                  if (Math.ceil(scrollYTarget + window.innerHeight) >= document.documentElement.scrollHeight) {
+                    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+                    scrollYTarget = Math.trunc(document.documentElement.scrollHeight) - Math.trunc(window.innerHeight) - 2;
+                  }
+
                   window.scrollTo({ behavior: 'instant', top: scrollYTarget });
                   const scrollYEnd = window.scrollY;
-                  if (Math.ceil(scrollYStart) === Math.ceil(scrollYEnd)) {
-                    muteUpdatesUntilScrollEnd.current = false;
-                    window.dispatchEvent(new Event('scrollend'));
-                  }
+
+                  if (Math.ceil(scrollYStart) === Math.ceil(scrollYEnd)) window.dispatchEvent(new Event('scrollend'));
                 }}
                 className={heading.slug === currentHeading ? 'text-primary' : ''}
                 href={`#${heading.slug}`}
