@@ -28,6 +28,9 @@ const TOP_DEAD_ZONE_PX = navbarHeight;
 const NIL_IDX = -1;
 const TOC_SCROLL_TOP_OFFSET_IN_PX: number = 192;
 
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+const isAtTop = () => window.scrollY === 0;
+
 const getAllDocumentHeadingsFromDOM = () => {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const h1 = Array.from(document.querySelectorAll('h1')).slice(1);
@@ -181,9 +184,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const handleScrollUp = useCallback(() => {
     if (scrollDirection !== 'up' || !isLargeScreen || muteUpdatesUntilScrollEnd.current) return;
 
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const atTop = window.scrollY === 0;
-    if (atTop) {
+    if (isAtTop()) {
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       const veryFirstHeadingSlug = headings[0].slug;
       forcedHeadingSlugRef.current = '';
@@ -223,11 +224,12 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     setCurrentHeading(firstVisibleHeadingSlug);
   }, [headings, getFirstVisibleHeadingSlug, isLargeScreen, scrollDirection, slugAndIndexAssoc]);
 
+  const isAtBottom = useCallback(() => getTotalVerticalScrollDistance() >= document.documentElement.scrollHeight, []);
+
   const handleScrollDown = useCallback(() => {
     if (scrollDirection !== 'down' || !isLargeScreen || muteUpdatesUntilScrollEnd.current) return;
 
-    const atBottom = getTotalVerticalScrollDistance() >= document.documentElement.scrollHeight;
-    if (atBottom) {
+    if (isAtBottom()) {
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       const veryLastHeadingSlug = headings[headings.length - 1].slug;
       forcedHeadingSlugRef.current = '';
@@ -246,7 +248,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     }
 
     setCurrentHeading(firstVisibleHeadingSlug);
-  }, [headings, getFirstVisibleHeadingSlug, isLargeScreen, scrollDirection, slugAndIndexAssoc]);
+  }, [headings, getFirstVisibleHeadingSlug, isLargeScreen, scrollDirection, slugAndIndexAssoc, isAtBottom]);
 
   const handleMagnetization = useCallback(() => {
     if (!isLargeScreen) return;
@@ -466,13 +468,28 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
               <Link
                 onClick={(event) => {
                   event.preventDefault();
-                  const elem = document.getElementById(heading.slug);
+                  const { slug } = heading;
+                  const elem = document.getElementById(slug);
                   if (!elem) return;
-                  forcedHeadingSlugRef.current = heading.slug;
+                  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+                  if (slugAndIndexAssoc[slug] === headings.length - 1 && isAtBottom()) {
+                    router.replace('#' + slug, { scroll: false });
+                    setCurrentHeading(slug);
+                    return;
+                  }
+
+                  forcedHeadingSlugRef.current = slug;
                   muteUpdatesUntilScrollEnd.current = true;
-                  router.replace('#' + heading.slug, { scroll: false });
+                  router.replace('#' + slug, { scroll: false });
                   setCurrentHeading(forcedHeadingSlugRef.current);
-                  window.scrollTo({ top: elem.offsetTop - TOC_SCROLL_TOP_OFFSET_IN_PX, behavior: 'instant' });
+                  const scrollYStart = window.scrollY;
+                  const scrollYTarget = elem.offsetTop - TOC_SCROLL_TOP_OFFSET_IN_PX;
+                  window.scrollTo({ behavior: 'instant', top: scrollYTarget });
+                  const scrollYEnd = window.scrollY;
+                  if (Math.ceil(scrollYStart) === Math.ceil(scrollYEnd)) {
+                    muteUpdatesUntilScrollEnd.current = false;
+                    window.dispatchEvent(new Event('scrollend'));
+                  }
                 }}
                 className={heading.slug === currentHeading ? 'text-primary' : ''}
                 href={`#${heading.slug}`}
