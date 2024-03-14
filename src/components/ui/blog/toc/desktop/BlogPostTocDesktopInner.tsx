@@ -53,6 +53,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const [scrollDirection, setScrollDirection] = useScrollDirection();
   const [currentHeading, setCurrentHeading] = useState<HeadingSlug>('');
 
+  const lastScrollY = useRef<number>(window.scrollY);
   const headingsObserver = useRef<MaybeNull<IntersectionObserver>>(null);
   const firstHeadingObserver = useRef<MaybeNull<IntersectionObserver>>(null);
   const visibleHeadings = useRef<VisibleHeadings>({});
@@ -60,6 +61,9 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const tocRef = useRef<HTMLDivElement>(null);
   const forcedHeadingSlugRef = useRef<HeadingSlug>('');
   const muteUpdatesUntilScrollEnd = useRef<boolean>(false);
+
+  const handleScrollUpRef = useRef<MaybeNull<(forced?: boolean) => void>>(null);
+  const handleScrollDownRef = useRef<MaybeNull<(forced?: boolean) => void>>(null);
 
   const slugAndIndexAssoc = useMemo(() => {
     return headings.reduce(
@@ -209,119 +213,137 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     return firstSlug;
   }, [slugAndIndexAssoc]);
 
-  /**
-   * @effect {May tweak Current Heading state & reset forced heading}
-   */
-  const handleScrollUp = useCallback(() => {
-    if (scrollDirection !== 'up' || !isLargeScreen || muteUpdatesUntilScrollEnd.current) return;
+  const isAtBottom = useCallback(() => getTotalVerticalScrollDistance() >= document.documentElement.scrollHeight, []);
 
-    if (isAtTop()) {
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      const veryFirstHeadingSlug = headings[0].slug;
-      forcedHeadingSlugRef.current = '';
-      releaseOldHeadingFocusAndSetCurrentHeading(veryFirstHeadingSlug);
-      return;
-    }
+  const populateHandleScrollUpAndHandleScrollDown = useCallback(() => {
+    /**
+     * @effect {May tweak Current Heading state, reset forced heading, change scroll direction, call forced handleScrollDown}
+     */
+    handleScrollUpRef.current = (forced: boolean = false) => {
+      const currentScrollY = window.scrollY;
+      const oldScrollY = lastScrollY.current;
+      lastScrollY.current = currentScrollY;
 
-    const visibleHeadingsInstance = getRefCurrentPtr(visibleHeadings);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (Object.keys(visibleHeadingsInstance).length === 0) {
-      const infered = getClosestUpHeadingFromBottom();
-      if (!infered) {
-        const maybeRescueHeading = inferCurrentHeadingRegardlessIntersectionObserver();
-        if (maybeRescueHeading) {
-          releaseOldHeadingFocusAndSetCurrentHeading(maybeRescueHeading.id);
-          return;
-        }
+      if (currentScrollY > oldScrollY) {
+        setScrollDirection('down');
+        const handleScrollDownInstance = getRefCurrentPtr(handleScrollDownRef);
+        if (handleScrollDownInstance) handleScrollDownInstance(true);
+        return;
+      }
+
+      if (!Boolean(forced) && (scrollDirection !== 'up' || !isLargeScreen || muteUpdatesUntilScrollEnd.current)) return;
+
+      if (isAtTop()) {
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         const veryFirstHeadingSlug = headings[0].slug;
+        forcedHeadingSlugRef.current = '';
         releaseOldHeadingFocusAndSetCurrentHeading(veryFirstHeadingSlug);
         return;
       }
 
-      const inferedHeading = infered.id;
+      const visibleHeadingsInstance = getRefCurrentPtr(visibleHeadings);
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      if (Object.keys(visibleHeadingsInstance).length === 0) {
+        const infered = getClosestUpHeadingFromBottom();
+
+        if (!infered) {
+          const maybeRescueHeading = inferCurrentHeadingRegardlessIntersectionObserver();
+          if (maybeRescueHeading) {
+            releaseOldHeadingFocusAndSetCurrentHeading(maybeRescueHeading.id);
+            return;
+          }
+          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          const veryFirstHeadingSlug = headings[0].slug;
+          releaseOldHeadingFocusAndSetCurrentHeading(veryFirstHeadingSlug);
+          return;
+        }
+
+        const inferedHeading = infered.id;
+
+        if (forcedHeadingSlugRef.current) {
+          const inferedHeadingIdx = slugAndIndexAssoc[inferedHeading];
+          const forcedHeadingIdx = slugAndIndexAssoc[forcedHeadingSlugRef.current];
+          if (inferedHeadingIdx <= forcedHeadingIdx) forcedHeadingSlugRef.current = '';
+          else return;
+        }
+
+        releaseOldHeadingFocusAndSetCurrentHeading(inferedHeading);
+        return;
+      }
+
+      let firstVisibleHeadingSlug = getFirstVisibleHeadingSlug();
+      if (firstVisibleHeadingSlug === null) {
+        const maybeRescueHeading = inferCurrentHeadingRegardlessIntersectionObserver();
+        if (maybeRescueHeading) firstVisibleHeadingSlug = maybeRescueHeading.id;
+        else {
+          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          const veryLastHeadingSlug = headings[headings.length - 1].slug;
+          firstVisibleHeadingSlug = veryLastHeadingSlug;
+        }
+      }
 
       if (forcedHeadingSlugRef.current) {
-        const inferedHeadingIdx = slugAndIndexAssoc[inferedHeading];
-        const forcedHeadingIdx = slugAndIndexAssoc[forcedHeadingSlugRef.current];
-        if (inferedHeadingIdx <= forcedHeadingIdx) forcedHeadingSlugRef.current = '';
+        const newIdx = slugAndIndexAssoc[firstVisibleHeadingSlug];
+        const oldIdx = slugAndIndexAssoc[forcedHeadingSlugRef.current];
+        if (newIdx <= oldIdx) forcedHeadingSlugRef.current = '';
         else return;
       }
 
-      releaseOldHeadingFocusAndSetCurrentHeading(inferedHeading);
-      return;
-    }
+      releaseOldHeadingFocusAndSetCurrentHeading(firstVisibleHeadingSlug);
+    };
 
-    let firstVisibleHeadingSlug = getFirstVisibleHeadingSlug();
-    if (firstVisibleHeadingSlug === null) {
-      const maybeRescueHeading = inferCurrentHeadingRegardlessIntersectionObserver();
-      if (maybeRescueHeading) firstVisibleHeadingSlug = maybeRescueHeading.id;
-      else {
+    /**
+     * @effect {May tweak Current Heading state, reset forced heading, change scroll direction, call forced handleScrollUp}
+     */
+    handleScrollDownRef.current = (forced: boolean = false) => {
+      const currentScrollY = window.scrollY;
+      const oldScrollY = lastScrollY.current;
+      lastScrollY.current = currentScrollY;
+
+      if (currentScrollY < oldScrollY) {
+        setScrollDirection('up');
+        const handleScrollUpInstance = getRefCurrentPtr(handleScrollUpRef);
+        if (handleScrollUpInstance) handleScrollUpInstance(true);
+        return;
+      }
+
+      if (!Boolean(forced) && (scrollDirection !== 'down' || !isLargeScreen || muteUpdatesUntilScrollEnd.current)) return;
+
+      if (isAtBottom()) {
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         const veryLastHeadingSlug = headings[headings.length - 1].slug;
-        firstVisibleHeadingSlug = veryLastHeadingSlug;
+        forcedHeadingSlugRef.current = '';
+        releaseOldHeadingFocusAndSetCurrentHeading(veryLastHeadingSlug);
+        return;
       }
-    }
 
-    if (forcedHeadingSlugRef.current) {
-      const newIdx = slugAndIndexAssoc[firstVisibleHeadingSlug];
-      const oldIdx = slugAndIndexAssoc[forcedHeadingSlugRef.current];
-      if (newIdx <= oldIdx) forcedHeadingSlugRef.current = '';
-      else return;
-    }
+      let firstVisibleHeadingSlug = getFirstVisibleHeadingSlug();
+      if (firstVisibleHeadingSlug === null) {
+        const rescueHeading = inferCurrentHeadingRegardlessIntersectionObserver();
+        if (rescueHeading) firstVisibleHeadingSlug = rescueHeading.id;
+        else return;
+      }
 
-    releaseOldHeadingFocusAndSetCurrentHeading(firstVisibleHeadingSlug);
+      if (forcedHeadingSlugRef.current) {
+        const newIdx = slugAndIndexAssoc[firstVisibleHeadingSlug];
+        const oldIdx = slugAndIndexAssoc[forcedHeadingSlugRef.current];
+        if (newIdx >= oldIdx) forcedHeadingSlugRef.current = '';
+        else return;
+      }
+
+      releaseOldHeadingFocusAndSetCurrentHeading(firstVisibleHeadingSlug);
+    };
   }, [
-    headings,
-    getFirstVisibleHeadingSlug,
-    isLargeScreen,
-    scrollDirection,
-    slugAndIndexAssoc,
-    inferCurrentHeadingRegardlessIntersectionObserver,
     getClosestUpHeadingFromBottom,
-    releaseOldHeadingFocusAndSetCurrentHeading
-  ]);
-
-  const isAtBottom = useCallback(() => getTotalVerticalScrollDistance() >= document.documentElement.scrollHeight, []);
-
-  /**
-   * @effect {May tweak Current Heading state & reset forced heading}
-   */
-  const handleScrollDown = useCallback(() => {
-    if (scrollDirection !== 'down' || !isLargeScreen || muteUpdatesUntilScrollEnd.current) return;
-
-    if (isAtBottom()) {
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      const veryLastHeadingSlug = headings[headings.length - 1].slug;
-      forcedHeadingSlugRef.current = '';
-      releaseOldHeadingFocusAndSetCurrentHeading(veryLastHeadingSlug);
-      return;
-    }
-
-    let firstVisibleHeadingSlug = getFirstVisibleHeadingSlug();
-    if (firstVisibleHeadingSlug === null) {
-      const rescueHeading = inferCurrentHeadingRegardlessIntersectionObserver();
-      if (rescueHeading) firstVisibleHeadingSlug = rescueHeading.id;
-      else return;
-    }
-
-    if (forcedHeadingSlugRef.current) {
-      const newIdx = slugAndIndexAssoc[firstVisibleHeadingSlug];
-      const oldIdx = slugAndIndexAssoc[forcedHeadingSlugRef.current];
-      if (newIdx >= oldIdx) forcedHeadingSlugRef.current = '';
-      else return;
-    }
-
-    releaseOldHeadingFocusAndSetCurrentHeading(firstVisibleHeadingSlug);
-  }, [
-    headings,
     getFirstVisibleHeadingSlug,
-    isLargeScreen,
-    scrollDirection,
-    slugAndIndexAssoc,
+    headings,
+    inferCurrentHeadingRegardlessIntersectionObserver,
     isAtBottom,
+    isLargeScreen,
     releaseOldHeadingFocusAndSetCurrentHeading,
-    inferCurrentHeadingRegardlessIntersectionObserver
+    scrollDirection,
+    setScrollDirection,
+    slugAndIndexAssoc
   ]);
 
   /**
@@ -532,6 +554,16 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   useEffect(() => {
     if (!isLargeScreen) return;
 
+    function handleScrollUp() {
+      const handleScrollUpInstance = getRefCurrentPtr(handleScrollUpRef);
+      if (handleScrollUpInstance) handleScrollUpInstance();
+    }
+
+    function handleScrollDown() {
+      const handleScrollDownInstance = getRefCurrentPtr(handleScrollDownRef);
+      if (handleScrollDownInstance) handleScrollDownInstance();
+    }
+
     window.addEventListener('scroll', handleMagnetization);
     window.addEventListener('scroll', handleScrollUp);
     window.addEventListener('scroll', handleScrollDown);
@@ -541,24 +573,27 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       window.removeEventListener('scroll', handleScrollUp);
       window.removeEventListener('scroll', handleScrollDown);
     };
-  }, [isLargeScreen, handleScrollDown, handleScrollUp, handleMagnetization]);
+  }, [isLargeScreen, handleMagnetization]);
 
   /**
    * @effect {Initializer}
    */
-  useEffect(
-    () => {
-      const maybeHeadingSlugFromHash = getCurrentHeadingSlugFromHash(true);
-      if (maybeHeadingSlugFromHash) releaseOldHeadingFocusAndSetCurrentHeading(maybeHeadingSlugFromHash);
-      else {
-        const maybeInferedHeading = inferCurrentHeadingRegardlessIntersectionObserver();
-        if (maybeInferedHeading) releaseOldHeadingFocusAndSetCurrentHeading(maybeInferedHeading.id);
-      }
-      handleMagnetization();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+  useEffect(() => {
+    const maybeHeadingSlugFromHash = getCurrentHeadingSlugFromHash(true);
+    if (maybeHeadingSlugFromHash) releaseOldHeadingFocusAndSetCurrentHeading(maybeHeadingSlugFromHash);
+    else {
+      const maybeInferedHeading = inferCurrentHeadingRegardlessIntersectionObserver();
+      if (maybeInferedHeading) releaseOldHeadingFocusAndSetCurrentHeading(maybeInferedHeading.id);
+    }
+    handleMagnetization();
+    populateHandleScrollUpAndHandleScrollDown();
+  }, [
+    getCurrentHeadingSlugFromHash,
+    handleMagnetization,
+    inferCurrentHeadingRegardlessIntersectionObserver,
+    releaseOldHeadingFocusAndSetCurrentHeading,
+    populateHandleScrollUpAndHandleScrollDown
+  ]);
 
   return (
     <nav className="flex flex-col items-center self-start transition-[margin-top] duration-300" aria-label={ariaLabel} ref={tocRef}>
