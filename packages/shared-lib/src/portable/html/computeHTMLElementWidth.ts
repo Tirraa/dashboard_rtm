@@ -1,5 +1,8 @@
-function computeHTMLElementWidth(htmlElement: HTMLElement): number {
+// NOTE: includeMargins is a debt for now, remove it in the future if it's not needed
+function computeHTMLElementWidth(htmlElement: HTMLElement, includeMargins: boolean = false): number {
   const { width } = htmlElement.getBoundingClientRect();
+  if (!includeMargins) return width;
+
   const { marginRight, marginLeft } = getComputedStyle(htmlElement);
   const widthDeltas = [marginRight, marginLeft].map(parseFloat);
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers

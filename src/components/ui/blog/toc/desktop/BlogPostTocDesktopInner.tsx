@@ -363,7 +363,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       }
 
       function applyCollapsedStyles() {
-        tocInstance.style.marginTop = '-' + (computeHTMLElementHeight(tocInstance) + COLLAPSE_BUTTON_HEIGTH_IN_PX) + 'px';
+        const height = computeHTMLElementHeight(tocInstance);
+        tocInstance.style.marginTop = '-' + (height + COLLAPSE_BUTTON_HEIGTH_IN_PX) + 'px';
       }
 
       if (!isCollapsed) {
