@@ -10,8 +10,6 @@
     "./misc": "./src/misc.ts",
     "./react": "./src/react.ts",
     "./str": "./src/str.ts",
-    "./portable/html/computeHTMLElementHeight": "./src/portable/html/computeHTMLElementHeight.ts",
-    "./portable/html/computeHTMLElementWidth": "./src/portable/html/computeHTMLElementWidth.ts",
     "./portable/html/createURLSearchParams": "./src/portable/html/createURLSearchParams.ts",
     "./portable/html/getDirection": "./src/portable/html/getDirection.ts",
     "./portable/html/preserveKeyboardNavigation": "./src/portable/html/preserveKeyboardNavigation.ts",
@@ -43,12 +41,6 @@
       ],
       "international-types": [
         "./src/international-types.ts"
-      ],
-      "portable/html/computeHTMLElementHeight": [
-        "./src/portable/html/computeHTMLElementHeight.ts"
-      ],
-      "portable/html/computeHTMLElementWidth": [
-        "./src/portable/html/computeHTMLElementWidth.ts"
       ],
       "portable/html/createURLSearchParams": [
         "./src/portable/html/createURLSearchParams.ts"

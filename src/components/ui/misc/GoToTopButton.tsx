@@ -2,7 +2,6 @@
 
 import type { FunctionComponent } from 'react';
 
-import { computeHTMLElementHeight } from 'packages/shared-lib/src/html';
 import { getRefCurrentPtr } from 'packages/shared-lib/src/react';
 import { useCallback, useEffect, useState, useRef } from 'react';
 import { ArrowUpIcon } from '@heroicons/react/20/solid';
@@ -79,7 +78,7 @@ const GoToTopButton: FunctionComponent<GoToTopButtonProps> = ({ scrollYthreshold
       return;
     }
 
-    const btnHeight = computeHTMLElementHeight(btnInstance);
+    const btnHeight = btnInstance.getBoundingClientRect().height;
     btnInstance.style.transform = `translateY(${btnHeight}px)`;
   }, [isShown]);
 

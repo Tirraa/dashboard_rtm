@@ -4,13 +4,13 @@ import type { DashboardRoutesKeys } from '@/config/DashboardSidebar/utils/Routes
 import type { FunctionComponent, ReactElement } from 'react';
 import type { AppPath } from '@rtm/shared-types/Next';
 
-import { computeHTMLElementHeight, computeHTMLElementWidth, getDirection } from '@rtm/shared-lib/html';
 import DASHBOARD_ROUTES, { DASHBOARD_ROUTES_TITLES } from '@/config/DashboardSidebar/routesImpl';
 import DASHBOARD_ROUTES_SIDEBAR_COMPONENTS from '@/config/DashboardSidebar/utils/IconsMapping';
 import SidebarButtonStyle from '@/components/config/styles/sidebar/SidebarButtonStyle';
 import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
 import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
+import { getDirection } from '@rtm/shared-lib/html';
 import { useEffect, useState, useRef } from 'react';
 import { hrefMatchesPathname } from '@/lib/str';
 import { usePathname } from 'next/navigation';
@@ -76,15 +76,15 @@ const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => {
       if (isLargeScreen) {
         sidebarInstance.style.marginTop = '0';
         if (direction === 'rtl') {
-          sidebarInstance.style.marginRight = '-' + computeHTMLElementWidth(sidebarInstance) + 'px';
+          sidebarInstance.style.marginRight = '-' + sidebarInstance.getBoundingClientRect().width + 'px';
           sidebarInstance.style.marginLeft = '0';
         } else {
-          sidebarInstance.style.marginLeft = '-' + computeHTMLElementWidth(sidebarInstance) + 'px';
+          sidebarInstance.style.marginLeft = '-' + sidebarInstance.getBoundingClientRect().width + 'px';
           sidebarInstance.style.marginRight = '0';
         }
       } else {
         sidebarInstance.style.marginLeft = '0';
-        sidebarInstance.style.marginTop = '-' + computeHTMLElementHeight(sidebarInstance) + 'px';
+        sidebarInstance.style.marginTop = '-' + sidebarInstance.getBoundingClientRect().height + 'px';
       }
       wasCollapsed.current = true;
     }

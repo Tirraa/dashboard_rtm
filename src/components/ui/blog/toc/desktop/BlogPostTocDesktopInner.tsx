@@ -4,7 +4,6 @@ import type { FunctionComponent } from 'react';
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
 import useScrollDirection from '@/components/hooks/useScrollDirection';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
-import { computeHTMLElementHeight } from '@rtm/shared-lib/html';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { useRouter } from 'next/navigation';
 import { getNavbar } from '@/lib/html';
@@ -21,7 +20,7 @@ require('scrollyfills').scrollend;
 
 const navbarElement = getNavbar();
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-const navbarHeight = navbarElement ? computeHTMLElementHeight(navbarElement) : 0;
+const navbarHeight = navbarElement ? navbarElement.getBoundingClientRect().height : 0;
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 const BOTTOM_DEAD_ZONE_PX = navbarHeight * 2;
 const TOP_DEAD_ZONE_PX = navbarHeight;
@@ -363,7 +362,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       }
 
       function applyCollapsedStyles() {
-        const height = computeHTMLElementHeight(tocInstance);
+        const height = tocInstance.getBoundingClientRect().height;
         tocInstance.style.marginTop = '-' + (height + COLLAPSE_BUTTON_HEIGTH_IN_PX) + 'px';
       }
 
