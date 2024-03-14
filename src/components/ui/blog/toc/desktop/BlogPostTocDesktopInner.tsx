@@ -61,9 +61,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const forcedHeadingSlugRef = useRef<HeadingSlug>('');
   const muteUpdatesUntilScrollEnd = useRef<boolean>(false);
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const headingsFromDOM = getAllDocumentHeadingsFromDOM().slice(1);
-
   const slugAndIndexAssoc = useMemo(() => {
     return headings.reduce(
       (indexed, { slug }, idx) => {
@@ -73,6 +70,11 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       {} as Record<HeadingSlug, HeadingSlugIdx>
     );
   }, [headings]);
+
+  const headingsFromDOM = useMemo(
+    () => getAllDocumentHeadingsFromDOM().filter((heading) => heading.id && slugAndIndexAssoc[heading.id] !== undefined),
+    [slugAndIndexAssoc]
+  );
 
   const getClosestUpHeadingFromBottom = useCallback((): MaybeNull<HTMLElement> => {
     let closestHeading = null;
