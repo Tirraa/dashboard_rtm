@@ -45,7 +45,7 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
       {/* {ToDo} https://github.com/Tirraa/dashboard_rtm/issues/41 */}
       <MaybePaginatedElements
         elementsPerPage={BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT}
-        paginatedElementsBodyWrapperProps={{ className: '[&>article:not(:last-of-type)]:mb-6' }}
+        paginatedElementsBodyWrapperProps={{ className: 'mb-4 [&>article:not(:last-of-type)]:mb-6' }}
         paginatedElements={paginatedElements}
         paginationButtonsPosition="top"
       />

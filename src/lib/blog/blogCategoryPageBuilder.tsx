@@ -86,8 +86,8 @@ async function blogCategoryPageBuilder(
 
       const section = (
         <section
+          className="mb-4 [&>article:not(:last-of-type)]:mb-6"
           key={`${subcategory}-${curSubcategTitle}-section`}
-          className="[&>article:not(:last-of-type)]:mb-6"
           id={slugger.slug(curSubcategTitle)}
         >
           {title}

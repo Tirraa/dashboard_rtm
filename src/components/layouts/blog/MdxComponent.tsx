@@ -25,7 +25,7 @@ const MDX: FunctionComponent<MdxProps> = ({ className: classNameValue, code }) =
   const className = classNameValue ?? '';
 
   return (
-    <article className={cn('mdx break-word', className)}>
+    <article className={cn('mdx break-word mb-4', className)}>
       <MDXComponent components={components} />
     </article>
   );
