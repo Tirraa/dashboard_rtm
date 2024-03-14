@@ -76,6 +76,19 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     [slugAndIndexAssoc]
   );
 
+  const releaseOldHeadingFocus = useCallback(() => {
+    const maybeCurrentlyFocusedHeading = headingsFromDOM.find((heading) => heading === document.activeElement);
+    if (maybeCurrentlyFocusedHeading) maybeCurrentlyFocusedHeading.blur();
+  }, [headingsFromDOM]);
+
+  const releaseOldHeadingFocusAndSetCurrentHeading = useCallback(
+    (newCurrentHeading: HeadingSlug) => {
+      releaseOldHeadingFocus();
+      setCurrentHeading(newCurrentHeading);
+    },
+    [releaseOldHeadingFocus]
+  );
+
   const getClosestUpHeadingFromBottom = useCallback((): MaybeNull<HTMLElement> => {
     let closestHeading = null;
     let closestDistance = Infinity;
@@ -162,9 +175,16 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     const infered2 = getClosestUpHeadingFromBottom();
     if (!infered2) return null;
 
-    setCurrentHeading(infered2.id);
+    releaseOldHeadingFocusAndSetCurrentHeading(infered2.id);
     return infered2;
-  }, [headings, slugAndIndexAssoc, setScrollDirection, getClosestUpHeadingFromBottom, getClosestUpHeadingFromTop]);
+  }, [
+    headings,
+    slugAndIndexAssoc,
+    setScrollDirection,
+    getClosestUpHeadingFromBottom,
+    getClosestUpHeadingFromTop,
+    releaseOldHeadingFocusAndSetCurrentHeading
+  ]);
 
   const getFirstVisibleHeadingSlug = useCallback(() => {
     let firstSlug: MaybeNull<HeadingSlug> = null;
@@ -192,7 +212,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       const veryFirstHeadingSlug = headings[0].slug;
       forcedHeadingSlugRef.current = '';
-      setCurrentHeading(veryFirstHeadingSlug);
+      releaseOldHeadingFocusAndSetCurrentHeading(veryFirstHeadingSlug);
       return;
     }
 
@@ -203,7 +223,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       if (!infered) {
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         const veryFirstHeadingSlug = headings[0].slug;
-        setCurrentHeading(veryFirstHeadingSlug);
+        releaseOldHeadingFocusAndSetCurrentHeading(veryFirstHeadingSlug);
         return;
       }
 
@@ -216,7 +236,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         else return;
       }
 
-      setCurrentHeading(inferedHeading);
+      releaseOldHeadingFocusAndSetCurrentHeading(inferedHeading);
       return;
     }
 
@@ -234,7 +254,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       else return;
     }
 
-    setCurrentHeading(firstVisibleHeadingSlug);
+    releaseOldHeadingFocusAndSetCurrentHeading(firstVisibleHeadingSlug);
   }, [
     headings,
     getFirstVisibleHeadingSlug,
@@ -242,7 +262,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     scrollDirection,
     slugAndIndexAssoc,
     inferCurrentHeadingRegardlessIntersectionObserver,
-    getClosestUpHeadingFromBottom
+    getClosestUpHeadingFromBottom,
+    releaseOldHeadingFocusAndSetCurrentHeading
   ]);
 
   const isAtBottom = useCallback(() => getTotalVerticalScrollDistance() >= document.documentElement.scrollHeight, []);
@@ -257,7 +278,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       const veryLastHeadingSlug = headings[headings.length - 1].slug;
       forcedHeadingSlugRef.current = '';
-      setCurrentHeading(veryLastHeadingSlug);
+      releaseOldHeadingFocusAndSetCurrentHeading(veryLastHeadingSlug);
       return;
     }
 
@@ -271,8 +292,16 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       else return;
     }
 
-    setCurrentHeading(firstVisibleHeadingSlug);
-  }, [headings, getFirstVisibleHeadingSlug, isLargeScreen, scrollDirection, slugAndIndexAssoc, isAtBottom]);
+    releaseOldHeadingFocusAndSetCurrentHeading(firstVisibleHeadingSlug);
+  }, [
+    headings,
+    getFirstVisibleHeadingSlug,
+    isLargeScreen,
+    scrollDirection,
+    slugAndIndexAssoc,
+    isAtBottom,
+    releaseOldHeadingFocusAndSetCurrentHeading
+  ]);
 
   /**
    * @effect {Tweaks isMagnetized state}
@@ -377,7 +406,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       top: (headingsInstance.children[idx] as HTMLElement).offsetTop - TOC_SCROLL_TOP_OFFSET_IN_PX,
       behavior: 'smooth'
     });
-  }, [currentHeading, isLargeScreen, slugAndIndexAssoc]);
+    return;
+  }, [currentHeading, isLargeScreen, slugAndIndexAssoc, headings]);
 
   /**
    * @effect {ToC autoscroll on uncollapse}
@@ -444,7 +474,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
     const handleResize = () => {
       const maybeInferedHeading = inferCurrentHeadingRegardlessIntersectionObserver();
-      if (maybeInferedHeading) setCurrentHeading(maybeInferedHeading.id);
+      if (maybeInferedHeading) releaseOldHeadingFocusAndSetCurrentHeading(maybeInferedHeading.id);
     };
 
     window.addEventListener('resize', handleResize);
@@ -452,7 +482,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [isLargeScreen, inferCurrentHeadingRegardlessIntersectionObserver]);
+  }, [isLargeScreen, inferCurrentHeadingRegardlessIntersectionObserver, releaseOldHeadingFocusAndSetCurrentHeading]);
 
   /**
    * @effect {Hash change Listener, may tweak Current Heading state}
@@ -464,7 +494,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       const heading = getCurrentHeadingSlugFromHash();
       if (heading !== null) {
         forcedHeadingSlugRef.current = heading;
-        setCurrentHeading(heading);
+        releaseOldHeadingFocusAndSetCurrentHeading(heading);
       }
     };
 
@@ -473,7 +503,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     return () => {
       window.removeEventListener('hashchange', handleHashchange);
     };
-  }, [isLargeScreen, getCurrentHeadingSlugFromHash]);
+  }, [isLargeScreen, getCurrentHeadingSlugFromHash, releaseOldHeadingFocusAndSetCurrentHeading]);
 
   /**
    * @effect {Scroll listeners checkpoint}
@@ -498,10 +528,10 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   useEffect(
     () => {
       const maybeHeadingSlugFromHash = getCurrentHeadingSlugFromHash(true);
-      if (maybeHeadingSlugFromHash) setCurrentHeading(maybeHeadingSlugFromHash);
+      if (maybeHeadingSlugFromHash) releaseOldHeadingFocusAndSetCurrentHeading(maybeHeadingSlugFromHash);
       else {
         const maybeInferedHeading = inferCurrentHeadingRegardlessIntersectionObserver();
-        if (maybeInferedHeading) setCurrentHeading(maybeInferedHeading.id);
+        if (maybeInferedHeading) releaseOldHeadingFocusAndSetCurrentHeading(maybeInferedHeading.id);
       }
       handleMagnetization();
     },
@@ -511,14 +541,12 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
   return (
     <nav className="flex flex-col items-center self-start transition-[margin-top] duration-300" aria-label={ariaLabel} ref={tocRef}>
-      <ol className="max-h-[40vh] w-full list-none space-y-3 overflow-auto pl-6 rtl:pl-0 rtl:pr-6" ref={headingsRef}>
+      <ol className="mb-1 max-h-[40vh] w-full list-none space-y-3 overflow-auto pl-6 rtl:pl-0 rtl:pr-6" ref={headingsRef}>
         {headings.map((heading) => (
           <li
             className={cn('w-fit list-none text-sm font-bold text-white transition-colors duration-200 ease-in-out', {
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
               'mt-2': heading.slug === currentHeading && slugAndIndexAssoc[heading.slug] === 0,
-              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-              'mb-2': slugAndIndexAssoc[heading.slug] === headings.length - 1,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
               'font-medium': 3 <= heading.depth && heading.depth <= 6,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -565,7 +593,9 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
                 }}
                 className={cn('transition-all', {
                   'rounded-md bg-primary p-1 font-bold': heading.slug === currentHeading,
-                  'hover:underline focus:text-primary': heading.slug !== currentHeading
+                  'hover:underline focus:text-primary': heading.slug !== currentHeading,
+                  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+                  'pb-1': slugAndIndexAssoc[heading.slug] === headings.length - 1
                 })}
                 href={`#${heading.slug}`}
                 replace
