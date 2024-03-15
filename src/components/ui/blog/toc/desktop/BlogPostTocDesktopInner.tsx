@@ -1,10 +1,12 @@
 import type { MaybeUndefined, MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { DocumentHeading } from '@rtm/shared-types/Documents';
 import type { FunctionComponent } from 'react';
 
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
 import useScrollDirection from '@/components/hooks/useScrollDirection';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
+import ELEMENTS_ID from '@/config/elementsId';
 import { useRouter } from 'next/navigation';
 import { getNavbar } from '@/lib/html';
 import { cn } from '@/lib/tailwind';
@@ -26,6 +28,8 @@ const navbarHeight: number = navbarElement ? navbarElement.getBoundingClientRect
 const BOTTOM_DEAD_ZONE_PX: number = navbarHeight * 2;
 const TOP_DEAD_ZONE_PX: number = navbarHeight;
 
+const SCROLL_TOP_OFFSET_ONCLICK_MAGIC: number = navbarHeight;
+
 const TOC_SCROLL_TOP_OFFSET_IN_PX: number = 172;
 
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -33,11 +37,9 @@ const isAtTop = () => window.scrollY === 0;
 
 const getTotalVerticalScrollDistance = () => Math.ceil(window.scrollY + window.innerHeight);
 
-const getAllDocumentHeadingsFromDOM = () => {
-  const h1 = Array.from(document.querySelectorAll('h1'));
-  const hN = Array.from(document.querySelectorAll('h2, h3, h4, h5, h6'));
-  return [...h1, ...hN] as HTMLElement[];
-};
+const getAllDocumentHeadingsFromDOM = () => Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')) as HTMLElement[];
+
+const getMdxBodyFromDOM = () => document.getElementById(ELEMENTS_ID.MDX_BODY);
 
 const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({
   setIsMagnetized,
@@ -53,12 +55,11 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const [currentHeading, setCurrentHeading] = useState<HeadingSlug>('');
 
   const lastScrollY = useRef<number>(window.scrollY);
-  const firstHeadingObserver = useRef<MaybeNull<IntersectionObserver>>(null);
   const headingsRef = useRef<HTMLOListElement>(null);
   const tocRef = useRef<HTMLDivElement>(null);
   const forcedHeadingSlugRef = useRef<HeadingSlug>('');
   const muteUpdatesUntilScrollEnd = useRef<boolean>(false);
-  const noRescueOnScrollEnd = useRef<boolean>(false);
+  const muteScrollEndNextDoubleCheck = useRef<boolean>(false);
 
   const handleScrollUpRef = useRef<MaybeNull<(currentScrollY: number, oldScrollY: number, forced?: boolean) => void>>(null);
   const handleScrollDownRef = useRef<MaybeNull<(currentScrollY: number, oldScrollY: number, forced?: boolean) => void>>(null);
@@ -77,6 +78,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     () => getAllDocumentHeadingsFromDOM().filter((heading) => heading.id && slugAndIndexAssoc[heading.id] !== undefined),
     [slugAndIndexAssoc]
   );
+
+  const mdxBodyFromDOM = useMemo(() => getMdxBodyFromDOM(), []);
 
   const releaseOldHeadingFocus = useCallback(() => {
     const headingsRefInstance = getRefCurrentPtr(headingsRef);
@@ -118,7 +121,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
   const getClosestHeadingFromTop = useCallback((): MaybeNull<HTMLElement> => {
     let closestHeading = null;
-    let closestDistance = -Infinity;
+    let closestDistance = -Infinity; // Like the level of the Intersection Observer devs
     const [yMin, yMax] = [window.scrollY + TOP_DEAD_ZONE_PX, getTotalVerticalScrollDistance() - BOTTOM_DEAD_ZONE_PX];
 
     for (const heading of headingsFromDOM) {
@@ -156,7 +159,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     [slugAndIndexAssoc, headings]
   );
 
-  const inferCurrentHeadingRegardlessIntersectionObserver: () => MaybeNull<HTMLElement> = useCallback(() => {
+  const inferCurrentHeading: () => MaybeNull<HTMLElement> = useCallback(() => {
     const infered1 = getClosestHeadingFromTop();
 
     if (infered1) {
@@ -197,7 +200,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
   const populateHandleScrollUpAndHandleScrollDown = useCallback(() => {
     handleScrollUpRef.current = (currentScrollY: number, oldScrollY: number, forced: boolean = false) => {
-      if (!isLargeScreen) return;
+      if (!isLargeScreen || muteScrollEndNextDoubleCheck.current) return;
 
       if (currentScrollY > oldScrollY) {
         setScrollDirection('down');
@@ -226,7 +229,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       const infered: MaybeNull<HeadingSlug> = getClosestHeadingFromTop()?.id ?? null;
 
       if (!infered) {
-        const maybeRescueHeading: MaybeNull<HeadingSlug> = inferCurrentHeadingRegardlessIntersectionObserver()?.id ?? null;
+        const maybeRescueHeading: MaybeNull<HeadingSlug> = inferCurrentHeading()?.id ?? null;
         if (maybeRescueHeading) {
           releaseOldHeadingFocusAndSetCurrentHeading(maybeRescueHeading);
           return;
@@ -249,7 +252,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     };
 
     handleScrollDownRef.current = (currentScrollY: number, oldScrollY: number, forced: boolean = false) => {
-      if (!isLargeScreen) return;
+      if (!isLargeScreen || muteScrollEndNextDoubleCheck.current) return;
 
       if (currentScrollY < oldScrollY) {
         setScrollDirection('up');
@@ -276,7 +279,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
       let firstVisibleHeadingSlug: MaybeNull<HeadingSlug> = getClosestHeadingFromTop()?.id ?? null;
       if (firstVisibleHeadingSlug === null) {
-        const rescueHeading: MaybeNull<HeadingSlug> = inferCurrentHeadingRegardlessIntersectionObserver()?.id ?? null;
+        const rescueHeading: MaybeNull<HeadingSlug> = inferCurrentHeading()?.id ?? null;
         if (rescueHeading) firstVisibleHeadingSlug = rescueHeading;
         else return;
       }
@@ -293,7 +296,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   }, [
     getClosestHeadingFromTop,
     headings,
-    inferCurrentHeadingRegardlessIntersectionObserver,
+    inferCurrentHeading,
     isAtBottom,
     isLargeScreen,
     releaseOldHeadingFocusAndSetCurrentHeading,
@@ -303,30 +306,75 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   ]);
 
   const handleMagnetization = useCallback(() => {
-    if (!isLargeScreen) return;
+    if (!isLargeScreen || !mdxBodyFromDOM?.offsetTop) return;
 
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const firstHeading = document.getElementById(headings[0].slug);
-    if (!firstHeading) return;
+    setIsMagnetized(window.scrollY + navbarHeight >= mdxBodyFromDOM.offsetTop);
+  }, [isLargeScreen, mdxBodyFromDOM, setIsMagnetized]);
 
-    firstHeadingObserver.current = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) setIsMagnetized(!entry.isIntersecting);
-      },
-      {
-        rootMargin: `-${TOP_DEAD_ZONE_PX}px 0px -${BOTTOM_DEAD_ZONE_PX}px 0px`,
-        threshold: 1
+  const onClickMagic = useCallback(
+    (event: Pick<Event, 'preventDefault'>, heading: DocumentHeading) => {
+      event.preventDefault();
+
+      const { slug } = heading;
+      const elem = document.getElementById(slug);
+      if (!elem) return;
+
+      forcedHeadingSlugRef.current = slug;
+
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const isLastHeading = slug === headings[headings.length - 1].slug;
+
+      if (isLastHeading && isAtBottom()) {
+        setCurrentHeading(slug);
+        router.replace('#' + slug, { scroll: false });
+        return;
       }
-    );
 
-    const firstHeadingObserverInstance = getRefCurrentPtr(firstHeadingObserver);
+      muteUpdatesUntilScrollEnd.current = true;
+      muteScrollEndNextDoubleCheck.current = true;
+      const scrollYTarget = Math.min(
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        Math.trunc(document.documentElement.scrollHeight) - Math.trunc(window.innerHeight) - 2,
+        elem.offsetTop - SCROLL_TOP_OFFSET_ONCLICK_MAGIC
+      );
 
-    firstHeadingObserverInstance.observe(firstHeading);
+      forcedHeadingSlugRef.current = slug;
 
-    return () => {
-      if (firstHeadingObserverInstance) firstHeadingObserverInstance.disconnect();
-    };
-  }, [headings, isLargeScreen, setIsMagnetized]);
+      if (Math.trunc(scrollYTarget) === Math.trunc(window.scrollY)) window.dispatchEvent(new Event('scrollend'));
+      else window.scrollTo({ behavior: 'instant', top: scrollYTarget });
+
+      setCurrentHeading(slug);
+      router.replace('#' + slug, { scroll: false });
+    },
+    [headings, isAtBottom, router]
+  );
+
+  const handleMagicHeadingClick = useCallback(
+    (event: Event) => {
+      if (!event.target) return;
+
+      const anchorElement = (event.target as HTMLElement).closest('a');
+
+      if (anchorElement?.parentNode) {
+        onClickMagic(event, headings[slugAndIndexAssoc[(anchorElement.parentNode as HTMLElement).id]]);
+      }
+    },
+    [headings, onClickMagic, slugAndIndexAssoc]
+  );
+
+  const setDocumentHeadingsOnClickEvent = useCallback(
+    (doSet: boolean = true) => {
+      for (const heading of headingsFromDOM) {
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        const firstChild = heading.children[0];
+        if (!firstChild) continue;
+
+        firstChild.removeEventListener('click', handleMagicHeadingClick);
+        if (doSet) firstChild.addEventListener('click', handleMagicHeadingClick);
+      }
+    },
+    [headingsFromDOM, handleMagicHeadingClick]
+  );
 
   useEffect(() => {
     function handleScrollEnd() {
@@ -337,8 +385,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       if (!isLargeScreen) return;
 
       muteUpdatesUntilScrollEnd.current = false;
-      if (noRescueOnScrollEnd.current) {
-        noRescueOnScrollEnd.current = false;
+      if (muteScrollEndNextDoubleCheck.current) {
+        muteScrollEndNextDoubleCheck.current = false;
         return;
       }
 
@@ -437,7 +485,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     if (!isLargeScreen) return;
 
     const handleResize = () => {
-      const maybeInferedHeading = inferCurrentHeadingRegardlessIntersectionObserver();
+      const maybeInferedHeading = inferCurrentHeading();
       if (maybeInferedHeading) {
         releaseOldHeadingFocusAndSetCurrentHeading(maybeInferedHeading.id);
       }
@@ -448,7 +496,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [isLargeScreen, inferCurrentHeadingRegardlessIntersectionObserver, releaseOldHeadingFocusAndSetCurrentHeading]);
+  }, [isLargeScreen, inferCurrentHeading, releaseOldHeadingFocusAndSetCurrentHeading]);
 
   useEffect(() => {
     if (!isLargeScreen) return;
@@ -508,7 +556,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
           return maybeHeadingSlugFromHash;
         }
 
-        const maybeInferedHeading: MaybeNull<HeadingSlug> = inferCurrentHeadingRegardlessIntersectionObserver()?.id ?? null;
+        const maybeInferedHeading: MaybeNull<HeadingSlug> = inferCurrentHeading()?.id ?? null;
         if (maybeInferedHeading) {
           releaseOldHeadingFocusAndSetCurrentHeading(maybeInferedHeading);
           return maybeInferedHeading;
@@ -520,12 +568,23 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       const maybeHeadingSlug = initializeHeadingSlug();
       if (maybeHeadingSlug) forcedHeadingSlugRef.current = maybeHeadingSlug;
 
-      handleMagnetization();
       populateHandleScrollUpAndHandleScrollDown();
+      handleMagnetization();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
+
+  useEffect(() => {
+    if (!isLargeScreen) {
+      setDocumentHeadingsOnClickEvent(false);
+      return;
+    }
+
+    setDocumentHeadingsOnClickEvent();
+
+    return () => setDocumentHeadingsOnClickEvent(false);
+  }, [isLargeScreen, setDocumentHeadingsOnClickEvent]);
 
   return (
     <nav className="flex flex-col items-center self-start transition-[margin-top] duration-300" aria-label={ariaLabel} ref={tocRef}>
@@ -538,65 +597,25 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
               'font-medium': 3 <= heading.depth && heading.depth <= 6,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-              'ml-6': heading.depth === 5,
+              'ml-6': heading.depth === 5 || heading.depth === 6,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-              'ml-2': heading.depth === 3,
+              'ml-4': heading.depth === 4,
               // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-              'ml-4': heading.depth === 4
+              'ml-2': heading.depth === 3
             })}
             key={heading.slug}
           >
             {(!isCollapsed && (
               <Link
-                onClick={(event) => {
-                  event.preventDefault();
-
-                  const { slug } = heading;
-                  const elem = document.getElementById(slug);
-                  if (!elem) return;
-
-                  forcedHeadingSlugRef.current = slug;
-
-                  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-                  const isLastHeading = slug === headings[headings.length - 1].slug;
-                  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-                  const isSecondToLastHeading = headings.length > 1 ? slug === headings[headings.length - 2].slug : false;
-
-                  if (isLastHeading && isAtBottom()) {
-                    setCurrentHeading(slug);
-                    router.replace('#' + slug, { scroll: false });
-                    return;
-                  }
-
-                  muteUpdatesUntilScrollEnd.current = true;
-                  noRescueOnScrollEnd.current = true;
-                  let scrollYTarget = elem.offsetTop - TOC_SCROLL_TOP_OFFSET_IN_PX;
-
-                  let forcedHeading: MaybeNull<HeadingSlug> = null;
-                  if (isSecondToLastHeading) {
-                    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-                    scrollYTarget = Math.min(Math.trunc(document.documentElement.scrollHeight) - Math.trunc(window.innerHeight) - 2, scrollYTarget);
-                    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-                    forcedHeading = headings[headings.length - 2].slug;
-                    forcedHeadingSlugRef.current = forcedHeading;
-                  } else {
-                    forcedHeadingSlugRef.current = slug;
-                  }
-
-                  if (Math.trunc(scrollYTarget) === Math.trunc(window.scrollY)) window.dispatchEvent(new Event('scrollend'));
-                  else window.scrollTo({ behavior: 'instant', top: scrollYTarget });
-
-                  if (forcedHeading) setCurrentHeading(forcedHeading);
-                  else setCurrentHeading(slug);
-
-                  router.replace('#' + slug, { scroll: false });
-                }}
                 className={cn('block transition-all', {
                   'rounded-md bg-primary p-1 font-bold': heading.slug === currentHeading,
                   'hover:underline focus:text-primary': heading.slug !== currentHeading,
                   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
                   'p-1': slugAndIndexAssoc[heading.slug] === headings.length - 1
                 })}
+                onClick={(event) => {
+                  onClickMagic(event, heading);
+                }}
                 href={`#${heading.slug}`}
                 replace
               >

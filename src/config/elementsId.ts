@@ -3,7 +3,8 @@
 
 const ELEMENTS_ID = {
   SITEWIDE_NAVBAR: '--sitewide-navbar',
-  BODY_CONTAINER: '--top'
+  BODY_CONTAINER: '--top',
+  MDX_BODY: '--mdx-body'
 } as const;
 
 export default ELEMENTS_ID;

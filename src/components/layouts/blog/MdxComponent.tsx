@@ -8,6 +8,7 @@ import PrimitiveComponents from '@/components/config/blog/PrimitiveComponents';
 import NextComponents from '@/components/config/blog/NextComponents';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import CTAs from '@/components/config/blog/CTAs';
+import ELEMENTS_ID from '@/config/elementsId';
 import { cn } from '@/lib/tailwind';
 
 const components: Record<PropertyKey, (...args: any[]) => JSX.Element | ReactNode> = {
@@ -25,7 +26,7 @@ const MDX: FunctionComponent<MdxProps> = ({ className: classNameValue, code }) =
   const className = classNameValue ?? '';
 
   return (
-    <article className={cn('mdx break-word mb-4', className)}>
+    <article className={cn('mdx break-word mb-4', className)} id={ELEMENTS_ID.MDX_BODY}>
       <MDXComponent components={components} />
     </article>
   );
