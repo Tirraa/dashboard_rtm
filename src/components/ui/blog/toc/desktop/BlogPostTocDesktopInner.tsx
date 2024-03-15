@@ -336,6 +336,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       if (!isLargeScreen) return;
 
       muteUpdatesUntilScrollEnd.current = false;
+
       if (scrollDirection === 'up') {
         const handleScrollUpInstance = getRefCurrentPtr(handleScrollUpRef);
         if (handleScrollUpInstance) handleScrollUpInstance(currentScrollY, oldScrollY, true);
@@ -492,12 +493,25 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   }, [isLargeScreen, handleMagnetization]);
 
   useEffect(() => {
-    const maybeHeadingSlugFromHash = getCurrentHeadingSlugFromHash(true);
-    if (maybeHeadingSlugFromHash) releaseOldHeadingFocusAndSetCurrentHeading(maybeHeadingSlugFromHash);
-    else {
-      const maybeInferedHeading = inferCurrentHeadingRegardlessIntersectionObserver();
-      if (maybeInferedHeading) releaseOldHeadingFocusAndSetCurrentHeading(maybeInferedHeading.id);
+    function initializeHeadingSlug(): MaybeNull<HeadingSlug> {
+      const maybeHeadingSlugFromHash = getCurrentHeadingSlugFromHash(true);
+      if (maybeHeadingSlugFromHash) {
+        releaseOldHeadingFocusAndSetCurrentHeading(maybeHeadingSlugFromHash);
+        return maybeHeadingSlugFromHash;
+      }
+
+      const maybeInferedHeading: MaybeNull<HeadingSlug> = inferCurrentHeadingRegardlessIntersectionObserver()?.id ?? null;
+      if (maybeInferedHeading) {
+        releaseOldHeadingFocusAndSetCurrentHeading(maybeInferedHeading);
+        return maybeInferedHeading;
+      }
+
+      return null;
     }
+
+    const maybeHeadingSlug = initializeHeadingSlug();
+    if (maybeHeadingSlug) forcedHeadingSlugRef.current = maybeHeadingSlug;
+
     handleMagnetization();
     populateHandleScrollUpAndHandleScrollDown();
   }, [
@@ -531,34 +545,45 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
               <Link
                 onClick={(event) => {
                   event.preventDefault();
+
                   const { slug } = heading;
                   const elem = document.getElementById(slug);
                   if (!elem) return;
 
+                  forcedHeadingSlugRef.current = slug;
+
                   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-                  if (slug === headings[headings.length - 1].slug && isAtBottom()) {
-                    router.replace('#' + slug, { scroll: false });
+                  const isLastHeading = slug === headings[headings.length - 1].slug;
+                  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+                  const isSecondToLastHeading = headings.length > 1 ? slug === headings[headings.length - 2].slug : false;
+
+                  if (isLastHeading && isAtBottom()) {
                     setCurrentHeading(slug);
-                    forcedHeadingSlugRef.current = '';
+                    router.replace('#' + slug, { scroll: false });
                     return;
                   }
 
-                  forcedHeadingSlugRef.current = slug;
                   muteUpdatesUntilScrollEnd.current = true;
-                  router.replace('#' + slug, { scroll: false });
-                  setCurrentHeading(forcedHeadingSlugRef.current);
-                  const scrollYStart = window.scrollY;
                   let scrollYTarget = elem.offsetTop - TOC_SCROLL_TOP_OFFSET_IN_PX;
 
-                  if (Math.ceil(scrollYTarget + window.innerHeight) >= document.documentElement.scrollHeight) {
+                  let forcedHeading: MaybeNull<HeadingSlug> = null;
+                  if (isSecondToLastHeading) {
                     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-                    scrollYTarget = Math.trunc(document.documentElement.scrollHeight) - Math.trunc(window.innerHeight) - 2;
+                    scrollYTarget = Math.min(Math.trunc(document.documentElement.scrollHeight) - Math.trunc(window.innerHeight) - 2, scrollYTarget);
+                    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+                    forcedHeading = headings[headings.length - 2].slug;
+                    forcedHeadingSlugRef.current = forcedHeading;
+                  } else {
+                    forcedHeadingSlugRef.current = slug;
                   }
 
-                  window.scrollTo({ behavior: 'instant', top: scrollYTarget });
-                  const scrollYEnd = window.scrollY;
+                  if (Math.trunc(scrollYTarget) === Math.trunc(window.scrollY)) window.dispatchEvent(new Event('scrollend'));
+                  else window.scrollTo({ behavior: 'instant', top: scrollYTarget });
 
-                  if (Math.trunc(scrollYStart) === Math.trunc(scrollYEnd)) window.dispatchEvent(new Event('scrollend'));
+                  if (forcedHeading) setCurrentHeading(forcedHeading);
+                  else setCurrentHeading(slug);
+
+                  router.replace('#' + slug, { scroll: false });
                 }}
                 className={cn('block transition-all', {
                   'rounded-md bg-primary p-1 font-bold': heading.slug === currentHeading,
