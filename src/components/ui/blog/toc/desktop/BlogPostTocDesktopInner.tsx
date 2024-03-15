@@ -58,6 +58,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const tocRef = useRef<HTMLDivElement>(null);
   const forcedHeadingSlugRef = useRef<HeadingSlug>('');
   const muteUpdatesUntilScrollEnd = useRef<boolean>(false);
+  const noRescueOnScrollEnd = useRef<boolean>(false);
 
   const handleScrollUpRef = useRef<MaybeNull<(currentScrollY: number, oldScrollY: number, forced?: boolean) => void>>(null);
   const handleScrollDownRef = useRef<MaybeNull<(currentScrollY: number, oldScrollY: number, forced?: boolean) => void>>(null);
@@ -336,6 +337,10 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       if (!isLargeScreen) return;
 
       muteUpdatesUntilScrollEnd.current = false;
+      if (noRescueOnScrollEnd.current) {
+        noRescueOnScrollEnd.current = false;
+        return;
+      }
 
       if (scrollDirection === 'up') {
         const handleScrollUpInstance = getRefCurrentPtr(handleScrollUpRef);
@@ -433,7 +438,9 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
     const handleResize = () => {
       const maybeInferedHeading = inferCurrentHeadingRegardlessIntersectionObserver();
-      if (maybeInferedHeading) releaseOldHeadingFocusAndSetCurrentHeading(maybeInferedHeading.id);
+      if (maybeInferedHeading) {
+        releaseOldHeadingFocusAndSetCurrentHeading(maybeInferedHeading.id);
+      }
     };
 
     window.addEventListener('resize', handleResize);
@@ -492,35 +499,33 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     };
   }, [isLargeScreen, handleMagnetization]);
 
-  useEffect(() => {
-    function initializeHeadingSlug(): MaybeNull<HeadingSlug> {
-      const maybeHeadingSlugFromHash = getCurrentHeadingSlugFromHash(true);
-      if (maybeHeadingSlugFromHash) {
-        releaseOldHeadingFocusAndSetCurrentHeading(maybeHeadingSlugFromHash);
-        return maybeHeadingSlugFromHash;
+  useEffect(
+    () => {
+      function initializeHeadingSlug(): MaybeNull<HeadingSlug> {
+        const maybeHeadingSlugFromHash = getCurrentHeadingSlugFromHash(true);
+        if (maybeHeadingSlugFromHash) {
+          releaseOldHeadingFocusAndSetCurrentHeading(maybeHeadingSlugFromHash);
+          return maybeHeadingSlugFromHash;
+        }
+
+        const maybeInferedHeading: MaybeNull<HeadingSlug> = inferCurrentHeadingRegardlessIntersectionObserver()?.id ?? null;
+        if (maybeInferedHeading) {
+          releaseOldHeadingFocusAndSetCurrentHeading(maybeInferedHeading);
+          return maybeInferedHeading;
+        }
+
+        return null;
       }
 
-      const maybeInferedHeading: MaybeNull<HeadingSlug> = inferCurrentHeadingRegardlessIntersectionObserver()?.id ?? null;
-      if (maybeInferedHeading) {
-        releaseOldHeadingFocusAndSetCurrentHeading(maybeInferedHeading);
-        return maybeInferedHeading;
-      }
+      const maybeHeadingSlug = initializeHeadingSlug();
+      if (maybeHeadingSlug) forcedHeadingSlugRef.current = maybeHeadingSlug;
 
-      return null;
-    }
-
-    const maybeHeadingSlug = initializeHeadingSlug();
-    if (maybeHeadingSlug) forcedHeadingSlugRef.current = maybeHeadingSlug;
-
-    handleMagnetization();
-    populateHandleScrollUpAndHandleScrollDown();
-  }, [
-    getCurrentHeadingSlugFromHash,
-    handleMagnetization,
-    inferCurrentHeadingRegardlessIntersectionObserver,
-    releaseOldHeadingFocusAndSetCurrentHeading,
-    populateHandleScrollUpAndHandleScrollDown
-  ]);
+      handleMagnetization();
+      populateHandleScrollUpAndHandleScrollDown();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   return (
     <nav className="flex flex-col items-center self-start transition-[margin-top] duration-300" aria-label={ariaLabel} ref={tocRef}>
@@ -564,6 +569,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
                   }
 
                   muteUpdatesUntilScrollEnd.current = true;
+                  noRescueOnScrollEnd.current = true;
                   let scrollYTarget = elem.offsetTop - TOC_SCROLL_TOP_OFFSET_IN_PX;
 
                   let forcedHeading: MaybeNull<HeadingSlug> = null;
