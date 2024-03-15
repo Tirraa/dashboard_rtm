@@ -26,7 +26,6 @@ const navbarHeight: number = navbarElement ? navbarElement.getBoundingClientRect
 const BOTTOM_DEAD_ZONE_PX: number = navbarHeight * 2;
 const TOP_DEAD_ZONE_PX: number = navbarHeight;
 
-const NIL_IDX: number = -1;
 const TOC_SCROLL_TOP_OFFSET_IN_PX: number = 172;
 
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -54,9 +53,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const [currentHeading, setCurrentHeading] = useState<HeadingSlug>('');
 
   const lastScrollY = useRef<number>(window.scrollY);
-  const headingsObserver = useRef<MaybeNull<IntersectionObserver>>(null);
   const firstHeadingObserver = useRef<MaybeNull<IntersectionObserver>>(null);
-  const visibleHeadings = useRef<VisibleHeadings>({});
   const headingsRef = useRef<HTMLOListElement>(null);
   const tocRef = useRef<HTMLDivElement>(null);
   const forcedHeadingSlugRef = useRef<HeadingSlug>('');
@@ -100,7 +97,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     [releaseOldHeadingFocus]
   );
 
-  const getClosestUpHeadingFromBottom = useCallback((): MaybeNull<HTMLElement> => {
+  const getClosestHeadingFromBottom = useCallback((): MaybeNull<HTMLElement> => {
     let closestHeading = null;
     let closestDistance = Infinity;
     const viewportHeight = window.innerHeight;
@@ -118,7 +115,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     return closestHeading;
   }, [headingsFromDOM]);
 
-  const getClosestUpHeadingFromTop = useCallback((): MaybeNull<HTMLElement> => {
+  const getClosestHeadingFromTop = useCallback((): MaybeNull<HTMLElement> => {
     let closestHeading = null;
     let closestDistance = -Infinity;
     const [yMin, yMax] = [window.scrollY + TOP_DEAD_ZONE_PX, getTotalVerticalScrollDistance() - BOTTOM_DEAD_ZONE_PX];
@@ -162,7 +159,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
    * @effect {May tweak Scroll Direction state and set a forced heading}
    */
   const inferCurrentHeadingRegardlessIntersectionObserver: () => MaybeNull<HTMLElement> = useCallback(() => {
-    const infered1 = getClosestUpHeadingFromTop();
+    const infered1 = getClosestHeadingFromTop();
 
     if (infered1) {
       const inferedElementHeading = infered1.id;
@@ -184,7 +181,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       return infered1;
     }
 
-    const infered2 = getClosestUpHeadingFromBottom();
+    const infered2 = getClosestHeadingFromBottom();
     if (!infered2) return null;
 
     releaseOldHeadingFocusAndSetCurrentHeading(infered2.id);
@@ -193,26 +190,10 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     headings,
     slugAndIndexAssoc,
     setScrollDirection,
-    getClosestUpHeadingFromBottom,
-    getClosestUpHeadingFromTop,
+    getClosestHeadingFromBottom,
+    getClosestHeadingFromTop,
     releaseOldHeadingFocusAndSetCurrentHeading
   ]);
-
-  const getFirstVisibleHeadingSlug = useCallback(() => {
-    let firstSlug: MaybeNull<HeadingSlug> = null;
-    let minIndex = NIL_IDX;
-    const visibleHeadingsInstance = getRefCurrentPtr(visibleHeadings);
-
-    for (const slug of Object.keys(visibleHeadingsInstance)) {
-      const currentIndex = slugAndIndexAssoc[slug];
-      if (currentIndex < minIndex || minIndex === NIL_IDX) {
-        firstSlug = slug;
-        minIndex = currentIndex;
-      }
-    }
-
-    return firstSlug;
-  }, [slugAndIndexAssoc]);
 
   const isAtBottom = useCallback(() => getTotalVerticalScrollDistance() >= document.documentElement.scrollHeight, []);
 
@@ -246,55 +227,30 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         return;
       }
 
-      const visibleHeadingsInstance = getRefCurrentPtr(visibleHeadings);
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      if (Object.keys(visibleHeadingsInstance).length === 0) {
-        const infered = getClosestUpHeadingFromBottom();
+      const infered: MaybeNull<HeadingSlug> = getClosestHeadingFromTop()?.id ?? null;
 
-        if (!infered) {
-          const maybeRescueHeading = inferCurrentHeadingRegardlessIntersectionObserver();
-          if (maybeRescueHeading) {
-            releaseOldHeadingFocusAndSetCurrentHeading(maybeRescueHeading.id);
-            return;
-          }
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-          const veryFirstHeadingSlug = headings[0].slug;
-          releaseOldHeadingFocusAndSetCurrentHeading(veryFirstHeadingSlug);
+      if (!infered) {
+        const maybeRescueHeading: MaybeNull<HeadingSlug> = inferCurrentHeadingRegardlessIntersectionObserver()?.id ?? null;
+        if (maybeRescueHeading) {
+          releaseOldHeadingFocusAndSetCurrentHeading(maybeRescueHeading);
           return;
         }
-
-        const inferedHeading = infered.id;
-
-        if (forcedHeadingSlugRef.current) {
-          const inferedHeadingIdx = slugAndIndexAssoc[inferedHeading];
-          const forcedHeadingIdx = slugAndIndexAssoc[forcedHeadingSlugRef.current];
-          if (inferedHeadingIdx <= forcedHeadingIdx) forcedHeadingSlugRef.current = '';
-          else return;
-        }
-
-        releaseOldHeadingFocusAndSetCurrentHeading(inferedHeading);
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        const veryFirstHeadingSlug = headings[0].slug;
+        releaseOldHeadingFocusAndSetCurrentHeading(veryFirstHeadingSlug);
         return;
       }
 
-      let firstVisibleHeadingSlug = getFirstVisibleHeadingSlug();
-      if (firstVisibleHeadingSlug === null) {
-        const maybeRescueHeading = inferCurrentHeadingRegardlessIntersectionObserver();
-        if (maybeRescueHeading) firstVisibleHeadingSlug = maybeRescueHeading.id;
-        else {
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-          const veryLastHeadingSlug = headings[headings.length - 1].slug;
-          firstVisibleHeadingSlug = veryLastHeadingSlug;
-        }
-      }
-
       if (forcedHeadingSlugRef.current) {
-        const newIdx = slugAndIndexAssoc[firstVisibleHeadingSlug];
-        const oldIdx = slugAndIndexAssoc[forcedHeadingSlugRef.current];
-        if (newIdx <= oldIdx) forcedHeadingSlugRef.current = '';
+        const inferedHeadingIdx = slugAndIndexAssoc[infered];
+        const forcedHeadingIdx = slugAndIndexAssoc[forcedHeadingSlugRef.current];
+        if (inferedHeadingIdx <= forcedHeadingIdx) forcedHeadingSlugRef.current = '';
         else return;
       }
 
-      releaseOldHeadingFocusAndSetCurrentHeading(firstVisibleHeadingSlug);
+      releaseOldHeadingFocusAndSetCurrentHeading(infered);
+      return;
     };
 
     /**
@@ -326,10 +282,10 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         return;
       }
 
-      let firstVisibleHeadingSlug = getFirstVisibleHeadingSlug();
+      let firstVisibleHeadingSlug: MaybeNull<HeadingSlug> = getClosestHeadingFromTop()?.id ?? null;
       if (firstVisibleHeadingSlug === null) {
-        const rescueHeading = inferCurrentHeadingRegardlessIntersectionObserver();
-        if (rescueHeading) firstVisibleHeadingSlug = rescueHeading.id;
+        const rescueHeading: MaybeNull<HeadingSlug> = inferCurrentHeadingRegardlessIntersectionObserver()?.id ?? null;
+        if (rescueHeading) firstVisibleHeadingSlug = rescueHeading;
         else return;
       }
 
@@ -343,8 +299,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       releaseOldHeadingFocusAndSetCurrentHeading(firstVisibleHeadingSlug);
     };
   }, [
-    getClosestUpHeadingFromBottom,
-    getFirstVisibleHeadingSlug,
+    getClosestHeadingFromTop,
     headings,
     inferCurrentHeadingRegardlessIntersectionObserver,
     isAtBottom,
@@ -412,43 +367,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
     return () => window.removeEventListener('scrollend', handleScrollEnd);
   }, [isLargeScreen, scrollDirection]);
-
-  /**
-   * @effect {Mutates visibleHeadings ref}
-   */
-  useEffect(() => {
-    if (!isLargeScreen) return;
-
-    const visibleHeadingsInstance = getRefCurrentPtr(visibleHeadings);
-
-    headingsObserver.current = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          const slug = entry.target.id;
-          if (entry.isIntersecting) {
-            visibleHeadingsInstance[slug] = slugAndIndexAssoc[slug];
-          } else {
-            delete visibleHeadingsInstance[slug];
-          }
-        }
-      },
-      {
-        rootMargin: `-${TOP_DEAD_ZONE_PX}px 0px -${BOTTOM_DEAD_ZONE_PX}px 0px`,
-        threshold: 0.1
-      }
-    );
-
-    const headingsObserverInstance = getRefCurrentPtr(headingsObserver);
-
-    for (const heading of headings) {
-      const element: MaybeNull<HTMLElement> = document.getElementById(heading.slug);
-      if (element) headingsObserverInstance.observe(element);
-    }
-
-    return () => {
-      if (headingsObserverInstance) headingsObserverInstance.disconnect();
-    };
-  }, [headings, isLargeScreen, slugAndIndexAssoc, handleMagnetization]);
 
   /**
    * @effect {Tweaks isCollapsed state, depending on isMagnetized state}
@@ -717,4 +635,3 @@ export default BlogPostTocDesktopInner;
 
 type HeadingSlug = string;
 type HeadingSlugIdx = number;
-type VisibleHeadings = Record<HeadingSlug, HeadingSlugIdx>;
