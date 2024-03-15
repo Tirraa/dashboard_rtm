@@ -2,7 +2,6 @@ import type { MaybeUndefined, MaybeNull } from '@rtm/shared-types/CustomUtilityT
 import type { FunctionComponent } from 'react';
 
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
-import useScrollDirection from '@/components/hooks/useScrollDirection';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { useRouter } from 'next/navigation';
@@ -50,7 +49,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 }) => {
   const router = useRouter();
   const isLargeScreen = useIsLargeScreen();
-  const [scrollDirection, setScrollDirection] = useScrollDirection();
+  const [scrollDirection, setScrollDirection] = useState<'down' | 'up'>('down');
   const [currentHeading, setCurrentHeading] = useState<HeadingSlug>('');
 
   const lastScrollY = useRef<number>(window.scrollY);
@@ -188,14 +187,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
     releaseOldHeadingFocusAndSetCurrentHeading(infered2.id);
     return infered2;
-  }, [
-    headings,
-    slugAndIndexAssoc,
-    setScrollDirection,
-    getClosestUpHeadingFromBottom,
-    getClosestUpHeadingFromTop,
-    releaseOldHeadingFocusAndSetCurrentHeading
-  ]);
+  }, [headings, slugAndIndexAssoc, getClosestUpHeadingFromBottom, getClosestUpHeadingFromTop, releaseOldHeadingFocusAndSetCurrentHeading]);
 
   const getFirstVisibleHeadingSlug = useCallback(() => {
     let firstSlug: MaybeNull<HeadingSlug> = null;
@@ -219,28 +211,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     /**
      * @effect {May tweak Current Heading state, reset forced heading, change scroll direction, call forced handleScrollDown}
      */
-    handleScrollUpRef.current = (forced: boolean = false) => {
-      const currentScrollY = window.scrollY;
-      const oldScrollY = lastScrollY.current;
-      lastScrollY.current = currentScrollY;
-
-      if (!isLargeScreen) return;
-
-      if (currentScrollY > oldScrollY) {
-        setScrollDirection('down');
-        const handleScrollDownInstance = getRefCurrentPtr(handleScrollDownRef);
-        if (handleScrollDownInstance) handleScrollDownInstance(true);
-        return;
-      }
-
-      const isForced = Boolean(forced);
-      let skip = false;
-
-      if (isForced) skip = false;
-      else if (scrollDirection !== 'up' || muteUpdatesUntilScrollEnd.current) skip = true;
-
-      if (skip) return;
-
+    handleScrollUpRef.current = () => {
       if (isAtTop()) {
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         const veryFirstHeadingSlug = headings[0].slug;
@@ -303,28 +274,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     /**
      * @effect {May tweak Current Heading state, reset forced heading, change scroll direction, call forced handleScrollUp}
      */
-    handleScrollDownRef.current = (forced: boolean = false) => {
-      const currentScrollY = window.scrollY;
-      const oldScrollY = lastScrollY.current;
-      lastScrollY.current = currentScrollY;
-
-      if (!isLargeScreen) return;
-
-      if (currentScrollY < oldScrollY) {
-        setScrollDirection('up');
-        const handleScrollUpInstance = getRefCurrentPtr(handleScrollUpRef);
-        if (handleScrollUpInstance) handleScrollUpInstance(true);
-        return;
-      }
-
-      const isForced = Boolean(forced);
-      let skip = false;
-
-      if (isForced) skip = false;
-      else if (scrollDirection !== 'down' || muteUpdatesUntilScrollEnd.current) skip = true;
-
-      if (skip) return;
-
+    handleScrollDownRef.current = () => {
       if (isAtBottom()) {
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         const veryLastHeadingSlug = headings[headings.length - 1].slug;
@@ -355,10 +305,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     headings,
     inferCurrentHeadingRegardlessIntersectionObserver,
     isAtBottom,
-    isLargeScreen,
     releaseOldHeadingFocusAndSetCurrentHeading,
-    scrollDirection,
-    setScrollDirection,
     slugAndIndexAssoc
   ]);
 
@@ -398,6 +345,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     function handleScrollEnd() {
       if (!isLargeScreen) return;
       muteUpdatesUntilScrollEnd.current = false;
+
       if (scrollDirection === 'up') {
         const handleScrollUpInstance = getRefCurrentPtr(handleScrollUpRef);
         if (handleScrollUpInstance) handleScrollUpInstance(true);
@@ -580,24 +528,31 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   useEffect(() => {
     if (!isLargeScreen) return;
 
-    function handleScrollUp() {
-      const handleScrollUpInstance = getRefCurrentPtr(handleScrollUpRef);
-      if (handleScrollUpInstance) handleScrollUpInstance();
-    }
+    function handleScroll() {
+      const currentScrollY = window.scrollY;
+      const oldScrollY = lastScrollY.current;
+      lastScrollY.current = currentScrollY;
 
-    function handleScrollDown() {
-      const handleScrollDownInstance = getRefCurrentPtr(handleScrollDownRef);
-      if (handleScrollDownInstance) handleScrollDownInstance();
+      if (!isLargeScreen || currentScrollY === oldScrollY || muteUpdatesUntilScrollEnd.current) return;
+
+      if (currentScrollY > oldScrollY) {
+        setScrollDirection('down');
+        const handleScrollDownInstance = getRefCurrentPtr(handleScrollDownRef);
+        if (handleScrollDownInstance) handleScrollDownInstance(true);
+        return;
+      }
+
+      setScrollDirection('up');
+      const handleScrollUpInstance = getRefCurrentPtr(handleScrollUpRef);
+      if (handleScrollUpInstance) handleScrollUpInstance(true);
     }
 
     window.addEventListener('scroll', handleMagnetization);
-    window.addEventListener('scroll', handleScrollUp);
-    window.addEventListener('scroll', handleScrollDown);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
       window.removeEventListener('scroll', handleMagnetization);
-      window.removeEventListener('scroll', handleScrollUp);
-      window.removeEventListener('scroll', handleScrollDown);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [isLargeScreen, handleMagnetization]);
 
