@@ -155,9 +155,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     [slugAndIndexAssoc, headings]
   );
 
-  /**
-   * @effect {May tweak Scroll Direction state and set a forced heading}
-   */
   const inferCurrentHeadingRegardlessIntersectionObserver: () => MaybeNull<HTMLElement> = useCallback(() => {
     const infered1 = getClosestHeadingFromTop();
 
@@ -198,9 +195,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const isAtBottom = useCallback(() => getTotalVerticalScrollDistance() >= document.documentElement.scrollHeight, []);
 
   const populateHandleScrollUpAndHandleScrollDown = useCallback(() => {
-    /**
-     * @effect {May tweak Current Heading state, reset forced heading, change scroll direction, call forced handleScrollDown}
-     */
     handleScrollUpRef.current = (currentScrollY: number, oldScrollY: number, forced: boolean = false) => {
       if (!isLargeScreen) return;
 
@@ -253,9 +247,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       return;
     };
 
-    /**
-     * @effect {May tweak Current Heading state, reset forced heading, change scroll direction, call forced handleScrollUp}
-     */
     handleScrollDownRef.current = (currentScrollY: number, oldScrollY: number, forced: boolean = false) => {
       if (!isLargeScreen) return;
 
@@ -310,9 +301,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     slugAndIndexAssoc
   ]);
 
-  /**
-   * @effect {Tweaks isMagnetized state}
-   */
   const handleMagnetization = useCallback(() => {
     if (!isLargeScreen) return;
 
@@ -339,9 +327,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     };
   }, [headings, isLargeScreen, setIsMagnetized]);
 
-  /**
-   * @effect {Listen scrollend event to unmute updates}
-   */
   useEffect(() => {
     function handleScrollEnd() {
       const currentScrollY = window.scrollY;
@@ -368,16 +353,10 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     return () => window.removeEventListener('scrollend', handleScrollEnd);
   }, [isLargeScreen, scrollDirection]);
 
-  /**
-   * @effect {Tweaks isCollapsed state, depending on isMagnetized state}
-   */
   useEffect(() => {
     if (!isMagnetized) setIsCollapsed(false);
   }, [isMagnetized, setIsCollapsed]);
 
-  /**
-   * @effect {ToC autoscroll}
-   */
   useEffect(() => {
     if (!isLargeScreen) return;
 
@@ -394,9 +373,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     return;
   }, [currentHeading, isLargeScreen, slugAndIndexAssoc, headings]);
 
-  /**
-   * @effect {ToC autoscroll on uncollapse}
-   */
   useEffect(
     () => {
       if (!isLargeScreen) return;
@@ -451,9 +427,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     [isCollapsed]
   );
 
-  /**
-   * @effect {Resize Listener, may tweak Current Heading state}
-   */
   useEffect(() => {
     if (!isLargeScreen) return;
 
@@ -469,9 +442,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     };
   }, [isLargeScreen, inferCurrentHeadingRegardlessIntersectionObserver, releaseOldHeadingFocusAndSetCurrentHeading]);
 
-  /**
-   * @effect {Hash change Listener, may tweak Current Heading state}
-   */
   useEffect(() => {
     if (!isLargeScreen) return;
 
@@ -490,9 +460,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     };
   }, [isLargeScreen, getCurrentHeadingSlugFromHash, releaseOldHeadingFocusAndSetCurrentHeading]);
 
-  /**
-   * @effect {Scroll listeners checkpoint}
-   */
   useEffect(() => {
     if (!isLargeScreen) return;
 
@@ -524,9 +491,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     };
   }, [isLargeScreen, handleMagnetization]);
 
-  /**
-   * @effect {Initializer}
-   */
   useEffect(() => {
     const maybeHeadingSlugFromHash = getCurrentHeadingSlugFromHash(true);
     if (maybeHeadingSlugFromHash) releaseOldHeadingFocusAndSetCurrentHeading(maybeHeadingSlugFromHash);
