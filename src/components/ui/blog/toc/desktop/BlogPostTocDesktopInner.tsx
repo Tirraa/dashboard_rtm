@@ -62,8 +62,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const forcedHeadingSlugRef = useRef<HeadingSlug>('');
   const muteUpdatesUntilScrollEnd = useRef<boolean>(false);
 
-  const handleScrollUpRef = useRef<MaybeNull<(forced?: boolean) => void>>(null);
-  const handleScrollDownRef = useRef<MaybeNull<(forced?: boolean) => void>>(null);
+  const handleScrollUpRef = useRef<MaybeNull<(currentScrollY: number, oldScrollY: number, forced?: boolean) => void>>(null);
+  const handleScrollDownRef = useRef<MaybeNull<(currentScrollY: number, oldScrollY: number, forced?: boolean) => void>>(null);
 
   const slugAndIndexAssoc = useMemo(() => {
     return headings.reduce(
@@ -175,7 +175,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         if (idx === 0) return infered1;
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         const rescueHeading = headings[idx - 1].slug;
-        forcedHeadingSlugRef.current = rescueHeading;
+        forcedHeadingSlugRef.current = '';
+        muteUpdatesUntilScrollEnd.current = true;
         setScrollDirection('up');
         const infered3 = document.getElementById(rescueHeading);
         return infered3;
@@ -219,17 +220,13 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     /**
      * @effect {May tweak Current Heading state, reset forced heading, change scroll direction, call forced handleScrollDown}
      */
-    handleScrollUpRef.current = (forced: boolean = false) => {
-      const currentScrollY = window.scrollY;
-      const oldScrollY = lastScrollY.current;
-      lastScrollY.current = currentScrollY;
-
+    handleScrollUpRef.current = (currentScrollY: number, oldScrollY: number, forced: boolean = false) => {
       if (!isLargeScreen) return;
 
       if (currentScrollY > oldScrollY) {
         setScrollDirection('down');
         const handleScrollDownInstance = getRefCurrentPtr(handleScrollDownRef);
-        if (handleScrollDownInstance) handleScrollDownInstance(true);
+        if (handleScrollDownInstance) handleScrollDownInstance(currentScrollY, oldScrollY, true);
         return;
       }
 
@@ -303,17 +300,13 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     /**
      * @effect {May tweak Current Heading state, reset forced heading, change scroll direction, call forced handleScrollUp}
      */
-    handleScrollDownRef.current = (forced: boolean = false) => {
-      const currentScrollY = window.scrollY;
-      const oldScrollY = lastScrollY.current;
-      lastScrollY.current = currentScrollY;
-
+    handleScrollDownRef.current = (currentScrollY: number, oldScrollY: number, forced: boolean = false) => {
       if (!isLargeScreen) return;
 
       if (currentScrollY < oldScrollY) {
         setScrollDirection('up');
         const handleScrollUpInstance = getRefCurrentPtr(handleScrollUpRef);
-        if (handleScrollUpInstance) handleScrollUpInstance(true);
+        if (handleScrollUpInstance) handleScrollUpInstance(currentScrollY, oldScrollY, true);
         return;
       }
 
@@ -396,18 +389,23 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
    */
   useEffect(() => {
     function handleScrollEnd() {
+      const currentScrollY = window.scrollY;
+      const oldScrollY = lastScrollY.current;
+      lastScrollY.current = currentScrollY;
+
       if (!isLargeScreen) return;
+
       muteUpdatesUntilScrollEnd.current = false;
       if (scrollDirection === 'up') {
         const handleScrollUpInstance = getRefCurrentPtr(handleScrollUpRef);
-        if (handleScrollUpInstance) handleScrollUpInstance(true);
+        if (handleScrollUpInstance) handleScrollUpInstance(currentScrollY, oldScrollY, true);
         return;
       }
 
       if (scrollDirection !== 'down') return;
 
       const handleScrollDownInstance = getRefCurrentPtr(handleScrollDownRef);
-      if (handleScrollDownInstance) handleScrollDownInstance(true);
+      if (handleScrollDownInstance) handleScrollDownInstance(currentScrollY, oldScrollY, true);
     }
 
     window.addEventListener('scrollend', handleScrollEnd);
@@ -580,24 +578,31 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   useEffect(() => {
     if (!isLargeScreen) return;
 
-    function handleScrollUp() {
+    function handleScrollUp(currentScrollY: number, oldScrollY: number) {
       const handleScrollUpInstance = getRefCurrentPtr(handleScrollUpRef);
-      if (handleScrollUpInstance) handleScrollUpInstance();
+      if (handleScrollUpInstance) handleScrollUpInstance(currentScrollY, oldScrollY);
     }
 
-    function handleScrollDown() {
+    function handleScrollDown(currentScrollY: number, oldScrollY: number) {
       const handleScrollDownInstance = getRefCurrentPtr(handleScrollDownRef);
-      if (handleScrollDownInstance) handleScrollDownInstance();
+      if (handleScrollDownInstance) handleScrollDownInstance(currentScrollY, oldScrollY);
+    }
+
+    function handleScroll() {
+      const currentScrollY = window.scrollY;
+      const oldScrollY = lastScrollY.current;
+      lastScrollY.current = currentScrollY;
+
+      handleScrollUp(currentScrollY, oldScrollY);
+      handleScrollDown(currentScrollY, oldScrollY);
     }
 
     window.addEventListener('scroll', handleMagnetization);
-    window.addEventListener('scroll', handleScrollUp);
-    window.addEventListener('scroll', handleScrollDown);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
       window.removeEventListener('scroll', handleMagnetization);
-      window.removeEventListener('scroll', handleScrollUp);
-      window.removeEventListener('scroll', handleScrollDown);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [isLargeScreen, handleMagnetization]);
 
