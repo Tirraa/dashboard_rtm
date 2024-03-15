@@ -61,7 +61,7 @@ const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="relative min-w-[145px] dark:border-card ltr:right-4 rtl:left-4" aria-label={scopedT('hamburger-menu')}>
-        <nav>{menuItemsGenerator(items)}</nav>
+        <nav className="max-w-[156px] text-center [&>*>*]:h-12">{menuItemsGenerator(items)}</nav>
       </DropdownMenuContent>
     </DropdownMenu>
   );
