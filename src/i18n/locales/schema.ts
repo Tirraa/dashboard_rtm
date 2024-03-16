@@ -55,6 +55,7 @@ export default {
     'copy-to-clipboard': _,
     'invite-the-bot': _,
     'no-blog-post': _,
+    'footer-copy': _,
     'brand-short': _,
     'see-more': _,
     loading: _,

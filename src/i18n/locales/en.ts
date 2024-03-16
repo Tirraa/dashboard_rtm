@@ -90,6 +90,7 @@ export default {
       goToTop: 'Go to the top of the page'
     },
 
+    'footer-copy': `${SHARED.vocab.brand} · Made with ❤️`,
     'no-blog-post': 'Nobody here but us chickens!',
     'copy-to-clipboard': 'Copy to clipboard',
     'invite-the-bot': 'Invite the bot',

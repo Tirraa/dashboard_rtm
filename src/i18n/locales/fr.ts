@@ -90,6 +90,7 @@ export default {
       goToTop: 'Remonter en haut de la page'
     },
 
+    'footer-copy': `${SHARED.vocab.brand} · Réalisé avec ❤️`,
     'copy-to-clipboard': 'Copier dans le presse-papiers',
     'no-blog-post': 'Rien à afficher ici !',
     'invite-the-bot': 'Inviter le bot',
