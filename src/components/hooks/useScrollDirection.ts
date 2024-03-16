@@ -1,6 +1,8 @@
 // https://www.robinwieruch.de/react-hook-scroll-direction/
 
+import { MINIMAL_THROTTLE_TIMING_IN_MS } from '@/config/throttling';
 import { useEffect, useState, useRef } from 'react';
+import throttle from 'throttleit';
 
 const THRESHOLD = 0;
 
@@ -28,14 +30,16 @@ const useScrollDirection = (): [ScrollDirection, React.Dispatch<React.SetStateAc
       blocking.current = false;
     };
 
-    const onScroll = () => {
+    const handleScroll = () => {
       if (blocking.current) return;
       blocking.current = true;
       window.requestAnimationFrame(updateScrollDirection);
     };
 
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
+    const throttledScrollHandler = throttle(handleScroll, MINIMAL_THROTTLE_TIMING_IN_MS);
+
+    window.addEventListener('scroll', throttledScrollHandler);
+    return () => window.removeEventListener('scroll', throttledScrollHandler);
   }, []);
 
   return [scrollDirection, setScrollDirection];

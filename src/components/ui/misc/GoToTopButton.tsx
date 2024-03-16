@@ -2,12 +2,14 @@
 
 import type { FunctionComponent } from 'react';
 
+import { APPROX_120_FPS_THROTTLE_TIMING_IN_MS } from '@/config/throttling';
 import { useCallback, useEffect, useState, useRef } from 'react';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { ArrowUpIcon } from '@heroicons/react/20/solid';
 import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
+import throttle from 'throttleit';
 
 // {ToDo} Remove this if, one day, this bug is fixed: https://bugs.webkit.org/show_bug.cgi?id=201556
 // https://github.com/argyleink/scrollyfills?tab=readme-ov-file#polyfills
@@ -44,10 +46,12 @@ const GoToTopButton: FunctionComponent<GoToTopButtonProps> = ({ scrollYthreshold
       setIsShown(window.scrollY > scrollYthreshold.current);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    const throttledScrollHandler = throttle(handleScroll, APPROX_120_FPS_THROTTLE_TIMING_IN_MS);
+
+    window.addEventListener('scroll', throttledScrollHandler);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', throttledScrollHandler);
     };
   }, []);
 

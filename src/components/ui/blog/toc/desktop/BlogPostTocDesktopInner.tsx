@@ -2,6 +2,7 @@ import type { MaybeUndefined, MaybeNull } from '@rtm/shared-types/CustomUtilityT
 import type { DocumentHeading } from '@rtm/shared-types/Documents';
 import type { FunctionComponent } from 'react';
 
+import { APPROX_120_FPS_THROTTLE_TIMING_IN_MS } from '@/config/throttling';
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
 import useScrollDirection from '@/components/hooks/useScrollDirection';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
@@ -32,8 +33,6 @@ const TOP_DEAD_ZONE_PX: number = navbarHeight;
 const SCROLL_TOP_OFFSET_ONCLICK_MAGIC: number = navbarHeight;
 
 const TOC_SCROLL_TOP_OFFSET_IN_PX: number = 172;
-
-const SCROLL_THROTTLE_IN_MS = 8; // ~120 FPS
 
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 const isAtTop = () => window.scrollY === 0;
@@ -494,10 +493,12 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       }
     };
 
-    window.addEventListener('resize', handleResize);
+    const throttledResizeHandler = throttle(handleResize, APPROX_120_FPS_THROTTLE_TIMING_IN_MS);
+
+    window.addEventListener('resize', throttledResizeHandler);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', throttledResizeHandler);
     };
   }, [isLargeScreen, inferCurrentHeading, releaseOldHeadingFocusAndSetCurrentHeading]);
 
@@ -541,8 +542,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       handleScrollDown(currentScrollY, oldScrollY);
     }
 
-    const throttledMagnetizationHandler = throttle(handleMagnetization, SCROLL_THROTTLE_IN_MS);
-    const throttledScrollHandler = throttle(handleScroll, SCROLL_THROTTLE_IN_MS);
+    const throttledMagnetizationHandler = throttle(handleMagnetization, APPROX_120_FPS_THROTTLE_TIMING_IN_MS);
+    const throttledScrollHandler = throttle(handleScroll, APPROX_120_FPS_THROTTLE_TIMING_IN_MS);
 
     window.addEventListener('scroll', throttledMagnetizationHandler);
     window.addEventListener('scroll', throttledScrollHandler);
