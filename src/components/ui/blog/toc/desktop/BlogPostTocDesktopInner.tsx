@@ -10,6 +10,7 @@ import ELEMENTS_ID from '@/config/elementsId';
 import { useRouter } from 'next/navigation';
 import { getNavbar } from '@/lib/html';
 import { cn } from '@/lib/tailwind';
+import throttle from 'throttleit';
 import Link from 'next/link';
 
 import type { BlogPostTocDesktopInnerProps } from '../types';
@@ -31,6 +32,8 @@ const TOP_DEAD_ZONE_PX: number = navbarHeight;
 const SCROLL_TOP_OFFSET_ONCLICK_MAGIC: number = navbarHeight;
 
 const TOC_SCROLL_TOP_OFFSET_IN_PX: number = 172;
+
+const SCROLL_THROTTLE_IN_MS = 8; // ~120 FPS
 
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 const isAtTop = () => window.scrollY === 0;
@@ -538,12 +541,15 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       handleScrollDown(currentScrollY, oldScrollY);
     }
 
-    window.addEventListener('scroll', handleMagnetization);
-    window.addEventListener('scroll', handleScroll);
+    const throttledMagnetizationHandler = throttle(handleMagnetization, SCROLL_THROTTLE_IN_MS);
+    const throttledScrollHandler = throttle(handleScroll, SCROLL_THROTTLE_IN_MS);
+
+    window.addEventListener('scroll', throttledMagnetizationHandler);
+    window.addEventListener('scroll', throttledScrollHandler);
 
     return () => {
-      window.removeEventListener('scroll', handleMagnetization);
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', throttledMagnetizationHandler);
+      window.removeEventListener('scroll', throttledScrollHandler);
     };
   }, [isLargeScreen, handleMagnetization]);
 
