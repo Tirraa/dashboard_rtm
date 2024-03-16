@@ -8,11 +8,13 @@ import type { FunctionComponent } from 'react';
 import { getBlogPostFormattedDate } from '@/lib/blog/api';
 import { cn } from '@/lib/tailwind';
 
-interface BlogPostDateProps extends BlogPostProps, Partial<WithClassname> {}
+interface BlogPostDateProps extends BlogPostProps, Partial<WithClassname> {
+  suffix?: string;
+}
 
-const BlogPostDate: FunctionComponent<BlogPostDateProps> = ({ className: classNameValue, language, post }) => (
+const BlogPostDate: FunctionComponent<BlogPostDateProps> = ({ className: classNameValue, language, suffix, post }) => (
   <time className={cn('text-xs', classNameValue)} dateTime={post.date}>
-    {getBlogPostFormattedDate(language, post.date)}
+    {getBlogPostFormattedDate(language, post.date) + (suffix ? suffix : '')}
   </time>
 );
 

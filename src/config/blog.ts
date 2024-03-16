@@ -17,6 +17,7 @@ export type BlogConfigType = {
   BLOG_POST_PREVIEW_DESCRIPTION_CHARACTERS_LIMIT: number;
   TESTING_CATEGORY: typeof TESTING_CATEGORY;
   ENABLE_DRAFTS_IN_PROD: boolean;
+  SHOW_DRAFTS_BADGE: boolean;
 };
 
 const TESTING_CATEGORY = 'blog-testing-category' as const satisfies BlogCategory;
@@ -36,6 +37,7 @@ const BlogConfig: BlogConfigType = {
   DISPLAYED_BLOG_POSTS_PER_SUBCATEGORY_ON_BLOG_CATEGORY_PAGE_LIMIT: 2,
   BLOG_POST_PREVIEW_DESCRIPTION_CHARACTERS_LIMIT: 250,
   ENABLE_DRAFTS_IN_PROD: false,
+  SHOW_DRAFTS_BADGE: true,
 
   TESTING_CATEGORY
 } as const;
