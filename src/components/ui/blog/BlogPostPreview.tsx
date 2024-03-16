@@ -22,6 +22,7 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
   const descriptionSnippet = post.description ? getSlicedBlogPostDescription(post.description) : getSlicedBlogPostDescription(post.metadescription);
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const hasTags = post.tags.length > 0;
+  const showDraftSuffix = BlogConfig.SHOW_DRAFTS_BADGE && post.draft;
 
   return (
     <article>
@@ -33,7 +34,7 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
           <CardHeader className="pb-2">
             <CardTitle titleType={isNotOnBlogSubcategoryPage ? 'h3' : 'h2'} className="is-h3 flex justify-between">
               {post.title}
-              {BlogConfig.SHOW_DRAFTS_BADGE && post.draft && <DraftBadge className="relative bottom-1 left-2" />}
+              {showDraftSuffix && <DraftBadge className="relative bottom-1 left-2" />}
             </CardTitle>
             <CardDescription>
               <BlogPostDate className="bg-secondary p-1 text-black dark:text-white" language={language} post={post} />

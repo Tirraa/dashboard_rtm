@@ -21,18 +21,20 @@ interface BlogPostInnerProps extends BlogPostProps {}
 interface _BlogPostPageProps extends BlogPostPageProps, Partial<WithClassname> {}
 
 const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className: classNameValue, language, post }) => {
+  const scopedT = await getScopedI18n(i18ns.vocab);
+
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const hasTags = post.tags.length > 0;
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const showToC = post.headings.length > 1;
-  const scopedT = await getScopedI18n(i18ns.vocab);
-  const suffix = BlogConfig.SHOW_DRAFTS_BADGE && post.draft ? ' (' + scopedT('draft') + ')' : undefined;
+  const showDraftSuffix = BlogConfig.SHOW_DRAFTS_BADGE && post.draft;
+  const draftSuffix = showDraftSuffix ? ' (' + scopedT('draft') + ')' : undefined;
 
   return (
     <section className={cn('mx-12 w-auto max-w-[730px] lg:w-[45vw]', classNameValue)}>
-      <header className="mb-4 p-2 text-center">
+      <header className="my-2 p-2 text-center">
         <h1>{post.title}</h1>
-        <BlogPostDate language={language} suffix={suffix} post={post} />
+        <BlogPostDate suffix={draftSuffix} language={language} post={post} />
         {hasTags && <div className="mt-1 flex flex-wrap justify-center gap-2 md:mx-auto md:w-fit md:justify-normal">{await tagsGenerator(post)}</div>}
       </header>
       <div className="flex max-w-full flex-col lg:flex-row">
