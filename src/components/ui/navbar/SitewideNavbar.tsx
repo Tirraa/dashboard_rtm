@@ -21,7 +21,7 @@ import Link from 'next/link';
 
 interface SitewideNavbarProps {}
 
-const { LOGO_SIZE_PX_VALUE } = NAVBAR_STYLE;
+const { LOGO_HEIGHT, LOGO_WIDTH } = NAVBAR_STYLE;
 const navbarExtrasForMobileClassNameBase = 'h-[40px]';
 
 const buildNavbarExtrasForDesktop: () => ReactElement[] = () =>
@@ -66,8 +66,8 @@ const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
 
   const navbarExtrasClassNameBase = 'gap-4 h-full flex-row flex-nowrap items-center';
   const navbarBrand = (
-    <Link className="transition-[filter] hover:brightness-75" href={ROUTES_ROOTS.WEBSITE}>
-      <Image height={LOGO_SIZE_PX_VALUE} src="/assets/rtm-logo.svg" width={LOGO_SIZE_PX_VALUE} alt={logoAlt} priority />
+    <Link className="scale-100 transition-transform hover:scale-105" href={ROUTES_ROOTS.WEBSITE}>
+      <Image src="/assets/rtm-logo-head.svg" height={LOGO_HEIGHT} width={LOGO_WIDTH} alt={logoAlt} priority />
     </Link>
   );
 
