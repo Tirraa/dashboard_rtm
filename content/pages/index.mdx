@@ -4,14 +4,19 @@ metadescription: Metadescription Page d'accueil
 ---
 
 <div className="text-center">
-  <Image
-    src="/assets/rust-team-management-logo-full-body.svg"
-    className="m-auto"
-    height={69}
-    width={226}
-    alt="Logo de Rust Team Management"
-    priority
-  />
-  <h1 className="my-2">Rust Team Management</h1>
-  <InviteTheBotButton />
+  <video
+    poster="/assets/rust-team-management-logo-full-body.svg"
+    autoPlay="true"
+    loop="true"
+    muted="true"
+    playsInline="true"
+    class="absolute bottom-0 left-0 h-full w-full object-cover"
+    style={{ zIndex: -1 }}
+  >
+    <source src="/assets/rtm-demo.webm" type="video/webm; codecs=av01.0.05M.08" />
+  </video>
+  <div class="absolute bottom-0 left-0 h-full w-full bg-gradient-to-t from-slate-900 to-slate-700 opacity-75 blur-sm" style={{ zIndex: -1 }} />
+  <div class="absolute bottom-0 left-0 h-full w-full" style={{ boxShadow: 'inset 0 0 70vw 11vw rgba(0, 0, 0, 1)', zIndex: -1 }} />
+  <Logo animatedOnHover clickable />
+  <InviteTheBotButton className="mt-2" />
 </div>
