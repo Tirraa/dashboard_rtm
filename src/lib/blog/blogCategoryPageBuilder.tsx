@@ -74,7 +74,7 @@ async function blogCategoryPageBuilder(
       if (posts.length > limit) {
         showMoreLink = (
           <div className="flex w-full justify-center">
-            <Button className={cn(BUTTON_CONFIG.CLASSNAME, 'mb-6 mt-4 lg:mb-0')} size="lg" asChild>
+            <Button className={cn(BUTTON_CONFIG.CLASSNAME, 'mt-4 lg:mb-0')} size="lg" asChild>
               <Link href={href}>{globalT(`${i18ns.vocab}.see-more`)}</Link>
             </Button>
           </div>
@@ -86,7 +86,7 @@ async function blogCategoryPageBuilder(
 
       const section = (
         <section
-          className="mb-4 [&>article:not(:last-of-type)]:mb-6"
+          className="my-4 [&>article:not(:last-of-type)]:mb-6"
           key={`${subcategory}-${curSubcategTitle}-section`}
           id={slugger.slug(curSubcategTitle)}
         >
