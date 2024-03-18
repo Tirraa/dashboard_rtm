@@ -90,7 +90,7 @@ const GoToTopButton: FunctionComponent<GoToTopButtonProps> = ({ scrollYthreshold
   return (
     <button
       className={cn(
-        'fixed bottom-0 right-0 z-10 m-2 h-10 w-10 cursor-pointer rounded-md bg-card p-2 text-lg font-bold opacity-0 transition-all duration-200 ease-in-out',
+        'fixed bottom-0 right-0 m-2 h-10 w-10 cursor-pointer rounded-md bg-card p-2 text-lg font-bold opacity-0 transition-all duration-200 ease-in-out',
         { 'opacity-65 hover:opacity-100 focus:opacity-100': isShown }
       )}
       onClick={isShown ? onClickFn : undefined}
