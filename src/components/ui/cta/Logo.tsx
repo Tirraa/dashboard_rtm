@@ -66,7 +66,7 @@ const Logo: FunctionComponent<LogoProps> = ({ onPageEnterAnimation, animatedOnHo
       className={cn('m-auto', onLoadAnimation, {
         'hover:animate-[gelatine_285ms_ease-in-out]': !onLoadAnimation && animatedOnHover
       })}
-      src="/assets/rust-team-management-logo-full-body.svg"
+      src="/assets/medias/img/rust-team-management-logo-full-body.svg"
       onMouseEnter={onMouseEnterCb}
       alt={scopedT('logo')}
       ref={imgRef}
