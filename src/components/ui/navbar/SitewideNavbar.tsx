@@ -1,5 +1,3 @@
-'use client';
-
 import type { FunctionComponent, ReactElement } from 'react';
 import type { NavbarItems } from '@/types/NavData';
 
@@ -11,7 +9,7 @@ import NavbarButton from '@/components/layouts/navbar/NavbarButton';
 import NavbarToggle from '@/components/layouts/navbar/NavbarToggle';
 import getComputedNavData from '@/lib/misc/getComputedNavData';
 import NavbarElement from '@/components/ui/hoc/NavbarElement';
-import { getClientSideI18n } from '@/i18n/client';
+import { getServerSideI18n } from '@/i18n/server';
 import ELEMENTS_ID from '@/config/elementsId';
 import ROUTES_ROOTS from '##/config/routes';
 import { i18ns } from '##/config/i18n';
@@ -47,8 +45,8 @@ function buildNavbarItems(): NavbarItems {
   return navbarItems;
 }
 
-const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
-  const globalT = getClientSideI18n();
+const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = async () => {
+  const globalT = await getServerSideI18n();
   const logoAlt = globalT(`${i18ns.vocab}.sr-only.brand-logo`);
 
   const navbarItemClassName = 'p-[5px]';

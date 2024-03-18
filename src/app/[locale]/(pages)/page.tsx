@@ -4,8 +4,8 @@
 import type { Page } from 'contentlayer/generated';
 import type { I18nPageProps } from '@/types/Next';
 
+import MdxInviteTheBotButton from '@/components/ui/cta/MdxInviteTheBotButton';
 import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
-import InviteTheBotButton from '@/components/ui/cta/InviteTheBotButton';
 import { getServerSideI18n, getStaticParams } from '@/i18n/server';
 import { setStaticParamsLocale } from 'next-international/server';
 import { getPageByLanguageAndPathStrict } from '@/lib/pages/api';
@@ -53,7 +53,7 @@ export default function Page({ params }: I18nPageProps) {
         />
         <div style={{ boxShadow: 'inset 0 0 70vw 11vw rgba(0, 0, 0, 1)', zIndex: -1 }} className="absolute bottom-0 left-0 h-full w-full" />
         <Logo onPageEnterAnimation animatedOnHover clickable />
-        <InviteTheBotButton className="mt-2" />
+        <MdxInviteTheBotButton className="mt-2" />
       </div>
     </main>
   );

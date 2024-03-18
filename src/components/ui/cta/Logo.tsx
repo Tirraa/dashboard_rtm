@@ -5,7 +5,6 @@ import type { FunctionComponent } from 'react';
 import { getRefCurrentPtr, getLinkTarget } from '@rtm/shared-lib/react';
 import { useCallback, useEffect, useState, useRef } from 'react';
 import DISCORD_CONFIG from '@/config/discord';
-import { useScopedI18n } from '@/i18n/client';
 import { cn } from '@/lib/tailwind';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -20,7 +19,6 @@ const ANIMATION_ON_HOVER_CLS = 'animate-[gelatine_285ms_ease-in-out]';
 const ON_PAGE_ENTER_CLS = 'animate-[swing_1234ms_ease-out]';
 
 const Logo: FunctionComponent<LogoProps> = ({ onPageEnterAnimation, animatedOnHover, clickable }) => {
-  const scopedT = useScopedI18n('vocab');
   const href = DISCORD_CONFIG.BOT_INVITE_LINK;
   const target = getLinkTarget(href);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -68,11 +66,11 @@ const Logo: FunctionComponent<LogoProps> = ({ onPageEnterAnimation, animatedOnHo
       })}
       src="/assets/medias/img/rust-team-management-logo-full-body.svg"
       onMouseEnter={onMouseEnterCb}
-      alt={scopedT('logo')}
+      height={201.45}
       ref={imgRef}
-      height={69}
       width={226}
       priority
+      alt=""
     />
   );
 
