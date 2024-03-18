@@ -2,7 +2,7 @@
 
 import type { FunctionComponent } from 'react';
 
-import { getRefCurrentPtr, getLinkTarget } from 'packages/shared-lib/src/react';
+import { getRefCurrentPtr, getLinkTarget } from '@rtm/shared-lib/react';
 import { useCallback, useEffect, useState, useRef } from 'react';
 import DISCORD_CONFIG from '@/config/discord';
 import { useScopedI18n } from '@/i18n/client';
@@ -10,7 +10,7 @@ import { cn } from '@/lib/tailwind';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export interface LogoProps {
+interface LogoProps {
   onPageEnterAnimation?: boolean;
   animatedOnHover?: boolean;
   clickable?: boolean;

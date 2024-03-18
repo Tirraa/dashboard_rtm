@@ -3,12 +3,10 @@
 
 import MdxInviteTheBotButton from '@/components/ui/cta/MdxInviteTheBotButton';
 import MdxSignupButton from '@/components/ui/cta/MdxSignupButton';
-import MdxLogo from '@/components/ui/cta/MdxLogo';
 
 const CTAs: Record<PropertyKey, (...args: any[]) => JSX.Element> = {
   InviteTheBotButton: ({ ...props }) => <MdxInviteTheBotButton {...props} />,
-  SignupButton: ({ ...props }) => <MdxSignupButton {...props} />,
-  Logo: ({ ...props }) => <MdxLogo {...props} />
+  SignupButton: ({ ...props }) => <MdxSignupButton {...props} />
 };
 
 export default CTAs;
