@@ -99,7 +99,7 @@ const config = {
     },
     screens: { ...defaultTheme.screens }
   },
-  content: ['./src/**/*.{js,ts,jsx,tsx}', './content/blog/**/*.{md,mdx}'],
+  content: ['./src/**/*.{js,ts,jsx,tsx}', './content/blog/**/*.{md,mdx}', './content/landing-pages/**/*.{md,mdx}', './content/pages/**/*.{md,mdx}'],
   safelist: [...REHYPE_AUTOLINK_HEADINGS_SAFELIST],
   plugins: [TailwindCSSAnimate],
   darkMode: ['class']

@@ -61,7 +61,7 @@ const Footer: FunctionComponent<FooterProps> = () => {
   }, [heartToggler, heart, nextHeart]);
 
   return (
-    <footer className="flex min-h-20 flex-col items-center justify-center border-t-[1px] border-transparent bg-black text-center text-white dark:border-card dark:bg-transparent">
+    <footer className="z-10 flex min-h-20 flex-col items-center justify-center border-t-[1px] border-transparent bg-black text-center text-white dark:border-card dark:bg-black">
       <p className="relative select-none">
         {footerCopy}
         {(heartToggler && (
