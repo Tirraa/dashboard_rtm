@@ -41,6 +41,7 @@ export default function Page({ params }: I18nPageProps) {
           style={{ zIndex: -1 }}
           playsInline={true}
           autoPlay={true}
+          preload="none"
           muted={true}
           loop={true}
         >

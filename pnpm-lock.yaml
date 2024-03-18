@@ -39,8 +39,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.10(next@14.1.3)(react@18.2.0)
       bentocache:
-        specifier: 1.0.0-beta.6
-        version: 1.0.0-beta.6(tslib@2.6.2)
+        specifier: 1.0.0-beta.7
+        version: 1.0.0-beta.7(tslib@2.6.2)
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -1985,8 +1985,8 @@ packages:
   /@polka/url@1.0.0-next.24:
     resolution: {integrity: sha512-2LuNTFBIO0m7kKIQvvPHN6UE63VjpmL9rnEEaOOaiSPbZK+zUOYIzBAWcED+3XYzhYsd/0mD57VdxAEqqV52CQ==}
 
-  /@poppinss/utils@6.7.0:
-    resolution: {integrity: sha512-gY+1j+V4Yb2Xx149LVPtxa07eNHUmf5zfn+SUQuzkxCBQMBY6GrpE1dSn5pRlhwMsSLv62nH95C8yqoPN/AThA==}
+  /@poppinss/utils@6.7.2:
+    resolution: {integrity: sha512-C7K0gy7nW0XzlWcuVrSqT1nLQBAddhpgbnvHtYtxFYkS/BdJKzeVz771c80yhLcmrqXoGqZZgjdC7y6Me1L4Tg==}
     engines: {node: '>=18.16.0'}
     dependencies:
       '@lukeed/ms': 2.0.2
@@ -3754,8 +3754,8 @@ packages:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
     dev: true
 
-  /bentocache@1.0.0-beta.6(tslib@2.6.2):
-    resolution: {integrity: sha512-ZacTdgLMzO9T3QnZSQ7mPjbd3Da2pAA5UXFCQirz+kCJDH4SiZ5XhARVMp9/JzIV4a1Lv88AN9EzSuX3Xu5GZg==}
+  /bentocache@1.0.0-beta.7(tslib@2.6.2):
+    resolution: {integrity: sha512-oEJttxwvzX9zAU2r7ONvmSmYJuLv/+ihRu+FQ0A5Z2UrXeYlA3pSnXTK0vMyp3YA1Tn14oiVoriRjMlOmlDdng==}
     peerDependencies:
       '@aws-sdk/client-dynamodb': ^3.438.0
       ioredis: ^5.3.2
@@ -3769,7 +3769,7 @@ packages:
         optional: true
     dependencies:
       '@paralleldrive/cuid2': 2.2.2
-      '@poppinss/utils': 6.7.0
+      '@poppinss/utils': 6.7.2
       '@sindresorhus/chunkify': 1.0.0
       async-mutex: 0.4.1
       hexoid: 1.0.0

@@ -34,7 +34,7 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
           <CardHeader className="pb-2">
             <CardTitle titleType={isNotOnBlogSubcategoryPage ? 'h3' : 'h2'} className="is-h3 flex justify-between">
               {post.title}
-              {showDraftSuffix && <DraftBadge className="relative bottom-1 left-2" />}
+              {showDraftSuffix && <DraftBadge className="relative bottom-1 left-2 rtl:-left-2" />}
             </CardTitle>
             <CardDescription>
               <BlogPostDate className="bg-secondary p-1 text-black dark:text-white" language={language} post={post} />

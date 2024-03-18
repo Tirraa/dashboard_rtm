@@ -66,7 +66,7 @@ const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = () => {
 
   const navbarExtrasClassNameBase = 'gap-4 h-full flex-row flex-nowrap items-center';
   const navbarBrand = (
-    <Link className="scale-100 transition-transform hover:scale-105" href={ROUTES_ROOTS.WEBSITE}>
+    <Link className="relative left-[-9px] scale-100 transition-transform hover:scale-105 rtl:left-[9px]" href={ROUTES_ROOTS.WEBSITE}>
       <Image src="/assets/medias/img/rtm-logo-head.svg" height={LOGO_HEIGHT} width={LOGO_WIDTH} alt={logoAlt} priority />
     </Link>
   );

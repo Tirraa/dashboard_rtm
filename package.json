@@ -55,7 +55,7 @@
     "@rtm/shared-lib": "*",
     "@rtm/shared-types": "*",
     "@vercel/speed-insights": "^1.0.2",
-    "bentocache": "1.0.0-beta.6",
+    "bentocache": "1.0.0-beta.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "contentlayer": "^0.3.4",
@@ -140,5 +140,5 @@
   "engines": {
     "node": "^18.x || ^20.x"
   },
-  "packageManager": "^pnpm@8.15.4"
+  "packageManager": "^pnpm@8.15.5"
 }
