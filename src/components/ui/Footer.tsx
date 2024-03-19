@@ -11,7 +11,7 @@ const INTERVAL_DURATION = 10_100;
 
 interface FooterProps {}
 
-const Footer: FunctionComponent<FooterProps> = () => {
+const FooterHeadline: FunctionComponent = () => {
   const [heart, setHeart] = useState<string>('❤️');
   const [nextHeart, setNextHeart] = useState<string>('❤️');
   const [heartToggler, setHeartToggler] = useState<boolean>(true);
@@ -61,25 +61,31 @@ const Footer: FunctionComponent<FooterProps> = () => {
   }, [heartToggler, heart, nextHeart]);
 
   return (
+    <p className="relative flex select-none">
+      <span>{footerCopy}</span>
+      {(heartToggler && (
+        <span className="relative">
+          <span className="absolute select-none opacity-0 transition-opacity duration-700" aria-hidden="true">
+            &nbsp;{heart}
+          </span>
+          <span className="absolute z-10 opacity-100 transition-opacity duration-700">&nbsp;{nextHeart}</span>
+        </span>
+      )) || (
+        <span className="relative">
+          <span className="absolute opacity-100 transition-opacity duration-700">&nbsp;{heart}</span>
+          <span className="absolute z-10 select-none opacity-0 transition-opacity duration-700" aria-hidden="true">
+            &nbsp;{nextHeart}
+          </span>
+        </span>
+      )}
+    </p>
+  );
+};
+
+const Footer: FunctionComponent<FooterProps> = () => {
+  return (
     <footer className="z-10 flex min-h-20 flex-col items-center justify-center border-t-[1px] border-transparent bg-black text-center text-white dark:border-card dark:bg-black">
-      <p className="relative select-none">
-        {footerCopy}
-        {(heartToggler && (
-          <>
-            <span className="absolute select-none opacity-0 transition-opacity duration-700" aria-hidden="true">
-              &nbsp;{heart}
-            </span>
-            <span className="absolute z-10 opacity-100 transition-opacity duration-700">&nbsp;{nextHeart}</span>
-          </>
-        )) || (
-          <>
-            <span className="absolute opacity-100 transition-opacity duration-700">&nbsp;{heart}</span>
-            <span className="absolute z-10 select-none opacity-0 transition-opacity duration-700" aria-hidden="true">
-              &nbsp;{nextHeart}
-            </span>
-          </>
-        )}
-      </p>
+      <FooterHeadline />
     </footer>
   );
 };
