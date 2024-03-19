@@ -15,7 +15,6 @@ interface LogoProps {
   clickable?: boolean;
 }
 
-const ANIMATION_ON_HOVER_CLS = 'animate-[gelatine_285ms_ease-in-out]';
 const ON_PAGE_ENTER_CLS = 'animate-[swing_1234ms_ease-out]';
 
 const Logo: FunctionComponent<LogoProps> = ({ onPageEnterAnimation, animatedOnHover, clickable }) => {
@@ -25,12 +24,21 @@ const Logo: FunctionComponent<LogoProps> = ({ onPageEnterAnimation, animatedOnHo
   const [onLoadAnimation, setOnLoadAnimation] = useState<string>(onPageEnterAnimation ? ON_PAGE_ENTER_CLS : '');
 
   const onMouseEnterCb = useCallback(() => {
-    if (onLoadAnimation) return;
+    if (onLoadAnimation || !animatedOnHover) return;
 
     const imgInstance = getRefCurrentPtr(imgRef);
     if (!imgInstance) return;
-    imgInstance.classList.add(ANIMATION_ON_HOVER_CLS);
-  }, [onLoadAnimation]);
+
+    imgInstance.style.animationName = 'gelatine';
+    imgInstance.style.animationDuration = '285ms';
+    imgInstance.style.animationTimingFunction = 'ease-in-out';
+
+    const oldAnimationName = imgInstance.style.animationName;
+    imgInstance.style.animationName = 'none';
+    window.requestAnimationFrame(() => {
+      imgInstance.style.animationName = oldAnimationName;
+    });
+  }, [onLoadAnimation, animatedOnHover]);
 
   useEffect(() => {
     const imgInstance = getRefCurrentPtr(imgRef);
@@ -52,7 +60,9 @@ const Logo: FunctionComponent<LogoProps> = ({ onPageEnterAnimation, animatedOnHo
     if (!imgInstance) return;
 
     function animationEndHandler() {
-      imgInstance.classList.remove(ANIMATION_ON_HOVER_CLS);
+      imgInstance.style.animationName = 'none';
+      imgInstance.style.animationDuration = '0s';
+      imgInstance.style.animationTimingFunction = 'unset';
     }
 
     imgInstance.addEventListener('animationend', animationEndHandler);
@@ -61,10 +71,8 @@ const Logo: FunctionComponent<LogoProps> = ({ onPageEnterAnimation, animatedOnHo
 
   const logo = (
     <Image
-      className={cn('m-auto select-none', onLoadAnimation, {
-        'hover:animate-[gelatine_285ms_ease-in-out]': !onLoadAnimation && animatedOnHover
-      })}
       src="/assets/medias/img/rust-team-management-logo-full-body.svg"
+      className={cn('m-auto select-none', onLoadAnimation)}
       onMouseEnter={onMouseEnterCb}
       draggable={false}
       height={201.45}
