@@ -61,11 +61,12 @@ const Logo: FunctionComponent<LogoProps> = ({ onPageEnterAnimation, animatedOnHo
 
   const logo = (
     <Image
-      className={cn('m-auto', onLoadAnimation, {
+      className={cn('m-auto select-none', onLoadAnimation, {
         'hover:animate-[gelatine_285ms_ease-in-out]': !onLoadAnimation && animatedOnHover
       })}
       src="/assets/medias/img/rust-team-management-logo-full-body.svg"
       onMouseEnter={onMouseEnterCb}
+      draggable={false}
       height={201.45}
       ref={imgRef}
       width={226}
@@ -77,7 +78,7 @@ const Logo: FunctionComponent<LogoProps> = ({ onPageEnterAnimation, animatedOnHo
   if (!clickable) return logo;
 
   return (
-    <Link className="m-auto flex h-fit w-fit" target={target} href={href}>
+    <Link className="m-auto flex h-fit w-fit select-none" target={target} href={href}>
       {logo}
     </Link>
   );
