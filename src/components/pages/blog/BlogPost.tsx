@@ -4,8 +4,6 @@ import type { WithClassname } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
 import { isValidBlogCategoryAndSubcategoryPair, getBlogPostUnstrict } from '@/lib/blog/api';
-import BlogPostTocDesktop from '@/components/ui/blog/toc/desktop/BlogPostTocDesktop';
-import BlogPostTocMobile from '@/components/ui/blog/toc/mobile/BlogPostTocMobile';
 import tagsGenerator from '@/components/ui/blog/tagsGenerator';
 import BlogPostDate from '@/components/ui/blog/BlogPostDate';
 import MDX from '@/components/layouts/blog/MdxComponent';
@@ -26,7 +24,6 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className:
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const hasTags = post.tags.length > 0;
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const showToC = post.headings.length > 1;
   const showDraftSuffix = BlogConfig.SHOW_DRAFTS_BADGE && post.draft;
   const draftSuffix = showDraftSuffix ? ' (' + scopedT('draft') + ')' : undefined;
 
@@ -38,9 +35,7 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className:
         {hasTags && <div className="mt-1 flex flex-wrap justify-center gap-2 md:mx-auto md:w-fit md:justify-normal">{await tagsGenerator(post)}</div>}
       </header>
       <div className="flex max-w-full flex-col lg:flex-row">
-        {showToC && <BlogPostTocMobile headings={post.headings} />}
         <MDX code={post.body.code} />
-        {showToC && <BlogPostTocDesktop headings={post.headings} />}
       </div>
     </section>
   );
