@@ -13,7 +13,7 @@ import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { notFound } from 'next/navigation';
 import dynamic from 'next/dynamic';
 
-const MDX = dynamic(() => import('@/components/layouts/documents/MdxComponent'), { ssr: false });
+const MDX = dynamic(() => import('@/components/layouts/documents/MdxComponent'), { ssr: true });
 
 export async function generateMetadata({ params }: LandingPageProps) {
   const metadatas = await getLandingPageMetadatas({ params });

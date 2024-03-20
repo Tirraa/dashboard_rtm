@@ -15,7 +15,7 @@ import { redirect } from 'next/navigation';
 import { i18ns } from '##/config/i18n';
 import dynamic from 'next/dynamic';
 
-const MDX = dynamic(() => import('@/components/layouts/documents/MdxComponent'), { ssr: false });
+const MDX = dynamic(() => import('@/components/layouts/documents/MdxComponent'), { ssr: true });
 
 export async function generateMetadata({ params }: I18nPageProps) {
   const scopedT = await getScopedI18n(i18ns.vocab);

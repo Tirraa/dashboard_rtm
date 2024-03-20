@@ -17,7 +17,7 @@ import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 import dynamic from 'next/dynamic';
 
-const MDX = dynamic(() => import('@/components/layouts/documents/MdxComponent'), { ssr: false });
+const MDX = dynamic(() => import('@/components/layouts/documents/MdxComponent'), { ssr: true });
 
 interface BlogPostInnerProps extends BlogPostProps {}
 interface _BlogPostPageProps extends BlogPostPageProps, Partial<WithClassname> {}
