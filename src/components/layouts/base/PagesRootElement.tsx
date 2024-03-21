@@ -8,11 +8,7 @@ import DocumentRoot from '@/components/layouts/base/DocumentRoot';
 
 interface HtmlElementProps extends WithChildren {}
 
-const PagesRootElement: FunctionComponent<HtmlElementProps> = ({ children }) => (
-  <DocumentRoot withNavbar withFooter>
-    {children}
-  </DocumentRoot>
-);
+const PagesRootElement: FunctionComponent<HtmlElementProps> = ({ children }) => <DocumentRoot withNavbar>{children}</DocumentRoot>;
 
 export default PagesRootElement;
 

@@ -4,17 +4,18 @@
 import type { WithChildren } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
-import DocumentRoot from '@/components/layouts/base/DocumentRoot';
+import Footer from '@/components/ui/Footer';
 
 interface HtmlElementProps extends WithChildren {}
 
-const DashboardRootElement: FunctionComponent<HtmlElementProps> = ({ children }) => (
-  <DocumentRoot disableGoToTopButton withNavbar>
+const PagesWithFooterRootElement: FunctionComponent<HtmlElementProps> = ({ children }) => (
+  <>
     {children}
-  </DocumentRoot>
+    <Footer />
+  </>
 );
 
-export default DashboardRootElement;
+export default PagesWithFooterRootElement;
 
 // Stryker restore all
 /* v8 ignore stop */
