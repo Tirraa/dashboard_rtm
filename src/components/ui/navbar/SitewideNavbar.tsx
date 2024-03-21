@@ -52,7 +52,7 @@ const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = async () => {
   const navbarItemClassName = 'p-[5px]';
   const navbarItems = buildNavbarItems();
   const desktopNavbarItems = navbarItems.map((item, index) => (
-    <li key={`${index}-navbar-btn-typography-desktop`} className={navbarItemClassName}>
+    <li key={`${index}-navbar-btn-desktop`} className={navbarItemClassName}>
       {item.jsx}
     </li>
   ));
