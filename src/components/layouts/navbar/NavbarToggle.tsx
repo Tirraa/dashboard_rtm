@@ -8,20 +8,23 @@ import preserveKeyboardNavigation from '@rtm/shared-lib/portable/html/preserveKe
 import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { getClientSideI18n, useScopedI18n } from '@/i18n/client';
-import { useEffect, useState, useRef } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { i18ns } from '##/config/i18n';
 
 interface NavbarToggleProps {
   items: NavbarItems;
 }
 
-const menuItemsGenerator = (items: NavbarItems) => {
+const menuItemsGenerator = (items: NavbarItems, closeMenu: () => void) => {
   const globalT = getClientSideI18n();
 
   return items.map((item, index) => {
     return (
       <DropdownMenuItem
-        onClick={(event) => preserveKeyboardNavigation(event.target)}
+        onClick={(event) => {
+          preserveKeyboardNavigation(event.target);
+          closeMenu();
+        }}
         key={`navbar-hamburger-menu-item-${index}`}
         textValue={globalT(item.i18nTitle)}
         className="my-1 p-0"
@@ -35,6 +38,8 @@ const menuItemsGenerator = (items: NavbarItems) => {
 const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const onOpenChange = (opened: boolean) => setIsOpened(opened);
+
+  const closeMenu = useCallback(() => setIsOpened(false), []);
 
   const isLargeScreen = useIsLargeScreen();
   const scopedT = useScopedI18n(`${i18ns.navbar}.sr-only`);
@@ -61,7 +66,7 @@ const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="relative min-w-[145px] dark:border-card ltr:right-4 rtl:left-4" aria-label={scopedT('hamburger-menu')}>
-        <nav className="max-w-[156px] text-center [&>*>*]:h-12">{menuItemsGenerator(items)}</nav>
+        <nav className="max-w-[156px] text-center text-black [&>*>*]:h-12">{menuItemsGenerator(items, closeMenu)}</nav>
       </DropdownMenuContent>
     </DropdownMenu>
   );

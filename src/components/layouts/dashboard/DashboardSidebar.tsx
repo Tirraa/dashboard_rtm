@@ -108,7 +108,7 @@ const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => {
         className={'z-20 w-full justify-center border-t-[1px] border-muted-foreground bg-black dark:bg-card lg:w-fit lg:border-0'}
         ref={sidebarRef}
       >
-        <nav className="py-4 lg:overflow-y-auto lg:px-[22px]">
+        <nav className="py-4 text-white lg:overflow-y-auto lg:px-[22px]">
           <ul className={cn('flex flex-wrap justify-center gap-2 lg:block')} role="menu">
             {sidebarBtnsGenerator(currentPathname)}
           </ul>
