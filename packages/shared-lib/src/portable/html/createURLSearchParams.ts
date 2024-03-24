@@ -14,7 +14,9 @@ function createURLSearchParams(params: Record<PropertyKey, JSPrimitives>, curren
   for (const [key, value] of Object.entries(params)) {
     if (!value) {
       newSearchParams.delete(key);
-    } else newSearchParams.set(key, String(value));
+      continue;
+    }
+    newSearchParams.set(key, String(value));
   }
 
   for (const [key, value] of Array.from(newSearchParams.entries())) {

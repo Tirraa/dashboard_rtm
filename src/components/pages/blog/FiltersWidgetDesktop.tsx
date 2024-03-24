@@ -27,34 +27,35 @@ const FiltersWidgetDesktop: FunctionComponent<FiltersWidgetDesktopProps> = ({ ta
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const packedIds = packIds(selectedTagsIds);
+    try {
+      const packedIds = searchParams.get(FILTERS_KEY);
+      if (!packedIds) return;
 
-    const q = createURLSearchParams({ [FILTERS_KEY]: packedIds }, searchParams);
-    router.push(q, { scroll: false });
-  }, [selectedTagsIds, router, searchParams]);
+      const unpackedAndCleanedFilters = sortUnpackedIds(
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        Array.from(new Set<number>(unpackIds(packedIds).filter((id) => 0 <= id && id < blogTagOptions.length)))
+      );
+      setSelectedTagsIds(unpackedAndCleanedFilters);
 
-  useEffect(
-    () => {
-      try {
-        const packedIds = searchParams.get(FILTERS_KEY);
-        if (!packedIds) return;
+      const sanitizedFilters = packIds(unpackedAndCleanedFilters);
+      const q = createURLSearchParams({ [FILTERS_KEY]: sanitizedFilters }, searchParams);
+      router.replace(q, { scroll: false });
+    } catch {
+      const q = createURLSearchParams({ [FILTERS_KEY]: null }, searchParams);
+      router.replace(q, { scroll: false });
+    }
+  }, [router, searchParams]);
 
-        const unpackedAndCleanedFilters = sortUnpackedIds(
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-          Array.from(new Set<number>(unpackIds(packedIds).filter((id) => 0 <= id && id < blogTagOptions.length)))
-        );
-        setSelectedTagsIds(unpackedAndCleanedFilters);
+  const updateRouterAndSetSelectedTags = useCallback(
+    (selectedTags: BlogTag[]) => {
+      const newSelectedTags = sortUnpackedIds(selectedTags.map((tag) => indexedBlogTagOptions[tag]));
+      const packedIds = packIds(newSelectedTags);
 
-        const sanitizedFilters = packIds(unpackedAndCleanedFilters);
-        const q = createURLSearchParams({ [FILTERS_KEY]: sanitizedFilters }, searchParams);
-        router.replace(q, { scroll: false });
-      } catch {
-        const q = createURLSearchParams({ [FILTERS_KEY]: null }, searchParams);
-        router.replace(q, { scroll: false });
-      }
+      const q = createURLSearchParams({ [FILTERS_KEY]: packedIds }, searchParams);
+      router.push(q, { scroll: false });
+      setSelectedTagsIds(newSelectedTags);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [router, searchParams]
   );
 
   const generateToggleGroup = useCallback(() => {
@@ -70,7 +71,7 @@ const FiltersWidgetDesktop: FunctionComponent<FiltersWidgetDesktopProps> = ({ ta
 
     return (
       <ToggleGroup
-        onValueChange={(selectedTags: BlogTag[]) => setSelectedTagsIds(sortUnpackedIds(selectedTags.map((tag) => indexedBlogTagOptions[tag])))}
+        onValueChange={(selectedTags: BlogTag[]) => updateRouterAndSetSelectedTags(selectedTags)}
         value={selectedTagsIds.map((id) => blogTagOptions[id])}
         variant="outline"
         type="multiple"
@@ -78,7 +79,7 @@ const FiltersWidgetDesktop: FunctionComponent<FiltersWidgetDesktopProps> = ({ ta
         {toggleGroupItems}
       </ToggleGroup>
     );
-  }, [scopedT, tags, selectedTagsIds]);
+  }, [scopedT, tags, selectedTagsIds, updateRouterAndSetSelectedTags]);
 
   return <header className="my-2 flex flex-wrap items-center justify-start gap-2">{generateToggleGroup()}</header>;
 };
