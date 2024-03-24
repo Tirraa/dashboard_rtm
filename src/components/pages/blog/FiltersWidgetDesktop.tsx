@@ -17,6 +17,8 @@ interface FiltersWidgetDesktopProps {
   tags: BlogTag[];
 }
 
+// {ToDo} Handle filters in URL on mount (+ try/catch for unpackIds)
+
 const FiltersWidgetDesktop: FunctionComponent<FiltersWidgetDesktopProps> = ({ tags }) => {
   const scopedT = useScopedI18n(i18ns.blogTags);
   const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>([]);
