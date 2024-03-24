@@ -2,8 +2,9 @@ import { describe, expect, it } from 'vitest';
 
 import { unpackIds, packIds, MIN_ID } from '../urlsPackAndUnpack';
 
+const BIG_LENGTH = 1e6;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const RIDICULOUSLY_LARGE_ID_RANGE = Array.from({ length: 0xffff }, (_, n) => n);
+const RIDICULOUSLY_LARGE_ID_RANGE = Array.from({ length: BIG_LENGTH }, (_, n) => n);
 
 const VALID_IDS = {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
