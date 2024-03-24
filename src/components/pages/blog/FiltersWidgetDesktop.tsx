@@ -1,14 +1,15 @@
 'use client';
 
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { FunctionComponent } from 'react';
 
 import { indexedBlogTagOptions, blogTagOptions } from '##/lib/builders/unifiedImport';
 import { ToggleGroupItem, ToggleGroup } from '@/components/ui/ToggleGroup';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
 import { unpackIds, packIds } from '@rtm/shared-lib/misc';
-import { useCallback, useEffect, useState } from 'react';
 import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
 
@@ -25,35 +26,60 @@ const FiltersWidgetDesktop: FunctionComponent<FiltersWidgetDesktopProps> = ({ ta
   const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const firstLoad = useRef<boolean>(true);
+  const cachedSelectedTags = useRef<MaybeNull<number[]>>(null);
 
   useEffect(() => {
-    try {
-      const packedIds = searchParams.get(FILTERS_KEY);
-      if (!packedIds) return;
+    function unsafeCtxHandler() {
+      try {
+        const packedIds = searchParams.get(FILTERS_KEY);
+        if (!packedIds) {
+          setSelectedTagsIds([]);
+          return;
+        }
 
-      const unpackedAndCleanedFilters = sortUnpackedIds(
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        Array.from(new Set<number>(unpackIds(packedIds).filter((id) => 0 <= id && id < blogTagOptions.length)))
-      );
-      setSelectedTagsIds(unpackedAndCleanedFilters);
+        const unpackedAndCleanedFilters = sortUnpackedIds(
+          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          Array.from(new Set<number>(unpackIds(packedIds).filter((id) => 0 <= id && id < blogTagOptions.length)))
+        );
+        setSelectedTagsIds(unpackedAndCleanedFilters);
 
-      const sanitizedFilters = packIds(unpackedAndCleanedFilters);
-      const q = createURLSearchParams({ [FILTERS_KEY]: sanitizedFilters }, searchParams);
-      router.replace(q, { scroll: false });
-    } catch {
-      const q = createURLSearchParams({ [FILTERS_KEY]: null }, searchParams);
-      router.replace(q, { scroll: false });
+        const sanitizedFilters = packIds(unpackedAndCleanedFilters);
+        const q = createURLSearchParams({ [FILTERS_KEY]: sanitizedFilters }, searchParams);
+        router.replace(q, { scroll: false });
+      } catch {
+        const q = createURLSearchParams({ [FILTERS_KEY]: null }, searchParams);
+        router.replace(q, { scroll: false });
+      }
     }
+
+    function maybeSafeCtxHandler() {
+      if (cachedSelectedTags.current !== null) {
+        setSelectedTagsIds(cachedSelectedTags.current);
+        cachedSelectedTags.current = null;
+        return;
+      }
+
+      unsafeCtxHandler();
+    }
+
+    if (firstLoad.current) unsafeCtxHandler();
+    else maybeSafeCtxHandler();
   }, [router, searchParams]);
+
+  useEffect(() => {
+    firstLoad.current = false;
+  }, []);
 
   const updateRouterAndSetSelectedTags = useCallback(
     (selectedTags: BlogTag[]) => {
       const newSelectedTags = sortUnpackedIds(selectedTags.map((tag) => indexedBlogTagOptions[tag]));
       const packedIds = packIds(newSelectedTags);
 
+      cachedSelectedTags.current = newSelectedTags;
+
       const q = createURLSearchParams({ [FILTERS_KEY]: packedIds }, searchParams);
       router.push(q, { scroll: false });
-      setSelectedTagsIds(newSelectedTags);
     },
     [router, searchParams]
   );
