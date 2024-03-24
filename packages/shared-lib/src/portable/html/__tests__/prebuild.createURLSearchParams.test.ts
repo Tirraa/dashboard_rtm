@@ -32,20 +32,20 @@ describe('createURLSearchParams', () => {
     expect(_URLSearchParams).toBe('?bar=3');
   });
 
-  it('should return an empty string, given empty searchParams object', () => {
+  it('should return an empty query string, given empty searchParams object', () => {
     const _URLSearchParams = createURLSearchParams({});
-    expect(_URLSearchParams).toBe('');
+    expect(_URLSearchParams).toBe('?');
   });
 
-  it('should return an empty string, given both empty searchParams and currentSearchParams objects', () => {
+  it('should return an empty query string, given both empty searchParams and currentSearchParams objects', () => {
     const emptyURLSearchParams = new URLSearchParams();
     const _URLSearchParams = createURLSearchParams({}, emptyURLSearchParams);
-    expect(_URLSearchParams).toBe('');
+    expect(_URLSearchParams).toBe('?');
   });
 
-  it('should return an empty string, given stupid args', () => {
+  it('should return an empty query string, given stupid args', () => {
     const stupidURLSearchParams = new URLSearchParams('whatever=');
     const _URLSearchParams = createURLSearchParams({ foo: null, bar: null, baz: '' }, stupidURLSearchParams);
-    expect(_URLSearchParams).toBe('');
+    expect(_URLSearchParams).toBe('?');
   });
 });
