@@ -1,23 +1,22 @@
 'use client';
 
-import type { JSPrimitives } from '@rtm/shared-types/CustomUtilityTypes';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { FunctionComponent } from 'react';
 
+import { indexedBlogTagOptions, blogTagOptions } from '##/lib/builders/unifiedImport';
 import { ToggleGroupItem, ToggleGroup } from '@/components/ui/ToggleGroup';
-import { indexedBlogTagOptions } from '##/lib/builders/unifiedImport';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
+import { unpackIds, packIds } from '@rtm/shared-lib/misc';
 import { useCallback, useEffect, useState } from 'react';
-import { packIds } from '@rtm/shared-lib/misc';
 import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
+
+const FILTERS_KEY = 'tags';
 
 interface FiltersWidgetDesktopProps {
   tags: BlogTag[];
 }
-
-// {ToDo} Handle filters in URL on mount (+ try/catch for unpackIds)
 
 const FiltersWidgetDesktop: FunctionComponent<FiltersWidgetDesktopProps> = ({ tags }) => {
   const scopedT = useScopedI18n(i18ns.blogTags);
@@ -26,14 +25,33 @@ const FiltersWidgetDesktop: FunctionComponent<FiltersWidgetDesktopProps> = ({ ta
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const packedFilters = packIds(selectedTagsIds);
+    const filters = packIds(selectedTagsIds);
 
-    const newParams: Record<PropertyKey, JSPrimitives> = {};
-    newParams.filters = packedFilters;
-
-    const q = createURLSearchParams(newParams, searchParams);
+    const q = createURLSearchParams({ [FILTERS_KEY]: filters }, searchParams);
     router.push(q, { scroll: false });
   }, [selectedTagsIds, router, searchParams]);
+
+  useEffect(
+    () => {
+      try {
+        const filters = searchParams.get(FILTERS_KEY);
+        if (!filters) return;
+
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        const unpackedAndCleanedFilters = Array.from(new Set<number>(unpackIds(filters).filter((id) => 0 <= id && id < blogTagOptions.length)));
+        setSelectedTagsIds(unpackedAndCleanedFilters);
+
+        const sanitizedFilters = packIds(unpackedAndCleanedFilters);
+        const q = createURLSearchParams({ [FILTERS_KEY]: sanitizedFilters }, searchParams);
+        router.replace(q, { scroll: false });
+      } catch {
+        const q = createURLSearchParams({ [FILTERS_KEY]: null }, searchParams);
+        router.replace(q, { scroll: false });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   const generateToggleGroup = useCallback(() => {
     const toggleGroupItems = tags.map((tag) => {
@@ -49,13 +67,14 @@ const FiltersWidgetDesktop: FunctionComponent<FiltersWidgetDesktopProps> = ({ ta
     return (
       <ToggleGroup
         onValueChange={(selectedTags: BlogTag[]) => setSelectedTagsIds(selectedTags.map((tag) => indexedBlogTagOptions[tag]))}
+        value={selectedTagsIds.map((id) => blogTagOptions[id])}
         variant="outline"
         type="multiple"
       >
         {toggleGroupItems}
       </ToggleGroup>
     );
-  }, [scopedT, tags]);
+  }, [scopedT, tags, selectedTagsIds]);
 
   return <header className="my-2 flex flex-wrap items-center justify-start gap-2">{generateToggleGroup()}</header>;
 };

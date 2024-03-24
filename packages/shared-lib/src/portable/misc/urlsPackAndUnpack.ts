@@ -7,6 +7,9 @@ export const MIN_ID: Id = 0;
 
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 
+/**
+ * @throws {RangeError}
+ */
 export function packIds(unpacked: Id[]): EncodedString {
   if (unpacked.length === 0) return '';
 
@@ -25,6 +28,9 @@ export function packIds(unpacked: Id[]): EncodedString {
   return base64url.encode(Buffer.from(packed));
 }
 
+/**
+ * @throws {URIError}
+ */
 export function unpackIds(encodedString: EncodedString): Id[] {
   if (encodedString === '') return [];
 
