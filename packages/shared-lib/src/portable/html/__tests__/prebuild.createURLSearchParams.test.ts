@@ -42,4 +42,10 @@ describe('createURLSearchParams', () => {
     const _URLSearchParams = createURLSearchParams({}, emptyURLSearchParams);
     expect(_URLSearchParams).toBe('');
   });
+
+  it('should return an empty string, given stupid args', () => {
+    const stupidURLSearchParams = new URLSearchParams('whatever=');
+    const _URLSearchParams = createURLSearchParams({ foo: null, bar: null, baz: '' }, stupidURLSearchParams);
+    expect(_URLSearchParams).toBe('');
+  });
 });

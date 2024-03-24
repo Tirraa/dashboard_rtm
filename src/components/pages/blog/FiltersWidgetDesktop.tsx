@@ -18,6 +18,8 @@ interface FiltersWidgetDesktopProps {
   tags: BlogTag[];
 }
 
+const sortUnpackedIds = (unpacked: number[]) => unpacked.sort((a, b) => a - b);
+
 const FiltersWidgetDesktop: FunctionComponent<FiltersWidgetDesktopProps> = ({ tags }) => {
   const scopedT = useScopedI18n(i18ns.blogTags);
   const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>([]);
@@ -25,20 +27,22 @@ const FiltersWidgetDesktop: FunctionComponent<FiltersWidgetDesktopProps> = ({ ta
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const filters = packIds(selectedTagsIds);
+    const packedIds = packIds(selectedTagsIds);
 
-    const q = createURLSearchParams({ [FILTERS_KEY]: filters }, searchParams);
+    const q = createURLSearchParams({ [FILTERS_KEY]: packedIds }, searchParams);
     router.push(q, { scroll: false });
   }, [selectedTagsIds, router, searchParams]);
 
   useEffect(
     () => {
       try {
-        const filters = searchParams.get(FILTERS_KEY);
-        if (!filters) return;
+        const packedIds = searchParams.get(FILTERS_KEY);
+        if (!packedIds) return;
 
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        const unpackedAndCleanedFilters = Array.from(new Set<number>(unpackIds(filters).filter((id) => 0 <= id && id < blogTagOptions.length)));
+        const unpackedAndCleanedFilters = sortUnpackedIds(
+          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          Array.from(new Set<number>(unpackIds(packedIds).filter((id) => 0 <= id && id < blogTagOptions.length)))
+        );
         setSelectedTagsIds(unpackedAndCleanedFilters);
 
         const sanitizedFilters = packIds(unpackedAndCleanedFilters);
@@ -66,7 +70,7 @@ const FiltersWidgetDesktop: FunctionComponent<FiltersWidgetDesktopProps> = ({ ta
 
     return (
       <ToggleGroup
-        onValueChange={(selectedTags: BlogTag[]) => setSelectedTagsIds(selectedTags.map((tag) => indexedBlogTagOptions[tag]))}
+        onValueChange={(selectedTags: BlogTag[]) => setSelectedTagsIds(sortUnpackedIds(selectedTags.map((tag) => indexedBlogTagOptions[tag])))}
         value={selectedTagsIds.map((id) => blogTagOptions[id])}
         variant="outline"
         type="multiple"

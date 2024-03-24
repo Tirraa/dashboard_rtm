@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { unpackIds, packIds, MIN_ID } from '../urlsPackAndUnpack';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const RIDICULOUSLY_LARGE_ID_RANGE = Array.from({ length: 0xffff }, (_, i) => i);
+const RIDICULOUSLY_LARGE_ID_RANGE = Array.from({ length: 0xffff }, (_, n) => n);
 
 const VALID_IDS = {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -28,16 +28,10 @@ describe('packIds', () => {
     expect(packIds([])).toBe('');
   });
 
-  it('should pack correctly (happy paths)', () => {
+  it('should pack correctly', () => {
     expect(packedA).toMatchSnapshot();
     expect(packedB).toMatchSnapshot();
     expect(packedC).toMatchSnapshot();
-  });
-
-  it('should NOT pack correctly (unhappy paths)', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    expect(() => packIds(INVALID_IDS)).toThrow(RangeError);
-    expect(() => unpackIds(INVALID_ENCODED_STRING)).toThrow(URIError);
   });
 });
 
@@ -46,9 +40,16 @@ describe('unpackIds', () => {
     expect(unpackIds('')).toStrictEqual([]);
   });
 
-  it('should unpack correctly (happy paths)', () => {
+  it('should unpack correctly', () => {
     expect(unpackIds(packedA)).toStrictEqual(VALID_IDS.A);
     expect(unpackIds(packedB)).toStrictEqual(VALID_IDS.B);
     expect(unpackIds(packedC)).toStrictEqual(VALID_IDS.C);
+  });
+});
+
+describe('pack/unpackIds (unhappy paths)', () => {
+  it('should NOT pack/unpack correctly (unhappy paths)', () => {
+    expect(() => packIds(INVALID_IDS)).toThrow(RangeError);
+    expect(() => unpackIds(INVALID_ENCODED_STRING)).toThrow(RangeError);
   });
 });
