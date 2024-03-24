@@ -91,6 +91,7 @@
     }
   },
   "dependencies": {
+    "base64url": "^3.0.1",
     "clsx": "^2.0.0",
     "tailwind-merge": "^1.14.0"
   },

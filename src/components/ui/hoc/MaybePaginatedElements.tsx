@@ -19,7 +19,8 @@ const MaybePaginatedElements: FunctionComponent<MaybePaginatedElementsProps> = (
   paginationButtonsPosition,
   paginationButtonsJustify,
   paginatedElements,
-  elementsPerPage
+  elementsPerPage,
+  className
 }) => {
   const pagesAmount = computePagesAmount(paginatedElements.length, elementsPerPage);
 
@@ -35,6 +36,7 @@ const MaybePaginatedElements: FunctionComponent<MaybePaginatedElementsProps> = (
       paginatedElements={paginatedElements}
       elementsPerPage={elementsPerPage}
       pagesAmount={pagesAmount}
+      className={className}
     />
   );
 };

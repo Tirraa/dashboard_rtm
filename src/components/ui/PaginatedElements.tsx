@@ -1,6 +1,7 @@
 'use client';
 
 import type { FunctionComponent, ReactElement } from 'react';
+import type { WithClassname } from '@rtm/shared-types/Next';
 import type { FlexJustify } from '@rtm/shared-types/HTML';
 
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/20/solid';
@@ -20,7 +21,7 @@ import { computePagesAmount } from './hoc/MaybePaginatedElements';
 
 const ReactPaginate = dynamic(() => import('react-paginate'), { ssr: false });
 
-export interface PaginatedElementsProps extends PaginatedElementsBodyWrapperProps {
+export interface PaginatedElementsProps extends PaginatedElementsBodyWrapperProps, Partial<WithClassname> {
   paginationButtonsPosition?: 'bottom' | 'top';
   paginationButtonsJustify?: FlexJustify;
   paginatedElements: ReactElement[];
@@ -45,7 +46,8 @@ const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   pagesAmount: forcedPagesAmount,
   pagesRange: pagesRangeValue,
   paginatedElements,
-  elementsPerPage
+  elementsPerPage,
+  className
 }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -76,7 +78,7 @@ const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   function handlePageClick(event: { selected: number }) {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const page = event.selected + 1;
-    const q = createURLSearchParams({ page });
+    const q = createURLSearchParams({ page }, searchParams);
     router.push(q, { scroll: false });
   }
 
@@ -121,15 +123,15 @@ const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   );
 
   return ypos === 'bottom' ? (
-    <>
+    <div className={cn('flex flex-col', className)}>
       {currentElementsNode}
       {paginationNode}
-    </>
+    </div>
   ) : (
-    <>
+    <div className={cn('flex flex-col', className)}>
       {paginationNode}
       {currentElementsNode}
-    </>
+    </div>
   );
 };
 

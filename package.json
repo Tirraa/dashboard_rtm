@@ -51,6 +51,8 @@
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-toggle": "^1.0.3",
+    "@radix-ui/react-toggle-group": "^1.0.4",
     "@react-hook/media-query": "^1.1.1",
     "@rtm/shared-lib": "*",
     "@rtm/shared-types": "*",
