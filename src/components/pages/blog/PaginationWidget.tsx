@@ -40,7 +40,7 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
         <PaginationItem key={`page-${i}`}>
           <PaginationLink
             className={cn('border-none font-bold', {
-              'bg-primary text-white hover:bg-primary hover:text-white': isActive
+              'pointer-events-none bg-primary text-white hover:bg-primary hover:text-white': isActive
             })}
             href={pathname + createURLSearchParams({ [PAGE_KEY]: i }, searchParams)}
             isActive={isActive}
