@@ -45,7 +45,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({ setSelec
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const disabled = tags.length < 1;
-  const classNameBase = 'flex h-8 items-center rounded-md px-2 py-4';
+  const classNameBase = 'flex h-10 items-center rounded-md px-2 py-4';
 
   useEffect(() => {
     function unsafeCtxHandler() {
@@ -173,7 +173,12 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({ setSelec
   return (
     <Popover onOpenChange={(isOpen: boolean) => setIsOpened(isOpen)} open={isOpened}>
       <PopoverTrigger asChild>
-        <button className={cn(classNameBase, BUTTON_CONFIG.NOT_ACTIVE_CLASSNAME)}>
+        <button
+          className={cn(classNameBase, BUTTON_CONFIG.CLASSNAME, {
+            [BUTTON_CONFIG.NOT_ACTIVE_CLASSNAME]: !isOpened,
+            [BUTTON_CONFIG.ACTIVE_CLASSNAME]: isOpened
+          })}
+        >
           <PlusCircledIcon className={cn('mr-2 h-5 w-5 transition-transform duration-300', { '-rotate-45 rtl:rotate-45': isOpened })} />
           {title}
           {/* eslint-disable-next-line @typescript-eslint/no-magic-numbers */}

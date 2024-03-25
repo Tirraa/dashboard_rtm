@@ -9,12 +9,11 @@ import { cn } from '@/lib/tailwind';
 import type { PaginatedElementsBodyWrapperProps } from './hoc/PaginatedElementsBodyWrapper';
 
 import PaginatedElementsBodyWrapper from './hoc/PaginatedElementsBodyWrapper';
-import { computePagesAmount } from './hoc/MaybePaginatedElements';
 
 export interface PaginatedElementsProps extends PaginatedElementsBodyWrapperProps, Partial<WithClassname> {
   paginatedElements: ReactElement[];
   elementsPerPage: number;
-  pagesAmount?: number;
+  pagesAmount: number;
   pagesRange?: number;
 }
 
@@ -29,14 +28,13 @@ function initializeCurrentPage(pageFromUrl: number, maxPage: number) {
 
 const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   paginatedElementsBodyWrapperProps,
-  pagesAmount: forcedPagesAmount,
   paginatedElements,
   elementsPerPage,
+  pagesAmount,
   className
 }) => {
   const searchParams = useSearchParams();
 
-  const pagesAmount = forcedPagesAmount ?? computePagesAmount(paginatedElements.length, elementsPerPage);
   const unsafePageFromUrl = searchParams.get('page');
   const pageFromUrl = initializeCurrentPage(Number(unsafePageFromUrl), pagesAmount);
 

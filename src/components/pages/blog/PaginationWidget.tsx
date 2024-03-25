@@ -9,7 +9,7 @@ import { useSearchParams, usePathname } from 'next/navigation';
 import { useCallback } from 'react';
 import { cn } from '@/lib/tailwind';
 
-interface PaginationWidgetProps extends Partial<WithClassname> {
+export interface PaginationWidgetProps extends Partial<WithClassname> {
   pagesAmount: number;
 }
 
@@ -39,7 +39,7 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
       items.push(
         <PaginationItem key={`page-${i}`}>
           <PaginationLink
-            className={cn('border-none', {
+            className={cn('border-none font-bold', {
               'bg-primary text-white hover:bg-primary hover:text-white': isActive
             })}
             href={pathname + createURLSearchParams({ [PAGE_KEY]: i }, searchParams)}
@@ -53,6 +53,9 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
 
     return items;
   }, [pagesAmount, pageFromUrl, pathname, searchParams]);
+
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  if (pagesAmount <= 1) return null;
 
   const previousBtn = (
     <PaginationPrevious

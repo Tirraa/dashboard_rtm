@@ -10,7 +10,6 @@ interface MaybePaginatedElementsProps extends PaginatedElementsProps {}
 
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 const paginationIsNotRequired = (pagesAmount: number) => pagesAmount <= 1;
-export const computePagesAmount = (total: number, perChunk: number) => Math.ceil(total / perChunk);
 
 /**
  * @hoc
@@ -20,10 +19,9 @@ const MaybePaginatedElements: FunctionComponent<MaybePaginatedElementsProps> = (
   paginatedElementsBodyWrapperProps,
   paginatedElements,
   elementsPerPage,
+  pagesAmount,
   className
 }) => {
-  const pagesAmount = computePagesAmount(paginatedElements.length, elementsPerPage);
-
   return paginationIsNotRequired(pagesAmount) ? (
     <PaginatedElementsBodyWrapper paginatedElementsBodyWrapperProps={paginatedElementsBodyWrapperProps}>
       {paginatedElements}

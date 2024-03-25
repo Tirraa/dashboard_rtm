@@ -24,6 +24,8 @@ interface SubcategoryRelatedBlogPostsClientProps {
   tags: BlogTag[];
 }
 
+const computePagesAmount = (total: number, perChunk: number) => Math.ceil(total / perChunk);
+
 const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlogPostsClientProps> = ({
   postsCollection,
   subcategory,
@@ -52,16 +54,25 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       return <BlogPostPreview key={`${post._raw.flattenedPath}-paginated-blog-post`} language={language} post={post} />;
     });
 
+  const elementsPerPage = BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT;
+
+  const pagesAmount = computePagesAmount(paginatedElements.length, elementsPerPage);
+
   return (
     <section className="w-full">
       <h1 className="mb-2 ltr:text-left rtl:text-right">{title}</h1>
-      {/* {ToDo} https://github.com/Tirraa/dashboard_rtm/issues/41 */}
-      <SubcategoryRelatedBlogPostsClientToolbar setSelectedTagsIds={setSelectedTagsIds} selectedTagsIds={selectedTagsIds} tags={tags} />
+      <SubcategoryRelatedBlogPostsClientToolbar
+        setSelectedTagsIds={setSelectedTagsIds}
+        selectedTagsIds={selectedTagsIds}
+        pagesAmount={pagesAmount}
+        tags={tags}
+      />
 
       <MaybePaginatedElements
-        elementsPerPage={BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT}
         paginatedElementsBodyWrapperProps={{ className: 'mb-4 [&>article:not(:last-of-type)]:mb-6' }}
         paginatedElements={paginatedElements}
+        elementsPerPage={elementsPerPage}
+        pagesAmount={pagesAmount}
         className="min-w-full"
       />
     </section>
