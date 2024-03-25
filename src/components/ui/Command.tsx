@@ -66,7 +66,6 @@ const CommandEmpty = React.forwardRef<React.ElementRef<typeof CommandPrimitive.E
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName;
 
 // https://github.com/shadcn-ui/ui/issues/3127#issuecomment-2018376782
-
 const CommandGroup = React.forwardRef<React.ElementRef<typeof CommandPrimitive.Group>, React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group>>(
   ({ className, ...props }, ref) => (
     <CommandPrimitive.Group
@@ -92,7 +91,7 @@ const CommandItem = React.forwardRef<React.ElementRef<typeof CommandPrimitive.It
   ({ className, ...props }, ref) => (
     <CommandPrimitive.Item
       className={cn(
-        'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none disabled:pointer-events-none disabled:opacity-50 aria-selected:bg-accent aria-selected:text-accent-foreground',
+        'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-selected:bg-accent aria-selected:text-accent-foreground',
         className
       )}
       ref={ref}
