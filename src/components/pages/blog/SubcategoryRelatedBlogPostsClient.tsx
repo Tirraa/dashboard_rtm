@@ -11,7 +11,7 @@ import BlogConfig from '@/config/blog';
 import { i18ns } from '##/config/i18n';
 import { useState } from 'react';
 
-import FiltersWidgetDesktop from './FiltersWidgetDesktop';
+import TagsFiltersWidget from './TagsFiltersWidget';
 
 interface SubcategoryRelatedBlogPostsClientProps {
   subcategory: BlogSubcategoryFromUnknownCategory;
@@ -48,14 +48,11 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       return <BlogPostPreview key={`${post._raw.flattenedPath}-paginated-blog-post`} language={language} post={post} />;
     });
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const showFilters = tags.length > 1;
-
   return (
     <section className="w-full">
       <h1 className="mb-2 ltr:text-left rtl:text-right">{title}</h1>
       {/* {ToDo} https://github.com/Tirraa/dashboard_rtm/issues/41 */}
-      {showFilters && <FiltersWidgetDesktop setSelectedTagsIds={setSelectedTagsIds} selectedTagsIds={selectedTagsIds} tags={tags} />}
+      <TagsFiltersWidget setSelectedTagsIds={setSelectedTagsIds} selectedTagsIds={selectedTagsIds} tags={tags} />
 
       <MaybePaginatedElements
         elementsPerPage={BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT}

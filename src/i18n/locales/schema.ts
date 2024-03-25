@@ -23,6 +23,7 @@ export const SHARED_VOCAB_SCHEMA = {
     draft: _,
     logo: _,
     page: _,
+    tags: _,
     toc: _
   },
 
@@ -82,6 +83,11 @@ export default {
       'hide-toc': _,
       'show-toc': _
     }
+  },
+
+  blogTagsFilters: {
+    'no-result-found': _,
+    'clear-filters': _
   },
 
   auth: {

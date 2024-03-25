@@ -28,7 +28,8 @@ const SHARED: SharedVocabType = {
     'sign-up': "s'inscrire",
     draft: 'ébauche',
     logo: 'logo',
-    page: 'page'
+    page: 'page',
+    tags: 'tags'
   }
 } as const;
 
@@ -120,6 +121,11 @@ export default {
       'show-toc': `Afficher la ${SHARED.vocab.toc}`,
       'hide-toc': `Masquer la ${SHARED.vocab.toc}`
     }
+  },
+
+  blogTagsFilters: {
+    'no-result-found': 'Rien trouvé !',
+    'clear-filters': 'Réinitialiser'
   },
 
   auth: {
