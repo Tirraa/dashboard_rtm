@@ -9,9 +9,13 @@ import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import { useCurrentLocale, useScopedI18n } from '@/i18n/client';
 import BlogConfig from '@/config/blog';
 import { i18ns } from '##/config/i18n';
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
-import TagsFiltersWidget from './TagsFiltersWidget';
+const SubcategoryRelatedBlogPostsClientToolbar = dynamic(() => import('@/components/pages/blog/SubcategoryRelatedBlogPostsClientToolbar'), {
+  loading: () => <div className="min-h-[72px]" />,
+  ssr: false
+});
 
 interface SubcategoryRelatedBlogPostsClientProps {
   subcategory: BlogSubcategoryFromUnknownCategory;
@@ -52,13 +56,12 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     <section className="w-full">
       <h1 className="mb-2 ltr:text-left rtl:text-right">{title}</h1>
       {/* {ToDo} https://github.com/Tirraa/dashboard_rtm/issues/41 */}
-      <TagsFiltersWidget setSelectedTagsIds={setSelectedTagsIds} selectedTagsIds={selectedTagsIds} tags={tags} />
+      <SubcategoryRelatedBlogPostsClientToolbar setSelectedTagsIds={setSelectedTagsIds} selectedTagsIds={selectedTagsIds} tags={tags} />
 
       <MaybePaginatedElements
         elementsPerPage={BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT}
         paginatedElementsBodyWrapperProps={{ className: 'mb-4 [&>article:not(:last-of-type)]:mb-6' }}
         paginatedElements={paginatedElements}
-        paginationButtonsPosition="top"
         className="min-w-full"
       />
     </section>

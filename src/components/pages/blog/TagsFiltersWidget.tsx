@@ -22,7 +22,7 @@ import { cn } from '@/lib/tailwind';
 
 const FILTERS_KEY = 'tags';
 
-interface TagsFiltersWidgetProps {
+export interface TagsFiltersWidgetProps {
   setSelectedTagsIds: (selectedTagsIds: number[]) => unknown;
   selectedTagsIds: number[];
   tags: BlogTag[];
@@ -46,8 +46,8 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({ setSelec
   const clearFilters = globalT(`${i18ns.blogTagsFilters}.clear-filters`);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const disabled = tags.length <= 1;
-  const classNameBase = 'my-4 flex h-8 items-center rounded-md px-2 py-4';
+  const disabled = tags.length < 1;
+  const classNameBase = 'flex h-8 items-center rounded-md px-2 py-4';
 
   useEffect(() => {
     function unsafeCtxHandler() {
@@ -163,14 +163,13 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({ setSelec
 
   if (disabled)
     return (
-      <div
+      <button
         className={cn(classNameBase, 'select-none text-inherit text-opacity-75 dark:text-muted-foreground dark:text-opacity-100')}
         aria-disabled="true"
-        role="button"
       >
         <PlusCircledIcon className="mr-2 h-5 w-5" />
         {title}
-      </div>
+      </button>
     );
 
   return (

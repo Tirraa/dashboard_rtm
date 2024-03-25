@@ -18,8 +18,6 @@ export const computePagesAmount = (total: number, perChunk: number) => Math.ceil
  */
 const MaybePaginatedElements: FunctionComponent<MaybePaginatedElementsProps> = ({
   paginatedElementsBodyWrapperProps,
-  paginationButtonsPosition,
-  paginationButtonsJustify,
   paginatedElements,
   elementsPerPage,
   className
@@ -33,8 +31,6 @@ const MaybePaginatedElements: FunctionComponent<MaybePaginatedElementsProps> = (
   ) : (
     <PaginatedElements
       paginatedElementsBodyWrapperProps={paginatedElementsBodyWrapperProps}
-      paginationButtonsPosition={paginationButtonsPosition}
-      paginationButtonsJustify={paginationButtonsJustify}
       paginatedElements={paginatedElements}
       elementsPerPage={elementsPerPage}
       pagesAmount={pagesAmount}

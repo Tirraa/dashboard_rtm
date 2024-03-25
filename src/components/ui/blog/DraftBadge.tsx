@@ -19,7 +19,7 @@ const DraftBadge: FunctionComponent<DraftBadgeProps> = ({ className: classNameVa
   return (
     <Badge
       className={cn(
-        'h-fit w-fit select-none border-[1px] border-[#e5e7eb] bg-transparent text-sm  font-bold text-black hover:bg-transparent dark:border-white dark:text-white',
+        'h-fit w-fit select-none border border-[#e5e7eb] bg-transparent text-sm  font-bold text-black hover:bg-transparent dark:border-white dark:text-white',
         className
       )}
     >
