@@ -28,8 +28,6 @@ export interface TagsFiltersWidgetProps {
   tags: BlogTag[];
 }
 
-// {ToDo} Update cmdk when this issue will be fixed https://github.com/shadcn-ui/ui/issues/3127
-
 const sortUnpackedIds = (unpacked: number[]) => unpacked.sort((a, b) => a - b);
 
 const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({ setSelectedTagsIds, selectedTagsIds, tags }) => {

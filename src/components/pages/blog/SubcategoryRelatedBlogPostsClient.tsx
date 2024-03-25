@@ -13,7 +13,7 @@ import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
 const SubcategoryRelatedBlogPostsClientToolbar = dynamic(() => import('@/components/pages/blog/SubcategoryRelatedBlogPostsClientToolbar'), {
-  loading: () => <div className="min-h-[72px]" />,
+  loading: () => <div className="my-4 min-h-[40px]" />,
   ssr: false
 });
 
