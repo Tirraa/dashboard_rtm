@@ -4,8 +4,8 @@ import type { BlogCategoriesAndSubcategoriesAssoc, BlogSubcategoryFromUnknownCat
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { FunctionComponent } from 'react';
 
-import MaybePaginatedElements from '@/components/ui/hoc/MaybePaginatedElements';
 import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
+import PaginatedElements from '@/components/ui/PaginatedElements';
 import { useCurrentLocale, useScopedI18n } from '@/i18n/client';
 import BlogConfig from '@/config/blog';
 import { i18ns } from '##/config/i18n';
@@ -57,6 +57,10 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   const elementsPerPage = BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT;
 
   const pagesAmount = computePagesAmount(paginatedElements.length, elementsPerPage);
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const paginationIsNotRequired = pagesAmount <= 1;
+
+  const paginated = <PaginatedElements paginatedElements={paginatedElements} elementsPerPage={elementsPerPage} pagesAmount={pagesAmount} />;
 
   return (
     <section className="w-full">
@@ -67,14 +71,9 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
         pagesAmount={pagesAmount}
         tags={tags}
       />
-
-      <MaybePaginatedElements
-        paginatedElementsBodyWrapperProps={{ className: 'mb-4 [&>article:not(:last-of-type)]:mb-6' }}
-        paginatedElements={paginatedElements}
-        elementsPerPage={elementsPerPage}
-        pagesAmount={pagesAmount}
-        className="min-w-full"
-      />
+      <div className="mb-4 flex min-w-full flex-col [&>article:not(:last-of-type)]:mb-6">
+        {(paginationIsNotRequired && paginatedElements) || paginated}
+      </div>
     </section>
   );
 };

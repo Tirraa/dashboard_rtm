@@ -1,16 +1,10 @@
 'use client';
 
 import type { FunctionComponent, ReactElement } from 'react';
-import type { WithClassname } from '@rtm/shared-types/Next';
 
 import { useSearchParams } from 'next/navigation';
-import { cn } from '@/lib/tailwind';
 
-import type { PaginatedElementsBodyWrapperProps } from './hoc/PaginatedElementsBodyWrapper';
-
-import PaginatedElementsBodyWrapper from './hoc/PaginatedElementsBodyWrapper';
-
-export interface PaginatedElementsProps extends PaginatedElementsBodyWrapperProps, Partial<WithClassname> {
+interface PaginatedElementsProps {
   paginatedElements: ReactElement[];
   elementsPerPage: number;
   pagesAmount: number;
@@ -26,13 +20,7 @@ function initializeCurrentPage(pageFromUrl: number, maxPage: number) {
   return pageFromUrl;
 }
 
-const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
-  paginatedElementsBodyWrapperProps,
-  paginatedElements,
-  elementsPerPage,
-  pagesAmount,
-  className
-}) => {
+const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({ paginatedElements, elementsPerPage, pagesAmount }) => {
   const searchParams = useSearchParams();
 
   const unsafePageFromUrl = searchParams.get('page');
@@ -43,13 +31,7 @@ const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({
   const endIndex = startIndex + elementsPerPage;
   const currentElements = paginatedElements.slice(startIndex, endIndex);
 
-  const currentElementsNode = (
-    <PaginatedElementsBodyWrapper paginatedElementsBodyWrapperProps={paginatedElementsBodyWrapperProps}>
-      {currentElements}
-    </PaginatedElementsBodyWrapper>
-  );
-
-  return <div className={cn('flex flex-col', className)}>{currentElementsNode}</div>;
+  return currentElements;
 };
 
 export default PaginatedElements;
