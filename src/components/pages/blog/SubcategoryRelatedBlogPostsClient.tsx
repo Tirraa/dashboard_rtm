@@ -27,11 +27,20 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   const narrowedCategoryAndSubcategoryAssoc = `${category}.${subcategory}` as BlogCategoriesAndSubcategoriesAssoc;
   const title = scopedT(`${narrowedCategoryAndSubcategoryAssoc}.title`);
 
-  const paginatedElements = postsCollection
+  const maybeFilteredPostsCollection =
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    selectedTagsIds.length === 0
+      ? postsCollection
+      : postsCollection.filter((post) => post.tagsIndexes.some((tagId) => selectedTagsIds.includes(tagId)));
+
+  const paginatedElements = maybeFilteredPostsCollection
     .sort((post1, post2) =>
       BlogConfig.DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE(new Date(post1.date), new Date(post2.date))
     )
-    .map((post) => <BlogPostPreview key={`${post._raw.flattenedPath}-paginated-blog-post`} language={language} post={post} />);
+    .map((post) => {
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      return <BlogPostPreview key={`${post._raw.flattenedPath}-paginated-blog-post`} language={language} post={post} />;
+    });
 
   const tags = Array.from(
     new Set<BlogTag>(postsCollection.reduce((accumulator, currentValue) => accumulator.concat(currentValue.tags), [] as BlogTag[]))
