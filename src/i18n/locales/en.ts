@@ -69,6 +69,27 @@ export default {
     'blog-testing-category': SHARED_TESTING_BLOG_CATEGORY_METADATAS
   },
 
+  vocab: {
+    ...SHARED.vocab,
+    'sr-only': {
+      'brand-logo': `${capitalize(SHARED.vocab.brand)}'s ${SHARED.vocab.logo}`,
+      goToTop: 'Go to the top of the page'
+    },
+
+    'footer-copy': `${SHARED.vocab.brand} · Made with ❤️`,
+    'no-blog-post': 'Nobody here but us chickens!',
+    'copy-to-clipboard': 'Copy to clipboard',
+    'invite-the-bot': 'Invite the bot',
+    '404': '404 - Page not found!',
+    'more-pages': 'More pages',
+    pagination: 'Pagination',
+    'see-more': 'See more!',
+    loading: 'Loading...',
+    'brand-short': 'RTM',
+    prev: 'Previous',
+    next: 'Next'
+  },
+
   navbar: {
     'sr-only': {
       'close-hamburger-menu': 'Close the navbar menu (website sections)',
@@ -82,25 +103,6 @@ export default {
     },
 
     assistance: 'Assistance'
-  },
-
-  vocab: {
-    ...SHARED.vocab,
-    'sr-only': {
-      'brand-logo': `${capitalize(SHARED.vocab.brand)}'s ${SHARED.vocab.logo}`,
-      goToTop: 'Go to the top of the page'
-    },
-
-    'footer-copy': `${SHARED.vocab.brand} · Made with ❤️`,
-    'no-blog-post': 'Nobody here but us chickens!',
-    'copy-to-clipboard': 'Copy to clipboard',
-    'invite-the-bot': 'Invite the bot',
-    '404': '404 - Page not found!',
-    'see-more': 'See more!',
-    loading: 'Loading...',
-    'brand-short': 'RTM',
-    prev: 'Previous',
-    next: 'Next'
   },
 
   dashboard: {

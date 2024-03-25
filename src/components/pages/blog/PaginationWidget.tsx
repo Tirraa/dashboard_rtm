@@ -4,8 +4,8 @@ import type { WithClassname } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
 import { PaginationPrevious, PaginationContent, PaginationItem, PaginationLink, PaginationNext, Pagination } from '@/components/ui/Pagination';
-import { createURLSearchParams } from 'packages/shared-lib/src/html';
 import { useSearchParams, usePathname } from 'next/navigation';
+import { createURLSearchParams } from '@rtm/shared-lib/html';
 import { useCallback } from 'react';
 import { cn } from '@/lib/tailwind';
 

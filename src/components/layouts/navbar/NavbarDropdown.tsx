@@ -50,8 +50,6 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities, triggerRef: RefO
   });
 };
 
-// {ToDo} Use Navigation Menu instead of this.
-// https://github.com/radix-ui/themes/discussions/139
 const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ embeddedEntities, path: href, i18nTitle }) => {
   const currentPathname = usePathname();
   const globalT = getClientSideI18n();
