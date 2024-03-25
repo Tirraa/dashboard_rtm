@@ -1,4 +1,5 @@
 import type { BlogSubcategoryPageProps, BlogPostType } from '@/types/Blog';
+import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { FunctionComponent } from 'react';
 
 import {
@@ -25,7 +26,11 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   else if (postsCollection.length === 0) return <BlogPostsNotFound />;
 
-  return <SubcategoryRelatedBlogPostsClient postsCollection={postsCollection} subcategory={subcategory} category={category} />;
+  const tags = Array.from(
+    new Set<BlogTag>(postsCollection.reduce((accumulator, currentValue) => accumulator.concat(currentValue.tags), [] as BlogTag[]))
+  );
+
+  return <SubcategoryRelatedBlogPostsClient postsCollection={postsCollection} subcategory={subcategory} category={category} tags={tags} />;
 };
 
 export default SubcategoryRelatedBlogPosts;

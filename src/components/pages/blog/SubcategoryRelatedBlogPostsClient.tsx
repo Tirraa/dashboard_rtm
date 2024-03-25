@@ -17,9 +17,15 @@ interface SubcategoryRelatedBlogPostsClientProps {
   subcategory: BlogSubcategoryFromUnknownCategory;
   postsCollection: BlogPostType[];
   category: BlogCategory;
+  tags: BlogTag[];
 }
 
-const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlogPostsClientProps> = ({ postsCollection, subcategory, category }) => {
+const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlogPostsClientProps> = ({
+  postsCollection,
+  subcategory,
+  category,
+  tags
+}) => {
   const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>([]);
 
   const language = useCurrentLocale();
@@ -41,10 +47,6 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       return <BlogPostPreview key={`${post._raw.flattenedPath}-paginated-blog-post`} language={language} post={post} />;
     });
-
-  const tags = Array.from(
-    new Set<BlogTag>(postsCollection.reduce((accumulator, currentValue) => accumulator.concat(currentValue.tags), [] as BlogTag[]))
-  );
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const showFilters = tags.length > 1;
