@@ -1,3 +1,5 @@
+'use client';
+
 import type { PaginatedElementsProps } from '@/components/ui/PaginatedElements';
 import type { FunctionComponent } from 'react';
 

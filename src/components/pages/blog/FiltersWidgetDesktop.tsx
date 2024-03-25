@@ -6,24 +6,25 @@ import type { FunctionComponent } from 'react';
 
 import { indexedBlogTagOptions, blogTagOptions } from '##/lib/builders/unifiedImport';
 import { ToggleGroupItem, ToggleGroup } from '@/components/ui/ToggleGroup';
-import { useCallback, useEffect, useState, useRef } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
 import { unpackIds, packIds } from '@rtm/shared-lib/misc';
+import { useCallback, useEffect, useRef } from 'react';
 import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
 
 const FILTERS_KEY = 'tags';
 
 interface FiltersWidgetDesktopProps {
+  setSelectedTagsIds: (selectedTagsIds: number[]) => unknown;
+  selectedTagsIds: number[];
   tags: BlogTag[];
 }
 
 const sortUnpackedIds = (unpacked: number[]) => unpacked.sort((a, b) => a - b);
 
-const FiltersWidgetDesktop: FunctionComponent<FiltersWidgetDesktopProps> = ({ tags }) => {
+const FiltersWidgetDesktop: FunctionComponent<FiltersWidgetDesktopProps> = ({ setSelectedTagsIds, selectedTagsIds, tags }) => {
   const scopedT = useScopedI18n(i18ns.blogTags);
-  const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
   const firstLoad = useRef<boolean>(true);
@@ -65,7 +66,7 @@ const FiltersWidgetDesktop: FunctionComponent<FiltersWidgetDesktopProps> = ({ ta
 
     if (firstLoad.current) unsafeCtxHandler();
     else maybeSafeCtxHandler();
-  }, [router, searchParams]);
+  }, [router, searchParams, setSelectedTagsIds]);
 
   useEffect(() => {
     firstLoad.current = false;

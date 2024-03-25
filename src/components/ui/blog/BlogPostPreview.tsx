@@ -1,3 +1,5 @@
+'use client';
+
 /* v8 ignore start */
 // Stryker disable all
 
@@ -5,7 +7,9 @@ import type { BlogPostProps } from '@/types/Blog';
 import type { FunctionComponent } from 'react';
 
 import { getBlogPostPathWithoutI18nPart, getSlicedBlogPostDescription } from '@/lib/blog/api';
+import { useScopedI18n } from '@/i18n/client';
 import BlogConfig from '@/config/blog';
+import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
@@ -18,7 +22,8 @@ interface BlogPostPreviewProps extends BlogPostProps {
   isNotOnBlogSubcategoryPage?: boolean;
 }
 
-const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotOnBlogSubcategoryPage, language, post }) => {
+const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = ({ isNotOnBlogSubcategoryPage, language, post }) => {
+  const scopedT = useScopedI18n(i18ns.blogTags);
   const descriptionSnippet = post.description ? getSlicedBlogPostDescription(post.description) : getSlicedBlogPostDescription(post.metadescription);
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const hasTags = post.tags.length > 0;
@@ -47,7 +52,7 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
           >
             <div className="break-word text-sm [&>*:last-child]:mb-0 [&>*]:mb-3">{descriptionSnippet}</div>
           </CardContent>
-          {hasTags && <CardFooter className="flex flex-wrap gap-2">{await tagsGenerator(post)}</CardFooter>}
+          {hasTags && <CardFooter className="flex flex-wrap gap-2">{tagsGenerator({ ...post, scopedT })}</CardFooter>}
         </Card>
       </Link>
     </article>
