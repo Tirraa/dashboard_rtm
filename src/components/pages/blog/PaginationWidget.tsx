@@ -72,7 +72,7 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
   const nextBtnPageId = Math.min(pagesAmount, pageFromUrl + 1);
   const nextBtn = (
     <PaginationNext
-      href={pathname + createURLSearchParams({ [PAGE_KEY]: nextBtnPageId === FIRST_PAGE_IDX ? null : nextBtnPageId }, searchParams)}
+      href={pathname + createURLSearchParams({ [PAGE_KEY]: nextBtnPageId }, searchParams)}
       className={cn({ 'pointer-events-none opacity-50': pageFromUrl >= pagesAmount })}
     />
   );
