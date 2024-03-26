@@ -7,10 +7,11 @@ import type { FunctionComponent } from 'react';
 import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import PaginatedElements from '@/components/ui/PaginatedElements';
 import { useCurrentLocale, useScopedI18n } from '@/i18n/client';
+import { SlidingList } from '@rtm/shared-lib/datastructs';
+import { useEffect, useState, useRef } from 'react';
 import BlogConfig from '@/config/blog';
 import { i18ns } from '##/config/i18n';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
 
 const SubcategoryRelatedBlogPostsClientToolbar = dynamic(() => import('@/components/pages/blog/SubcategoryRelatedBlogPostsClientToolbar'), {
   loading: () => <div className="my-4 min-h-[40px]" />,
@@ -33,6 +34,8 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   tags
 }) => {
   const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const pagesAmountHistory = useRef<SlidingList>(new SlidingList(2));
 
   const language = useCurrentLocale();
   const scopedT = useScopedI18n(i18ns.blogCategories);
@@ -58,6 +61,21 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   const elementsPerPage = BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT;
 
   const pagesAmount = computePagesAmount(paginatedElements.length, elementsPerPage);
+
+  useEffect(() => {
+    const historyLength = pagesAmountHistory.current.getPtr().length;
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    if (historyLength === 0) {
+      pagesAmountHistory.current.push(pagesAmount);
+      return;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    if (pagesAmount !== pagesAmountHistory.current.getPtr()[historyLength - 1]) {
+      console.log('Changed pages amount!');
+      pagesAmountHistory.current.push(pagesAmount);
+    }
+  }, [pagesAmount]);
+
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const paginationIsNotRequired = pagesAmount <= 1;
 
