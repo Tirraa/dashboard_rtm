@@ -16,22 +16,21 @@ interface PaginatedElementsProps {
 
 const FIRST_PAGE_IDX = 1;
 
-function getSanitizedCurrentPage(pageFromUrl: number, maxPage: number) {
-  if (isNaN(pageFromUrl)) return FIRST_PAGE_IDX;
-  if (pageFromUrl < FIRST_PAGE_IDX) return FIRST_PAGE_IDX;
-  if (pageFromUrl > maxPage) return maxPage;
-  return pageFromUrl;
+function getSanitizedCurrentPage(searchParams: URLSearchParams, maxPage: number, __PAGE_KEY: string = PAGE_KEY) {
+  const maybeUnsafePageFromUrl: MaybeNull<string> = searchParams.get(__PAGE_KEY);
+  const unsafePageFromUrl = maybeUnsafePageFromUrl === null ? FIRST_PAGE_IDX : Number(maybeUnsafePageFromUrl);
+
+  if (isNaN(unsafePageFromUrl)) return FIRST_PAGE_IDX;
+  if (unsafePageFromUrl < FIRST_PAGE_IDX) return FIRST_PAGE_IDX;
+  if (unsafePageFromUrl > maxPage) return maxPage;
+  return unsafePageFromUrl;
 }
 
 const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({ paginatedElements, elementsPerPage, pagesAmount }) => {
   const searchParams = useSearchParams();
 
   if (paginatedElements.length <= elementsPerPage) return paginatedElements;
-
-  const maybeUnsafePageFromUrl: MaybeNull<string> = searchParams.get(PAGE_KEY);
-  const unsafePageFromUrl = maybeUnsafePageFromUrl === null ? FIRST_PAGE_IDX : Number(maybeUnsafePageFromUrl);
-
-  const pageFromUrl = getSanitizedCurrentPage(unsafePageFromUrl, pagesAmount);
+  const pageFromUrl = getSanitizedCurrentPage(searchParams, pagesAmount);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const startIndex = (pageFromUrl - 1) * elementsPerPage;

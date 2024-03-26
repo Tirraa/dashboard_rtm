@@ -75,37 +75,51 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   const pagesAmountHistory = useRef<SlidingList>(new SlidingList(2));
 
   const handlePageNumberReconcilation = useCallback(() => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (pagesAmount === 1) {
+    function hardResetRouterAndSkip(): boolean {
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      if (pagesAmount !== 1) return false;
+
       const q = createURLSearchParams({ [PAGE_KEY]: null }, searchParams);
       router.replace(q, { scroll: false });
+      return true;
     }
 
-    const pagesAmountHistoryPtr = pagesAmountHistory.current.getPtr();
-    const historyLength = pagesAmountHistoryPtr.length;
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const historyLastIdx = historyLength - 1;
-    const historyFirstIdx = 0;
-    if (pagesAmountHistoryPtr[historyLastIdx] === pagesAmountHistoryPtr[historyFirstIdx]) return;
+    function noPageNumberChange(): boolean {
+      const pagesAmountHistoryPtr = pagesAmountHistory.current.getPtr();
+      const historyLength = pagesAmountHistoryPtr.length;
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const historyLastIdx = historyLength - 1;
+      const historyFirstIdx = 0;
+      if (pagesAmountHistoryPtr[historyLastIdx] === pagesAmountHistoryPtr[historyFirstIdx]) return true;
+      return false;
+    }
+
+    if (hardResetRouterAndSkip()) return;
+    if (noPageNumberChange()) return;
+    // {ToDo} Handle hell here
   }, [pagesAmount, router, searchParams]);
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (pagesAmount === -1) return;
     const pagesAmountHistoryPtr = pagesAmountHistory.current.getPtr();
     const historyLength = pagesAmountHistoryPtr.length;
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const historyLastIdx = historyLength - 1;
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (historyLength === 0) {
+
+    function initializePagesAmountHistoryAndSkip(): boolean {
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      if (historyLength !== 0) return false;
       pagesAmountHistory.current.push(pagesAmount);
-      return;
+      return true;
     }
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (pagesAmount !== pagesAmountHistoryPtr[historyLastIdx]) {
+
+    function maybeHandlePageNumberReconcilation() {
+      if (pagesAmount === pagesAmountHistoryPtr[historyLastIdx]) return;
       pagesAmountHistory.current.push(pagesAmount);
       handlePageNumberReconcilation();
     }
+
+    if (initializePagesAmountHistoryAndSkip()) return;
+    maybeHandlePageNumberReconcilation();
   }, [pagesAmount, handlePageNumberReconcilation]);
 
   const paginated = useMemo(
