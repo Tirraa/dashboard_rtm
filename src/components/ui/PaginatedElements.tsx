@@ -14,9 +14,10 @@ interface PaginatedElementsProps {
   pagesRange?: number;
 }
 
-const FIRST_PAGE_IDX = 1;
+export const FIRST_PAGE_IDX = 1;
+export const MIN_PAGES_AMOUNT = 1;
 
-function getSanitizedCurrentPage(searchParams: URLSearchParams, maxPage: number, pageKey: string = PAGE_KEY) {
+export function getSanitizedCurrentPage(searchParams: URLSearchParams, maxPage: number, pageKey: string = PAGE_KEY) {
   const maybeUnsafePageFromUrl: MaybeNull<string> = searchParams.get(pageKey);
   const unsafePageFromUrl = maybeUnsafePageFromUrl === null ? FIRST_PAGE_IDX : Number(maybeUnsafePageFromUrl);
 

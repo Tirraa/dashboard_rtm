@@ -5,12 +5,12 @@ import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { FunctionComponent } from 'react';
 
+import usePagination, { computePagesAmount } from '@/components/hooks/usePagination';
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
 import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import PaginatedElements from '@/components/ui/PaginatedElements';
 import { useCurrentLocale, useScopedI18n } from '@/i18n/client';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
-import usePagination from '@/components/hooks/usePagination';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { SlidingList } from '@rtm/shared-lib/datastructs';
 import BlogConfig from '@/config/blog';
@@ -28,11 +28,10 @@ const SubcategoryRelatedBlogPostsClientToolbar = dynamic(() => import('@/compone
 interface SubcategoryRelatedBlogPostsClientProps {
   subcategory: BlogSubcategoryFromUnknownCategory;
   postsCollection: BlogPostType[];
+  elementsPerPage: number;
   category: BlogCategory;
   tags: BlogTag[];
 }
-
-const elementsPerPage = BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT;
 
 function computePaginatedElements(selectedTagsIds: number[], postsCollection: BlogPostType[], language: LanguageFlag) {
   const maybeFilteredPostsCollection =
@@ -64,6 +63,7 @@ function computeSelectedTagsIdsInitialState(searchParams: URLSearchParams): numb
 
 const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlogPostsClientProps> = ({
   postsCollection,
+  elementsPerPage,
   subcategory,
   category,
   tags
@@ -82,6 +82,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     [language, postsCollection, selectedTagsIds]
   );
 
+  const maxPagesAmount = useMemo(() => computePagesAmount(postsCollection.length, elementsPerPage), [postsCollection, elementsPerPage]);
   const pagesAmount = usePagination(paginatedElements, elementsPerPage);
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const pagesAmountHistory = useRef<SlidingList>(new SlidingList(2));
@@ -106,10 +107,17 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       return false;
     }
 
+    function dontHandleFiltersClear() {
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      if (selectedTagsIds.length !== 0) return true;
+      return false;
+    }
+
     if (hardResetRouterAndSkip()) return;
     if (noPageNumberChange()) return;
+    if (dontHandleFiltersClear()) return;
     // {ToDo} Handle hell here
-  }, [pagesAmount, router, searchParams]);
+  }, [pagesAmount, router, searchParams, selectedTagsIds]);
 
   useEffect(() => {
     const pagesAmountHistoryPtr = pagesAmountHistory.current.getPtr();
@@ -136,7 +144,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 
   const paginated = useMemo(
     () => <PaginatedElements paginatedElements={paginatedElements} elementsPerPage={elementsPerPage} pagesAmount={pagesAmount} />,
-    [pagesAmount, paginatedElements]
+    [pagesAmount, paginatedElements, elementsPerPage]
   );
 
   const narrowedCategoryAndSubcategoryAssoc = `${category}.${subcategory}` as BlogCategoriesAndSubcategoriesAssoc;
@@ -148,6 +156,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       <SubcategoryRelatedBlogPostsClientToolbar
         setSelectedTagsIds={setSelectedTagsIds}
         selectedTagsIds={selectedTagsIds}
+        maxPagesAmount={maxPagesAmount}
         pagesAmount={pagesAmount}
         tags={tags}
       />

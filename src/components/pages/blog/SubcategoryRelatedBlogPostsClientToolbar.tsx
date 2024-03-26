@@ -13,11 +13,18 @@ interface SubcategoryRelatedBlogPostsClientToolbarProps extends TagsFiltersWidge
 const SubcategoryRelatedBlogPostsClientToolbar: FunctionComponent<SubcategoryRelatedBlogPostsClientToolbarProps> = ({
   setSelectedTagsIds,
   selectedTagsIds,
+  maxPagesAmount,
   pagesAmount,
   tags
 }) => (
   <div className="my-4 flex items-center justify-between">
-    <TagsFiltersWidget setSelectedTagsIds={setSelectedTagsIds} selectedTagsIds={selectedTagsIds} tags={tags} />
+    <TagsFiltersWidget
+      setSelectedTagsIds={setSelectedTagsIds}
+      selectedTagsIds={selectedTagsIds}
+      maxPagesAmount={maxPagesAmount}
+      pagesAmount={pagesAmount}
+      tags={tags}
+    />
     <PaginationWidget pagesAmount={pagesAmount} />
   </div>
 );

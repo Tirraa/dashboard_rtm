@@ -11,6 +11,7 @@ import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { notFound } from 'next/navigation';
+import BlogConfig from '@/config/blog';
 
 import SubcategoryRelatedBlogPostsClient from './SubcategoryRelatedBlogPostsClient';
 
@@ -30,7 +31,15 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
     new Set<BlogTag>(postsCollection.reduce((accumulator, currentValue) => accumulator.concat(currentValue.tags), [] as BlogTag[]))
   );
 
-  return <SubcategoryRelatedBlogPostsClient postsCollection={postsCollection} subcategory={subcategory} category={category} tags={tags} />;
+  return (
+    <SubcategoryRelatedBlogPostsClient
+      elementsPerPage={BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT}
+      postsCollection={postsCollection}
+      subcategory={subcategory}
+      category={category}
+      tags={tags}
+    />
+  );
 };
 
 export default SubcategoryRelatedBlogPosts;

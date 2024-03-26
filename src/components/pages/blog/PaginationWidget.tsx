@@ -4,13 +4,14 @@ import type { WithClassname } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
 import { PaginationPrevious, PaginationContent, PaginationItem, PaginationLink, PaginationNext, Pagination } from '@/components/ui/Pagination';
+import { MIN_PAGES_AMOUNT } from '@/components/ui/PaginatedElements';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
 import { useCallback } from 'react';
 import { cn } from '@/lib/tailwind';
 
 export interface PaginationWidgetProps extends Partial<WithClassname> {
-  pagesAmount: number;
+  pagesAmount?: number;
 }
 
 export const PAGE_KEY = 'page';
@@ -24,9 +25,11 @@ function initializeCurrentPage(pageFromUrl: number, maxPage: number) {
   return pageFromUrl;
 }
 
-const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmount, className }) => {
+const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmount: pagesAmountValue, className }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
+
+  const pagesAmount = pagesAmountValue ?? MIN_PAGES_AMOUNT;
 
   const unsafePageFromUrl = searchParams.get(PAGE_KEY);
   const pageFromUrl = initializeCurrentPage(Number(unsafePageFromUrl), pagesAmount);

@@ -5,6 +5,7 @@ import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { FunctionComponent } from 'react';
 
 import { CommandSeparator, CommandEmpty, CommandGroup, CommandInput, CommandList, CommandItem, Command } from '@/components/ui/Command';
+import { getSanitizedCurrentPage, MIN_PAGES_AMOUNT, FIRST_PAGE_IDX } from '@/components/ui/PaginatedElements';
 import { indexedBlogTagOptions, blogTagOptions } from '##/lib/builders/unifiedImport';
 import { PopoverTrigger, PopoverContent, Popover } from '@/components/ui/Popover';
 import { PlusCircledIcon, CheckIcon } from '@radix-ui/react-icons';
@@ -20,11 +21,15 @@ import { capitalize } from '@/lib/str';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 
+import { PAGE_KEY } from './PaginationWidget';
+
 const FILTERS_KEY = 'tags';
 
 export interface TagsFiltersWidgetProps {
   setSelectedTagsIds: (selectedTagsIds: number[]) => unknown;
   selectedTagsIds: number[];
+  maxPagesAmount?: number;
+  pagesAmount?: number;
   tags: BlogTag[];
 }
 
@@ -45,11 +50,25 @@ export function getUnpackedAndSanitizedFilters(searchParams: URLSearchParams, fi
   return unpackedAndSanitizedFilters;
 }
 
-const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({ setSelectedTagsIds, selectedTagsIds, tags }) => {
+const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
+  maxPagesAmount: maxPagesAmountValue,
+  pagesAmount: pagesAmountValue,
+  setSelectedTagsIds,
+  selectedTagsIds,
+  tags
+}) => {
   const globalT = getClientSideI18n();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isOpened, setIsOpened] = useState<boolean>(false);
+
+  const pagesAmount = pagesAmountValue ?? MIN_PAGES_AMOUNT;
+  const maxPagesAmount = maxPagesAmountValue ?? MIN_PAGES_AMOUNT;
+
+  const memorizedPageBeforeFiltering = useRef<number>(
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    selectedTagsIds.length !== 0 ? FIRST_PAGE_IDX : getSanitizedCurrentPage(searchParams, pagesAmount)
+  );
 
   const firstLoad = useRef<boolean>(true);
   const cachedSelectedTags = useRef<MaybeNull<number[]>>(null);
@@ -61,6 +80,15 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({ setSelec
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const disabled = tags.length < 1;
   const classNameBase = 'flex h-10 items-center rounded-md px-2 py-4';
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    if (selectedTagsIds.length !== 0) return;
+    const pageId: MaybeNull<number> = memorizedPageBeforeFiltering.current === FIRST_PAGE_IDX ? null : memorizedPageBeforeFiltering.current;
+    const q = createURLSearchParams({ [PAGE_KEY]: pageId }, searchParams);
+    router.replace(q, { scroll: false });
+    memorizedPageBeforeFiltering.current = getSanitizedCurrentPage(searchParams, maxPagesAmount);
+  }, [selectedTagsIds, searchParams, maxPagesAmount, router]);
 
   useEffect(() => {
     function unsafeCtxHandler() {
@@ -97,6 +125,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({ setSelec
 
   const updateRouterAndSetSelectedTags = useCallback(
     (selectedTagsIds: number[]) => {
+      // {ToDo} Try to handle the page resume on filters clear here to avoid the horrible flickering of the current PoC?
       const newSelectedTags = sortUnpackedIds(selectedTagsIds);
       const packedIds = packIds(newSelectedTags);
 
