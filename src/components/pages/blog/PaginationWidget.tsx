@@ -4,7 +4,7 @@ import type { WithClassname } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
 import { PaginationPrevious, PaginationContent, PaginationItem, PaginationLink, PaginationNext, Pagination } from '@/components/ui/Pagination';
-import { FIRST_PAGE_IDX } from '@/components/ui/PaginatedElements';
+import { getSanitizedCurrentPage, FIRST_PAGE_IDX } from '@/components/ui/PaginatedElements';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
 import { useCallback } from 'react';
@@ -16,21 +16,11 @@ export interface PaginationWidgetProps extends Partial<WithClassname> {
 
 export const PAGE_KEY = 'page';
 
-function initializeCurrentPage(pageFromUrl: number, maxPage: number) {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  if (isNaN(pageFromUrl)) return 1;
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  if (pageFromUrl < 1) return 1;
-  if (pageFromUrl > maxPage) return maxPage;
-  return pageFromUrl;
-}
-
 const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmount, className }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  const unsafePageFromUrl = searchParams.get(PAGE_KEY);
-  const pageFromUrl = initializeCurrentPage(Number(unsafePageFromUrl), pagesAmount);
+  const pageFromUrl = getSanitizedCurrentPage(searchParams, pagesAmount);
 
   const generatePaginationsItems = useCallback(() => {
     const items = [];
