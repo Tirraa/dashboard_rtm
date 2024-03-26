@@ -34,6 +34,8 @@ export interface TagsFiltersWidgetProps {
 
 const sortUnpackedIds = (unpacked: number[]) => unpacked.sort((a, b) => a - b);
 
+const MEMORIZED_PAGE_BEFORE_FILTERING_KILLSWITCH = -1;
+
 /**
  * @throws {RangeError}
  */
@@ -64,6 +66,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isOpened, setIsOpened] = useState<boolean>(false);
+  const isOpenedRef = useRef<boolean>(isOpened);
 
   const maxPagesAmount = maxPagesAmountValue ?? MIN_PAGES_AMOUNT;
 
@@ -112,10 +115,24 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   useEffect(() => {
     firstLoad.current = false;
   }, []);
+
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     if (selectedTagsIds.length !== 0) return;
     memorizedPageBeforeFiltering.current = getSanitizedCurrentPage(searchParams, maxPagesAmount);
+  }, [searchParams, selectedTagsIds, maxPagesAmount]);
+
+  useEffect(() => {
+    isOpenedRef.current = isOpened;
+  }, [isOpened]);
+
+  useEffect(() => {
+    function killswitchMemorizedPageBeforeFilteringOnPaginationWidgetClick() {
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      if (isOpenedRef.current || selectedTagsIds.length === 0) return;
+      memorizedPageBeforeFiltering.current = MEMORIZED_PAGE_BEFORE_FILTERING_KILLSWITCH;
+    }
+    killswitchMemorizedPageBeforeFilteringOnPaginationWidgetClick();
   }, [searchParams, selectedTagsIds, maxPagesAmount]);
 
   const updateRouterAndSetSelectedTags = useCallback(
@@ -136,7 +153,11 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
         return true;
       }
 
-      if (handlePageResumeOnClearFiltersAndSkip()) return;
+      if (memorizedPageBeforeFiltering.current !== MEMORIZED_PAGE_BEFORE_FILTERING_KILLSWITCH) {
+        if (handlePageResumeOnClearFiltersAndSkip()) return;
+      } else {
+        // {ToDo} Handle some of the hell of page reconciliation here if newSelectedTags is empty?
+      }
 
       const q = createURLSearchParams({ [FILTERS_KEY]: packedIds }, searchParams);
       router.push(q, { scroll: false });
