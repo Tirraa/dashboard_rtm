@@ -18,13 +18,7 @@ const SubcategoryRelatedBlogPostsClientToolbar: FunctionComponent<SubcategoryRel
   tags
 }) => (
   <div className="my-4 flex items-center justify-between">
-    <TagsFiltersWidget
-      setSelectedTagsIds={setSelectedTagsIds}
-      selectedTagsIds={selectedTagsIds}
-      maxPagesAmount={maxPagesAmount}
-      pagesAmount={pagesAmount}
-      tags={tags}
-    />
+    <TagsFiltersWidget setSelectedTagsIds={setSelectedTagsIds} selectedTagsIds={selectedTagsIds} maxPagesAmount={maxPagesAmount} tags={tags} />
     <PaginationWidget pagesAmount={pagesAmount} />
   </div>
 );

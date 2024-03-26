@@ -4,14 +4,14 @@ import type { WithClassname } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
 import { PaginationPrevious, PaginationContent, PaginationItem, PaginationLink, PaginationNext, Pagination } from '@/components/ui/Pagination';
-import { MIN_PAGES_AMOUNT } from '@/components/ui/PaginatedElements';
+import { FIRST_PAGE_IDX } from '@/components/ui/PaginatedElements';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
 import { useCallback } from 'react';
 import { cn } from '@/lib/tailwind';
 
 export interface PaginationWidgetProps extends Partial<WithClassname> {
-  pagesAmount?: number;
+  pagesAmount: number;
 }
 
 export const PAGE_KEY = 'page';
@@ -25,11 +25,9 @@ function initializeCurrentPage(pageFromUrl: number, maxPage: number) {
   return pageFromUrl;
 }
 
-const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmount: pagesAmountValue, className }) => {
+const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmount, className }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
-
-  const pagesAmount = pagesAmountValue ?? MIN_PAGES_AMOUNT;
 
   const unsafePageFromUrl = searchParams.get(PAGE_KEY);
   const pageFromUrl = initializeCurrentPage(Number(unsafePageFromUrl), pagesAmount);
@@ -45,7 +43,7 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
             className={cn('border-none font-bold', {
               'pointer-events-none bg-primary text-white hover:bg-primary hover:text-white': isActive
             })}
-            href={pathname + createURLSearchParams({ [PAGE_KEY]: i }, searchParams)}
+            href={pathname + createURLSearchParams({ [PAGE_KEY]: i === FIRST_PAGE_IDX ? null : i }, searchParams)}
             isActive={isActive}
           >
             {i}
@@ -60,19 +58,21 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (pagesAmount <= 1) return null;
 
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const prevBtnPageId = Math.max(1, pageFromUrl - 1);
   const previousBtn = (
     <PaginationPrevious
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      href={pathname + createURLSearchParams({ [PAGE_KEY]: Math.max(1, pageFromUrl - 1) }, searchParams)}
+      href={pathname + createURLSearchParams({ [PAGE_KEY]: prevBtnPageId === FIRST_PAGE_IDX ? null : prevBtnPageId }, searchParams)}
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       className={cn({ 'pointer-events-none opacity-50': pageFromUrl <= 1 })}
     />
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const nextBtnPageId = Math.min(pagesAmount, pageFromUrl + 1);
   const nextBtn = (
     <PaginationNext
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      href={pathname + createURLSearchParams({ [PAGE_KEY]: Math.min(pagesAmount, pageFromUrl + 1) }, searchParams)}
+      href={pathname + createURLSearchParams({ [PAGE_KEY]: nextBtnPageId === FIRST_PAGE_IDX ? null : nextBtnPageId }, searchParams)}
       className={cn({ 'pointer-events-none opacity-50': pageFromUrl >= pagesAmount })}
     />
   );

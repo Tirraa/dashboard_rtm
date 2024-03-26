@@ -5,10 +5,10 @@ import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { FunctionComponent } from 'react';
 
+import PaginatedElements, { MIN_PAGES_AMOUNT } from '@/components/ui/PaginatedElements';
 import usePagination, { computePagesAmount } from '@/components/hooks/usePagination';
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
 import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
-import PaginatedElements from '@/components/ui/PaginatedElements';
 import { useCurrentLocale, useScopedI18n } from '@/i18n/client';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -90,7 +90,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   const handlePageNumberReconcilation = useCallback(() => {
     function hardResetRouterAndSkip(): boolean {
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      if (pagesAmount !== 1) return false;
+      if (pagesAmount !== MIN_PAGES_AMOUNT) return false;
 
       const q = createURLSearchParams({ [PAGE_KEY]: null }, searchParams);
       router.replace(q, { scroll: false });

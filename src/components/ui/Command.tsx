@@ -65,7 +65,6 @@ const CommandEmpty = React.forwardRef<React.ElementRef<typeof CommandPrimitive.E
 
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName;
 
-// https://github.com/shadcn-ui/ui/issues/3127#issuecomment-2018376782
 const CommandGroup = React.forwardRef<React.ElementRef<typeof CommandPrimitive.Group>, React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group>>(
   ({ className, ...props }, ref) => (
     <CommandPrimitive.Group

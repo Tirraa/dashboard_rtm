@@ -29,7 +29,6 @@ export interface TagsFiltersWidgetProps {
   setSelectedTagsIds: (selectedTagsIds: number[]) => unknown;
   selectedTagsIds: number[];
   maxPagesAmount?: number;
-  pagesAmount?: number;
   tags: BlogTag[];
 }
 
@@ -52,7 +51,6 @@ export function getUnpackedAndSanitizedFilters(searchParams: URLSearchParams, fi
 
 const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   maxPagesAmount: maxPagesAmountValue,
-  pagesAmount: pagesAmountValue,
   setSelectedTagsIds,
   selectedTagsIds,
   tags
@@ -62,12 +60,11 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   const searchParams = useSearchParams();
   const [isOpened, setIsOpened] = useState<boolean>(false);
 
-  const pagesAmount = pagesAmountValue ?? MIN_PAGES_AMOUNT;
   const maxPagesAmount = maxPagesAmountValue ?? MIN_PAGES_AMOUNT;
 
   const memorizedPageBeforeFiltering = useRef<number>(
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    selectedTagsIds.length !== 0 ? FIRST_PAGE_IDX : getSanitizedCurrentPage(searchParams, pagesAmount)
+    selectedTagsIds.length !== 0 ? FIRST_PAGE_IDX : getSanitizedCurrentPage(searchParams, maxPagesAmount)
   );
 
   const firstLoad = useRef<boolean>(true);
@@ -80,15 +77,6 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const disabled = tags.length < 1;
   const classNameBase = 'flex h-10 items-center rounded-md px-2 py-4';
-
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (selectedTagsIds.length !== 0) return;
-    const pageId: MaybeNull<number> = memorizedPageBeforeFiltering.current === FIRST_PAGE_IDX ? null : memorizedPageBeforeFiltering.current;
-    const q = createURLSearchParams({ [PAGE_KEY]: pageId }, searchParams);
-    router.replace(q, { scroll: false });
-    memorizedPageBeforeFiltering.current = getSanitizedCurrentPage(searchParams, maxPagesAmount);
-  }, [selectedTagsIds, searchParams, maxPagesAmount, router]);
 
   useEffect(() => {
     function unsafeCtxHandler() {
@@ -122,19 +110,36 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   useEffect(() => {
     firstLoad.current = false;
   }, []);
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    if (selectedTagsIds.length !== 0) return;
+    memorizedPageBeforeFiltering.current = getSanitizedCurrentPage(searchParams, maxPagesAmount);
+  }, [searchParams, selectedTagsIds, maxPagesAmount]);
 
   const updateRouterAndSetSelectedTags = useCallback(
     (selectedTagsIds: number[]) => {
-      // {ToDo} Try to handle the page resume on filters clear here to avoid the horrible flickering of the current PoC?
       const newSelectedTags = sortUnpackedIds(selectedTagsIds);
       const packedIds = packIds(newSelectedTags);
 
       cachedSelectedTags.current = newSelectedTags;
 
+      function handlePageResumeOnClearFiltersAndSkip(): boolean {
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        if (newSelectedTags.length !== 0) return false;
+
+        const pageId: MaybeNull<number> = memorizedPageBeforeFiltering.current === FIRST_PAGE_IDX ? null : memorizedPageBeforeFiltering.current;
+        const q = createURLSearchParams({ [FILTERS_KEY]: null, [PAGE_KEY]: pageId });
+        router.push(q, { scroll: false });
+        memorizedPageBeforeFiltering.current = getSanitizedCurrentPage(searchParams, maxPagesAmount);
+        return true;
+      }
+
+      if (handlePageResumeOnClearFiltersAndSkip()) return;
+
       const q = createURLSearchParams({ [FILTERS_KEY]: packedIds }, searchParams);
       router.push(q, { scroll: false });
     },
-    [router, searchParams]
+    [router, searchParams, maxPagesAmount]
   );
 
   const generateCommandItems = useCallback(
