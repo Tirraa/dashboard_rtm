@@ -2,13 +2,15 @@
 
 import type { BlogCategoriesAndSubcategoriesAssoc, BlogSubcategoryFromUnknownCategory, BlogCategory, BlogPostType } from '@/types/Blog';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
+import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { FunctionComponent } from 'react';
 
 import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import PaginatedElements from '@/components/ui/PaginatedElements';
 import { useCurrentLocale, useScopedI18n } from '@/i18n/client';
+import usePagination from '@/components/hooks/usePagination';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { SlidingList } from '@rtm/shared-lib/datastructs';
-import { useEffect, useState, useRef } from 'react';
 import BlogConfig from '@/config/blog';
 import { i18ns } from '##/config/i18n';
 import dynamic from 'next/dynamic';
@@ -25,24 +27,9 @@ interface SubcategoryRelatedBlogPostsClientProps {
   tags: BlogTag[];
 }
 
-const computePagesAmount = (total: number, perChunk: number) => Math.ceil(total / perChunk);
+const elementsPerPage = BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT;
 
-const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlogPostsClientProps> = ({
-  postsCollection,
-  subcategory,
-  category,
-  tags
-}) => {
-  const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>([]);
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const pagesAmountHistory = useRef<SlidingList>(new SlidingList(2));
-
-  const language = useCurrentLocale();
-  const scopedT = useScopedI18n(i18ns.blogCategories);
-
-  const narrowedCategoryAndSubcategoryAssoc = `${category}.${subcategory}` as BlogCategoriesAndSubcategoriesAssoc;
-  const title = scopedT(`${narrowedCategoryAndSubcategoryAssoc}.title`);
-
+function computePaginatedElements(selectedTagsIds: number[], postsCollection: BlogPostType[], language: LanguageFlag) {
   const maybeFilteredPostsCollection =
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     selectedTagsIds.length === 0
@@ -58,28 +45,55 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       return <BlogPostPreview key={`${post._raw.flattenedPath}-paginated-blog-post`} language={language} post={post} />;
     });
 
-  const elementsPerPage = BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT;
+  return paginatedElements;
+}
 
-  const pagesAmount = computePagesAmount(paginatedElements.length, elementsPerPage);
+const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlogPostsClientProps> = ({
+  postsCollection,
+  subcategory,
+  category,
+  tags
+}) => {
+  const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>([]);
+
+  const language = useCurrentLocale();
+  const scopedT = useScopedI18n(i18ns.blogCategories);
+
+  const paginatedElements = useMemo(
+    () => computePaginatedElements(selectedTagsIds, postsCollection, language),
+    [language, postsCollection, selectedTagsIds]
+  );
+
+  const pagesAmount = usePagination(paginatedElements, elementsPerPage);
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const pagesAmountHistory = useRef<SlidingList>(new SlidingList(2));
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    if (pagesAmount === -1) return;
     const historyLength = pagesAmountHistory.current.getPtr().length;
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const historyLastIdx = historyLength - 1;
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     if (historyLength === 0) {
       pagesAmountHistory.current.push(pagesAmount);
       return;
     }
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (pagesAmount !== pagesAmountHistory.current.getPtr()[historyLength - 1]) {
+    if (pagesAmount !== pagesAmountHistory.current.getPtr()[historyLastIdx]) {
+      // {ToDo} Remove this debug console.log
       console.log('Changed pages amount!');
       pagesAmountHistory.current.push(pagesAmount);
     }
   }, [pagesAmount]);
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const paginationIsNotRequired = pagesAmount <= 1;
+  const paginated = useMemo(
+    () => <PaginatedElements paginatedElements={paginatedElements} elementsPerPage={elementsPerPage} pagesAmount={pagesAmount} />,
+    [pagesAmount, paginatedElements]
+  );
 
-  const paginated = <PaginatedElements paginatedElements={paginatedElements} elementsPerPage={elementsPerPage} pagesAmount={pagesAmount} />;
+  const narrowedCategoryAndSubcategoryAssoc = `${category}.${subcategory}` as BlogCategoriesAndSubcategoriesAssoc;
+  const title = scopedT(`${narrowedCategoryAndSubcategoryAssoc}.title`);
 
   return (
     <section className="w-full">
@@ -90,9 +104,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
         pagesAmount={pagesAmount}
         tags={tags}
       />
-      <div className="mb-4 flex min-w-full flex-col [&>article:not(:last-of-type)]:mb-6">
-        {(paginationIsNotRequired && paginatedElements) || paginated}
-      </div>
+      <div className="mb-4 flex min-w-full flex-col [&>article:not(:last-of-type)]:mb-6">{paginated}</div>
     </section>
   );
 };

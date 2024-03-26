@@ -7,8 +7,8 @@ import type { FunctionComponent } from 'react';
 import { CommandSeparator, CommandEmpty, CommandGroup, CommandInput, CommandList, CommandItem, Command } from '@/components/ui/Command';
 import { indexedBlogTagOptions, blogTagOptions } from '##/lib/builders/unifiedImport';
 import { PopoverTrigger, PopoverContent, Popover } from '@/components/ui/Popover';
-import { useCallback, useEffect, Fragment, useState, useRef } from 'react';
 import { PlusCircledIcon, CheckIcon } from '@radix-ui/react-icons';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
@@ -191,7 +191,6 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({ setSelec
           <CommandList>
             <CommandEmpty>{noResultFound}</CommandEmpty>
             <CommandGroup>{generateCommandItems()}</CommandGroup>
-
             {/* eslint-disable-next-line @typescript-eslint/no-magic-numbers */}
             {selectedTagsIds.length > 0 && clearFiltersBtn}
           </CommandList>

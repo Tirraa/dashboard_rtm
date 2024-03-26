@@ -1,5 +1,6 @@
 'use client';
 
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { FunctionComponent, ReactElement } from 'react';
 
 import { useSearchParams } from 'next/navigation';
@@ -13,11 +14,11 @@ interface PaginatedElementsProps {
   pagesRange?: number;
 }
 
-function initializeCurrentPage(pageFromUrl: number, maxPage: number) {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  if (isNaN(pageFromUrl)) return 1;
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  if (pageFromUrl < 1) return 1;
+const FIRST_PAGE_IDX = 1;
+
+function getSanitizedCurrentPage(pageFromUrl: number, maxPage: number) {
+  if (isNaN(pageFromUrl)) return FIRST_PAGE_IDX;
+  if (pageFromUrl < FIRST_PAGE_IDX) return FIRST_PAGE_IDX;
   if (pageFromUrl > maxPage) return maxPage;
   return pageFromUrl;
 }
@@ -25,8 +26,12 @@ function initializeCurrentPage(pageFromUrl: number, maxPage: number) {
 const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({ paginatedElements, elementsPerPage, pagesAmount }) => {
   const searchParams = useSearchParams();
 
-  const unsafePageFromUrl = searchParams.get(PAGE_KEY);
-  const pageFromUrl = initializeCurrentPage(Number(unsafePageFromUrl), pagesAmount);
+  if (paginatedElements.length <= elementsPerPage) return paginatedElements;
+
+  const maybeUnsafePageFromUrl: MaybeNull<string> = searchParams.get(PAGE_KEY);
+  const unsafePageFromUrl = maybeUnsafePageFromUrl === null ? FIRST_PAGE_IDX : Number(maybeUnsafePageFromUrl);
+
+  const pageFromUrl = getSanitizedCurrentPage(unsafePageFromUrl, pagesAmount);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const startIndex = (pageFromUrl - 1) * elementsPerPage;
