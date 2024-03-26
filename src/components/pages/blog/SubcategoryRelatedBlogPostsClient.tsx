@@ -17,7 +17,7 @@ import BlogConfig from '@/config/blog';
 import { i18ns } from '##/config/i18n';
 import dynamic from 'next/dynamic';
 
-import { getUnpackedAndCleanedFilters } from './TagsFiltersWidget';
+import { getUnpackedAndSanitizedFilters } from './TagsFiltersWidget';
 import { PAGE_KEY } from './PaginationWidget';
 
 const SubcategoryRelatedBlogPostsClientToolbar = dynamic(() => import('@/components/pages/blog/SubcategoryRelatedBlogPostsClientToolbar'), {
@@ -55,8 +55,8 @@ function computePaginatedElements(selectedTagsIds: number[], postsCollection: Bl
 
 function computeSelectedTagsIdsInitialState(searchParams: URLSearchParams): number[] {
   try {
-    const unpackedAndCleanedFilters = getUnpackedAndCleanedFilters(searchParams);
-    return unpackedAndCleanedFilters;
+    const unpackedAndSanitizedFilters = getUnpackedAndSanitizedFilters(searchParams);
+    return unpackedAndSanitizedFilters;
   } catch {
     return [];
   }
