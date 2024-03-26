@@ -30,6 +30,21 @@ export interface TagsFiltersWidgetProps {
 
 const sortUnpackedIds = (unpacked: number[]) => unpacked.sort((a, b) => a - b);
 
+/**
+ * @throws {RangeError}
+ */
+export function getUnpackedAndCleanedFilters(searchParams: URLSearchParams, filtersKey: string = FILTERS_KEY) {
+  const packedIds: MaybeNull<string> = searchParams.get(filtersKey);
+  if (packedIds === null) return [];
+
+  const unpackedAndCleanedFilters = sortUnpackedIds(
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    Array.from(new Set<number>(unpackIds(packedIds).filter((id) => 0 <= id && id < blogTagOptions.length)))
+  );
+
+  return unpackedAndCleanedFilters;
+}
+
 const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({ setSelectedTagsIds, selectedTagsIds, tags }) => {
   const globalT = getClientSideI18n();
   const router = useRouter();
@@ -50,16 +65,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({ setSelec
   useEffect(() => {
     function unsafeCtxHandler() {
       try {
-        const packedIds = searchParams.get(FILTERS_KEY);
-        if (!packedIds) {
-          setSelectedTagsIds([]);
-          return;
-        }
-
-        const unpackedAndCleanedFilters = sortUnpackedIds(
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-          Array.from(new Set<number>(unpackIds(packedIds).filter((id) => 0 <= id && id < blogTagOptions.length)))
-        );
+        const unpackedAndCleanedFilters = getUnpackedAndCleanedFilters(searchParams);
         setSelectedTagsIds(unpackedAndCleanedFilters);
 
         const sanitizedFilters = packIds(unpackedAndCleanedFilters);

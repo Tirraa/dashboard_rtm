@@ -6,10 +6,10 @@ import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { FunctionComponent } from 'react';
 
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
-import { createURLSearchParams } from 'packages/shared-lib/src/html';
 import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import PaginatedElements from '@/components/ui/PaginatedElements';
 import { useCurrentLocale, useScopedI18n } from '@/i18n/client';
+import { createURLSearchParams } from '@rtm/shared-lib/html';
 import usePagination from '@/components/hooks/usePagination';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { SlidingList } from '@rtm/shared-lib/datastructs';
@@ -17,6 +17,7 @@ import BlogConfig from '@/config/blog';
 import { i18ns } from '##/config/i18n';
 import dynamic from 'next/dynamic';
 
+import { getUnpackedAndCleanedFilters } from './TagsFiltersWidget';
 import { PAGE_KEY } from './PaginationWidget';
 
 const SubcategoryRelatedBlogPostsClientToolbar = dynamic(() => import('@/components/pages/blog/SubcategoryRelatedBlogPostsClientToolbar'), {
@@ -52,15 +53,26 @@ function computePaginatedElements(selectedTagsIds: number[], postsCollection: Bl
   return paginatedElements;
 }
 
+function computeSelectedTagsIdsInitialState(searchParams: URLSearchParams): number[] {
+  try {
+    const unpackedAndCleanedFilters = getUnpackedAndCleanedFilters(searchParams);
+    return unpackedAndCleanedFilters;
+  } catch {
+    return [];
+  }
+}
+
 const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlogPostsClientProps> = ({
   postsCollection,
   subcategory,
   category,
   tags
 }) => {
-  const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const computedSelectedTagsIdsInitialState = useMemo(() => computeSelectedTagsIdsInitialState(searchParams), []);
+  const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>(computedSelectedTagsIdsInitialState);
 
   const language = useCurrentLocale();
   const scopedT = useScopedI18n(i18ns.blogCategories);

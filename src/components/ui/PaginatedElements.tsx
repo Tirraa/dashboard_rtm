@@ -16,8 +16,8 @@ interface PaginatedElementsProps {
 
 const FIRST_PAGE_IDX = 1;
 
-function getSanitizedCurrentPage(searchParams: URLSearchParams, maxPage: number, __PAGE_KEY: string = PAGE_KEY) {
-  const maybeUnsafePageFromUrl: MaybeNull<string> = searchParams.get(__PAGE_KEY);
+function getSanitizedCurrentPage(searchParams: URLSearchParams, maxPage: number, pageKey: string = PAGE_KEY) {
+  const maybeUnsafePageFromUrl: MaybeNull<string> = searchParams.get(pageKey);
   const unsafePageFromUrl = maybeUnsafePageFromUrl === null ? FIRST_PAGE_IDX : Number(maybeUnsafePageFromUrl);
 
   if (isNaN(unsafePageFromUrl)) return FIRST_PAGE_IDX;
