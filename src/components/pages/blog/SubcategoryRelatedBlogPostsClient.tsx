@@ -36,6 +36,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 
   const language = useCurrentLocale();
   const scopedT = useScopedI18n(i18ns.blogCategories);
+
   const narrowedCategoryAndSubcategoryAssoc = `${category}.${subcategory}` as BlogCategoriesAndSubcategoriesAssoc;
   const title = scopedT(`${narrowedCategoryAndSubcategoryAssoc}.title`);
 

@@ -13,7 +13,7 @@ export interface PaginationWidgetProps extends Partial<WithClassname> {
   pagesAmount: number;
 }
 
-const PAGE_KEY = 'page';
+export const PAGE_KEY = 'page';
 
 function initializeCurrentPage(pageFromUrl: number, maxPage: number) {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
