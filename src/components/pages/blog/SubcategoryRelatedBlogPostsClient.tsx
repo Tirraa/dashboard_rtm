@@ -5,15 +5,19 @@ import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { FunctionComponent } from 'react';
 
+import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
+import { createURLSearchParams } from 'packages/shared-lib/src/html';
 import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import PaginatedElements from '@/components/ui/PaginatedElements';
 import { useCurrentLocale, useScopedI18n } from '@/i18n/client';
 import usePagination from '@/components/hooks/usePagination';
-import { useEffect, useState, useMemo, useRef } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { SlidingList } from '@rtm/shared-lib/datastructs';
 import BlogConfig from '@/config/blog';
 import { i18ns } from '##/config/i18n';
 import dynamic from 'next/dynamic';
+
+import { PAGE_KEY } from './PaginationWidget';
 
 const SubcategoryRelatedBlogPostsClientToolbar = dynamic(() => import('@/components/pages/blog/SubcategoryRelatedBlogPostsClientToolbar'), {
   loading: () => <div className="my-4 min-h-[40px]" />,
@@ -55,6 +59,8 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   tags
 }) => {
   const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>([]);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const language = useCurrentLocale();
   const scopedT = useScopedI18n(i18ns.blogCategories);
@@ -68,10 +74,26 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const pagesAmountHistory = useRef<SlidingList>(new SlidingList(2));
 
+  const handlePageNumberReconcilation = useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    if (pagesAmount === 1) {
+      const q = createURLSearchParams({ [PAGE_KEY]: null }, searchParams);
+      router.replace(q, { scroll: false });
+    }
+
+    const pagesAmountHistoryPtr = pagesAmountHistory.current.getPtr();
+    const historyLength = pagesAmountHistoryPtr.length;
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const historyLastIdx = historyLength - 1;
+    const historyFirstIdx = 0;
+    if (pagesAmountHistoryPtr[historyLastIdx] === pagesAmountHistoryPtr[historyFirstIdx]) return;
+  }, [pagesAmount, router, searchParams]);
+
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     if (pagesAmount === -1) return;
-    const historyLength = pagesAmountHistory.current.getPtr().length;
+    const pagesAmountHistoryPtr = pagesAmountHistory.current.getPtr();
+    const historyLength = pagesAmountHistoryPtr.length;
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const historyLastIdx = historyLength - 1;
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -80,12 +102,11 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       return;
     }
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (pagesAmount !== pagesAmountHistory.current.getPtr()[historyLastIdx]) {
-      // {ToDo} Remove this debug console.log
-      console.log('Changed pages amount!');
+    if (pagesAmount !== pagesAmountHistoryPtr[historyLastIdx]) {
       pagesAmountHistory.current.push(pagesAmount);
+      handlePageNumberReconcilation();
     }
-  }, [pagesAmount]);
+  }, [pagesAmount, handlePageNumberReconcilation]);
 
   const paginated = useMemo(
     () => <PaginatedElements paginatedElements={paginatedElements} elementsPerPage={elementsPerPage} pagesAmount={pagesAmount} />,
