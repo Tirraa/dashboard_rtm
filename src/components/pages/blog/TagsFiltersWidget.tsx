@@ -49,6 +49,11 @@ export function getUnpackedAndSanitizedFilters(searchParams: URLSearchParams, fi
   return unpackedAndSanitizedFilters;
 }
 
+function initializeMemorizedPageBeforeFiltering(searchParams: URLSearchParams, selectedTagsIds: number[], maxPagesAmount: number) {
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  return selectedTagsIds.length !== 0 ? FIRST_PAGE_IDX : getSanitizedCurrentPage(searchParams, maxPagesAmount);
+}
+
 const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   maxPagesAmount: maxPagesAmountValue,
   setSelectedTagsIds,
@@ -62,10 +67,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
 
   const maxPagesAmount = maxPagesAmountValue ?? MIN_PAGES_AMOUNT;
 
-  const memorizedPageBeforeFiltering = useRef<number>(
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    selectedTagsIds.length !== 0 ? FIRST_PAGE_IDX : getSanitizedCurrentPage(searchParams, maxPagesAmount)
-  );
+  const memorizedPageBeforeFiltering = useRef<number>(initializeMemorizedPageBeforeFiltering(searchParams, selectedTagsIds, maxPagesAmount));
 
   const firstLoad = useRef<boolean>(true);
   const cachedSelectedTags = useRef<MaybeNull<number[]>>(null);
