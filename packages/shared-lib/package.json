@@ -6,10 +6,12 @@
   "version": "1.0.0",
   "description": "",
   "exports": {
+    "./datastructs": "./src/datastructs.ts",
     "./html": "./src/html.ts",
     "./misc": "./src/misc.ts",
     "./react": "./src/react.ts",
     "./str": "./src/str.ts",
+    "./portable/datastructs/SlidingList": "./src/portable/datastructs/SlidingList.ts",
     "./portable/html/createURLSearchParams": "./src/portable/html/createURLSearchParams.ts",
     "./portable/html/getDirection": "./src/portable/html/getDirection.ts",
     "./portable/html/preserveKeyboardNavigation": "./src/portable/html/preserveKeyboardNavigation.ts",
@@ -28,6 +30,9 @@
   },
   "typesVersions": {
     "*": {
+      "datastructs": [
+        "./src/datastructs.ts"
+      ],
       "html": [
         "./src/html.ts"
       ],
@@ -42,6 +47,9 @@
       ],
       "international-types": [
         "./src/international-types.ts"
+      ],
+      "portable/datastructs/SlidingList": [
+        "./src/portable/datastructs/SlidingList.ts"
       ],
       "portable/html/createURLSearchParams": [
         "./src/portable/html/createURLSearchParams.ts"
