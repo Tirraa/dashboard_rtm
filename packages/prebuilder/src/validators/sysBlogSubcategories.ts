@@ -7,6 +7,7 @@ import formatMessage from '../config/formatMessage';
 
 // https://github.com/vitest-dev/vitest/discussions/2484
 const fs = require('fs/promises');
+const path = require('path');
 
 export default async function sysBlogSubcategoriesValidator(
   postsFolder: Path,
@@ -20,7 +21,7 @@ export default async function sysBlogSubcategoriesValidator(
   for (const maybeCategory of categoriesCollection) {
     if (!maybeCategory.isDirectory()) continue;
     const category = maybeCategory.name;
-    const maybeSubcategories = await fs.readdir(maybeCategory.path, { withFileTypes: true });
+    const maybeSubcategories = await fs.readdir(path.join(maybeCategory.path, maybeCategory.name), { withFileTypes: true });
 
     for (const maybeSubcategory of maybeSubcategories) {
       if (!maybeSubcategory.isDirectory()) continue;

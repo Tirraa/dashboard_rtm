@@ -31,7 +31,7 @@ async function buildLpMetadatasFromLpFolder(lpFolder: string): Promise<LpMetadat
       if (maybePost.isDirectory()) {
         const maybeLanguage = maybePost;
 
-        const lps = await fs.readdir(maybeLanguage.path, { withFileTypes: true });
+        const lps = await fs.readdir(path.join(maybeLanguage.path, maybeLanguage.name), { withFileTypes: true });
         for (const lp of lps) {
           const filename = lp.name;
           const slug = getSlug(filename);
