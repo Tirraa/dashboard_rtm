@@ -5,25 +5,23 @@ import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { FunctionComponent } from 'react';
 
 import { CommandSeparator, CommandEmpty, CommandGroup, CommandInput, CommandList, CommandItem, Command } from '@/components/ui/Command';
-import { getSanitizedCurrentPage, MIN_PAGES_AMOUNT, FIRST_PAGE_IDX } from '@/components/ui/PaginatedElements';
-import { indexedBlogTagOptions, blogTagOptions } from '##/lib/builders/unifiedImport';
 import { PopoverTrigger, PopoverContent, Popover } from '@/components/ui/Popover';
+import { indexedBlogTagOptions } from '##/lib/builders/unifiedImport';
 import { PlusCircledIcon, CheckIcon } from '@radix-ui/react-icons';
 import { useCallback, useEffect, useState, useRef } from 'react';
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
-import { unpackIds, packIds } from '@rtm/shared-lib/misc';
 import { Separator } from '@/components/ui/Separator';
 import { getClientSideI18n } from '@/i18n/client';
+import { packIds } from '@rtm/shared-lib/misc';
 import { Badge } from '@/components/ui/Badge';
 import { capitalize } from '@/lib/str';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 
-import { PAGE_KEY } from './PaginationWidget';
-
-const FILTERS_KEY = 'tags';
+import { getUnpackedAndSanitizedFilters, getSanitizedCurrentPage, sortUnpackedIds } from './helpers/functions';
+import { MIN_PAGES_AMOUNT, FIRST_PAGE_IDX, FILTERS_KEY, PAGE_KEY } from './helpers/constants';
 
 export interface TagsFiltersWidgetProps {
   setSelectedTagsIds: (selectedTagsIds: number[]) => unknown;
@@ -32,24 +30,7 @@ export interface TagsFiltersWidgetProps {
   tags: BlogTag[];
 }
 
-const sortUnpackedIds = (unpacked: number[]) => unpacked.sort((a, b) => a - b);
-
 const MEMORIZED_PAGE_BEFORE_FILTERING_KILLSWITCH = -1;
-
-/**
- * @throws {RangeError}
- */
-export function getUnpackedAndSanitizedFilters(searchParams: URLSearchParams, filtersKey: string = FILTERS_KEY) {
-  const packedIds: MaybeNull<string> = searchParams.get(filtersKey);
-  if (packedIds === null) return [];
-
-  const unpackedAndSanitizedFilters = sortUnpackedIds(
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    Array.from(new Set<number>(unpackIds(packedIds).filter((id) => 0 <= id && id < blogTagOptions.length)))
-  );
-
-  return unpackedAndSanitizedFilters;
-}
 
 function initializeMemorizedPageBeforeFiltering(searchParams: URLSearchParams, selectedTagsIds: number[], maxPagesAmount: number) {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers

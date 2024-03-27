@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const computePagesAmount = (total: number, perChunk: number) => Math.ceil(total / perChunk);
+import { computePagesAmount } from './helpers/usePagination/functions';
 
 const usePagination = <T>(items: T[], itemsPerPage: number): number => {
   const [pagesAmount, setPagesAmount] = useState<number>(computePagesAmount(items.length, itemsPerPage));

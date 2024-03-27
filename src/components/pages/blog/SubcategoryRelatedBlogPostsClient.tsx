@@ -1,24 +1,28 @@
 'use client';
 
-import type { BlogCategoriesAndSubcategoriesAssoc, BlogSubcategoryFromUnknownCategory, BlogCategory, BlogPostType } from '@/types/Blog';
+import type {
+  BlogPostPreviewComponentWithMetadatas,
+  BlogCategoriesAndSubcategoriesAssoc,
+  BlogSubcategoryFromUnknownCategory,
+  BlogCategory
+} from '@/types/Blog';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { FunctionComponent } from 'react';
 
-import PaginatedElements, { MIN_PAGES_AMOUNT } from '@/components/ui/PaginatedElements';
-import usePagination, { computePagesAmount } from '@/components/hooks/usePagination';
+import { computePagesAmount } from '@/components/hooks/helpers/usePagination/functions';
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
-import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
-import { useCurrentLocale, useScopedI18n } from '@/i18n/client';
+import PaginatedElements from '@/components/ui/PaginatedElements';
+import usePagination from '@/components/hooks/usePagination';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { SlidingList } from '@rtm/shared-lib/datastructs';
+import { useScopedI18n } from '@/i18n/client';
 import BlogConfig from '@/config/blog';
 import { i18ns } from '##/config/i18n';
 import dynamic from 'next/dynamic';
 
-import { getUnpackedAndSanitizedFilters } from './TagsFiltersWidget';
-import { PAGE_KEY } from './PaginationWidget';
+import { getUnpackedAndSanitizedFilters } from './helpers/functions';
+import { MIN_PAGES_AMOUNT, PAGE_KEY } from './helpers/constants';
 
 const SubcategoryRelatedBlogPostsClientToolbar = dynamic(() => import('@/components/pages/blog/SubcategoryRelatedBlogPostsClientToolbar'), {
   loading: () => <div className="my-4 min-h-[40px]" />,
@@ -26,14 +30,14 @@ const SubcategoryRelatedBlogPostsClientToolbar = dynamic(() => import('@/compone
 });
 
 interface SubcategoryRelatedBlogPostsClientProps {
+  postsCollection: BlogPostPreviewComponentWithMetadatas[];
   subcategory: BlogSubcategoryFromUnknownCategory;
-  postsCollection: BlogPostType[];
   elementsPerPage: number;
   category: BlogCategory;
   tags: BlogTag[];
 }
 
-function computePaginatedElements(selectedTagsIds: number[], postsCollection: BlogPostType[], language: LanguageFlag) {
+function computePaginatedElements(selectedTagsIds: number[], postsCollection: BlogPostPreviewComponentWithMetadatas[]) {
   const maybeFilteredPostsCollection =
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     selectedTagsIds.length === 0
@@ -44,10 +48,7 @@ function computePaginatedElements(selectedTagsIds: number[], postsCollection: Bl
     .sort((post1, post2) =>
       BlogConfig.DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE(new Date(post1.date), new Date(post2.date))
     )
-    .map((post) => {
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      return <BlogPostPreview key={`${post._raw.flattenedPath}-paginated-blog-post`} language={language} post={post} />;
-    });
+    .map((post) => post.blogPostPreviewComp);
 
   return paginatedElements;
 }
@@ -74,13 +75,9 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   const computedSelectedTagsIdsInitialState = useMemo(() => computeSelectedTagsIdsInitialState(searchParams), []);
   const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>(computedSelectedTagsIdsInitialState);
 
-  const language = useCurrentLocale();
   const scopedT = useScopedI18n(i18ns.blogCategories);
 
-  const paginatedElements = useMemo(
-    () => computePaginatedElements(selectedTagsIds, postsCollection, language),
-    [language, postsCollection, selectedTagsIds]
-  );
+  const paginatedElements = useMemo(() => computePaginatedElements(selectedTagsIds, postsCollection), [postsCollection, selectedTagsIds]);
 
   const maxPagesAmount = useMemo(() => computePagesAmount(postsCollection.length, elementsPerPage), [postsCollection, elementsPerPage]);
   const pagesAmount = usePagination(paginatedElements, elementsPerPage);

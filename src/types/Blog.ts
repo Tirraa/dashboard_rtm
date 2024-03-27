@@ -2,14 +2,14 @@
 // Stryker disable all
 
 import type { badlyTypedBlogHeadings } from '##/config/contentlayer/contentlayerConfigTweakers';
+import type { WithClassname, WithLanguage } from '@rtm/shared-types/Next';
 import type { KeySeparator } from '@rtm/shared-types/CustomUtilityTypes';
 import type { DocumentHeading } from '@rtm/shared-types/Documents';
 import type { BlogTaxonomyType } from '##/config/taxonomies/blog';
 import type { BlogPostSchema } from 'contentlayer/generated';
-import type { WithClassname } from '@rtm/shared-types/Next';
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type BlogTaxonomy from '##/config/taxonomies/blog';
 import type { BlogArchitecture } from '@rtm/generated';
+import type { ReactElement } from 'react';
 
 import type StrictBlog from './adapters/StrictBlog';
 import type { I18nParams } from './Next';
@@ -24,6 +24,8 @@ export type BlogPostType = Omit<BlogPostSchema, ContentlayerPhantomTypeKey | Bad
 export type BlogCategory = keyof BlogArchitecture;
 export type BlogSubcategoryFromUnknownCategory = BlogArchitecture[BlogCategory];
 export type UnknownBlogSlug = string;
+
+export type BlogPostPreviewComponentWithMetadatas = Pick<BlogPostType, 'tagsIndexes' | 'date' | 'tags'> & { blogPostPreviewComp: ReactElement };
 
 type BlogCategoryPagePropsParams = {
   [BlogTaxonomy.CATEGORY]: BlogCategory;
@@ -48,8 +50,7 @@ export interface BlogPostPageProps {
   params: BlogPostPagePropsParams;
 }
 
-export interface BlogPostProps extends Partial<WithClassname> {
-  language: LanguageFlag;
+export interface BlogPostProps extends Partial<WithClassname>, WithLanguage {
   post: BlogPostType;
 }
 

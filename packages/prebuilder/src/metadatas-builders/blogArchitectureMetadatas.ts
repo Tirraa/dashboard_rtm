@@ -23,14 +23,14 @@ async function buildCategoriesMetadatasFromPostsFolder(postsFolder: string): Pro
     if (!maybeCategory.isDirectory()) continue;
 
     const category = maybeCategory.name;
-    const maybeSubcategories = await fs.readdir(path.join(maybeCategory.path, maybeCategory.name), { withFileTypes: true });
+    const maybeSubcategories = await fs.readdir(path.join(maybeCategory.path, category), { withFileTypes: true });
     const subcategoriesMetadatas = {} as CategoriesMetadatasEntity;
 
     for (const maybeSubcategory of maybeSubcategories) {
       if (!maybeSubcategory.isDirectory()) continue;
       const subcategory = maybeSubcategory.name;
 
-      const languagesOrPosts = await fs.readdir(path.join(maybeSubcategory.path, maybeSubcategory.name), { withFileTypes: true });
+      const languagesOrPosts = await fs.readdir(path.join(maybeSubcategory.path, subcategory), { withFileTypes: true });
 
       for (const maybeLanguage of languagesOrPosts) {
         if (maybeLanguage.isDirectory()) {

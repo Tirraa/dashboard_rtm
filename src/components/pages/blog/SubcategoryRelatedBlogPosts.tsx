@@ -1,4 +1,4 @@
-import type { BlogSubcategoryPageProps, BlogPostType } from '@/types/Blog';
+import type { BlogPostPreviewComponentWithMetadatas, BlogSubcategoryPageProps } from '@/types/Blog';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { FunctionComponent } from 'react';
 
@@ -8,6 +8,7 @@ import {
   blogSubcategoryShouldTriggerNotFound
 } from '@/lib/blog/api';
 import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
+import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { notFound } from 'next/navigation';
@@ -21,7 +22,14 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
   const isValidPair: boolean = await isValidBlogCategoryAndSubcategoryPairInAnyLanguage(category, subcategory);
   if (!isValidPair) notFound();
 
-  const postsCollection: BlogPostType[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(category, subcategory, language);
+  const postsCollection: BlogPostPreviewComponentWithMetadatas[] = (
+    await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(category, subcategory, language)
+  ).map((post) => ({
+    blogPostPreviewComp: <BlogPostPreview key={`${post._raw.flattenedPath}-paginated-blog-post`} language={language} post={post} />,
+    tagsIndexes: post.tagsIndexes,
+    tags: post.tags,
+    date: post.date
+  }));
 
   if (blogSubcategoryShouldTriggerNotFound(postsCollection)) notFound();
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers

@@ -35,7 +35,7 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className:
     <section className={cn('mx-12 w-auto max-w-[730px] lg:w-[45vw]', classNameValue)}>
       <header className="my-2 p-2 text-center">
         <h1>{post.title}</h1>
-        <BlogPostDate suffix={draftSuffix} language={language} post={post} />
+        <BlogPostDate suffix={draftSuffix} language={language} date={post.date} />
         {hasTags && (
           <div className="mt-1 flex flex-wrap justify-center gap-2 md:mx-auto md:w-fit md:justify-normal">
             {tagsGenerator({ ...post, scopedT: scopedT2 })}

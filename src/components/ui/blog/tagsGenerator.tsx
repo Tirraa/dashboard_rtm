@@ -9,7 +9,7 @@ function tagsGenerator({
   language,
   scopedT,
   tags
-}: BlogPostType & { scopedT: Awaited<ReturnType<typeof getScopedI18n<typeof i18ns.blogTags>>> }): ReactElement[] {
+}: Pick<BlogPostType, 'language' | 'tags'> & { scopedT: Awaited<ReturnType<typeof getScopedI18n<typeof i18ns.blogTags>>> }): ReactElement[] {
   const sortedTagsByCurrentLocale = tags.sort((a, b) => a.localeCompare(b, language));
   return sortedTagsByCurrentLocale.map((tag) => <Badge key={tag}>{scopedT(tag)}</Badge>);
 }
