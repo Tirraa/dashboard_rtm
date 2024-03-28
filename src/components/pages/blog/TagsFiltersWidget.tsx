@@ -28,6 +28,7 @@ import { FILTERS_KEY } from './helpers/constants';
 export interface TagsFiltersWidgetProps {
   setSelectedTagsIds: (selectedTagsIds: number[]) => unknown;
   selectedTagsIds: number[];
+  expectedTagsIds: number[];
   maxPagesAmount?: number;
   tags: BlogTag[];
 }
@@ -42,6 +43,7 @@ function initializeMemorizedPageBeforeFiltering(searchParams: URLSearchParams, s
 const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   maxPagesAmount: maxPagesAmountValue,
   setSelectedTagsIds,
+  expectedTagsIds,
   selectedTagsIds,
   tags
 }) => {
@@ -69,7 +71,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   useEffect(() => {
     function unsafeCtxHandler() {
       try {
-        const unpackedAndCleanedFilters = getUnpackedAndSanitizedFilters(searchParams.get(FILTERS_KEY));
+        const unpackedAndCleanedFilters = getUnpackedAndSanitizedFilters(searchParams.get(FILTERS_KEY), expectedTagsIds);
         setSelectedTagsIds(unpackedAndCleanedFilters);
 
         const sanitizedFilters = packIds(unpackedAndCleanedFilters);
@@ -93,7 +95,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
 
     if (firstLoad.current) unsafeCtxHandler();
     else maybeSafeCtxHandler();
-  }, [router, searchParams, setSelectedTagsIds]);
+  }, [router, searchParams, setSelectedTagsIds, expectedTagsIds]);
 
   useEffect(() => {
     firstLoad.current = false;

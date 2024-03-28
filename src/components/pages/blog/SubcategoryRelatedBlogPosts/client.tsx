@@ -21,6 +21,7 @@ import { FILTERS_KEY } from '../helpers/constants';
 
 interface SubcategoryRelatedBlogPostsClientProps {
   postsCollection: BlogPostPreviewComponentWithMetadatas[];
+  expectedTagsIds: number[];
   elementsPerPage: number;
   tags: BlogTag[];
   title: string;
@@ -42,9 +43,9 @@ function computePaginatedElements(selectedTagsIds: number[], postsCollection: Bl
   return paginatedElements;
 }
 
-function computeSelectedTagsIdsInitialState(packedsIds: MaybeNull<string>): number[] {
+function computeSelectedTagsIdsInitialState(packedsIds: MaybeNull<string>, expectedTagsIds: number[]): number[] {
   try {
-    const unpackedAndSanitizedFilters = getUnpackedAndSanitizedFilters(packedsIds);
+    const unpackedAndSanitizedFilters = getUnpackedAndSanitizedFilters(packedsIds, expectedTagsIds);
     return unpackedAndSanitizedFilters;
   } catch {
     return [];
@@ -54,13 +55,14 @@ function computeSelectedTagsIdsInitialState(packedsIds: MaybeNull<string>): numb
 const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlogPostsClientProps> = ({
   postsCollection,
   elementsPerPage,
+  expectedTagsIds,
   title,
   tags
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const computedSelectedTagsIdsInitialState = useMemo(() => computeSelectedTagsIdsInitialState(searchParams.get(FILTERS_KEY)), []);
+  const computedSelectedTagsIdsInitialState = useMemo(() => computeSelectedTagsIdsInitialState(searchParams.get(FILTERS_KEY), expectedTagsIds), []);
   const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>(computedSelectedTagsIdsInitialState);
 
   const paginatedElements = useMemo(() => computePaginatedElements(selectedTagsIds, postsCollection), [postsCollection, selectedTagsIds]);
@@ -136,6 +138,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       <SubcategoryRelatedBlogPostsClientToolbar
         setSelectedTagsIds={setSelectedTagsIds}
         selectedTagsIds={selectedTagsIds}
+        expectedTagsIds={expectedTagsIds}
         maxPagesAmount={maxPagesAmount}
         pagesAmount={pagesAmount}
         tags={tags}

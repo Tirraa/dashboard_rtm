@@ -8,12 +8,12 @@ export const sortUnpackedIds = (unpacked: number[]) => unpacked.sort((a, b) => a
 /**
  * @throws {RangeError}
  */
-export function getUnpackedAndSanitizedFilters(packedIds: MaybeNull<string>) {
+export function getUnpackedAndSanitizedFilters(packedIds: MaybeNull<string>, expectedIds: number[]) {
   if (packedIds === null) return [];
 
   const unpackedAndSanitizedFilters = sortUnpackedIds(
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    Array.from(new Set<number>(unpackIds(packedIds).filter((id) => 0 <= id && id < blogTagOptions.length)))
+    Array.from(new Set<number>(unpackIds(packedIds).filter((id) => 0 <= id && id < blogTagOptions.length && expectedIds.includes(id))))
   );
 
   return unpackedAndSanitizedFilters;

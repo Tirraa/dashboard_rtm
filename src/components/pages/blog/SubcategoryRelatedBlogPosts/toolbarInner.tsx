@@ -12,13 +12,20 @@ export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends Tags
 
 const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<SubcategoryRelatedBlogPostsClientToolbarInnerProps> = ({
   setSelectedTagsIds,
+  expectedTagsIds,
   selectedTagsIds,
   maxPagesAmount,
   pagesAmount,
   tags
 }) => (
   <div className="my-4 flex items-center justify-between">
-    <TagsFiltersWidget setSelectedTagsIds={setSelectedTagsIds} selectedTagsIds={selectedTagsIds} maxPagesAmount={maxPagesAmount} tags={tags} />
+    <TagsFiltersWidget
+      setSelectedTagsIds={setSelectedTagsIds}
+      selectedTagsIds={selectedTagsIds}
+      expectedTagsIds={expectedTagsIds}
+      maxPagesAmount={maxPagesAmount}
+      tags={tags}
+    />
     <PaginationWidget pagesAmount={pagesAmount} />
   </div>
 );

@@ -8,6 +8,7 @@ import {
   blogSubcategoryShouldTriggerNotFound
 } from '@/lib/blog/api';
 import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
+import { indexedBlogTagOptions } from '##/lib/builders/unifiedImport';
 import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
@@ -45,10 +46,13 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
   const narrowedCategoryAndSubcategoryAssoc = `${category}.${subcategory}` as BlogCategoriesAndSubcategoriesAssoc;
   const title = scopedT(`${narrowedCategoryAndSubcategoryAssoc}.title`);
 
+  const expectedTagsIds = tags.map((tag) => indexedBlogTagOptions[tag]);
+
   return (
     <SubcategoryRelatedBlogPostsClient
       elementsPerPage={BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT}
       postsCollection={postsCollection}
+      expectedTagsIds={expectedTagsIds}
       title={title}
       tags={tags}
     />
