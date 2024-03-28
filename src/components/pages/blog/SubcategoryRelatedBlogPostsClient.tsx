@@ -1,14 +1,10 @@
 'use client';
 
-import type {
-  BlogPostPreviewComponentWithMetadatas,
-  BlogCategoriesAndSubcategoriesAssoc,
-  BlogSubcategoryFromUnknownCategory,
-  BlogCategory
-} from '@/types/Blog';
+import type { BlogPostPreviewComponentWithMetadatas } from '@/types/Blog';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { FunctionComponent } from 'react';
 
+import { MIN_PAGES_AMOUNT, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import { computePagesAmount } from '@/components/hooks/helpers/usePagination/functions';
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
 import PaginatedElements from '@/components/ui/PaginatedElements';
@@ -16,13 +12,10 @@ import usePagination from '@/components/hooks/usePagination';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { SlidingList } from '@rtm/shared-lib/datastructs';
-import { useScopedI18n } from '@/i18n/client';
 import BlogConfig from '@/config/blog';
-import { i18ns } from '##/config/i18n';
 import dynamic from 'next/dynamic';
 
 import { getUnpackedAndSanitizedFilters } from './helpers/functions';
-import { MIN_PAGES_AMOUNT, PAGE_KEY } from './helpers/constants';
 
 const SubcategoryRelatedBlogPostsClientToolbar = dynamic(() => import('@/components/pages/blog/SubcategoryRelatedBlogPostsClientToolbar'), {
   loading: () => <div className="my-4 min-h-[40px]" />,
@@ -31,10 +24,9 @@ const SubcategoryRelatedBlogPostsClientToolbar = dynamic(() => import('@/compone
 
 interface SubcategoryRelatedBlogPostsClientProps {
   postsCollection: BlogPostPreviewComponentWithMetadatas[];
-  subcategory: BlogSubcategoryFromUnknownCategory;
   elementsPerPage: number;
-  category: BlogCategory;
   tags: BlogTag[];
+  title: string;
 }
 
 function computePaginatedElements(selectedTagsIds: number[], postsCollection: BlogPostPreviewComponentWithMetadatas[]) {
@@ -65,8 +57,7 @@ function computeSelectedTagsIdsInitialState(searchParams: URLSearchParams): numb
 const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlogPostsClientProps> = ({
   postsCollection,
   elementsPerPage,
-  subcategory,
-  category,
+  title,
   tags
 }) => {
   const router = useRouter();
@@ -74,8 +65,6 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const computedSelectedTagsIdsInitialState = useMemo(() => computeSelectedTagsIdsInitialState(searchParams), []);
   const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>(computedSelectedTagsIdsInitialState);
-
-  const scopedT = useScopedI18n(i18ns.blogCategories);
 
   const paginatedElements = useMemo(() => computePaginatedElements(selectedTagsIds, postsCollection), [postsCollection, selectedTagsIds]);
 
@@ -143,9 +132,6 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     () => <PaginatedElements paginatedElements={paginatedElements} elementsPerPage={elementsPerPage} pagesAmount={pagesAmount} />,
     [pagesAmount, paginatedElements, elementsPerPage]
   );
-
-  const narrowedCategoryAndSubcategoryAssoc = `${category}.${subcategory}` as BlogCategoriesAndSubcategoriesAssoc;
-  const title = scopedT(`${narrowedCategoryAndSubcategoryAssoc}.title`);
 
   return (
     <section className="w-full">

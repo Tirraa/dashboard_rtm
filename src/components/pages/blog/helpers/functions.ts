@@ -3,7 +3,7 @@ import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import { blogTagOptions } from '##/lib/builders/unifiedImport';
 import { unpackIds } from '@rtm/shared-lib/misc';
 
-import { FIRST_PAGE_IDX, FILTERS_KEY, PAGE_KEY } from './constants';
+import { FILTERS_KEY } from './constants';
 
 export const sortUnpackedIds = (unpacked: number[]) => unpacked.sort((a, b) => a - b);
 
@@ -20,14 +20,4 @@ export function getUnpackedAndSanitizedFilters(searchParams: URLSearchParams, fi
   );
 
   return unpackedAndSanitizedFilters;
-}
-
-export function getSanitizedCurrentPage(searchParams: URLSearchParams, maxPage: number, pageKey: string = PAGE_KEY) {
-  const maybeUnsafePageFromUrl: MaybeNull<string> = searchParams.get(pageKey);
-  const unsafePageFromUrl = maybeUnsafePageFromUrl === null ? FIRST_PAGE_IDX : Number(maybeUnsafePageFromUrl);
-
-  if (isNaN(unsafePageFromUrl)) return FIRST_PAGE_IDX;
-  if (unsafePageFromUrl < FIRST_PAGE_IDX) return FIRST_PAGE_IDX;
-  if (unsafePageFromUrl > maxPage) return maxPage;
-  return unsafePageFromUrl;
 }

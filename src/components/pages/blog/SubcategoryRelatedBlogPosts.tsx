@@ -1,4 +1,4 @@
-import type { BlogPostPreviewComponentWithMetadatas, BlogSubcategoryPageProps } from '@/types/Blog';
+import type { BlogPostPreviewComponentWithMetadatas, BlogCategoriesAndSubcategoriesAssoc, BlogSubcategoryPageProps } from '@/types/Blog';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { FunctionComponent } from 'react';
 
@@ -11,8 +11,10 @@ import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
 import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
+import { getScopedI18n } from '@/i18n/server';
 import { notFound } from 'next/navigation';
 import BlogConfig from '@/config/blog';
+import { i18ns } from '##/config/i18n';
 
 import SubcategoryRelatedBlogPostsClient from './SubcategoryRelatedBlogPostsClient';
 
@@ -39,12 +41,15 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
     new Set<BlogTag>(postsCollection.reduce((accumulator, currentValue) => accumulator.concat(currentValue.tags), [] as BlogTag[]))
   );
 
+  const scopedT = await getScopedI18n(i18ns.blogCategories);
+  const narrowedCategoryAndSubcategoryAssoc = `${category}.${subcategory}` as BlogCategoriesAndSubcategoriesAssoc;
+  const title = scopedT(`${narrowedCategoryAndSubcategoryAssoc}.title`);
+
   return (
     <SubcategoryRelatedBlogPostsClient
       elementsPerPage={BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT}
       postsCollection={postsCollection}
-      subcategory={subcategory}
-      category={category}
+      title={title}
       tags={tags}
     />
   );

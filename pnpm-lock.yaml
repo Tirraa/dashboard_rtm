@@ -56,6 +56,9 @@ importers:
       '@vercel/speed-insights':
         specifier: ^1.0.2
         version: 1.0.10(next@14.1.4)(react@18.2.0)
+      base64url:
+        specifier: ^3.0.1
+        version: 3.0.1
       bentocache:
         specifier: 1.0.0-beta.7
         version: 1.0.0-beta.7(tslib@2.6.2)

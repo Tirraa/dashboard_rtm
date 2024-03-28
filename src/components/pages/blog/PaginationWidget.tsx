@@ -4,13 +4,12 @@ import type { WithClassname } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
 import { PaginationPrevious, PaginationContent, PaginationItem, PaginationLink, PaginationNext, Pagination } from '@/components/ui/Pagination';
+import { getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/getSanitizedCurrentPage';
+import { FIRST_PAGE_IDX, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
 import { useCallback } from 'react';
 import { cn } from '@/lib/tailwind';
-
-import { FIRST_PAGE_IDX, PAGE_KEY } from './helpers/constants';
-import { getSanitizedCurrentPage } from './helpers/functions';
 
 export interface PaginationWidgetProps extends Partial<WithClassname> {
   pagesAmount: number;

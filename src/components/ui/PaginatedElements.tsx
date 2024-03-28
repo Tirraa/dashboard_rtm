@@ -4,7 +4,7 @@ import type { FunctionComponent, ReactElement } from 'react';
 
 import { useSearchParams } from 'next/navigation';
 
-import { getSanitizedCurrentPage } from '../pages/blog/helpers/functions';
+import { getSanitizedCurrentPage } from './helpers/PaginatedElements/getSanitizedCurrentPage';
 
 interface PaginatedElementsProps {
   paginatedElements: ReactElement[];

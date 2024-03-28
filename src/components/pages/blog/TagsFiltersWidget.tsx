@@ -5,6 +5,8 @@ import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { FunctionComponent } from 'react';
 
 import { CommandSeparator, CommandEmpty, CommandGroup, CommandInput, CommandList, CommandItem, Command } from '@/components/ui/Command';
+import { MIN_PAGES_AMOUNT, FIRST_PAGE_IDX, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
+import { getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/getSanitizedCurrentPage';
 import { PopoverTrigger, PopoverContent, Popover } from '@/components/ui/Popover';
 import { indexedBlogTagOptions } from '##/lib/builders/unifiedImport';
 import { PlusCircledIcon, CheckIcon } from '@radix-ui/react-icons';
@@ -20,8 +22,8 @@ import { capitalize } from '@/lib/str';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 
-import { getUnpackedAndSanitizedFilters, getSanitizedCurrentPage, sortUnpackedIds } from './helpers/functions';
-import { MIN_PAGES_AMOUNT, FIRST_PAGE_IDX, FILTERS_KEY, PAGE_KEY } from './helpers/constants';
+import { getUnpackedAndSanitizedFilters, sortUnpackedIds } from './helpers/functions';
+import { FILTERS_KEY } from './helpers/constants';
 
 export interface TagsFiltersWidgetProps {
   setSelectedTagsIds: (selectedTagsIds: number[]) => unknown;
