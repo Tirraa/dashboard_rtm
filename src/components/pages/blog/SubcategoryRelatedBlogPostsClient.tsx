@@ -12,7 +12,7 @@ import usePagination from '@/components/hooks/usePagination';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { SlidingList } from '@rtm/shared-lib/datastructs';
-import BlogConfig from '@/config/blog';
+import BlogConfigClient from '@/config/Blog/client';
 import dynamic from 'next/dynamic';
 
 import { getUnpackedAndSanitizedFilters } from './helpers/functions';
@@ -38,7 +38,7 @@ function computePaginatedElements(selectedTagsIds: number[], postsCollection: Bl
 
   const paginatedElements = maybeFilteredPostsCollection
     .sort((post1, post2) =>
-      BlogConfig.DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE(new Date(post1.date), new Date(post2.date))
+      BlogConfigClient.DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE(new Date(post1.date), new Date(post2.date))
     )
     .map((post) => post.blogPostPreviewComp);
 

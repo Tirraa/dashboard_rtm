@@ -6,6 +6,8 @@ import { categoriesBlogDataAssoc } from '##/config/contentlayer/blog/documentTyp
 import { compareDesc } from 'date-fns/compareDesc';
 import { compareAlphabetically } from '@/lib/str';
 
+import BlogConfigClient from './client';
+
 export type BlogConfigType = {
   DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_SUBCATEGORIES_ON_BLOG_CATEGORY_PAGE: StringsCompareFun;
   DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE: DatesCompareFun;
@@ -21,6 +23,7 @@ export type BlogConfigType = {
 };
 
 const TESTING_CATEGORY = 'blog-testing-category' as const satisfies BlogCategory;
+
 const BlogConfig: BlogConfigType = {
   BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC: Object.fromEntries(
     Object.entries(categoriesBlogDataAssoc).map(([categoryFolder, blogDataName]) => [
@@ -29,7 +32,6 @@ const BlogConfig: BlogConfigType = {
     ])
   ) as PostsCollectionAssoc,
   DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_SUBCATEGORIES_ON_BLOG_CATEGORY_PAGE: compareAlphabetically,
-  DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE: compareDesc,
   DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_CATEGORY_PAGE: compareDesc,
   USE_BLOG_POSTS_NOTFOUND_WHEN_SUBCATEGORY_IS_EMPTY_INSTEAD_OF_NOT_FOUND: true,
   DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT: 5,
@@ -39,7 +41,8 @@ const BlogConfig: BlogConfigType = {
   ENABLE_DRAFTS_IN_PROD: false,
   SHOW_DRAFTS_BADGE: true,
 
-  TESTING_CATEGORY
+  TESTING_CATEGORY,
+  ...BlogConfigClient
 } as const;
 
 export default BlogConfig;

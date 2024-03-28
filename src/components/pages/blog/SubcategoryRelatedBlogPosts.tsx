@@ -12,8 +12,8 @@ import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getScopedI18n } from '@/i18n/server';
+import BlogConfig from '@/config/Blog/server';
 import { notFound } from 'next/navigation';
-import BlogConfig from '@/config/blog';
 import { i18ns } from '##/config/i18n';
 
 import SubcategoryRelatedBlogPostsClient from './SubcategoryRelatedBlogPostsClient';

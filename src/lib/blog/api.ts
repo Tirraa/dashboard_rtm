@@ -6,10 +6,10 @@ import type { AppPath } from '@rtm/shared-types/Next';
 
 import buildAbsolutePathFromParts from '@rtm/shared-lib/portable/str/buildAbsolutePathFromParts';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
+import BlogConfig from '@/config/Blog/server';
 import ROUTES_ROOTS from '##/config/routes';
 import { LANGUAGES } from '##/config/i18n';
 import { redirect } from 'next/navigation';
-import BlogConfig from '@/config/blog';
 
 import { getFormattedDate } from '../str';
 import ComputedBlogCtx from './ctx';

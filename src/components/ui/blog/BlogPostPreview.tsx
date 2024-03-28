@@ -7,7 +7,7 @@ import type { FunctionComponent } from 'react';
 
 import { getBlogPostPathWithoutI18nPart, getSlicedBlogPostDescription } from '@/lib/blog/api';
 import { getScopedI18n } from '@/i18n/server';
-import BlogConfig from '@/config/blog';
+import BlogConfig from '@/config/Blog/server';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
