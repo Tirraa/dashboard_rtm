@@ -125,6 +125,13 @@ export default {
     }
   },
 
+  'blog-tags': {
+    xylophone: 'Xylophone',
+    bagpipes: 'Cornemuse',
+    cello: 'Violoncelle',
+    drums: 'Batterie'
+  },
+
   blogTagsFilters: {
     'no-result-found': 'Rien trouvé !',
     'clear-filters': 'Réinitialiser'
@@ -134,12 +141,6 @@ export default {
     signup: SHARED.vocab['sign-up'],
     logout: 'Déconnexion',
     login: 'Connexion'
-  },
-
-  'blog-tags': {
-    xylophone: 'Xylophone',
-    bagpipes: 'Cornemuse',
-    cello: 'Violoncelle'
   },
 
   'pages-titles': SHARED['pages-titles'],

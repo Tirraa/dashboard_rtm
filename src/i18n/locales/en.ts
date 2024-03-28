@@ -125,15 +125,16 @@ export default {
     }
   },
 
-  blogTagsFilters: {
-    'no-result-found': 'Nothing found!',
-    'clear-filters': 'Clear'
-  },
-
   'blog-tags': {
     xylophone: 'Xylophone',
     bagpipes: 'Bagpipes',
+    drums: 'Drums',
     cello: 'Cello'
+  },
+
+  blogTagsFilters: {
+    'no-result-found': 'Nothing found!',
+    'clear-filters': 'Clear'
   },
 
   auth: {

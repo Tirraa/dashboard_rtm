@@ -9,8 +9,8 @@ export const MIN_ID: Id = 0;
 export function packIds(unpacked: Id[]): EncodedString {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (unpacked.length === 0) return '';
-
   if (unpacked.some((n) => n < MIN_ID)) throw new RangeError();
+
   return unpacked.join('_');
 }
 
@@ -25,5 +25,6 @@ export function unpackIds(encodedString: EncodedString): Id[] {
     if (isNaN(unpackedNumber)) throw new TypeError();
     return unpackedNumber;
   });
+
   return unpacked;
 }
