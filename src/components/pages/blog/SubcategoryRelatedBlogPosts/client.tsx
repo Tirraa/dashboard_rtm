@@ -1,6 +1,7 @@
 'use client';
 
 import type { BlogPostPreviewComponentWithMetadatas } from '@/types/Blog';
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { FunctionComponent } from 'react';
 
@@ -13,14 +14,10 @@ import { createURLSearchParams } from '@rtm/shared-lib/html';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { SlidingList } from '@rtm/shared-lib/datastructs';
 import BlogConfigClient from '@/config/Blog/client';
-import dynamic from 'next/dynamic';
 
-import { getUnpackedAndSanitizedFilters } from './helpers/functions';
-
-const SubcategoryRelatedBlogPostsClientToolbar = dynamic(() => import('@/components/pages/blog/SubcategoryRelatedBlogPostsClientToolbar'), {
-  loading: () => <div className="my-4 min-h-[40px]" />,
-  ssr: false
-});
+import { getUnpackedAndSanitizedFilters } from '../helpers/functions';
+import SubcategoryRelatedBlogPostsClientToolbar from './toolbar';
+import { FILTERS_KEY } from '../helpers/constants';
 
 interface SubcategoryRelatedBlogPostsClientProps {
   postsCollection: BlogPostPreviewComponentWithMetadatas[];
@@ -45,9 +42,9 @@ function computePaginatedElements(selectedTagsIds: number[], postsCollection: Bl
   return paginatedElements;
 }
 
-function computeSelectedTagsIdsInitialState(searchParams: URLSearchParams): number[] {
+function computeSelectedTagsIdsInitialState(packedsIds: MaybeNull<string>): number[] {
   try {
-    const unpackedAndSanitizedFilters = getUnpackedAndSanitizedFilters(searchParams);
+    const unpackedAndSanitizedFilters = getUnpackedAndSanitizedFilters(packedsIds);
     return unpackedAndSanitizedFilters;
   } catch {
     return [];
@@ -63,7 +60,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   const router = useRouter();
   const searchParams = useSearchParams();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const computedSelectedTagsIdsInitialState = useMemo(() => computeSelectedTagsIdsInitialState(searchParams), []);
+  const computedSelectedTagsIdsInitialState = useMemo(() => computeSelectedTagsIdsInitialState(searchParams.get(FILTERS_KEY)), []);
   const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>(computedSelectedTagsIdsInitialState);
 
   const paginatedElements = useMemo(() => computePaginatedElements(selectedTagsIds, postsCollection), [postsCollection, selectedTagsIds]);

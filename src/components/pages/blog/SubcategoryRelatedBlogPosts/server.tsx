@@ -16,7 +16,7 @@ import BlogConfig from '@/config/Blog/server';
 import { notFound } from 'next/navigation';
 import { i18ns } from '##/config/i18n';
 
-import SubcategoryRelatedBlogPostsClient from './SubcategoryRelatedBlogPostsClient';
+import SubcategoryRelatedBlogPostsClient from './client';
 
 const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> = async ({ params }) => {
   const [category, subcategory, language] = [params[BlogTaxonomy.CATEGORY], params[BlogTaxonomy.SUBCATEGORY], params[I18nTaxonomy.LANGUAGE]];
