@@ -1,7 +1,7 @@
 import { TESTING_BLOG_FAKE_SUBCATEGORY } from '𝕍/testingContentCategoryDatas';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, vi, it } from 'vitest';
-import BlogConfig from '@/config/blog';
+import BlogConfig from '@/config/Blog/server';
 
 import { getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict, getBlogPostUnstrict, isValidBlogCategory } from '../api';
 

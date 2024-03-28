@@ -1,4 +1,4 @@
-import type { BlogConfigType } from '@/config/blog';
+import type { BlogConfigType } from '@/config/Blog/server';
 
 import { TESTING_BLOG_CATEGORY_FAKE_LANGUAGES, TESTING_BLOG_FAKE_SUBCATEGORY } from '𝕍/testingContentCategoryDatas';
 import { INDEX_TOKEN } from '##/lib/misc/contentlayerCornerCases';
@@ -6,7 +6,7 @@ import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { describe, expect, it, vi } from 'vitest';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
-import BlogConfig from '@/config/blog';
+import BlogConfig from '@/config/Blog/server';
 
 import getBlogStaticParams from '../static/getBlogStaticParams';
 
@@ -30,9 +30,9 @@ vi.mock('../api', async (orgImport) => {
   };
 });
 
-vi.mock('@/config/blog', async (orgImport) => {
+vi.mock('@/config/Blog/server', async (orgImport) => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-  const mod = await orgImport<typeof import('@/config/blog')>();
+  const mod = await orgImport<typeof import('@/config/Blog/server')>();
 
   return {
     default: {
@@ -124,4 +124,4 @@ describe('getBlogStaticParams', () => {
 
 vi.doUnmock('##/config/i18n');
 vi.doUnmock('../api');
-vi.doUnmock('@/config/blog');
+vi.doUnmock('@/config/Blog/server');

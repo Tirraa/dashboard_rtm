@@ -4,7 +4,7 @@
 import type { BlogSubcategoryPageProps } from '@/types/Blog';
 
 import { getBlogSubcategoryMetadatas, blogSubcategoryGuard, getBlogStaticParams } from '@/lib/blog/staticGeneration';
-import SubcategoryRelatedBlogPosts from '@/components/pages/blog/SubcategoryRelatedBlogPosts';
+import SubcategoryRelatedBlogPosts from '@/components/pages/blog/SubcategoryRelatedBlogPosts/server';
 import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
 import { setStaticParamsLocale } from 'next-international/server';
 import I18nTaxonomy from '##/config/taxonomies/i18n';

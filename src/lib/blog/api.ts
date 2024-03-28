@@ -6,10 +6,10 @@ import type { AppPath } from '@rtm/shared-types/Next';
 
 import buildAbsolutePathFromParts from '@rtm/shared-lib/portable/str/buildAbsolutePathFromParts';
 import { getBlogSubcategoriesByCategory } from '@/cache/blog';
+import BlogConfig from '@/config/Blog/server';
 import ROUTES_ROOTS from '##/config/routes';
 import { LANGUAGES } from '##/config/i18n';
 import { redirect } from 'next/navigation';
-import BlogConfig from '@/config/blog';
 
 import { getFormattedDate } from '../str';
 import ComputedBlogCtx from './ctx';
@@ -107,7 +107,7 @@ export async function getBlogPostStrict({ subcategory, category, lang, slug }: S
 
 export const getAllBlogCategories: () => BlogCategory[] = () => Object.keys(BlogConfig.BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC) as BlogCategory[];
 
-export function blogSubcategoryShouldTriggerNotFound(postsCollection: BlogPostType[]): boolean {
+export function blogSubcategoryShouldTriggerNotFound(postsCollection: Partial<BlogPostType>[]): boolean {
   const isForcedPath = BlogConfig.USE_BLOG_POSTS_NOTFOUND_WHEN_SUBCATEGORY_IS_EMPTY_INSTEAD_OF_NOT_FOUND;
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   return !isForcedPath && postsCollection.length === 0;
@@ -168,7 +168,7 @@ export const redirectToBlogCategoryPage = (category: BlogCategory): void => redi
 export const redirectToBlogCategoryAndSubcategoryPairPageUnstrict = (category: BlogCategory, subcategory: BlogSubcategoryFromUnknownCategory): void =>
   redirect(buildAbsolutePathFromParts(ROUTES_ROOTS.BLOG, category, subcategory));
 
-export function getBlogPostPathWithoutI18nPart({ language, url }: BlogPostType): AppPath {
+export function getBlogPostPathWithoutI18nPart(language: string, url: string): AppPath {
   const blogPostPathWithoutI18nPart = url.replace(`/${language}/`, '/');
   return blogPostPathWithoutI18nPart;
 }

@@ -12,8 +12,8 @@ import MDX from '@/components/layouts/blog/MdxComponent';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getScopedI18n } from '@/i18n/server';
+import BlogConfig from '@/config/Blog/server';
 import { notFound } from 'next/navigation';
-import BlogConfig from '@/config/blog';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 
@@ -22,6 +22,7 @@ interface _BlogPostPageProps extends BlogPostPageProps, Partial<WithClassname> {
 
 const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className: classNameValue, language, post }) => {
   const scopedT = await getScopedI18n(i18ns.vocab);
+  const scopedT2 = await getScopedI18n(i18ns.blogTags);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const hasTags = post.tags.length > 0;
@@ -34,8 +35,12 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className:
     <section className={cn('mx-12 w-auto max-w-[730px] lg:w-[45vw]', classNameValue)}>
       <header className="my-2 p-2 text-center">
         <h1>{post.title}</h1>
-        <BlogPostDate suffix={draftSuffix} language={language} post={post} />
-        {hasTags && <div className="mt-1 flex flex-wrap justify-center gap-2 md:mx-auto md:w-fit md:justify-normal">{await tagsGenerator(post)}</div>}
+        <BlogPostDate suffix={draftSuffix} language={language} date={post.date} />
+        {hasTags && (
+          <div className="mt-1 flex flex-wrap justify-center gap-2 md:mx-auto md:w-fit md:justify-normal">
+            {tagsGenerator({ ...post, scopedT: scopedT2 })}
+          </div>
+        )}
       </header>
       <div className="flex max-w-full flex-col lg:flex-row">
         {showToC && <BlogPostTocMobile headings={post.headings} />}

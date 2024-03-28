@@ -5,8 +5,8 @@ import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, it, vi } from 'vitest';
 import { indexOfNthOccurrence } from '@/lib/str';
+import BlogConfig from '@/config/Blog/server';
 import ROUTES_ROOTS from '##/config/routes';
-import BlogConfig from '@/config/blog';
 
 import blogPostGuard from '../blogPostGuard';
 

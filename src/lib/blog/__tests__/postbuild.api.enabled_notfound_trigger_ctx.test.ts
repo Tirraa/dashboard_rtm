@@ -1,16 +1,16 @@
-import type { BlogConfigType } from '@/config/blog';
+import type { BlogConfigType } from '@/config/Blog/server';
 import type { BlogPostType } from '@/types/Blog';
 
 import { TESTING_BLOG_FAKE_SUBCATEGORY } from '𝕍/testingContentCategoryDatas';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, it, vi } from 'vitest';
-import BlogConfig from '@/config/blog';
+import BlogConfig from '@/config/Blog/server';
 
 import { blogSubcategoryShouldTriggerNotFound, getBlogPostStrict } from '../api';
 
-vi.mock('@/config/blog', async (orgImport) => {
+vi.mock('@/config/Blog/server', async (orgImport) => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-  const mod = await orgImport<typeof import('@/config/blog')>();
+  const mod = await orgImport<typeof import('@/config/Blog/server')>();
 
   return {
     default: {
@@ -31,4 +31,4 @@ describe('blogSubcategoryShouldTriggerNotFound', () => {
   });
 });
 
-vi.doUnmock('@/config/blog');
+vi.doUnmock('@/config/Blog/server');

@@ -9,6 +9,7 @@ export enum ELanguagesFlag {
 }
 
 const _i18nsBase = {
+  blogTagsFilters: 'blogTagsFilters',
   blogCategories: 'blog-categories',
   pagesTitles: 'pages-titles',
   dashboard: 'dashboard',

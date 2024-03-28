@@ -21,7 +21,7 @@ export default async function sysBlogSubcategoriesValidator(
   for (const maybeCategory of categoriesCollection) {
     if (!maybeCategory.isDirectory()) continue;
     const category = maybeCategory.name;
-    const maybeSubcategories = await fs.readdir(path.join(maybeCategory.path, maybeCategory.name), { withFileTypes: true });
+    const maybeSubcategories = await fs.readdir(path.join(maybeCategory.path, category), { withFileTypes: true });
 
     for (const maybeSubcategory of maybeSubcategories) {
       if (!maybeSubcategory.isDirectory()) continue;

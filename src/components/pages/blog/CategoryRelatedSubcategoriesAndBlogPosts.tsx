@@ -6,10 +6,10 @@ import { getAllBlogPostsByCategory } from '@/lib/blog/api';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getScopedI18n } from '@/i18n/server';
+import BlogConfig from '@/config/Blog/server';
 import ComputedBlogCtx from '@/lib/blog/ctx';
 import { notFound } from 'next/navigation';
 import { i18ns } from '##/config/i18n';
-import BlogConfig from '@/config/blog';
 
 interface CategoryRelatedSubcategoriesAndBlogPostsProps extends BlogCategoryPageProps {}
 

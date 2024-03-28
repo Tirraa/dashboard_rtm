@@ -1,6 +1,6 @@
 // Stryker disable all
 
-import BlogConfig from '@/config/blog';
+import BlogConfig from '@/config/Blog/server';
 
 type ComputedBlogCtxType = {
   ALLOWED_DRAFTS: boolean;
