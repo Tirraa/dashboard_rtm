@@ -10,7 +10,6 @@ interface PaginatedElementsProps {
   paginatedElements: ReactElement[];
   elementsPerPage: number;
   pagesAmount: number;
-  pagesRange?: number;
 }
 
 const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({ paginatedElements, elementsPerPage, pagesAmount }) => {
