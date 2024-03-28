@@ -1,7 +1,8 @@
 type Id = number;
+type Char = string;
 type BufferGarbage = string;
 type EncodedString = string;
-type Base64UrlAssoc = Record<string, string>;
+type Base64UrlAssoc = Record<Char, Char>;
 
 export const MIN_ID: Id = 0;
 
@@ -17,10 +18,10 @@ const BASE64URL_MAP: Base64UrlAssoc = {
 const REVERSED_BASE64URL_MAP: Base64UrlAssoc = Object.fromEntries(Object.entries(BASE64URL_MAP).map(([k, v]) => [v, k]));
 
 // NOTE: Unsafe hard-coded RegEx for performance concerns, be diligent if you edit BASE64URL_MAP.
-const base64UrlEncode = (bufferString: BufferGarbage): EncodedString => btoa(bufferString).replace(/[+/=]/g, (char) => BASE64URL_MAP[char]);
+const base64UrlEncode = (bufferString: BufferGarbage): EncodedString => btoa(bufferString).replace(/[+/=]/g, (c: Char) => BASE64URL_MAP[c]);
 
 // NOTE: Unsafe hard-coded RegEx for performance concerns, be diligent if you edit BASE64URL_MAP.
-const base64UrlDecode = (encodedString: EncodedString): BufferGarbage => atob(encodedString.replace(/[-_]/g, (char) => REVERSED_BASE64URL_MAP[char]));
+const base64UrlDecode = (encodedString: EncodedString): BufferGarbage => atob(encodedString.replace(/[-_]/g, (c: Char) => REVERSED_BASE64URL_MAP[c]));
 
 /**
  * @throws {RangeError}
