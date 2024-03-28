@@ -1,3 +1,9 @@
+/*
+{ToDo} Implement this pack/unpack with base64url and bits magic if, one day, this issue is fixed:
+https://github.com/vercel/next.js/issues/40178
+-> https://github.com/Tirraa/dashboard_rtm/pull/116/commits/c5cd294520c0abeebe4a32b138e165438c4a5edb
+*/
+
 type Id = number;
 type EncodedString = string;
 
