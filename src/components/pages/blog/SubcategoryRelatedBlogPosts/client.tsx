@@ -23,6 +23,7 @@ interface SubcategoryRelatedBlogPostsClientProps {
   postsCollection: BlogPostPreviewComponentWithMetadatas[];
   expectedTagsIds: Set<number>;
   elementsPerPage: number;
+  maxBlogTagId: number;
   tags: BlogTag[];
   title: string;
 }
@@ -43,9 +44,9 @@ function computePaginatedElements(selectedTagsIds: number[], postsCollection: Bl
   return paginatedElements;
 }
 
-function computeSelectedTagsIdsInitialState(packedsIds: MaybeNull<string>, expectedTagsIds: Set<number>): number[] {
+function computeSelectedTagsIdsInitialState(packedsIds: MaybeNull<string>, expectedTagsIds: Set<number>, maxId: number): number[] {
   try {
-    const unpackedAndSanitizedFilters = getUnpackedAndSanitizedFilters(packedsIds, expectedTagsIds);
+    const unpackedAndSanitizedFilters = getUnpackedAndSanitizedFilters(packedsIds, expectedTagsIds, maxId);
     return unpackedAndSanitizedFilters;
   } catch {
     return [];
@@ -56,13 +57,17 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   postsCollection,
   elementsPerPage,
   expectedTagsIds,
+  maxBlogTagId,
   title,
   tags
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const computedSelectedTagsIdsInitialState = useMemo(() => computeSelectedTagsIdsInitialState(searchParams.get(FILTERS_KEY), expectedTagsIds), []);
+  const computedSelectedTagsIdsInitialState = useMemo(
+    () => computeSelectedTagsIdsInitialState(searchParams.get(FILTERS_KEY), expectedTagsIds, maxBlogTagId),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
   const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>(computedSelectedTagsIdsInitialState);
 
   const paginatedElements = useMemo(() => computePaginatedElements(selectedTagsIds, postsCollection), [postsCollection, selectedTagsIds]);
@@ -141,6 +146,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
         expectedTagsIds={expectedTagsIds}
         maxPagesAmount={maxPagesAmount}
         pagesAmount={pagesAmount}
+        maxId={maxBlogTagId}
         tags={tags}
       />
       <div className="mb-4 flex min-w-full flex-col [&>article:not(:last-of-type)]:mb-6">{paginated}</div>

@@ -7,8 +7,8 @@ import {
   isValidBlogCategoryAndSubcategoryPairInAnyLanguage,
   blogSubcategoryShouldTriggerNotFound
 } from '@/lib/blog/api';
+import { indexedBlogTagOptions, blogTagOptions } from '##/lib/builders/unifiedImport';
 import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
-import { indexedBlogTagOptions } from '##/lib/builders/unifiedImport';
 import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
@@ -47,12 +47,15 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
   const title = scopedT(`${narrowedCategoryAndSubcategoryAssoc}.title`);
 
   const expectedTagsIds = new Set<number>(tags.map((tag) => indexedBlogTagOptions[tag]));
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const maxBlogTagId = blogTagOptions.length - 1;
 
   return (
     <SubcategoryRelatedBlogPostsClient
       elementsPerPage={BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT}
       postsCollection={postsCollection}
       expectedTagsIds={expectedTagsIds}
+      maxBlogTagId={maxBlogTagId}
       title={title}
       tags={tags}
     />

@@ -16,6 +16,7 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
   selectedTagsIds,
   maxPagesAmount,
   pagesAmount,
+  maxId,
   tags
 }) => (
   <div className="my-4 flex items-center justify-between">
@@ -24,6 +25,7 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
       selectedTagsIds={selectedTagsIds}
       expectedTagsIds={expectedTagsIds}
       maxPagesAmount={maxPagesAmount}
+      maxId={maxId}
       tags={tags}
     />
     <PaginationWidget pagesAmount={pagesAmount} />
