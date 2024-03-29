@@ -46,7 +46,7 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
   const narrowedCategoryAndSubcategoryAssoc = `${category}.${subcategory}` as BlogCategoriesAndSubcategoriesAssoc;
   const title = scopedT(`${narrowedCategoryAndSubcategoryAssoc}.title`);
 
-  const expectedTagsIds = tags.map((tag) => indexedBlogTagOptions[tag]);
+  const expectedTagsIds = new Set<number>(tags.map((tag) => indexedBlogTagOptions[tag]));
 
   return (
     <SubcategoryRelatedBlogPostsClient

@@ -21,7 +21,7 @@ import { FILTERS_KEY } from '../helpers/constants';
 
 interface SubcategoryRelatedBlogPostsClientProps {
   postsCollection: BlogPostPreviewComponentWithMetadatas[];
-  expectedTagsIds: number[];
+  expectedTagsIds: Set<number>;
   elementsPerPage: number;
   tags: BlogTag[];
   title: string;
@@ -43,7 +43,7 @@ function computePaginatedElements(selectedTagsIds: number[], postsCollection: Bl
   return paginatedElements;
 }
 
-function computeSelectedTagsIdsInitialState(packedsIds: MaybeNull<string>, expectedTagsIds: number[]): number[] {
+function computeSelectedTagsIdsInitialState(packedsIds: MaybeNull<string>, expectedTagsIds: Set<number>): number[] {
   try {
     const unpackedAndSanitizedFilters = getUnpackedAndSanitizedFilters(packedsIds, expectedTagsIds);
     return unpackedAndSanitizedFilters;

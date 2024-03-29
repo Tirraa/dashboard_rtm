@@ -27,8 +27,8 @@ import { FILTERS_KEY } from './helpers/constants';
 
 export interface TagsFiltersWidgetProps {
   setSelectedTagsIds: (selectedTagsIds: number[]) => unknown;
+  expectedTagsIds: Set<number>;
   selectedTagsIds: number[];
-  expectedTagsIds: number[];
   maxPagesAmount?: number;
   tags: BlogTag[];
 }
