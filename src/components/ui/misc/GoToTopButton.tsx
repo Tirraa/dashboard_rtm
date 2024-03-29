@@ -79,7 +79,6 @@ const GoToTopButton: FunctionComponent<GoToTopButtonProps> = ({ scrollYthreshold
     if (!btnInstance) return;
 
     if (isShown) {
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       btnInstance.style.transform = '';
       return;
     }

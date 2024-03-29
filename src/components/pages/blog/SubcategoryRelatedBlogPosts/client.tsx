@@ -78,7 +78,6 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 
   const handlePageNumberReconcilation = useCallback(() => {
     function hardResetRouterAndSkip(): boolean {
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       if (pagesAmount !== MIN_PAGES_AMOUNT) return false;
 
       const q = createURLSearchParams({ [PAGE_KEY]: null }, searchParams);

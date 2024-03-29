@@ -228,7 +228,6 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         return;
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       const infered: MaybeNull<HeadingSlug> = getClosestHeadingFromTop()?.id ?? null;
 
       if (!infered) {
