@@ -1,4 +1,4 @@
-import type { BlogPostPreviewComponentWithMetadatas, BlogCategoriesAndSubcategoriesAssoc, BlogSubcategoryPageProps } from '@/types/Blog';
+import type { BlogPostPreviewComponentWithMetadatas, BlogCategoriesAndSubcategoriesAssoc, BlogSubcategoryPageProps, BlogTagId } from '@/types/Blog';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { FunctionComponent } from 'react';
 
@@ -46,7 +46,7 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
   const narrowedCategoryAndSubcategoryAssoc = `${category}.${subcategory}` as BlogCategoriesAndSubcategoriesAssoc;
   const title = scopedT(`${narrowedCategoryAndSubcategoryAssoc}.title`);
 
-  const expectedTagsIds = new Set<number>(tags.map((tag) => indexedBlogTagOptions[tag]));
+  const expectedTagsIds = new Set<BlogTagId>(tags.map((tag) => indexedBlogTagOptions[tag]));
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const maxBlogTagId = blogTagOptions.length - 1;
 

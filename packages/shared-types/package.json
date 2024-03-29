@@ -21,6 +21,7 @@
     "./JSON": "./src/JSON.ts",
     "./LanguageFlag": "./src/LanguageFlag.ts",
     "./Next": "./src/Next.ts",
+    "./Numbers": "./src/Numbers.ts",
     "./React": "./src/React.ts",
     "./StringManipulations": "./src/StringManipulations.ts"
   },
@@ -61,6 +62,9 @@
       ],
       "Next": [
         "./src/Next.ts"
+      ],
+      "Numbers": [
+        "./src/Numbers.ts"
       ],
       "React": [
         "./src/React.ts"

@@ -1,6 +1,6 @@
 'use client';
 
-import type { BlogPostPreviewComponentWithMetadatas } from '@/types/Blog';
+import type { BlogPostPreviewComponentWithMetadatas, BlogTagId } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { FunctionComponent } from 'react';
@@ -21,14 +21,14 @@ import { FILTERS_KEY } from '../helpers/constants';
 
 interface SubcategoryRelatedBlogPostsClientProps {
   postsCollection: BlogPostPreviewComponentWithMetadatas[];
-  expectedTagsIds: Set<number>;
+  expectedTagsIds: Set<BlogTagId>;
   elementsPerPage: number;
-  maxBlogTagId: number;
+  maxBlogTagId: BlogTagId;
   tags: BlogTag[];
   title: string;
 }
 
-function computePaginatedElements(selectedTagsIds: number[], postsCollection: BlogPostPreviewComponentWithMetadatas[]) {
+function computePaginatedElements(selectedTagsIds: BlogTagId[], postsCollection: BlogPostPreviewComponentWithMetadatas[]) {
   const maybeFilteredPostsCollection =
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     selectedTagsIds.length === 0
@@ -44,7 +44,7 @@ function computePaginatedElements(selectedTagsIds: number[], postsCollection: Bl
   return paginatedElements;
 }
 
-function computeSelectedTagsIdsInitialState(packedsIds: MaybeNull<string>, expectedTagsIds: Set<number>, maxId: number): number[] {
+function computeSelectedTagsIdsInitialState(packedsIds: MaybeNull<string>, expectedTagsIds: Set<BlogTagId>, maxId: BlogTagId): BlogTagId[] {
   try {
     const unpackedAndSanitizedFilters = getUnpackedAndSanitizedFilters(packedsIds, expectedTagsIds, maxId);
     return unpackedAndSanitizedFilters;

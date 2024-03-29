@@ -9,6 +9,7 @@ import type { BlogTaxonomyType } from '##/config/taxonomies/blog';
 import type { BlogPostSchema } from 'contentlayer/generated';
 import type BlogTaxonomy from '##/config/taxonomies/blog';
 import type { BlogArchitecture } from '@rtm/generated';
+import type { Id } from '@rtm/shared-types/Numbers';
 import type { ReactElement } from 'react';
 
 import type StrictBlog from './adapters/StrictBlog';
@@ -24,6 +25,7 @@ export type BlogPostType = Omit<BlogPostSchema, ContentlayerPhantomTypeKey | Bad
 export type BlogCategory = keyof BlogArchitecture;
 export type BlogSubcategoryFromUnknownCategory = BlogArchitecture[BlogCategory];
 export type UnknownBlogSlug = string;
+export type BlogTagId = Id;
 
 export type BlogPostPreviewComponentWithMetadatas = Pick<BlogPostType, 'tagsIndexes' | 'date' | 'tags'> & { blogPostPreviewComp: ReactElement };
 

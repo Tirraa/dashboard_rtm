@@ -1,4 +1,5 @@
-type Id = number;
+import type { Id } from '@rtm/shared-types/Numbers';
+
 type Char = string;
 type BufferGarbage = string;
 type EncodedString = string;
@@ -46,7 +47,7 @@ export function packIds(unpacked: Id[]): EncodedString {
   const bufferArray = new Uint8Array(buffer);
 
   const chunkSize = 0xffff;
-  const chunks: number[][] = [];
+  const chunks: Id[][] = [];
   for (let i = 0; i < bufferArray.length; i += chunkSize) {
     chunks.push(Array.from(bufferArray.subarray(i, i + chunkSize)));
   }

@@ -3,10 +3,11 @@
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { FunctionComponent } from 'react';
+import type { BlogTagId } from '@/types/Blog';
 
 import { CommandSeparator, CommandEmpty, CommandGroup, CommandInput, CommandList, CommandItem, Command } from '@/components/ui/Command';
-import { MIN_PAGES_AMOUNT, FIRST_PAGE_IDX, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import { getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/getSanitizedCurrentPage';
+import { FIRST_PAGE_IDX, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import { PopoverTrigger, PopoverContent, Popover } from '@/components/ui/Popover';
 import { indexedBlogTagOptions } from '##/lib/builders/unifiedImport';
 import { PlusCircledIcon, CheckIcon } from '@radix-ui/react-icons';
@@ -26,26 +27,26 @@ import { getUnpackedAndSanitizedFilters, sortUnpackedIds } from './helpers/funct
 import { FILTERS_KEY } from './helpers/constants';
 
 export interface TagsFiltersWidgetProps {
-  setSelectedTagsIds: (selectedTagsIds: number[]) => unknown;
-  expectedTagsIds: Set<number>;
-  selectedTagsIds: number[];
-  maxPagesAmount?: number;
+  setSelectedTagsIds: (selectedTagsIds: BlogTagId[]) => unknown;
+  expectedTagsIds: Set<BlogTagId>;
+  selectedTagsIds: BlogTagId[];
+  maxPagesAmount: number;
+  maxId: BlogTagId;
   tags: BlogTag[];
-  maxId: number;
 }
 
 const MEMORIZED_PAGE_BEFORE_FILTERING_KILLSWITCH = -1;
 
-function initializeMemorizedPageBeforeFiltering(searchParams: URLSearchParams, selectedTagsIds: number[], maxPagesAmount: number) {
+function initializeMemorizedPageBeforeFiltering(searchParams: URLSearchParams, selectedTagsIds: BlogTagId[], maxPagesAmount: number) {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   return selectedTagsIds.length !== 0 ? FIRST_PAGE_IDX : getSanitizedCurrentPage(searchParams, maxPagesAmount);
 }
 
 const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
-  maxPagesAmount: maxPagesAmountValue,
   setSelectedTagsIds,
   expectedTagsIds,
   selectedTagsIds,
+  maxPagesAmount,
   maxId,
   tags
 }) => {
@@ -54,8 +55,6 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   const searchParams = useSearchParams();
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const isOpenedRef = useRef<boolean>(isOpened);
-
-  const maxPagesAmount = maxPagesAmountValue ?? MIN_PAGES_AMOUNT;
 
   const memorizedPageBeforeFiltering = useRef<number>(initializeMemorizedPageBeforeFiltering(searchParams, selectedTagsIds, maxPagesAmount));
 
@@ -123,7 +122,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   }, [searchParams, selectedTagsIds, maxPagesAmount]);
 
   const updateRouterAndSetSelectedTags = useCallback(
-    (selectedTagsIds: number[]) => {
+    (selectedTagsIds: BlogTagId[]) => {
       const newSelectedTags = sortUnpackedIds(selectedTagsIds);
       const packedIds = packIds(newSelectedTags);
 
