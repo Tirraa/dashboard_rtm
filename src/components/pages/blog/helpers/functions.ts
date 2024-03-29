@@ -3,8 +3,6 @@ import type { Id } from '@rtm/shared-types/Numbers';
 
 import { unpackIds } from '@rtm/shared-lib/misc';
 
-import { FILTERS_KEY } from './constants';
-
 export const sortUnpackedIds = (unpacked: Id[]) => unpacked.sort((a, b) => a - b);
 
 /**
@@ -22,11 +20,10 @@ function generateUnpackedAndSanitizedFilters(packedIds: string, expectedIds: Set
 /**
  * @throws {RangeError}
  */
-export function getUnpackedAndSanitizedFilters(searchParams: URLSearchParams, expectedIds: Set<Id>, maxId: Id, __FILTERS_KEY: string = FILTERS_KEY) {
-  const packedIds: MaybeNull<string> = searchParams.get(__FILTERS_KEY);
+export function getUnpackedAndSanitizedFilters(searchParams: URLSearchParams, expectedIds: Set<Id>, maxId: Id, filtersKey: string) {
+  const packedIds: MaybeNull<string> = searchParams.get(filtersKey);
   if (packedIds === null) return [];
 
   const generatedUnpackedAndSanitizedFilters = generateUnpackedAndSanitizedFilters(packedIds, expectedIds, maxId);
-
   return generatedUnpackedAndSanitizedFilters;
 }

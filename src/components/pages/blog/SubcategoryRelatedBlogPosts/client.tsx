@@ -17,6 +17,7 @@ import BlogConfigClient from '@/config/Blog/client';
 
 import { getUnpackedAndSanitizedFilters } from '../helpers/functions';
 import SubcategoryRelatedBlogPostsClientToolbar from './toolbar';
+import { FILTERS_KEY } from '../helpers/constants';
 
 interface SubcategoryRelatedBlogPostsClientProps {
   postsCollection: BlogPostPreviewComponentWithMetadatas[];
@@ -45,7 +46,7 @@ function computePaginatedElements(selectedTagsIds: BlogTagId[], postsCollection:
 
 function computeSelectedTagsIdsInitialState(searchParams: URLSearchParams, expectedTagsIds: Set<BlogTagId>, maxId: BlogTagId): BlogTagId[] {
   try {
-    const unpackedAndSanitizedFilters = getUnpackedAndSanitizedFilters(searchParams, expectedTagsIds, maxId);
+    const unpackedAndSanitizedFilters = getUnpackedAndSanitizedFilters(searchParams, expectedTagsIds, maxId, FILTERS_KEY);
     return unpackedAndSanitizedFilters;
   } catch {
     return [];

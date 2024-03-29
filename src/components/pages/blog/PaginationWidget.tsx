@@ -20,7 +20,7 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  const pageFromUrl = getSanitizedCurrentPage(searchParams, pagesAmount);
+  const pageFromUrl = getSanitizedCurrentPage(searchParams, pagesAmount, PAGE_KEY);
 
   const generatePaginationsItems = useCallback(() => {
     const items = [];

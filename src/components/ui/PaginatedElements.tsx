@@ -6,6 +6,7 @@ import type { FunctionComponent, ReactElement } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 import { getSanitizedCurrentPage } from './helpers/PaginatedElements/getSanitizedCurrentPage';
+import { PAGE_KEY } from './helpers/PaginatedElements/constants';
 
 interface PaginatedElementsProps {
   paginatedElements: ReactElement[];
@@ -17,7 +18,7 @@ const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({ paginate
   const searchParams = useSearchParams();
 
   if (paginatedElements.length <= elementsPerPage) return paginatedElements;
-  const pageFromUrl = getSanitizedCurrentPage(searchParams, pagesAmount);
+  const pageFromUrl = getSanitizedCurrentPage(searchParams, pagesAmount, PAGE_KEY);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const startIndex = (pageFromUrl - 1) * elementsPerPage;

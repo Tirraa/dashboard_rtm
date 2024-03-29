@@ -54,6 +54,6 @@ describe('pack/unpackIds (unhappy paths)', () => {
   it('should NOT pack/unpack correctly (unhappy paths)', () => {
     expect(() => packIds(INVALID_IDS)).toThrow(RangeError);
     expect(() => unpackIds(INVALID_ENCODED_STRING_GLITCHED_BITSTREAM)).toThrow(RangeError);
-    expect(() => unpackIds(INVALID_ENCODED_STRING_GLITCHED_BASE64)).toThrow(/The string to be decoded is not correctly encoded./);
+    expect(() => unpackIds(INVALID_ENCODED_STRING_GLITCHED_BASE64)).toThrow('The string to be decoded is not correctly encoded.');
   });
 });

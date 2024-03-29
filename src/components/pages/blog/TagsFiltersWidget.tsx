@@ -40,7 +40,7 @@ const MEMORIZED_PAGE_BEFORE_FILTERING_KILLSWITCH = -1;
 
 function initializeMemorizedPageBeforeFiltering(searchParams: URLSearchParams, selectedTagsIds: BlogTagId[], maxPagesAmount: Limit) {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  return selectedTagsIds.length !== 0 ? FIRST_PAGE_IDX : getSanitizedCurrentPage(searchParams, maxPagesAmount);
+  return selectedTagsIds.length !== 0 ? FIRST_PAGE_IDX : getSanitizedCurrentPage(searchParams, maxPagesAmount, PAGE_KEY);
 }
 
 const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
@@ -73,7 +73,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   useEffect(() => {
     function unsafeCtxHandler() {
       try {
-        const unpackedAndCleanedFilters = getUnpackedAndSanitizedFilters(searchParams, expectedTagsIds, maxId);
+        const unpackedAndCleanedFilters = getUnpackedAndSanitizedFilters(searchParams, expectedTagsIds, maxId, FILTERS_KEY);
         setSelectedTagsIds(unpackedAndCleanedFilters);
 
         const sanitizedFilters = packIds(unpackedAndCleanedFilters);
@@ -106,7 +106,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     if (selectedTagsIds.length !== 0) return;
-    memorizedPageBeforeFiltering.current = getSanitizedCurrentPage(searchParams, maxPagesAmount);
+    memorizedPageBeforeFiltering.current = getSanitizedCurrentPage(searchParams, maxPagesAmount, PAGE_KEY);
   }, [searchParams, selectedTagsIds, maxPagesAmount]);
 
   useEffect(() => {
@@ -136,7 +136,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
         const pageId: MaybeNull<Id> = memorizedPageBeforeFiltering.current === FIRST_PAGE_IDX ? null : memorizedPageBeforeFiltering.current;
         const q = createURLSearchParams({ [FILTERS_KEY]: null, [PAGE_KEY]: pageId });
         router.push(q, { scroll: false });
-        memorizedPageBeforeFiltering.current = getSanitizedCurrentPage(searchParams, maxPagesAmount);
+        memorizedPageBeforeFiltering.current = getSanitizedCurrentPage(searchParams, maxPagesAmount, PAGE_KEY);
         return true;
       }
 
@@ -190,11 +190,9 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
       <Badge className="rounded-sm px-1 font-normal lg:hidden" variant="secondary">
         {selectedTagsIds.length}
       </Badge>
-      <div className="hidden space-x-1 lg:flex">
-        <Badge className="rounded-sm px-1 font-normal" variant="secondary">
-          {selectedTagsIds.length}
-        </Badge>
-      </div>
+      <Badge className="hidden space-x-1 rounded-sm px-1 font-normal lg:flex" variant="secondary">
+        {selectedTagsIds.length}
+      </Badge>
     </>
   );
 
