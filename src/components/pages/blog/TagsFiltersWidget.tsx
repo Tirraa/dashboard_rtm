@@ -7,8 +7,8 @@ import type { FunctionComponent } from 'react';
 import type { BlogTagId } from '@/types/Blog';
 
 import { CommandSeparator, CommandEmpty, CommandGroup, CommandInput, CommandList, CommandItem, Command } from '@/components/ui/Command';
-import { getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/getSanitizedCurrentPage';
-import { FIRST_PAGE_IDX, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
+import { FIRST_PAGE_PARAM, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
+import { getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/functions';
 import { PopoverTrigger, PopoverContent, Popover } from '@/components/ui/Popover';
 import { indexedBlogTagOptions } from '##/lib/builders/unifiedImport';
 import { PlusCircledIcon, CheckIcon } from '@radix-ui/react-icons';
@@ -16,15 +16,15 @@ import { useCallback, useEffect, useState, useRef } from 'react';
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
+import { sortNumbers, packIds } from '@rtm/shared-lib/misc';
 import { Separator } from '@/components/ui/Separator';
 import { getClientSideI18n } from '@/i18n/client';
-import { packIds } from '@rtm/shared-lib/misc';
 import { Badge } from '@/components/ui/Badge';
 import { capitalize } from '@/lib/str';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 
-import { getUnpackedAndSanitizedFilters, sortUnpackedIds } from './helpers/functions';
+import { getUnpackedAndSanitizedFilters } from './helpers/functions';
 import { FILTERS_KEY } from './helpers/constants';
 
 export interface TagsFiltersWidgetProps {
@@ -40,7 +40,7 @@ const MEMORIZED_PAGE_BEFORE_FILTERING_KILLSWITCH = -1;
 
 function initializeMemorizedPageBeforeFiltering(searchParams: URLSearchParams, selectedTagsIds: BlogTagId[], maxPagesAmount: Limit) {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  return selectedTagsIds.length !== 0 ? FIRST_PAGE_IDX : getSanitizedCurrentPage(searchParams, maxPagesAmount, PAGE_KEY);
+  return selectedTagsIds.length !== 0 ? FIRST_PAGE_PARAM : getSanitizedCurrentPage(searchParams, maxPagesAmount, PAGE_KEY);
 }
 
 const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
@@ -124,7 +124,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
 
   const updateRouterAndSetSelectedTags = useCallback(
     (selectedTagsIds: BlogTagId[]) => {
-      const newSelectedTags = sortUnpackedIds(selectedTagsIds);
+      const newSelectedTags = sortNumbers(selectedTagsIds);
       const packedIds = packIds(newSelectedTags);
 
       cachedSelectedTags.current = newSelectedTags;
@@ -133,7 +133,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         if (newSelectedTags.length !== 0) return false;
 
-        const pageId: MaybeNull<Id> = memorizedPageBeforeFiltering.current === FIRST_PAGE_IDX ? null : memorizedPageBeforeFiltering.current;
+        const pageId: MaybeNull<Id> = memorizedPageBeforeFiltering.current === FIRST_PAGE_PARAM ? null : memorizedPageBeforeFiltering.current;
         const q = createURLSearchParams({ [FILTERS_KEY]: null, [PAGE_KEY]: pageId });
         router.push(q, { scroll: false });
         memorizedPageBeforeFiltering.current = getSanitizedCurrentPage(searchParams, maxPagesAmount, PAGE_KEY);

@@ -19,6 +19,7 @@
     "./portable/html/resetWindowScroll": "./src/portable/html/resetWindowScroll.ts",
     "./portable/html/scrollToTop": "./src/portable/html/scrollToTop.ts",
     "./portable/misc/isEmptyObject": "./src/portable/misc/isEmptyObject.ts",
+    "./portable/misc/sortNumbers": "./src/portable/misc/sortNumbers.ts",
     "./portable/misc/urlsPackAndUnpack": "./src/portable/misc/urlsPackAndUnpack.ts",
     "./portable/react/getLinkTarget": "./src/portable/react/getLinkTarget.ts",
     "./portable/react/getRefCurrentPtr": "./src/portable/react/getRefCurrentPtr.ts",
@@ -71,6 +72,9 @@
       ],
       "portable/misc/isEmptyObject": [
         "./src/portable/misc/isEmptyObject.ts"
+      ],
+      "portable/misc/sortNumbers": [
+        "./src/portable/misc/sortNumbers.ts"
       ],
       "portable/misc/urlsPackAndUnpack": [
         "./src/portable/misc/urlsPackAndUnpack.ts"

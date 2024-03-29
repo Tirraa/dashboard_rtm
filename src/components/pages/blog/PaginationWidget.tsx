@@ -5,8 +5,8 @@ import type { Quantity } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
 
 import { PaginationPrevious, PaginationContent, PaginationItem, PaginationLink, PaginationNext, Pagination } from '@/components/ui/Pagination';
-import { getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/getSanitizedCurrentPage';
-import { FIRST_PAGE_IDX, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
+import { FIRST_PAGE_PARAM, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
+import { getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/functions';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
 import { useCallback } from 'react';
@@ -33,7 +33,7 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
             className={cn('border-none font-bold', {
               'pointer-events-none bg-primary text-white hover:bg-primary hover:text-white': isActive
             })}
-            href={pathname + createURLSearchParams({ [PAGE_KEY]: i === FIRST_PAGE_IDX ? null : i }, searchParams)}
+            href={pathname + createURLSearchParams({ [PAGE_KEY]: i === FIRST_PAGE_PARAM ? null : i }, searchParams)}
             isActive={isActive}
           >
             {i}
@@ -52,7 +52,7 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
   const prevBtnPageId = Math.max(1, pageFromUrl - 1);
   const previousBtn = (
     <PaginationPrevious
-      href={pathname + createURLSearchParams({ [PAGE_KEY]: prevBtnPageId === FIRST_PAGE_IDX ? null : prevBtnPageId }, searchParams)}
+      href={pathname + createURLSearchParams({ [PAGE_KEY]: prevBtnPageId === FIRST_PAGE_PARAM ? null : prevBtnPageId }, searchParams)}
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       className={cn({ 'pointer-events-none opacity-50': pageFromUrl <= 1 })}
     />
