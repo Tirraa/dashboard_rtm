@@ -1,14 +1,15 @@
 import type { AppPathAsIs, AppPath } from '@rtm/shared-types/Next';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
+import type { Index } from '@rtm/shared-types/Numbers';
 
 import ROUTES_ROOTS from '##/config/routes';
 
 import indexOfNthOccurrence from './portable/str/indexOfNthOccurrence';
 import isValidLanguageFlag from './portable/i18n/isValidLanguageFlag';
 
-function computePathnameI18nFlagUnstrict(pathname: AppPath, providedEndIndex?: number): string {
+function computePathnameI18nFlagUnstrict(pathname: AppPath, providedEndIndex?: Index): string {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const compute = (pathname: AppPath, endIndex: number) => (endIndex === -1 ? pathname.substring(1) : pathname.substring(1, endIndex));
+  const compute = (pathname: AppPath, endIndex: Index) => (endIndex === -1 ? pathname.substring(1) : pathname.substring(1, endIndex));
 
   if (providedEndIndex !== undefined) return compute(pathname, providedEndIndex);
 

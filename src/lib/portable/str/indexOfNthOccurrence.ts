@@ -1,5 +1,7 @@
+import type { Index, Count } from '@rtm/shared-types/Numbers';
+
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-function indexOfNthOccurrence(strHaystack: string, needle: string, n: number): number | -1 {
+function indexOfNthOccurrence(strHaystack: string, needle: string, n: Count): Index | -1 {
   let index = -1;
   for (let i = 0; i < n; i++) {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers

@@ -1,6 +1,7 @@
 'use client';
 
 import type { WithClassname } from '@rtm/shared-types/Next';
+import type { Quantity } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
 
 import { PaginationPrevious, PaginationContent, PaginationItem, PaginationLink, PaginationNext, Pagination } from '@/components/ui/Pagination';
@@ -12,7 +13,7 @@ import { useCallback } from 'react';
 import { cn } from '@/lib/tailwind';
 
 export interface PaginationWidgetProps extends Partial<WithClassname> {
-  pagesAmount: number;
+  pagesAmount: Quantity;
 }
 
 const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmount, className }) => {

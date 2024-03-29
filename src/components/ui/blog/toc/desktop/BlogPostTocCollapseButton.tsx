@@ -1,6 +1,7 @@
 'use client';
 
 import type { WithClassname } from '@rtm/shared-types/Next';
+import type { PxValue } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
 
 import DesktopBlogTocCollapseButtonIconStyle, { SIZE_PX_VALUE } from '@/components/config/styles/blogToc/desktopTocCollapseButtonIconStyle';
@@ -9,7 +10,7 @@ import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 
-export const COLLAPSE_BUTTON_HEIGTH_IN_PX: number = 30;
+export const COLLAPSE_BUTTON_HEIGTH_IN_PX: PxValue = 30;
 
 interface BlogPostTocCollapseButtonProps extends Partial<WithClassname> {
   setIsCollapsed: (isCollapsed: boolean) => unknown;

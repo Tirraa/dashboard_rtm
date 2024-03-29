@@ -6,6 +6,7 @@ import formatMessage from './config/formatMessage';
 // NOTE: formatMessage import MUST be at the top of the file
 
 import type { MaybeUndefined, MaybeNull, Couple } from '@rtm/shared-types/CustomUtilityTypes';
+import type { TimestampInMs } from '@rtm/shared-types/Numbers';
 
 import { dirname, join } from 'path';
 import { ArgError } from 'arg';
@@ -49,23 +50,23 @@ const BENCHMARK_ACCURACY = 5;
 const HANDLED_ERRORS_TYPES = [FeedbackError, BuilderError, ArgumentsValidatorError, ArgError];
 
 let clocks = {} as Partial<{
-  pagesTaxonomyCheckersStartTime: number;
-  blogTaxonomyCheckersStartTime: number;
-  pagesTaxonomyCheckersEndTime: number;
-  blogTaxonomyCheckersEndTime: number;
-  lpTaxonomyCheckersStartTime: number;
-  lpTaxonomyCheckersEndTime: number;
-  localesCheckersStartTime: number;
-  localesCheckersEndTime: number;
-  pagesCodegenStartTime: number;
-  utilsCodegenStartTime: number;
-  blogCodegenStartTime: number;
-  pagesCodegenEndTime: number;
-  utilsCodegenEndTime: number;
-  blogCodegenEndTime: number;
-  lpCodegenStartTime: number;
-  lpCodegenEndTime: number;
-  globalStartTime: number;
+  pagesTaxonomyCheckersStartTime: TimestampInMs;
+  blogTaxonomyCheckersStartTime: TimestampInMs;
+  pagesTaxonomyCheckersEndTime: TimestampInMs;
+  blogTaxonomyCheckersEndTime: TimestampInMs;
+  lpTaxonomyCheckersStartTime: TimestampInMs;
+  lpTaxonomyCheckersEndTime: TimestampInMs;
+  localesCheckersStartTime: TimestampInMs;
+  localesCheckersEndTime: TimestampInMs;
+  pagesCodegenStartTime: TimestampInMs;
+  utilsCodegenStartTime: TimestampInMs;
+  blogCodegenStartTime: TimestampInMs;
+  pagesCodegenEndTime: TimestampInMs;
+  utilsCodegenEndTime: TimestampInMs;
+  blogCodegenEndTime: TimestampInMs;
+  lpCodegenStartTime: TimestampInMs;
+  lpCodegenEndTime: TimestampInMs;
+  globalStartTime: TimestampInMs;
 }>;
 
 function resetBenchmarkClocks(): void {
@@ -107,7 +108,7 @@ function printPrebuildReport({
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const IGNORED = -1 as const;
 
-  const computeDelay = (maybeStart: MaybeUndefined<number>, maybeEnd: MaybeUndefined<number>) =>
+  const computeDelay = (maybeStart: MaybeUndefined<TimestampInMs>, maybeEnd: MaybeUndefined<TimestampInMs>) =>
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     maybeStart === undefined || maybeEnd === undefined ? IGNORED : (Math.abs(maybeEnd - maybeStart) / 1e3).toFixed(BENCHMARK_ACCURACY);
 

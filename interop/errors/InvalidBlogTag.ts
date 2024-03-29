@@ -1,3 +1,5 @@
+import type { Limit, Score } from '@rtm/shared-types/Numbers';
+
 import { EMPTY_BULLET, TAB_SIZE } from '../lib/misc/contentlayerCornerCases';
 import damerauLevenshtein from '../lib/misc/damerauLevenshtein';
 import { blogTagOptions } from '../lib/builders/unifiedImport';
@@ -14,7 +16,6 @@ const noSuggestionFound = 'No suggestion found';
 type Tag = string;
 type InvalidTag = string;
 type ValidTagSuggestion = Tag;
-type Score = number;
 type ScoresMap = Record<InvalidTag, Record<ValidTagSuggestion, Score>>;
 
 function onlyBestScoresMap(scoresMap: ScoresMap): ScoresMap {
@@ -52,7 +53,7 @@ function mergeScoresMaps(scoresMap1: ScoresMap, scoresMap2: ScoresMap, invalidBl
   return mergedScoresMap;
 }
 
-function buildDamerauMap(invalidBlogTags: InvalidTag[], __BLOG_TAGS_OPTIONS: readonly Tag[], __DAMERAU_THRESHOLD: number) {
+function buildDamerauMap(invalidBlogTags: InvalidTag[], __BLOG_TAGS_OPTIONS: readonly Tag[], __DAMERAU_THRESHOLD: Limit) {
   const damerauMap = {} as ScoresMap;
 
   for (const invalidTag of invalidBlogTags) {
@@ -113,7 +114,7 @@ function buildFeedback(scoresMap: ScoresMap): string {
   return errorMessage;
 }
 
-function buildHint(invalidBlogTags: InvalidTag[], __BLOG_TAGS_OPTIONS: readonly Tag[], __DAMERAU_THRESHOLD: number) {
+function buildHint(invalidBlogTags: InvalidTag[], __BLOG_TAGS_OPTIONS: readonly Tag[], __DAMERAU_THRESHOLD: Limit) {
   const damerauMap = onlyBestScoresMap(buildDamerauMap(invalidBlogTags, __BLOG_TAGS_OPTIONS, __DAMERAU_THRESHOLD));
   const startingWithMap = buildStartingWithMap(invalidBlogTags, __BLOG_TAGS_OPTIONS);
   const scoresMap = mergeScoresMaps(damerauMap, startingWithMap, invalidBlogTags);
@@ -142,7 +143,7 @@ class InvalidBlogTag extends Error {
   constructor(
     invalidBlogTags: InvalidTag[],
     __BLOG_TAGS_OPTIONS: readonly Tag[] = blogTagOptions,
-    __DAMERAU_THRESHOLD: number = DAMERAU_LEVENSHTEIN_THRESHOLD
+    __DAMERAU_THRESHOLD: Limit = DAMERAU_LEVENSHTEIN_THRESHOLD
   ) {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const tag = invalidBlogTags.length === 1 ? 'tag' : 'tags';

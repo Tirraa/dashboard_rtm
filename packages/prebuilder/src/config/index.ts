@@ -1,14 +1,15 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import type { Limit } from '@rtm/shared-types/Numbers';
 import type { FormatCodeSettings } from 'ts-morph';
 
 import config from '../../prebuilder.config';
 import defaultConfig from './defaultConfig';
 
-const MY_MAX_PAGE_TAXONOMY_LEN: number = config.maxPageTaxonomyLen ?? defaultConfig.maxPageTaxonomyLen;
-const MY_MAX_BLOG_TAXONOMY_LEN: number = config.maxBlogTaxonomyLen ?? defaultConfig.maxBlogTaxonomyLen;
-const MY_MAX_LP_TAXONOMY_LEN: number = config.maxLpTaxonomyLen ?? defaultConfig.maxLpTaxonomyLen;
+const MY_MAX_PAGE_TAXONOMY_LEN: Limit = config.maxPageTaxonomyLen ?? defaultConfig.maxPageTaxonomyLen;
+const MY_MAX_BLOG_TAXONOMY_LEN: Limit = config.maxBlogTaxonomyLen ?? defaultConfig.maxBlogTaxonomyLen;
+const MY_MAX_LP_TAXONOMY_LEN: Limit = config.maxLpTaxonomyLen ?? defaultConfig.maxLpTaxonomyLen;
 const MY_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS: string[] =
   config.i18nCategoriesRequiredExtraFields ?? defaultConfig.i18nCategoriesRequiredExtraFields;
 const MY_I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS: string[] =
@@ -31,9 +32,9 @@ export const FLAGS = {
   LANG: '--lang'
 } as const satisfies Record<PropertyKey, string>;
 
-export const MAX_PAGE_TAXONOMY_LEN: number = MY_MAX_PAGE_TAXONOMY_LEN;
-export const MAX_BLOG_TAXONOMY_LEN: number = MY_MAX_BLOG_TAXONOMY_LEN;
-export const MAX_LP_TAXONOMY_LEN: number = MY_MAX_LP_TAXONOMY_LEN;
+export const MAX_PAGE_TAXONOMY_LEN: Limit = MY_MAX_PAGE_TAXONOMY_LEN;
+export const MAX_BLOG_TAXONOMY_LEN: Limit = MY_MAX_BLOG_TAXONOMY_LEN;
+export const MAX_LP_TAXONOMY_LEN: Limit = MY_MAX_LP_TAXONOMY_LEN;
 
 export const I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = [...MY_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS, 'title', 'meta-description'];
 export const I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS: string[] = [...MY_I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS, 'title', 'meta-description'];

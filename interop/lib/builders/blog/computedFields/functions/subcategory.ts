@@ -1,5 +1,6 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { BlogSubcategoryFromUnknownCategory } from '@/types/Blog';
+import type { Index } from '@rtm/shared-types/Numbers';
 
 import {
   throwIfForbiddenToUseIndexErrorBlogCtx,
@@ -13,7 +14,7 @@ import {
  * @throws {InvalidArgumentsError}
  */
 function buildBlogPostSubcategoryFromStr(path: string): BlogSubcategoryFromUnknownCategory {
-  function subcategBuilder(path: string, firstSlashIndex: number, secondSlashIndex: number): BlogSubcategoryFromUnknownCategory {
+  function subcategBuilder(path: string, firstSlashIndex: Index, secondSlashIndex: Index): BlogSubcategoryFromUnknownCategory {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     if (secondSlashIndex !== -1) return path.substring(firstSlashIndex + 1, secondSlashIndex) as BlogSubcategoryFromUnknownCategory;
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers

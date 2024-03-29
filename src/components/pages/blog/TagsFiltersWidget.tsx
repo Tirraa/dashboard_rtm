@@ -2,6 +2,7 @@
 
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
+import type { Limit, Id } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
 import type { BlogTagId } from '@/types/Blog';
 
@@ -30,14 +31,14 @@ export interface TagsFiltersWidgetProps {
   setSelectedTagsIds: (selectedTagsIds: BlogTagId[]) => unknown;
   expectedTagsIds: Set<BlogTagId>;
   selectedTagsIds: BlogTagId[];
-  maxPagesAmount: number;
+  maxPagesAmount: Limit;
   maxId: BlogTagId;
   tags: BlogTag[];
 }
 
 const MEMORIZED_PAGE_BEFORE_FILTERING_KILLSWITCH = -1;
 
-function initializeMemorizedPageBeforeFiltering(searchParams: URLSearchParams, selectedTagsIds: BlogTagId[], maxPagesAmount: number) {
+function initializeMemorizedPageBeforeFiltering(searchParams: URLSearchParams, selectedTagsIds: BlogTagId[], maxPagesAmount: Limit) {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   return selectedTagsIds.length !== 0 ? FIRST_PAGE_IDX : getSanitizedCurrentPage(searchParams, maxPagesAmount);
 }
@@ -56,10 +57,10 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const isOpenedRef = useRef<boolean>(isOpened);
 
-  const memorizedPageBeforeFiltering = useRef<number>(initializeMemorizedPageBeforeFiltering(searchParams, selectedTagsIds, maxPagesAmount));
+  const memorizedPageBeforeFiltering = useRef<Id>(initializeMemorizedPageBeforeFiltering(searchParams, selectedTagsIds, maxPagesAmount));
 
   const firstLoad = useRef<boolean>(true);
-  const cachedSelectedTags = useRef<MaybeNull<number[]>>(null);
+  const cachedSelectedTags = useRef<MaybeNull<BlogTagId[]>>(null);
 
   const title = capitalize(globalT(`${i18ns.vocab}.tags`));
   const noResultFound = globalT(`${i18ns.blogTagsFilters}.no-result-found`);
@@ -132,7 +133,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         if (newSelectedTags.length !== 0) return false;
 
-        const pageId: MaybeNull<number> = memorizedPageBeforeFiltering.current === FIRST_PAGE_IDX ? null : memorizedPageBeforeFiltering.current;
+        const pageId: MaybeNull<Id> = memorizedPageBeforeFiltering.current === FIRST_PAGE_IDX ? null : memorizedPageBeforeFiltering.current;
         const q = createURLSearchParams({ [FILTERS_KEY]: null, [PAGE_KEY]: pageId });
         router.push(q, { scroll: false });
         memorizedPageBeforeFiltering.current = getSanitizedCurrentPage(searchParams, maxPagesAmount);

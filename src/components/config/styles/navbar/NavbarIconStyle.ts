@@ -1,8 +1,10 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import type { PxValue } from '@rtm/shared-types/Numbers';
+
 type NavbarIconStyleType = {
-  SIZE_PX_VALUE: number;
+  SIZE_PX_VALUE: PxValue;
 };
 
 const NAVBAR_ICON_STYLE: NavbarIconStyleType = {

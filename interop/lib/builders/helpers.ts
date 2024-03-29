@@ -1,9 +1,11 @@
+import type { Limit } from '@rtm/shared-types/Numbers';
+
 import { ForbiddenToUseIndexError, getPathWithoutExtension, indexOfNthOccurrence, INDEX_TOKEN } from './unifiedImport';
 
 /**
  * @throws {ForbiddenToUseIndexError}
  */
-function throwIfForbiddenToUseIndexError(sourceFilePath: string, minRequiredSlashesAmount: number) {
+function throwIfForbiddenToUseIndexError(sourceFilePath: string, minRequiredSlashesAmount: Limit) {
   const filepathWithoutExt = getPathWithoutExtension(sourceFilePath);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers

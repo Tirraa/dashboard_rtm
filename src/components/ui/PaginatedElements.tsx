@@ -1,5 +1,6 @@
 'use client';
 
+import type { Quantity, Limit } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent, ReactElement } from 'react';
 
 import { useSearchParams } from 'next/navigation';
@@ -8,8 +9,8 @@ import { getSanitizedCurrentPage } from './helpers/PaginatedElements/getSanitize
 
 interface PaginatedElementsProps {
   paginatedElements: ReactElement[];
-  elementsPerPage: number;
-  pagesAmount: number;
+  elementsPerPage: Limit;
+  pagesAmount: Quantity;
 }
 
 const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({ paginatedElements, elementsPerPage, pagesAmount }) => {

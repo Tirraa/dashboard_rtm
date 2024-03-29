@@ -1,9 +1,11 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import type { PxValue } from '@rtm/shared-types/Numbers';
+
 type NavbarStyleType = {
-  LOGO_HEIGHT: number;
-  LOGO_WIDTH: number;
+  LOGO_HEIGHT: PxValue;
+  LOGO_WIDTH: PxValue;
 };
 
 const NAVBAR_STYLE: NavbarStyleType = {

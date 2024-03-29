@@ -1,4 +1,5 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
+import type { Index } from '@rtm/shared-types/Numbers';
 import type { UnknownBlogSlug } from '@/types/Blog';
 
 import { throwIfForbiddenToUseIndexErrorBlogCtx, getPathWithIndexSuffix } from '../../../unifiedImport';
@@ -7,7 +8,7 @@ import { throwIfForbiddenToUseIndexErrorBlogCtx, getPathWithIndexSuffix } from '
  * @throws {InvalidArgumentsError}
  */
 function buildBlogPostSlugFromStr(flattenedPath: string, sourceFilePath: string): UnknownBlogSlug {
-  const slugBuilder = (flattenedPath: string, lastSlashIndex: number): UnknownBlogSlug =>
+  const slugBuilder = (flattenedPath: string, lastSlashIndex: Index): UnknownBlogSlug =>
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     flattenedPath.substring(lastSlashIndex + 1) as UnknownBlogSlug;
 

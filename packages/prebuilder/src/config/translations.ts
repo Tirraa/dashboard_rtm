@@ -1,6 +1,8 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import type { Index } from '@rtm/shared-types/Numbers';
+
 import { capitalize } from 'inflection';
 
 import {
@@ -365,7 +367,7 @@ type VocabTokens =
   | 'SLUGS';
 
 export const LOCALES = ['en', 'fr'] as const;
-export type Locale = (typeof LOCALES)[number];
+export type Locale = (typeof LOCALES)[Index];
 type VocabTokensCollection = Partial<Record<VocabTokens, Token>>;
 type VocabTokensWithGrammaticalVariants = Partial<Record<GrammaticalVariantsSumType, VocabTokensCollection>>;
 

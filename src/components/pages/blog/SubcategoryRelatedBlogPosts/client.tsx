@@ -3,6 +3,7 @@
 import type { BlogPostPreviewComponentWithMetadatas, BlogTagId } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
+import type { Limit } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
 
 import { MIN_PAGES_AMOUNT, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
@@ -22,8 +23,8 @@ import { FILTERS_KEY } from '../helpers/constants';
 interface SubcategoryRelatedBlogPostsClientProps {
   postsCollection: BlogPostPreviewComponentWithMetadatas[];
   expectedTagsIds: Set<BlogTagId>;
-  elementsPerPage: number;
   maxBlogTagId: BlogTagId;
+  elementsPerPage: Limit;
   tags: BlogTag[];
   title: string;
 }
@@ -68,7 +69,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
-  const [selectedTagsIds, setSelectedTagsIds] = useState<number[]>(computedSelectedTagsIdsInitialState);
+  const [selectedTagsIds, setSelectedTagsIds] = useState<BlogTagId[]>(computedSelectedTagsIdsInitialState);
 
   const paginatedElements = useMemo(() => computePaginatedElements(selectedTagsIds, postsCollection), [postsCollection, selectedTagsIds]);
 

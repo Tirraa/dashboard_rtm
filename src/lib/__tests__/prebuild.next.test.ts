@@ -1,5 +1,6 @@
 import type { NextFetchEvent, NextMiddleware, NextRequest } from 'next/server';
 import type { MiddlewareFactory } from '@rtm/shared-types/Next';
+import type { Index } from '@rtm/shared-types/Numbers';
 
 import { describe, expect, it, vi } from 'vitest';
 import { NextResponse } from 'next/server';
@@ -51,7 +52,7 @@ describe('stackMiddlewares', () => {
   });
 
   it('calls middlewares in the correct order', () => {
-    const order: number[] = [];
+    const order: Index[] = [];
     const middleware1: MiddlewareFactory = (next) => (req, evt) => {
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       order.push(1);

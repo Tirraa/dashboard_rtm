@@ -1,3 +1,5 @@
+import type { Limit } from '@rtm/shared-types/Numbers';
+
 import type { MaybeEmptyErrorsDetectionFeedback, ErrorsDetectionFeedback, Path } from '../types/Metadatas';
 import type { VocabKey } from '../config/translations';
 
@@ -10,7 +12,7 @@ const fs = require('fs/promises');
 
 export default async function sysLpCategoriesValidator(
   lpFolder: Path,
-  __MAX_LEN: number = MAX_LP_TAXONOMY_LEN
+  __MAX_LEN: Limit = MAX_LP_TAXONOMY_LEN
 ): Promise<MaybeEmptyErrorsDetectionFeedback> {
   let feedback: ErrorsDetectionFeedback = '';
 

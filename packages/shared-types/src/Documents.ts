@@ -1,9 +1,11 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import type { Score } from './Numbers';
+
 export type DocumentHeading = {
   content: string;
-  depth: number;
+  depth: Score;
   slug: string;
 };
 

@@ -1,5 +1,6 @@
 import type { MaybeUndefined, MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { DocumentHeading } from '@rtm/shared-types/Documents';
+import type { PxValue, Index } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
 
 import { APPROX_120_FPS_THROTTLE_TIMING_IN_MS } from '@/config/throttling';
@@ -25,14 +26,14 @@ require('scrollyfills').scrollend;
 
 const navbarElement: MaybeNull<HTMLElement> = getNavbar();
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-const navbarHeight: number = navbarElement ? navbarElement.getBoundingClientRect().height : 0;
+const navbarHeight: PxValue = navbarElement ? navbarElement.getBoundingClientRect().height : 0;
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-const BOTTOM_DEAD_ZONE_PX: number = navbarHeight * 2;
-const TOP_DEAD_ZONE_PX: number = navbarHeight;
+const BOTTOM_DEAD_ZONE_PX: PxValue = navbarHeight * 2;
+const TOP_DEAD_ZONE_PX: PxValue = navbarHeight;
 
-const SCROLL_TOP_OFFSET_ONCLICK_MAGIC: number = navbarHeight;
+const SCROLL_TOP_OFFSET_ONCLICK_MAGIC: PxValue = navbarHeight;
 
-const TOC_SCROLL_TOP_OFFSET_IN_PX: number = 172;
+const TOC_SCROLL_TOP_OFFSET_IN_PX: PxValue = 172;
 
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 const isAtTop = () => window.scrollY === 0;
@@ -56,15 +57,15 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const [scrollDirection, setScrollDirection] = useScrollDirection();
   const [currentHeading, setCurrentHeading] = useState<HeadingSlug>('');
 
-  const lastScrollY = useRef<number>(window.scrollY);
+  const lastScrollY = useRef<PxValue>(window.scrollY);
   const headingsRef = useRef<HTMLOListElement>(null);
   const tocRef = useRef<HTMLDivElement>(null);
   const forcedHeadingSlugRef = useRef<HeadingSlug>('');
   const muteUpdatesUntilScrollEnd = useRef<boolean>(false);
   const muteScrollEndNextDoubleCheck = useRef<boolean>(false);
 
-  const handleScrollUpRef = useRef<MaybeNull<(currentScrollY: number, oldScrollY: number, forced?: boolean) => void>>(null);
-  const handleScrollDownRef = useRef<MaybeNull<(currentScrollY: number, oldScrollY: number, forced?: boolean) => void>>(null);
+  const handleScrollUpRef = useRef<MaybeNull<(currentScrollY: PxValue, oldScrollY: PxValue, forced?: boolean) => void>>(null);
+  const handleScrollDownRef = useRef<MaybeNull<(currentScrollY: PxValue, oldScrollY: PxValue, forced?: boolean) => void>>(null);
 
   const slugAndIndexAssoc = useMemo(() => {
     return headings.reduce(
@@ -201,7 +202,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const isAtBottom = useCallback(() => getTotalVerticalScrollDistance() >= document.documentElement.scrollHeight, []);
 
   const populateHandleScrollUpAndHandleScrollDown = useCallback(() => {
-    handleScrollUpRef.current = (currentScrollY: number, oldScrollY: number, forced: boolean = false) => {
+    handleScrollUpRef.current = (currentScrollY: PxValue, oldScrollY: PxValue, forced: boolean = false) => {
       if (!isLargeScreen || muteScrollEndNextDoubleCheck.current) return;
 
       if (currentScrollY > oldScrollY) {
@@ -253,7 +254,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       return;
     };
 
-    handleScrollDownRef.current = (currentScrollY: number, oldScrollY: number, forced: boolean = false) => {
+    handleScrollDownRef.current = (currentScrollY: PxValue, oldScrollY: PxValue, forced: boolean = false) => {
       if (!isLargeScreen || muteScrollEndNextDoubleCheck.current) return;
 
       if (currentScrollY < oldScrollY) {
@@ -523,12 +524,12 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   useEffect(() => {
     if (!isLargeScreen) return;
 
-    function handleScrollUp(currentScrollY: number, oldScrollY: number) {
+    function handleScrollUp(currentScrollY: PxValue, oldScrollY: PxValue) {
       const handleScrollUpInstance = getRefCurrentPtr(handleScrollUpRef);
       if (handleScrollUpInstance) handleScrollUpInstance(currentScrollY, oldScrollY);
     }
 
-    function handleScrollDown(currentScrollY: number, oldScrollY: number) {
+    function handleScrollDown(currentScrollY: PxValue, oldScrollY: PxValue) {
       const handleScrollDownInstance = getRefCurrentPtr(handleScrollDownRef);
       if (handleScrollDownInstance) handleScrollDownInstance(currentScrollY, oldScrollY);
     }
@@ -655,4 +656,4 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 export default BlogPostTocDesktopInner;
 
 type HeadingSlug = string;
-type HeadingSlugIdx = number;
+type HeadingSlugIdx = Index;

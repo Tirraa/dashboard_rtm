@@ -1,5 +1,6 @@
 'use client';
 
+import type { PxValue } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
 
 import { APPROX_120_FPS_THROTTLE_TIMING_IN_MS } from '@/config/throttling';
@@ -17,7 +18,7 @@ import throttle from 'throttleit';
 require('scrollyfills').scrollend;
 
 export interface GoToTopButtonProps {
-  scrollYthreshold?: number;
+  scrollYthreshold?: PxValue;
 }
 
 const SCROLL_Y_THRESHOLD_DEFAULT = 400;
@@ -28,7 +29,7 @@ const GoToTopButton: FunctionComponent<GoToTopButtonProps> = ({ scrollYthreshold
 
   const btnRef = useRef<HTMLButtonElement>(null);
   const skipUpdateUntilScrollEnd = useRef<boolean>(false);
-  const scrollYthreshold = useRef<number>(scrollYthresholdValue ?? SCROLL_Y_THRESHOLD_DEFAULT);
+  const scrollYthreshold = useRef<PxValue>(scrollYthresholdValue ?? SCROLL_Y_THRESHOLD_DEFAULT);
 
   const ariaLabel = scopedT('goToTop');
 
