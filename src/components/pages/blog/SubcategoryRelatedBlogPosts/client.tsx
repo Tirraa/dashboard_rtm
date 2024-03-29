@@ -1,7 +1,6 @@
 'use client';
 
 import type { BlogPostPreviewComponentWithMetadatas, BlogTagId } from '@/types/Blog';
-import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { Limit } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
@@ -18,7 +17,6 @@ import BlogConfigClient from '@/config/Blog/client';
 
 import { getUnpackedAndSanitizedFilters } from '../helpers/functions';
 import SubcategoryRelatedBlogPostsClientToolbar from './toolbar';
-import { FILTERS_KEY } from '../helpers/constants';
 
 interface SubcategoryRelatedBlogPostsClientProps {
   postsCollection: BlogPostPreviewComponentWithMetadatas[];
@@ -45,9 +43,9 @@ function computePaginatedElements(selectedTagsIds: BlogTagId[], postsCollection:
   return paginatedElements;
 }
 
-function computeSelectedTagsIdsInitialState(packedsIds: MaybeNull<string>, expectedTagsIds: Set<BlogTagId>, maxId: BlogTagId): BlogTagId[] {
+function computeSelectedTagsIdsInitialState(searchParams: URLSearchParams, expectedTagsIds: Set<BlogTagId>, maxId: BlogTagId): BlogTagId[] {
   try {
-    const unpackedAndSanitizedFilters = getUnpackedAndSanitizedFilters(packedsIds, expectedTagsIds, maxId);
+    const unpackedAndSanitizedFilters = getUnpackedAndSanitizedFilters(searchParams, expectedTagsIds, maxId);
     return unpackedAndSanitizedFilters;
   } catch {
     return [];
@@ -65,7 +63,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   const router = useRouter();
   const searchParams = useSearchParams();
   const computedSelectedTagsIdsInitialState = useMemo(
-    () => computeSelectedTagsIdsInitialState(searchParams.get(FILTERS_KEY), expectedTagsIds, maxBlogTagId),
+    () => computeSelectedTagsIdsInitialState(searchParams, expectedTagsIds, maxBlogTagId),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );

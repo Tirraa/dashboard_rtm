@@ -1,10 +1,5 @@
 import type { Quantity, Id } from '@rtm/shared-types/Numbers';
 
-type Char = string;
-type BufferGarbage = string;
-type EncodedString = string;
-type Base64UrlAssoc = Record<Char, Char>;
-
 export const MIN_ID: Id = 0;
 
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -16,13 +11,13 @@ const BASE64URL_MAP: Base64UrlAssoc = {
   '=': ''
 };
 
-const REVERSED_BASE64URL_MAP: Base64UrlAssoc = Object.fromEntries(Object.entries(BASE64URL_MAP).map(([k, v]) => [v, k]));
+const FLIPPED_BASE64URL_MAP: Base64UrlAssoc = Object.fromEntries(Object.entries(BASE64URL_MAP).map(([k, v]) => [v, k]));
 
 // NOTE: Unsafe hard-coded RegEx for performance concerns, be diligent if you edit BASE64URL_MAP.
 const base64UrlEncode = (bufferString: BufferGarbage): EncodedString => btoa(bufferString).replace(/[+/=]/g, (c: Char) => BASE64URL_MAP[c]);
 
 // NOTE: Unsafe hard-coded RegEx for performance concerns, be diligent if you edit BASE64URL_MAP.
-const base64UrlDecode = (encodedString: EncodedString): BufferGarbage => atob(encodedString.replace(/[-_]/g, (c: Char) => REVERSED_BASE64URL_MAP[c]));
+const base64UrlDecode = (encodedString: EncodedString): BufferGarbage => atob(encodedString.replace(/[-_]/g, (c: Char) => FLIPPED_BASE64URL_MAP[c]));
 
 /**
  * @throws {RangeError}
@@ -91,3 +86,8 @@ export function unpackIds(encodedString: EncodedString): Id[] {
   if (currentShift !== 0) throw new RangeError();
   return unpacked;
 }
+
+type Char = string;
+type BufferGarbage = string;
+type EncodedString = string;
+type Base64UrlAssoc = Record<Char, Char>;

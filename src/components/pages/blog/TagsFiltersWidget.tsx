@@ -73,7 +73,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   useEffect(() => {
     function unsafeCtxHandler() {
       try {
-        const unpackedAndCleanedFilters = getUnpackedAndSanitizedFilters(searchParams.get(FILTERS_KEY), expectedTagsIds, maxId);
+        const unpackedAndCleanedFilters = getUnpackedAndSanitizedFilters(searchParams, expectedTagsIds, maxId);
         setSelectedTagsIds(unpackedAndCleanedFilters);
 
         const sanitizedFilters = packIds(unpackedAndCleanedFilters);
