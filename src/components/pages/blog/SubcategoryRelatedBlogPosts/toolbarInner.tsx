@@ -20,7 +20,7 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
   maxId,
   tags
 }) => (
-  <div className="my-4 flex items-center justify-between">
+  <nav className="my-4 flex items-center justify-between">
     <TagsFiltersWidget
       setSelectedTagsIds={setSelectedTagsIds}
       selectedTagsIds={selectedTagsIds}
@@ -31,7 +31,7 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
       tags={tags}
     />
     <PaginationWidget pagesAmount={pagesAmount} />
-  </div>
+  </nav>
 );
 
 export default SubcategoryRelatedBlogPostsClientToolbarInner;

@@ -228,6 +228,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
     </>
   );
 
+  // {ToDo} Don't show the button at all when disabled
   if (disabled)
     return (
       <button

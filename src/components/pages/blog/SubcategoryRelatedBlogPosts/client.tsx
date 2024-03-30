@@ -161,19 +161,24 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     maybeFilteredPostsCollection
   ]);
 
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const showToolbar = postsCollection.length > 1;
+
   return (
     <section className="w-full">
       <h1 className="mb-2 ltr:text-left rtl:text-right">{title}</h1>
-      <SubcategoryRelatedBlogPostsClientToolbar
-        extraCtx={{ pagesSlicesRelatedPostsIdsHistory, maybeFilteredPostsCollection, elementsPerPage, pagesAmount }}
-        setSelectedTagsIds={setSelectedTagsIds}
-        selectedTagsIds={selectedTagsIds}
-        expectedTagsIds={expectedTagsIds}
-        maxPagesAmount={maxPagesAmount}
-        pagesAmount={pagesAmount}
-        maxId={maxBlogTagId}
-        tags={tags}
-      />
+      {showToolbar && (
+        <SubcategoryRelatedBlogPostsClientToolbar
+          extraCtx={{ pagesSlicesRelatedPostsIdsHistory, maybeFilteredPostsCollection, elementsPerPage, pagesAmount }}
+          setSelectedTagsIds={setSelectedTagsIds}
+          selectedTagsIds={selectedTagsIds}
+          expectedTagsIds={expectedTagsIds}
+          maxPagesAmount={maxPagesAmount}
+          pagesAmount={pagesAmount}
+          maxId={maxBlogTagId}
+          tags={tags}
+        />
+      )}
       <div className="mb-4 flex min-w-full flex-col [&>article:not(:last-of-type)]:mb-6">{paginated}</div>
     </section>
   );
