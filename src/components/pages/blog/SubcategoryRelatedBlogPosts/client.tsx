@@ -2,9 +2,10 @@
 
 import type { BlogPostPreviewComponentWithMetadatas, BlogTagId } from '@/types/Blog';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
-import type { Limit } from '@rtm/shared-types/Numbers';
-import type { FunctionComponent } from 'react';
+import type { Count, Limit } from '@rtm/shared-types/Numbers';
+import type { FunctionComponent, ReactElement } from 'react';
 
+import { getPaginatedElementsCurrentSlice, getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/functions';
 import { MIN_PAGES_AMOUNT, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import { computePagesAmount } from '@/components/hooks/helpers/usePagination/functions';
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
@@ -68,6 +69,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
+
   const [selectedTagsIds, setSelectedTagsIds] = useState<BlogTagId[]>(computedSelectedTagsIdsInitialState);
 
   const paginatedElements = useMemo(() => computePaginatedElements(selectedTagsIds, postsCollection), [postsCollection, selectedTagsIds]);
@@ -75,7 +77,10 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   const maxPagesAmount = useMemo(() => computePagesAmount(postsCollection.length, elementsPerPage), [postsCollection, elementsPerPage]);
   const pagesAmount = usePagination(paginatedElements, elementsPerPage);
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const pagesAmountHistory = useRef<SlidingList>(new SlidingList(2));
+  const pagesAmountHistory = useRef<SlidingList<Count>>(new SlidingList(2));
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const pagesSlicesHistory = useRef<SlidingList<ReactElement[]>>(new SlidingList(2));
+  const currentPage = useMemo(() => getSanitizedCurrentPage(searchParams, pagesAmount, PAGE_KEY), [pagesAmount, searchParams]);
 
   const handlePageNumberReconcilation = useCallback(() => {
     function hardResetRouterAndSkip(): boolean {
@@ -92,21 +97,24 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       const historyLastIdx = historyLength - 1;
       const historyFirstIdx = 0;
-      if (pagesAmountHistoryPtr[historyLastIdx] === pagesAmountHistoryPtr[historyFirstIdx]) return true;
-      return false;
+      return pagesAmountHistoryPtr[historyLastIdx] === pagesAmountHistoryPtr[historyFirstIdx];
     }
 
-    function dontHandleFiltersClear() {
+    const clearedFilters = () => {
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      if (selectedTagsIds.length !== 0) return true;
+      if (selectedTagsIds.length === 0) {
+        pagesSlicesHistory.current.push(getPaginatedElementsCurrentSlice(currentPage, elementsPerPage, paginatedElements));
+        return true;
+      }
       return false;
-    }
+    };
 
     if (hardResetRouterAndSkip()) return;
     if (noPageNumberChange()) return;
-    if (dontHandleFiltersClear()) return;
-    // {ToDo} Handle hell here
-  }, [pagesAmount, router, searchParams, selectedTagsIds]);
+    if (clearedFilters()) return;
+    console.log(pagesSlicesHistory.current.getPtr());
+    // {ToDo} Handle page number reconciliation
+  }, [pagesAmount, router, searchParams, selectedTagsIds, currentPage, elementsPerPage, paginatedElements]);
 
   useEffect(() => {
     const pagesAmountHistoryPtr = pagesAmountHistory.current.getPtr();
@@ -118,22 +126,24 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       if (historyLength !== 0) return false;
       pagesAmountHistory.current.push(pagesAmount);
+      pagesSlicesHistory.current.push(getPaginatedElementsCurrentSlice(currentPage, elementsPerPage, paginatedElements));
       return true;
     }
 
     function maybeHandlePageNumberReconcilation() {
       if (pagesAmount === pagesAmountHistoryPtr[historyLastIdx]) return;
       pagesAmountHistory.current.push(pagesAmount);
+      pagesSlicesHistory.current.push(getPaginatedElementsCurrentSlice(currentPage, elementsPerPage, paginatedElements));
       handlePageNumberReconcilation();
     }
 
     if (initializePagesAmountHistoryAndSkip()) return;
     maybeHandlePageNumberReconcilation();
-  }, [pagesAmount, handlePageNumberReconcilation]);
+  }, [pagesAmount, handlePageNumberReconcilation, currentPage, elementsPerPage, paginatedElements]);
 
   const paginated = useMemo(
-    () => <PaginatedElements paginatedElements={paginatedElements} elementsPerPage={elementsPerPage} pagesAmount={pagesAmount} />,
-    [pagesAmount, paginatedElements, elementsPerPage]
+    () => <PaginatedElements paginatedElements={paginatedElements} elementsPerPage={elementsPerPage} currentPage={currentPage} />,
+    [paginatedElements, elementsPerPage, currentPage]
   );
 
   return (

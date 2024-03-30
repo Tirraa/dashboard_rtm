@@ -143,7 +143,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
       if (memorizedPageBeforeFiltering.current !== MEMORIZED_PAGE_BEFORE_FILTERING_KILLSWITCH) {
         if (handlePageResumeOnClearFiltersAndSkip()) return;
       } else {
-        // {ToDo} Handle some of the hell of page reconciliation here if newSelectedTags is empty?
+        // {ToDo} Handle some of the hell of page reconciliation here: handling cleared filters is a part of this component concerns
       }
 
       const q = createURLSearchParams({ [FILTERS_KEY]: packedIds }, searchParams);

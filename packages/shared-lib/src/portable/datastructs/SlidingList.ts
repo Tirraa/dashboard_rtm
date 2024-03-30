@@ -2,9 +2,9 @@ import type { Limit } from '@rtm/shared-types/Numbers';
 
 export const MIN_MAX_SIZE = 1;
 
-class SlidingList {
-  private elements: unknown[];
+class SlidingList<T = unknown> {
   private maxSize: Limit;
+  private elements: T[];
 
   /**
    * @throws {RangeError}
@@ -16,18 +16,18 @@ class SlidingList {
     this.elements = [];
   }
 
-  push(...elements: unknown[]): void {
+  push(...elements: T[]): void {
     for (const element of elements) {
       if (this.elements.length >= this.maxSize) this.elements.shift();
       this.elements.push(element);
     }
   }
 
-  getSnapshot(): unknown[] {
+  getSnapshot(): T[] {
     return [...this.elements];
   }
 
-  getPtr(): unknown[] {
+  getPtr(): T[] {
     return this.elements;
   }
 }
