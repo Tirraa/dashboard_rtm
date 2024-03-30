@@ -1,14 +1,14 @@
 'use client';
 
 import type { BlogPostPreviewComponentWithMetadatas, BlogTagId } from '@/types/Blog';
+import type { Quantity, Count, Limit } from '@rtm/shared-types/Numbers';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
-import type { Count, Limit } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent, ReactElement } from 'react';
 
 import { getPaginatedElementsCurrentSlice, getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/functions';
 import { MIN_PAGES_AMOUNT, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import { computePagesAmount } from '@/components/hooks/helpers/usePagination/functions';
-import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useState, Fragment, useMemo, useRef } from 'react';
 import PaginatedElements from '@/components/ui/PaginatedElements';
 import usePagination from '@/components/hooks/usePagination';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
@@ -40,7 +40,7 @@ function computePaginatedElements(selectedTagsIds: BlogTagId[], postsCollection:
     .sort((post1, post2) =>
       BlogConfigClient.DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE(new Date(post1.date), new Date(post2.date))
     )
-    .map((post) => post.blogPostPreviewComp);
+    .map((post) => <Fragment key={post._id}>{post.blogPostPreviewComp}</Fragment>);
 
   return paginatedElements;
 }
@@ -52,6 +52,14 @@ function computeSelectedTagsIdsInitialState(searchParams: URLSearchParams, expec
   } catch {
     return [];
   }
+}
+
+function computeFreshSliceMetadatas(currentPage: Count, elementsPerPage: Quantity, paginatedElements: ReactElement[]): FragmentKey[] {
+  const currentSlice = getPaginatedElementsCurrentSlice(currentPage, elementsPerPage, paginatedElements);
+  const metadatas: FragmentKey[] = [];
+
+  for (const element of currentSlice) if (element.key) metadatas.push(element.key);
+  return metadatas;
 }
 
 const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlogPostsClientProps> = ({
@@ -79,7 +87,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const pagesAmountHistory = useRef<SlidingList<Count>>(new SlidingList(2));
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const pagesSlicesHistory = useRef<SlidingList<ReactElement[]>>(new SlidingList(2));
+  const pagesSlicesRelatedPostsIdsHistory = useRef<SlidingList<FragmentKey[]>>(new SlidingList(2));
   const currentPage = useMemo(() => getSanitizedCurrentPage(searchParams, pagesAmount, PAGE_KEY), [pagesAmount, searchParams]);
 
   const handlePageNumberReconcilation = useCallback(() => {
@@ -103,7 +111,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     const clearedFilters = () => {
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       if (selectedTagsIds.length === 0) {
-        pagesSlicesHistory.current.push(getPaginatedElementsCurrentSlice(currentPage, elementsPerPage, paginatedElements));
+        pagesSlicesRelatedPostsIdsHistory.current.push(computeFreshSliceMetadatas(currentPage, elementsPerPage, paginatedElements));
         return true;
       }
       return false;
@@ -112,7 +120,9 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     if (hardResetRouterAndSkip()) return;
     if (noPageNumberChange()) return;
     if (clearedFilters()) return;
-    console.log(pagesSlicesHistory.current.getPtr());
+
+    const pagesSlicesRelatedPostsIdsHistoryPtr = pagesSlicesRelatedPostsIdsHistory.current.getPtr();
+    console.log(pagesSlicesRelatedPostsIdsHistoryPtr);
     // {ToDo} Handle page number reconciliation
   }, [pagesAmount, router, searchParams, selectedTagsIds, currentPage, elementsPerPage, paginatedElements]);
 
@@ -126,14 +136,15 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       if (historyLength !== 0) return false;
       pagesAmountHistory.current.push(pagesAmount);
-      pagesSlicesHistory.current.push(getPaginatedElementsCurrentSlice(currentPage, elementsPerPage, paginatedElements));
+      pagesSlicesRelatedPostsIdsHistory.current.push(computeFreshSliceMetadatas(currentPage, elementsPerPage, paginatedElements));
+
       return true;
     }
 
     function maybeHandlePageNumberReconcilation() {
       if (pagesAmount === pagesAmountHistoryPtr[historyLastIdx]) return;
       pagesAmountHistory.current.push(pagesAmount);
-      pagesSlicesHistory.current.push(getPaginatedElementsCurrentSlice(currentPage, elementsPerPage, paginatedElements));
+      pagesSlicesRelatedPostsIdsHistory.current.push(computeFreshSliceMetadatas(currentPage, elementsPerPage, paginatedElements));
       handlePageNumberReconcilation();
     }
 
@@ -164,3 +175,5 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 };
 
 export default SubcategoryRelatedBlogPostsClient;
+
+type FragmentKey = string;

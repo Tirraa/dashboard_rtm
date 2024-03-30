@@ -31,7 +31,8 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
     blogPostPreviewComp: <BlogPostPreview key={`${post._raw.flattenedPath}-paginated-blog-post`} language={language} post={post} />,
     tagsIndexes: post.tagsIndexes,
     tags: post.tags,
-    date: post.date
+    date: post.date,
+    _id: post._id
   }));
 
   if (blogSubcategoryShouldTriggerNotFound(postsCollection)) notFound();
