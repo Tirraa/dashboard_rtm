@@ -11,6 +11,7 @@ import PaginationWidget from '../PaginationWidget';
 export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends TagsFiltersWidgetProps, PaginationWidgetProps {}
 
 const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<SubcategoryRelatedBlogPostsClientToolbarInnerProps> = ({
+  memorizedPageBeforeFiltering,
   setSelectedTagsIds,
   expectedTagsIds,
   selectedTagsIds,
@@ -21,6 +22,7 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
 }) => (
   <div className="my-4 flex items-center justify-between">
     <TagsFiltersWidget
+      memorizedPageBeforeFiltering={memorizedPageBeforeFiltering}
       setSelectedTagsIds={setSelectedTagsIds}
       selectedTagsIds={selectedTagsIds}
       expectedTagsIds={expectedTagsIds}

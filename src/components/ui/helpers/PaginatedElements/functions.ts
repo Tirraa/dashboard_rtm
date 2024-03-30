@@ -22,6 +22,17 @@ function getPaginatedElementsCurrentSliceStartAndEndIndexes(page: Count, element
   return [startIndex, endIndex];
 }
 
+export function findPageNumberByPaginatedElementIndex(paginatedElementIndex: Index, elementsPerPage: Quantity, pagesAmount: Quantity): Count {
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const lastIndex: Limit = elementsPerPage * pagesAmount - 1;
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const sanitizedIndex: Index = Math.min(Math.max(0, paginatedElementIndex), lastIndex);
+
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const retrievedPage: Count = Math.trunc(sanitizedIndex / elementsPerPage) + 1;
+  return retrievedPage;
+}
+
 export function getPaginatedElementsCurrentSlice(page: Count, elementsPerPage: Quantity, paginatedElements: ReactElement[]): ReactElement[] {
   if (paginatedElements.length <= elementsPerPage) return paginatedElements;
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers

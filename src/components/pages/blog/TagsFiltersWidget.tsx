@@ -2,8 +2,8 @@
 
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
-import type { Limit, Id } from '@rtm/shared-types/Numbers';
-import type { FunctionComponent } from 'react';
+import type { Limit, Count, Id } from '@rtm/shared-types/Numbers';
+import type { FunctionComponent, MutableRefObject } from 'react';
 import type { BlogTagId } from '@/types/Blog';
 
 import { CommandSeparator, CommandEmpty, CommandGroup, CommandInput, CommandList, CommandItem, Command } from '@/components/ui/Command';
@@ -29,6 +29,7 @@ import { FILTERS_KEY } from './helpers/constants';
 
 export interface TagsFiltersWidgetProps {
   setSelectedTagsIds: (selectedTagsIds: BlogTagId[]) => unknown;
+  memorizedPageBeforeFiltering: MutableRefObject<Count>;
   expectedTagsIds: Set<BlogTagId>;
   selectedTagsIds: BlogTagId[];
   maxPagesAmount: Limit;
@@ -38,12 +39,8 @@ export interface TagsFiltersWidgetProps {
 
 const MEMORIZED_PAGE_BEFORE_FILTERING_KILLSWITCH = -1;
 
-function initializeMemorizedPageBeforeFiltering(searchParams: URLSearchParams, selectedTagsIds: BlogTagId[], maxPagesAmount: Limit) {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  return selectedTagsIds.length !== 0 ? FIRST_PAGE_PARAM : getSanitizedCurrentPage(searchParams, maxPagesAmount, PAGE_KEY);
-}
-
 const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
+  memorizedPageBeforeFiltering,
   setSelectedTagsIds,
   expectedTagsIds,
   selectedTagsIds,
@@ -56,8 +53,6 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   const searchParams = useSearchParams();
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const isOpenedRef = useRef<boolean>(isOpened);
-
-  const memorizedPageBeforeFiltering = useRef<Id>(initializeMemorizedPageBeforeFiltering(searchParams, selectedTagsIds, maxPagesAmount));
 
   const firstLoad = useRef<boolean>(true);
   const cachedSelectedTags = useRef<MaybeNull<BlogTagId[]>>(null);
@@ -107,7 +102,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     if (selectedTagsIds.length !== 0) return;
     memorizedPageBeforeFiltering.current = getSanitizedCurrentPage(searchParams, maxPagesAmount, PAGE_KEY);
-  }, [searchParams, selectedTagsIds, maxPagesAmount]);
+  }, [searchParams, selectedTagsIds, maxPagesAmount, memorizedPageBeforeFiltering]);
 
   useEffect(() => {
     isOpenedRef.current = isOpened;
@@ -120,7 +115,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
       memorizedPageBeforeFiltering.current = MEMORIZED_PAGE_BEFORE_FILTERING_KILLSWITCH;
     }
     killswitchMemorizedPageBeforeFilteringOnPaginationWidgetClick();
-  }, [searchParams, selectedTagsIds, maxPagesAmount]);
+  }, [searchParams, selectedTagsIds, maxPagesAmount, memorizedPageBeforeFiltering]);
 
   const updateRouterAndSetSelectedTags = useCallback(
     (selectedTagsIds: BlogTagId[]) => {
@@ -149,7 +144,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
       const q = createURLSearchParams({ [FILTERS_KEY]: packedIds }, searchParams);
       router.push(q, { scroll: false });
     },
-    [router, searchParams, maxPagesAmount]
+    [router, searchParams, maxPagesAmount, memorizedPageBeforeFiltering]
   );
 
   const generateCommandItems = useCallback(
