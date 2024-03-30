@@ -1,14 +1,16 @@
 'use client';
 
+import type { BlogPostPreviewComponentWithMetadatas, BlogTagId } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { Quantity, Limit, Id } from '@rtm/shared-types/Numbers';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
-import type { Limit, Count, Id } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent, MutableRefObject } from 'react';
-import type { BlogTagId } from '@/types/Blog';
+import type { SlidingList } from '@rtm/shared-lib/datastructs';
+import type { ReactElementKey } from '@rtm/shared-types/React';
 
 import { CommandSeparator, CommandEmpty, CommandGroup, CommandInput, CommandList, CommandItem, Command } from '@/components/ui/Command';
+import { computeReconciliatedPageIndex, getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/functions';
 import { FIRST_PAGE_PARAM, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
-import { getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/functions';
 import { PopoverTrigger, PopoverContent, Popover } from '@/components/ui/Popover';
 import { indexedBlogTagOptions } from '##/lib/builders/unifiedImport';
 import { PlusCircledIcon, CheckIcon } from '@radix-ui/react-icons';
@@ -28,8 +30,13 @@ import { getUnpackedAndSanitizedFilters } from './helpers/functions';
 import { FILTERS_KEY } from './helpers/constants';
 
 export interface TagsFiltersWidgetProps {
+  extraCtx?: {
+    pagesSlicesRelatedPostsIdsHistory: MutableRefObject<SlidingList<ReactElementKey[]>>;
+    maybeFilteredPostsCollection: BlogPostPreviewComponentWithMetadatas[];
+    elementsPerPage: Limit;
+    pagesAmount: Quantity;
+  };
   setSelectedTagsIds: (selectedTagsIds: BlogTagId[]) => unknown;
-  memorizedPageBeforeFiltering: MutableRefObject<Count>;
   expectedTagsIds: Set<BlogTagId>;
   selectedTagsIds: BlogTagId[];
   maxPagesAmount: Limit;
@@ -40,11 +47,11 @@ export interface TagsFiltersWidgetProps {
 const MEMORIZED_PAGE_BEFORE_FILTERING_KILLSWITCH = -1;
 
 const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
-  memorizedPageBeforeFiltering,
   setSelectedTagsIds,
   expectedTagsIds,
   selectedTagsIds,
   maxPagesAmount,
+  extraCtx,
   maxId,
   tags
 }) => {
@@ -53,6 +60,10 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   const searchParams = useSearchParams();
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const isOpenedRef = useRef<boolean>(isOpened);
+  const memorizedPageBeforeFiltering = useRef<Id>(
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    selectedTagsIds.length !== 0 ? FIRST_PAGE_PARAM : getSanitizedCurrentPage(searchParams, maxPagesAmount, PAGE_KEY)
+  );
 
   const firstLoad = useRef<boolean>(true);
   const cachedSelectedTags = useRef<MaybeNull<BlogTagId[]>>(null);
@@ -124,7 +135,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
 
       cachedSelectedTags.current = newSelectedTags;
 
-      function handlePageResumeOnClearFiltersAndSkip(): boolean {
+      function handlePageResumeOnClearFiltersThenSkip(): boolean {
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         if (newSelectedTags.length !== 0) return false;
 
@@ -135,16 +146,31 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
         return true;
       }
 
-      if (memorizedPageBeforeFiltering.current !== MEMORIZED_PAGE_BEFORE_FILTERING_KILLSWITCH) {
-        if (handlePageResumeOnClearFiltersAndSkip()) return;
-      } else {
-        // {ToDo} Handle some of the hell of page reconciliation here: handling cleared filters is a part of this component concerns
+      function filtersClearWithPageReconciliationInferenceThenSkip() {
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        if (newSelectedTags.length !== 0 || !extraCtx) return false;
+        const pagesSlicesRelatedPostsIdsHistoryPtr = extraCtx.pagesSlicesRelatedPostsIdsHistory.current.getPtr();
+        const newPageIndex = computeReconciliatedPageIndex(
+          pagesSlicesRelatedPostsIdsHistoryPtr,
+          extraCtx.maybeFilteredPostsCollection,
+          extraCtx.elementsPerPage,
+          extraCtx.pagesAmount
+        );
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        if (newPageIndex === -1) return false;
+        const q = createURLSearchParams({ [PAGE_KEY]: newPageIndex, [FILTERS_KEY]: null }, searchParams);
+        router.replace(q, { scroll: false });
+        return true;
       }
+
+      if (memorizedPageBeforeFiltering.current !== MEMORIZED_PAGE_BEFORE_FILTERING_KILLSWITCH) {
+        if (handlePageResumeOnClearFiltersThenSkip()) return;
+      } else if (filtersClearWithPageReconciliationInferenceThenSkip()) return;
 
       const q = createURLSearchParams({ [FILTERS_KEY]: packedIds }, searchParams);
       router.push(q, { scroll: false });
     },
-    [router, searchParams, maxPagesAmount, memorizedPageBeforeFiltering]
+    [router, searchParams, maxPagesAmount, memorizedPageBeforeFiltering, extraCtx]
   );
 
   const generateCommandItems = useCallback(

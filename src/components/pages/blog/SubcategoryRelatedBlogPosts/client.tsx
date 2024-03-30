@@ -1,18 +1,19 @@
 'use client';
 
 import type { BlogPostPreviewComponentWithMetadatas, BlogTagId } from '@/types/Blog';
-import type { Count, Index, Limit, Id } from '@rtm/shared-types/Numbers';
+import type { Count, Index, Limit } from '@rtm/shared-types/Numbers';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
+import type { ReactElementKey } from '@rtm/shared-types/React';
 import type { FunctionComponent } from 'react';
 
 import {
-  findPageNumberByPaginatedElementIndex,
   getPaginatedElementsCurrentSlice,
+  computeReconciliatedPageIndex,
   getSanitizedCurrentPage
 } from '@/components/ui/helpers/PaginatedElements/functions';
-import { FIRST_PAGE_PARAM, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import { computePagesAmount } from '@/components/hooks/helpers/usePagination/functions';
 import { useCallback, useEffect, useState, Fragment, useMemo, useRef } from 'react';
+import { PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import PaginatedElements from '@/components/ui/PaginatedElements';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -88,13 +89,8 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   const maxPagesAmount = useMemo(() => computePagesAmount(postsCollection.length, elementsPerPage), [postsCollection, elementsPerPage]);
   const pagesAmount = usePagination(paginatedElements, elementsPerPage);
 
-  const memorizedPageBeforeFiltering = useRef<Id>(
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    selectedTagsIds.length !== 0 ? FIRST_PAGE_PARAM : getSanitizedCurrentPage(searchParams, maxPagesAmount, PAGE_KEY)
-  );
-
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const pagesSlicesRelatedPostsIdsHistory = useRef<SlidingList<FragmentKey[]>>(new SlidingList(2));
+  const pagesSlicesRelatedPostsIdsHistory = useRef<SlidingList<ReactElementKey[]>>(new SlidingList(2));
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const oldPage = useRef<Count>(-1);
@@ -107,32 +103,11 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     () => <PaginatedElements paginatedElements={paginatedElements} elementsPerPage={elementsPerPage} currentPage={currentPage} />,
     [paginatedElements, elementsPerPage, currentPage]
   );
+
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const getReconciliatedPageIndex = useCallback((): Index | -1 => {
     const pagesSlicesRelatedPostsIdsHistoryPtr = pagesSlicesRelatedPostsIdsHistory.current.getPtr();
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (pagesSlicesRelatedPostsIdsHistoryPtr.length !== 2) return -1;
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const oldSliceIds = pagesSlicesRelatedPostsIdsHistoryPtr[0];
-
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    let firstCommonElementIndex: Index | -1 = -1;
-
-    for (const postId of oldSliceIds) {
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      const maybeFirstCommonElementIndex: Index | -1 = maybeFilteredPostsCollection.findIndex((post) => post._id === postId);
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      if (maybeFirstCommonElementIndex !== -1) {
-        firstCommonElementIndex = maybeFirstCommonElementIndex;
-        break;
-      }
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (firstCommonElementIndex === -1) return -1;
-
-    const newPage = findPageNumberByPaginatedElementIndex(firstCommonElementIndex, elementsPerPage, pagesAmount);
-    return newPage;
+    return computeReconciliatedPageIndex(pagesSlicesRelatedPostsIdsHistoryPtr, maybeFilteredPostsCollection, elementsPerPage, pagesAmount);
   }, [elementsPerPage, pagesAmount, maybeFilteredPostsCollection]);
 
   useEffect(() => {
@@ -141,7 +116,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 
     const slice = getPaginatedElementsCurrentSlice(currentPage, elementsPerPage, paginatedElements);
 
-    let keys: FragmentKey[] = [];
+    let keys: ReactElementKey[] = [];
     for (const element of slice) if (element.key) keys.push(element.key);
 
     oldPage.current = currentPage;
@@ -190,7 +165,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     <section className="w-full">
       <h1 className="mb-2 ltr:text-left rtl:text-right">{title}</h1>
       <SubcategoryRelatedBlogPostsClientToolbar
-        memorizedPageBeforeFiltering={memorizedPageBeforeFiltering}
+        extraCtx={{ pagesSlicesRelatedPostsIdsHistory, maybeFilteredPostsCollection, elementsPerPage, pagesAmount }}
         setSelectedTagsIds={setSelectedTagsIds}
         selectedTagsIds={selectedTagsIds}
         expectedTagsIds={expectedTagsIds}
@@ -205,5 +180,3 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 };
 
 export default SubcategoryRelatedBlogPostsClient;
-
-type FragmentKey = string;

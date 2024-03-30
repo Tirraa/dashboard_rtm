@@ -1,5 +1,7 @@
 import type { Quantity, Count, Limit, Index } from '@rtm/shared-types/Numbers';
 import type { MaybeNull, Couple } from '@rtm/shared-types/CustomUtilityTypes';
+import type { BlogPostPreviewComponentWithMetadatas } from '@/types/Blog';
+import type { ReactElementKey } from '@rtm/shared-types/React';
 import type { ReactElement } from 'react';
 
 import { FIRST_PAGE_PARAM } from './constants';
@@ -22,7 +24,7 @@ function getPaginatedElementsCurrentSliceStartAndEndIndexes(page: Count, element
   return [startIndex, endIndex];
 }
 
-export function findPageNumberByPaginatedElementIndex(paginatedElementIndex: Index, elementsPerPage: Quantity, pagesAmount: Quantity): Count {
+function findPageNumberByPaginatedElementIndex(paginatedElementIndex: Index, elementsPerPage: Quantity, pagesAmount: Quantity): Count {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const lastIndex: Limit = elementsPerPage * pagesAmount - 1;
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -31,6 +33,42 @@ export function findPageNumberByPaginatedElementIndex(paginatedElementIndex: Ind
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const retrievedPage: Count = Math.trunc(sanitizedIndex / elementsPerPage) + 1;
   return retrievedPage;
+}
+
+function findFirstCommonElementIndex(
+  oldSliceIds: ReactElementKey[],
+  maybeFilteredPostsCollection: BlogPostPreviewComponentWithMetadatas[]
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+): Index | -1 {
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  for (const postId of oldSliceIds) {
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const maybeFirstCommonElementIndex: Index | -1 = maybeFilteredPostsCollection.findIndex((post) => post._id === postId);
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    if (maybeFirstCommonElementIndex !== -1) return maybeFirstCommonElementIndex;
+  }
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  return -1;
+}
+
+export function computeReconciliatedPageIndex(
+  pagesSlicesRelatedPostsIdsHistory: Array<ReactElementKey[]>,
+  maybeFilteredPostsCollection: BlogPostPreviewComponentWithMetadatas[],
+  elementsPerPage: Quantity,
+  pagesAmount: Quantity
+) {
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  if (pagesSlicesRelatedPostsIdsHistory.length <= 1) return -1;
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const oldSliceIds = pagesSlicesRelatedPostsIdsHistory[0];
+
+  const firstCommonElementIndex = findFirstCommonElementIndex(oldSliceIds, maybeFilteredPostsCollection);
+
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  if (firstCommonElementIndex === -1) return -1;
+
+  const newPage = findPageNumberByPaginatedElementIndex(firstCommonElementIndex, elementsPerPage, pagesAmount);
+  return newPage;
 }
 
 export function getPaginatedElementsCurrentSlice(page: Count, elementsPerPage: Quantity, paginatedElements: ReactElement[]): ReactElement[] {
