@@ -17,19 +17,21 @@ import {
 import { FIRST_PAGE_PARAM, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import { getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/functions';
 import { preserveKeyboardNavigation, createURLSearchParams } from '@rtm/shared-lib/html';
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { DropdownMenuItem } from '@/components/ui/DropdownMenu';
-import { useSearchParams, usePathname } from 'next/navigation';
 import { useCallback } from 'react';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
 export interface PaginationWidgetProps extends Partial<WithClassname> {
+  isBottomWidget: boolean;
   pagesAmount: Quantity;
 }
 
-const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmount, className }) => {
+const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ isBottomWidget, pagesAmount, className }) => {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const pathname = usePathname();
   const isLargeScreen = useIsLargeScreen();
 
@@ -59,8 +61,24 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
     const buildDropdownMenu = (dropdownItems: ReactElement[], pageNumberIndicator?: Count) =>
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       dropdownItems.length === 0 ? null : (
-        <PaginationEllipsis pageNumberIndicator={pageNumberIndicator} dropdownItems={dropdownItems} key={'ellipsis'} />
+        <PaginationEllipsis
+          pageNumberIndicator={pageNumberIndicator}
+          isBottomWidget={isBottomWidget}
+          dropdownItems={dropdownItems}
+          key={'ellipsis'}
+        />
       );
+
+    const onLinkClick = (event: React.MouseEvent, href: AppPath, isBottomWidget: boolean) => {
+      event.preventDefault();
+
+      if (!isBottomWidget) {
+        router.push(href, { scroll: false });
+        return;
+      }
+
+      router.push(href, { scroll: true });
+    };
 
     const buildForDesktop = () => {
       const dropdownItems = [];
@@ -83,12 +101,14 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
 
         if (i === FIRST_PAGE_PARAM && activePageIsLastPage) continue;
 
+        const href = getItemHref(i, pathname, searchParams);
         const item = (
           <DropdownMenuItem onClick={(event) => preserveKeyboardNavigation(event.target)} key={`page-${i}`} className="p-0">
             <Link
               className="block w-full border-none px-2 py-1.5 text-center font-bold"
-              href={getItemHref(i, pathname, searchParams)}
+              onClick={(event) => onLinkClick(event, href, isBottomWidget)}
               title={String(i)}
+              href={href}
             >
               {i}
             </Link>
@@ -106,6 +126,7 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
 
       for (let i = FIRST_PAGE_PARAM; i <= pagesAmount; i++) {
         const isActive = pageFromUrl === i;
+        const href = getItemHref(i, pathname, searchParams);
 
         const item = (
           <DropdownMenuItem onClick={(event) => preserveKeyboardNavigation(event.target)} className="h-10 p-0" key={`page-${i}`}>
@@ -113,8 +134,9 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
               className={cn('flex h-full w-full items-center justify-center border-none px-2 text-center font-bold', {
                 'rounded-md bg-primary': isActive
               })}
-              href={getItemHref(i, pathname, searchParams)}
+              onClick={(event) => onLinkClick(event, href, isBottomWidget)}
               title={String(i)}
+              href={href}
             >
               {i}
             </Link>
@@ -129,7 +151,7 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
 
     if (isLargeScreen) return buildForDesktop();
     return buildForMobile();
-  }, [pagesAmount, pageFromUrl, pathname, searchParams, isLargeScreen]);
+  }, [pagesAmount, pageFromUrl, pathname, searchParams, isLargeScreen, router, isBottomWidget]);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (pagesAmount <= 1) return null;

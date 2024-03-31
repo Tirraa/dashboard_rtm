@@ -73,10 +73,11 @@ PaginationNext.displayName = 'PaginationNext';
 
 const PaginationEllipsis = ({
   pageNumberIndicator,
+  isBottomWidget,
   dropdownItems,
   className,
   ...props
-}: React.ComponentProps<'button'> & { dropdownItems: React.ReactElement[]; pageNumberIndicator?: Count }) => {
+}: React.ComponentProps<'button'> & { dropdownItems: React.ReactElement[]; pageNumberIndicator?: Count; isBottomWidget: boolean }) => {
   const scopedT = useScopedI18n(i18ns.vocab);
   const [isOpened, setIsOpened] = React.useState<boolean>(false);
 
@@ -102,7 +103,17 @@ const PaginationEllipsis = ({
           <span className="sr-only">{scopedT('more-pages')}</span>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-fit">{dropdownItems}</DropdownMenuContent>
+      <DropdownMenuContent
+        onCloseAutoFocus={(event) => {
+          if (isBottomWidget) event.preventDefault();
+        }}
+        onClick={() => {
+          if (isBottomWidget) setIsOpened(false);
+        }}
+        className="w-fit"
+      >
+        {dropdownItems}
+      </DropdownMenuContent>
     </DropdownMenu>
   );
 };

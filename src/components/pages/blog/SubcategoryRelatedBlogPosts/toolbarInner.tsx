@@ -15,6 +15,7 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
   expectedTagsIds,
   selectedTagsIds,
   maxPagesAmount,
+  isBottomWidget,
   pagesAmount,
   extraCtx,
   maxId,
@@ -30,7 +31,7 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
       maxId={maxId}
       tags={tags}
     />
-    <PaginationWidget pagesAmount={pagesAmount} />
+    <PaginationWidget isBottomWidget={isBottomWidget} pagesAmount={pagesAmount} />
   </nav>
 );
 
