@@ -16,10 +16,10 @@ import {
 } from '@/components/ui/Pagination';
 import { FIRST_PAGE_PARAM, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import { getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/functions';
+import { preserveKeyboardNavigation, createURLSearchParams } from '@rtm/shared-lib/html';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { DropdownMenuItem } from '@/components/ui/DropdownMenu';
 import { useSearchParams, usePathname } from 'next/navigation';
-import { createURLSearchParams } from '@rtm/shared-lib/html';
 import { useCallback } from 'react';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
@@ -84,7 +84,7 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
         if (i === FIRST_PAGE_PARAM && activePageIsLastPage) continue;
 
         const item = (
-          <DropdownMenuItem key={`page-${i}`} className="p-0">
+          <DropdownMenuItem onClick={(event) => preserveKeyboardNavigation(event.target)} key={`page-${i}`} className="p-0">
             <Link
               className="block w-full border-none px-2 py-1.5 text-center font-bold"
               href={getItemHref(i, pathname, searchParams)}
@@ -108,7 +108,7 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
         const isActive = pageFromUrl === i;
 
         const item = (
-          <DropdownMenuItem className="h-10 p-0" key={`page-${i}`}>
+          <DropdownMenuItem onClick={(event) => preserveKeyboardNavigation(event.target)} className="h-10 p-0" key={`page-${i}`}>
             <Link
               className={cn('flex h-full w-full items-center justify-center border-none px-2 text-center font-bold', {
                 'rounded-md bg-primary': isActive
