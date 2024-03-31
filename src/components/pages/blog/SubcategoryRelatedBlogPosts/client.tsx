@@ -19,6 +19,7 @@ import { createURLSearchParams } from '@rtm/shared-lib/html';
 import { useSearchParams, useRouter } from 'next/navigation';
 import usePagination from '@/components/hooks/usePagination';
 import { SlidingList } from '@rtm/shared-lib/datastructs';
+import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import BlogConfigClient from '@/config/Blog/client';
 
 import { getUnpackedAndSanitizedFilters } from '../helpers/functions';
@@ -106,7 +107,11 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const getReconciliatedPageIndex = useCallback((): Index | -1 => {
-    const pagesSlicesRelatedPostsIdsHistoryPtr = pagesSlicesRelatedPostsIdsHistory.current.getPtr();
+    const pagesSlicesRelatedPostsIdsHistoryInstance = getRefCurrentPtr(pagesSlicesRelatedPostsIdsHistory);
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    if (!pagesSlicesRelatedPostsIdsHistoryInstance) return -1;
+
+    const pagesSlicesRelatedPostsIdsHistoryPtr = pagesSlicesRelatedPostsIdsHistoryInstance.getPtr();
     return computeReconciliatedPageIndex(pagesSlicesRelatedPostsIdsHistoryPtr, maybeFilteredPostsCollection, elementsPerPage, pagesAmount);
   }, [elementsPerPage, pagesAmount, maybeFilteredPostsCollection]);
 
@@ -114,29 +119,35 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     const currentPaginatedElements = paginatedElements.length;
     if (oldPage.current === currentPage && oldPaginatedElementsLength.current === currentPaginatedElements) return;
 
+    const oldSelectedTagsIdsInstance = getRefCurrentPtr(oldSelectedTagsIds);
+    if (!oldSelectedTagsIdsInstance) return;
+
     const slice = getPaginatedElementsCurrentSlice(currentPage, elementsPerPage, paginatedElements);
 
-    let keys: ReactElementKey[] = [];
+    const keys: ReactElementKey[] = [];
     for (const element of slice) if (element.key) keys.push(element.key);
 
     oldPage.current = currentPage;
     oldPaginatedElementsLength.current = currentPaginatedElements;
 
+    const pagesSlicesRelatedPostsIdsHistoryInstance = getRefCurrentPtr(pagesSlicesRelatedPostsIdsHistory);
+    if (!pagesSlicesRelatedPostsIdsHistoryInstance) return;
+
     pagesSlicesRelatedPostsIdsHistory.current.push(keys);
 
     const selectedTagsIdsSet = new Set(selectedTagsIds);
-    const commons = oldSelectedTagsIds.current.filter((x) => selectedTagsIdsSet.has(x));
+    const commons = oldSelectedTagsIdsInstance.filter((x) => selectedTagsIdsSet.has(x));
 
-    if (commons.length === selectedTagsIds.length && commons.length === oldSelectedTagsIds.current.length) return;
+    if (commons.length === selectedTagsIds.length && commons.length === oldSelectedTagsIdsInstance.length) return;
 
-    const hasUncheckedTags = selectedTagsIds.length < oldSelectedTagsIds.current.length;
+    const hasUncheckedTags = selectedTagsIds.length < oldSelectedTagsIdsInstance.length;
 
     oldSelectedTagsIds.current = [...selectedTagsIds];
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     if (selectedTagsIds.length === 0) return;
 
-    const pagesSlicesRelatedPostsIdsHistoryPtr = pagesSlicesRelatedPostsIdsHistory.current.getPtr();
+    const pagesSlicesRelatedPostsIdsHistoryPtr = pagesSlicesRelatedPostsIdsHistoryInstance.getPtr();
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const oldSliceIds = pagesSlicesRelatedPostsIdsHistoryPtr[0];
 

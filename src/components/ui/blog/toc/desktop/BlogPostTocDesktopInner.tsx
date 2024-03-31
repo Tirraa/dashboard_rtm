@@ -86,6 +86,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
   const dropOldHeadingFocus = useCallback(() => {
     const headingsRefInstance = getRefCurrentPtr(headingsRef);
+    if (!headingsRefInstance) return;
+
     const maybeCurrentlyFocusedHeadingParent: MaybeUndefined<Element> = Array.from(headingsRefInstance.children).find((headingLi) =>
       Array.from(headingLi.children).find((child) => child === document.activeElement)
     );
