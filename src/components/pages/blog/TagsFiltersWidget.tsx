@@ -173,7 +173,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
     [router, searchParams, maxPagesAmount, memorizedPageBeforeFiltering, extraCtx]
   );
 
-  const generateCommandItems = useCallback(
+  const buildCommandItems = useCallback(
     () =>
       tags.map((tag) => {
         const tagName = globalT(`${i18ns.blogTags}.${tag}`);
@@ -260,7 +260,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
           <CommandInput placeholder={title} />
           <CommandList>
             <CommandEmpty>{noResultFound}</CommandEmpty>
-            <CommandGroup>{generateCommandItems()}</CommandGroup>
+            <CommandGroup>{buildCommandItems()}</CommandGroup>
             {/* eslint-disable-next-line @typescript-eslint/no-magic-numbers */}
             {selectedTagsIds.length > 0 && clearFiltersBtn}
           </CommandList>

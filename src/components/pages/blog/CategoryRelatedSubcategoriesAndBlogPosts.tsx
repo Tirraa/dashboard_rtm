@@ -41,12 +41,13 @@ const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<CategoryRelate
   const posts = gettedOnTheFlyPosts.sort((post1, post2) =>
     BlogConfig.DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_CATEGORY_PAGE(new Date(post1.date), new Date(post2.date))
   );
-  const generatedContent = await blogCategoryPageBuilder(posts, category, language);
+
+  const content = await blogCategoryPageBuilder(posts, category, language);
 
   return (
     <div className="w-full">
       <h1 className="text-center">{scopedT(`${category}._title`)}</h1>
-      {generatedContent}
+      {content}
     </div>
   );
 };

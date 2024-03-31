@@ -1,12 +1,16 @@
 import type { ButtonProps } from '@/components/ui/Button';
+import type { Count } from '@rtm/shared-types/Numbers';
 
 import { DotsHorizontalIcon, ChevronRightIcon, ChevronLeftIcon } from '@radix-ui/react-icons';
+import { DropdownMenuTrigger, DropdownMenu } from '@radix-ui/react-dropdown-menu';
 import { buttonVariants } from '@/components/ui/Button';
 import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 import * as React from 'react';
 import Link from 'next/link';
+
+import { DropdownMenuContent } from './DropdownMenu';
 
 const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => {
   const scopedT = useScopedI18n(i18ns.vocab);
@@ -67,16 +71,42 @@ const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof Pag
 };
 PaginationNext.displayName = 'PaginationNext';
 
-const PaginationEllipsis = ({ className, ...props }: React.ComponentProps<'span'>) => {
+const PaginationEllipsis = ({
+  pageNumberIndicator,
+  dropdownItems,
+  className,
+  ...props
+}: React.ComponentProps<'button'> & { dropdownItems: React.ReactElement[]; pageNumberIndicator?: Count }) => {
   const scopedT = useScopedI18n(i18ns.vocab);
+  const [isOpened, setIsOpened] = React.useState<boolean>(false);
+
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  if (dropdownItems.length === 0) return null;
+
+  const onOpenChange = (opened: boolean) => setIsOpened(opened);
 
   return (
-    <span className={cn('flex h-9 w-9 items-center justify-center', className)} aria-hidden {...props}>
-      <DotsHorizontalIcon className="h-4 w-4" />
-      <span className="sr-only">{scopedT('more-pages')}</span>
-    </span>
+    <DropdownMenu onOpenChange={onOpenChange} open={isOpened}>
+      <DropdownMenuTrigger asChild>
+        <button
+          className={cn(
+            'inline-flex h-10 w-10 items-center justify-center rounded-md border-none font-bold hover:bg-accent hover:text-accent-foreground',
+            {
+              'bg-accent text-accent-foreground': isOpened
+            },
+            className
+          )}
+          {...props}
+        >
+          {pageNumberIndicator !== undefined ? <span>{pageNumberIndicator}</span> : <DotsHorizontalIcon className="h-4 w-4" />}
+          <span className="sr-only">{scopedT('more-pages')}</span>
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-fit">{dropdownItems}</DropdownMenuContent>
+    </DropdownMenu>
   );
 };
+
 PaginationEllipsis.displayName = 'PaginationEllipsis';
 
 export { PaginationPrevious, PaginationEllipsis, PaginationContent, PaginationLink, PaginationItem, PaginationNext, Pagination };
