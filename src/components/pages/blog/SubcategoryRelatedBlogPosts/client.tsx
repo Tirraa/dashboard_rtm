@@ -112,8 +112,8 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     if (!pagesSlicesRelatedPostsIdsHistoryInstance) return -1;
 
     const pagesSlicesRelatedPostsIdsHistoryPtr = pagesSlicesRelatedPostsIdsHistoryInstance.getPtr();
-    return computeReconciliatedPageIndex(pagesSlicesRelatedPostsIdsHistoryPtr, maybeFilteredPostsCollection, elementsPerPage, pagesAmount);
-  }, [elementsPerPage, pagesAmount, maybeFilteredPostsCollection]);
+    return computeReconciliatedPageIndex(pagesSlicesRelatedPostsIdsHistoryPtr, maybeFilteredPostsCollection, elementsPerPage);
+  }, [elementsPerPage, maybeFilteredPostsCollection]);
 
   useEffect(() => {
     const currentPaginatedElements = paginatedElements.length;
@@ -151,10 +151,21 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const oldSliceIds = pagesSlicesRelatedPostsIdsHistoryPtr[0];
 
-    if (hasUncheckedTags) {
-      const currentSliceHasCommonElementsWithOldSlice = maybeFilteredPostsCollection.some((post) => oldSliceIds.includes(post._id));
-      if (currentSliceHasCommonElementsWithOldSlice) return;
+    function uncheckedTagCtxHandlerThenSkip(
+      hasUncheckedTags: boolean,
+      pagesSlicesRelatedPostsIdsHistoryPtr: Array<ReactElementKey[]>,
+      oldSliceIds: ReactElementKey[]
+    ): boolean {
+      if (!hasUncheckedTags) return false;
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const currentSliceIds = pagesSlicesRelatedPostsIdsHistoryPtr[1];
+      if (currentSliceIds === undefined) return false;
+      const currentSliceHasCommonElementsWithOldSlice = currentSliceIds.some((postId) => oldSliceIds.includes(postId));
+      if (currentSliceHasCommonElementsWithOldSlice) return true;
+      return false;
     }
+
+    if (uncheckedTagCtxHandlerThenSkip(hasUncheckedTags, pagesSlicesRelatedPostsIdsHistoryPtr, oldSliceIds)) return;
 
     const newPageIndex = getReconciliatedPageIndex();
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -180,7 +191,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       <h1 className="mb-2 ltr:text-left rtl:text-right">{title}</h1>
       {showToolbar && (
         <SubcategoryRelatedBlogPostsClientToolbar
-          extraCtx={{ pagesSlicesRelatedPostsIdsHistory, maybeFilteredPostsCollection, elementsPerPage, pagesAmount }}
+          extraCtx={{ pagesSlicesRelatedPostsIdsHistory, maybeFilteredPostsCollection, elementsPerPage }}
           setSelectedTagsIds={setSelectedTagsIds}
           selectedTagsIds={selectedTagsIds}
           expectedTagsIds={expectedTagsIds}

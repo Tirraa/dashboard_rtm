@@ -24,11 +24,9 @@ function getPaginatedElementsCurrentSliceStartAndEndIndexes(page: Count, element
   return [startIndex, endIndex];
 }
 
-function findPageNumberByPaginatedElementIndex(paginatedElementIndex: Index, elementsPerPage: Quantity, pagesAmount: Quantity): Count {
+function findPageNumberByPaginatedElementIndex(paginatedElementIndex: Index, elementsPerPage: Quantity): Count {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const lastIndex: Limit = elementsPerPage * pagesAmount - 1;
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const sanitizedIndex: Index = Math.min(Math.max(0, paginatedElementIndex), lastIndex);
+  const sanitizedIndex: Index = Math.max(0, paginatedElementIndex);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const retrievedPage: Count = Math.trunc(sanitizedIndex / elementsPerPage) + 1;
@@ -40,7 +38,6 @@ function findFirstCommonElementIndex(
   maybeFilteredPostsCollection: BlogPostPreviewComponentWithMetadatas[]
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 ): Index | -1 {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   for (const postId of oldSliceIds) {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const maybeFirstCommonElementIndex: Index | -1 = maybeFilteredPostsCollection.findIndex((post) => post._id === postId);
@@ -54,26 +51,25 @@ function findFirstCommonElementIndex(
 export function computeReconciliatedPageIndex(
   pagesSlicesRelatedPostsIdsHistory: Array<ReactElementKey[]>,
   maybeFilteredPostsCollection: BlogPostPreviewComponentWithMetadatas[],
-  elementsPerPage: Quantity,
-  pagesAmount: Quantity
+  elementsPerPage: Quantity
 ) {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (pagesSlicesRelatedPostsIdsHistory.length <= 1) return -1;
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const oldSliceIds = pagesSlicesRelatedPostsIdsHistory[0];
 
-  const firstCommonElementIndex = findFirstCommonElementIndex(oldSliceIds, maybeFilteredPostsCollection);
+  // {ToDo} Handling ASC sort is okay, but what about DESC sort (something like 'findLastCommonElementIndex')?
+  const commonElementIndex = findFirstCommonElementIndex(oldSliceIds, maybeFilteredPostsCollection);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  if (firstCommonElementIndex === -1) return -1;
+  if (commonElementIndex === -1) return -1;
 
-  const newPage = findPageNumberByPaginatedElementIndex(firstCommonElementIndex, elementsPerPage, pagesAmount);
+  const newPage = findPageNumberByPaginatedElementIndex(commonElementIndex, elementsPerPage);
   return newPage;
 }
 
 export function getPaginatedElementsCurrentSlice(page: Count, elementsPerPage: Quantity, paginatedElements: ReactElement[]): ReactElement[] {
   if (paginatedElements.length <= elementsPerPage) return paginatedElements;
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const [startIndex, endIndex] = getPaginatedElementsCurrentSliceStartAndEndIndexes(page, elementsPerPage);
   const currentSlice = paginatedElements.slice(startIndex, endIndex);
 

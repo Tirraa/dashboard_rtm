@@ -139,7 +139,6 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
   const previousBtn = (
     <PaginationPrevious
       href={pathname + createURLSearchParams({ [PAGE_KEY]: prevBtnPageId === FIRST_PAGE_PARAM ? null : prevBtnPageId }, searchParams)}
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       className={cn('max-lg:h-10 max-lg:w-10 max-lg:p-0', { 'pointer-events-none opacity-50': pageFromUrl <= FIRST_PAGE_PARAM })}
     />
   );

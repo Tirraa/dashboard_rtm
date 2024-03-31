@@ -2,11 +2,11 @@
 
 import type { BlogPostPreviewComponentWithMetadatas, BlogTagId } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
-import type { Quantity, Limit, Id } from '@rtm/shared-types/Numbers';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { FunctionComponent, MutableRefObject } from 'react';
 import type { SlidingList } from '@rtm/shared-lib/datastructs';
 import type { ReactElementKey } from '@rtm/shared-types/React';
+import type { Limit, Id } from '@rtm/shared-types/Numbers';
 
 import { CommandSeparator, CommandEmpty, CommandGroup, CommandInput, CommandList, CommandItem, Command } from '@/components/ui/Command';
 import { computeReconciliatedPageIndex, getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/functions';
@@ -34,7 +34,6 @@ export interface TagsFiltersWidgetProps {
     pagesSlicesRelatedPostsIdsHistory: MutableRefObject<SlidingList<ReactElementKey[]>>;
     maybeFilteredPostsCollection: BlogPostPreviewComponentWithMetadatas[];
     elementsPerPage: Limit;
-    pagesAmount: Quantity;
   };
   setSelectedTagsIds: (selectedTagsIds: BlogTagId[]) => unknown;
   expectedTagsIds: Set<BlogTagId>;
@@ -153,8 +152,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
         const newPageIndex = computeReconciliatedPageIndex(
           pagesSlicesRelatedPostsIdsHistoryPtr,
           extraCtx.maybeFilteredPostsCollection,
-          extraCtx.elementsPerPage,
-          extraCtx.pagesAmount
+          extraCtx.elementsPerPage
         );
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         if (newPageIndex === -1) return false;
