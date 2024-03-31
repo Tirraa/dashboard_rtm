@@ -2,7 +2,7 @@ import type { RefObject } from 'react';
 
 import getRefCurrentPtr from '../react/getRefCurrentPtr';
 import resetWindowScroll from './resetWindowScroll';
-import scrollToTop from './scrollToTop';
+import snapToTopLeft from './snapToTopLeft';
 
 function resetScroll<T extends HTMLElement>(scrollableElementToResetRef?: RefObject<T>, alsoResetWindowScroll?: boolean) {
   if (!scrollableElementToResetRef) {
@@ -11,7 +11,7 @@ function resetScroll<T extends HTMLElement>(scrollableElementToResetRef?: RefObj
   }
 
   const scrollableElementToResetInstance = getRefCurrentPtr(scrollableElementToResetRef);
-  if (scrollableElementToResetInstance) scrollToTop(scrollableElementToResetInstance);
+  if (scrollableElementToResetInstance) snapToTopLeft(scrollableElementToResetInstance);
   if (alsoResetWindowScroll) resetWindowScroll();
 }
 

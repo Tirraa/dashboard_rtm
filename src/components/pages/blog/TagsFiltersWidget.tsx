@@ -71,8 +71,6 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   const noResultFound = globalT(`${i18ns.blogTagsFilters}.no-result-found`);
   const clearFilters = globalT(`${i18ns.blogTagsFilters}.clear-filters`);
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const disabled = tags.length < 1;
   const classNameBase = 'flex h-10 items-center rounded-md px-2 py-4';
 
   useEffect(() => {
@@ -225,18 +223,6 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
       </CommandGroup>
     </>
   );
-
-  // {ToDo} Don't show the button at all when disabled
-  if (disabled)
-    return (
-      <button
-        className={cn(classNameBase, 'select-none text-inherit text-opacity-75 dark:text-muted-foreground dark:text-opacity-100')}
-        aria-disabled="true"
-      >
-        <PlusCircledIcon className="mr-2 h-5 w-5" />
-        {title}
-      </button>
-    );
 
   return (
     <Popover onOpenChange={(isOpen: boolean) => setIsOpened(isOpen)} open={isOpened}>

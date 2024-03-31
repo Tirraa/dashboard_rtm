@@ -1,4 +1,4 @@
-import { scrollToTop } from './scrollToTop';
+import snapToTopLeft from './snapToTopLeft';
 
-const resetWindowScroll = () => scrollToTop();
+const resetWindowScroll = () => snapToTopLeft();
 export default resetWindowScroll;

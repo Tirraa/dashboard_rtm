@@ -77,7 +77,9 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ isBottomWi
         return;
       }
 
-      router.push(href, { scroll: true });
+      router.push(href, { scroll: false });
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      window.scrollTo({ behavior: 'smooth', top: 0 });
     };
 
     const buildForDesktop = () => {

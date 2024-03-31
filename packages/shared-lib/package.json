@@ -17,7 +17,7 @@
     "./portable/html/preserveKeyboardNavigation": "./src/portable/html/preserveKeyboardNavigation.ts",
     "./portable/html/resetScroll": "./src/portable/html/resetScroll.ts",
     "./portable/html/resetWindowScroll": "./src/portable/html/resetWindowScroll.ts",
-    "./portable/html/scrollToTop": "./src/portable/html/scrollToTop.ts",
+    "./portable/html/snapToTopLeft": "./src/portable/html/snapToTopLeft.ts",
     "./portable/misc/isEmptyObject": "./src/portable/misc/isEmptyObject.ts",
     "./portable/misc/sortNumbers": "./src/portable/misc/sortNumbers.ts",
     "./portable/misc/urlsPackAndUnpack": "./src/portable/misc/urlsPackAndUnpack.ts",
@@ -67,8 +67,8 @@
       "portable/html/resetWindowScroll": [
         "./src/portable/html/resetWindowScroll.ts"
       ],
-      "portable/html/scrollToTop": [
-        "./src/portable/html/scrollToTop.ts"
+      "portable/html/snapToTopLeft": [
+        "./src/portable/html/snapToTopLeft.ts"
       ],
       "portable/misc/isEmptyObject": [
         "./src/portable/misc/isEmptyObject.ts"
