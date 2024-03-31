@@ -3,13 +3,14 @@
 
 import type { FunctionComponent, CSSProperties } from 'react';
 import type { WithClassname } from '@rtm/shared-types/Next';
+import type { PxValue } from '@rtm/shared-types/Numbers';
 import type { User } from '@rtm/shared-types/Auth';
 
 import { AvatarFallback, AvatarImage, Avatar } from '@/components/ui/Avatar';
 
 interface UserImageProps extends Partial<WithClassname> {
-  height: number;
-  width: number;
+  height: PxValue;
+  width: PxValue;
   user: User;
 }
 

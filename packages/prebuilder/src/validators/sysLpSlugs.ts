@@ -1,3 +1,5 @@
+import type { Limit } from '@rtm/shared-types/Numbers';
+
 import type { MaybeEmptyErrorsDetectionFeedback, ErrorsDetectionFeedback, Filename, Path } from '../types/Metadatas';
 import type { VocabKey } from '../config/translations';
 
@@ -8,7 +10,7 @@ import formatMessage from '../config/formatMessage';
 
 export default async function sysLpSlugsValidator(
   lpFolder: Path,
-  __MAX_LEN: number = MAX_LP_TAXONOMY_LEN
+  __MAX_LEN: Limit = MAX_LP_TAXONOMY_LEN
 ): Promise<MaybeEmptyErrorsDetectionFeedback> {
   let feedback: ErrorsDetectionFeedback = '';
 

@@ -1,4 +1,5 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
+import type { Index } from '@rtm/shared-types/Numbers';
 import type { BlogCategory } from '@/types/Blog';
 
 import { throwIfForbiddenToUseIndexErrorBlogCtx, getFlattenedPathWithoutRootFolder, BLOG_POSTS_FOLDER } from '../../../unifiedImport';
@@ -8,7 +9,7 @@ import { throwIfForbiddenToUseIndexErrorBlogCtx, getFlattenedPathWithoutRootFold
  */
 function buildBlogPostCategoryFromStr(path: string): BlogCategory {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const categBuilder = (path: string, firstSlashIndex: number): BlogCategory => path.substring(0, firstSlashIndex) as BlogCategory;
+  const categBuilder = (path: string, firstSlashIndex: Index): BlogCategory => path.substring(0, firstSlashIndex) as BlogCategory;
 
   const firstSlashIndex = path.indexOf('/');
   const categ = categBuilder(path, firstSlashIndex);

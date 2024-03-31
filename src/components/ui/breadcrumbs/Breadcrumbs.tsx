@@ -3,6 +3,7 @@
 import type { CustomCrumbs } from '@rtm/shared-types/Breadcrumbs';
 import type { PagesTitlesKey } from '@rtm/shared-types/I18n';
 import type { FunctionComponent, ReactElement } from 'react';
+import type { Index } from '@rtm/shared-types/Numbers';
 import type { getScopedI18n } from '@/i18n/server';
 
 import buildAbsolutePathFromParts from '@rtm/shared-lib/portable/str/buildAbsolutePathFromParts';
@@ -30,7 +31,7 @@ function crumbsGenerator(
   scopedT: Awaited<ReturnType<typeof getScopedI18n<typeof i18ns.pagesTitles>>>,
   customCrumbs?: CustomCrumbs
 ): ReactElement[] {
-  function buildCurrentPath(pathParts: string[], depth: number) {
+  function buildCurrentPath(pathParts: string[], depth: Index) {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     const currentPathParts = pathParts.slice(0, depth + 1);
     const currentPath = buildAbsolutePathFromParts(...currentPathParts);
@@ -46,7 +47,7 @@ function crumbsGenerator(
       ]
     : [];
 
-  function crumbGenerator(depth: number, isLeaf: boolean, href: string) {
+  function crumbGenerator(depth: Index, isLeaf: boolean, href: string) {
     if (customCrumbs) {
       for (const customComponent of customCrumbs) {
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers

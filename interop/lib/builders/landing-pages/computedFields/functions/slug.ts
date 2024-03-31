@@ -1,5 +1,6 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { UnknownLandingPageSlug } from '@/types/LandingPage';
+import type { Index } from '@rtm/shared-types/Numbers';
 
 import { throwIfForbiddenToUseIndexErrorLpCtx, getPathWithIndexSuffix } from '../../../unifiedImport';
 import buildLandingPageCategory from './category';
@@ -8,7 +9,7 @@ import buildLandingPageCategory from './category';
  * @throws {InvalidArgumentsError}
  */
 function buildLandingPageSlugFromStr(flattenedPath: string): UnknownLandingPageSlug {
-  const slugBuilder = (flattenedPath: string, lastSlashIndex: number): UnknownLandingPageSlug =>
+  const slugBuilder = (flattenedPath: string, lastSlashIndex: Index): UnknownLandingPageSlug =>
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     flattenedPath.substring(lastSlashIndex + 1) as UnknownLandingPageSlug;
 

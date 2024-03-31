@@ -6,10 +6,12 @@
   "version": "1.0.0",
   "description": "",
   "exports": {
+    "./datastructs": "./src/datastructs.ts",
     "./html": "./src/html.ts",
     "./misc": "./src/misc.ts",
     "./react": "./src/react.ts",
     "./str": "./src/str.ts",
+    "./portable/datastructs/SlidingList": "./src/portable/datastructs/SlidingList.ts",
     "./portable/html/createURLSearchParams": "./src/portable/html/createURLSearchParams.ts",
     "./portable/html/getDirection": "./src/portable/html/getDirection.ts",
     "./portable/html/preserveKeyboardNavigation": "./src/portable/html/preserveKeyboardNavigation.ts",
@@ -17,6 +19,8 @@
     "./portable/html/resetWindowScroll": "./src/portable/html/resetWindowScroll.ts",
     "./portable/html/scrollToTop": "./src/portable/html/scrollToTop.ts",
     "./portable/misc/isEmptyObject": "./src/portable/misc/isEmptyObject.ts",
+    "./portable/misc/sortNumbers": "./src/portable/misc/sortNumbers.ts",
+    "./portable/misc/urlsPackAndUnpack": "./src/portable/misc/urlsPackAndUnpack.ts",
     "./portable/react/getLinkTarget": "./src/portable/react/getLinkTarget.ts",
     "./portable/react/getRefCurrentPtr": "./src/portable/react/getRefCurrentPtr.ts",
     "./portable/str/buildPathFromParts": "./src/portable/str/buildPathFromParts.ts",
@@ -27,6 +31,9 @@
   },
   "typesVersions": {
     "*": {
+      "datastructs": [
+        "./src/datastructs.ts"
+      ],
       "html": [
         "./src/html.ts"
       ],
@@ -41,6 +48,9 @@
       ],
       "international-types": [
         "./src/international-types.ts"
+      ],
+      "portable/datastructs/SlidingList": [
+        "./src/portable/datastructs/SlidingList.ts"
       ],
       "portable/html/createURLSearchParams": [
         "./src/portable/html/createURLSearchParams.ts"
@@ -62,6 +72,12 @@
       ],
       "portable/misc/isEmptyObject": [
         "./src/portable/misc/isEmptyObject.ts"
+      ],
+      "portable/misc/sortNumbers": [
+        "./src/portable/misc/sortNumbers.ts"
+      ],
+      "portable/misc/urlsPackAndUnpack": [
+        "./src/portable/misc/urlsPackAndUnpack.ts"
       ],
       "portable/react/getLinkTarget": [
         "./src/portable/react/getLinkTarget.ts"
@@ -87,6 +103,7 @@
     }
   },
   "dependencies": {
+    "base64url": "^3.0.1",
     "clsx": "^2.0.0",
     "tailwind-merge": "^1.14.0"
   },

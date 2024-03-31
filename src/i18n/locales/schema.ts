@@ -23,6 +23,7 @@ export const SHARED_VOCAB_SCHEMA = {
     draft: _,
     logo: _,
     page: _,
+    tags: _,
     toc: _
   },
 
@@ -30,6 +31,27 @@ export const SHARED_VOCAB_SCHEMA = {
 } as const satisfies TypedLeafsJSONData<NotScanned>;
 
 export default {
+  vocab: {
+    ...SHARED_VOCAB_SCHEMA.vocab,
+    'sr-only': {
+      'brand-logo': _,
+      goToTop: _
+    },
+
+    'copy-to-clipboard': _,
+    'invite-the-bot': _,
+    'no-blog-post': _,
+    'footer-copy': _,
+    'brand-short': _,
+    'more-pages': _,
+    'see-more': _,
+    pagination: _,
+    loading: _,
+    '404': _,
+    prev: _,
+    next: _
+  },
+
   navbar: {
     'sr-only': {
       'close-language-switcher-menu': _,
@@ -43,25 +65,6 @@ export default {
     },
 
     assistance: _
-  },
-
-  vocab: {
-    ...SHARED_VOCAB_SCHEMA.vocab,
-    'sr-only': {
-      'brand-logo': _,
-      goToTop: _
-    },
-
-    'copy-to-clipboard': _,
-    'invite-the-bot': _,
-    'no-blog-post': _,
-    'footer-copy': _,
-    'brand-short': _,
-    'see-more': _,
-    loading: _,
-    '404': _,
-    prev: _,
-    next: _
   },
 
   dashboard: {
@@ -82,6 +85,11 @@ export default {
       'hide-toc': _,
       'show-toc': _
     }
+  },
+
+  blogTagsFilters: {
+    'no-result-found': _,
+    'clear-filters': _
   },
 
   auth: {

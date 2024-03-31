@@ -13,6 +13,8 @@ import MobileDetect from 'mobile-detect';
 // https://www.npmjs.com/package/nextjs-toploader
 // Copyright (c) 2023 Shri Ganesh Jha
 
+import type { Percentage, MsValue, PxValue } from '@rtm/shared-types/Numbers';
+
 import nProgress from 'nprogress';
 import * as React from 'react';
 export type NextTopLoaderProps = {
@@ -20,7 +22,7 @@ export type NextTopLoaderProps = {
    * The initial position for the TopLoader in percentage, 0.08 is 8%.
    * @default 0.08
    */
-  initialPosition?: number;
+  initialPosition?: Percentage;
   /**
    * Defines a shadow for the TopLoader.
    * @default "0 0 10px ${color},0 0 5px ${color}"
@@ -36,12 +38,12 @@ export type NextTopLoaderProps = {
    * The increament delay speed in milliseconds.
    * @default 200
    */
-  crawlSpeed?: number;
+  crawlSpeed?: MsValue;
   /**
    * The height for the TopLoader in pixels (px).
    * @default 3
    */
-  height?: number;
+  height?: PxValue;
   /**
    * Auto increamenting behaviour for the TopLoader.
    * @default true
@@ -53,15 +55,15 @@ export type NextTopLoaderProps = {
    */
   easing?: string;
   /**
+   * Animation speed in ms for the TopLoader.
+   * @default 200
+   */
+  speed?: MsValue;
+  /**
    * Color for the TopLoader.
    * @default "#29d"
    */
   color?: string;
-  /**
-   * Animation speed in ms for the TopLoader.
-   * @default 200
-   */
-  speed?: number;
 };
 
 const NextTopLoader = ({

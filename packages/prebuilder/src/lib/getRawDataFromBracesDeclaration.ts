@@ -1,5 +1,7 @@
+import type { Index } from '@rtm/shared-types/Numbers';
+
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-export default function getRawDataFromBracesDeclaration(fileContent: string, startIndex: number = 0): string | null {
+export default function getRawDataFromBracesDeclaration(fileContent: string, startIndex: Index = 0): string | null {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (startIndex < 0) return null;
 

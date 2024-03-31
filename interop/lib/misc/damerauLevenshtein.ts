@@ -1,9 +1,11 @@
+import type { Score } from '@rtm/shared-types/Numbers';
+
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-function damerauLevenshtein(s1: string, s2: string): number {
+function damerauLevenshtein(s1: string, s2: string): Score {
   if (s1 === s2) return 0;
 
   const [s1len, s2len] = [s1.length, s2.length];
-  const matrix: number[][] = Array.from({ length: s1len + 1 }, () => new Array(s2len + 1).fill(0));
+  const matrix: Score[][] = Array.from({ length: s1len + 1 }, () => new Array(s2len + 1).fill(0));
 
   for (let y = 1; y <= s1len; y++) matrix[y][0] = y;
   for (let x = 1; x <= s2len; x++) matrix[0][x] = x;

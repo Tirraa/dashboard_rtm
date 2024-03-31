@@ -1,3 +1,5 @@
+import type { Limit } from '@rtm/shared-types/Numbers';
+
 import type { MaybeEmptyErrorsDetectionFeedback, ErrorsDetectionFeedback, BlogSubcategory, BlogCategory, Path } from '../types/Metadatas';
 import type { VocabKey } from '../config/translations';
 
@@ -11,7 +13,7 @@ const path = require('path');
 
 export default async function sysBlogSubcategoriesValidator(
   postsFolder: Path,
-  __MAX_LEN: number = MAX_BLOG_TAXONOMY_LEN
+  __MAX_LEN: Limit = MAX_BLOG_TAXONOMY_LEN
 ): Promise<MaybeEmptyErrorsDetectionFeedback> {
   let feedback: ErrorsDetectionFeedback = '';
 
@@ -21,7 +23,7 @@ export default async function sysBlogSubcategoriesValidator(
   for (const maybeCategory of categoriesCollection) {
     if (!maybeCategory.isDirectory()) continue;
     const category = maybeCategory.name;
-    const maybeSubcategories = await fs.readdir(path.join(maybeCategory.path, maybeCategory.name), { withFileTypes: true });
+    const maybeSubcategories = await fs.readdir(path.join(maybeCategory.path, category), { withFileTypes: true });
 
     for (const maybeSubcategory of maybeSubcategories) {
       if (!maybeSubcategory.isDirectory()) continue;

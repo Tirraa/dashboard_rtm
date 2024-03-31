@@ -1,13 +1,15 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import type { TimestampInMs, MsValue } from '@rtm/shared-types/Numbers';
+
 import { watch } from 'chokidar';
 
 import type { Path } from '../types/Metadatas';
 
-let lastEventTimestamp: number | null = null;
+let lastEventTimestamp: TimestampInMs | null = null;
 
-const DEBOUNCE_THRESHOLD_IN_MS = 10;
+const DEBOUNCE_THRESHOLD_IN_MS: MsValue = 10;
 
 function handleEvent(callback: () => void) {
   const currentTimestamp = Date.now();

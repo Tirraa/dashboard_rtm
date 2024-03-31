@@ -3,7 +3,7 @@ import I18nTaxonomy from '##/config/taxonomies/i18n';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, it } from 'vitest';
-import BlogConfig from '@/config/blog';
+import BlogConfig from '@/config/Blog/server';
 
 import blogCategoryGuard from '../blogCategoryGuard';
 

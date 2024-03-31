@@ -5,8 +5,8 @@ import { TESTING_BLOG_FAKE_SUBCATEGORY } from '𝕍/testingContentCategoryDatas'
 import { INDEX_TOKEN } from '##/lib/misc/contentlayerCornerCases';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, it } from 'vitest';
+import BlogConfig from '@/config/Blog/server';
 import ROUTES_ROOTS from '##/config/routes';
-import BlogConfig from '@/config/blog';
 
 import {
   getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict,
@@ -109,7 +109,7 @@ describe('getBlogPostPathWithoutI18nPart (happy paths)', () => {
     ];
 
     const post = (await getBlogPostStrict({ subcategory, category, lang, slug })) as BlogPostType;
-    const blogPostWithoutI18nPart = getBlogPostPathWithoutI18nPart(post);
+    const blogPostWithoutI18nPart = getBlogPostPathWithoutI18nPart(post.language, post.url);
 
     expect(blogPostWithoutI18nPart).toBe(ROUTES_ROOTS.BLOG + [category, subcategory, slug].join('/'));
   });

@@ -1,4 +1,5 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
+import type { Index, Id } from '@rtm/shared-types/Numbers';
 
 import { describe, expect, it } from 'vitest';
 
@@ -13,8 +14,8 @@ const fakeIndexedBlogTagOptions = fakeBlogTags.reduce(
     acc[tag] = index;
     return acc;
   },
-  {} as Record<string, number>
-) as Record<FakeBlogTag, number>;
+  {} as Record<string, Id>
+) as Record<FakeBlogTag, Id>;
 
 describe('buildBlogTagsIndexes (happy path)', () => {
   it('should return a valid tag indexes array, given valid tagsArray', () => {
@@ -181,4 +182,4 @@ describe('buildBlogTagsIndexes (unhappy path, error combinations)', () => {
   });
 });
 
-type FakeBlogTag = (typeof fakeBlogTags)[number];
+type FakeBlogTag = (typeof fakeBlogTags)[Index];

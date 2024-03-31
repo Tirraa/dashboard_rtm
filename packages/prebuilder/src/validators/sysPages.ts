@@ -1,3 +1,5 @@
+import type { Limit } from '@rtm/shared-types/Numbers';
+
 import type { MaybeEmptyErrorsDetectionFeedback, ErrorsDetectionFeedback, Arborescence, PathSegment, Filename, Path } from '../types/Metadatas';
 import type { VocabKey } from '../config/translations';
 
@@ -93,7 +95,7 @@ async function hasUglyIndexStrategy(filename: Filename, directoriesChain: PathSe
 
 export default async function sysPagesValidator(
   pagesFolder: Path,
-  __MAX_LEN: number = MAX_PAGE_TAXONOMY_LEN
+  __MAX_LEN: Limit = MAX_PAGE_TAXONOMY_LEN
 ): Promise<{
   feedback: MaybeEmptyErrorsDetectionFeedback;
   arborescence: Arborescence;
@@ -120,7 +122,6 @@ export default async function sysPagesValidator(
     if (uglyIndexStrategy) {
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       const expectedFolder = path.join(pagesFolderPrefix, ...directoriesChain, filename.slice(0, -PAGE_FILE_EXT.length));
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       const currentFolder = path.normalize(path.join(pagesFolderPrefix, ...directoriesChain));
       indexStrategyDefects[expectedFolder] = path.join(currentFolder, filename);
     }

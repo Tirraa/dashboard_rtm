@@ -3,6 +3,7 @@
 
 import type { INDEX_TOKEN } from '##/lib/misc/contentlayerCornerCases';
 import type { PageTaxonomyType } from '##/config/taxonomies/pages';
+import type { Index } from '@rtm/shared-types/Numbers';
 import type { Pages } from '@rtm/generated';
 
 import type PageAdapter from './adapters/PageAdapter';
@@ -20,7 +21,7 @@ export type UnknownPagePath = string;
 export type PageRoot = StrictPage['root'];
 
 type StrictPage = {
-  [Category in keyof Pages]: PageAdapter<Pages[Category][number]>;
+  [Category in keyof Pages]: PageAdapter<Pages[Category][Index]>;
 }[keyof Pages];
 
 export type MakePagesLangAndPathPairs<__URL extends string = StrictPage['url']> = __URL extends `/${infer Lang}/${infer Path}`

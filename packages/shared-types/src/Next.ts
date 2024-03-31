@@ -6,6 +6,7 @@ import type { Session } from 'next-auth';
 import type { ReactNode } from 'react';
 
 import type { MaybeNull } from './CustomUtilityTypes';
+import type { LanguageFlag } from './I18n';
 import type { ClassName } from './React';
 
 export type AppPath = string;
@@ -17,6 +18,10 @@ export interface LayoutMinimalProps extends WithChildren {}
 
 export interface WithSession {
   session: MaybeNull<Session>;
+}
+
+export interface WithLanguage {
+  language: LanguageFlag;
 }
 
 export interface WithClassname extends ClassName {}
