@@ -1,11 +1,13 @@
 'use client';
 
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { FunctionComponent } from 'react';
 
 import { useCallback, useEffect, useState, useRef } from 'react';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
+import { cn } from '@/lib/tailwind';
 
 const INTERVAL_DURATION = 10_100;
 
@@ -15,11 +17,16 @@ const FooterHeadline: FunctionComponent = () => {
   const [heart, setHeart] = useState<string>('❤️');
   const [nextHeart, setNextHeart] = useState<string>('❤️');
   const [heartToggler, setHeartToggler] = useState<boolean>(true);
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const [heartContainerWidthInPx, setHeartContainerWidthInPx] = useState<number>(0);
 
   const heartsCollectionRef = useRef<string[]>(['❤️', '🧡', '💛', '💚', '💙', '💜', '💕', '💓', '💗', '💖']);
   const heartRef = useRef<string>(heart);
   const nextHeartRef = useRef<string>(nextHeart);
   const heartTogglerRef = useRef<boolean>(heartToggler);
+
+  const firstHeartRef = useRef<MaybeNull<HTMLSpanElement>>(null);
+  const secondHeartRef = useRef<MaybeNull<HTMLSpanElement>>(null);
 
   const scopedT = useScopedI18n(i18ns.vocab);
   const footerCopy = scopedT('footer-copy').replace('❤️', '');
@@ -60,24 +67,52 @@ const FooterHeadline: FunctionComponent = () => {
     nextHeartRef.current = nextHeart;
   }, [heartToggler, heart, nextHeart]);
 
+  useEffect(() => {
+    const firstHeartInstance = getRefCurrentPtr(firstHeartRef);
+    const secondHeartInstance = getRefCurrentPtr(secondHeartRef);
+
+    if (firstHeartInstance === null || secondHeartInstance === null) return;
+
+    if (heartToggler) setHeartContainerWidthInPx(secondHeartInstance.getBoundingClientRect().width);
+    else setHeartContainerWidthInPx(firstHeartInstance.getBoundingClientRect().width);
+  }, [heartToggler]);
+
   return (
     <p className="relative flex select-none">
-      <span>{footerCopy}</span>
-      {(heartToggler && (
-        <span className="relative">
-          <span className="absolute select-none opacity-0 transition-opacity duration-700" aria-hidden="true">
-            &nbsp;{heart}
-          </span>
-          <span className="absolute z-10 opacity-100 transition-opacity duration-700">&nbsp;{nextHeart}</span>
+      <span
+        className={cn('opacity-100 transition-opacity delay-75 duration-500', {
+          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          'opacity-0': heartContainerWidthInPx === 0
+        })}
+      >
+        {footerCopy}
+      </span>
+      <span
+        className={cn('relative opacity-100 transition-opacity delay-200 duration-500', {
+          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          'opacity-0': heartContainerWidthInPx === 0
+        })}
+        style={{ width: heartContainerWidthInPx + 'px' }}
+      >
+        <span
+          className={cn('absolute bottom-0 left-0 right-0 top-0 w-fit opacity-100 transition-opacity duration-700', {
+            'opacity-0': heartToggler
+          })}
+          aria-hidden={heartToggler}
+          ref={firstHeartRef}
+        >
+          &nbsp;{heart}
         </span>
-      )) || (
-        <span className="relative">
-          <span className="absolute opacity-100 transition-opacity duration-700">&nbsp;{heart}</span>
-          <span className="absolute z-10 select-none opacity-0 transition-opacity duration-700" aria-hidden="true">
-            &nbsp;{nextHeart}
-          </span>
+        <span
+          className={cn('absolute bottom-0 left-0 right-0 top-0 z-10 w-fit opacity-100 transition-opacity duration-700', {
+            'opacity-0': !heartToggler
+          })}
+          aria-hidden={!heartToggler}
+          ref={secondHeartRef}
+        >
+          &nbsp;{nextHeart}
         </span>
-      )}
+      </span>
     </p>
   );
 };
