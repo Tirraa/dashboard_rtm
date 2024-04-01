@@ -197,7 +197,6 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
           expectedTagsIds={expectedTagsIds}
           maxPagesAmount={maxPagesAmount}
           pagesAmount={pagesAmount}
-          isBottomWidget={false}
           maxId={maxBlogTagId}
           tags={tags}
         />
@@ -211,8 +210,8 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
           expectedTagsIds={expectedTagsIds}
           maxPagesAmount={maxPagesAmount}
           pagesAmount={pagesAmount}
-          isBottomWidget={true}
           maxId={maxBlogTagId}
+          isBottomWidget
           tags={tags}
         />
       )}

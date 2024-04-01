@@ -47,6 +47,7 @@ const PaginationLink = ({ size = 'icon', className, isActive, ...props }: Pagina
     {...props}
   />
 );
+
 PaginationLink.displayName = 'PaginationLink';
 
 const PaginationPrevious = ({ className, ...props }: React.ComponentProps<typeof PaginationLink>) => {
@@ -77,7 +78,7 @@ const PaginationEllipsis = ({
   dropdownItems,
   className,
   ...props
-}: React.ComponentProps<'button'> & { dropdownItems: React.ReactElement[]; pageNumberIndicator?: Count; isBottomWidget: boolean }) => {
+}: React.ComponentProps<'button'> & { dropdownItems: React.ReactElement[]; pageNumberIndicator?: Count; isBottomWidget?: boolean }) => {
   const scopedT = useScopedI18n(i18ns.vocab);
   const [isOpened, setIsOpened] = React.useState<boolean>(false);
 

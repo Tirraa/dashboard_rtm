@@ -2,15 +2,20 @@
 
 import type { FunctionComponent } from 'react';
 
+import { getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/functions';
+import { PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
+import { useSearchParams, usePathname } from 'next/navigation';
 import { cn } from '@/lib/tailwind';
 
 import type { TagsFiltersWidgetProps } from '../TagsFiltersWidget';
 import type { PaginationWidgetProps } from '../PaginationWidget';
 
+import PaginationWidget, { buildDropdownForMobileAndBottom } from '../PaginationWidget';
 import TagsFiltersWidget from '../TagsFiltersWidget';
-import PaginationWidget from '../PaginationWidget';
 
-export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends TagsFiltersWidgetProps, PaginationWidgetProps {}
+export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends TagsFiltersWidgetProps, PaginationWidgetProps {
+  isBottomWidget?: boolean;
+}
 
 const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<SubcategoryRelatedBlogPostsClientToolbarInnerProps> = ({
   setSelectedTagsIds,
@@ -25,6 +30,19 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const disabledTagsFiltersWidget = tags.length < 1;
+
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const pageFromUrl = getSanitizedCurrentPage(searchParams, pagesAmount, PAGE_KEY);
+
+  const extras =
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    pagesAmount <= 1 ? null : (
+      <div>
+        {(!isBottomWidget && <PaginationWidget pagesAmount={pagesAmount} />) ||
+          buildDropdownForMobileAndBottom(pagesAmount, pageFromUrl, pathname, searchParams, isBottomWidget)}
+      </div>
+    );
 
   return (
     <nav
@@ -44,9 +62,7 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
         />
       )}
 
-      <nav>
-        <PaginationWidget isBottomWidget={isBottomWidget} pagesAmount={pagesAmount} />
-      </nav>
+      {extras}
     </nav>
   );
 };
