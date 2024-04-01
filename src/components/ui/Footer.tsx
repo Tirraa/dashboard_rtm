@@ -6,6 +6,7 @@ import type { FunctionComponent } from 'react';
 import { useCallback, useEffect, useState, useRef } from 'react';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { useScopedI18n } from '@/i18n/client';
+import ELEMENTS_ID from '@/config/elementsId';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 
@@ -119,7 +120,10 @@ const FooterHeadline: FunctionComponent = () => {
 
 const Footer: FunctionComponent<FooterProps> = () => {
   return (
-    <footer className="z-10 flex min-h-20 flex-col items-center justify-center border-t-[1px] border-transparent bg-black text-center text-white dark:border-card dark:bg-black">
+    <footer
+      className="z-10 flex min-h-20 flex-col items-center justify-center border-t-[1px] border-transparent bg-black text-center text-white dark:border-card dark:bg-black"
+      id={ELEMENTS_ID.FOOTER_CONTAINER}
+    >
       <FooterHeadline />
     </footer>
   );

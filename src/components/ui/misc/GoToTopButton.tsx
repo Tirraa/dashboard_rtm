@@ -9,6 +9,7 @@ import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { ArrowUpIcon } from '@heroicons/react/20/solid';
 import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
+import { getFooter } from '@/lib/html';
 import { cn } from '@/lib/tailwind';
 import throttle from 'throttleit';
 
@@ -41,26 +42,54 @@ const GoToTopButton: FunctionComponent<GoToTopButtonProps> = ({ scrollYthreshold
     });
   }, []);
 
+  const footerCollide = useCallback((): boolean => {
+    const documentHeight = document.body.scrollHeight;
+    const currentBottomPx = Math.ceil(window.scrollY + window.innerHeight);
+
+    if (currentBottomPx >= documentHeight) return true;
+
+    const maybeFooter = getFooter();
+    if (!maybeFooter) return false;
+
+    const distanceFromPageBottom = Math.abs(currentBottomPx - documentHeight);
+
+    if (distanceFromPageBottom <= maybeFooter.getBoundingClientRect().height) return true;
+
+    return false;
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       if (skipUpdateUntilScrollEnd.current) return;
-      setIsShown(window.scrollY > scrollYthreshold.current);
+
+      if (footerCollide()) {
+        setIsShown(false);
+        return;
+      }
+
+      if (window.scrollY > scrollYthreshold.current) setIsShown(true);
+      else setIsShown(false);
     };
 
     const throttledScrollHandler = throttle(handleScroll, APPROX_120_FPS_THROTTLE_TIMING_IN_MS);
 
     window.addEventListener('scroll', throttledScrollHandler);
 
-    return () => {
-      window.removeEventListener('scroll', throttledScrollHandler);
-    };
-  }, []);
+    return () => window.removeEventListener('scroll', throttledScrollHandler);
+  }, [footerCollide]);
 
   useEffect(() => {
     const handleScrollEnd = () => {
       if (!skipUpdateUntilScrollEnd.current) return;
       skipUpdateUntilScrollEnd.current = false;
-      setIsShown(window.scrollY > scrollYthreshold.current);
+
+      if (footerCollide()) {
+        setIsShown(false);
+        return;
+      }
+
+      if (window.scrollY > scrollYthreshold.current) setIsShown(true);
+      else setIsShown(false);
     };
 
     window.addEventListener('scrollend', handleScrollEnd);
@@ -68,7 +97,7 @@ const GoToTopButton: FunctionComponent<GoToTopButtonProps> = ({ scrollYthreshold
     return () => {
       window.removeEventListener('scrollend', handleScrollEnd);
     };
-  }, []);
+  }, [footerCollide]);
 
   useEffect(() => {
     setIsShown(window.scrollY > scrollYthreshold.current);

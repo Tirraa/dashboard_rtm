@@ -7,5 +7,7 @@ export const getBodyContainer = () => document.getElementById(ELEMENTS_ID.BODY_C
 
 export const getNavbar = () => document.getElementById(ELEMENTS_ID.SITEWIDE_NAVBAR);
 
+export const getFooter = () => document.getElementById(ELEMENTS_ID.FOOTER_CONTAINER);
+
 // Stryker restore all
 /* v8 ignore stop */
