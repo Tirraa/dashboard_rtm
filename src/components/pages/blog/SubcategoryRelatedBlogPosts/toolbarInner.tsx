@@ -1,6 +1,6 @@
 'use client';
 
-import type { MaybeNull } from 'packages/shared-types/src/CustomUtilityTypes';
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { FunctionComponent, ReactElement } from 'react';
 import type { Quantity } from '@rtm/shared-types/Numbers';
 
