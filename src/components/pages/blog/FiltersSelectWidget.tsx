@@ -1,27 +1,40 @@
-import type { WithClassname } from '@rtm/shared-types/Next';
+'use client';
+
 import type { FunctionComponent } from 'react';
 
-import { SelectContent, SelectTrigger, SelectGroup, SelectLabel, SelectValue, SelectItem, Select } from '@/components/ui/Select';
+import { SelectContent, SelectTrigger, SelectGroup, SelectValue, SelectItem, Select } from '@/components/ui/Select';
+import { getClientSideI18n } from '@/i18n/client';
+import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
+import { useState } from 'react';
 
-interface FiltersSelectWidgetProps extends Partial<WithClassname> {}
+interface FiltersSelectWidgetProps {
+  triggerClassName?: string;
+}
 
-const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({ className }) => (
-  <Select>
-    <SelectTrigger className={cn('w-[180px]', className)}>
-      <SelectValue placeholder="Select a fruit" />
-    </SelectTrigger>
-    <SelectContent>
-      <SelectGroup>
-        <SelectLabel>Fruits</SelectLabel>
-        <SelectItem value="apple">Apple</SelectItem>
-        <SelectItem value="banana">Banana</SelectItem>
-        <SelectItem value="blueberry">Blueberry</SelectItem>
-        <SelectItem value="grapes">Grapes</SelectItem>
-        <SelectItem value="pineapple">Pineapple</SelectItem>
-      </SelectGroup>
-    </SelectContent>
-  </Select>
-);
+const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({ triggerClassName }) => {
+  const globalT = getClientSideI18n();
+  const [open, setOpen] = useState<boolean>(false);
+  const onOpenChange = (opened: boolean) => setOpen(opened);
+
+  return (
+    <Select onOpenChange={(isOpen: boolean) => onOpenChange(isOpen)} defaultValue="date-asc">
+      <SelectTrigger
+        chevronClassName={cn('transition-transform', {
+          'ltr:-rotate-180 rtl:rotate-180': open
+        })}
+        className={cn('mx-[2px] min-w-[182px] ', triggerClassName)}
+      >
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup aria-label={globalT(`${i18ns.srOnly}.sort-by`)}>
+          <SelectItem value="date-asc">{globalT(`${i18ns.filters}.date-asc`)}</SelectItem>
+          <SelectItem value="date-desc">{globalT(`${i18ns.filters}.date-desc`)}</SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  );
+};
 
 export default FiltersSelectWidget;

@@ -73,7 +73,8 @@ export default {
     ...SHARED.vocab,
     'sr-only': {
       'brand-logo': `${capitalize(SHARED.vocab.brand)}'s ${SHARED.vocab.logo}`,
-      goToTop: 'Go to the top of the page'
+      goToTop: 'Go to the top of the page',
+      'sort-by': 'sort by'
     },
 
     'footer-copy': `${SHARED.vocab.brand} · Made with ❤️`,
@@ -141,6 +142,11 @@ export default {
     signup: SHARED.vocab['sign-up'],
     logout: 'Logout',
     login: 'Login'
+  },
+
+  filters: {
+    'date-asc': 'Most recent first',
+    'date-desc': 'Oldest first'
   },
 
   'pages-titles': SHARED['pages-titles'],

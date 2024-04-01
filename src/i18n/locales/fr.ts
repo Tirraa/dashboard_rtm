@@ -73,7 +73,8 @@ export default {
     ...SHARED.vocab,
     'sr-only': {
       'brand-logo': `${capitalize(SHARED.vocab.logo)} de ${SHARED.vocab.brand}`,
-      goToTop: 'Remonter en haut de la page'
+      goToTop: 'Remonter en haut de la page',
+      'sort-by': 'trier par'
     },
 
     'footer-copy': `${SHARED.vocab.brand} · Réalisé avec ❤️`,
@@ -132,6 +133,11 @@ export default {
     drums: 'Batterie'
   },
 
+  filters: {
+    'date-desc': "Les plus anciens d'abord",
+    'date-asc': "Les plus récents d'abord"
+  },
+
   blogTagsFilters: {
     'no-result-found': 'Rien trouvé !',
     'clear-filters': 'Réinitialiser'
@@ -142,7 +148,6 @@ export default {
     logout: 'Déconnexion',
     login: 'Connexion'
   },
-
   'pages-titles': SHARED['pages-titles'],
 
   _infos: { lng: 'fr' }

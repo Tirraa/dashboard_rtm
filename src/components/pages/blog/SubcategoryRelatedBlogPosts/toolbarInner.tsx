@@ -49,8 +49,8 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
     function buildForTop(): MaybeNull<ReactElement>[] {
       const elements: MaybeNull<ReactElement>[] = [];
 
-      if (showFiltersSelectWidget) elements.push(<FiltersSelectWidget className="z-20 mb-1 self-end" />);
-      if (showPaginationWidget) elements.push(<PaginationWidget className="w-full justify-end" pagesAmount={pagesAmount} />);
+      if (showFiltersSelectWidget) elements.push(<FiltersSelectWidget triggerClassName="z-20 mb-1 self-end" key="filters-widget" />);
+      if (showPaginationWidget) elements.push(<PaginationWidget className="w-full justify-end" pagesAmount={pagesAmount} key="pagination-widget" />);
 
       return elements;
     }
