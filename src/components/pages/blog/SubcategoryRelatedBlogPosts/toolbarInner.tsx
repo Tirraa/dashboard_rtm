@@ -1,6 +1,8 @@
 'use client';
 
-import type { FunctionComponent } from 'react';
+import type { MaybeNull } from 'packages/shared-types/src/CustomUtilityTypes';
+import type { FunctionComponent, ReactElement } from 'react';
+import type { Quantity } from '@rtm/shared-types/Numbers';
 
 import { getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/functions';
 import { PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
@@ -11,10 +13,12 @@ import type { TagsFiltersWidgetProps } from '../TagsFiltersWidget';
 import type { PaginationWidgetProps } from '../PaginationWidget';
 
 import PaginationWidget, { buildDropdownForMobileAndBottom } from '../PaginationWidget';
+import FiltersSelectWidget from '../FiltersSelectWidget';
 import TagsFiltersWidget from '../TagsFiltersWidget';
 
 export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends TagsFiltersWidgetProps, PaginationWidgetProps {
   isBottomWidget?: boolean;
+  postsAmount: Quantity;
 }
 
 const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<SubcategoryRelatedBlogPostsClientToolbarInnerProps> = ({
@@ -23,6 +27,7 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
   selectedTagsIds,
   maxPagesAmount,
   isBottomWidget,
+  postsAmount,
   pagesAmount,
   extraCtx,
   maxId,
@@ -35,14 +40,38 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
   const pathname = usePathname();
   const pageFromUrl = getSanitizedCurrentPage(searchParams, pagesAmount, PAGE_KEY);
 
-  const extras =
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    pagesAmount <= 1 ? null : (
-      <div>
-        {(!isBottomWidget && <PaginationWidget pagesAmount={pagesAmount} />) ||
-          buildDropdownForMobileAndBottom(pagesAmount, pageFromUrl, pathname, searchParams, isBottomWidget)}
-      </div>
-    );
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const showPaginationWidget = pagesAmount > 1;
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const showFiltersSelectWidget = postsAmount > 1;
+
+  function buildExtrasInner(): MaybeNull<ReactElement>[] {
+    function buildForTop(): MaybeNull<ReactElement>[] {
+      const elements: MaybeNull<ReactElement>[] = [];
+
+      if (showPaginationWidget) elements.push(<PaginationWidget pagesAmount={pagesAmount} />);
+      if (showFiltersSelectWidget) elements.push(<FiltersSelectWidget />);
+
+      return elements;
+    }
+
+    function buildForBottom(): MaybeNull<ReactElement>[] {
+      const elements: MaybeNull<ReactElement>[] = [];
+
+      if (showPaginationWidget) {
+        elements.push(buildDropdownForMobileAndBottom(pagesAmount, pageFromUrl, pathname, searchParams, isBottomWidget));
+      }
+
+      return elements;
+    }
+
+    const extrasInner = !isBottomWidget ? buildForTop() : buildForBottom();
+    return extrasInner;
+  }
+
+  const extrasInner = buildExtrasInner();
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const extras = extrasInner.length > 0 ? <div>{extrasInner}</div> : null;
 
   return (
     <nav

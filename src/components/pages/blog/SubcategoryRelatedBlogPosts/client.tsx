@@ -193,6 +193,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
         <SubcategoryRelatedBlogPostsClientToolbar
           extraCtx={{ pagesSlicesRelatedPostsIdsHistory, maybeFilteredPostsCollection, elementsPerPage }}
           setSelectedTagsIds={setSelectedTagsIds}
+          postsAmount={paginatedElements.length}
           selectedTagsIds={selectedTagsIds}
           expectedTagsIds={expectedTagsIds}
           maxPagesAmount={maxPagesAmount}
@@ -206,6 +207,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
         <SubcategoryRelatedBlogPostsClientToolbar
           extraCtx={{ pagesSlicesRelatedPostsIdsHistory, maybeFilteredPostsCollection, elementsPerPage }}
           setSelectedTagsIds={setSelectedTagsIds}
+          postsAmount={paginatedElements.length}
           selectedTagsIds={selectedTagsIds}
           expectedTagsIds={expectedTagsIds}
           maxPagesAmount={maxPagesAmount}
