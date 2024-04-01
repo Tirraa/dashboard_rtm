@@ -49,8 +49,8 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
     function buildForTop(): MaybeNull<ReactElement>[] {
       const elements: MaybeNull<ReactElement>[] = [];
 
-      if (showPaginationWidget) elements.push(<PaginationWidget pagesAmount={pagesAmount} />);
-      if (showFiltersSelectWidget) elements.push(<FiltersSelectWidget />);
+      if (showFiltersSelectWidget) elements.push(<FiltersSelectWidget className="z-20 mb-1 self-end" />);
+      if (showPaginationWidget) elements.push(<PaginationWidget className="w-full justify-end" pagesAmount={pagesAmount} />);
 
       return elements;
     }
@@ -71,11 +71,11 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
 
   const extrasInner = buildExtrasInner();
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const extras = extrasInner.length > 0 ? <div>{extrasInner}</div> : null;
+  const extras = extrasInner.length > 0 ? <div className="flex flex-col">{extrasInner}</div> : null;
 
   return (
     <nav
-      className={cn('my-4 flex items-center justify-between', {
+      className={cn('my-4 flex items-end justify-between', {
         'justify-end': isBottomWidget || disabledTagsFiltersWidget
       })}
     >
