@@ -35,6 +35,7 @@ export default {
     ...SHARED_VOCAB_SCHEMA.vocab,
     'sr-only': {
       'brand-logo': _,
+      'sort-by': _,
       goToTop: _
     },
 
@@ -96,6 +97,11 @@ export default {
     logout: _,
     signup: _,
     login: _
+  },
+
+  filters: {
+    'date-desc': _,
+    'date-asc': _
   },
 
   'pages-titles': SHARED_VOCAB_SCHEMA['pages-titles'],

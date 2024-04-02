@@ -22,7 +22,7 @@ export interface GoToTopButtonProps {
   scrollYthreshold?: PxValue;
 }
 
-const SCROLL_Y_THRESHOLD_DEFAULT = 250;
+const SCROLL_Y_THRESHOLD_DEFAULT = 400;
 
 const GoToTopButton: FunctionComponent<GoToTopButtonProps> = ({ scrollYthreshold: scrollYthresholdValue }) => {
   const [isShown, setIsShown] = useState<boolean>(false);

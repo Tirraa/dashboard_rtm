@@ -1,28 +1,36 @@
 'use client';
 
-import type { FunctionComponent } from 'react';
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { FunctionComponent, ReactElement } from 'react';
+import type { Quantity } from '@rtm/shared-types/Numbers';
 
 import { getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/functions';
 import { PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { cn } from '@/lib/tailwind';
 
+import type { FiltersSelectWidgetProps } from '../FiltersSelectWidget';
 import type { TagsFiltersWidgetProps } from '../TagsFiltersWidget';
 import type { PaginationWidgetProps } from '../PaginationWidget';
 
 import PaginationWidget, { buildDropdownForMobileAndBottom } from '../PaginationWidget';
+import FiltersSelectWidget from '../FiltersSelectWidget';
 import TagsFiltersWidget from '../TagsFiltersWidget';
 
-export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends TagsFiltersWidgetProps, PaginationWidgetProps {
+export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends TagsFiltersWidgetProps, PaginationWidgetProps, FiltersSelectWidgetProps {
   isBottomWidget?: boolean;
+  postsAmount: Quantity;
 }
 
 const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<SubcategoryRelatedBlogPostsClientToolbarInnerProps> = ({
   setSelectedTagsIds,
+  setSelectedFilter,
   expectedTagsIds,
   selectedTagsIds,
+  selectedFilter,
   maxPagesAmount,
   isBottomWidget,
+  postsAmount,
   pagesAmount,
   extraCtx,
   maxId,
@@ -35,18 +43,50 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
   const pathname = usePathname();
   const pageFromUrl = getSanitizedCurrentPage(searchParams, pagesAmount, PAGE_KEY);
 
-  const extras =
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    pagesAmount <= 1 ? null : (
-      <div>
-        {(!isBottomWidget && <PaginationWidget pagesAmount={pagesAmount} />) ||
-          buildDropdownForMobileAndBottom(pagesAmount, pageFromUrl, pathname, searchParams, isBottomWidget)}
-      </div>
-    );
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const showPaginationWidget = pagesAmount > 1;
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const showFiltersSelectWidget = postsAmount > 1;
+
+  function buildExtrasInner(): MaybeNull<ReactElement>[] {
+    function buildForTop(): MaybeNull<ReactElement>[] {
+      const elements: MaybeNull<ReactElement>[] = [];
+
+      if (showFiltersSelectWidget)
+        elements.push(
+          <FiltersSelectWidget
+            setSelectedFilter={setSelectedFilter}
+            triggerClassName="z-20 mb-1 self-end"
+            selectedFilter={selectedFilter}
+            key="filters-widget"
+          />
+        );
+      if (showPaginationWidget) elements.push(<PaginationWidget className="w-full justify-end" pagesAmount={pagesAmount} key="pagination-widget" />);
+
+      return elements;
+    }
+
+    function buildForBottom(): MaybeNull<ReactElement>[] {
+      const elements: MaybeNull<ReactElement>[] = [];
+
+      if (showPaginationWidget) {
+        elements.push(buildDropdownForMobileAndBottom(pagesAmount, pageFromUrl, pathname, searchParams, isBottomWidget));
+      }
+
+      return elements;
+    }
+
+    const extrasInner = !isBottomWidget ? buildForTop() : buildForBottom();
+    return extrasInner;
+  }
+
+  const extrasInner = buildExtrasInner();
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const extras = extrasInner.length > 0 ? <div className="flex flex-col">{extrasInner}</div> : null;
 
   return (
     <nav
-      className={cn('my-4 flex items-center justify-between', {
+      className={cn('my-4 flex items-end justify-between', {
         'justify-end': isBottomWidget || disabledTagsFiltersWidget
       })}
     >

@@ -14,6 +14,7 @@ const _i18nsBase = {
   pagesTitles: 'pages-titles',
   dashboard: 'dashboard',
   blogTags: 'blog-tags',
+  filters: 'filters',
   blogToc: 'blogToc',
   navbar: 'navbar',
   infos: '_infos',

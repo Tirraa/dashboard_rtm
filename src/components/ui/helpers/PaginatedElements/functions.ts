@@ -6,6 +6,17 @@ import type { ReactElement } from 'react';
 
 import { FIRST_PAGE_PARAM } from './constants';
 
+export function getSanitizedCurrentFilterIndex(searchParams: URLSearchParams, maxFilter: Limit, filtersKey: string) {
+  const FIRST_FILTER_INDEX = 0;
+  const maybeUnsafeFilterFromUrl: MaybeNull<string> = searchParams.get(filtersKey);
+  const unsafeFilterFromUrl = maybeUnsafeFilterFromUrl === null ? FIRST_FILTER_INDEX : Number(maybeUnsafeFilterFromUrl);
+
+  if (isNaN(unsafeFilterFromUrl)) return FIRST_FILTER_INDEX;
+  if (unsafeFilterFromUrl < FIRST_FILTER_INDEX) return FIRST_FILTER_INDEX;
+  if (unsafeFilterFromUrl > maxFilter) return maxFilter;
+  return unsafeFilterFromUrl;
+}
+
 export function getSanitizedCurrentPage(searchParams: URLSearchParams, maxPage: Limit, pageKey: string) {
   const maybeUnsafePageFromUrl: MaybeNull<string> = searchParams.get(pageKey);
   const unsafePageFromUrl = maybeUnsafePageFromUrl === null ? FIRST_PAGE_PARAM : Number(maybeUnsafePageFromUrl);
@@ -58,7 +69,6 @@ export function computeReconciliatedPageIndex(
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const oldSliceIds = pagesSlicesRelatedPostsIdsHistory[0];
 
-  // {ToDo} Handling ASC sort is okay, but what about DESC sort (something like 'findLastCommonElementIndex')?
   const commonElementIndex = findFirstCommonElementIndex(oldSliceIds, maybeFilteredPostsCollection);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
