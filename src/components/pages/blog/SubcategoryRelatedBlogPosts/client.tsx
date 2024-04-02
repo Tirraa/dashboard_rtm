@@ -85,16 +85,16 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 
   const computePaginatedElements = useCallback(
     (filterFunIndex: Index) => {
-      const applyFilter = (post1: BlogPostPreviewComponentWithMetadatas, post2: BlogPostPreviewComponentWithMetadatas) =>
+      const getSortCallbackFunction = (post1: BlogPostPreviewComponentWithMetadatas, post2: BlogPostPreviewComponentWithMetadatas) =>
         [
           // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-          BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE[0].fun(new Date(post1.date), new Date(post2.date)),
+          () => BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE[0].fun(new Date(post1.date), new Date(post2.date)),
           // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-          BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE[1].fun(new Date(post1.date), new Date(post2.date))
+          () => BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE[1].fun(new Date(post1.date), new Date(post2.date))
         ][filterFunIndex];
 
       const paginatedElements = maybeFilteredPostsCollection
-        .sort((post1, post2) => applyFilter(post1, post2))
+        .sort((post1, post2) => getSortCallbackFunction(post1, post2)())
         .map((post) => <Fragment key={post._id}>{post.blogPostPreviewComp}</Fragment>);
 
       return paginatedElements;
