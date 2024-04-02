@@ -81,6 +81,13 @@ export default {
     }
   },
 
+  filters: {
+    'alphabet-desc': _,
+    'alphabet-asc': _,
+    'date-desc': _,
+    'date-asc': _
+  },
+
   blogToc: {
     'sr-only': {
       'hide-toc': _,
@@ -97,11 +104,6 @@ export default {
     logout: _,
     signup: _,
     login: _
-  },
-
-  filters: {
-    'date-desc': _,
-    'date-asc': _
   },
 
   'pages-titles': SHARED_VOCAB_SCHEMA['pages-titles'],

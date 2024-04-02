@@ -60,7 +60,7 @@ const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({
         chevronClassName={cn('transition-transform', {
           'ltr:-rotate-180 rtl:rotate-180': open
         })}
-        className={cn('mx-[2px] min-w-[182px]', triggerClassName)}
+        className={cn('mx-[2px] min-w-[124px] lg:min-w-[176px]', triggerClassName)}
       >
         <SelectValue />
       </SelectTrigger>

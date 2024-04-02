@@ -119,6 +119,13 @@ export default {
     }
   },
 
+  filters: {
+    'alphabet-desc': 'Alphabetic Z-A',
+    'date-desc': 'Most recent first',
+    'alphabet-asc': 'Alphabetic A-Z',
+    'date-asc': 'Oldest first'
+  },
+
   blogToc: {
     'sr-only': {
       'hide-toc': `Hide the ${SHARED.vocab.toc}`,
@@ -142,11 +149,6 @@ export default {
     signup: SHARED.vocab['sign-up'],
     logout: 'Logout',
     login: 'Login'
-  },
-
-  filters: {
-    'date-desc': 'Most recent first',
-    'date-asc': 'Oldest first'
   },
 
   'pages-titles': SHARED['pages-titles'],

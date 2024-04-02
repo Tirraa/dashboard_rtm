@@ -22,6 +22,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import usePagination from '@/components/hooks/usePagination';
 import { SlidingList } from '@rtm/shared-lib/datastructs';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
+import { useCurrentLocale } from '@/i18n/client';
 
 import { getUnpackedAndSanitizedFilters } from '../helpers/functions';
 import SubcategoryRelatedBlogPostsClientToolbar from './toolbar';
@@ -46,6 +47,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const currentLocale = useCurrentLocale();
 
   const [selectedFilterSwitch, setSelectedFilterSwitch] = useState<boolean>(false);
   const [selectedTagSwitch, setSelectedTagSwitch] = useState<boolean>(false);
@@ -93,7 +95,11 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
           // eslint-disable-next-line @typescript-eslint/no-magic-numbers
           () => BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE[0].fun(new Date(post1.date), new Date(post2.date)),
           // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-          () => BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE[1].fun(new Date(post1.date), new Date(post2.date))
+          () => BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE[1].fun(new Date(post1.date), new Date(post2.date)),
+          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          () => BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE[2].fun(post1.title, post2.title, currentLocale),
+          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          () => BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE[3].fun(post1.title, post2.title, currentLocale)
         ][filterFunIndex];
 
       const paginatedElements = maybeFilteredPostsCollection
@@ -102,7 +108,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 
       return paginatedElements;
     },
-    [maybeFilteredPostsCollection]
+    [maybeFilteredPostsCollection, currentLocale]
   );
 
   const [selectedFilter, setSelectedFilter] = useState<Id>(selectedFilterInitialState);

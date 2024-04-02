@@ -1,24 +1,18 @@
 import type { StringsCompareFun } from '@rtm/shared-types/StringManipulations';
 import type { DatesCompareFun } from '@rtm/shared-types/DateManipulations';
 import type { PostsCollectionAssoc, BlogCategory } from '@/types/Blog';
-import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
 import type { Limit } from '@rtm/shared-types/Numbers';
 
 import { categoriesBlogDataAssoc } from '##/config/contentlayer/blog/documentTypes';
 
+import type { COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE } from './client';
+
 import BlogConfigClient from './client';
 
-type FilterFun = DatesCompareFun;
-
-type Filter = {
-  i18nTitle: I18nVocabTarget;
-  fun: FilterFun;
-};
-
 export type BlogConfigType = {
+  COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE: typeof COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE;
   DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_SUBCATEGORIES_ON_BLOG_CATEGORY_PAGE: StringsCompareFun;
   DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_CATEGORY_PAGE: DatesCompareFun;
-  COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE: readonly Filter[];
   USE_BLOG_POSTS_NOTFOUND_WHEN_SUBCATEGORY_IS_EMPTY_INSTEAD_OF_NOT_FOUND: boolean;
   DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT: Limit;
   DISPLAYED_BLOG_POSTS_PER_SUBCATEGORY_ON_BLOG_CATEGORY_PAGE_LIMIT: Limit;

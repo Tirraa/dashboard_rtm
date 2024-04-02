@@ -30,6 +30,7 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
   ).map((post) => ({
     blogPostPreviewComp: <BlogPostPreview key={`${post._raw.flattenedPath}-paginated-blog-post`} language={language} post={post} />,
     tagsIndexes: post.tagsIndexes,
+    title: post.title,
     tags: post.tags,
     date: post.date,
     _id: post._id

@@ -119,6 +119,13 @@ export default {
     }
   },
 
+  filters: {
+    'date-desc': "Les plus récents d'abord",
+    'date-asc': "Les plus anciens d'abord",
+    'alphabet-desc': 'Alphabétique Z-A',
+    'alphabet-asc': 'Alphabétique A-Z'
+  },
+
   blogToc: {
     'sr-only': {
       'show-toc': `Afficher la ${SHARED.vocab.toc}`,
@@ -131,11 +138,6 @@ export default {
     bagpipes: 'Cornemuse',
     cello: 'Violoncelle',
     drums: 'Batterie'
-  },
-
-  filters: {
-    'date-desc': "Les plus récents d'abord",
-    'date-asc': "Les plus anciens d'abord"
   },
 
   blogTagsFilters: {
