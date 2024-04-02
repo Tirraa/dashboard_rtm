@@ -79,7 +79,8 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   const computePaginatedElements = useCallback(() => {
     const paginatedElements = maybeFilteredPostsCollection
       .sort((post1, post2) =>
-        BlogConfigClient.DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE(new Date(post1.date), new Date(post2.date))
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE[0].fun(new Date(post1.date), new Date(post2.date))
       )
       .map((post) => <Fragment key={post._id}>{post.blogPostPreviewComp}</Fragment>);
 

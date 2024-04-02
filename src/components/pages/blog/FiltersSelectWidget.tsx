@@ -3,6 +3,7 @@
 import type { FunctionComponent } from 'react';
 
 import { SelectContent, SelectTrigger, SelectGroup, SelectValue, SelectItem, Select } from '@/components/ui/Select';
+import BlogConfigClient from '@/config/Blog/client';
 import { getClientSideI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
@@ -17,8 +18,15 @@ const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({ trig
   const [open, setOpen] = useState<boolean>(false);
   const onOpenChange = (opened: boolean) => setOpen(opened);
 
+  const buildSelectItems = () =>
+    BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE.map((config, index) => (
+      <SelectItem key={`select-item-${index}`} value={String(index)}>
+        {globalT(config.i18nTitle)}
+      </SelectItem>
+    ));
+
   return (
-    <Select onOpenChange={(isOpen: boolean) => onOpenChange(isOpen)} defaultValue="date-asc">
+    <Select onOpenChange={(isOpen: boolean) => onOpenChange(isOpen)} defaultValue="0">
       <SelectTrigger
         chevronClassName={cn('transition-transform', {
           'ltr:-rotate-180 rtl:rotate-180': open
@@ -28,10 +36,7 @@ const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({ trig
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        <SelectGroup aria-label={globalT(`${i18ns.srOnly}.sort-by`)}>
-          <SelectItem value="date-asc">{globalT(`${i18ns.filters}.date-asc`)}</SelectItem>
-          <SelectItem value="date-desc">{globalT(`${i18ns.filters}.date-desc`)}</SelectItem>
-        </SelectGroup>
+        <SelectGroup aria-label={globalT(`${i18ns.srOnly}.sort-by`)}>{buildSelectItems()}</SelectGroup>
       </SelectContent>
     </Select>
   );
