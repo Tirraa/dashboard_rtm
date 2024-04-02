@@ -76,11 +76,11 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   useEffect(() => {
     function unsafeCtxHandler() {
       try {
-        const unpackedAndCleanedFilters = getUnpackedAndSanitizedFilters(searchParams, expectedTagsIds, maxId, TAGS_KEY);
-        setSelectedTagsIds(unpackedAndCleanedFilters);
+        const unpackedAndCleanedTags = getUnpackedAndSanitizedFilters(searchParams, expectedTagsIds, maxId, TAGS_KEY);
+        setSelectedTagsIds(unpackedAndCleanedTags);
 
-        const sanitizedFilters = packIds(unpackedAndCleanedFilters);
-        const q = createURLSearchParams({ [TAGS_KEY]: sanitizedFilters }, searchParams);
+        const sanitizedTags = packIds(unpackedAndCleanedTags);
+        const q = createURLSearchParams({ [TAGS_KEY]: sanitizedTags }, searchParams);
         router.replace(q, { scroll: false });
       } catch {
         const q = createURLSearchParams({ [TAGS_KEY]: null }, searchParams);
