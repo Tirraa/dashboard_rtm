@@ -12,8 +12,8 @@ import {
   computeReconciliatedPageIndex,
   getSanitizedCurrentPage
 } from '@/components/ui/helpers/PaginatedElements/functions';
+import { useLayoutEffect, useCallback, useState, Fragment, useMemo, useRef } from 'react';
 import { computePagesAmount } from '@/components/hooks/helpers/usePagination/functions';
-import { useCallback, useEffect, useState, Fragment, useMemo, useRef } from 'react';
 import { PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import BlogConfigClient, { MAX_FILTER_INDEX } from '@/config/Blog/client';
 import PaginatedElements from '@/components/ui/PaginatedElements';
@@ -129,7 +129,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     return computeReconciliatedPageIndex(pagesSlicesRelatedPostsIdsHistoryPtr, maybeFilteredPostsCollection, elementsPerPage);
   }, [elementsPerPage, maybeFilteredPostsCollection]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const currentPaginatedElementsLength = paginatedElements.length;
 
     if (
