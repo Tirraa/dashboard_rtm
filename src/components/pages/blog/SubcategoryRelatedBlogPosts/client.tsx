@@ -210,7 +210,8 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     if (newPageIndex === -1) return;
 
-    const q = createURLSearchParams({ [PAGE_KEY]: newPageIndex }, searchParams);
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    const q = createURLSearchParams({ [FILTERS_KEY]: selectedFilter !== 0 ? selectedFilter : null, [PAGE_KEY]: newPageIndex }, searchParams);
     router.replace(q, { scroll: false });
   }, [
     selectedFilter,
