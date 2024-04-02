@@ -27,7 +27,7 @@ import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 
 import { getUnpackedAndSanitizedFilters } from './helpers/functions';
-import { FILTERS_KEY } from './helpers/constants';
+import { TAGS_KEY } from './helpers/constants';
 
 export interface TagsFiltersWidgetProps {
   extraCtx?: {
@@ -76,14 +76,14 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   useEffect(() => {
     function unsafeCtxHandler() {
       try {
-        const unpackedAndCleanedFilters = getUnpackedAndSanitizedFilters(searchParams, expectedTagsIds, maxId, FILTERS_KEY);
+        const unpackedAndCleanedFilters = getUnpackedAndSanitizedFilters(searchParams, expectedTagsIds, maxId, TAGS_KEY);
         setSelectedTagsIds(unpackedAndCleanedFilters);
 
         const sanitizedFilters = packIds(unpackedAndCleanedFilters);
-        const q = createURLSearchParams({ [FILTERS_KEY]: sanitizedFilters }, searchParams);
+        const q = createURLSearchParams({ [TAGS_KEY]: sanitizedFilters }, searchParams);
         router.replace(q, { scroll: false });
       } catch {
-        const q = createURLSearchParams({ [FILTERS_KEY]: null }, searchParams);
+        const q = createURLSearchParams({ [TAGS_KEY]: null }, searchParams);
         router.replace(q, { scroll: false });
       }
     }
@@ -137,7 +137,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
         if (newSelectedTags.length !== 0) return false;
 
         const pageId: MaybeNull<Id> = memorizedPageBeforeFiltering.current === FIRST_PAGE_PARAM ? null : memorizedPageBeforeFiltering.current;
-        const q = createURLSearchParams({ [FILTERS_KEY]: null, [PAGE_KEY]: pageId });
+        const q = createURLSearchParams({ [PAGE_KEY]: pageId, [TAGS_KEY]: null });
         router.push(q, { scroll: false });
         memorizedPageBeforeFiltering.current = getSanitizedCurrentPage(searchParams, maxPagesAmount, PAGE_KEY);
         return true;
@@ -154,7 +154,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
         );
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         if (newPageIndex === -1) return false;
-        const q = createURLSearchParams({ [PAGE_KEY]: newPageIndex, [FILTERS_KEY]: null }, searchParams);
+        const q = createURLSearchParams({ [PAGE_KEY]: newPageIndex, [TAGS_KEY]: null }, searchParams);
         router.replace(q, { scroll: false });
         return true;
       }
@@ -163,7 +163,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
         if (handlePageResumeOnClearFiltersThenSkip()) return;
       } else if (filtersClearWithPageReconciliationInferenceThenSkip()) return;
 
-      const q = createURLSearchParams({ [FILTERS_KEY]: packedIds }, searchParams);
+      const q = createURLSearchParams({ [TAGS_KEY]: packedIds }, searchParams);
       router.push(q, { scroll: false });
     },
     [router, searchParams, maxPagesAmount, memorizedPageBeforeFiltering, extraCtx]

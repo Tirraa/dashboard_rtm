@@ -134,8 +134,8 @@ export default {
   },
 
   filters: {
-    'date-desc': "Les plus anciens d'abord",
-    'date-asc': "Les plus récents d'abord"
+    'date-desc': "Les plus récents d'abord",
+    'date-asc': "Les plus anciens d'abord"
   },
 
   blogTagsFilters: {

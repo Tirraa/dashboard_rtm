@@ -145,8 +145,8 @@ export default {
   },
 
   filters: {
-    'date-asc': 'Most recent first',
-    'date-desc': 'Oldest first'
+    'date-desc': 'Most recent first',
+    'date-asc': 'Oldest first'
   },
 
   'pages-titles': SHARED['pages-titles'],

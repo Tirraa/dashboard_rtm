@@ -13,12 +13,12 @@ type BlogConfigClientType = Pick<
 
 const COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE = [
   {
-    i18nTitle: 'filters.date-asc',
-    fun: compareAsc
-  },
-  {
     i18nTitle: 'filters.date-desc',
     fun: compareDesc
+  },
+  {
+    i18nTitle: 'filters.date-asc',
+    fun: compareAsc
   }
 ] as const;
 
@@ -27,5 +27,8 @@ const BlogConfigClient: BlogConfigClientType = {
   DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_CATEGORY_PAGE: compareDesc,
   COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE
 } as const;
+
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+export const MAX_FILTER_INDEX = BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE.length - 1;
 
 export default BlogConfigClient;

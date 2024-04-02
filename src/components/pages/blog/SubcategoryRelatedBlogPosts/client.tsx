@@ -1,30 +1,31 @@
 'use client';
 
 import type { BlogPostPreviewComponentWithMetadatas, BlogTagId } from '@/types/Blog';
-import type { Count, Index, Limit } from '@rtm/shared-types/Numbers';
+import type { Count, Index, Limit, Id } from '@rtm/shared-types/Numbers';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { ReactElementKey } from '@rtm/shared-types/React';
 import type { FunctionComponent } from 'react';
 
 import {
   getPaginatedElementsCurrentSlice,
+  getSanitizedCurrentFilterIndex,
   computeReconciliatedPageIndex,
   getSanitizedCurrentPage
 } from '@/components/ui/helpers/PaginatedElements/functions';
 import { computePagesAmount } from '@/components/hooks/helpers/usePagination/functions';
 import { useCallback, useEffect, useState, Fragment, useMemo, useRef } from 'react';
 import { PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
+import BlogConfigClient, { MAX_FILTER_INDEX } from '@/config/Blog/client';
 import PaginatedElements from '@/components/ui/PaginatedElements';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
 import { useSearchParams, useRouter } from 'next/navigation';
 import usePagination from '@/components/hooks/usePagination';
 import { SlidingList } from '@rtm/shared-lib/datastructs';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
-import BlogConfigClient from '@/config/Blog/client';
 
 import { getUnpackedAndSanitizedFilters } from '../helpers/functions';
 import SubcategoryRelatedBlogPostsClientToolbar from './toolbar';
-import { FILTERS_KEY } from '../helpers/constants';
+import { FILTERS_KEY, TAGS_KEY } from '../helpers/constants';
 
 interface SubcategoryRelatedBlogPostsClientProps {
   postsCollection: BlogPostPreviewComponentWithMetadatas[];
@@ -49,7 +50,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   const computeSelectedTagsIdsInitialState = useCallback(
     () => {
       try {
-        const unpackedAndSanitizedFilters = getUnpackedAndSanitizedFilters(searchParams, expectedTagsIds, maxBlogTagId, FILTERS_KEY);
+        const unpackedAndSanitizedFilters = getUnpackedAndSanitizedFilters(searchParams, expectedTagsIds, maxBlogTagId, TAGS_KEY);
         return unpackedAndSanitizedFilters;
       } catch {
         return [];
@@ -76,24 +77,36 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 
   const maybeFilteredPostsCollection = useMemo(() => getMaybeFilteredPostsCollection(), [getMaybeFilteredPostsCollection]);
 
-  const computePaginatedElements = useCallback(() => {
-    const paginatedElements = maybeFilteredPostsCollection
-      .sort((post1, post2) =>
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE[0].fun(new Date(post1.date), new Date(post2.date))
-      )
-      .map((post) => <Fragment key={post._id}>{post.blogPostPreviewComp}</Fragment>);
+  const computePaginatedElements = useCallback(
+    (filterFunIndex: Index) => {
+      const applyFilter = (post1: BlogPostPreviewComponentWithMetadatas, post2: BlogPostPreviewComponentWithMetadatas) =>
+        [
+          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE[0].fun(new Date(post1.date), new Date(post2.date)),
+          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE[1].fun(new Date(post1.date), new Date(post2.date))
+        ][filterFunIndex];
 
-    return paginatedElements;
-  }, [maybeFilteredPostsCollection]);
+      const paginatedElements = maybeFilteredPostsCollection
+        .sort((post1, post2) => applyFilter(post1, post2))
+        .map((post) => <Fragment key={post._id}>{post.blogPostPreviewComp}</Fragment>);
 
-  const paginatedElements = useMemo(() => computePaginatedElements(), [computePaginatedElements]);
+      return paginatedElements;
+    },
+    [maybeFilteredPostsCollection]
+  );
+
+  const currentFilter = useMemo(() => getSanitizedCurrentFilterIndex(searchParams, MAX_FILTER_INDEX, FILTERS_KEY), [searchParams]);
+
+  const paginatedElements = useMemo(() => computePaginatedElements(currentFilter), [computePaginatedElements, currentFilter]);
   const maxPagesAmount = useMemo(() => computePagesAmount(postsCollection.length, elementsPerPage), [postsCollection, elementsPerPage]);
   const pagesAmount = usePagination(paginatedElements, elementsPerPage);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const pagesSlicesRelatedPostsIdsHistory = useRef<SlidingList<ReactElementKey[]>>(new SlidingList(2));
 
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const oldFilter = useRef<Id>(-1);
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const oldPage = useRef<Count>(-1);
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -117,8 +130,15 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   }, [elementsPerPage, maybeFilteredPostsCollection]);
 
   useEffect(() => {
-    const currentPaginatedElements = paginatedElements.length;
-    if (oldPage.current === currentPage && oldPaginatedElementsLength.current === currentPaginatedElements) return;
+    const currentPaginatedElementsLength = paginatedElements.length;
+
+    if (
+      oldPage.current === currentPage &&
+      oldPaginatedElementsLength.current === currentPaginatedElementsLength &&
+      oldFilter.current === currentFilter
+    ) {
+      return;
+    }
 
     const oldSelectedTagsIdsInstance = getRefCurrentPtr(oldSelectedTagsIds);
     if (!oldSelectedTagsIdsInstance) return;
@@ -128,8 +148,11 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     const keys: ReactElementKey[] = [];
     for (const element of slice) if (element.key) keys.push(element.key);
 
+    const newFilter = oldFilter.current !== currentFilter;
+
+    oldFilter.current = currentFilter;
     oldPage.current = currentPage;
-    oldPaginatedElementsLength.current = currentPaginatedElements;
+    oldPaginatedElementsLength.current = currentPaginatedElementsLength;
 
     const pagesSlicesRelatedPostsIdsHistoryInstance = getRefCurrentPtr(pagesSlicesRelatedPostsIdsHistory);
     if (!pagesSlicesRelatedPostsIdsHistoryInstance) return;
@@ -139,14 +162,14 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     const selectedTagsIdsSet = new Set(selectedTagsIds);
     const commons = oldSelectedTagsIdsInstance.filter((x) => selectedTagsIdsSet.has(x));
 
-    if (commons.length === selectedTagsIds.length && commons.length === oldSelectedTagsIdsInstance.length) return;
+    if (commons.length === selectedTagsIds.length && commons.length === oldSelectedTagsIdsInstance.length && !newFilter) return;
 
     const hasUncheckedTags = selectedTagsIds.length < oldSelectedTagsIdsInstance.length;
 
     oldSelectedTagsIds.current = [...selectedTagsIds];
 
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (selectedTagsIds.length === 0) return;
+    if (selectedTagsIds.length === 0 && !newFilter) return;
 
     const pagesSlicesRelatedPostsIdsHistoryPtr = pagesSlicesRelatedPostsIdsHistoryInstance.getPtr();
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -166,7 +189,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       return false;
     }
 
-    if (uncheckedTagCtxHandlerThenSkip(hasUncheckedTags, pagesSlicesRelatedPostsIdsHistoryPtr, oldSliceIds)) return;
+    if (!newFilter && uncheckedTagCtxHandlerThenSkip(hasUncheckedTags, pagesSlicesRelatedPostsIdsHistoryPtr, oldSliceIds)) return;
 
     const newPageIndex = getReconciliatedPageIndex();
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -174,6 +197,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     const q = createURLSearchParams({ [PAGE_KEY]: newPageIndex }, searchParams);
     router.replace(q, { scroll: false });
   }, [
+    currentFilter,
     paginatedElements,
     currentPage,
     getReconciliatedPageIndex,
