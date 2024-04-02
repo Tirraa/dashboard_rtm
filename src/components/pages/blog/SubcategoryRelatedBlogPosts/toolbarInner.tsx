@@ -23,6 +23,8 @@ export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends Tags
 }
 
 const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<SubcategoryRelatedBlogPostsClientToolbarInnerProps> = ({
+  setSelectedFilterSwitch,
+  setSelectedTagSwitch,
   setSelectedTagsIds,
   setSelectedFilter,
   expectedTagsIds,
@@ -52,15 +54,18 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
     function buildForTop(): MaybeNull<ReactElement>[] {
       const elements: MaybeNull<ReactElement>[] = [];
 
-      if (showFiltersSelectWidget)
+      if (showFiltersSelectWidget) {
         elements.push(
           <FiltersSelectWidget
+            setSelectedFilterSwitch={setSelectedFilterSwitch}
             setSelectedFilter={setSelectedFilter}
             triggerClassName="z-20 mb-1 self-end"
             selectedFilter={selectedFilter}
             key="filters-widget"
           />
         );
+      }
+
       if (showPaginationWidget) elements.push(<PaginationWidget className="w-full justify-end" pagesAmount={pagesAmount} key="pagination-widget" />);
 
       return elements;
@@ -92,6 +97,7 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
     >
       {!isBottomWidget && !disabledTagsFiltersWidget && (
         <TagsFiltersWidget
+          setSelectedTagSwitch={setSelectedTagSwitch}
           setSelectedTagsIds={setSelectedTagsIds}
           selectedTagsIds={selectedTagsIds}
           expectedTagsIds={expectedTagsIds}

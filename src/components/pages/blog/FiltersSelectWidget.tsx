@@ -6,21 +6,27 @@ import type { FunctionComponent } from 'react';
 import { SelectContent, SelectTrigger, SelectGroup, SelectValue, SelectItem, Select } from '@/components/ui/Select';
 import { getSanitizedCurrentFilterIndex } from '@/components/ui/helpers/PaginatedElements/functions';
 import BlogConfigClient, { MAX_FILTER_INDEX } from '@/config/Blog/client';
+import { useEffect, useState, useMemo } from 'react';
 import { getClientSideI18n } from '@/i18n/client';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 
 import { FILTERS_KEY } from './helpers/constants';
 
 export interface FiltersSelectWidgetProps {
+  setSelectedFilterSwitch: (s: boolean) => unknown;
   setSelectedFilter: (filter: Id) => unknown;
   triggerClassName?: string;
   selectedFilter: Id;
 }
 
-const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({ setSelectedFilter, triggerClassName, selectedFilter }) => {
+const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({
+  setSelectedFilterSwitch,
+  setSelectedFilter,
+  triggerClassName,
+  selectedFilter
+}) => {
   const globalT = getClientSideI18n();
   const searchParams = useSearchParams();
 
@@ -34,16 +40,21 @@ const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({ setS
       </SelectItem>
     ));
 
+  const sanitizedFilter = useMemo(() => getSanitizedCurrentFilterIndex(searchParams, MAX_FILTER_INDEX, FILTERS_KEY), [searchParams]);
+
   useEffect(() => {
-    const sanitizedFilter = getSanitizedCurrentFilterIndex(searchParams, MAX_FILTER_INDEX, FILTERS_KEY);
     setSelectedFilter(sanitizedFilter);
-  }, [searchParams, setSelectedFilter]);
+  }, [sanitizedFilter, setSelectedFilter]);
 
   return (
     <Select
-      onValueChange={(value: string) => setSelectedFilter(Number(value))}
+      onValueChange={(value: string) => {
+        const f = Number(value);
+        if (f !== selectedFilter) setSelectedFilterSwitch(true);
+        setSelectedFilter(f);
+      }}
       onOpenChange={(isOpen: boolean) => onOpenChange(isOpen)}
-      value={String(selectedFilter)}
+      value={String(sanitizedFilter)}
     >
       <SelectTrigger
         chevronClassName={cn('transition-transform', {

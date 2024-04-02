@@ -35,6 +35,7 @@ export interface TagsFiltersWidgetProps {
     maybeFilteredPostsCollection: BlogPostPreviewComponentWithMetadatas[];
     elementsPerPage: Limit;
   };
+  setSelectedTagSwitch: (isOpenedTagsWidget: boolean) => unknown;
   setSelectedTagsIds: (selectedTagsIds: BlogTagId[]) => unknown;
   expectedTagsIds: Set<BlogTagId>;
   selectedTagsIds: BlogTagId[];
@@ -46,6 +47,7 @@ export interface TagsFiltersWidgetProps {
 const MEMORIZED_PAGE_BEFORE_FILTERING_KILLSWITCH = -1;
 
 const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
+  setSelectedTagSwitch,
   setSelectedTagsIds,
   expectedTagsIds,
   selectedTagsIds,
@@ -138,7 +140,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
 
         const pageId: MaybeNull<Id> = memorizedPageBeforeFiltering.current === FIRST_PAGE_PARAM ? null : memorizedPageBeforeFiltering.current;
         const q = createURLSearchParams({ [PAGE_KEY]: pageId, [TAGS_KEY]: null });
-        router.push(q, { scroll: false });
+        router.replace(q, { scroll: false });
         memorizedPageBeforeFiltering.current = getSanitizedCurrentPage(searchParams, maxPagesAmount, PAGE_KEY);
         return true;
       }
@@ -164,7 +166,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
       } else if (filtersClearWithPageReconciliationInferenceThenSkip()) return;
 
       const q = createURLSearchParams({ [TAGS_KEY]: packedIds }, searchParams);
-      router.push(q, { scroll: false });
+      router.replace(q, { scroll: false });
     },
     [router, searchParams, maxPagesAmount, memorizedPageBeforeFiltering, extraCtx]
   );
@@ -182,6 +184,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
           } else {
             updateRouterAndSetSelectedTags([...selectedTagsIds, tagId]);
           }
+          setSelectedTagSwitch(true);
         };
 
         return (
@@ -198,7 +201,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
           </CommandItem>
         );
       }),
-    [globalT, selectedTagsIds, tags, updateRouterAndSetSelectedTags]
+    [globalT, selectedTagsIds, tags, updateRouterAndSetSelectedTags, setSelectedTagSwitch]
   );
 
   const activeFiltersIndicator = (
@@ -225,7 +228,7 @@ const TagsFiltersWidget: FunctionComponent<TagsFiltersWidgetProps> = ({
   );
 
   return (
-    <Popover onOpenChange={(isOpen: boolean) => setIsOpened(isOpen)} open={isOpened}>
+    <Popover onOpenChange={(_isOpened: boolean) => setIsOpened(_isOpened)} open={isOpened}>
       <PopoverTrigger asChild>
         <button
           className={cn(classNameBase, BUTTON_CONFIG.CLASSNAME, {

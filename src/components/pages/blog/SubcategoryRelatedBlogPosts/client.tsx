@@ -12,9 +12,9 @@ import {
   computeReconciliatedPageIndex,
   getSanitizedCurrentPage
 } from '@/components/ui/helpers/PaginatedElements/functions';
+import { FIRST_PAGE_PARAM, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import { computePagesAmount } from '@/components/hooks/helpers/usePagination/functions';
 import { useCallback, useEffect, useState, Fragment, useMemo, useRef } from 'react';
-import { PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import BlogConfigClient, { MAX_FILTER_INDEX } from '@/config/Blog/client';
 import PaginatedElements from '@/components/ui/PaginatedElements';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
@@ -46,6 +46,9 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
+
+  const [selectedFilterSwitch, setSelectedFilterSwitch] = useState<boolean>(false);
+  const [selectedTagSwitch, setSelectedTagSwitch] = useState<boolean>(false);
 
   const computeSelectedTagsIdsInitialState = useCallback(
     () => {
@@ -128,6 +131,11 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   const getReconciliatedPageIndex = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     (): Index | -1 => {
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      if (!selectedTagSwitch && !selectedFilterSwitch) return -1;
+      setSelectedTagSwitch(false);
+      setSelectedFilterSwitch(false);
+
       const pagesSlicesRelatedPostsIdsHistoryInstance = getRefCurrentPtr(pagesSlicesRelatedPostsIdsHistory);
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       if (!pagesSlicesRelatedPostsIdsHistoryInstance) return -1;
@@ -141,7 +149,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 
       return reconciliatedPageIndex;
     },
-    [elementsPerPage, maybeFilteredPostsCollection]
+    [elementsPerPage, maybeFilteredPostsCollection, selectedTagSwitch, selectedFilterSwitch]
   );
 
   useEffect(() => {
@@ -210,8 +218,11 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     if (newPageIndex === -1) return;
 
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const q = createURLSearchParams({ [FILTERS_KEY]: selectedFilter !== 0 ? selectedFilter : null, [PAGE_KEY]: newPageIndex }, searchParams);
+    const q = createURLSearchParams(
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      { [PAGE_KEY]: newPageIndex === FIRST_PAGE_PARAM ? null : newPageIndex, [FILTERS_KEY]: selectedFilter !== 0 ? selectedFilter : null },
+      searchParams
+    );
     router.replace(q, { scroll: false });
   }, [
     selectedFilter,
@@ -234,6 +245,8 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       {showToolbar && (
         <SubcategoryRelatedBlogPostsClientToolbar
           extraCtx={{ pagesSlicesRelatedPostsIdsHistory, maybeFilteredPostsCollection, elementsPerPage }}
+          setSelectedFilterSwitch={setSelectedFilterSwitch}
+          setSelectedTagSwitch={setSelectedTagSwitch}
           setSelectedTagsIds={setSelectedTagsIds}
           postsAmount={paginatedElements.length}
           setSelectedFilter={setSelectedFilter}
@@ -250,6 +263,8 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       {showToolbar && (
         <SubcategoryRelatedBlogPostsClientToolbar
           extraCtx={{ pagesSlicesRelatedPostsIdsHistory, maybeFilteredPostsCollection, elementsPerPage }}
+          setSelectedFilterSwitch={setSelectedFilterSwitch}
+          setSelectedTagSwitch={setSelectedTagSwitch}
           setSelectedTagsIds={setSelectedTagsIds}
           postsAmount={paginatedElements.length}
           setSelectedFilter={setSelectedFilter}
