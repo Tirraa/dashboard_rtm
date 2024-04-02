@@ -12,8 +12,8 @@ import {
   computeReconciliatedPageIndex,
   getSanitizedCurrentPage
 } from '@/components/ui/helpers/PaginatedElements/functions';
-import { useLayoutEffect, useCallback, useState, Fragment, useMemo, useRef } from 'react';
 import { computePagesAmount } from '@/components/hooks/helpers/usePagination/functions';
+import { useCallback, useEffect, useState, Fragment, useMemo, useRef } from 'react';
 import { PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import BlogConfigClient, { MAX_FILTER_INDEX } from '@/config/Blog/client';
 import PaginatedElements from '@/components/ui/PaginatedElements';
@@ -60,6 +60,12 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     []
   );
 
+  const selectedFilterInitialState = useMemo(
+    () => getSanitizedCurrentFilterIndex(searchParams, MAX_FILTER_INDEX, FILTERS_KEY),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
   const computedSelectedTagsIdsInitialState = useMemo(() => computeSelectedTagsIdsInitialState(), [computeSelectedTagsIdsInitialState]);
 
   const [selectedTagsIds, setSelectedTagsIds] = useState<BlogTagId[]>(computedSelectedTagsIdsInitialState);
@@ -96,9 +102,9 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     [maybeFilteredPostsCollection]
   );
 
-  const currentFilter = useMemo(() => getSanitizedCurrentFilterIndex(searchParams, MAX_FILTER_INDEX, FILTERS_KEY), [searchParams]);
+  const [selectedFilter, setSelectedFilter] = useState<Id>(selectedFilterInitialState);
 
-  const paginatedElements = useMemo(() => computePaginatedElements(currentFilter), [computePaginatedElements, currentFilter]);
+  const paginatedElements = useMemo(() => computePaginatedElements(selectedFilter), [computePaginatedElements, selectedFilter]);
   const maxPagesAmount = useMemo(() => computePagesAmount(postsCollection.length, elementsPerPage), [postsCollection, elementsPerPage]);
   const pagesAmount = usePagination(paginatedElements, elementsPerPage);
 
@@ -119,23 +125,32 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     [paginatedElements, elementsPerPage, currentPage]
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const getReconciliatedPageIndex = useCallback((): Index | -1 => {
-    const pagesSlicesRelatedPostsIdsHistoryInstance = getRefCurrentPtr(pagesSlicesRelatedPostsIdsHistory);
+  const getReconciliatedPageIndex = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    if (!pagesSlicesRelatedPostsIdsHistoryInstance) return -1;
+    (): Index | -1 => {
+      const pagesSlicesRelatedPostsIdsHistoryInstance = getRefCurrentPtr(pagesSlicesRelatedPostsIdsHistory);
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      if (!pagesSlicesRelatedPostsIdsHistoryInstance) return -1;
 
-    const pagesSlicesRelatedPostsIdsHistoryPtr = pagesSlicesRelatedPostsIdsHistoryInstance.getPtr();
-    return computeReconciliatedPageIndex(pagesSlicesRelatedPostsIdsHistoryPtr, maybeFilteredPostsCollection, elementsPerPage);
-  }, [elementsPerPage, maybeFilteredPostsCollection]);
+      const pagesSlicesRelatedPostsIdsHistoryPtr = pagesSlicesRelatedPostsIdsHistoryInstance.getPtr();
+      const reconciliatedPageIndex = computeReconciliatedPageIndex(
+        pagesSlicesRelatedPostsIdsHistoryPtr,
+        maybeFilteredPostsCollection,
+        elementsPerPage
+      );
 
-  useLayoutEffect(() => {
+      return reconciliatedPageIndex;
+    },
+    [elementsPerPage, maybeFilteredPostsCollection]
+  );
+
+  useEffect(() => {
     const currentPaginatedElementsLength = paginatedElements.length;
 
     if (
       oldPage.current === currentPage &&
       oldPaginatedElementsLength.current === currentPaginatedElementsLength &&
-      oldFilter.current === currentFilter
+      oldFilter.current === selectedFilter
     ) {
       return;
     }
@@ -148,9 +163,9 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     const keys: ReactElementKey[] = [];
     for (const element of slice) if (element.key) keys.push(element.key);
 
-    const newFilter = oldFilter.current !== currentFilter;
+    const newFilter = oldFilter.current !== selectedFilter;
 
-    oldFilter.current = currentFilter;
+    oldFilter.current = selectedFilter;
     oldPage.current = currentPage;
     oldPaginatedElementsLength.current = currentPaginatedElementsLength;
 
@@ -194,10 +209,11 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     const newPageIndex = getReconciliatedPageIndex();
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     if (newPageIndex === -1) return;
+
     const q = createURLSearchParams({ [PAGE_KEY]: newPageIndex }, searchParams);
     router.replace(q, { scroll: false });
   }, [
-    currentFilter,
+    selectedFilter,
     paginatedElements,
     currentPage,
     getReconciliatedPageIndex,
@@ -219,8 +235,10 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
           extraCtx={{ pagesSlicesRelatedPostsIdsHistory, maybeFilteredPostsCollection, elementsPerPage }}
           setSelectedTagsIds={setSelectedTagsIds}
           postsAmount={paginatedElements.length}
+          setSelectedFilter={setSelectedFilter}
           selectedTagsIds={selectedTagsIds}
           expectedTagsIds={expectedTagsIds}
+          selectedFilter={selectedFilter}
           maxPagesAmount={maxPagesAmount}
           pagesAmount={pagesAmount}
           maxId={maxBlogTagId}
@@ -233,8 +251,10 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
           extraCtx={{ pagesSlicesRelatedPostsIdsHistory, maybeFilteredPostsCollection, elementsPerPage }}
           setSelectedTagsIds={setSelectedTagsIds}
           postsAmount={paginatedElements.length}
+          setSelectedFilter={setSelectedFilter}
           selectedTagsIds={selectedTagsIds}
           expectedTagsIds={expectedTagsIds}
+          selectedFilter={selectedFilter}
           maxPagesAmount={maxPagesAmount}
           pagesAmount={pagesAmount}
           maxId={maxBlogTagId}

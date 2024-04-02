@@ -1,28 +1,23 @@
 'use client';
 
+import type { Id } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
 
 import { SelectContent, SelectTrigger, SelectGroup, SelectValue, SelectItem, Select } from '@/components/ui/Select';
-import { getSanitizedCurrentFilterIndex } from '@/components/ui/helpers/PaginatedElements/functions';
-import BlogConfigClient, { MAX_FILTER_INDEX } from '@/config/Blog/client';
-import { createURLSearchParams } from '@rtm/shared-lib/html';
-import { useSearchParams, useRouter } from 'next/navigation';
+import BlogConfigClient from '@/config/Blog/client';
 import { getClientSideI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 import { useState } from 'react';
 
-import { FILTERS_KEY } from './helpers/constants';
-
-interface FiltersSelectWidgetProps {
+export interface FiltersSelectWidgetProps {
+  setSelectedFilter: (filter: Id) => unknown;
   triggerClassName?: string;
+  selectedFilter: Id;
 }
 
-const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({ triggerClassName }) => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({ setSelectedFilter, triggerClassName, selectedFilter }) => {
   const globalT = getClientSideI18n();
-  const value = getSanitizedCurrentFilterIndex(searchParams, MAX_FILTER_INDEX, FILTERS_KEY);
 
   const [open, setOpen] = useState<boolean>(false);
   const onOpenChange = (opened: boolean) => setOpen(opened);
@@ -36,12 +31,9 @@ const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({ trig
 
   return (
     <Select
-      onValueChange={(value: string) => {
-        const q = createURLSearchParams({ [FILTERS_KEY]: value !== '0' ? value : null }, searchParams);
-        router.push(q, { scroll: false });
-      }}
+      onValueChange={(value: string) => setSelectedFilter(Number(value))}
       onOpenChange={(isOpen: boolean) => onOpenChange(isOpen)}
-      defaultValue={String(value)}
+      defaultValue={String(selectedFilter)}
     >
       <SelectTrigger
         chevronClassName={cn('transition-transform', {

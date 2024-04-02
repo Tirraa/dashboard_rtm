@@ -69,7 +69,6 @@ export function computeReconciliatedPageIndex(
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const oldSliceIds = pagesSlicesRelatedPostsIdsHistory[0];
 
-  // {ToDo} Handling ASC sort is okay, but what about DESC sort (something like 'findLastCommonElementIndex')?
   const commonElementIndex = findFirstCommonElementIndex(oldSliceIds, maybeFilteredPostsCollection);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers

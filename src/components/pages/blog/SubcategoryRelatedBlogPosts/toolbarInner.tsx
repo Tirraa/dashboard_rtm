@@ -9,6 +9,7 @@ import { PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { cn } from '@/lib/tailwind';
 
+import type { FiltersSelectWidgetProps } from '../FiltersSelectWidget';
 import type { TagsFiltersWidgetProps } from '../TagsFiltersWidget';
 import type { PaginationWidgetProps } from '../PaginationWidget';
 
@@ -16,15 +17,17 @@ import PaginationWidget, { buildDropdownForMobileAndBottom } from '../Pagination
 import FiltersSelectWidget from '../FiltersSelectWidget';
 import TagsFiltersWidget from '../TagsFiltersWidget';
 
-export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends TagsFiltersWidgetProps, PaginationWidgetProps {
+export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends TagsFiltersWidgetProps, PaginationWidgetProps, FiltersSelectWidgetProps {
   isBottomWidget?: boolean;
   postsAmount: Quantity;
 }
 
 const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<SubcategoryRelatedBlogPostsClientToolbarInnerProps> = ({
   setSelectedTagsIds,
+  setSelectedFilter,
   expectedTagsIds,
   selectedTagsIds,
+  selectedFilter,
   maxPagesAmount,
   isBottomWidget,
   postsAmount,
@@ -49,7 +52,15 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
     function buildForTop(): MaybeNull<ReactElement>[] {
       const elements: MaybeNull<ReactElement>[] = [];
 
-      if (showFiltersSelectWidget) elements.push(<FiltersSelectWidget triggerClassName="z-20 mb-1 self-end" key="filters-widget" />);
+      if (showFiltersSelectWidget)
+        elements.push(
+          <FiltersSelectWidget
+            setSelectedFilter={setSelectedFilter}
+            triggerClassName="z-20 mb-1 self-end"
+            selectedFilter={selectedFilter}
+            key="filters-widget"
+          />
+        );
       if (showPaginationWidget) elements.push(<PaginationWidget className="w-full justify-end" pagesAmount={pagesAmount} key="pagination-widget" />);
 
       return elements;
