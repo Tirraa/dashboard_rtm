@@ -39,12 +39,12 @@ function findFirstCommonElementIndex(
   return -1;
 }
 
-// {ToDo} Write test
 export function computeReconciliatedPageIndex(
   pagesSlicesRelatedPostsIdsHistory: Array<ReactElementKey[]>,
   maybeFilteredPostsCollection: BlogPostPreviewComponentWithMetadatas[],
   elementsPerPage: Quantity
-) {
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+): Index | -1 {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (pagesSlicesRelatedPostsIdsHistory.length <= 1) return -1;
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers

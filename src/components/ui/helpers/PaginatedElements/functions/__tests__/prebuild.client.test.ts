@@ -9,6 +9,7 @@ import { describe, expect, it } from 'vitest';
 import * as React from 'react';
 
 import { doComputeSelectedTagsIdsInitialState, doGetMaybeFilteredPostsCollection, doComputePaginatedElements, shouldShowToolbar } from '../client';
+import { computeReconciliatedPageIndex } from '../pagination';
 
 const emptyPostsCollection: BlogPostPreviewComponentWithMetadatas[] = [];
 
@@ -65,6 +66,66 @@ const twoPostsPostsCollection: BlogPostPreviewComponentWithMetadatas[] = [
     language: 'en',
     _id: '2',
     tags: []
+  }
+];
+
+const fivePostsPostsCollection: BlogPostPreviewComponentWithMetadatas[] = [
+  {
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    tagsIndexes: [fakeTagsIndexes[0], fakeTagsIndexes[1], fakeTagsIndexes[3]],
+    blogPostPreviewComp: React.createElement('div', {}, 'The first'),
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    tags: [fakeTags[0], fakeTags[1], fakeTags[3]],
+    date: '2021-01-01',
+    title: 'Title',
+    language: 'en',
+    _id: '1'
+  },
+  {
+    blogPostPreviewComp: React.createElement('div', {}, 'The second'),
+    date: '2022-01-01',
+    tagsIndexes: [],
+    title: 'Title',
+    language: 'en',
+    _id: '2',
+    tags: []
+  },
+  {
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    tagsIndexes: [fakeTagsIndexes[0], fakeTagsIndexes[1], fakeTagsIndexes[3]],
+    blogPostPreviewComp: React.createElement('div', {}, 'The third'),
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    tags: [fakeTags[0], fakeTags[1], fakeTags[3]],
+    date: '2021-01-01',
+    title: 'Title',
+    language: 'en',
+    _id: '3'
+  },
+  {
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    tagsIndexes: [fakeTagsIndexes[0], fakeTagsIndexes[1], fakeTagsIndexes[3]],
+    blogPostPreviewComp: React.createElement('div', {}, 'The fourth'),
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    tags: [fakeTags[0], fakeTags[1], fakeTags[3]],
+    date: '2021-01-01',
+    title: 'Title',
+    language: 'en',
+    _id: '4'
+  },
+  {
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    tagsIndexes: [fakeTagsIndexes[0], fakeTagsIndexes[1], fakeTagsIndexes[3]],
+    blogPostPreviewComp: React.createElement('div', {}, 'The fifth'),
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    tags: [fakeTags[0], fakeTags[1], fakeTags[3]],
+    date: '2021-01-01',
+    title: 'Title',
+    language: 'en',
+    _id: '5'
   }
 ];
 
@@ -188,5 +249,54 @@ describe('doComputePaginatedElements', () => {
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       React.createElement(React.Fragment, { key: twoPostsPostsCollection[0]._id }, twoPostsPostsCollection[0].blogPostPreviewComp)
     ]);
+  });
+});
+
+describe('computeReconciliatedPageIndex', () => {
+  it('should return the last page index, given the last page indexes in the old slice ids', () => {
+    const elementsPerPage = 2;
+    const maybeFilteredPostsCollection = fivePostsPostsCollection;
+    const expected = 3;
+
+    const reconciliatedPageIndex = computeReconciliatedPageIndex([['5'], ['1', '2']], maybeFilteredPostsCollection, elementsPerPage);
+
+    expect(reconciliatedPageIndex).toBe(expected);
+  });
+
+  it('should return the first page index, given the first page indexes in the old slice ids', () => {
+    const elementsPerPage = 2;
+    const maybeFilteredPostsCollection = fivePostsPostsCollection;
+    const expected = 1;
+
+    const reconciliatedPageIndex = computeReconciliatedPageIndex([['1', '2'], ['5']], maybeFilteredPostsCollection, elementsPerPage);
+
+    expect(reconciliatedPageIndex).toBe(expected);
+  });
+
+  it('should return the 2nd page index, given the 2nd page indexes in the old slice ids', () => {
+    const elementsPerPage = 2;
+    const maybeFilteredPostsCollection = fivePostsPostsCollection;
+    const expected = 2;
+
+    const reconciliatedPageIndex = computeReconciliatedPageIndex(
+      [
+        ['3', '4'],
+        ['1', '2']
+      ],
+      maybeFilteredPostsCollection,
+      elementsPerPage
+    );
+
+    expect(reconciliatedPageIndex).toBe(expected);
+  });
+
+  it('should return -1, given unknown page index in the old slice ids', () => {
+    const elementsPerPage = 2;
+    const maybeFilteredPostsCollection = fivePostsPostsCollection;
+    const expected = -1;
+
+    const reconciliatedPageIndex = computeReconciliatedPageIndex([['unknown'], ['5']], maybeFilteredPostsCollection, elementsPerPage);
+
+    expect(reconciliatedPageIndex).toBe(expected);
   });
 });
