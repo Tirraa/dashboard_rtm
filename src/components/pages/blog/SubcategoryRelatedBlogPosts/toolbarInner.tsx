@@ -1,14 +1,13 @@
 'use client';
 
-import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
-import type { FunctionComponent, ReactElement } from 'react';
+import type { FunctionComponent } from 'react';
 
 import { useSearchParams, usePathname } from 'next/navigation';
 import { cn } from '@/lib/tailwind';
 
 import type { PaginationWidgetProps } from '../PaginationWidget';
 
-import PaginationWidget, { buildDropdownForMobileAndBottom } from '../PaginationWidget';
+import { buildWidgets } from './helpers/functions/toolbarInner';
 
 export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends PaginationWidgetProps {
   isBottomWidget?: boolean;
@@ -22,38 +21,13 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
+  const widgets = buildWidgets(pagesAmount, currentPage, pathname, searchParams, isBottomWidget);
+
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const showPaginationWidget = pagesAmount > 1;
+  if (widgets.length <= 0) return null;
 
-  function buildExtrasInner(): MaybeNull<ReactElement>[] {
-    function buildForTop(): MaybeNull<ReactElement>[] {
-      const elements: MaybeNull<ReactElement>[] = [];
-
-      if (showPaginationWidget)
-        elements.push(
-          <PaginationWidget className="w-full justify-end" pagesAmount={pagesAmount} currentPage={currentPage} key="pagination-widget" />
-        );
-
-      return elements;
-    }
-
-    function buildForBottom(): MaybeNull<ReactElement>[] {
-      const elements: MaybeNull<ReactElement>[] = [];
-
-      if (showPaginationWidget) {
-        elements.push(buildDropdownForMobileAndBottom(pagesAmount, currentPage, pathname, searchParams, isBottomWidget));
-      }
-
-      return elements;
-    }
-
-    const extrasInner = !isBottomWidget ? buildForTop() : buildForBottom();
-    return extrasInner;
-  }
-
-  const extrasInner = buildExtrasInner();
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const extras = extrasInner.length > 0 ? <div className="flex flex-col">{extrasInner}</div> : null;
+  const content = <div className="flex flex-col">{widgets}</div>;
 
   return (
     <nav
@@ -61,7 +35,7 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
         'justify-end': isBottomWidget
       })}
     >
-      {extras}
+      {content}
     </nav>
   );
 };
