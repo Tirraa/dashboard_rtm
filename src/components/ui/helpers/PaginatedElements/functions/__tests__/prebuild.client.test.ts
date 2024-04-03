@@ -295,7 +295,17 @@ describe('computeReconciliatedPageIndex', () => {
     const maybeFilteredPostsCollection = fivePostsPostsCollection;
     const expected = -1;
 
-    const reconciliatedPageIndex = computeReconciliatedPageIndex([['unknown'], ['5']], maybeFilteredPostsCollection, elementsPerPage);
+    const reconciliatedPageIndex = computeReconciliatedPageIndex([['__UNKNOWN__'], ['5']], maybeFilteredPostsCollection, elementsPerPage);
+
+    expect(reconciliatedPageIndex).toBe(expected);
+  });
+
+  it('should return -1, given an history with only one element', () => {
+    const elementsPerPage = 2;
+    const maybeFilteredPostsCollection = fivePostsPostsCollection;
+    const expected = -1;
+
+    const reconciliatedPageIndex = computeReconciliatedPageIndex([['1']], maybeFilteredPostsCollection, elementsPerPage);
 
     expect(reconciliatedPageIndex).toBe(expected);
   });
