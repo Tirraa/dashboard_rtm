@@ -14,7 +14,7 @@
     "./portable/datastructs/SlidingList": "./src/portable/datastructs/SlidingList.ts",
     "./portable/html/createURLSearchParams": "./src/portable/html/createURLSearchParams.ts",
     "./portable/html/getDirection": "./src/portable/html/getDirection.ts",
-    "./portable/html/preserveKeyboardNavigation": "./src/portable/html/preserveKeyboardNavigation.ts",
+    "./portable/html/dispatchClickOnLinkOrButtonFirstChild": "./src/portable/html/dispatchClickOnLinkOrButtonFirstChild.ts",
     "./portable/html/resetScroll": "./src/portable/html/resetScroll.ts",
     "./portable/html/resetWindowScroll": "./src/portable/html/resetWindowScroll.ts",
     "./portable/html/snapToTopLeft": "./src/portable/html/snapToTopLeft.ts",
@@ -58,8 +58,8 @@
       "portable/html/getDirection": [
         "./src/portable/html/getDirection.ts"
       ],
-      "portable/html/preserveKeyboardNavigation": [
-        "./src/portable/html/preserveKeyboardNavigation.ts"
+      "portable/html/dispatchClickOnLinkOrButtonFirstChild": [
+        "./src/portable/html/dispatchClickOnLinkOrButtonFirstChild.ts"
       ],
       "portable/html/resetScroll": [
         "./src/portable/html/resetScroll.ts"

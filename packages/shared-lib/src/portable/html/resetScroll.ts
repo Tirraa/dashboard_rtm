@@ -1,3 +1,6 @@
+/* v8 ignore start */
+// Stryker disable all
+
 import type { RefObject } from 'react';
 
 import getRefCurrentPtr from '../react/getRefCurrentPtr';
@@ -16,3 +19,6 @@ function resetScroll<T extends HTMLElement>(scrollableElementToResetRef?: RefObj
 }
 
 export default resetScroll;
+
+// Stryker restore all
+/* v8 ignore stop */

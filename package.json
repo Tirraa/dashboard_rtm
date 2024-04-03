@@ -102,7 +102,7 @@
     "@stryker-mutator/typescript-checker": "^8.2.5",
     "@stryker-mutator/vitest-runner": "^8.2.2",
     "@testing-library/jest-dom": "^6.1.5",
-    "@testing-library/react": "^14.1.2",
+    "@testing-library/react": "^14.2.2",
     "@transloadit/ts-fly": "^0.1.4",
     "@tsd/typescript": "^5.3.2",
     "@types/eslint": "^8.56.5",

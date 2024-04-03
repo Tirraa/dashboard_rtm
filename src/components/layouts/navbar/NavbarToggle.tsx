@@ -4,7 +4,7 @@ import type { NavbarItems } from '@/types/NavData';
 import type { FunctionComponent } from 'react';
 
 import { DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem, DropdownMenu } from '@/components/ui/DropdownMenu';
-import preserveKeyboardNavigation from '@rtm/shared-lib/portable/html/preserveKeyboardNavigation';
+import dispatchClickOnLinkOrButtonFirstChild from '@rtm/shared-lib/portable/html/dispatchClickOnLinkOrButtonFirstChild';
 import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { getClientSideI18n, useScopedI18n } from '@/i18n/client';
@@ -21,7 +21,7 @@ const menuItemsGenerator = (items: NavbarItems) => {
   return items.map((item, index) => {
     return (
       <DropdownMenuItem
-        onClick={(event) => preserveKeyboardNavigation(event.target)}
+        onClick={(event) => dispatchClickOnLinkOrButtonFirstChild(event.target)}
         key={`navbar-hamburger-menu-item-${index}`}
         textValue={globalT(item.i18nTitle)}
         className="my-1 p-0"

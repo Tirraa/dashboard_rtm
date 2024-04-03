@@ -16,6 +16,7 @@ export const INVALID_SLUG_NEEDLE = 'invalid slug '; // NOTE: do NOT remove the t
 export const INVALID_SLUGS_NEEDLE = 'invalid slugs '; // NOTE: do NOT remove the trailing space
 export const INVALID_NESTING_NEEDLE = 'invalid nesting:';
 export const INVALID_NESTINGS_NEEDLE = 'invalid nestings:';
+export const POINTER_EVENTS_NONE_NEEDLE = 'pointer-events-none';
 
 // NOTE: please, let those needles case untouched
 

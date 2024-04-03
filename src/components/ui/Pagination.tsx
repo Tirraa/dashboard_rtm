@@ -1,3 +1,6 @@
+/* v8 ignore start */
+// Stryker disable all
+
 import type { ButtonProps } from '@/components/ui/Button';
 import type { Count } from '@rtm/shared-types/Numbers';
 
@@ -47,7 +50,6 @@ const PaginationLink = ({ size = 'icon', className, isActive, ...props }: Pagina
     {...props}
   />
 );
-
 PaginationLink.displayName = 'PaginationLink';
 
 const PaginationPrevious = ({ className, ...props }: React.ComponentProps<typeof PaginationLink>) => {
@@ -118,7 +120,9 @@ const PaginationEllipsis = ({
     </DropdownMenu>
   );
 };
-
 PaginationEllipsis.displayName = 'PaginationEllipsis';
 
 export { PaginationPrevious, PaginationEllipsis, PaginationContent, PaginationLink, PaginationItem, PaginationNext, Pagination };
+
+// Stryker restore all
+/* v8 ignore stop */

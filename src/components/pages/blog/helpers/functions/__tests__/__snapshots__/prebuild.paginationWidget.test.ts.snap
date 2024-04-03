@@ -1,0 +1,330 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`buildDropdown > should match snapshot (NOT bottom widget) 1`] = `
+<PaginationEllipsis
+  dropdownItems={
+    [
+      <DropdownMenuItem
+        className="h-10 p-0"
+        onClick={[Function]}
+      >
+        <ForwardRef(LinkComponent)
+          className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold rounded-md bg-primary"
+          href="pathname?foo=bar&bar=bar&baz=baz"
+          title="1"
+        >
+          1
+        </ForwardRef(LinkComponent)>
+      </DropdownMenuItem>,
+      <DropdownMenuItem
+        className="h-10 p-0"
+        onClick={[Function]}
+      >
+        <ForwardRef(LinkComponent)
+          className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold"
+          href="pathname?foo=bar&bar=bar&baz=baz&page=2"
+          title="2"
+        >
+          2
+        </ForwardRef(LinkComponent)>
+      </DropdownMenuItem>,
+      <DropdownMenuItem
+        className="h-10 p-0"
+        onClick={[Function]}
+      >
+        <ForwardRef(LinkComponent)
+          className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold"
+          href="pathname?foo=bar&bar=bar&baz=baz&page=3"
+          title="3"
+        >
+          3
+        </ForwardRef(LinkComponent)>
+      </DropdownMenuItem>,
+      <DropdownMenuItem
+        className="h-10 p-0"
+        onClick={[Function]}
+      >
+        <ForwardRef(LinkComponent)
+          className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold"
+          href="pathname?foo=bar&bar=bar&baz=baz&page=4"
+          title="4"
+        >
+          4
+        </ForwardRef(LinkComponent)>
+      </DropdownMenuItem>,
+    ]
+  }
+  isBottomWidget={false}
+  pageNumberIndicator={1}
+/>
+`;
+
+exports[`buildDropdown > should match snapshot (bottom widget) 1`] = `
+<PaginationEllipsis
+  dropdownItems={
+    [
+      <DropdownMenuItem
+        className="h-10 p-0"
+        onClick={[Function]}
+      >
+        <ForwardRef(LinkComponent)
+          className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold rounded-md bg-primary"
+          href="pathname?foo=bar&bar=bar&baz=baz"
+          title="1"
+        >
+          1
+        </ForwardRef(LinkComponent)>
+      </DropdownMenuItem>,
+      <DropdownMenuItem
+        className="h-10 p-0"
+        onClick={[Function]}
+      >
+        <ForwardRef(LinkComponent)
+          className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold"
+          href="pathname?foo=bar&bar=bar&baz=baz&page=2"
+          title="2"
+        >
+          2
+        </ForwardRef(LinkComponent)>
+      </DropdownMenuItem>,
+      <DropdownMenuItem
+        className="h-10 p-0"
+        onClick={[Function]}
+      >
+        <ForwardRef(LinkComponent)
+          className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold"
+          href="pathname?foo=bar&bar=bar&baz=baz&page=3"
+          title="3"
+        >
+          3
+        </ForwardRef(LinkComponent)>
+      </DropdownMenuItem>,
+      <DropdownMenuItem
+        className="h-10 p-0"
+        onClick={[Function]}
+      >
+        <ForwardRef(LinkComponent)
+          className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold"
+          href="pathname?foo=bar&bar=bar&baz=baz&page=4"
+          title="4"
+        >
+          4
+        </ForwardRef(LinkComponent)>
+      </DropdownMenuItem>,
+    ]
+  }
+  isBottomWidget={true}
+  pageNumberIndicator={1}
+/>
+`;
+
+exports[`doBuildPaginationItems > should match snapshot (desktop, 3 parts UI with dropdown) 1`] = `
+[
+  <PaginationItem>
+    <PaginationLink
+      aria-current="page"
+      className="border-none font-bold transition-opacity pointer-events-none underline opacity-50"
+      href="pathname?foo=bar&bar=bar&baz=baz"
+      isActive={true}
+    >
+      1
+    </PaginationLink>
+  </PaginationItem>,
+  <PaginationEllipsis
+    dropdownItems={
+      [
+        <DropdownMenuItem
+          className="p-0"
+          onClick={[Function]}
+        >
+          <ForwardRef(LinkComponent)
+            className="block w-full border-none px-2 py-1.5 text-center font-bold"
+            href="pathname?foo=bar&bar=bar&baz=baz&page=2"
+            title="2"
+          >
+            2
+          </ForwardRef(LinkComponent)>
+        </DropdownMenuItem>,
+        <DropdownMenuItem
+          className="p-0"
+          onClick={[Function]}
+        >
+          <ForwardRef(LinkComponent)
+            className="block w-full border-none px-2 py-1.5 text-center font-bold"
+            href="pathname?foo=bar&bar=bar&baz=baz&page=3"
+            title="3"
+          >
+            3
+          </ForwardRef(LinkComponent)>
+        </DropdownMenuItem>,
+      ]
+    }
+  />,
+  <PaginationItem>
+    <PaginationLink
+      className="border-none font-bold transition-opacity"
+      href="pathname?foo=bar&bar=bar&baz=baz&page=4"
+      isActive={false}
+    >
+      4
+    </PaginationLink>
+  </PaginationItem>,
+]
+`;
+
+exports[`doBuildPaginationItems > should match snapshot (desktop, 3 parts UI with dropdown, current page being last page) 1`] = `
+[
+  <PaginationItem>
+    <PaginationLink
+      className="border-none font-bold transition-opacity"
+      href="pathname?foo=bar&bar=bar&baz=baz"
+      isActive={false}
+    >
+      1
+    </PaginationLink>
+  </PaginationItem>,
+  <PaginationEllipsis
+    dropdownItems={
+      [
+        <DropdownMenuItem
+          className="p-0"
+          onClick={[Function]}
+        >
+          <ForwardRef(LinkComponent)
+            className="block w-full border-none px-2 py-1.5 text-center font-bold"
+            href="pathname?foo=bar&bar=bar&baz=baz&page=2"
+            title="2"
+          >
+            2
+          </ForwardRef(LinkComponent)>
+        </DropdownMenuItem>,
+        <DropdownMenuItem
+          className="p-0"
+          onClick={[Function]}
+        >
+          <ForwardRef(LinkComponent)
+            className="block w-full border-none px-2 py-1.5 text-center font-bold"
+            href="pathname?foo=bar&bar=bar&baz=baz&page=3"
+            title="3"
+          >
+            3
+          </ForwardRef(LinkComponent)>
+        </DropdownMenuItem>,
+      ]
+    }
+  />,
+  <PaginationItem>
+    <PaginationLink
+      aria-current="page"
+      className="border-none font-bold transition-opacity pointer-events-none underline opacity-50"
+      href="pathname?foo=bar&bar=bar&baz=baz&page=4"
+      isActive={true}
+    >
+      4
+    </PaginationLink>
+  </PaginationItem>,
+]
+`;
+
+exports[`doBuildPaginationItems > should match snapshot (desktop, trivial pagesAmount === 2 case, i.e: 2 parts UI without dropdown) 1`] = `
+[
+  <PaginationItem>
+    <PaginationLink
+      aria-current="page"
+      className="border-none font-bold transition-opacity pointer-events-none underline opacity-50"
+      href="pathname?foo=bar&bar=bar&baz=baz"
+      isActive={true}
+    >
+      1
+    </PaginationLink>
+  </PaginationItem>,
+  <PaginationItem>
+    <PaginationLink
+      className="border-none font-bold transition-opacity"
+      href="pathname?foo=bar&bar=bar&baz=baz&page=2"
+      isActive={false}
+    >
+      2
+    </PaginationLink>
+  </PaginationItem>,
+]
+`;
+
+exports[`doBuildPaginationItems > should match snapshot (desktop, trivial pagesAmount === 3 case, i.e: 3 parts UI without dropdown) 1`] = `
+[
+  <PaginationItem>
+    <PaginationLink
+      aria-current="page"
+      className="border-none font-bold transition-opacity pointer-events-none underline opacity-50"
+      href="pathname?foo=bar&bar=bar&baz=baz"
+      isActive={true}
+    >
+      1
+    </PaginationLink>
+  </PaginationItem>,
+  <PaginationItem>
+    <PaginationLink
+      className="border-none font-bold transition-opacity"
+      href="pathname?foo=bar&bar=bar&baz=baz&page=2"
+      isActive={false}
+    >
+      2
+    </PaginationLink>
+  </PaginationItem>,
+  <PaginationItem>
+    <PaginationLink
+      className="border-none font-bold transition-opacity"
+      href="pathname?foo=bar&bar=bar&baz=baz&page=3"
+      isActive={false}
+    >
+      3
+    </PaginationLink>
+  </PaginationItem>,
+]
+`;
+
+exports[`doBuildPaginationItems > should match snapshot (mobile) 1`] = `
+<PaginationEllipsis
+  dropdownItems={
+    [
+      <DropdownMenuItem
+        className="h-10 p-0"
+        onClick={[Function]}
+      >
+        <ForwardRef(LinkComponent)
+          className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold rounded-md bg-primary"
+          href="pathname?foo=bar&bar=bar&baz=baz"
+          title="1"
+        >
+          1
+        </ForwardRef(LinkComponent)>
+      </DropdownMenuItem>,
+      <DropdownMenuItem
+        className="h-10 p-0"
+        onClick={[Function]}
+      >
+        <ForwardRef(LinkComponent)
+          className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold"
+          href="pathname?foo=bar&bar=bar&baz=baz&page=2"
+          title="2"
+        >
+          2
+        </ForwardRef(LinkComponent)>
+      </DropdownMenuItem>,
+      <DropdownMenuItem
+        className="h-10 p-0"
+        onClick={[Function]}
+      >
+        <ForwardRef(LinkComponent)
+          className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold"
+          href="pathname?foo=bar&bar=bar&baz=baz&page=3"
+          title="3"
+        >
+          3
+        </ForwardRef(LinkComponent)>
+      </DropdownMenuItem>,
+    ]
+  }
+  pageNumberIndicator={1}
+/>
+`;

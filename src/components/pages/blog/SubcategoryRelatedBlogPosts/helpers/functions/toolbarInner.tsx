@@ -3,6 +3,8 @@ import type { Quantity, Count } from '@rtm/shared-types/Numbers';
 import type { AppPath } from '@rtm/shared-types/Next';
 import type { ReactElement } from 'react';
 
+import { PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
+
 import { buildDropdown } from '../../../helpers/functions/paginationWidget';
 import PaginationWidget from '../../../PaginationWidget';
 
@@ -13,7 +15,8 @@ const getMaybeDropdown = (
   pathname: AppPath,
   searchParams: URLSearchParams,
   isBottomWidget?: boolean
-): MaybeNull<ReactElement> => (!showPaginationWidget ? null : buildDropdown(pagesAmount, currentPage, pathname, searchParams, isBottomWidget));
+): MaybeNull<ReactElement> =>
+  !showPaginationWidget ? null : buildDropdown(pagesAmount, currentPage, pathname, searchParams, PAGE_KEY, isBottomWidget);
 
 function buildWidgetsForTop(showPaginationWidget: boolean, pagesAmount: Quantity, currentPage: Count): ReactElement[] {
   const elements: ReactElement[] = [];

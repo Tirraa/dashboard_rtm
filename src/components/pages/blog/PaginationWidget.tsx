@@ -4,8 +4,8 @@ import type { Quantity, Count } from '@rtm/shared-types/Numbers';
 import type { WithClassname } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
+import { FIRST_PAGE_PARAM, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import { PaginationContent, PaginationItem, Pagination } from '@/components/ui/Pagination';
-import { FIRST_PAGE_PARAM } from '@/components/ui/helpers/PaginatedElements/constants';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
@@ -29,15 +29,15 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
   const nextBtnPageId = useMemo(() => Math.min(pagesAmount, currentPage + 1), [pagesAmount, currentPage]);
 
   const buildPaginationItems = useCallback(
-    () => doBuildPaginationItems(currentPage, pagesAmount, pathname, searchParams, isLargeScreen),
+    () => doBuildPaginationItems(currentPage, pagesAmount, pathname, searchParams, isLargeScreen, PAGE_KEY),
     [pagesAmount, currentPage, pathname, searchParams, isLargeScreen]
   );
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (pagesAmount <= 1) return null;
 
-  const previousBtn = buildPreviousBtn(prevBtnPageId, pathname, searchParams, currentPage);
-  const nextBtn = buildNextBtn(nextBtnPageId, pathname, searchParams, currentPage, pagesAmount);
+  const previousBtn = buildPreviousBtn(prevBtnPageId, pathname, searchParams, currentPage, PAGE_KEY);
+  const nextBtn = buildNextBtn(nextBtnPageId, pathname, searchParams, currentPage, pagesAmount, PAGE_KEY);
 
   return (
     <Pagination className={cn('m-0 w-fit', className)}>
