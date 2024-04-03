@@ -1,3 +1,6 @@
+/* v8 ignore start */
+// Stryker disable all
+
 import type { I18nVocabTarget, LanguageFlag } from '@rtm/shared-types/I18n';
 import type { BlogPostPreviewComponentWithMetadatas } from '@/types/Blog';
 import type { Score } from '@rtm/shared-types/Numbers';
@@ -50,3 +53,6 @@ type Filter = {
 };
 
 export type FiltersAssoc = Filter[];
+
+// Stryker restore all
+/* v8 ignore stop */
