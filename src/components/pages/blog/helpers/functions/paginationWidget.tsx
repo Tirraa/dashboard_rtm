@@ -19,6 +19,63 @@ const buildDropdownMenu = (dropdownItems: ReactElement[], pageNumberIndicator?: 
     <PaginationEllipsis pageNumberIndicator={pageNumberIndicator} isBottomWidget={isBottomWidget} dropdownItems={dropdownItems} key={'ellipsis'} />
   );
 
+const buildPaginationItem = (i: Count, isActive: boolean, pathname: AppPath, searchParams: URLSearchParams) => (
+  <PaginationItem key={`page-${i}`}>
+    <PaginationLink
+      className={cn('border-none font-bold transition-opacity', {
+        'pointer-events-none underline opacity-50': isActive
+      })}
+      href={getItemHref(i, pathname, searchParams)}
+      aria-current={isActive ? 'page' : undefined}
+      isActive={isActive}
+    >
+      {i}
+    </PaginationLink>
+  </PaginationItem>
+);
+
+const buildPaginationItemsForMobile = (pagesAmount: Quantity, currentPage: Count, pathname: AppPath, searchParams: URLSearchParams) =>
+  buildDropdown(pagesAmount, currentPage, pathname, searchParams);
+
+function buildPaginationItemsForDesktop(pagesAmount: Quantity, currentPage: Count, pathname: AppPath, searchParams: URLSearchParams) {
+  const activePageIsLastPage = currentPage === pagesAmount;
+
+  const dropdownItems = [];
+  let leftItem: MaybeNull<ReactElement> = null;
+  let rightItem: MaybeNull<ReactElement> = null;
+
+  for (let i = FIRST_PAGE_PARAM; i <= pagesAmount; i++) {
+    const isActive = currentPage === i;
+
+    if (i === pagesAmount) {
+      rightItem = buildPaginationItem(i, isActive, pathname, searchParams);
+      if (!leftItem) leftItem = buildPaginationItem(FIRST_PAGE_PARAM, false, pathname, searchParams);
+      continue;
+    }
+
+    if (isActive) {
+      leftItem = buildPaginationItem(i, isActive, pathname, searchParams);
+      continue;
+    }
+
+    if (i === FIRST_PAGE_PARAM && activePageIsLastPage) continue;
+
+    const href = getItemHref(i, pathname, searchParams);
+    const item = (
+      <DropdownMenuItem onClick={(event) => preserveKeyboardNavigation(event.target)} key={`page-${i}`} className="p-0">
+        <Link className="block w-full border-none px-2 py-1.5 text-center font-bold" title={String(i)} href={href}>
+          {i}
+        </Link>
+      </DropdownMenuItem>
+    );
+
+    dropdownItems.push(item);
+  }
+
+  return [leftItem, buildDropdownMenu(dropdownItems), rightItem];
+}
+
+// {ToDo} Write tests
 export function buildDropdown(pagesAmount: Quantity, pageFromUrl: Count, pathname: AppPath, searchParams: URLSearchParams, isBottomWidget?: boolean) {
   const dropdownItems: ReactElement[] = [];
 
@@ -46,72 +103,19 @@ export function buildDropdown(pagesAmount: Quantity, pageFromUrl: Count, pathnam
   return buildDropdownMenu(dropdownItems, pageFromUrl, isBottomWidget);
 }
 
-export function doBuildPaginationsItems(
+// {ToDo} Write tests
+export function doBuildPaginationItems(
   currentPage: Count,
   pagesAmount: Quantity,
   pathname: AppPath,
   searchParams: URLSearchParams,
   isLargeScreen: boolean
 ) {
-  const activePageIsLastPage = currentPage === pagesAmount;
-
-  const buildPaginationItem = (i: Count, isActive: boolean) => (
-    <PaginationItem key={`page-${i}`}>
-      <PaginationLink
-        className={cn('border-none font-bold transition-opacity', {
-          'pointer-events-none underline opacity-50': isActive
-        })}
-        href={getItemHref(i, pathname, searchParams)}
-        aria-current={isActive ? 'page' : undefined}
-        isActive={isActive}
-      >
-        {i}
-      </PaginationLink>
-    </PaginationItem>
-  );
-
-  function buildForDesktop() {
-    const dropdownItems = [];
-    let leftItem: MaybeNull<ReactElement> = null;
-    let rightItem: MaybeNull<ReactElement> = null;
-
-    for (let i = FIRST_PAGE_PARAM; i <= pagesAmount; i++) {
-      const isActive = currentPage === i;
-
-      if (i === pagesAmount) {
-        rightItem = buildPaginationItem(i, isActive);
-        if (!leftItem) leftItem = buildPaginationItem(FIRST_PAGE_PARAM, false);
-        continue;
-      }
-
-      if (isActive) {
-        leftItem = buildPaginationItem(i, isActive);
-        continue;
-      }
-
-      if (i === FIRST_PAGE_PARAM && activePageIsLastPage) continue;
-
-      const href = getItemHref(i, pathname, searchParams);
-      const item = (
-        <DropdownMenuItem onClick={(event) => preserveKeyboardNavigation(event.target)} key={`page-${i}`} className="p-0">
-          <Link className="block w-full border-none px-2 py-1.5 text-center font-bold" title={String(i)} href={href}>
-            {i}
-          </Link>
-        </DropdownMenuItem>
-      );
-
-      dropdownItems.push(item);
-    }
-
-    return [leftItem, buildDropdownMenu(dropdownItems), rightItem];
-  }
-
-  const buildForMobile = () => buildDropdown(pagesAmount, currentPage, pathname, searchParams);
-
-  if (isLargeScreen) return buildForDesktop();
-  return buildForMobile();
+  if (isLargeScreen) return buildPaginationItemsForDesktop(pagesAmount, currentPage, pathname, searchParams);
+  return buildPaginationItemsForMobile(pagesAmount, currentPage, pathname, searchParams);
 }
 
+// {ToDo} Write tests
 export const buildPreviousBtn = (prevBtnPageId: Count, pathname: AppPath, searchParams: URLSearchParams, currentPage: Count) => (
   <PaginationPrevious
     href={pathname + createURLSearchParams({ [PAGE_KEY]: prevBtnPageId === FIRST_PAGE_PARAM ? null : prevBtnPageId }, searchParams)}
@@ -119,6 +123,7 @@ export const buildPreviousBtn = (prevBtnPageId: Count, pathname: AppPath, search
   />
 );
 
+// {ToDo} Write tests
 export const buildNextBtn = (nextBtnPageId: Count, pathname: AppPath, searchParams: URLSearchParams, currentPage: Count, pagesAmount: Quantity) => (
   <PaginationNext
     className={cn('max-lg:h-10 max-lg:w-10 max-lg:p-0', { 'pointer-events-none opacity-50': currentPage >= pagesAmount })}

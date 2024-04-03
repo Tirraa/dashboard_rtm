@@ -15,6 +15,34 @@ const getMaybeDropdown = (
   isBottomWidget?: boolean
 ): MaybeNull<ReactElement> => (!showPaginationWidget ? null : buildDropdown(pagesAmount, currentPage, pathname, searchParams, isBottomWidget));
 
+function buildWidgetsForTop(showPaginationWidget: boolean, pagesAmount: Quantity, currentPage: Count): ReactElement[] {
+  const elements: ReactElement[] = [];
+
+  if (showPaginationWidget) {
+    elements.push(<PaginationWidget className="w-full justify-end" pagesAmount={pagesAmount} currentPage={currentPage} key="pagination-widget" />);
+  }
+
+  return elements;
+}
+
+function buildWidgetsForBottom(
+  showPaginationWidget: boolean,
+  pagesAmount: Quantity,
+  currentPage: Count,
+  pathname: AppPath,
+  searchParams: URLSearchParams,
+  isBottomWidget: boolean
+): ReactElement[] {
+  const elements: ReactElement[] = [];
+
+  const maybeDropdown = getMaybeDropdown(showPaginationWidget, pagesAmount, currentPage, pathname, searchParams, isBottomWidget);
+
+  if (maybeDropdown !== null) elements.push(maybeDropdown);
+
+  return elements;
+}
+
+// {ToDo} Write tests
 export function buildWidgets(
   pagesAmount: Quantity,
   currentPage: Count,
@@ -25,26 +53,9 @@ export function buildWidgets(
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const showPaginationWidget = pagesAmount > 1;
 
-  function buildForTop(): ReactElement[] {
-    const elements: ReactElement[] = [];
+  const widgets = !isBottomWidget
+    ? buildWidgetsForTop(showPaginationWidget, pagesAmount, currentPage)
+    : buildWidgetsForBottom(showPaginationWidget, pagesAmount, currentPage, pathname, searchParams, isBottomWidget);
 
-    if (showPaginationWidget) {
-      elements.push(<PaginationWidget className="w-full justify-end" pagesAmount={pagesAmount} currentPage={currentPage} key="pagination-widget" />);
-    }
-
-    return elements;
-  }
-
-  function buildForBottom(): ReactElement[] {
-    const elements: ReactElement[] = [];
-
-    const maybeDropdown = getMaybeDropdown(showPaginationWidget, pagesAmount, currentPage, pathname, searchParams, isBottomWidget);
-
-    if (maybeDropdown !== null) elements.push(maybeDropdown);
-
-    return elements;
-  }
-
-  const widgets = !isBottomWidget ? buildForTop() : buildForBottom();
   return widgets;
 }

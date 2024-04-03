@@ -11,7 +11,7 @@ import { useSearchParams, usePathname } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import { cn } from '@/lib/tailwind';
 
-import { doBuildPaginationsItems, buildPreviousBtn, buildNextBtn } from './helpers/functions/paginationWidget';
+import { doBuildPaginationItems, buildPreviousBtn, buildNextBtn } from './helpers/functions/paginationWidget';
 
 export interface PaginationWidgetProps extends Partial<WithClassname> {
   pagesAmount: Quantity;
@@ -28,8 +28,8 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const nextBtnPageId = useMemo(() => Math.min(pagesAmount, currentPage + 1), [pagesAmount, currentPage]);
 
-  const buildPaginationsItems = useCallback(
-    () => doBuildPaginationsItems(currentPage, pagesAmount, pathname, searchParams, isLargeScreen),
+  const buildPaginationItems = useCallback(
+    () => doBuildPaginationItems(currentPage, pagesAmount, pathname, searchParams, isLargeScreen),
     [pagesAmount, currentPage, pathname, searchParams, isLargeScreen]
   );
 
@@ -43,7 +43,7 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
     <Pagination className={cn('m-0 w-fit', className)}>
       <PaginationContent>
         <PaginationItem>{previousBtn}</PaginationItem>
-        {buildPaginationsItems()}
+        {buildPaginationItems()}
         <PaginationItem>{nextBtn}</PaginationItem>
       </PaginationContent>
     </Pagination>
