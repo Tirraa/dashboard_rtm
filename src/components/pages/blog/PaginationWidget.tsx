@@ -15,7 +15,6 @@ import {
   Pagination
 } from '@/components/ui/Pagination';
 import { FIRST_PAGE_PARAM, PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
-import { getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/functions';
 import { preserveKeyboardNavigation, createURLSearchParams } from '@rtm/shared-lib/html';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { DropdownMenuItem } from '@/components/ui/DropdownMenu';
@@ -26,6 +25,7 @@ import Link from 'next/link';
 
 export interface PaginationWidgetProps extends Partial<WithClassname> {
   pagesAmount: Quantity;
+  currentPage: Count;
 }
 
 const getItemHref = (i: Count, pathname: AppPath, searchParams: URLSearchParams) =>
@@ -70,15 +70,13 @@ export const buildDropdownForMobileAndBottom = (
   return buildDropdownMenu(dropdownItems, pageFromUrl, isBottomWidget);
 };
 
-const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmount, className }) => {
+const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmount, currentPage, className }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const isLargeScreen = useIsLargeScreen();
 
-  const pageFromUrl = getSanitizedCurrentPage(searchParams, pagesAmount, PAGE_KEY);
-
   const buildPaginationsItems = useCallback(() => {
-    const activePageIsLastPage = pageFromUrl === pagesAmount;
+    const activePageIsLastPage = currentPage === pagesAmount;
 
     const buildPaginationItem = (i: Count, isActive: boolean) => (
       <PaginationItem key={`page-${i}`}>
@@ -101,7 +99,7 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
       let rightItem: MaybeNull<ReactElement> = null;
 
       for (let i = FIRST_PAGE_PARAM; i <= pagesAmount; i++) {
-        const isActive = pageFromUrl === i;
+        const isActive = currentPage === i;
 
         if (i === pagesAmount) {
           rightItem = buildPaginationItem(i, isActive);
@@ -132,26 +130,26 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
     };
 
     if (isLargeScreen) return buildForDesktop();
-    return buildDropdownForMobileAndBottom(pagesAmount, pageFromUrl, pathname, searchParams);
-  }, [pagesAmount, pageFromUrl, pathname, searchParams, isLargeScreen]);
+    return buildDropdownForMobileAndBottom(pagesAmount, currentPage, pathname, searchParams);
+  }, [pagesAmount, currentPage, pathname, searchParams, isLargeScreen]);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (pagesAmount <= 1) return null;
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const prevBtnPageId = Math.max(FIRST_PAGE_PARAM, pageFromUrl - 1);
+  const prevBtnPageId = Math.max(FIRST_PAGE_PARAM, currentPage - 1);
   const previousBtn = (
     <PaginationPrevious
       href={pathname + createURLSearchParams({ [PAGE_KEY]: prevBtnPageId === FIRST_PAGE_PARAM ? null : prevBtnPageId }, searchParams)}
-      className={cn('max-lg:h-10 max-lg:w-10 max-lg:p-0', { 'pointer-events-none opacity-50': pageFromUrl <= FIRST_PAGE_PARAM })}
+      className={cn('max-lg:h-10 max-lg:w-10 max-lg:p-0', { 'pointer-events-none opacity-50': currentPage <= FIRST_PAGE_PARAM })}
     />
   );
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const nextBtnPageId = Math.min(pagesAmount, pageFromUrl + 1);
+  const nextBtnPageId = Math.min(pagesAmount, currentPage + 1);
   const nextBtn = (
     <PaginationNext
-      className={cn('max-lg:h-10 max-lg:w-10 max-lg:p-0', { 'pointer-events-none opacity-50': pageFromUrl >= pagesAmount })}
+      className={cn('max-lg:h-10 max-lg:w-10 max-lg:p-0', { 'pointer-events-none opacity-50': currentPage >= pagesAmount })}
       href={pathname + createURLSearchParams({ [PAGE_KEY]: nextBtnPageId }, searchParams)}
     />
   );

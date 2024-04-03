@@ -2,71 +2,37 @@
 
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { FunctionComponent, ReactElement } from 'react';
-import type { Quantity } from '@rtm/shared-types/Numbers';
 
-import { getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/functions';
-import { PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { cn } from '@/lib/tailwind';
 
-import type { FiltersSelectWidgetProps } from '../FiltersSelectWidget';
-import type { TagsFiltersWidgetProps } from '../TagsFiltersWidget';
 import type { PaginationWidgetProps } from '../PaginationWidget';
 
 import PaginationWidget, { buildDropdownForMobileAndBottom } from '../PaginationWidget';
-import FiltersSelectWidget from '../FiltersSelectWidget';
-import TagsFiltersWidget from '../TagsFiltersWidget';
 
-export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends TagsFiltersWidgetProps, PaginationWidgetProps, FiltersSelectWidgetProps {
+export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends PaginationWidgetProps {
   isBottomWidget?: boolean;
-  postsAmount: Quantity;
 }
 
 const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<SubcategoryRelatedBlogPostsClientToolbarInnerProps> = ({
-  setSelectedFilterSwitch,
-  setSelectedTagSwitch,
-  setSelectedTagsIds,
-  setSelectedFilter,
-  expectedTagsIds,
-  selectedTagsIds,
-  selectedFilter,
-  maxPagesAmount,
   isBottomWidget,
-  postsAmount,
-  pagesAmount,
-  extraCtx,
-  maxId,
-  tags
+  currentPage,
+  pagesAmount
 }) => {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const disabledTagsFiltersWidget = tags.length < 1;
-
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const pageFromUrl = getSanitizedCurrentPage(searchParams, pagesAmount, PAGE_KEY);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const showPaginationWidget = pagesAmount > 1;
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const showFiltersSelectWidget = postsAmount > 1;
 
   function buildExtrasInner(): MaybeNull<ReactElement>[] {
     function buildForTop(): MaybeNull<ReactElement>[] {
       const elements: MaybeNull<ReactElement>[] = [];
 
-      if (showFiltersSelectWidget) {
+      if (showPaginationWidget)
         elements.push(
-          <FiltersSelectWidget
-            setSelectedFilterSwitch={setSelectedFilterSwitch}
-            setSelectedFilter={setSelectedFilter}
-            triggerClassName="z-20 mb-1 self-end"
-            selectedFilter={selectedFilter}
-            key="filters-widget"
-          />
+          <PaginationWidget className="w-full justify-end" pagesAmount={pagesAmount} currentPage={currentPage} key="pagination-widget" />
         );
-      }
-
-      if (showPaginationWidget) elements.push(<PaginationWidget className="w-full justify-end" pagesAmount={pagesAmount} key="pagination-widget" />);
 
       return elements;
     }
@@ -75,7 +41,7 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
       const elements: MaybeNull<ReactElement>[] = [];
 
       if (showPaginationWidget) {
-        elements.push(buildDropdownForMobileAndBottom(pagesAmount, pageFromUrl, pathname, searchParams, isBottomWidget));
+        elements.push(buildDropdownForMobileAndBottom(pagesAmount, currentPage, pathname, searchParams, isBottomWidget));
       }
 
       return elements;
@@ -92,22 +58,9 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
   return (
     <nav
       className={cn('my-4 flex items-end justify-between', {
-        'justify-end': isBottomWidget || disabledTagsFiltersWidget
+        'justify-end': isBottomWidget
       })}
     >
-      {!isBottomWidget && !disabledTagsFiltersWidget && (
-        <TagsFiltersWidget
-          setSelectedTagSwitch={setSelectedTagSwitch}
-          setSelectedTagsIds={setSelectedTagsIds}
-          selectedTagsIds={selectedTagsIds}
-          expectedTagsIds={expectedTagsIds}
-          maxPagesAmount={maxPagesAmount}
-          extraCtx={extraCtx}
-          maxId={maxId}
-          tags={tags}
-        />
-      )}
-
       {extras}
     </nav>
   );

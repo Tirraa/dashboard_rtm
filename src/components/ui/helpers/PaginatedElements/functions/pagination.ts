@@ -1,21 +1,9 @@
-import type { Quantity, Count, Limit, Index } from '@rtm/shared-types/Numbers';
-import type { MaybeNull, Couple } from '@rtm/shared-types/CustomUtilityTypes';
+import type { Quantity, Count, Index, Limit } from '@rtm/shared-types/Numbers';
 import type { BlogPostPreviewComponentWithMetadatas } from '@/types/Blog';
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { ReactElementKey } from '@rtm/shared-types/React';
-import type { ReactElement } from 'react';
 
-import { FIRST_PAGE_PARAM } from './constants';
-
-export function getSanitizedCurrentFilterIndex(searchParams: URLSearchParams, maxFilter: Limit, filtersKey: string) {
-  const FIRST_FILTER_INDEX = 0;
-  const maybeUnsafeFilterFromUrl: MaybeNull<string> = searchParams.get(filtersKey);
-  const unsafeFilterFromUrl = maybeUnsafeFilterFromUrl === null ? FIRST_FILTER_INDEX : Number(maybeUnsafeFilterFromUrl);
-
-  if (isNaN(unsafeFilterFromUrl)) return FIRST_FILTER_INDEX;
-  if (unsafeFilterFromUrl < FIRST_FILTER_INDEX) return FIRST_FILTER_INDEX;
-  if (unsafeFilterFromUrl > maxFilter) return maxFilter;
-  return unsafeFilterFromUrl;
-}
+import { FIRST_PAGE_PARAM } from '../constants';
 
 export function getSanitizedCurrentPage(searchParams: URLSearchParams, maxPage: Limit, pageKey: string) {
   const maybeUnsafePageFromUrl: MaybeNull<string> = searchParams.get(pageKey);
@@ -25,14 +13,6 @@ export function getSanitizedCurrentPage(searchParams: URLSearchParams, maxPage: 
   if (unsafePageFromUrl < FIRST_PAGE_PARAM) return FIRST_PAGE_PARAM;
   if (unsafePageFromUrl > maxPage) return maxPage;
   return unsafePageFromUrl;
-}
-
-function getPaginatedElementsCurrentSliceStartAndEndIndexes(page: Count, elementsPerPage: Quantity): Couple<Index> {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const startIndex = Math.max(0, page - 1) * elementsPerPage;
-  const endIndex = startIndex + elementsPerPage;
-
-  return [startIndex, endIndex];
 }
 
 function findPageNumberByPaginatedElementIndex(paginatedElementIndex: Index, elementsPerPage: Quantity): Count {
@@ -59,6 +39,7 @@ function findFirstCommonElementIndex(
   return -1;
 }
 
+// {ToDo} Write test
 export function computeReconciliatedPageIndex(
   pagesSlicesRelatedPostsIdsHistory: Array<ReactElementKey[]>,
   maybeFilteredPostsCollection: BlogPostPreviewComponentWithMetadatas[],
@@ -76,12 +57,4 @@ export function computeReconciliatedPageIndex(
 
   const newPage = findPageNumberByPaginatedElementIndex(commonElementIndex, elementsPerPage);
   return newPage;
-}
-
-export function getPaginatedElementsCurrentSlice(page: Count, elementsPerPage: Quantity, paginatedElements: ReactElement[]): ReactElement[] {
-  if (paginatedElements.length <= elementsPerPage) return paginatedElements;
-  const [startIndex, endIndex] = getPaginatedElementsCurrentSliceStartAndEndIndexes(page, elementsPerPage);
-  const currentSlice = paginatedElements.slice(startIndex, endIndex);
-
-  return currentSlice;
 }
