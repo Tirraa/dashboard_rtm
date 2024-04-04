@@ -8,7 +8,13 @@ import { packIds } from '@rtm/shared-lib/misc';
 import { describe, expect, it } from 'vitest';
 import * as React from 'react';
 
-import { doComputeSelectedTagsIdsInitialState, doGetMaybeFilteredPostsCollection, doComputePaginatedElements, shouldShowToolbar } from '../client';
+import {
+  doComputeSelectedTagsIdsInitialState,
+  doGetMaybeFilteredPostsCollection,
+  doComputePaginatedElements,
+  getSortedPostsCollection,
+  shouldShowToolbar
+} from '../client';
 import { computeReconciliatedPageIndex } from '../pagination';
 
 const emptyPostsCollection: BlogPostPreviewComponentWithMetadatas[] = [];
@@ -222,10 +228,31 @@ describe('doGetMaybeFilteredPostsCollection', () => {
   });
 });
 
+describe('getSortedPostsCollection', () => {
+  it('should return original list, unchanged', () => {
+    const filterFunIndex = 0;
+    const maybeFilteredPostsCollection = twoPostsPostsCollection;
+
+    const toSorted = getSortedPostsCollection(filterFunIndex, maybeFilteredPostsCollection, __filtersAssoc);
+
+    expect(toSorted).toStrictEqual(twoPostsPostsCollection);
+  });
+
+  it('should return a new list, sorted', () => {
+    const filterFunIndex = 1;
+    const maybeFilteredPostsCollection = twoPostsPostsCollection;
+
+    const toSorted = getSortedPostsCollection(filterFunIndex, maybeFilteredPostsCollection, __filtersAssoc);
+
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    expect(toSorted).toStrictEqual([twoPostsPostsCollection[1], twoPostsPostsCollection[0]]);
+  });
+});
+
 describe('doComputePaginatedElements', () => {
   it('should translate list into fragments, unchanged', () => {
     const filterFunIndex = 0;
-    const maybeFilteredPostsCollection = [...twoPostsPostsCollection];
+    const maybeFilteredPostsCollection = twoPostsPostsCollection;
 
     const paginatedElements = doComputePaginatedElements(filterFunIndex, maybeFilteredPostsCollection, __filtersAssoc);
 
@@ -239,7 +266,7 @@ describe('doComputePaginatedElements', () => {
 
   it('should translate list into fragments, sorted', () => {
     const filterFunIndex = 1;
-    const maybeFilteredPostsCollection = [...twoPostsPostsCollection];
+    const maybeFilteredPostsCollection = twoPostsPostsCollection;
 
     const paginatedElements = doComputePaginatedElements(filterFunIndex, maybeFilteredPostsCollection, __filtersAssoc);
 

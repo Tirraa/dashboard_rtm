@@ -11,7 +11,6 @@
     "./misc": "./src/misc.ts",
     "./react": "./src/react.ts",
     "./str": "./src/str.ts",
-    "./portable/datastructs/SlidingList": "./src/portable/datastructs/SlidingList.ts",
     "./portable/html/createURLSearchParams": "./src/portable/html/createURLSearchParams.ts",
     "./portable/html/getDirection": "./src/portable/html/getDirection.ts",
     "./portable/html/dispatchClickOnLinkOrButtonFirstChild": "./src/portable/html/dispatchClickOnLinkOrButtonFirstChild.ts",
@@ -48,9 +47,6 @@
       ],
       "international-types": [
         "./src/international-types.ts"
-      ],
-      "portable/datastructs/SlidingList": [
-        "./src/portable/datastructs/SlidingList.ts"
       ],
       "portable/html/createURLSearchParams": [
         "./src/portable/html/createURLSearchParams.ts"

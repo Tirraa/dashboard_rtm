@@ -3,22 +3,26 @@
 import type { BlogPostPreviewComponentWithMetadatas, BlogTagId } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
-import type { Index, Limit, Id } from '@rtm/shared-types/Numbers';
+import type { ReactElementKey } from '@rtm/shared-types/React';
+import type { Limit, Id } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
 
 import {
   doComputeSelectedTagsIdsInitialState,
   doGetMaybeFilteredPostsCollection,
   doComputePaginatedElements,
+  getSortedPostsCollection,
   shouldShowToolbar
 } from '@/components/ui/helpers/PaginatedElements/functions/client';
-import { getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/functions/pagination';
+import { computeReconciliatedPageIndex, getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/functions/pagination';
+import { getPaginatedElementsCurrentSlice } from '@/components/ui/helpers/PaginatedElements/functions/paginatedElements';
 import { PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import BlogConfigClient, { MAX_FILTER_INDEX } from '@/config/Blog/client';
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
+import { createURLSearchParams } from 'packages/shared-lib/src/html';
 import PaginatedElements from '@/components/ui/PaginatedElements';
 import usePagination from '@/components/hooks/usePagination';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 import { getSanitizedCurrentFilterIndex } from '../helpers/functions/filtersSelectWidget';
 import SubcategoryRelatedBlogPostsClientToolbar from './Toolbar';
@@ -38,21 +42,13 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   expectedTagsIds,
   title
 }) => {
+  const router = useRouter();
   const searchParams = useSearchParams();
 
-  const selectedFilterInitialState = useMemo(
-    () => getSanitizedCurrentFilterIndex(searchParams, MAX_FILTER_INDEX, FILTERS_KEY),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+  const selectedFilter = useMemo(() => getSanitizedCurrentFilterIndex(searchParams, MAX_FILTER_INDEX, FILTERS_KEY), [searchParams]);
 
-  const [selectedFilter] = useState<Id>(selectedFilterInitialState);
-  const newSelectedFilter = useRef<MaybeNull<Id>>(null);
-
-  const HARDCODED_FILTER_FUN_INDEX = 0;
   const showToolbar = shouldShowToolbar(postsCollection);
 
-  const [filterFunIndex] = useState<Index>(HARDCODED_FILTER_FUN_INDEX);
   const [selectedFilterSwitch, setSelectedFilterSwitch] = useState<boolean>(false);
 
   const computeSelectedTagsIdsInitialState = useCallback(
@@ -73,8 +69,8 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   const maybeFilteredPostsCollection = useMemo(() => getMaybeFilteredPostsCollection(), [getMaybeFilteredPostsCollection]);
 
   const computePaginatedElements = useCallback(
-    () => doComputePaginatedElements(filterFunIndex, maybeFilteredPostsCollection),
-    [maybeFilteredPostsCollection, filterFunIndex]
+    () => doComputePaginatedElements(selectedFilter, maybeFilteredPostsCollection),
+    [maybeFilteredPostsCollection, selectedFilter]
   );
 
   const paginatedElements = useMemo(() => computePaginatedElements(), [computePaginatedElements]);
@@ -86,13 +82,25 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     [paginatedElements, elementsPerPage, currentPage]
   );
 
+  const newSelectedFilter = useRef<MaybeNull<Id>>(null);
+
   useEffect(() => {
-    if (selectedFilterSwitch && newSelectedFilter.current !== null) {
-      console.log(newSelectedFilter.current);
-      newSelectedFilter.current = null;
-      setSelectedFilterSwitch(false);
-    }
-  }, [selectedFilterSwitch]);
+    if (!selectedFilterSwitch || newSelectedFilter.current === null) return;
+
+    const slice = getPaginatedElementsCurrentSlice(currentPage, elementsPerPage, paginatedElements);
+
+    const keys: ReactElementKey[] = [];
+    for (const element of slice) if (element.key) keys.push(element.key);
+    const toSorted = getSortedPostsCollection(newSelectedFilter.current, maybeFilteredPostsCollection);
+
+    const newPageIndex = computeReconciliatedPageIndex(keys, toSorted, elementsPerPage);
+    const q = createURLSearchParams({ [FILTERS_KEY]: newSelectedFilter.current, [PAGE_KEY]: newPageIndex }, searchParams);
+
+    newSelectedFilter.current = null;
+
+    router.push(q, { scroll: false });
+    setSelectedFilterSwitch(false);
+  }, [selectedFilterSwitch, currentPage, elementsPerPage, maybeFilteredPostsCollection, paginatedElements, router, searchParams]);
 
   return (
     <section className="w-full">

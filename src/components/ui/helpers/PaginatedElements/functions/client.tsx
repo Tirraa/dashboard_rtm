@@ -25,7 +25,7 @@ export function doGetMaybeFilteredPostsCollection(selectedTagsIds: BlogTagId[], 
   return maybeFilteredPostsCollection;
 }
 
-export function doComputePaginatedElements(
+export function getSortedPostsCollection(
   filterFunIndex: Index,
   maybeFilteredPostsCollection: BlogPostPreviewComponentWithMetadatas[],
   __filtersAssoc: FiltersAssoc = BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE
@@ -33,9 +33,18 @@ export function doComputePaginatedElements(
   const getSortScore = (post1: BlogPostPreviewComponentWithMetadatas, post2: BlogPostPreviewComponentWithMetadatas): Score =>
     __filtersAssoc[filterFunIndex].score(post1, post2);
 
-  const paginatedElements = maybeFilteredPostsCollection
-    .sort((post1, post2) => getSortScore(post1, post2))
-    .map((post) => <Fragment key={post._id}>{post.blogPostPreviewComp}</Fragment>);
+  const toSorted = maybeFilteredPostsCollection.toSorted((post1, post2) => getSortScore(post1, post2));
+  return toSorted;
+}
+
+export function doComputePaginatedElements(
+  filterFunIndex: Index,
+  maybeFilteredPostsCollection: BlogPostPreviewComponentWithMetadatas[],
+  __filtersAssoc: FiltersAssoc = BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE
+) {
+  const paginatedElements = getSortedPostsCollection(filterFunIndex, maybeFilteredPostsCollection, __filtersAssoc).map((post) => (
+    <Fragment key={post._id}>{post.blogPostPreviewComp}</Fragment>
+  ));
 
   return paginatedElements;
 }
