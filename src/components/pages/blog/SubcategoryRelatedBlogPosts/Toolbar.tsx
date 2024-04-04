@@ -1,6 +1,6 @@
 'use client';
 
-import type { SubcategoryRelatedBlogPostsClientToolbarInnerProps } from '@/components/pages/blog/SubcategoryRelatedBlogPosts/toolbarInner';
+import type { SubcategoryRelatedBlogPostsClientToolbarInnerProps } from '@/components/pages/blog/SubcategoryRelatedBlogPosts/ToolbarInner';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { FunctionComponent } from 'react';
 
@@ -14,7 +14,7 @@ const SubcategoryRelatedBlogPostsClientToolbar: FunctionComponent<SubcategoryRel
   const [Component, setComponent] = useState<MaybeNull<FunctionComponent<SubcategoryRelatedBlogPostsClientToolbarInnerProps>>>(null);
   useEffect(() => {
     // eslint-disable-next-line promise/catch-or-return
-    import('@/components/pages/blog/SubcategoryRelatedBlogPosts/toolbarInner').then((component) => setComponent(() => component.default));
+    import('@/components/pages/blog/SubcategoryRelatedBlogPosts/ToolbarInner').then((component) => setComponent(() => component.default));
   }, []);
   if (Component === null) return placeholder;
   return <Component {...props} />;

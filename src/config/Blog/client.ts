@@ -36,6 +36,9 @@ const BlogConfigClient: BlogConfigClientType = {
   COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE
 } as const;
 
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+export const MAX_FILTER_INDEX = BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE.length - 1;
+
 export default BlogConfigClient;
 
 type P = BlogPostPreviewComponentWithMetadatas;
