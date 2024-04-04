@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`buildBottomWidgets > should match snapshot 1`] = `
+exports[`buildBottomRightWidgets > should match snapshot 1`] = `
 [
   <PaginationEllipsis
     dropdownItems={

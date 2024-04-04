@@ -94,7 +94,7 @@ function buildWidgetsForBottom(
 }
 
 // {ToDo} Write tests when the function is fully implemented
-export function buildTopWidgets(
+export function buildTopRightWidgets(
   paginationWidgetProps: {
     pagesAmount: Quantity;
     postsAmount: Quantity;
@@ -126,7 +126,7 @@ export function buildTopWidgets(
   );
 }
 
-export function buildBottomWidgets(
+export function buildBottomRightWidgets(
   pathname: AppPath,
   searchParams: URLSearchParams,
   paginationWidgetProps: {

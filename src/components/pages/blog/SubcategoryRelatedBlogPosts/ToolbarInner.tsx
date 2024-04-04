@@ -9,7 +9,7 @@ import { cn } from '@/lib/tailwind';
 import type { FiltersSelectWidgetProps } from '../FiltersSelectWidget';
 import type { PaginationWidgetProps } from '../PaginationWidget';
 
-import { buildBottomWidgets, buildTopWidgets } from './helpers/functions/toolbarInner';
+import { buildBottomRightWidgets, buildTopRightWidgets } from './helpers/functions/toolbarInner';
 
 export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends PaginationWidgetProps, FiltersSelectWidgetProps {
   isBottomWidget?: boolean;
@@ -29,8 +29,8 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  const widgets = !isBottomWidget
-    ? buildTopWidgets(
+  const rightWidgets = !isBottomWidget
+    ? buildTopRightWidgets(
         { pagesAmount, postsAmount, currentPage },
         {
           setSelectedFilterSwitch,
@@ -39,10 +39,10 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
           filtersAssoc
         }
       )
-    : buildBottomWidgets(pathname, searchParams, { pagesAmount, currentPage });
+    : buildBottomRightWidgets(pathname, searchParams, { pagesAmount, currentPage });
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  if (widgets.length <= 0) return null;
+  if (rightWidgets.length <= 0) return null;
 
   return (
     <nav
@@ -50,7 +50,7 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
         'justify-end': isBottomWidget
       })}
     >
-      <div className="flex flex-col">{widgets}</div>
+      <div className="flex flex-col">{rightWidgets}</div>
     </nav>
   );
 };

@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { buildBottomWidgets } from '../toolbarInner';
+import { buildBottomRightWidgets } from '../toolbarInner';
 
-describe('buildBottomWidgets', () => {
+describe('buildBottomRightWidgets', () => {
   it('should return an empty list, given no reason to generate a pagination dropdown', () => {
     const pathname = 'pathname';
     const searchParams = new URLSearchParams();
@@ -10,8 +10,8 @@ describe('buildBottomWidgets', () => {
     const pagesAmount = 1;
     const currentPage = 1;
 
-    const bottomWidgets = buildBottomWidgets(pathname, searchParams, { pagesAmount, currentPage });
-    expect(bottomWidgets).toStrictEqual([]);
+    const bottomRightWidgets = buildBottomRightWidgets(pathname, searchParams, { pagesAmount, currentPage });
+    expect(bottomRightWidgets).toStrictEqual([]);
   });
 
   it('should match snapshot', () => {
@@ -21,7 +21,7 @@ describe('buildBottomWidgets', () => {
     const pagesAmount = 4;
     const currentPage = 1;
 
-    const bottomWidgets = buildBottomWidgets(pathname, searchParams, { pagesAmount, currentPage });
-    expect(bottomWidgets).toMatchSnapshot();
+    const bottomRightWidgets = buildBottomRightWidgets(pathname, searchParams, { pagesAmount, currentPage });
+    expect(bottomRightWidgets).toMatchSnapshot();
   });
 });
