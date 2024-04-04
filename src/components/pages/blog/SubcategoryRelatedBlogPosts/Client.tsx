@@ -12,15 +12,16 @@ import {
   doGetMaybeFilteredPostsCollection,
   doComputePaginatedElements,
   getSortedPostsCollection,
-  shouldShowToolbar
+  shouldShowBottomToolbar,
+  shouldShowTopToolbar
 } from '@/components/ui/helpers/PaginatedElements/functions/client';
 import { computeReconciliatedPageIndex, getSanitizedCurrentPage } from '@/components/ui/helpers/PaginatedElements/functions/pagination';
 import { getPaginatedElementsCurrentSlice } from '@/components/ui/helpers/PaginatedElements/functions/paginatedElements';
 import { PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 import BlogConfigClient, { MAX_FILTER_INDEX } from '@/config/Blog/client';
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
-import { createURLSearchParams } from 'packages/shared-lib/src/html';
 import PaginatedElements from '@/components/ui/PaginatedElements';
+import { createURLSearchParams } from '@rtm/shared-lib/html';
 import usePagination from '@/components/hooks/usePagination';
 import { useSearchParams, useRouter } from 'next/navigation';
 
@@ -46,8 +47,6 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   const searchParams = useSearchParams();
 
   const selectedFilter = useMemo(() => getSanitizedCurrentFilterIndex(searchParams, MAX_FILTER_INDEX, FILTERS_KEY), [searchParams]);
-
-  const showToolbar = shouldShowToolbar(postsCollection);
 
   const [selectedFilterSwitch, setSelectedFilterSwitch] = useState<boolean>(false);
 
@@ -102,10 +101,13 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     setSelectedFilterSwitch(false);
   }, [selectedFilterSwitch, currentPage, elementsPerPage, maybeFilteredPostsCollection, paginatedElements, router, searchParams]);
 
+  const showTopToolbar = shouldShowTopToolbar(postsCollection);
+  const showBottomToolbar = shouldShowBottomToolbar(pagesAmount);
+
   return (
     <section className="w-full">
       <h1 className="mb-2 ltr:text-left rtl:text-right">{title}</h1>
-      {showToolbar && (
+      {showTopToolbar && (
         <SubcategoryRelatedBlogPostsClientToolbar
           filtersAssoc={BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE}
           setSelectedFilterSwitch={setSelectedFilterSwitch}
@@ -117,6 +119,18 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
         />
       )}
       <div className="mb-4 flex min-w-full flex-col [&>article:not(:last-of-type)]:mb-6">{paginated}</div>
+      {showBottomToolbar && (
+        <SubcategoryRelatedBlogPostsClientToolbar
+          filtersAssoc={BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE}
+          setSelectedFilterSwitch={setSelectedFilterSwitch}
+          postsAmount={paginatedElements.length}
+          newSelectedFilter={newSelectedFilter}
+          selectedFilter={selectedFilter}
+          currentPage={currentPage}
+          pagesAmount={pagesAmount}
+          isBottomWidget
+        />
+      )}
     </section>
   );
 };

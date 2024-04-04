@@ -7,11 +7,9 @@ import type { AppPath } from '@rtm/shared-types/Next';
 import { PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 
 import { buildDropdown } from '../../../helpers/functions/paginationWidget';
+import shouldShowPaginationWidget from './shouldShowPaginationWidget';
 import FiltersSelectWidget from '../../../FiltersSelectWidget';
 import PaginationWidget from '../../../PaginationWidget';
-
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
-const shouldShowPaginationWidget = (pagesAmount: Quantity): boolean => pagesAmount > 1;
 
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 const shouldShowFiltersSelectWidget = (postsAmount: Quantity): boolean => postsAmount > 1;

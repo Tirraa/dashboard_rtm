@@ -1,5 +1,5 @@
 import type { BlogPostPreviewComponentWithMetadatas, BlogTagId } from '@/types/Blog';
-import type { Index, Score } from '@rtm/shared-types/Numbers';
+import type { Quantity, Index, Score } from '@rtm/shared-types/Numbers';
 import type { FiltersAssoc } from '@/config/Blog/client';
 
 import { getUnpackedAndSanitizedFilters } from '@/components/pages/blog/helpers/functions/filters';
@@ -50,4 +50,7 @@ export function doComputePaginatedElements(
 }
 
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-export const shouldShowToolbar = (postsCollection: BlogPostPreviewComponentWithMetadatas[]): boolean => postsCollection.length > 1;
+export const shouldShowTopToolbar = (postsCollection: BlogPostPreviewComponentWithMetadatas[]): boolean => postsCollection.length > 1;
+
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+export const shouldShowBottomToolbar = (pagesAmount: Quantity): boolean => pagesAmount > 1;

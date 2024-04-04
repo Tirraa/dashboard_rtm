@@ -13,7 +13,8 @@ import {
   doGetMaybeFilteredPostsCollection,
   doComputePaginatedElements,
   getSortedPostsCollection,
-  shouldShowToolbar
+  shouldShowBottomToolbar,
+  shouldShowTopToolbar
 } from '../client';
 import { computeReconciliatedPageIndex } from '../pagination';
 
@@ -135,11 +136,22 @@ const fivePostsPostsCollection: BlogPostPreviewComponentWithMetadatas[] = [
   }
 ];
 
-describe('shouldShowToolbar', () => {
+describe('shouldShowTopToolbar', () => {
   it('should return false or true depending on postsCollection length', () => {
-    expect(shouldShowToolbar(emptyPostsCollection)).toBe(false);
-    expect(shouldShowToolbar(onlyOnePostPostsCollection)).toBe(false);
-    expect(shouldShowToolbar(twoPostsPostsCollection)).toBe(true);
+    expect(shouldShowTopToolbar(emptyPostsCollection)).toBe(false);
+    expect(shouldShowTopToolbar(onlyOnePostPostsCollection)).toBe(false);
+    expect(shouldShowTopToolbar(twoPostsPostsCollection)).toBe(true);
+  });
+});
+
+describe('shouldShowBottomToolbar', () => {
+  it('should return false or true depending on pagesAmount', () => {
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    expect(shouldShowBottomToolbar(0)).toBe(false);
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    expect(shouldShowBottomToolbar(1)).toBe(false);
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    expect(shouldShowBottomToolbar(2)).toBe(true);
   });
 });
 
