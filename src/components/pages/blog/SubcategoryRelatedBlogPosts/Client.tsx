@@ -41,7 +41,8 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   postsCollection,
   elementsPerPage,
   expectedTagsIds,
-  title
+  title,
+  tags
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -116,6 +117,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
           selectedFilter={selectedFilter}
           currentPage={currentPage}
           pagesAmount={pagesAmount}
+          tags={tags}
         />
       )}
       <div className="mb-4 flex min-w-full flex-col [&>article:not(:last-of-type)]:mb-6">{paginated}</div>
@@ -129,6 +131,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
           currentPage={currentPage}
           pagesAmount={pagesAmount}
           isBottomWidget
+          tags={tags}
         />
       )}
     </section>

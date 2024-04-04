@@ -1,5 +1,6 @@
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { Quantity, Count, Id } from '@rtm/shared-types/Numbers';
+import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { MutableRefObject, ReactElement } from 'react';
 import type { FiltersAssoc } from '@/config/Blog/client';
 import type { AppPath } from '@rtm/shared-types/Next';
@@ -7,8 +8,10 @@ import type { AppPath } from '@rtm/shared-types/Next';
 import { PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 
 import { buildDropdown } from '../../../helpers/functions/paginationWidget';
+import shouldShowTagsCommandWidget from './shouldShowTagsCommandWidget';
 import shouldShowPaginationWidget from './shouldShowPaginationWidget';
 import FiltersSelectWidget from '../../../FiltersSelectWidget';
+import TagsCommandWidget from '../../../TagsCommandWidget';
 import PaginationWidget from '../../../PaginationWidget';
 
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
@@ -24,7 +27,7 @@ const getMaybeDropdown = (
 ): MaybeNull<ReactElement> =>
   !showPaginationWidget ? null : buildDropdown(pagesAmount, currentPage, pathname, searchParams, PAGE_KEY, isBottomWidget);
 
-function buildWidgetsForTop(
+function buildWidgetsForTopRight(
   paginationWidgetProps: {
     showPaginationWidget: boolean;
     pagesAmount: Quantity;
@@ -67,7 +70,7 @@ function buildWidgetsForTop(
   return elements;
 }
 
-function buildWidgetsForBottom(
+function buildWidgetsForBottomRight(
   paginationWidgetProps: {
     showPaginationWidget: boolean;
     pagesAmount: Quantity;
@@ -93,7 +96,18 @@ function buildWidgetsForBottom(
   return elements;
 }
 
-// {ToDo} Write tests when the function is fully implemented
+// {ToDo} Write test
+export function buildTopLeftWidgets(tagsCommandWidgetProps: { tags: BlogTag[] }): ReactElement[] {
+  const showTagsCommandWidget = shouldShowTagsCommandWidget(tagsCommandWidgetProps.tags.length);
+
+  const elements: ReactElement[] = [];
+
+  if (showTagsCommandWidget) elements.push(<TagsCommandWidget tags={tagsCommandWidgetProps.tags} key="tags-filter-widget" />);
+
+  return elements;
+}
+
+// {ToDo} Write test
 export function buildTopRightWidgets(
   paginationWidgetProps: {
     pagesAmount: Quantity;
@@ -110,7 +124,7 @@ export function buildTopRightWidgets(
   const showPaginationWidget = shouldShowPaginationWidget(paginationWidgetProps.pagesAmount);
   const showFiltersSelectWidget = shouldShowFiltersSelectWidget(paginationWidgetProps.postsAmount);
 
-  return buildWidgetsForTop(
+  return buildWidgetsForTopRight(
     {
       pagesAmount: paginationWidgetProps.pagesAmount,
       currentPage: paginationWidgetProps.currentPage,
@@ -136,7 +150,7 @@ export function buildBottomRightWidgets(
 ): ReactElement[] {
   const showPaginationWidget = shouldShowPaginationWidget(paginationWidgetProps.pagesAmount);
 
-  return buildWidgetsForBottom(
+  return buildWidgetsForBottomRight(
     {
       pagesAmount: paginationWidgetProps.pagesAmount,
       currentPage: paginationWidgetProps.currentPage,

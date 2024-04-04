@@ -15,10 +15,14 @@ interface SubcategoryRelatedBlogPostsClientToolbarProps extends SubcategoryRelat
 function buildPlaceholder(isBottomWidget: boolean, pagesAmount: Quantity) {
   const margin = 'my-4';
 
-  if (isBottomWidget) return <div className={cn(margin, 'min-h-[40px]')} />;
+  const bottomWidgetPlaceholder = <div className={cn(margin, 'min-h-[40px]')} />;
+  const topWidgetTwoColsPlaceholder = <div className={cn(margin, 'min-h-[84px]')} />;
+  const topWidgetOneColPlaceholder = <div className={cn(margin, 'min-h-[40px]')} />;
+
+  if (isBottomWidget) return bottomWidgetPlaceholder;
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  if (shouldShowPaginationWidget(pagesAmount)) return <div className={cn(margin, 'min-h-[84px]')} />;
-  return <div className={cn(margin, 'min-h-[40px]')} />;
+  if (shouldShowPaginationWidget(pagesAmount)) return topWidgetTwoColsPlaceholder;
+  return topWidgetOneColPlaceholder;
 }
 
 // https://v3.gatsbyjs.com/docs/mdx/importing-and-using-components/#lazy-loading-components

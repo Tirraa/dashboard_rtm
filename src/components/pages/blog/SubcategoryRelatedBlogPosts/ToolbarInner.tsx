@@ -1,17 +1,18 @@
 'use client';
 
+import type { FunctionComponent, ReactElement } from 'react';
 import type { Quantity } from '@rtm/shared-types/Numbers';
-import type { FunctionComponent } from 'react';
 
 import { useSearchParams, usePathname } from 'next/navigation';
 import { cn } from '@/lib/tailwind';
 
 import type { FiltersSelectWidgetProps } from '../FiltersSelectWidget';
+import type { TagsCommandWidgetProps } from '../TagsCommandWidget';
 import type { PaginationWidgetProps } from '../PaginationWidget';
 
-import { buildBottomRightWidgets, buildTopRightWidgets } from './helpers/functions/toolbarInner';
+import { buildBottomRightWidgets, buildTopRightWidgets, buildTopLeftWidgets } from './helpers/functions/toolbarInner';
 
-export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends PaginationWidgetProps, FiltersSelectWidgetProps {
+export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends TagsCommandWidgetProps, PaginationWidgetProps, FiltersSelectWidgetProps {
   isBottomWidget?: boolean;
   postsAmount: Quantity;
 }
@@ -24,10 +25,13 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
   filtersAssoc,
   currentPage,
   pagesAmount,
-  postsAmount
+  postsAmount,
+  tags
 }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
+
+  const leftWidgets: ReactElement[] = !isBottomWidget ? buildTopLeftWidgets({ tags }) : [];
 
   const rightWidgets = !isBottomWidget
     ? buildTopRightWidgets(
@@ -42,15 +46,19 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
     : buildBottomRightWidgets(pathname, searchParams, { pagesAmount, currentPage });
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  if (rightWidgets.length <= 0) return null;
+  if (rightWidgets.length + leftWidgets.length <= 0) return null;
 
   return (
     <nav
       className={cn('my-4 flex items-end justify-between', {
-        'justify-end': isBottomWidget
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        'justify-end': isBottomWidget || leftWidgets.length <= 0
       })}
     >
-      <div className="flex flex-col">{rightWidgets}</div>
+      {/* eslint-disable-next-line @typescript-eslint/no-magic-numbers */}
+      {leftWidgets.length > 0 && leftWidgets}
+      {/* eslint-disable-next-line @typescript-eslint/no-magic-numbers */}
+      {rightWidgets.length > 0 && <div className="flex flex-col">{rightWidgets}</div>}
     </nav>
   );
 };
