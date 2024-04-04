@@ -2,18 +2,8 @@ import type { BlogPostPreviewComponentWithMetadatas, BlogTagId } from '@/types/B
 import type { Quantity, Index, Score } from '@rtm/shared-types/Numbers';
 import type { FiltersAssoc } from '@/config/Blog/client';
 
-import { getUnpackedAndSanitizedFilters } from '@/components/pages/blog/helpers/functions/filters';
 import BlogConfigClient from '@/config/Blog/client';
 import { Fragment } from 'react';
-
-export function doComputeSelectedTagsIdsInitialState(searchParams: URLSearchParams, expectedTagsIds: Set<BlogTagId>, tagsKey: string) {
-  try {
-    const unpackedAndSanitizedFilters = getUnpackedAndSanitizedFilters(searchParams, expectedTagsIds, tagsKey);
-    return unpackedAndSanitizedFilters;
-  } catch {
-    return [];
-  }
-}
 
 export function doGetMaybeFilteredPostsCollection(selectedTagsIds: BlogTagId[], postsCollection: BlogPostPreviewComponentWithMetadatas[]) {
   const maybeFilteredPostsCollection =

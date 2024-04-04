@@ -4,8 +4,11 @@ import type { BlogTag } from '##/config/contentlayer/blog/blogTags';
 import type { MutableRefObject, ReactElement } from 'react';
 import type { FiltersAssoc } from '@/config/Blog/client';
 import type { AppPath } from '@rtm/shared-types/Next';
+import type { BlogTagId } from '@/types/Blog';
 
 import { PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
+
+import type { ETagsSwitch } from '../enums';
 
 import { buildDropdown } from '../../../helpers/functions/paginationWidget';
 import shouldShowTagsCommandWidget from './shouldShowTagsCommandWidget';
@@ -97,12 +100,29 @@ function buildWidgetsForBottomRight(
 }
 
 // {ToDo} Write test
-export function buildTopLeftWidgets(tagsCommandWidgetProps: { tags: BlogTag[] }): ReactElement[] {
+export function buildTopLeftWidgets(tagsCommandWidgetProps: {
+  memorizedPageBeforeFiltering: MutableRefObject<MaybeNull<Id>>;
+  newSelectedTagsIds: MutableRefObject<MaybeNull<Id[]>>;
+  setSelectedTagSwitch: (s: ETagsSwitch) => unknown;
+  selectedTagsIds: BlogTagId[];
+  tags: BlogTag[];
+}): ReactElement[] {
   const showTagsCommandWidget = shouldShowTagsCommandWidget(tagsCommandWidgetProps.tags.length);
 
   const elements: ReactElement[] = [];
 
-  if (showTagsCommandWidget) elements.push(<TagsCommandWidget tags={tagsCommandWidgetProps.tags} key="tags-filter-widget" />);
+  if (showTagsCommandWidget) {
+    elements.push(
+      <TagsCommandWidget
+        memorizedPageBeforeFiltering={tagsCommandWidgetProps.memorizedPageBeforeFiltering}
+        setSelectedTagSwitch={tagsCommandWidgetProps.setSelectedTagSwitch}
+        newSelectedTagsIds={tagsCommandWidgetProps.newSelectedTagsIds}
+        selectedTagsIds={tagsCommandWidgetProps.selectedTagsIds}
+        tags={tagsCommandWidgetProps.tags}
+        key="tags-filter-widget"
+      />
+    );
+  }
 
   return elements;
 }

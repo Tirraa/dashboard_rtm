@@ -1,15 +1,12 @@
-import type { BlogPostPreviewComponentWithMetadatas, BlogTagId } from '@/types/Blog';
+import type { BlogPostPreviewComponentWithMetadatas } from '@/types/Blog';
 import type { FiltersAssoc } from '@/config/Blog/client';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { INVALID_ENCODED_STRING_GLITCHED_BITSTREAM, INVALID_ENCODED_STRING_GLITCHED_BASE64 } from '𝕍/commons';
 import { compareDesc } from 'date-fns/compareDesc';
-import { packIds } from '@rtm/shared-lib/misc';
 import { describe, expect, it } from 'vitest';
 import * as React from 'react';
 
 import {
-  doComputeSelectedTagsIdsInitialState,
   doGetMaybeFilteredPostsCollection,
   doComputePaginatedElements,
   getSortedPostsCollection,
@@ -152,70 +149,6 @@ describe('shouldShowBottomToolbar', () => {
     expect(shouldShowBottomToolbar(1)).toBe(false);
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     expect(shouldShowBottomToolbar(2)).toBe(true);
-  });
-});
-
-describe('doComputeSelectedTagsIdsInitialState', () => {
-  it('should return an empty array, given empty fake datas', () => {
-    const expectedTagsIds: BlogTagId[] = [];
-    const expectedTagsIdsSet: Set<BlogTagId> = new Set(expectedTagsIds);
-    const tagsKey = '';
-    const searchParams = new URLSearchParams();
-
-    const expected: BlogTagId[] = [];
-
-    const selectedTagsIds = doComputeSelectedTagsIdsInitialState(searchParams, expectedTagsIdsSet, tagsKey);
-    expect(selectedTagsIds).toStrictEqual(expected);
-  });
-
-  it('should return a valid array, given valid fake datas', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const expectedTagsIds: BlogTagId[] = [1, 2, 3, 4];
-    const expectedTagsIdsSet: Set<BlogTagId> = new Set(expectedTagsIds);
-    const tagsKey = 'tags';
-
-    const searchParams = new URLSearchParams(`tags=${packIds(expectedTagsIds)}`);
-
-    const expected: BlogTagId[] = expectedTagsIds;
-
-    const selectedTagsIds = doComputeSelectedTagsIdsInitialState(searchParams, expectedTagsIdsSet, tagsKey);
-    expect(selectedTagsIds).toStrictEqual(expected);
-  });
-
-  it('should return a sanitized valid array, given sanitazable invalid fake datas', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const expectedTagsIds: BlogTagId[] = [1, 2, 3, 4];
-    const maxBlogTagId = Math.max(...expectedTagsIds);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const invalidBlogTagId = maxBlogTagId + 1;
-    const expectedTagsIdsSet: Set<BlogTagId> = new Set([...expectedTagsIds, invalidBlogTagId]);
-    const tagsKey = 'tags';
-
-    const searchParams = new URLSearchParams(`tags=${packIds(expectedTagsIds)}`);
-
-    const expected: BlogTagId[] = expectedTagsIds;
-
-    const selectedTagsIds = doComputeSelectedTagsIdsInitialState(searchParams, expectedTagsIdsSet, tagsKey);
-    expect(selectedTagsIds).toStrictEqual(expected);
-  });
-
-  it('should return an empty array, given invalid fake datas (unhappy path)', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    const expectedTagsIds: BlogTagId[] = [1, 2, 3, 4];
-    const expectedTagsIdsSet: Set<BlogTagId> = new Set(expectedTagsIds);
-    const tagsKey = 'tags';
-
-    const searchParams_A = new URLSearchParams(`tags=${INVALID_ENCODED_STRING_GLITCHED_BITSTREAM}`);
-
-    const searchParams_B = new URLSearchParams(`tags=${INVALID_ENCODED_STRING_GLITCHED_BASE64}`);
-
-    const expected: BlogTagId[] = [];
-
-    const selectedTagsIds_A = doComputeSelectedTagsIdsInitialState(searchParams_A, expectedTagsIdsSet, tagsKey);
-    expect(selectedTagsIds_A).toStrictEqual(expected);
-
-    const selectedTagsIds_B = doComputeSelectedTagsIdsInitialState(searchParams_B, expectedTagsIdsSet, tagsKey);
-    expect(selectedTagsIds_B).toStrictEqual(expected);
   });
 });
 
