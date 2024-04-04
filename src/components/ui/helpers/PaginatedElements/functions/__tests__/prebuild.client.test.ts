@@ -258,7 +258,7 @@ describe('computeReconciliatedPageIndex', () => {
     const maybeFilteredPostsCollection = fivePostsPostsCollection;
     const expected = 3;
 
-    const reconciliatedPageIndex = computeReconciliatedPageIndex([['5'], ['1', '2']], maybeFilteredPostsCollection, elementsPerPage);
+    const reconciliatedPageIndex = computeReconciliatedPageIndex(['5'], maybeFilteredPostsCollection, elementsPerPage);
 
     expect(reconciliatedPageIndex).toBe(expected);
   });
@@ -268,7 +268,7 @@ describe('computeReconciliatedPageIndex', () => {
     const maybeFilteredPostsCollection = fivePostsPostsCollection;
     const expected = 1;
 
-    const reconciliatedPageIndex = computeReconciliatedPageIndex([['1', '2'], ['5']], maybeFilteredPostsCollection, elementsPerPage);
+    const reconciliatedPageIndex = computeReconciliatedPageIndex(['1', '2'], maybeFilteredPostsCollection, elementsPerPage);
 
     expect(reconciliatedPageIndex).toBe(expected);
   });
@@ -278,14 +278,7 @@ describe('computeReconciliatedPageIndex', () => {
     const maybeFilteredPostsCollection = fivePostsPostsCollection;
     const expected = 2;
 
-    const reconciliatedPageIndex = computeReconciliatedPageIndex(
-      [
-        ['3', '4'],
-        ['1', '2']
-      ],
-      maybeFilteredPostsCollection,
-      elementsPerPage
-    );
+    const reconciliatedPageIndex = computeReconciliatedPageIndex(['3', '4'], maybeFilteredPostsCollection, elementsPerPage);
 
     expect(reconciliatedPageIndex).toBe(expected);
   });
@@ -295,17 +288,7 @@ describe('computeReconciliatedPageIndex', () => {
     const maybeFilteredPostsCollection = fivePostsPostsCollection;
     const expected = -1;
 
-    const reconciliatedPageIndex = computeReconciliatedPageIndex([['__UNKNOWN__'], ['5']], maybeFilteredPostsCollection, elementsPerPage);
-
-    expect(reconciliatedPageIndex).toBe(expected);
-  });
-
-  it('should return -1, given an history with only one element', () => {
-    const elementsPerPage = 2;
-    const maybeFilteredPostsCollection = fivePostsPostsCollection;
-    const expected = -1;
-
-    const reconciliatedPageIndex = computeReconciliatedPageIndex([['1']], maybeFilteredPostsCollection, elementsPerPage);
+    const reconciliatedPageIndex = computeReconciliatedPageIndex(['__UNKNOWN__'], maybeFilteredPostsCollection, elementsPerPage);
 
     expect(reconciliatedPageIndex).toBe(expected);
   });

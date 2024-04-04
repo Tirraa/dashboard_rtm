@@ -25,7 +25,6 @@ export function doGetMaybeFilteredPostsCollection(selectedTagsIds: BlogTagId[], 
   return maybeFilteredPostsCollection;
 }
 
-// {ToDo} Write test
 export function doComputePaginatedElements(
   filterFunIndex: Index,
   maybeFilteredPostsCollection: BlogPostPreviewComponentWithMetadatas[],

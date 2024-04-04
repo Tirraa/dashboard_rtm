@@ -1,0 +1,62 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`buildBottomWidgets > should match snapshot 1`] = `
+[
+  <PaginationEllipsis
+    dropdownItems={
+      [
+        <DropdownMenuItem
+          className="h-10 p-0"
+          onClick={[Function]}
+        >
+          <ForwardRef(LinkComponent)
+            className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold rounded-md bg-primary"
+            href="pathname?"
+            title="1"
+          >
+            1
+          </ForwardRef(LinkComponent)>
+        </DropdownMenuItem>,
+        <DropdownMenuItem
+          className="h-10 p-0"
+          onClick={[Function]}
+        >
+          <ForwardRef(LinkComponent)
+            className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold"
+            href="pathname?page=2"
+            title="2"
+          >
+            2
+          </ForwardRef(LinkComponent)>
+        </DropdownMenuItem>,
+        <DropdownMenuItem
+          className="h-10 p-0"
+          onClick={[Function]}
+        >
+          <ForwardRef(LinkComponent)
+            className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold"
+            href="pathname?page=3"
+            title="3"
+          >
+            3
+          </ForwardRef(LinkComponent)>
+        </DropdownMenuItem>,
+        <DropdownMenuItem
+          className="h-10 p-0"
+          onClick={[Function]}
+        >
+          <ForwardRef(LinkComponent)
+            className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold"
+            href="pathname?page=4"
+            title="4"
+          >
+            4
+          </ForwardRef(LinkComponent)>
+        </DropdownMenuItem>,
+      ]
+    }
+    isBottomWidget={true}
+    pageNumberIndicator={1}
+  />,
+]
+`;

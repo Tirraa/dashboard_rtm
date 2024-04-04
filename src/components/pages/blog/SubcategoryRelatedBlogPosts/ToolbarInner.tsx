@@ -39,7 +39,7 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
           filtersAssoc
         }
       )
-    : buildBottomWidgets(pathname, searchParams, { pagesAmount, postsAmount, currentPage });
+    : buildBottomWidgets(pathname, searchParams, { pagesAmount, currentPage });
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (widgets.length <= 0) return null;

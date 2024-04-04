@@ -10,6 +10,7 @@ interface SubcategoryRelatedBlogPostsClientToolbarProps extends SubcategoryRelat
 
 // https://v3.gatsbyjs.com/docs/mdx/importing-and-using-components/#lazy-loading-components
 const SubcategoryRelatedBlogPostsClientToolbar: FunctionComponent<SubcategoryRelatedBlogPostsClientToolbarProps> = (props) => {
+  // {ToDo} Generate another placeholder for BottomWidget
   const placeholder = <div className="my-4 min-h-[84px]" />;
   const [Component, setComponent] = useState<MaybeNull<FunctionComponent<SubcategoryRelatedBlogPostsClientToolbarInnerProps>>>(null);
   useEffect(() => {

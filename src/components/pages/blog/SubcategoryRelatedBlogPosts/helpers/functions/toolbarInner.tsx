@@ -10,6 +10,12 @@ import { buildDropdown } from '../../../helpers/functions/paginationWidget';
 import FiltersSelectWidget from '../../../FiltersSelectWidget';
 import PaginationWidget from '../../../PaginationWidget';
 
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+const shouldShowPaginationWidget = (pagesAmount: Quantity): boolean => pagesAmount > 1;
+
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+const shouldShowFiltersSelectWidget = (postsAmount: Quantity): boolean => postsAmount > 1;
+
 const getMaybeDropdown = (
   showPaginationWidget: boolean,
   pagesAmount: Quantity,
@@ -103,10 +109,8 @@ export function buildTopWidgets(
     selectedFilter: Id;
   }
 ): ReactElement[] {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const showPaginationWidget = paginationWidgetProps.pagesAmount > 1;
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const showFiltersSelectWidget = paginationWidgetProps.postsAmount > 1;
+  const showPaginationWidget = shouldShowPaginationWidget(paginationWidgetProps.pagesAmount);
+  const showFiltersSelectWidget = shouldShowFiltersSelectWidget(paginationWidgetProps.postsAmount);
 
   return buildWidgetsForTop(
     {
@@ -124,18 +128,15 @@ export function buildTopWidgets(
   );
 }
 
-// {ToDo} Write tests when the function is fully implemented
 export function buildBottomWidgets(
   pathname: AppPath,
   searchParams: URLSearchParams,
   paginationWidgetProps: {
     pagesAmount: Quantity;
-    postsAmount: Quantity;
     currentPage: Count;
   }
 ): ReactElement[] {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const showPaginationWidget = paginationWidgetProps.pagesAmount > 1;
+  const showPaginationWidget = shouldShowPaginationWidget(paginationWidgetProps.pagesAmount);
 
   return buildWidgetsForBottom(
     {

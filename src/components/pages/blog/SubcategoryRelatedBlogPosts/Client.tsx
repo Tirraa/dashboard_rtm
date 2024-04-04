@@ -87,8 +87,9 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   );
 
   useEffect(() => {
-    if (selectedFilterSwitch) {
+    if (selectedFilterSwitch && newSelectedFilter.current !== null) {
       console.log(newSelectedFilter.current);
+      newSelectedFilter.current = null;
       setSelectedFilterSwitch(false);
     }
   }, [selectedFilterSwitch]);

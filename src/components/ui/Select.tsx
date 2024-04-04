@@ -1,3 +1,6 @@
+/* v8 ignore start */
+// Stryker disable all
+
 'use client';
 
 import { ChevronDown, ChevronUp, Check } from 'lucide-react';
@@ -124,3 +127,6 @@ export {
   SelectItem,
   Select
 };
+
+// Stryker restore all
+/* v8 ignore stop */

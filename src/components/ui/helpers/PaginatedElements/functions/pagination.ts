@@ -40,16 +40,11 @@ function findFirstCommonElementIndex(
 }
 
 export function computeReconciliatedPageIndex(
-  pagesSlicesRelatedPostsIdsHistory: Array<ReactElementKey[]>,
+  oldSliceIds: ReactElementKey[],
   maybeFilteredPostsCollection: BlogPostPreviewComponentWithMetadatas[],
   elementsPerPage: Quantity
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 ): Index | -1 {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  if (pagesSlicesRelatedPostsIdsHistory.length <= 1) return -1;
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const oldSliceIds = pagesSlicesRelatedPostsIdsHistory[0];
-
   const commonElementIndex = findFirstCommonElementIndex(oldSliceIds, maybeFilteredPostsCollection);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
