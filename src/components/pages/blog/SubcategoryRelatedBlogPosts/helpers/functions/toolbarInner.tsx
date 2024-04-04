@@ -1,8 +1,8 @@
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { Quantity, Count, Id } from '@rtm/shared-types/Numbers';
+import type { MutableRefObject, ReactElement } from 'react';
 import type { FiltersAssoc } from '@/config/Blog/client';
 import type { AppPath } from '@rtm/shared-types/Next';
-import type { ReactElement } from 'react';
 
 import { PAGE_KEY } from '@/components/ui/helpers/PaginatedElements/constants';
 
@@ -21,11 +21,13 @@ const getMaybeDropdown = (
   !showPaginationWidget ? null : buildDropdown(pagesAmount, currentPage, pathname, searchParams, PAGE_KEY, isBottomWidget);
 
 function buildWidgetsForTop(
-  pagesAmount: Quantity,
-  currentPage: Count,
-  showPaginationWidget: boolean,
+  paginationWidgetProps: {
+    showPaginationWidget: boolean;
+    pagesAmount: Quantity;
+    currentPage: Count;
+  },
   filtersWidgetProps: {
-    setSelectedFilter: (selectedFilter: Id) => unknown;
+    newSelectedFilter: MutableRefObject<MaybeNull<Id>>;
     setSelectedFilterSwitch: (s: boolean) => unknown;
     showFiltersSelectWidget: boolean;
     filtersAssoc: FiltersAssoc;
@@ -38,7 +40,7 @@ function buildWidgetsForTop(
     elements.push(
       <FiltersSelectWidget
         setSelectedFilterSwitch={filtersWidgetProps.setSelectedFilterSwitch}
-        setSelectedFilter={filtersWidgetProps.setSelectedFilter}
+        newSelectedFilter={filtersWidgetProps.newSelectedFilter}
         selectedFilter={filtersWidgetProps.selectedFilter}
         filtersAssoc={filtersWidgetProps.filtersAssoc}
         triggerClassName="z-20 mb-1 self-end"
@@ -47,24 +49,40 @@ function buildWidgetsForTop(
     );
   }
 
-  if (showPaginationWidget) {
-    elements.push(<PaginationWidget className="w-full justify-end" pagesAmount={pagesAmount} currentPage={currentPage} key="pagination-widget" />);
+  if (paginationWidgetProps.showPaginationWidget) {
+    elements.push(
+      <PaginationWidget
+        pagesAmount={paginationWidgetProps.pagesAmount}
+        currentPage={paginationWidgetProps.currentPage}
+        className="w-full justify-end"
+        key="pagination-widget"
+      />
+    );
   }
 
   return elements;
 }
 
 function buildWidgetsForBottom(
-  pagesAmount: Quantity,
-  currentPage: Count,
+  paginationWidgetProps: {
+    showPaginationWidget: boolean;
+    pagesAmount: Quantity;
+    currentPage: Count;
+  },
   pathname: AppPath,
-  searchParams: URLSearchParams,
-  isBottomWidget: boolean,
-  showPaginationWidget: boolean
+  searchParams: URLSearchParams
 ): ReactElement[] {
   const elements: ReactElement[] = [];
+  const isBottomWidget = true;
 
-  const maybeDropdown = getMaybeDropdown(showPaginationWidget, pagesAmount, currentPage, pathname, searchParams, isBottomWidget);
+  const maybeDropdown = getMaybeDropdown(
+    paginationWidgetProps.showPaginationWidget,
+    paginationWidgetProps.pagesAmount,
+    paginationWidgetProps.currentPage,
+    pathname,
+    searchParams,
+    isBottomWidget
+  );
 
   if (maybeDropdown !== null) elements.push(maybeDropdown);
 
@@ -72,34 +90,60 @@ function buildWidgetsForBottom(
 }
 
 // {ToDo} Write tests when the function is fully implemented
-export function buildWidgets(
-  pagesAmount: Quantity,
-  postsAmount: Quantity,
-  currentPage: Count,
-  pathname: AppPath,
-  searchParams: URLSearchParams,
+export function buildTopWidgets(
+  paginationWidgetProps: {
+    pagesAmount: Quantity;
+    postsAmount: Quantity;
+    currentPage: Count;
+  },
   filtersWidgetProps: {
-    setSelectedFilter: (selectedFilter: Id) => unknown;
+    newSelectedFilter: MutableRefObject<MaybeNull<Id>>;
     setSelectedFilterSwitch: (s: boolean) => unknown;
     filtersAssoc: FiltersAssoc;
     selectedFilter: Id;
-  },
-  isBottomWidget?: boolean
+  }
 ): ReactElement[] {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const showPaginationWidget = pagesAmount > 1;
+  const showPaginationWidget = paginationWidgetProps.pagesAmount > 1;
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const showFiltersSelectWidget = postsAmount > 1;
+  const showFiltersSelectWidget = paginationWidgetProps.postsAmount > 1;
 
-  const widgets = !isBottomWidget
-    ? buildWidgetsForTop(pagesAmount, currentPage, showPaginationWidget, {
-        setSelectedFilterSwitch: filtersWidgetProps.setSelectedFilterSwitch,
-        setSelectedFilter: filtersWidgetProps.setSelectedFilter,
-        selectedFilter: filtersWidgetProps.selectedFilter,
-        filtersAssoc: filtersWidgetProps.filtersAssoc,
-        showFiltersSelectWidget
-      })
-    : buildWidgetsForBottom(pagesAmount, currentPage, pathname, searchParams, showPaginationWidget, isBottomWidget);
+  return buildWidgetsForTop(
+    {
+      pagesAmount: paginationWidgetProps.pagesAmount,
+      currentPage: paginationWidgetProps.currentPage,
+      showPaginationWidget
+    },
+    {
+      setSelectedFilterSwitch: filtersWidgetProps.setSelectedFilterSwitch,
+      newSelectedFilter: filtersWidgetProps.newSelectedFilter,
+      selectedFilter: filtersWidgetProps.selectedFilter,
+      filtersAssoc: filtersWidgetProps.filtersAssoc,
+      showFiltersSelectWidget
+    }
+  );
+}
 
-  return widgets;
+// {ToDo} Write tests when the function is fully implemented
+export function buildBottomWidgets(
+  pathname: AppPath,
+  searchParams: URLSearchParams,
+  paginationWidgetProps: {
+    pagesAmount: Quantity;
+    postsAmount: Quantity;
+    currentPage: Count;
+  }
+): ReactElement[] {
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const showPaginationWidget = paginationWidgetProps.pagesAmount > 1;
+
+  return buildWidgetsForBottom(
+    {
+      pagesAmount: paginationWidgetProps.pagesAmount,
+      currentPage: paginationWidgetProps.currentPage,
+      showPaginationWidget
+    },
+    pathname,
+    searchParams
+  );
 }

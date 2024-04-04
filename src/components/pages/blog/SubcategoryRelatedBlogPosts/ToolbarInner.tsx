@@ -9,7 +9,7 @@ import { cn } from '@/lib/tailwind';
 import type { FiltersSelectWidgetProps } from '../FiltersSelectWidget';
 import type { PaginationWidgetProps } from '../PaginationWidget';
 
-import { buildWidgets } from './helpers/functions/toolbarInner';
+import { buildBottomWidgets, buildTopWidgets } from './helpers/functions/toolbarInner';
 
 export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends PaginationWidgetProps, FiltersSelectWidgetProps {
   isBottomWidget?: boolean;
@@ -18,7 +18,7 @@ export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends Pagi
 
 const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<SubcategoryRelatedBlogPostsClientToolbarInnerProps> = ({
   setSelectedFilterSwitch,
-  setSelectedFilter,
+  newSelectedFilter,
   isBottomWidget,
   selectedFilter,
   filtersAssoc,
@@ -29,20 +29,17 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  const widgets = buildWidgets(
-    pagesAmount,
-    postsAmount,
-    currentPage,
-    pathname,
-    searchParams,
-    {
-      setSelectedFilterSwitch,
-      setSelectedFilter,
-      selectedFilter,
-      filtersAssoc
-    },
-    isBottomWidget
-  );
+  const widgets = !isBottomWidget
+    ? buildTopWidgets(
+        { pagesAmount, postsAmount, currentPage },
+        {
+          setSelectedFilterSwitch,
+          newSelectedFilter,
+          selectedFilter,
+          filtersAssoc
+        }
+      )
+    : buildBottomWidgets(pathname, searchParams, { pagesAmount, postsAmount, currentPage });
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (widgets.length <= 0) return null;
