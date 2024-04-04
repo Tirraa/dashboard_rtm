@@ -154,8 +154,8 @@ importers:
         version: 2.0.0
     devDependencies:
       '@commitlint/config-conventional':
-        specifier: ^18.1.0
-        version: 18.6.3
+        specifier: ^19.1.0
+        version: 19.1.0
       '@commitlint/cz-commitlint':
         specifier: ^18.2.0
         version: 18.6.1(@types/node@20.12.4)(commitizen@4.3.0)(inquirer@8.2.6)(typescript@5.4.3)
@@ -783,11 +783,11 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@commitlint/config-conventional@18.6.3:
-    resolution: {integrity: sha512-8ZrRHqF6je+TRaFoJVwszwnOXb/VeYrPmTwPhf0WxpzpGTcYy1p0SPyZ2eRn/sRi/obnWAcobtDAq6+gJQQNhQ==}
+  /@commitlint/config-conventional@19.1.0:
+    resolution: {integrity: sha512-KIKD2xrp6Uuk+dcZVj3++MlzIr/Su6zLE8crEDQCZNvWHNQSeeGbzOlNtsR32TUy6H3JbP7nWgduAHCaiGQ6EA==}
     engines: {node: '>=v18'}
     dependencies:
-      '@commitlint/types': 18.6.1
+      '@commitlint/types': 19.0.3
       conventional-changelog-conventionalcommits: 7.0.2
     dev: true
 
@@ -935,7 +935,6 @@ packages:
       '@types/conventional-commits-parser': 5.0.0
       chalk: 5.3.0
     dev: true
-    optional: true
 
   /@contentlayer/cli@0.3.4(esbuild@0.20.2):
     resolution: {integrity: sha512-vNDwgLuhYNu+m70NZ3XK9kexKNguuxPXg7Yvzj3B34cEilQjjzSrcTY/i+AIQm9V7uT5GGshx9ukzPf+SmoszQ==}
@@ -3120,7 +3119,6 @@ packages:
     dependencies:
       '@types/node': 20.12.4
     dev: true
-    optional: true
 
   /@types/debug@4.1.12:
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
