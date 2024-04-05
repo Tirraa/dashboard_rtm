@@ -2,6 +2,7 @@
 
 import type { NavbarDropdownElement, EmbeddedEntities } from '@/types/NavData';
 import type { FunctionComponent, RefObject } from 'react';
+import type { AppPath } from '@rtm/shared-types/Next';
 
 import NavbarDropdownMenuButtonStyle, {
   NAVBAR_DROPDOWN_MENU_INNER_BUTTONS_CLASSLIST
@@ -15,6 +16,7 @@ import { useEffect, useState, useRef } from 'react';
 import { getClientSideI18n } from '@/i18n/client';
 import { hrefMatchesPathname } from '@/lib/str';
 import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
 interface NavbarButtonProps extends NavbarDropdownElement {}
@@ -25,7 +27,7 @@ const { isNotActiveClassList: navbarDropdownIsNotActiveClassList, isActiveClassL
 const { isNotActiveClassList: navbarDropdownBtnIconIsNotActiveClassList, isActiveClassList: navbarDropdownBtnIconIsActiveClassList } =
   NavbarDropdownButtonIconStyle;
 
-const menuItemsGenerator = (embeddedEntities: EmbeddedEntities, triggerRef: RefObject<HTMLButtonElement>) => {
+const menuItemsGenerator = (embeddedEntities: EmbeddedEntities, currentPathname: AppPath, triggerRef: RefObject<HTMLButtonElement>) => {
   const globalT = getClientSideI18n();
 
   return embeddedEntities.map(({ path: href, i18nTitle }) => {
@@ -33,16 +35,26 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities, triggerRef: RefO
     const target = getLinkTarget(href);
     const triggerRefInstance = getRefCurrentPtr(triggerRef);
     const minWidth = triggerRefInstance ? window.getComputedStyle(triggerRefInstance).width : '0';
+    const isActive = hrefMatchesPathname(href, currentPathname);
 
     return (
       <DropdownMenuItem
-        className="p-0 dark:bg-opacity-20 dark:text-muted-foreground dark:hover:text-primary-foreground"
+        className={cn('p-0 dark:bg-opacity-20 dark:text-muted-foreground dark:hover:text-primary-foreground', {
+          'bg-primary focus:bg-primary focus:text-white': isActive
+        })}
         key={`${href}-${title}-navbar-menu-item`}
         style={{ minWidth }}
         textValue={title}
         asChild
       >
-        <Link className={NAVBAR_DROPDOWN_MENU_INNER_BUTTONS_CLASSLIST} target={target} title={title} href={href}>
+        <Link
+          className={cn(NAVBAR_DROPDOWN_MENU_INNER_BUTTONS_CLASSLIST, {
+            'font-bold text-white opacity-100 dark:text-white': isActive
+          })}
+          target={target}
+          title={title}
+          href={href}
+        >
           {title}
         </Link>
       </DropdownMenuItem>
@@ -55,6 +67,7 @@ const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ embeddedEntities
   const globalT = getClientSideI18n();
   const isLargeScreen = useIsLargeScreen();
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const pathname = usePathname();
 
   const title = globalT(i18nTitle);
 
@@ -77,7 +90,7 @@ const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ embeddedEntities
           <ChevronDownIcon className={navbarDropdownBtnClassName} aria-hidden="true" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent aria-label={title}>{menuItemsGenerator(embeddedEntities, triggerRef)}</DropdownMenuContent>
+      <DropdownMenuContent aria-label={title}>{menuItemsGenerator(embeddedEntities, pathname, triggerRef)}</DropdownMenuContent>
     </DropdownMenu>
   );
 };
