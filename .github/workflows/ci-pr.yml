@@ -82,7 +82,7 @@ jobs:
   test-before-build:
     strategy:
       matrix:
-        node-version: [18, 20]
+        node-version: [20]
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     if: github.event.pull_request.draft == false
@@ -94,7 +94,7 @@ jobs:
       - uses: pnpm/action-setup@v3
         with:
           version: 8
-      - name: Use Node.js (18 or 20)
+      - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
@@ -131,7 +131,7 @@ jobs:
   test-after-build:
     strategy:
       matrix:
-        node-version: [18, 20]
+        node-version: [20]
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     if: github.event.pull_request.draft == false
@@ -143,7 +143,7 @@ jobs:
       - uses: pnpm/action-setup@v3
         with:
           version: 8
-      - name: Use Node.js (18 or 20)
+      - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
@@ -184,7 +184,7 @@ jobs:
   simulate-deploy-discarding-build-cache:
     strategy:
       matrix:
-        node-version: [18, 20]
+        node-version: [20]
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     if: github.event.pull_request.draft == false
@@ -196,7 +196,7 @@ jobs:
       - uses: pnpm/action-setup@v3
         with:
           version: 8
-      - name: Use Node.js (18 or 20)
+      - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
