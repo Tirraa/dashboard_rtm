@@ -96,7 +96,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 
     newSelectedFilter.current = null;
 
-    router.push(q, { scroll: false });
+    router.replace(q, { scroll: false });
     setSelectedFilterSwitch(false);
   }, [selectedFilterSwitch, currentPage, elementsPerPage, maybeFilteredPostsCollection, paginatedElements, router, searchParams]);
 
@@ -119,7 +119,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 
       newSelectedTagsIds.current = null;
 
-      router.push(q, { scroll: false });
+      router.replace(q, { scroll: false });
     }
 
     function handleUnselecting(__newSelectedTagsIds: BlogTagId[]) {
@@ -140,7 +140,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 
       newSelectedTagsIds.current = null;
 
-      router.push(q, { scroll: false });
+      router.replace(q, { scroll: false });
     }
 
     function handleClearing(__newSelectedTagsIds: BlogTagId[]) {
@@ -151,7 +151,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 
       const q = createURLSearchParams({ [PAGE_KEY]: memorizedPageBeforeFiltering.current, [TAGS_KEY]: null }, searchParams);
 
-      router.push(q, { scroll: false });
+      router.replace(q, { scroll: false });
     }
 
     const handlers = {
