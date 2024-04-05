@@ -132,61 +132,63 @@ exports[`doBuildPaginationItems > should match snapshot (desktop, 3 parts UI wit
       1
     </PaginationLink>
   </PaginationItem>,
-  <PaginationEllipsis
-    dropdownItems={
-      [
-        <DropdownMenuItem
-          className="p-0 opacity-50"
-          onClick={[Function]}
-        >
-          <ForwardRef(LinkComponent)
-            aria-current="page"
-            className="block w-full border-none px-2 py-1.5 text-center font-bold"
-            href="pathname?foo=bar&bar=bar&baz=baz"
-            title="1"
+  <li>
+    <PaginationEllipsis
+      dropdownItems={
+        [
+          <DropdownMenuItem
+            className="p-0 opacity-50"
+            onClick={[Function]}
           >
-            1
-          </ForwardRef(LinkComponent)>
-        </DropdownMenuItem>,
-        <DropdownMenuItem
-          className="p-0"
-          onClick={[Function]}
-        >
-          <ForwardRef(LinkComponent)
-            className="block w-full border-none px-2 py-1.5 text-center font-bold"
-            href="pathname?foo=bar&bar=bar&baz=baz&page=2"
-            title="2"
+            <ForwardRef(LinkComponent)
+              aria-current="page"
+              className="block w-full border-none px-2 py-1.5 text-center font-bold"
+              href="pathname?foo=bar&bar=bar&baz=baz"
+              title="1"
+            >
+              1
+            </ForwardRef(LinkComponent)>
+          </DropdownMenuItem>,
+          <DropdownMenuItem
+            className="p-0"
+            onClick={[Function]}
           >
-            2
-          </ForwardRef(LinkComponent)>
-        </DropdownMenuItem>,
-        <DropdownMenuItem
-          className="p-0"
-          onClick={[Function]}
-        >
-          <ForwardRef(LinkComponent)
-            className="block w-full border-none px-2 py-1.5 text-center font-bold"
-            href="pathname?foo=bar&bar=bar&baz=baz&page=3"
-            title="3"
+            <ForwardRef(LinkComponent)
+              className="block w-full border-none px-2 py-1.5 text-center font-bold"
+              href="pathname?foo=bar&bar=bar&baz=baz&page=2"
+              title="2"
+            >
+              2
+            </ForwardRef(LinkComponent)>
+          </DropdownMenuItem>,
+          <DropdownMenuItem
+            className="p-0"
+            onClick={[Function]}
           >
-            3
-          </ForwardRef(LinkComponent)>
-        </DropdownMenuItem>,
-        <DropdownMenuItem
-          className="p-0"
-          onClick={[Function]}
-        >
-          <ForwardRef(LinkComponent)
-            className="block w-full border-none px-2 py-1.5 text-center font-bold"
-            href="pathname?foo=bar&bar=bar&baz=baz&page=4"
-            title="4"
+            <ForwardRef(LinkComponent)
+              className="block w-full border-none px-2 py-1.5 text-center font-bold"
+              href="pathname?foo=bar&bar=bar&baz=baz&page=3"
+              title="3"
+            >
+              3
+            </ForwardRef(LinkComponent)>
+          </DropdownMenuItem>,
+          <DropdownMenuItem
+            className="p-0"
+            onClick={[Function]}
           >
-            4
-          </ForwardRef(LinkComponent)>
-        </DropdownMenuItem>,
-      ]
-    }
-  />,
+            <ForwardRef(LinkComponent)
+              className="block w-full border-none px-2 py-1.5 text-center font-bold"
+              href="pathname?foo=bar&bar=bar&baz=baz&page=4"
+              title="4"
+            >
+              4
+            </ForwardRef(LinkComponent)>
+          </DropdownMenuItem>,
+        ]
+      }
+    />
+  </li>,
   <PaginationItem>
     <PaginationLink
       className="border-none font-bold transition-opacity"
@@ -210,61 +212,63 @@ exports[`doBuildPaginationItems > should match snapshot (desktop, 3 parts UI wit
       1
     </PaginationLink>
   </PaginationItem>,
-  <PaginationEllipsis
-    dropdownItems={
-      [
-        <DropdownMenuItem
-          className="p-0"
-          onClick={[Function]}
-        >
-          <ForwardRef(LinkComponent)
-            className="block w-full border-none px-2 py-1.5 text-center font-bold"
-            href="pathname?foo=bar&bar=bar&baz=baz"
-            title="1"
+  <li>
+    <PaginationEllipsis
+      dropdownItems={
+        [
+          <DropdownMenuItem
+            className="p-0"
+            onClick={[Function]}
           >
-            1
-          </ForwardRef(LinkComponent)>
-        </DropdownMenuItem>,
-        <DropdownMenuItem
-          className="p-0"
-          onClick={[Function]}
-        >
-          <ForwardRef(LinkComponent)
-            className="block w-full border-none px-2 py-1.5 text-center font-bold"
-            href="pathname?foo=bar&bar=bar&baz=baz&page=2"
-            title="2"
+            <ForwardRef(LinkComponent)
+              className="block w-full border-none px-2 py-1.5 text-center font-bold"
+              href="pathname?foo=bar&bar=bar&baz=baz"
+              title="1"
+            >
+              1
+            </ForwardRef(LinkComponent)>
+          </DropdownMenuItem>,
+          <DropdownMenuItem
+            className="p-0"
+            onClick={[Function]}
           >
-            2
-          </ForwardRef(LinkComponent)>
-        </DropdownMenuItem>,
-        <DropdownMenuItem
-          className="p-0"
-          onClick={[Function]}
-        >
-          <ForwardRef(LinkComponent)
-            className="block w-full border-none px-2 py-1.5 text-center font-bold"
-            href="pathname?foo=bar&bar=bar&baz=baz&page=3"
-            title="3"
+            <ForwardRef(LinkComponent)
+              className="block w-full border-none px-2 py-1.5 text-center font-bold"
+              href="pathname?foo=bar&bar=bar&baz=baz&page=2"
+              title="2"
+            >
+              2
+            </ForwardRef(LinkComponent)>
+          </DropdownMenuItem>,
+          <DropdownMenuItem
+            className="p-0"
+            onClick={[Function]}
           >
-            3
-          </ForwardRef(LinkComponent)>
-        </DropdownMenuItem>,
-        <DropdownMenuItem
-          className="p-0 opacity-50"
-          onClick={[Function]}
-        >
-          <ForwardRef(LinkComponent)
-            aria-current="page"
-            className="block w-full border-none px-2 py-1.5 text-center font-bold"
-            href="pathname?foo=bar&bar=bar&baz=baz&page=4"
-            title="4"
+            <ForwardRef(LinkComponent)
+              className="block w-full border-none px-2 py-1.5 text-center font-bold"
+              href="pathname?foo=bar&bar=bar&baz=baz&page=3"
+              title="3"
+            >
+              3
+            </ForwardRef(LinkComponent)>
+          </DropdownMenuItem>,
+          <DropdownMenuItem
+            className="p-0 opacity-50"
+            onClick={[Function]}
           >
-            4
-          </ForwardRef(LinkComponent)>
-        </DropdownMenuItem>,
-      ]
-    }
-  />,
+            <ForwardRef(LinkComponent)
+              aria-current="page"
+              className="block w-full border-none px-2 py-1.5 text-center font-bold"
+              href="pathname?foo=bar&bar=bar&baz=baz&page=4"
+              title="4"
+            >
+              4
+            </ForwardRef(LinkComponent)>
+          </DropdownMenuItem>,
+        ]
+      }
+    />
+  </li>,
   <PaginationItem>
     <PaginationLink
       aria-current="page"
@@ -336,48 +340,50 @@ exports[`doBuildPaginationItems > should match snapshot (desktop, trivial pagesA
 `;
 
 exports[`doBuildPaginationItems > should match snapshot (mobile) 1`] = `
-<PaginationEllipsis
-  dropdownItems={
-    [
-      <DropdownMenuItem
-        className="h-10 p-0"
-        onClick={[Function]}
-      >
-        <ForwardRef(LinkComponent)
-          aria-current="page"
-          className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold rounded-md bg-primary"
-          href="pathname?foo=bar&bar=bar&baz=baz"
-          title="1"
+<li>
+  <PaginationEllipsis
+    dropdownItems={
+      [
+        <DropdownMenuItem
+          className="h-10 p-0"
+          onClick={[Function]}
         >
-          1
-        </ForwardRef(LinkComponent)>
-      </DropdownMenuItem>,
-      <DropdownMenuItem
-        className="h-10 p-0"
-        onClick={[Function]}
-      >
-        <ForwardRef(LinkComponent)
-          className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold"
-          href="pathname?foo=bar&bar=bar&baz=baz&page=2"
-          title="2"
+          <ForwardRef(LinkComponent)
+            aria-current="page"
+            className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold rounded-md bg-primary"
+            href="pathname?foo=bar&bar=bar&baz=baz"
+            title="1"
+          >
+            1
+          </ForwardRef(LinkComponent)>
+        </DropdownMenuItem>,
+        <DropdownMenuItem
+          className="h-10 p-0"
+          onClick={[Function]}
         >
-          2
-        </ForwardRef(LinkComponent)>
-      </DropdownMenuItem>,
-      <DropdownMenuItem
-        className="h-10 p-0"
-        onClick={[Function]}
-      >
-        <ForwardRef(LinkComponent)
-          className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold"
-          href="pathname?foo=bar&bar=bar&baz=baz&page=3"
-          title="3"
+          <ForwardRef(LinkComponent)
+            className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold"
+            href="pathname?foo=bar&bar=bar&baz=baz&page=2"
+            title="2"
+          >
+            2
+          </ForwardRef(LinkComponent)>
+        </DropdownMenuItem>,
+        <DropdownMenuItem
+          className="h-10 p-0"
+          onClick={[Function]}
         >
-          3
-        </ForwardRef(LinkComponent)>
-      </DropdownMenuItem>,
-    ]
-  }
-  pageNumberIndicator={1}
-/>
+          <ForwardRef(LinkComponent)
+            className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold"
+            href="pathname?foo=bar&bar=bar&baz=baz&page=3"
+            title="3"
+          >
+            3
+          </ForwardRef(LinkComponent)>
+        </DropdownMenuItem>,
+      ]
+    }
+    pageNumberIndicator={1}
+  />
+</li>
 `;

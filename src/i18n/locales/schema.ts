@@ -82,6 +82,7 @@ export default {
   },
 
   filters: {
+    'select-a-filter': _,
     'alphabet-desc': _,
     'alphabet-asc': _,
     'date-desc': _,

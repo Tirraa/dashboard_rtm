@@ -121,6 +121,7 @@ export default {
 
   filters: {
     'date-desc': "Les plus récents d'abord",
+    'select-a-filter': 'Choisir un filtre',
     'date-asc': "Les plus anciens d'abord",
     'alphabet-desc': 'Alphabétique Z-A',
     'alphabet-asc': 'Alphabétique A-Z'

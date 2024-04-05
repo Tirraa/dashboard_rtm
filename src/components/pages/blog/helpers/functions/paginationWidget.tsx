@@ -34,13 +34,17 @@ const buildPaginationItem = (i: Count, isActive: boolean, pathname: AppPath, sea
   </PaginationItem>
 );
 
-const buildPaginationItemsForMobile = (
+function buildPaginationItemsForMobile(
   pagesAmount: Quantity,
   currentPage: Count,
   pathname: AppPath,
   searchParams: URLSearchParams,
   pageKey: string
-) => buildDropdown(pagesAmount, currentPage, pathname, searchParams, pageKey);
+): MaybeNull<ReactElement> {
+  const maybeDropdown: MaybeNull<ReactElement> = buildDropdown(pagesAmount, currentPage, pathname, searchParams, pageKey);
+  if (maybeDropdown === null) return null;
+  return <li key="pagination-dropdown-mobile">{maybeDropdown}</li>;
+}
 
 function buildPaginationItemsForDesktopTrivialCase(
   pagesAmount: Quantity,
@@ -136,7 +140,7 @@ function buildPaginationItemsForDesktop(
 
   const dropdown: MaybeNull<ReactElement> = buildDropdownMenu(dropdownItems);
   if (dropdown === null) return [leftItem, rightItem];
-  return [leftItem, dropdown, rightItem];
+  return [leftItem, <li key="pagination-dropdown-desktop">{dropdown}</li>, rightItem];
 }
 
 export function buildDropdown(

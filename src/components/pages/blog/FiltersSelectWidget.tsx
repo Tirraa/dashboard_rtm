@@ -68,6 +68,7 @@ const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({
           'ltr:-rotate-180 rtl:rotate-180': open
         })}
         className={cn('mx-[2px] min-w-[124px] lg:min-w-[176px]', triggerClassName)}
+        aria-label={globalT(`${i18ns.filters}.select-a-filter`)}
       >
         <SelectValue />
       </SelectTrigger>

@@ -126,7 +126,7 @@ describe('doBuildPaginationItems', () => {
 
     const dummyEventTarget = new EventTarget();
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    (paginationItems as ReactElement[])[1].props.dropdownItems[0].props.onClick(dummyEventTarget);
+    (paginationItems as ReactElement[])[1].props.children.props.dropdownItems[0].props.onClick(dummyEventTarget);
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     expect(dispatchClickOnLinkOrButtonFirstChildSpy).toHaveBeenCalledTimes(1);
   });
@@ -143,7 +143,7 @@ describe('doBuildPaginationItems', () => {
 
     const dummyEventTarget = new EventTarget();
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    (paginationItems as ReactElement).props.dropdownItems[0].props.onClick(dummyEventTarget);
+    (paginationItems as ReactElement).props.children.props.dropdownItems[0].props.onClick(dummyEventTarget);
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     expect(dispatchClickOnLinkOrButtonFirstChildSpy).toHaveBeenCalledTimes(1);
   });

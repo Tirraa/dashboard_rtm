@@ -120,6 +120,7 @@ export default {
   },
 
   filters: {
+    'select-a-filter': 'Select a filter',
     'alphabet-desc': 'Alphabetic Z-A',
     'date-desc': 'Most recent first',
     'alphabet-asc': 'Alphabetic A-Z',
