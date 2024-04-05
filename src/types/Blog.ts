@@ -27,7 +27,7 @@ export type BlogSubcategoryFromUnknownCategory = BlogArchitecture[BlogCategory];
 export type UnknownBlogSlug = string;
 export type BlogTagId = Id;
 
-export type BlogPostPreviewComponentWithMetadatas = Pick<BlogPostType, 'tagsIndexes' | 'title' | 'date' | 'tags' | '_id'> & {
+export type BlogPostPreviewComponentWithMetadatas = Pick<BlogPostType, 'tagsIndexes' | 'language' | 'title' | 'date' | 'tags' | '_id'> & {
   blogPostPreviewComp: ReactElement;
 };
 

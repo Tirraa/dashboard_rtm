@@ -1,4 +1,4 @@
-function preserveKeyboardNavigation(element: EventTarget | HTMLElement) {
+function dispatchClickOnLinkOrButtonFirstChild(element: EventTarget | HTMLElement) {
   if (!(element instanceof HTMLElement)) return;
 
   const linkElement = element.querySelector('a');
@@ -8,4 +8,4 @@ function preserveKeyboardNavigation(element: EventTarget | HTMLElement) {
   else if (buttonElement) buttonElement.click();
 }
 
-export default preserveKeyboardNavigation;
+export default dispatchClickOnLinkOrButtonFirstChild;

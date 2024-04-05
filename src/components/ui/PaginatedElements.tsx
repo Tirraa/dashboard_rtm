@@ -3,7 +3,7 @@
 import type { Limit, Count } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent, ReactElement } from 'react';
 
-import { getPaginatedElementsCurrentSlice } from './helpers/PaginatedElements/functions';
+import { getPaginatedElementsCurrentSlice } from './helpers/PaginatedElements/functions/paginatedElements';
 
 interface PaginatedElementsProps {
   paginatedElements: ReactElement[];

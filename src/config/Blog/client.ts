@@ -1,6 +1,9 @@
-import type { StringsCompareFun } from '@rtm/shared-types/StringManipulations';
-import type { DatesCompareFun } from '@rtm/shared-types/DateManipulations';
-import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
+/* v8 ignore start */
+// Stryker disable all
+
+import type { I18nVocabTarget, LanguageFlag } from '@rtm/shared-types/I18n';
+import type { BlogPostPreviewComponentWithMetadatas } from '@/types/Blog';
+import type { Score } from '@rtm/shared-types/Numbers';
 
 import { compareAlphabeticallyDesc, compareAlphabeticallyAsc } from '@/lib/str';
 import { compareDesc } from 'date-fns/compareDesc';
@@ -8,38 +11,24 @@ import { compareAsc } from 'date-fns/compareAsc';
 
 import type { BlogConfigType } from './server';
 
-type BlogConfigClientType = Pick<
-  BlogConfigType,
-  | 'DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_SUBCATEGORIES_ON_BLOG_CATEGORY_PAGE'
-  | 'DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_CATEGORY_PAGE'
-  | 'COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE'
->;
-
-type FilterFun = StringsCompareFun | DatesCompareFun;
-
-type Filter = {
-  i18nTitle: I18nVocabTarget;
-  fun: FilterFun;
-};
-
-export const COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE = [
+const COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE: FiltersAssoc = [
   {
-    i18nTitle: 'filters.date-desc',
-    fun: compareDesc
+    score: (post1: P, post2: P) => compareDesc(new Date(post1.date), new Date(post2.date)),
+    i18nTitle: 'filters.date-desc'
   },
   {
-    i18nTitle: 'filters.date-asc',
-    fun: compareAsc
+    score: (post1: P, post2: P) => compareAsc(new Date(post1.date), new Date(post2.date)),
+    i18nTitle: 'filters.date-asc'
   },
   {
-    i18nTitle: 'filters.alphabet-asc',
-    fun: compareAlphabeticallyAsc
+    score: (post1: P, post2: P) => compareAlphabeticallyAsc(post1.title, post2.title, post1.language as LanguageFlag),
+    i18nTitle: 'filters.alphabet-asc'
   },
   {
-    i18nTitle: 'filters.alphabet-desc',
-    fun: compareAlphabeticallyDesc
+    score: (post1: P, post2: P) => compareAlphabeticallyDesc(post1.title, post2.title, post1.language as LanguageFlag),
+    i18nTitle: 'filters.alphabet-desc'
   }
-] as const satisfies Filter[];
+];
 
 const BlogConfigClient: BlogConfigClientType = {
   DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_SUBCATEGORIES_ON_BLOG_CATEGORY_PAGE: compareAlphabeticallyAsc,
@@ -51,3 +40,22 @@ const BlogConfigClient: BlogConfigClientType = {
 export const MAX_FILTER_INDEX = BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE.length - 1;
 
 export default BlogConfigClient;
+
+type P = BlogPostPreviewComponentWithMetadatas;
+
+type BlogConfigClientType = Pick<
+  BlogConfigType,
+  | 'DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_SUBCATEGORIES_ON_BLOG_CATEGORY_PAGE'
+  | 'DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_CATEGORY_PAGE'
+  | 'COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE'
+>;
+
+type Filter = {
+  score: (post1: P, post2: P) => Score;
+  i18nTitle: I18nVocabTarget;
+};
+
+export type FiltersAssoc = Filter[];
+
+// Stryker restore all
+/* v8 ignore stop */

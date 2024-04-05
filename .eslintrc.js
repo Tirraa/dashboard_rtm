@@ -24,7 +24,6 @@ module.exports = {
     'import/first': ERROR,
     'no-eval': ERROR
   },
-
   extends: [
     'next/core-web-vitals',
     'plugin:promise/recommended',
@@ -42,7 +41,9 @@ module.exports = {
     }
   ],
 
-  plugins: ['@typescript-eslint', 'import', 'unused-imports', 'only-error', 'perfectionist', 'react']
+  plugins: ['@typescript-eslint', 'import', 'unused-imports', 'only-error', 'perfectionist', 'react'],
+
+  parser: '@typescript-eslint/parser'
 };
 
 // Stryker restore all

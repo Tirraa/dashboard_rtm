@@ -11,10 +11,9 @@
     "./misc": "./src/misc.ts",
     "./react": "./src/react.ts",
     "./str": "./src/str.ts",
-    "./portable/datastructs/SlidingList": "./src/portable/datastructs/SlidingList.ts",
     "./portable/html/createURLSearchParams": "./src/portable/html/createURLSearchParams.ts",
     "./portable/html/getDirection": "./src/portable/html/getDirection.ts",
-    "./portable/html/preserveKeyboardNavigation": "./src/portable/html/preserveKeyboardNavigation.ts",
+    "./portable/html/dispatchClickOnLinkOrButtonFirstChild": "./src/portable/html/dispatchClickOnLinkOrButtonFirstChild.ts",
     "./portable/html/resetScroll": "./src/portable/html/resetScroll.ts",
     "./portable/html/resetWindowScroll": "./src/portable/html/resetWindowScroll.ts",
     "./portable/html/snapToTopLeft": "./src/portable/html/snapToTopLeft.ts",
@@ -49,17 +48,14 @@
       "international-types": [
         "./src/international-types.ts"
       ],
-      "portable/datastructs/SlidingList": [
-        "./src/portable/datastructs/SlidingList.ts"
-      ],
       "portable/html/createURLSearchParams": [
         "./src/portable/html/createURLSearchParams.ts"
       ],
       "portable/html/getDirection": [
         "./src/portable/html/getDirection.ts"
       ],
-      "portable/html/preserveKeyboardNavigation": [
-        "./src/portable/html/preserveKeyboardNavigation.ts"
+      "portable/html/dispatchClickOnLinkOrButtonFirstChild": [
+        "./src/portable/html/dispatchClickOnLinkOrButtonFirstChild.ts"
       ],
       "portable/html/resetScroll": [
         "./src/portable/html/resetScroll.ts"
@@ -103,13 +99,12 @@
     }
   },
   "dependencies": {
-    "base64url": "^3.0.1",
-    "clsx": "^2.0.0",
-    "tailwind-merge": "^1.14.0"
+    "clsx": "^2.1.0",
+    "tailwind-merge": "^2.2.2"
   },
   "devDependencies": {
-    "@types/hast": "^3.0.2",
-    "vitest": "1.2.2"
+    "@types/hast": "^3.0.4",
+    "vitest": "^1.4.0"
   },
-  "packageManager": "^pnpm@8.15.5"
+  "packageManager": "^pnpm@8.15.6"
 }

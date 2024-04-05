@@ -7,8 +7,8 @@ import {
   isValidBlogCategoryAndSubcategoryPairInAnyLanguage,
   blogSubcategoryShouldTriggerNotFound
 } from '@/lib/blog/api';
-import { indexedBlogTagOptions, blogTagOptions } from '##/lib/builders/unifiedImport';
 import BlogPostsNotFound from '@/components/ui/blog/BlogPostsNotFound';
+import { indexedBlogTagOptions } from '##/lib/builders/unifiedImport';
 import BlogPostPreview from '@/components/ui/blog/BlogPostPreview';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
@@ -17,7 +17,7 @@ import BlogConfig from '@/config/Blog/server';
 import { notFound } from 'next/navigation';
 import { i18ns } from '##/config/i18n';
 
-import SubcategoryRelatedBlogPostsClient from './client';
+import SubcategoryRelatedBlogPostsClient from './Client';
 
 const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> = async ({ params }) => {
   const [category, subcategory, language] = [params[BlogTaxonomy.CATEGORY], params[BlogTaxonomy.SUBCATEGORY], params[I18nTaxonomy.LANGUAGE]];
@@ -30,6 +30,7 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
   ).map((post) => ({
     blogPostPreviewComp: <BlogPostPreview key={`${post._raw.flattenedPath}-paginated-blog-post`} language={language} post={post} />,
     tagsIndexes: post.tagsIndexes,
+    language: post.language,
     title: post.title,
     tags: post.tags,
     date: post.date,
@@ -49,15 +50,12 @@ const SubcategoryRelatedBlogPosts: FunctionComponent<BlogSubcategoryPageProps> =
   const title = scopedT(`${narrowedCategoryAndSubcategoryAssoc}.title`);
 
   const expectedTagsIds = new Set<BlogTagId>(tags.map((tag) => indexedBlogTagOptions[tag]));
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const maxBlogTagId = blogTagOptions.length - 1;
 
   return (
     <SubcategoryRelatedBlogPostsClient
       elementsPerPage={BlogConfig.DISPLAYED_BLOG_POSTS_ON_SUBCATEGORY_RELATED_PAGE_PAGINATION_LIMIT}
       postsCollection={postsCollection}
       expectedTagsIds={expectedTagsIds}
-      maxBlogTagId={maxBlogTagId}
       title={title}
       tags={tags}
     />

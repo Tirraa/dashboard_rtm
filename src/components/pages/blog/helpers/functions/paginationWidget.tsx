@@ -1,0 +1,190 @@
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { Quantity, Count } from '@rtm/shared-types/Numbers';
+import type { AppPath } from '@rtm/shared-types/Next';
+import type { ReactElement } from 'react';
+
+import { PaginationEllipsis, PaginationPrevious, PaginationItem, PaginationLink, PaginationNext } from '@/components/ui/Pagination';
+import { dispatchClickOnLinkOrButtonFirstChild, createURLSearchParams } from '@rtm/shared-lib/html';
+import { FIRST_PAGE_PARAM } from '@/components/ui/helpers/PaginatedElements/constants';
+import { DropdownMenuItem } from '@/components/ui/DropdownMenu';
+import { cn } from '@/lib/tailwind';
+import Link from 'next/link';
+
+const getItemHref = (i: Count, pathname: AppPath, searchParams: URLSearchParams, pageKey: string) =>
+  pathname + createURLSearchParams({ [pageKey]: i === FIRST_PAGE_PARAM ? null : i }, searchParams);
+
+const buildDropdownMenu = (dropdownItems: ReactElement[], pageNumberIndicator?: Count, isBottomWidget?: boolean) =>
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  dropdownItems.length === 0 ? null : (
+    <PaginationEllipsis pageNumberIndicator={pageNumberIndicator} isBottomWidget={isBottomWidget} dropdownItems={dropdownItems} key={'ellipsis'} />
+  );
+
+const buildPaginationItem = (i: Count, isActive: boolean, pathname: AppPath, searchParams: URLSearchParams, pageKey: string) => (
+  <PaginationItem key={`page-${i}`}>
+    <PaginationLink
+      className={cn('border-none font-bold transition-opacity', {
+        'pointer-events-none underline opacity-50': isActive
+      })}
+      href={getItemHref(i, pathname, searchParams, pageKey)}
+      aria-current={isActive ? 'page' : undefined}
+      isActive={isActive}
+    >
+      {i}
+    </PaginationLink>
+  </PaginationItem>
+);
+
+const buildPaginationItemsForMobile = (
+  pagesAmount: Quantity,
+  currentPage: Count,
+  pathname: AppPath,
+  searchParams: URLSearchParams,
+  pageKey: string
+) => buildDropdown(pagesAmount, currentPage, pathname, searchParams, pageKey);
+
+function buildPaginationItemsForDesktopTrivialCase(
+  pagesAmount: Quantity,
+  currentPage: Count,
+  pathname: AppPath,
+  searchParams: URLSearchParams,
+  pageKey: string
+) {
+  const elements: ReactElement[] = [];
+
+  for (let i = FIRST_PAGE_PARAM; i <= pagesAmount; i++) {
+    const isActive = currentPage === i;
+    elements.push(buildPaginationItem(i, isActive, pathname, searchParams, pageKey));
+  }
+
+  return elements;
+}
+
+function buildPaginationItemsForDesktop(
+  pagesAmount: Quantity,
+  currentPage: Count,
+  pathname: AppPath,
+  searchParams: URLSearchParams,
+  pageKey: string
+) {
+  const maxUserInterfaceItemsAmount = 3;
+  if (pagesAmount === maxUserInterfaceItemsAmount) {
+    return buildPaginationItemsForDesktopTrivialCase(pagesAmount, currentPage, pathname, searchParams, pageKey);
+  }
+
+  const activePageIsLastPage = currentPage === pagesAmount;
+
+  const dropdownItems = [];
+  let leftItem: MaybeNull<ReactElement> = null;
+  let rightItem: MaybeNull<ReactElement> = null;
+
+  for (let i = FIRST_PAGE_PARAM; i <= pagesAmount; i++) {
+    const isActive = currentPage === i;
+
+    if (i === pagesAmount) {
+      rightItem = buildPaginationItem(i, isActive, pathname, searchParams, pageKey);
+      if (!leftItem) leftItem = buildPaginationItem(FIRST_PAGE_PARAM, false, pathname, searchParams, pageKey);
+      continue;
+    }
+
+    if (isActive) {
+      leftItem = buildPaginationItem(i, isActive, pathname, searchParams, pageKey);
+      continue;
+    }
+
+    if (i === FIRST_PAGE_PARAM && activePageIsLastPage) continue;
+
+    const href = getItemHref(i, pathname, searchParams, pageKey);
+    const item = (
+      <DropdownMenuItem onClick={(event) => dispatchClickOnLinkOrButtonFirstChild(event.target)} key={`page-${i}`} className="p-0">
+        <Link className="block w-full border-none px-2 py-1.5 text-center font-bold" title={String(i)} href={href}>
+          {i}
+        </Link>
+      </DropdownMenuItem>
+    );
+
+    dropdownItems.push(item);
+  }
+
+  const dropdown: MaybeNull<ReactElement> = buildDropdownMenu(dropdownItems);
+  if (dropdown === null) return [leftItem, rightItem];
+  return [leftItem, dropdown, rightItem];
+}
+
+export function buildDropdown(
+  pagesAmount: Quantity,
+  pageFromUrl: Count,
+  pathname: AppPath,
+  searchParams: URLSearchParams,
+  pageKey: string,
+  isBottomWidget?: boolean
+) {
+  const dropdownItems: ReactElement[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  if (pagesAmount === 1) return null;
+
+  for (let i = FIRST_PAGE_PARAM; i <= pagesAmount; i++) {
+    const isActive = pageFromUrl === i;
+    const href = getItemHref(i, pathname, searchParams, pageKey);
+
+    const item = (
+      <DropdownMenuItem onClick={(event) => dispatchClickOnLinkOrButtonFirstChild(event.target)} className="h-10 p-0" key={`page-${i}`}>
+        <Link
+          className={cn('flex h-full w-full items-center justify-center border-none px-2 text-center font-bold', {
+            'rounded-md bg-primary': isActive
+          })}
+          title={String(i)}
+          href={href}
+        >
+          {i}
+        </Link>
+      </DropdownMenuItem>
+    );
+
+    dropdownItems.push(item);
+  }
+
+  return buildDropdownMenu(dropdownItems, pageFromUrl, isBottomWidget);
+}
+
+export const doBuildPaginationItems = (
+  currentPage: Count,
+  pagesAmount: Quantity,
+  pathname: AppPath,
+  searchParams: URLSearchParams,
+  isLargeScreen: boolean,
+  pageKey: string
+) =>
+  isLargeScreen
+    ? buildPaginationItemsForDesktop(pagesAmount, currentPage, pathname, searchParams, pageKey)
+    : buildPaginationItemsForMobile(pagesAmount, currentPage, pathname, searchParams, pageKey);
+
+export const buildPreviousBtn = (prevBtnPageId: Count, pathname: AppPath, searchParams: URLSearchParams, currentPage: Count, pageKey: string) => {
+  const isDisabled = currentPage <= FIRST_PAGE_PARAM;
+
+  return (
+    <PaginationPrevious
+      href={pathname + createURLSearchParams({ [pageKey]: prevBtnPageId <= FIRST_PAGE_PARAM ? null : prevBtnPageId }, searchParams)}
+      className={cn('max-lg:h-10 max-lg:w-10 max-lg:p-0', { 'pointer-events-none opacity-50': isDisabled })}
+      aria-disabled={isDisabled}
+    />
+  );
+};
+
+export const buildNextBtn = (
+  nextBtnPageId: Count,
+  pathname: AppPath,
+  searchParams: URLSearchParams,
+  currentPage: Count,
+  pagesAmount: Quantity,
+  pageKey: string
+) => {
+  const isDisabled = currentPage >= pagesAmount;
+
+  return (
+    <PaginationNext
+      className={cn('max-lg:h-10 max-lg:w-10 max-lg:p-0', { 'pointer-events-none opacity-50': isDisabled })}
+      href={pathname + createURLSearchParams({ [pageKey]: nextBtnPageId }, searchParams)}
+      aria-disabled={isDisabled}
+    />
+  );
+};
