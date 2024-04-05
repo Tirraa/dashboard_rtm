@@ -14,6 +14,7 @@ import {
   shouldShowTopToolbar
 } from '../client';
 import { computeReconciliatedPageIndex } from '../pagination';
+import { FIRST_PAGE_PARAM } from '../../constants';
 
 const emptyPostsCollection: BlogPostPreviewComponentWithMetadatas[] = [];
 
@@ -255,10 +256,10 @@ describe('computeReconciliatedPageIndex', () => {
     expect(reconciliatedPageIndex).toBe(expected);
   });
 
-  it('should return -1, given unknown page index in the old slice ids', () => {
+  it('should return FIRST_PAGE_PARAM, given unknown page index in the old slice ids', () => {
     const elementsPerPage = 2;
     const maybeFilteredPostsCollection = fivePostsPostsCollection;
-    const expected = -1;
+    const expected = FIRST_PAGE_PARAM;
 
     const reconciliatedPageIndex = computeReconciliatedPageIndex(['__UNKNOWN__'], maybeFilteredPostsCollection, elementsPerPage);
 

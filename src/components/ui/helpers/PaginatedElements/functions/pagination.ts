@@ -44,11 +44,11 @@ export function computeReconciliatedPageIndex(
   maybeFilteredPostsCollection: BlogPostPreviewComponentWithMetadatas[],
   elementsPerPage: Quantity
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-): Index | -1 {
+): Index {
   const commonElementIndex = findFirstCommonElementIndex(oldSliceIds, maybeFilteredPostsCollection);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  if (commonElementIndex === -1) return -1;
+  if (commonElementIndex === -1) return FIRST_PAGE_PARAM;
 
   const newPage = findPageNumberByPaginatedElementIndex(commonElementIndex, elementsPerPage);
   return newPage;
