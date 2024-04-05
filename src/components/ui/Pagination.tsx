@@ -1,11 +1,12 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import type { PxValue, Count } from '@rtm/shared-types/Numbers';
 import type { ButtonProps } from '@/components/ui/Button';
-import type { Count } from '@rtm/shared-types/Numbers';
 
 import { DotsHorizontalIcon, ChevronRightIcon, ChevronLeftIcon } from '@radix-ui/react-icons';
 import { DropdownMenuTrigger, DropdownMenu } from '@radix-ui/react-dropdown-menu';
+import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { buttonVariants } from '@/components/ui/Button';
 import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
@@ -83,6 +84,7 @@ const PaginationEllipsis = ({
 }: React.ComponentProps<'button'> & { dropdownItems: React.ReactElement[]; pageNumberIndicator?: Count; isBottomWidget?: boolean }) => {
   const scopedT = useScopedI18n(i18ns.vocab);
   const [isOpened, setIsOpened] = React.useState<boolean>(false);
+  const dropdownContentRef = React.useRef<HTMLDivElement>(null);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (dropdownItems.length === 0) return null;
@@ -107,13 +109,52 @@ const PaginationEllipsis = ({
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
+        onClick={(event) => {
+          if (isBottomWidget) setIsOpened(false);
+          if (!(event.target instanceof HTMLAnchorElement)) return;
+
+          const SCROLL_OFFSET_Y: PxValue = 35;
+          const dropdownContentInstance = getRefCurrentPtr(dropdownContentRef);
+          if (!dropdownContentInstance) return;
+          const targetTitle = event.target.title;
+
+          let newActivePageNodeIndex = 0;
+          const links = dropdownContentInstance.querySelectorAll('a');
+          for (let i = 0; i < links.length; i++) {
+            if (links[i].title === targetTitle) break;
+            newActivePageNodeIndex++;
+          }
+
+          let scrollDist = 0;
+          for (let i = 0; i < newActivePageNodeIndex; i++) scrollDist += links[i].getBoundingClientRect().height;
+          dropdownContentInstance.scrollTo({ top: scrollDist - SCROLL_OFFSET_Y, behavior: 'smooth' });
+        }}
+        onAnimationEnd={() => {
+          const dropdownContentInstance = getRefCurrentPtr(dropdownContentRef);
+          if (!dropdownContentInstance) return;
+
+          const SCROLL_OFFSET_Y: PxValue = 4;
+
+          let activePageNodeIndex = 0;
+          const links = dropdownContentInstance.querySelectorAll('a');
+          for (let i = 0; i < links.length; i++) {
+            if (links[i].getAttribute('aria-current') === 'page') break;
+            activePageNodeIndex++;
+          }
+
+          let scrollDist = 0;
+          for (let i = 0; i < activePageNodeIndex; i++) scrollDist += links[i].getBoundingClientRect().height;
+          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          if (activePageNodeIndex !== 0) scrollDist += SCROLL_OFFSET_Y;
+          dropdownContentInstance.scrollTo({ behavior: 'smooth', top: scrollDist });
+        }}
+        className={cn('max-h-[228px] w-fit overflow-y-auto', {
+          'max-h-[210px] overflow-y-auto': pageNumberIndicator
+        })}
         onCloseAutoFocus={(event) => {
           if (isBottomWidget) event.preventDefault();
         }}
-        onClick={() => {
-          if (isBottomWidget) setIsOpened(false);
-        }}
-        className="w-fit"
+        ref={dropdownContentRef}
       >
         {dropdownItems}
       </DropdownMenuContent>

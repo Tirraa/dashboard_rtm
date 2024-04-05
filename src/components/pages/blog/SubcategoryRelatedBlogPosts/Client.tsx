@@ -23,7 +23,7 @@ import PaginatedElements from '@/components/ui/PaginatedElements';
 import { createURLSearchParams } from '@rtm/shared-lib/html';
 import usePagination from '@/components/hooks/usePagination';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { packIds } from 'packages/shared-lib/src/misc';
+import { packIds } from '@rtm/shared-lib/misc';
 
 import { getSanitizedCurrentFilterIndex } from '../helpers/functions/filtersSelectWidget';
 import { getUnpackedAndSanitizedFilters } from '../helpers/functions/filters';

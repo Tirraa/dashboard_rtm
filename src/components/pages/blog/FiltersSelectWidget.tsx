@@ -34,11 +34,17 @@ const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({
   const selectItems = useMemo(
     () =>
       filtersAssoc.map((config, index) => (
-        <SelectItem key={`select-item-${index}`} value={String(index)}>
+        <SelectItem
+          className={cn('max-lg:h-12', {
+            'hover:bg-accent active:pointer-events-none max-lg:pointer-events-none': index === selectedFilter
+          })}
+          key={`select-item-${index}`}
+          value={String(index)}
+        >
           {globalT(config.i18nTitle)}
         </SelectItem>
       )),
-    [filtersAssoc, globalT]
+    [filtersAssoc, globalT, selectedFilter]
   );
 
   return (
@@ -55,6 +61,7 @@ const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({
       }}
       onOpenChange={(isOpen: boolean) => onOpenChange(isOpen)}
       value={String(selectedFilter)}
+      open={open}
     >
       <SelectTrigger
         chevronClassName={cn('transition-transform', {

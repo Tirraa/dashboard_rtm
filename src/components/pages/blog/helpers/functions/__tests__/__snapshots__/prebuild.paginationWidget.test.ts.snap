@@ -9,6 +9,7 @@ exports[`buildDropdown > should match snapshot (NOT bottom widget) 1`] = `
         onClick={[Function]}
       >
         <ForwardRef(LinkComponent)
+          aria-current="page"
           className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold rounded-md bg-primary"
           href="pathname?foo=bar&bar=bar&baz=baz"
           title="1"
@@ -68,6 +69,7 @@ exports[`buildDropdown > should match snapshot (bottom widget) 1`] = `
         onClick={[Function]}
       >
         <ForwardRef(LinkComponent)
+          aria-current="page"
           className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold rounded-md bg-primary"
           href="pathname?foo=bar&bar=bar&baz=baz"
           title="1"
@@ -134,6 +136,19 @@ exports[`doBuildPaginationItems > should match snapshot (desktop, 3 parts UI wit
     dropdownItems={
       [
         <DropdownMenuItem
+          className="p-0 opacity-50"
+          onClick={[Function]}
+        >
+          <ForwardRef(LinkComponent)
+            aria-current="page"
+            className="block w-full border-none px-2 py-1.5 text-center font-bold"
+            href="pathname?foo=bar&bar=bar&baz=baz"
+            title="1"
+          >
+            1
+          </ForwardRef(LinkComponent)>
+        </DropdownMenuItem>,
+        <DropdownMenuItem
           className="p-0"
           onClick={[Function]}
         >
@@ -155,6 +170,18 @@ exports[`doBuildPaginationItems > should match snapshot (desktop, 3 parts UI wit
             title="3"
           >
             3
+          </ForwardRef(LinkComponent)>
+        </DropdownMenuItem>,
+        <DropdownMenuItem
+          className="p-0"
+          onClick={[Function]}
+        >
+          <ForwardRef(LinkComponent)
+            className="block w-full border-none px-2 py-1.5 text-center font-bold"
+            href="pathname?foo=bar&bar=bar&baz=baz&page=4"
+            title="4"
+          >
+            4
           </ForwardRef(LinkComponent)>
         </DropdownMenuItem>,
       ]
@@ -192,6 +219,18 @@ exports[`doBuildPaginationItems > should match snapshot (desktop, 3 parts UI wit
         >
           <ForwardRef(LinkComponent)
             className="block w-full border-none px-2 py-1.5 text-center font-bold"
+            href="pathname?foo=bar&bar=bar&baz=baz"
+            title="1"
+          >
+            1
+          </ForwardRef(LinkComponent)>
+        </DropdownMenuItem>,
+        <DropdownMenuItem
+          className="p-0"
+          onClick={[Function]}
+        >
+          <ForwardRef(LinkComponent)
+            className="block w-full border-none px-2 py-1.5 text-center font-bold"
             href="pathname?foo=bar&bar=bar&baz=baz&page=2"
             title="2"
           >
@@ -208,6 +247,19 @@ exports[`doBuildPaginationItems > should match snapshot (desktop, 3 parts UI wit
             title="3"
           >
             3
+          </ForwardRef(LinkComponent)>
+        </DropdownMenuItem>,
+        <DropdownMenuItem
+          className="p-0 opacity-50"
+          onClick={[Function]}
+        >
+          <ForwardRef(LinkComponent)
+            aria-current="page"
+            className="block w-full border-none px-2 py-1.5 text-center font-bold"
+            href="pathname?foo=bar&bar=bar&baz=baz&page=4"
+            title="4"
+          >
+            4
           </ForwardRef(LinkComponent)>
         </DropdownMenuItem>,
       ]
@@ -292,6 +344,7 @@ exports[`doBuildPaginationItems > should match snapshot (mobile) 1`] = `
         onClick={[Function]}
       >
         <ForwardRef(LinkComponent)
+          aria-current="page"
           className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold rounded-md bg-primary"
           href="pathname?foo=bar&bar=bar&baz=baz"
           title="1"

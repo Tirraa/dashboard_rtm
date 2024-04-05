@@ -10,6 +10,7 @@ exports[`buildBottomRightWidgets > should match snapshot 1`] = `
           onClick={[Function]}
         >
           <ForwardRef(LinkComponent)
+            aria-current="page"
             className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold rounded-md bg-primary"
             href="pathname?"
             title="1"
