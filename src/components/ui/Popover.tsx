@@ -1,3 +1,6 @@
+/* v8 ignore start */
+// Stryker disable all
+
 'use client';
 
 import * as PopoverPrimitive from '@radix-ui/react-popover';
@@ -31,3 +34,6 @@ const PopoverContent = React.forwardRef<
 PopoverContent.displayName = PopoverPrimitive.Content.displayName;
 
 export { PopoverTrigger, PopoverContent, PopoverAnchor, Popover };
+
+// Stryker restore all
+/* v8 ignore stop */

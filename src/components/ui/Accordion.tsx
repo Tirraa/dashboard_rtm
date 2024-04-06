@@ -1,3 +1,6 @@
+/* v8 ignore start */
+// Stryker disable all
+
 'use client';
 
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
@@ -49,3 +52,6 @@ const AccordionContent = React.forwardRef<
 AccordionContent.displayName = AccordionPrimitive.Content.displayName;
 
 export { AccordionTrigger, AccordionContent, AccordionItem, Accordion };
+
+// Stryker restore all
+/* v8 ignore stop */

@@ -1,3 +1,6 @@
+/* v8 ignore start */
+// Stryker disable all
+
 'use client';
 
 import * as SeparatorPrimitive from '@radix-ui/react-separator';
@@ -18,3 +21,6 @@ const Separator = React.forwardRef<React.ElementRef<typeof SeparatorPrimitive.Ro
 Separator.displayName = SeparatorPrimitive.Root.displayName;
 
 export { Separator };
+
+// Stryker restore all
+/* v8 ignore stop */

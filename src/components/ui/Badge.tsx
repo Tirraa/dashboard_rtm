@@ -1,3 +1,6 @@
+/* v8 ignore start */
+// Stryker disable all
+
 import type { VariantProps } from 'class-variance-authority';
 
 import { cva } from 'class-variance-authority';
@@ -28,3 +31,6 @@ function Badge({ className, variant, ...props }: BadgeProps) {
 }
 
 export { badgeVariants, Badge };
+
+// Stryker restore all
+/* v8 ignore stop */

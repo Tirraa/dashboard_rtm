@@ -1,3 +1,6 @@
+/* v8 ignore start */
+// Stryker disable all
+
 'use client';
 
 import * as DialogPrimitive from '@radix-ui/react-dialog';
@@ -76,3 +79,6 @@ const DialogDescription = React.forwardRef<
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
 export { DialogDescription, DialogOverlay, DialogTrigger, DialogContent, DialogPortal, DialogHeader, DialogFooter, DialogClose, DialogTitle, Dialog };
+
+// Stryker restore all
+/* v8 ignore stop */

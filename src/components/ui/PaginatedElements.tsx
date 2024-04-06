@@ -1,3 +1,6 @@
+/* v8 ignore start */
+// Stryker disable all
+
 'use client';
 
 import type { Limit, Count } from '@rtm/shared-types/Numbers';
@@ -18,3 +21,6 @@ const PaginatedElements: FunctionComponent<PaginatedElementsProps> = ({ paginate
 };
 
 export default PaginatedElements;
+
+// Stryker restore all
+/* v8 ignore stop */

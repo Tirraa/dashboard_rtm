@@ -1,3 +1,6 @@
+/* v8 ignore start */
+// Stryker disable all
+
 'use client';
 
 import type { DialogProps } from '@radix-ui/react-dialog';
@@ -107,3 +110,6 @@ const CommandShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanE
 CommandShortcut.displayName = 'CommandShortcut';
 
 export { CommandSeparator, CommandShortcut, CommandDialog, CommandInput, CommandEmpty, CommandGroup, CommandList, CommandItem, Command };
+
+// Stryker restore all
+/* v8 ignore stop */
