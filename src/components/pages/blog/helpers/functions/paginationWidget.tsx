@@ -10,14 +10,15 @@ import { DropdownMenuItem } from '@/components/ui/DropdownMenu';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
+const MIN_USER_INTERFACE_ITEMS_AMOUNT: Quantity = 2;
+const MAX_USER_INTERFACE_ITEMS_AMOUNT: Quantity = 3;
+
 const getItemHref = (i: Count, pathname: AppPath, searchParams: URLSearchParams, pageKey: string) =>
   pathname + createURLSearchParams({ [pageKey]: i === FIRST_PAGE_PARAM ? null : i }, searchParams);
 
-const buildDropdownMenu = (dropdownItems: ReactElement[], pageNumberIndicator?: Count, isBottomWidget?: boolean) =>
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  dropdownItems.length === 0 ? null : (
-    <PaginationEllipsis pageNumberIndicator={pageNumberIndicator} isBottomWidget={isBottomWidget} dropdownItems={dropdownItems} key={'ellipsis'} />
-  );
+const buildDropdownMenu = (dropdownItems: ReactElement[], pageNumberIndicator?: Count, isBottomWidget?: boolean): ReactElement => (
+  <PaginationEllipsis pageNumberIndicator={pageNumberIndicator} isBottomWidget={isBottomWidget} dropdownItems={dropdownItems} key={'ellipsis'} />
+);
 
 const buildPaginationItem = (i: Count, isActive: boolean, pathname: AppPath, searchParams: URLSearchParams, pageKey: string) => (
   <PaginationItem key={`page-${i}`}>
@@ -46,7 +47,7 @@ function buildPaginationItemsForMobile(
   return <li key="pagination-dropdown-mobile">{maybeDropdown}</li>;
 }
 
-function buildPaginationItemsForDesktopTrivialCase(
+function buildPaginationItemsForDesktopTrivialCases(
   pagesAmount: Quantity,
   currentPage: Count,
   pathname: AppPath,
@@ -70,16 +71,15 @@ function buildPaginationItemsForDesktop(
   searchParams: URLSearchParams,
   pageKey: string
 ) {
-  const maxUserInterfaceItemsAmount = 3;
-  const minUserInterfaceItemsAmount = 2;
+  const isTrivialCase = pagesAmount === MAX_USER_INTERFACE_ITEMS_AMOUNT || pagesAmount === MIN_USER_INTERFACE_ITEMS_AMOUNT;
 
-  if (pagesAmount === maxUserInterfaceItemsAmount || pagesAmount === minUserInterfaceItemsAmount) {
-    return buildPaginationItemsForDesktopTrivialCase(pagesAmount, currentPage, pathname, searchParams, pageKey);
+  if (isTrivialCase) {
+    return buildPaginationItemsForDesktopTrivialCases(pagesAmount, currentPage, pathname, searchParams, pageKey);
   }
 
   const activePageIsLastPage = currentPage === pagesAmount;
 
-  const dropdownItems = [];
+  const dropdownItems: ReactElement[] = [];
   let leftItem: MaybeNull<ReactElement> = null;
   let rightItem: MaybeNull<ReactElement> = null;
 
@@ -111,6 +111,10 @@ function buildPaginationItemsForDesktop(
 
     if (i === pagesAmount) {
       rightItem = buildPaginationItem(i, isActive, pathname, searchParams, pageKey);
+      if (!leftItem) {
+        leftItem = buildPaginationItem(FIRST_PAGE_PARAM, false, pathname, searchParams, pageKey);
+      }
+
       if (activePageIsLastPage) {
         const dropdownItem = buildDropdownItem(i, true);
         dropdownItems.push(dropdownItem);
@@ -119,9 +123,6 @@ function buildPaginationItemsForDesktop(
         dropdownItems.push(dropdownItem);
       }
 
-      if (!leftItem) {
-        leftItem = buildPaginationItem(FIRST_PAGE_PARAM, false, pathname, searchParams, pageKey);
-      }
       continue;
     }
 
@@ -138,8 +139,7 @@ function buildPaginationItemsForDesktop(
     dropdownItems.push(dropdownItem);
   }
 
-  const dropdown: MaybeNull<ReactElement> = buildDropdownMenu(dropdownItems);
-  if (dropdown === null) return [leftItem, rightItem];
+  const dropdown: ReactElement = buildDropdownMenu(dropdownItems);
   return [leftItem, <li key="pagination-dropdown-desktop">{dropdown}</li>, rightItem];
 }
 

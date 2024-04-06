@@ -1,7 +1,7 @@
 import { getBodyContainer } from '@/lib/html';
 import { useLayoutEffect } from 'react';
 
-const EFFECT_CLASSES = ['h-100svh', 'overflow-y-hidden'];
+export const EFFECT_CLASSES = ['h-100svh', 'overflow-y-hidden'];
 
 const useLockScreenScrollY = () =>
   useLayoutEffect(() => {

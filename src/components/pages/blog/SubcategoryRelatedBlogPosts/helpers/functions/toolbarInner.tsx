@@ -99,7 +99,6 @@ function buildWidgetsForBottomRight(
   return elements;
 }
 
-// {ToDo} Write test
 export function buildTopLeftWidgets(tagsCommandWidgetProps: {
   memorizedPageBeforeFiltering: MutableRefObject<MaybeNull<Id>>;
   newSelectedTagsIds: MutableRefObject<MaybeNull<Id[]>>;
@@ -127,7 +126,6 @@ export function buildTopLeftWidgets(tagsCommandWidgetProps: {
   return elements;
 }
 
-// {ToDo} Write test
 export function buildTopRightWidgets(
   paginationWidgetProps: {
     pagesAmount: Quantity;

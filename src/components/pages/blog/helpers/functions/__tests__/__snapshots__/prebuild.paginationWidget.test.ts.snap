@@ -120,6 +120,30 @@ exports[`buildDropdown > should match snapshot (bottom widget) 1`] = `
 />
 `;
 
+exports[`doBuildPaginationItems > should match snapshot (desktop) 1`] = `
+[
+  <PaginationItem>
+    <PaginationLink
+      aria-current="page"
+      className="border-none font-bold transition-opacity pointer-events-none underline opacity-50"
+      href="pathname?"
+      isActive={true}
+    >
+      1
+    </PaginationLink>
+  </PaginationItem>,
+  <PaginationItem>
+    <PaginationLink
+      className="border-none font-bold transition-opacity"
+      href="pathname?page=2"
+      isActive={false}
+    >
+      2
+    </PaginationLink>
+  </PaginationItem>,
+]
+`;
+
 exports[`doBuildPaginationItems > should match snapshot (desktop, 3 parts UI with dropdown) 1`] = `
 [
   <PaginationItem>

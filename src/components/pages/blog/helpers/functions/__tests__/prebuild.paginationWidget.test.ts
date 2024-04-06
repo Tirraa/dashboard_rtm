@@ -147,6 +147,32 @@ describe('doBuildPaginationItems', () => {
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     expect(dispatchClickOnLinkOrButtonFirstChildSpy).toHaveBeenCalledTimes(1);
   });
+
+  it('should match snapshot (desktop)', () => {
+    const currentPage = 1;
+    const pagesAmount = 2;
+    const pathname = 'pathname';
+    const searchParams = new URLSearchParams();
+    const isLargeScreen = true;
+    const pageKey = 'page';
+
+    const paginationItemsWithoutDropdown = doBuildPaginationItems(currentPage, pagesAmount, pathname, searchParams, isLargeScreen, pageKey);
+    expect(paginationItemsWithoutDropdown).toMatchSnapshot();
+  });
+
+  it('should return null (mobile)', () => {
+    const currentPage = 1;
+    const pagesAmount = 1;
+    const pathname = 'pathname';
+    const searchParams = new URLSearchParams();
+    const isLargeScreen = false;
+    const pageKey = 'page';
+
+    const expected = null;
+
+    const emptyPaginationItems = doBuildPaginationItems(currentPage, pagesAmount, pathname, searchParams, isLargeScreen, pageKey);
+    expect(emptyPaginationItems).toBe(expected);
+  });
 });
 
 describe('buildDropdown', () => {
@@ -154,6 +180,7 @@ describe('buildDropdown', () => {
     const currentPage = 1;
     const pagesAmount = 4;
     const isBottomWidget = true;
+
     const dropdown = buildDropdown(pagesAmount, currentPage, pathname, searchParams, pageKey, isBottomWidget);
 
     expect(dropdown).toMatchSnapshot();
@@ -163,15 +190,17 @@ describe('buildDropdown', () => {
     const currentPage = 1;
     const pagesAmount = 4;
     const isBottomWidget = false;
+
     const dropdown = buildDropdown(pagesAmount, currentPage, pathname, searchParams, pageKey, isBottomWidget);
 
     expect(dropdown).toMatchSnapshot();
   });
 
-  it('should return null, given pagesAmount equal to 1', () => {
+  it('should return null, given pagesAmount is equal to 1', () => {
     const currentPage = 1;
     const pagesAmount = 1;
     const isBottomWidget = false;
+
     const dropdown = buildDropdown(pagesAmount, currentPage, pathname, searchParams, pageKey, isBottomWidget);
 
     expect(dropdown).toBe(null);
