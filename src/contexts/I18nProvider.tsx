@@ -4,13 +4,14 @@
 'use client';
 
 import type { WithChildren } from '@rtm/shared-types/Next';
+import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { FunctionComponent } from 'react';
 
 import { I18nProviderClient } from '@/i18n/client';
 import Loader from '@/components/ui/Loader';
 
 export interface I18nProviderProps extends WithChildren {
-  locale: string;
+  locale: LanguageFlag;
 }
 
 const I18nProvider: FunctionComponent<I18nProviderProps> = ({ children, locale }) => (
