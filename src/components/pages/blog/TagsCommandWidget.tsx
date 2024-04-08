@@ -70,7 +70,7 @@ const TagsCommandWidget: FunctionComponent<TagsCommandWidgetProps> = ({
           <CommandItem onSelect={() => onSelect()} className="h-12 lg:h-8" key={`filter-${tag}`}>
             <div
               className={cn(
-                'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
+                'flex h-4 w-4 items-center justify-center rounded-sm border border-primary ltr:mr-2 rtl:ml-2',
                 isSelected ? 'bg-primary text-primary-foreground' : '[&_svg]:invisible'
               )}
             >
@@ -134,7 +134,9 @@ const TagsCommandWidget: FunctionComponent<TagsCommandWidgetProps> = ({
             [BUTTON_CONFIG.ACTIVE_CLASSNAME]: isOpened
           })}
         >
-          <PlusCircledIcon className={cn('mr-2 h-5 w-5 transition-transform duration-300', { '-rotate-45 rtl:rotate-45': isOpened })} />
+          <PlusCircledIcon
+            className={cn('h-5 w-5 transition-transform duration-300 ltr:mr-2 rtl:ml-2', { 'ltr:-rotate-45 rtl:rotate-45': isOpened })}
+          />
           {title}
           {/* eslint-disable-next-line @typescript-eslint/no-magic-numbers */}
           {selectedTagsIds.length > 0 && activeFiltersIndicator}

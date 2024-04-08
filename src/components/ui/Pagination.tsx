@@ -58,7 +58,8 @@ const PaginationPrevious = ({ className, ...props }: React.ComponentProps<typeof
 
   return (
     <PaginationLink className={cn('h-8 gap-1 px-3', className)} aria-label={scopedT('prev')} size="default" {...props}>
-      <ChevronLeftIcon className="h-5 w-5" />
+      <ChevronLeftIcon className="h-5 w-5 rtl:hidden" />
+      <ChevronRightIcon className="h-5 w-5 ltr:hidden" />
     </PaginationLink>
   );
 };
@@ -69,7 +70,8 @@ const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof Pag
 
   return (
     <PaginationLink className={cn('h-8 gap-1 px-3', className)} aria-label={scopedT('next')} size="default" {...props}>
-      <ChevronRightIcon className="h-5 w-5" />
+      <ChevronRightIcon className="h-5 w-5 rtl:hidden" />
+      <ChevronLeftIcon className="h-5 w-5 ltr:hidden" />
     </PaginationLink>
   );
 };
