@@ -1,7 +1,7 @@
 import type { MockInstance } from 'vitest';
 
 import { beforeAll, afterAll, describe, expect, it, vi } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
+import { renderHook, waitFor, act } from '@testing-library/react';
 
 import useScrollDirection from '../useScrollDirection';
 
@@ -35,22 +35,25 @@ describe('useScrollDirection', () => {
     expect(result.current[LEFT_PART]).toBe('up');
   });
 
-  it('should update scroll direction when window scrolls', () => {
+  it('should update scroll direction when window scrolls', async () => {
     const { result } = renderHook(() => useScrollDirection());
 
     act(() => {
+      window.scrollY = 100;
+      window.dispatchEvent(new Event('scroll'));
+
       window.scrollY = 0;
       window.dispatchEvent(new Event('scroll'));
     });
 
-    expect(result.current[LEFT_PART]).toBe('up');
+    await waitFor(() => expect(result.current[LEFT_PART]).toBe('up'));
 
     act(() => {
       window.scrollY = 100;
       window.dispatchEvent(new Event('scroll'));
     });
 
-    expect(result.current[LEFT_PART]).toBe('down');
+    await waitFor(() => expect(result.current[LEFT_PART]).toBe('down'));
   });
 
   afterAll(() => {
