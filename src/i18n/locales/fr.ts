@@ -26,10 +26,14 @@ const SHARED: SharedVocabType = {
     breadcrumbs: "fil d'ariane",
     toc: 'table des matières',
     'sign-up': "s'inscrire",
+    search: 'rechercher',
     draft: 'ébauche',
+    pages: 'pages',
     logo: 'logo',
     page: 'page',
-    tags: 'tags'
+    tags: 'tags',
+    blog: 'blog',
+    all: 'tout'
   }
 } as const;
 
@@ -69,6 +73,23 @@ export default {
     'blog-testing-category': SHARED_TESTING_BLOG_CATEGORY_METADATAS
   },
 
+  navbar: {
+    'sr-only': {
+      'close-hamburger-menu': 'Fermer le menu de la barre de navigation (sections du site)',
+      'open-hamburger-menu': 'Ouvrir le menu de la barre de navigation (sections du site)',
+      'close-language-switcher-menu': 'Fermer le menu du choix de la langue',
+      'open-language-switcher-menu': 'Ouvrir le menu du choix de la langue',
+      'switch-to-light-mode': 'Passer sur le thème clair',
+      'switch-to-dark-mode': 'Passer sur le thème sombre',
+      'close-search-menu': 'Fermer le menu de recherche',
+      'open-search-menu': 'Ouvrir le menu de recherche',
+      'language-switcher-menu': 'Choix de la langue',
+      'hamburger-menu': 'Sections du site'
+    },
+
+    assistance: 'Support'
+  },
+
   vocab: {
     ...SHARED.vocab,
     'sr-only': {
@@ -89,21 +110,6 @@ export default {
     'brand-short': 'RTM',
     prev: 'Précédent',
     next: 'Suivant'
-  },
-
-  navbar: {
-    'sr-only': {
-      'close-hamburger-menu': 'Fermer le menu de la barre de navigation (sections du site)',
-      'open-hamburger-menu': 'Ouvrir le menu de la barre de navigation (sections du site)',
-      'close-language-switcher-menu': 'Fermer le menu du choix de la langue',
-      'open-language-switcher-menu': 'Ouvrir le menu du choix de la langue',
-      'switch-to-light-mode': 'Passer sur le thème clair',
-      'switch-to-dark-mode': 'Passer sur le thème sombre',
-      'language-switcher-menu': 'Choix de la langue',
-      'hamburger-menu': 'Sections du site'
-    },
-
-    assistance: 'Support'
   },
 
   dashboard: {
