@@ -5,19 +5,22 @@ import type { FunctionComponent, ChangeEvent } from 'react';
 import { DialogContent, DialogTrigger, DialogHeader, Dialog } from '@/components/ui/Dialog';
 import { TabsContent, TabsTrigger, TabsList, Tabs } from '@/components/ui/Tabs';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
+import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { getClientSideI18n } from '@/i18n/client';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
+import { useState, useRef } from 'react';
 import { i18ns } from '##/config/i18n';
 import { capitalize } from '@/lib/str';
-import { useState } from 'react';
 import debounce from 'debounce';
 
 interface NavbarSearchButtonProps {}
 
 const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
+  const [isOpened, setIsOpened] = useState<boolean>(false);
   const [searchText, setSearchText] = useState<string>('');
   const [value, setValue] = useState<Value>('all');
+  const inputFieldRef = useRef<HTMLInputElement>(null);
 
   const globalT = getClientSideI18n();
 
@@ -29,11 +32,19 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
   const debouncedOnChange = debounce(onChange, 200);
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={(_isOpened: boolean) => setIsOpened(_isOpened)} open={isOpened}>
       <DialogTrigger aria-label={globalT(`${i18ns.navbar}.sr-only.open-search-menu`)} className="h-full w-4">
         <MagnifyingGlassIcon />
       </DialogTrigger>
-      <DialogContent className="h-full max-h-[90vh] max-w-[90vw]">
+      <DialogContent
+        onAnimationEnd={() => {
+          if (!isOpened) return;
+          const inputFieldInstance = getRefCurrentPtr(inputFieldRef);
+          if (!inputFieldInstance) return;
+          inputFieldInstance.focus();
+        }}
+        className="h-full max-h-[90vh] max-w-[90vw]"
+      >
         <DialogHeader>
           <Tabs onValueChange={(v) => setValue(v as Value)} className="w-full px-5" value={value}>
             <TabsList className="mx-auto grid w-full grid-cols-3">
@@ -54,6 +65,7 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
                   debouncedOnChange(event);
                 }}
                 placeholder={`${capitalize(globalT(`${i18ns.vocab}.search`))}...`}
+                ref={inputFieldRef}
                 id="modal-search"
                 className="mt-1"
                 type="text"
