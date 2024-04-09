@@ -17,9 +17,9 @@ export const PAGES_TITLES = {
 
 export const SHARED_VOCAB_SCHEMA = {
   vocab: {
+    'start-typing': _,
     breadcrumbs: _,
     'sign-up': _,
-    search: _,
     brand: _,
     draft: _,
     pages: _,

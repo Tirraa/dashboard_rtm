@@ -22,11 +22,11 @@ const SHARED: SharedVocabType = {
   },
 
   vocab: {
+    'start-typing': 'start typing',
     brand: 'Rust Team Management',
     breadcrumbs: 'breadcrumbs',
     toc: 'table of contents',
     'sign-up': 'sign up',
-    search: 'search',
     draft: 'draft',
     pages: 'pages',
     logo: 'logo',

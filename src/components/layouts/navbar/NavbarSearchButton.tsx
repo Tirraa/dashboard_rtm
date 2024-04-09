@@ -16,16 +16,16 @@ import { capitalize } from '@/lib/str';
 
 interface NavbarSearchButtonProps {}
 
-const VALUE_INITIAL_STATE: Value = 'all';
+const VALUE_INITIAL_STATE: TabValue = 'all';
 const SEARCH_TEXT_INITIAL_STATE = '';
 
 const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const [searchText, setSearchText] = useState<string>(SEARCH_TEXT_INITIAL_STATE);
-  const [value, setValue] = useState<Value>(VALUE_INITIAL_STATE);
+  const [tabValue, setTabValue] = useState<TabValue>(VALUE_INITIAL_STATE);
   const inputFieldRef = useRef<HTMLInputElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const [debouncedSearchText] = useDebounce(searchText, 200);
+  const [debouncedSearchText, setDebouncedSearchText] = useDebounce(searchText, 200);
 
   const globalT = getClientSideI18n();
 
@@ -35,10 +35,9 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
     <Dialog
       onOpenChange={(_isOpened: boolean) => {
         setIsOpened(_isOpened);
-        if (_isOpened) {
-          setValue(VALUE_INITIAL_STATE);
-          setSearchText(SEARCH_TEXT_INITIAL_STATE);
-        }
+        setTabValue(VALUE_INITIAL_STATE);
+        setSearchText(SEARCH_TEXT_INITIAL_STATE);
+        setDebouncedSearchText(SEARCH_TEXT_INITIAL_STATE);
       }}
       open={isOpened}
     >
@@ -55,33 +54,41 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
         className="h-full max-h-[90vh] max-w-[90vw]"
       >
         <DialogHeader>
-          <Tabs onValueChange={(v) => setValue(v as Value)} className="w-full px-5" value={value}>
+          <Tabs className="flex h-full w-full flex-col px-5 py-5" onValueChange={(v) => setTabValue(v as TabValue)} value={tabValue}>
             <TabsList className="mx-auto grid w-full grid-cols-3">
-              <TabsTrigger className="hover:bg-primary hover:font-bold hover:text-white focus:font-semibold" value={'all' satisfies Value}>
+              <TabsTrigger className="hover:bg-primary hover:font-bold hover:text-white focus:font-semibold" value={'all' satisfies TabValue}>
                 {capitalize(globalT(`${i18ns.vocab}.all`))}
               </TabsTrigger>
-              <TabsTrigger className="hover:bg-primary hover:font-bold hover:text-white focus:font-semibold" value={'pages' satisfies Value}>
+              <TabsTrigger className="hover:bg-primary hover:font-bold hover:text-white focus:font-semibold" value={'pages' satisfies TabValue}>
                 {capitalize(globalT(`${i18ns.vocab}.pages`))}
               </TabsTrigger>
-              <TabsTrigger className="hover:bg-primary hover:font-bold hover:text-white focus:font-semibold" value={'blog' satisfies Value}>
+              <TabsTrigger className="hover:bg-primary hover:font-bold hover:text-white focus:font-semibold" value={'blog' satisfies TabValue}>
                 {capitalize(globalT(`${i18ns.vocab}.blog`))}
               </TabsTrigger>
             </TabsList>
             <div className="mt-5 grid w-full items-center gap-1.5">
-              <Label htmlFor="modal-search">{capitalize(globalT(`${i18ns.vocab}.${value}`))}</Label>
+              <Label htmlFor="modal-search">{capitalize(globalT(`${i18ns.vocab}.${tabValue}`))}</Label>
               <Input
-                placeholder={`${capitalize(globalT(`${i18ns.vocab}.search`))}...`}
+                placeholder={`${capitalize(globalT(`${i18ns.vocab}.start-typing`))}…`}
+                value={isOpened ? searchText : debouncedSearchText}
                 onChange={onChange}
                 ref={inputFieldRef}
-                value={searchText}
                 id="modal-search"
                 className="mt-1"
                 type="text"
               />
             </div>
-            <TabsContent value="all">{debouncedSearchText}</TabsContent>
-            <TabsContent value="pages">{debouncedSearchText}</TabsContent>
-            <TabsContent value="blog">{debouncedSearchText}</TabsContent>
+            <div className="mt-5 flex flex-1 rounded-md border border-input">
+              <TabsContent value={'all' satisfies TabValue} className="w-full px-3">
+                {debouncedSearchText}
+              </TabsContent>
+              <TabsContent value={'pages' satisfies TabValue} className="w-full px-3">
+                {debouncedSearchText}
+              </TabsContent>
+              <TabsContent value={'blog' satisfies TabValue} className="w-full px-3">
+                {debouncedSearchText}
+              </TabsContent>
+            </div>
           </Tabs>
         </DialogHeader>
       </DialogContent>
@@ -91,4 +98,4 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
 
 export default NavbarSearchButton;
 
-type Value = 'pages' | 'blog' | 'all';
+type TabValue = 'pages' | 'blog' | 'all';

@@ -22,11 +22,11 @@ const SHARED: SharedVocabType = {
   },
 
   vocab: {
+    'start-typing': 'commencer à écrire',
     brand: 'Rust Team Management',
     breadcrumbs: "fil d'ariane",
     toc: 'table des matières',
     'sign-up': "s'inscrire",
-    search: 'rechercher',
     draft: 'ébauche',
     pages: 'pages',
     logo: 'logo',
