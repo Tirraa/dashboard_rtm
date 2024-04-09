@@ -1,6 +1,6 @@
 'use client';
 
-import type { FunctionComponent, ChangeEvent } from 'react';
+import type { ChangeEventHandler, FunctionComponent } from 'react';
 
 import { DialogContent, DialogTrigger, DialogHeader, Dialog } from '@/components/ui/Dialog';
 import { TabsContent, TabsTrigger, TabsList, Tabs } from '@/components/ui/Tabs';
@@ -9,30 +9,39 @@ import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { getClientSideI18n } from '@/i18n/client';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
+import { useDebounce } from 'use-debounce';
 import { useState, useRef } from 'react';
 import { i18ns } from '##/config/i18n';
 import { capitalize } from '@/lib/str';
-import debounce from 'debounce';
 
 interface NavbarSearchButtonProps {}
 
+const VALUE_INITIAL_STATE: Value = 'all';
+const SEARCH_TEXT_INITIAL_STATE = '';
+
 const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
-  const [searchText, setSearchText] = useState<string>('');
-  const [value, setValue] = useState<Value>('all');
+  const [searchText, setSearchText] = useState<string>(SEARCH_TEXT_INITIAL_STATE);
+  const [value, setValue] = useState<Value>(VALUE_INITIAL_STATE);
   const inputFieldRef = useRef<HTMLInputElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  const [debouncedSearchText] = useDebounce(searchText, 200);
 
   const globalT = getClientSideI18n();
 
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchText(event.target.value);
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const debouncedOnChange = debounce(onChange, 200);
+  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => setSearchText(e.target.value);
 
   return (
-    <Dialog onOpenChange={(_isOpened: boolean) => setIsOpened(_isOpened)} open={isOpened}>
+    <Dialog
+      onOpenChange={(_isOpened: boolean) => {
+        setIsOpened(_isOpened);
+        if (_isOpened) {
+          setValue(VALUE_INITIAL_STATE);
+          setSearchText(SEARCH_TEXT_INITIAL_STATE);
+        }
+      }}
+      open={isOpened}
+    >
       <DialogTrigger aria-label={globalT(`${i18ns.navbar}.sr-only.open-search-menu`)} className="h-full w-4">
         <MagnifyingGlassIcon />
       </DialogTrigger>
@@ -61,19 +70,18 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
             <div className="mt-5 grid w-full items-center gap-1.5">
               <Label htmlFor="modal-search">{capitalize(globalT(`${i18ns.vocab}.${value}`))}</Label>
               <Input
-                onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                  debouncedOnChange(event);
-                }}
                 placeholder={`${capitalize(globalT(`${i18ns.vocab}.search`))}...`}
+                onChange={onChange}
                 ref={inputFieldRef}
+                value={searchText}
                 id="modal-search"
                 className="mt-1"
                 type="text"
               />
             </div>
-            <TabsContent value="all">{searchText}</TabsContent>
-            <TabsContent value="pages">{searchText}</TabsContent>
-            <TabsContent value="blog">{searchText}</TabsContent>
+            <TabsContent value="all">{debouncedSearchText}</TabsContent>
+            <TabsContent value="pages">{debouncedSearchText}</TabsContent>
+            <TabsContent value="blog">{debouncedSearchText}</TabsContent>
           </Tabs>
         </DialogHeader>
       </DialogContent>

@@ -71,7 +71,6 @@
     "cmdk": "^1.0.0",
     "contentlayer": "^0.3.4",
     "date-fns": "^3.6.0",
-    "debounce": "^2.0.0",
     "github-slugger": "^2.0.0",
     "inflection": "^3.0.0",
     "intl-locale-textinfo-polyfill": "^2.1.1",
@@ -96,7 +95,8 @@
     "tailwind-merge": "^2.2.2",
     "tailwindcss": "^3.4.3",
     "tailwindcss-animate": "^1.0.7",
-    "throttleit": "^2.0.0"
+    "throttleit": "^2.0.0",
+    "use-debounce": "^10.0.0"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^19.1.0",
