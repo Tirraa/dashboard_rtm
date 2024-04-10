@@ -81,7 +81,6 @@ export default {
       'open-language-switcher-menu': 'Ouvrir le menu du choix de la langue',
       'switch-to-light-mode': 'Passer sur le thème clair',
       'switch-to-dark-mode': 'Passer sur le thème sombre',
-      'close-search-menu': 'Fermer le menu de recherche',
       'open-search-menu': 'Ouvrir le menu de recherche',
       'language-switcher-menu': 'Choix de la langue',
       'hamburger-menu': 'Sections du site'
@@ -110,6 +109,19 @@ export default {
     'brand-short': 'RTM',
     prev: 'Précédent',
     next: 'Suivant'
+  },
+
+  searchMenu: {
+    'sr-only': {
+      'close-search-menu': 'Fermer le menu de recherche',
+      'prev-screen': 'Écran précédent',
+      'next-screen': 'Écran suivant'
+    },
+    options: {
+      blog: "Recherche d'articles de blog",
+      pages: 'Recherche de pages',
+      all: 'Recherche globale'
+    }
   },
 
   dashboard: {

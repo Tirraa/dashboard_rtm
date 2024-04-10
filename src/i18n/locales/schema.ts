@@ -35,23 +35,6 @@ export const SHARED_VOCAB_SCHEMA = {
 } as const satisfies TypedLeafsJSONData<NotScanned>;
 
 export default {
-  navbar: {
-    'sr-only': {
-      'close-language-switcher-menu': _,
-      'open-language-switcher-menu': _,
-      'language-switcher-menu': _,
-      'close-hamburger-menu': _,
-      'switch-to-light-mode': _,
-      'open-hamburger-menu': _,
-      'switch-to-dark-mode': _,
-      'close-search-menu': _,
-      'open-search-menu': _,
-      'hamburger-menu': _
-    },
-
-    assistance: _
-  },
-
   vocab: {
     ...SHARED_VOCAB_SCHEMA.vocab,
     'sr-only': {
@@ -72,6 +55,35 @@ export default {
     '404': _,
     prev: _,
     next: _
+  },
+
+  navbar: {
+    'sr-only': {
+      'close-language-switcher-menu': _,
+      'open-language-switcher-menu': _,
+      'language-switcher-menu': _,
+      'close-hamburger-menu': _,
+      'switch-to-light-mode': _,
+      'open-hamburger-menu': _,
+      'switch-to-dark-mode': _,
+      'open-search-menu': _,
+      'hamburger-menu': _
+    },
+
+    assistance: _
+  },
+
+  searchMenu: {
+    'sr-only': {
+      'close-search-menu': _,
+      'next-screen': _,
+      'prev-screen': _
+    },
+    options: {
+      pages: _,
+      blog: _,
+      all: _
+    }
   },
 
   dashboard: {

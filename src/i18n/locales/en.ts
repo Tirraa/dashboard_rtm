@@ -73,23 +73,6 @@ export default {
     'blog-testing-category': SHARED_TESTING_BLOG_CATEGORY_METADATAS
   },
 
-  navbar: {
-    'sr-only': {
-      'close-hamburger-menu': 'Close the navbar menu (website sections)',
-      'open-hamburger-menu': 'Open the navbar menu (website sections)',
-      'close-language-switcher-menu': 'Close language choice menu',
-      'open-language-switcher-menu': 'Open language choice menu',
-      'switch-to-light-mode': 'Switch to light mode',
-      'switch-to-dark-mode': 'Switch to dark mode',
-      'language-switcher-menu': 'Language choice',
-      'close-search-menu': 'Close search menu',
-      'open-search-menu': 'Open search menu',
-      'hamburger-menu': 'Website sections'
-    },
-
-    assistance: 'Assistance'
-  },
-
   vocab: {
     ...SHARED.vocab,
     'sr-only': {
@@ -110,6 +93,35 @@ export default {
     'brand-short': 'RTM',
     prev: 'Previous',
     next: 'Next'
+  },
+
+  navbar: {
+    'sr-only': {
+      'close-hamburger-menu': 'Close the navbar menu (website sections)',
+      'open-hamburger-menu': 'Open the navbar menu (website sections)',
+      'close-language-switcher-menu': 'Close language choice menu',
+      'open-language-switcher-menu': 'Open language choice menu',
+      'switch-to-light-mode': 'Switch to light mode',
+      'switch-to-dark-mode': 'Switch to dark mode',
+      'language-switcher-menu': 'Language choice',
+      'open-search-menu': 'Open search menu',
+      'hamburger-menu': 'Website sections'
+    },
+
+    assistance: 'Assistance'
+  },
+
+  searchMenu: {
+    'sr-only': {
+      'close-search-menu': 'Close search menu',
+      'prev-screen': 'Previous screen',
+      'next-screen': 'Next screen'
+    },
+    options: {
+      blog: 'Search blog posts',
+      pages: 'Search pages',
+      all: 'Global search'
+    }
   },
 
   dashboard: {

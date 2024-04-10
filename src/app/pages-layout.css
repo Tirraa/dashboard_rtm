@@ -1,0 +1,96 @@
+.search-menu-gap-y {
+  gap: max(0.05vw, 0.05vh) 0;
+}
+
+.search-menu-tabslist-item {
+  border-radius: 0.2296875vw;
+  height: max(2vw, 4vh);
+  font-size: max(2.45vw, 2.45vh);
+  padding: max(clamp(1.7625vh, 1.8375vw, 1.1875em), 2%) 0.459375vw;
+  padding-left: 1.5vw;
+  padding-right: 1.5vw;
+}
+
+.search-menu-input {
+  text-indent: min(1vw, 0.25rem);
+  border-radius: 0.459375vw;
+  height: calc(max(clamp(1.6625vh, 2.0625vw, 1.1875em), 3.75vh) * 1.5);
+  font-size: max(clamp(1.6625vh, 2.0625vw, 1.1875em), 3.75vh);
+  padding: clamp(0.7625vh, 1.8375vw, 1.1875em) 0.459375vw;
+  margin: max(0.6vw, 0.6vh) 0;
+}
+
+.search-menu-prev-next-icon {
+  height: max(3vw, 3vh);
+  width: max(3vw, 3vh);
+}
+
+.search-menu-prev-next-btn {
+  margin: 0 1.5vw;
+}
+
+.search-menu-close-btn {
+  margin: -1.4vw;
+}
+
+.search-menu-close-btn > svg {
+  height: max(1.5vw, 1.5vh);
+  width: max(1.5vw, 1.5vh);
+}
+
+.search-menu-banner {
+  padding: 1rem max(1vw, 1rem);
+}
+
+.search-menu-banner-span {
+  font-size: max(1.4rem, 2.5vw);
+  margin-left: max(1vw, 1rem);
+  margin-right: max(1vw, 1rem);
+}
+
+@media (max-width: 1024px) {
+  .search-menu-tabslist-item {
+    height: max(4vw, 4vh);
+  }
+}
+
+@media (max-width: 675px) {
+  .search-menu-banner > svg {
+    border-color: transparent !important;
+  }
+
+  .search-menu-close-btn {
+    display: none;
+  }
+
+  .search-menu-prev-next-btn {
+    margin: 0 clamp(1.175vh, 1.5vw, 1.1875em);
+  }
+
+  .search-menu-prev-next-icon {
+    height: clamp(2.35vh, 3vw, 1.1875em);
+    width: clamp(2.35vh, 3vw, 1.1875em);
+  }
+
+  .search-menu-input {
+    border-radius: clamp(0.390625vh, 0.515625vw, 1.1875em);
+    padding: clamp(1.5625vh, 2.0625vw, 1.1875em) clamp(0.390625vh, 0.515625vw, 1.1875em);
+    --tw-ring-offset-color: none;
+    font-size: max(clamp(1.45vh, 2.35vw, 1.1875em), max(2.35vh, 2.35vw));
+  }
+
+  .search-menu-tabslist-item {
+    border-radius: clamp(0.1953125vh, 0.2578125vw, 1.1875em);
+    font-size: max(clamp(1.45vh, 2.35vw, 1.1875em), max(2.35vh, 2.35vw));
+    padding: min(0.78125vh, 1.03125vw) min(0.390625vh, 0.515625vw, 1.1875em);
+    height: fit-content;
+  }
+}
+
+@media (max-width: 470px) {
+  .search-menu-dialog {
+    padding-left: 0;
+    padding-right: 0;
+    gap: 0;
+  }
+}

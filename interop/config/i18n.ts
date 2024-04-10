@@ -12,6 +12,7 @@ const _i18nsBase = {
   blogTagsFilters: 'blogTagsFilters',
   blogCategories: 'blog-categories',
   pagesTitles: 'pages-titles',
+  searchMenu: 'searchMenu',
   dashboard: 'dashboard',
   blogTags: 'blog-tags',
   filters: 'filters',
@@ -27,6 +28,8 @@ const i18nsBase: MakeI18nsBase<typeof _i18nsBase> = _i18nsBase;
 export const i18ns = {
   ...i18nsBase,
   dashboardPagesTitles: 'dashboard.pages-titles',
+  searchMenuOptions: 'searchMenu.options',
+  searchMenuSrOnly: 'searchMenu.sr-only',
   srOnly: 'vocab.sr-only'
 } as const satisfies typeof i18nsBase & Record<PropertyKey, I18nVocabScope>;
 
