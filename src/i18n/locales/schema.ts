@@ -73,10 +73,11 @@ export default {
     assistance: _
   },
 
-  searchMenu: {
+  'search-menu': {
     'sr-only': {
       'choose-search-mode': _,
       'close-search-menu': _,
+      'quick-access': _,
       'next-screen': _,
       'prev-screen': _
     },
@@ -108,14 +109,14 @@ export default {
     'date-asc': _
   },
 
-  blogToc: {
+  'blog-toc': {
     'sr-only': {
       'hide-toc': _,
       'show-toc': _
     }
   },
 
-  blogTagsFilters: {
+  'blog-tags-filters': {
     'no-result-found': _,
     'clear-filters': _
   },

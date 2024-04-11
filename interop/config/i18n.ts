@@ -9,14 +9,14 @@ export enum ELanguagesFlag {
 }
 
 const _i18nsBase = {
-  blogTagsFilters: 'blogTagsFilters',
+  blogTagsFilters: 'blog-tags-filters',
   blogCategories: 'blog-categories',
   pagesTitles: 'pages-titles',
-  searchMenu: 'searchMenu',
+  searchMenu: 'search-menu',
   dashboard: 'dashboard',
   blogTags: 'blog-tags',
+  blogToc: 'blog-toc',
   filters: 'filters',
-  blogToc: 'blogToc',
   navbar: 'navbar',
   infos: '_infos',
   vocab: 'vocab',
@@ -28,8 +28,8 @@ const i18nsBase: MakeI18nsBase<typeof _i18nsBase> = _i18nsBase;
 export const i18ns = {
   ...i18nsBase,
   dashboardPagesTitles: 'dashboard.pages-titles',
-  searchMenuOptions: 'searchMenu.options',
-  searchMenuSrOnly: 'searchMenu.sr-only',
+  searchMenuOptions: 'search-menu.options',
+  searchMenuSrOnly: 'search-menu.sr-only',
   srOnly: 'vocab.sr-only'
 } as const satisfies typeof i18nsBase & Record<PropertyKey, I18nVocabScope>;
 

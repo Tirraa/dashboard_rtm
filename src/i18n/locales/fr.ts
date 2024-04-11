@@ -111,11 +111,12 @@ export default {
     next: 'Suivant'
   },
 
-  searchMenu: {
+  'search-menu': {
     'sr-only': {
       'choose-search-mode': 'Choisir le mode de recherche',
       'close-search-menu': 'Fermer le menu de recherche',
       'prev-screen': 'Écran précédent',
+      'quick-access': 'Accès rapide',
       'next-screen': 'Écran suivant'
     },
     options: {
@@ -146,7 +147,7 @@ export default {
     'alphabet-asc': 'Alphabétique A-Z'
   },
 
-  blogToc: {
+  'blog-toc': {
     'sr-only': {
       'show-toc': `Afficher la ${SHARED.vocab.toc}`,
       'hide-toc': `Masquer la ${SHARED.vocab.toc}`
@@ -160,7 +161,7 @@ export default {
     drums: 'Batterie'
   },
 
-  blogTagsFilters: {
+  'blog-tags-filters': {
     'no-result-found': 'Rien trouvé !',
     'clear-filters': 'Réinitialiser'
   },

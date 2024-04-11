@@ -111,11 +111,12 @@ export default {
     assistance: 'Assistance'
   },
 
-  searchMenu: {
+  'search-menu': {
     'sr-only': {
       'choose-search-mode': 'Choose search mode',
       'close-search-menu': 'Close search menu',
       'prev-screen': 'Previous screen',
+      'quick-access': 'Quick access',
       'next-screen': 'Next screen'
     },
     options: {
@@ -146,7 +147,7 @@ export default {
     'date-asc': 'Oldest first'
   },
 
-  blogToc: {
+  'blog-toc': {
     'sr-only': {
       'hide-toc': `Hide the ${SHARED.vocab.toc}`,
       'show-toc': `Show the ${SHARED.vocab.toc}`
@@ -160,7 +161,7 @@ export default {
     cello: 'Cello'
   },
 
-  blogTagsFilters: {
+  'blog-tags-filters': {
     'no-result-found': 'Nothing found!',
     'clear-filters': 'Clear'
   },

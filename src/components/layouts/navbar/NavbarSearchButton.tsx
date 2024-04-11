@@ -21,7 +21,6 @@ import { useDebounce } from 'use-debounce';
 import { i18ns } from '##/config/i18n';
 import { capitalize } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
-import Link from 'next/link';
 
 interface NavbarSearchButtonProps {}
 
@@ -205,36 +204,41 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
     </button>
   );
 
-  // {ToDo} Should be a Navigation Menu too
   const cardDefaultViewFooter = (
     <CardFooter className="search-menu-footer flex w-full flex-wrap justify-center p-0">
-      <div className="w-fit items-center justify-center max-lg:w-full max-lg:flex-1 lg:flex">
-        <Link
-          className="flex h-fit flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
-          onClick={() => setIsOpened(false)}
-          href={ROUTES_ROOTS.WEBSITE}
-        >
-          <HomeIcon className="h-10 w-10" />
-        </Link>
-      </div>
-      <div className="w-fit items-center justify-center max-lg:w-full max-lg:flex-1 lg:flex">
-        <Link
-          className="flex h-fit flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
-          onClick={() => setIsOpened(false)}
-          href={ROUTES_ROOTS.BLOG}
-        >
-          <PilcrowIcon className="h-10 w-10" />
-        </Link>
-      </div>
-      <div className="w-fit items-center justify-center max-lg:w-full max-lg:flex-1 lg:flex">
-        <Link
-          className="flex h-fit flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
-          onClick={() => setIsOpened(false)}
-          href={ROUTES_ROOTS.DASHBOARD}
-        >
-          <LayoutDashboardIcon className="h-10 w-10" />
-        </Link>
-      </div>
+      <NavigationMenu.Root aria-label={globalT(`${i18ns.searchMenuSrOnly}.quick-access`)} className="contents [&>div]:contents">
+        <NavigationMenu.List className="contents">
+          <NavigationMenu.Item className="w-fit items-center justify-center max-lg:w-full max-lg:flex-1 lg:flex">
+            <NavigationMenu.Link
+              className="flex h-fit flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
+              onClick={() => setIsOpened(false)}
+              href={ROUTES_ROOTS.WEBSITE}
+            >
+              <HomeIcon className="h-10 w-10" />
+            </NavigationMenu.Link>
+          </NavigationMenu.Item>
+
+          <NavigationMenu.Item className="w-fit items-center justify-center max-lg:w-full max-lg:flex-1 lg:flex">
+            <NavigationMenu.Link
+              className="flex h-fit flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
+              onClick={() => setIsOpened(false)}
+              href={ROUTES_ROOTS.BLOG}
+            >
+              <PilcrowIcon className="h-10 w-10" />
+            </NavigationMenu.Link>
+          </NavigationMenu.Item>
+
+          <NavigationMenu.Item className="w-fit items-center justify-center max-lg:w-full max-lg:flex-1 lg:flex">
+            <NavigationMenu.Link
+              className="flex h-fit flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
+              onClick={() => setIsOpened(false)}
+              href={ROUTES_ROOTS.DASHBOARD}
+            >
+              <LayoutDashboardIcon className="h-10 w-10" />
+            </NavigationMenu.Link>
+          </NavigationMenu.Item>
+        </NavigationMenu.List>
+      </NavigationMenu.Root>
     </CardFooter>
   );
 
