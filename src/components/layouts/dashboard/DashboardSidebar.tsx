@@ -50,6 +50,7 @@ function sidebarBtnsGenerator(currentPathname: AppPath): ReactElement[] {
   });
 }
 
+// {ToDo} https://github.com/Tirraa/dashboard_rtm/issues/126
 const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => {
   const wasCollapsed = useRef<boolean>(false);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(wasCollapsed.current);

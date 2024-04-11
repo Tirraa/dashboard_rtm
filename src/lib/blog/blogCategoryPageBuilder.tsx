@@ -17,6 +17,7 @@ import Link from 'next/link';
 
 const slugger = new GithubSlugger();
 
+// {ToDo} https://github.com/Tirraa/dashboard_rtm/issues/126
 async function blogCategoryPageBuilder(
   posts: BlogPostType[],
   category: BlogCategory,

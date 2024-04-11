@@ -192,6 +192,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
           tags={tags}
         />
       )}
+      {/* {ToDo} https://github.com/Tirraa/dashboard_rtm/issues/126 */}
       <div className="mb-4 flex min-w-full flex-col [&>article:not(:last-of-type)]:mb-6">{paginated}</div>
       {showBottomToolbar && (
         <SubcategoryRelatedBlogPostsClientToolbar

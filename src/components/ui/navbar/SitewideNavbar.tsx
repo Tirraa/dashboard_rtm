@@ -45,6 +45,7 @@ function buildNavbarItems(): NavbarItems {
   return navbarItems;
 }
 
+// {ToDo} https://github.com/Tirraa/dashboard_rtm/issues/126
 const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = async () => {
   const globalT = await getServerSideI18n();
   const logoAlt = globalT(`${i18ns.vocab}.sr-only.brand-logo`);
