@@ -207,7 +207,7 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
 
   // {ToDo} Should be a Navigation Menu too
   const cardDefaultViewFooter = (
-    <CardFooter className="mt-4 flex w-full flex-wrap justify-center gap-2 p-0 lg:gap-4">
+    <CardFooter className="search-menu-footer flex w-full flex-wrap justify-center p-0">
       <div className="w-fit items-center justify-center max-lg:w-full max-lg:flex-1 lg:flex">
         <Link
           className="flex h-fit flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
