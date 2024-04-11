@@ -52,7 +52,7 @@ const DialogContent = React.forwardRef<
         {...props}
       >
         {children}
-        <div className="sticky left-0 top-0 h-0 w-0 self-start ltr:right-2.5 rtl:left-2.5">
+        <div className="sticky left-0 right-2.5 top-0 h-0 w-0 self-start">
           <DialogPrimitive.Close
             className={cn(
               'absolute bottom-1 rounded-full bg-accent p-1 text-muted-foreground ring-offset-background transition-all hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none dark:opacity-70 dark:hover:text-inherit dark:hover:opacity-100 dark:focus:text-inherit dark:focus:opacity-100',

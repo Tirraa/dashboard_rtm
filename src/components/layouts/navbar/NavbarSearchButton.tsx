@@ -8,6 +8,7 @@ import { MagnifyingGlassIcon, ChevronRightIcon, ChevronLeftIcon, PilcrowIcon, Re
 import { DialogContent, DialogTrigger, DialogHeader, Dialog } from '@/components/ui/Dialog';
 import { TabsContent, TabsTrigger, TabsList, Tabs } from '@/components/ui/Tabs';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
+import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import { useCallback, useState, Fragment, useRef } from 'react';
 import { LayoutDashboardIcon, HomeIcon } from 'lucide-react';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
@@ -53,18 +54,36 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
   const [searchText, setSearchText] = useState<string>(SEARCH_TEXT_INITIAL_STATE);
   const [tabValue, setTabValue] = useState<TabValue>(TAB_VALUE_INITIAL_STATE);
   const inputFieldRef = useRef<HTMLInputElement>(null);
+  const prevScreenBtnRef = useRef<HTMLButtonElement>(null);
+  const nextScreenBtnRef = useRef<HTMLButtonElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const [debouncedSearchText, setDebouncedSearchText] = useDebounce(searchText, 200);
   const isLargeScreen = useIsLargeScreen();
+  const memorizedTabValue = useRef<TabValue>(tabValue);
 
   const globalT = getClientSideI18n();
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => setSearchText(e.target.value);
 
+  const updateMemorizedTabValueAndSetTabValue = useCallback((v: TabValue) => {
+    memorizedTabValue.current = v;
+    setTabValue(v);
+  }, []);
+
   const buildTabTrigger = useCallback(
     (tabValue: TabValue, i18nTitle: I18nVocabTarget) => {
       return (
         <TabsTrigger
+          onFocusCapture={(e) => {
+            if (memorizedTabValue.current) {
+              e.preventDefault();
+              setTabValue(memorizedTabValue.current);
+            }
+          }}
+          onFocus={(e) => {
+            e.preventDefault();
+            updateMemorizedTabValueAndSetTabValue(tabValue);
+          }}
           className="search-menu-tabslist-item w-full flex-1 font-semibold hover:bg-primary hover:text-white max-lg:h-10 lg:w-fit"
           value={tabValue}
         >
@@ -72,34 +91,69 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
         </TabsTrigger>
       );
     },
-    [globalT]
+    [globalT, updateMemorizedTabValueAndSetTabValue]
   );
 
-  const buildBanner = useCallback(
-    (bannerTabValue: TabValue, __Icon: IconComponentType, pos: EBannerPosition) => {
-      const title = globalT(`${i18ns.searchMenuOptions}.${bannerTabValue}`);
+  const buildBanners = useCallback(
+    () => (
+      <NavigationMenu.Root
+        aria-label={globalT(`${i18ns.searchMenuSrOnly}.choose-search-mode`)}
+        className="contents [&>div]:contents"
+        orientation="vertical"
+      >
+        <NavigationMenu.List className="contents">
+          {banners.map(([category, __Icon], index) => {
+            const title = globalT(`${i18ns.searchMenuOptions}.${category}`);
+            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+            const pos = index === 0 ? EBannerPosition.FIRST : index === banners.length - 1 ? EBannerPosition.LAST : EBannerPosition.MIDDLE;
 
-      return (
-        <button
-          className={cn(
-            'search-menu-banner flex w-full flex-1 cursor-pointer justify-between bg-accent font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none [&>svg]:hover:border-transparent [&>svg]:focus:border-transparent [&>svg]:dark:hover:border-transparent [&>svg]:dark:focus:border-transparent',
-            { 'rounded-t-md': pos === EBannerPosition.FIRST },
-            { 'rounded-b-md': pos === EBannerPosition.LAST },
-            {
-              'pointer-events-none opacity-50 hover:cursor-default dark:opacity-75 [&>svg]:border-transparent [&>svg]:dark:border-transparent':
-                tabValue === bannerTabValue
-            }
-          )}
-          onClick={() => setTabValue(bannerTabValue)}
-          disabled={tabValue === bannerTabValue}
-          aria-label={title}
-        >
-          <__Icon className="flex h-full max-h-full min-h-10 w-auto min-w-10 max-w-[10%] rounded-md border border-black border-transparent dark:border-white" />
-          <span className="search-menu-banner-span my-auto flex-1 text-left max-sm:text-base">{title}</span>
-        </button>
-      );
-    },
-    [tabValue, globalT]
+            return (
+              <NavigationMenu.Item className="contents" key={category}>
+                <NavigationMenu.Link
+                  onKeyDown={(e) => {
+                    if (e.key === 'ArrowLeft') {
+                      const prevScreenBtnInstance = getRefCurrentPtr(prevScreenBtnRef);
+                      if (!prevScreenBtnInstance) return;
+                      e.preventDefault();
+                      prevScreenBtnInstance.focus();
+                    } else if (e.key === 'ArrowRight') {
+                      const nextScreenBtnInstance = getRefCurrentPtr(nextScreenBtnRef);
+                      if (!nextScreenBtnInstance) return;
+                      e.preventDefault();
+                      nextScreenBtnInstance.focus();
+                    }
+                  }}
+                  asChild
+                >
+                  <button
+                    className={cn(
+                      'search-menu-banner flex w-full flex-1 cursor-pointer justify-between bg-accent font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none [&>svg]:hover:border-transparent [&>svg]:focus:border-transparent [&>svg]:dark:hover:border-transparent [&>svg]:dark:focus:border-transparent',
+                      { 'rounded-t-md': pos === EBannerPosition.FIRST },
+                      { 'rounded-b-md': pos === EBannerPosition.LAST },
+                      {
+                        'pointer-events-none opacity-50 hover:cursor-default dark:opacity-75 [&>svg]:border-transparent [&>svg]:dark:border-transparent':
+                          tabValue === category
+                      }
+                    )}
+                    onClick={() => {
+                      updateMemorizedTabValueAndSetTabValue(category);
+                      const inputFieldInstance = getRefCurrentPtr(inputFieldRef);
+                      if (!inputFieldInstance) return;
+                      inputFieldInstance.focus();
+                    }}
+                    aria-label={title}
+                  >
+                    <__Icon className="flex h-full max-h-full min-h-10 w-auto min-w-10 max-w-[10%] rounded-md border border-black border-transparent dark:border-white" />
+                    <span className="search-menu-banner-span my-auto flex-1 text-left max-sm:text-base">{title}</span>
+                  </button>
+                </NavigationMenu.Link>
+              </NavigationMenu.Item>
+            );
+          })}
+        </NavigationMenu.List>
+      </NavigationMenu.Root>
+    ),
+    [tabValue, globalT, updateMemorizedTabValueAndSetTabValue]
   );
 
   const prevScreenBtn = (
@@ -110,10 +164,19 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         const newIdx = indexOf < 0 ? ALL_TAB_VALUES.length - 1 : indexOf;
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        setTabValue(ALL_TAB_VALUES[newIdx]);
+        updateMemorizedTabValueAndSetTabValue(ALL_TAB_VALUES[newIdx]);
       }}
       className="search-menu-prev-next-btn sticky top-[calc(50%-1rem)] h-fit scale-125 self-center rounded-full bg-accent transition-all hover:scale-150 hover:bg-primary hover:text-white focus:scale-150 focus:bg-primary focus:text-white dark:opacity-75 hover:dark:opacity-100 dark:focus:opacity-100"
+      onKeyDown={(e) => {
+        if (e.key !== 'ArrowRight') return;
+        const inputFieldInstance = getRefCurrentPtr(inputFieldRef);
+        if (!inputFieldInstance) return;
+        e.preventDefault();
+        inputFieldInstance.focus();
+      }}
       aria-label={globalT(`${i18ns.searchMenuSrOnly}.prev-screen`)}
+      disabled={!isLargeScreen}
+      ref={prevScreenBtnRef}
     >
       <ChevronLeftIcon className="search-menu-prev-next-icon max-lg:hidden" />
     </button>
@@ -125,14 +188,24 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
       onClick={() => {
         const indexOf = ALL_TAB_VALUES.indexOf(tabValue);
         // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        setTabValue(ALL_TAB_VALUES[(indexOf + 1) % ALL_TAB_VALUES.length]);
+        updateMemorizedTabValueAndSetTabValue(ALL_TAB_VALUES[(indexOf + 1) % ALL_TAB_VALUES.length]);
+      }}
+      onKeyDown={(e) => {
+        if (e.key !== 'ArrowLeft') return;
+        const inputFieldInstance = getRefCurrentPtr(inputFieldRef);
+        if (!inputFieldInstance) return;
+        e.preventDefault();
+        inputFieldInstance.focus();
       }}
       aria-label={globalT(`${i18ns.searchMenuSrOnly}.next-screen`)}
+      disabled={!isLargeScreen}
+      ref={nextScreenBtnRef}
     >
       <ChevronRightIcon className="search-menu-prev-next-icon max-lg:hidden" />
     </button>
   );
 
+  // {ToDo} Should be a Navigation Menu too
   const cardDefaultViewFooter = (
     <CardFooter className="mt-4 flex w-full flex-wrap justify-center gap-2 p-0 lg:gap-4">
       <div className="w-fit items-center justify-center max-lg:w-full max-lg:flex-1 lg:flex">
@@ -167,16 +240,7 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
 
   const defaultView = (
     <>
-      {banners.map(([category, icon], index) => (
-        <Fragment key={category}>
-          {buildBanner(
-            category,
-            icon,
-            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-            index === 0 ? EBannerPosition.FIRST : index === banners.length - 1 ? EBannerPosition.LAST : EBannerPosition.MIDDLE
-          )}
-        </Fragment>
-      ))}
+      {buildBanners()}
       {cardDefaultViewFooter}
     </>
   );
@@ -185,7 +249,7 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
     <Dialog
       onOpenChange={(_isOpened: boolean) => {
         setIsOpened(_isOpened);
-        setTabValue(TAB_VALUE_INITIAL_STATE);
+        updateMemorizedTabValueAndSetTabValue(TAB_VALUE_INITIAL_STATE);
         setSearchText(SEARCH_TEXT_INITIAL_STATE);
         setDebouncedSearchText(SEARCH_TEXT_INITIAL_STATE);
       }}
@@ -205,12 +269,13 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
         closeButtonI18nTitle={`${i18ns.searchMenuSrOnly}.close-search-menu`}
         closeButtonClassName="search-menu-close-btn"
         onOpenAutoFocus={(e) => e.preventDefault()}
+        dir="ltr"
       >
         {prevScreenBtn}
         <Tabs
+          onValueChange={(v) => updateMemorizedTabValueAndSetTabValue(v as TabValue)}
           className="search-menu-gap-y flex w-full flex-col lg:px-5"
           orientation={isLargeScreen ? 'horizontal' : 'vertical'}
-          onValueChange={(v) => setTabValue(v as TabValue)}
           value={tabValue}
         >
           <DialogHeader className="search-menu-gap-y">

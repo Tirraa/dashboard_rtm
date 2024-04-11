@@ -75,6 +75,7 @@ export default {
 
   searchMenu: {
     'sr-only': {
+      'choose-search-mode': _,
       'close-search-menu': _,
       'next-screen': _,
       'prev-screen': _

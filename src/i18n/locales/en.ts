@@ -113,6 +113,7 @@ export default {
 
   searchMenu: {
     'sr-only': {
+      'choose-search-mode': 'Choose search mode',
       'close-search-menu': 'Close search menu',
       'prev-screen': 'Previous screen',
       'next-screen': 'Next screen'
