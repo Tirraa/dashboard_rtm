@@ -8,9 +8,9 @@ import { MagnifyingGlassIcon, ChevronRightIcon, ChevronLeftIcon, PilcrowIcon, Re
 import { DialogContent, DialogTrigger, DialogHeader, Dialog } from '@/components/ui/Dialog';
 import { TabsContent, TabsTrigger, TabsList, Tabs } from '@/components/ui/Tabs';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
+import { useCallback, useState, Fragment, useRef } from 'react';
 import { LayoutDashboardIcon, HomeIcon } from 'lucide-react';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
-import { useCallback, useState, useRef } from 'react';
 import { getClientSideI18n } from '@/i18n/client';
 import { CardFooter } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
@@ -167,14 +167,16 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
 
   const defaultView = (
     <>
-      {banners.map(([category, icon], index) =>
-        buildBanner(
-          category,
-          icon,
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-          index === 0 ? EBannerPosition.FIRST : index === banners.length - 1 ? EBannerPosition.LAST : EBannerPosition.MIDDLE
-        )
-      )}
+      {banners.map(([category, icon], index) => (
+        <Fragment key={category}>
+          {buildBanner(
+            category,
+            icon,
+            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+            index === 0 ? EBannerPosition.FIRST : index === banners.length - 1 ? EBannerPosition.LAST : EBannerPosition.MIDDLE
+          )}
+        </Fragment>
+      ))}
       {cardDefaultViewFooter}
     </>
   );
@@ -213,7 +215,9 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
         >
           <DialogHeader className="search-menu-gap-y">
             <TabsList className="mx-auto flex h-fit w-full flex-col flex-wrap lg:flex-row" loop>
-              {tabTriggers.map(([category, i18nTitle]) => buildTabTrigger(category, i18nTitle))}
+              {tabTriggers.map(([category, i18nTitle]) => (
+                <Fragment key={`tab-${category}`}>{buildTabTrigger(category, i18nTitle)}</Fragment>
+              ))}
             </TabsList>
             <div className="flex w-full flex-col" style={{ marginTop: '0' }}>
               <Label htmlFor="modal-search" className="sr-only">
