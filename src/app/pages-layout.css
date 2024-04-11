@@ -14,7 +14,7 @@
 .search-menu-input {
   text-indent: min(1vw, 0.25rem);
   border-radius: 0.459375vw;
-  height: calc(max(clamp(1.6625vh, 2.0625vw, 1.1875em), 3.75vh) * 1.5);
+  height: max(clamp(2.49375vh, 3.09375vw, 1.1875em), 5.625vh);
   font-size: max(clamp(1.6625vh, 2.0625vw, 1.1875em), 3.75vh);
   padding: clamp(0.7625vh, 1.8375vw, 1.1875em) 0.459375vw;
   margin: max(0.6vw, 0.6vh) 0;
