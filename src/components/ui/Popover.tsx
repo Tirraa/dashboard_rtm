@@ -3,9 +3,11 @@
 
 'use client';
 
+import type { ComponentPropsWithoutRef, ElementRef } from 'react';
+
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import { cn } from '@/lib/tailwind';
-import * as React from 'react';
+import { forwardRef } from 'react';
 
 const Popover = PopoverPrimitive.Root;
 
@@ -13,9 +15,9 @@ const PopoverTrigger = PopoverPrimitive.Trigger;
 
 const PopoverAnchor = PopoverPrimitive.Anchor;
 
-const PopoverContent = React.forwardRef<
-  React.ElementRef<typeof PopoverPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
+const PopoverContent = forwardRef<
+  ElementRef<typeof PopoverPrimitive.Content>,
+  ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 >(({ align = 'center', sideOffset = 4, className, ...props }, ref) => (
   <PopoverPrimitive.Portal>

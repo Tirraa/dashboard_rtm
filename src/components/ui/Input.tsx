@@ -1,12 +1,14 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import type { InputHTMLAttributes as ReactInputHTMLAttributes } from 'react';
+
 import { cn } from '@/lib/tailwind';
-import * as React from 'react';
+import { forwardRef } from 'react';
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+export interface InputProps extends ReactInputHTMLAttributes<HTMLInputElement> {}
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type, ...props }, ref) => {
+const Input = forwardRef<HTMLInputElement, InputProps>(({ className, type, ...props }, ref) => {
   return (
     <input
       className={cn(

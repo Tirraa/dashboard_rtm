@@ -6,6 +6,7 @@
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 
 import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
+import { useEffect, useState } from 'react';
 import MobileDetect from 'mobile-detect';
 
 // A Next.js Top Loading Bar component made using nprogress, works with Next.js 13.
@@ -16,7 +17,7 @@ import MobileDetect from 'mobile-detect';
 import type { Percentage, MsValue, PxValue } from '@rtm/shared-types/Numbers';
 
 import nProgress from 'nprogress';
-import * as React from 'react';
+
 export type NextTopLoaderProps = {
   /**
    * The initial position for the TopLoader in percentage, 0.08 is 8%.
@@ -77,7 +78,7 @@ const NextTopLoader = ({
   crawl,
   speed
 }: NextTopLoaderProps) => {
-  const [isOnMobileOrTablet, setIsOnMobileOrTablet] = React.useState<MaybeNull<boolean>>(null);
+  const [isOnMobileOrTablet, setIsOnMobileOrTablet] = useState<MaybeNull<boolean>>(null);
 
   const defaultColor = '#29d';
   const defaultHeight = 3;
@@ -93,14 +94,14 @@ const NextTopLoader = ({
     </style>
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     const md = new MobileDetect(window.navigator.userAgent);
     const onMobile = md.mobile() !== null || md.tablet() !== null;
 
     setIsOnMobileOrTablet(onMobile);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     nProgress.configure({
       showSpinner: showSpinner ?? true,
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
