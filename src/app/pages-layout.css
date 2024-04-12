@@ -31,6 +31,11 @@
   gap: max(0.6vw, 0.6vh);
 }
 
+.search-menu-footer-items svg {
+  height: clamp(8.49375vh, 8.09375vw, 1.1875em);
+  width: auto;
+}
+
 .search-menu-prev-next-icon {
   height: max(3vw, 3vh);
   width: max(3vw, 3vh);
@@ -63,6 +68,11 @@
   .search-menu-tabslist-item {
     height: max(4vw, 4vh);
   }
+
+  .search-menu-footer-items svg {
+    height: clamp(4.49375vh, 4.09375vw, 1.1875em);
+    width: auto;
+  }
 }
 
 @media (max-width: 675px) {
@@ -86,8 +96,8 @@
   .search-menu-input {
     border-radius: clamp(0.390625vh, 0.515625vw, 1.1875em);
     padding: clamp(1.5625vh, 2.0625vw, 1.1875em) clamp(0.390625vh, 0.515625vw, 1.1875em);
-    --tw-ring-offset-color: none;
     font-size: max(clamp(1.45vh, 2.35vw, 1.1875em), max(2.35vh, 2.35vw));
+    --tw-ring-offset-color: none;
   }
 
   .search-menu-tabslist-item {

@@ -1,8 +1,9 @@
 'use client';
 
-import type { ChangeEventHandler, FunctionComponent, ComponentType } from 'react';
+import type { KeyboardEvent as ReactKeyboardEvent, ChangeEventHandler, FunctionComponent, ComponentType } from 'react';
 import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
 import type { Index } from '@rtm/shared-types/Numbers';
+import type { AppPath } from '@rtm/shared-types/Next';
 
 import { MagnifyingGlassIcon, ChevronRightIcon, ChevronLeftIcon, PilcrowIcon, ReaderIcon, GlobeIcon } from '@radix-ui/react-icons';
 import { DialogContent, DialogTrigger, DialogHeader, Dialog } from '@/components/ui/Dialog';
@@ -43,9 +44,19 @@ const tabTriggersObj = {
 } as const satisfies Record<TabValue, I18nVocabTarget>;
 /* eslint-enable perfectionist/sort-objects */
 
+/* eslint-disable perfectionist/sort-objects */
+const quickAccessBtnsObj = {
+  [ROUTES_ROOTS.WEBSITE]: HomeIcon,
+  [ROUTES_ROOTS.BLOG]: PilcrowIcon,
+  [ROUTES_ROOTS.DASHBOARD]: LayoutDashboardIcon
+} as const satisfies Record<AppPath, IconComponentType>;
+/* eslint-enable perfectionist/sort-objects */
+
 const banners = Object.entries(bannersObj) as [keyof typeof bannersObj, (typeof bannersObj)[keyof typeof bannersObj]][];
 
 const tabTriggers = Object.entries(tabTriggersObj) as [keyof typeof tabTriggersObj, (typeof tabTriggersObj)[keyof typeof tabTriggersObj]][];
+
+const quickAccessBtns = Object.entries(quickAccessBtnsObj) as [AppPath, (typeof quickAccessBtnsObj)[keyof typeof quickAccessBtnsObj]][];
 
 const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
@@ -66,6 +77,38 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
   const updateMemorizedTabValueAndSetTabValue = useCallback((v: TabValue) => {
     memorizedTabValue.current = v;
     setTabValue(v);
+  }, []);
+
+  const quickMenuLeftCustomHandler = useCallback((e: ReactKeyboardEvent<HTMLAnchorElement>) => {
+    if (e.key === 'ArrowLeft') {
+      const prevScreenBtnInstance = getRefCurrentPtr(prevScreenBtnRef);
+      if (!prevScreenBtnInstance) return;
+      e.preventDefault();
+      prevScreenBtnInstance.focus();
+    }
+  }, []);
+
+  const quickMenuRightCustomHandler = useCallback((e: ReactKeyboardEvent<HTMLAnchorElement>) => {
+    if (e.key === 'ArrowRight') {
+      const nextScreenBtnInstance = getRefCurrentPtr(nextScreenBtnRef);
+      if (!nextScreenBtnInstance) return;
+      e.preventDefault();
+      nextScreenBtnInstance.focus();
+    }
+  }, []);
+
+  const quickMenuLeftRightCustomHandler = useCallback(
+    (e: ReactKeyboardEvent<HTMLAnchorElement>) => {
+      quickMenuLeftCustomHandler(e);
+      quickMenuRightCustomHandler(e);
+    },
+    [quickMenuLeftCustomHandler, quickMenuRightCustomHandler]
+  );
+
+  const focusInputField = useCallback(() => {
+    const inputFieldInstance = getRefCurrentPtr(inputFieldRef);
+    if (!inputFieldInstance) return;
+    inputFieldInstance.focus();
   }, []);
 
   const buildTabTrigger = useCallback(
@@ -107,22 +150,7 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
 
             return (
               <NavigationMenu.Item className="contents" key={category}>
-                <NavigationMenu.Link
-                  onKeyDown={(e) => {
-                    if (e.key === 'ArrowLeft') {
-                      const prevScreenBtnInstance = getRefCurrentPtr(prevScreenBtnRef);
-                      if (!prevScreenBtnInstance) return;
-                      e.preventDefault();
-                      prevScreenBtnInstance.focus();
-                    } else if (e.key === 'ArrowRight') {
-                      const nextScreenBtnInstance = getRefCurrentPtr(nextScreenBtnRef);
-                      if (!nextScreenBtnInstance) return;
-                      e.preventDefault();
-                      nextScreenBtnInstance.focus();
-                    }
-                  }}
-                  asChild
-                >
+                <NavigationMenu.Link onKeyDown={(e) => quickMenuLeftRightCustomHandler(e)} asChild>
                   <button
                     className={cn(
                       'search-menu-banner flex w-full flex-1 cursor-pointer justify-between bg-accent font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none [&>svg]:hover:border-transparent [&>svg]:focus:border-transparent [&>svg]:dark:hover:border-transparent [&>svg]:dark:focus:border-transparent',
@@ -135,9 +163,7 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
                     )}
                     onClick={() => {
                       updateMemorizedTabValueAndSetTabValue(category);
-                      const inputFieldInstance = getRefCurrentPtr(inputFieldRef);
-                      if (!inputFieldInstance) return;
-                      inputFieldInstance.focus();
+                      focusInputField();
                     }}
                     aria-label={title}
                   >
@@ -149,43 +175,25 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
             );
           })}
 
-          <nav className="search-menu-footer flex w-full flex-col">
+          <nav aria-label={globalT(`${i18ns.searchMenuSrOnly}.quick-access`)} className="search-menu-footer flex w-full flex-col">
             <div className="search-menu-footer-items flex w-full flex-wrap justify-center">
-              <NavigationMenu.Item className="flex w-full flex-1 items-center justify-center">
-                <NavigationMenu.Link
-                  className="flex h-fit flex-1 flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
-                  onClick={() => setIsOpened(false)}
-                  href={ROUTES_ROOTS.WEBSITE}
-                >
-                  <HomeIcon className="h-10 w-10" />
-                </NavigationMenu.Link>
-              </NavigationMenu.Item>
-
-              <NavigationMenu.Item className="flex w-full flex-1 items-center justify-center">
-                <NavigationMenu.Link
-                  className="flex h-fit flex-1 flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
-                  onClick={() => setIsOpened(false)}
-                  href={ROUTES_ROOTS.BLOG}
-                >
-                  <PilcrowIcon className="h-10 w-10" />
-                </NavigationMenu.Link>
-              </NavigationMenu.Item>
-
-              <NavigationMenu.Item className="flex w-full flex-1 items-center justify-center">
-                <NavigationMenu.Link
-                  className="flex h-fit flex-1 flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
-                  onClick={() => setIsOpened(false)}
-                  href={ROUTES_ROOTS.DASHBOARD}
-                >
-                  <LayoutDashboardIcon className="h-10 w-10" />
-                </NavigationMenu.Link>
-              </NavigationMenu.Item>
+              {quickAccessBtns.map(([href, __Icon]) => (
+                <NavigationMenu.Item className="flex w-full flex-1 items-center justify-center" key={href}>
+                  <NavigationMenu.Link
+                    className="flex h-fit flex-1 flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
+                    onClick={() => setIsOpened(false)}
+                    href={href}
+                  >
+                    <__Icon className="h-10 w-10" />
+                  </NavigationMenu.Link>
+                </NavigationMenu.Item>
+              ))}
             </div>
           </nav>
         </NavigationMenu.List>
       </NavigationMenu.Root>
     ),
-    [tabValue, globalT, updateMemorizedTabValueAndSetTabValue]
+    [tabValue, globalT, updateMemorizedTabValueAndSetTabValue, quickMenuLeftRightCustomHandler, focusInputField]
   );
 
   const prevScreenBtn = (
@@ -201,10 +209,8 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
       className="search-menu-prev-next-btn sticky top-[calc(50%-1rem)] h-fit scale-125 self-center rounded-full bg-accent transition-all hover:scale-150 hover:bg-primary hover:text-white focus:scale-150 focus:bg-primary focus:text-white dark:opacity-75 hover:dark:opacity-100 dark:focus:opacity-100"
       onKeyDown={(e) => {
         if (e.key !== 'ArrowRight') return;
-        const inputFieldInstance = getRefCurrentPtr(inputFieldRef);
-        if (!inputFieldInstance) return;
         e.preventDefault();
-        inputFieldInstance.focus();
+        focusInputField();
       }}
       aria-label={globalT(`${i18ns.searchMenuSrOnly}.prev-screen`)}
       disabled={!isLargeScreen}
@@ -224,10 +230,8 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
       }}
       onKeyDown={(e) => {
         if (e.key !== 'ArrowLeft') return;
-        const inputFieldInstance = getRefCurrentPtr(inputFieldRef);
-        if (!inputFieldInstance) return;
         e.preventDefault();
-        inputFieldInstance.focus();
+        focusInputField();
       }}
       aria-label={globalT(`${i18ns.searchMenuSrOnly}.next-screen`)}
       disabled={!isLargeScreen}
@@ -253,13 +257,11 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
         <MagnifyingGlassIcon />
       </DialogTrigger>
       <DialogContent
+        className="search-menu-dialog flex h-fit max-h-[90vh] min-h-[90vh] w-full max-w-[90vw] overflow-y-auto overflow-x-hidden"
         onAnimationEnd={() => {
           if (!isOpened) return;
-          const inputFieldInstance = getRefCurrentPtr(inputFieldRef);
-          if (!inputFieldInstance) return;
-          inputFieldInstance.focus();
+          focusInputField();
         }}
-        className="search-menu-dialog flex h-fit max-h-[90vh] min-h-[90vh] w-full max-w-[90vw] overflow-y-auto overflow-x-hidden"
         closeButtonI18nTitle={`${i18ns.searchMenuSrOnly}.close-search-menu`}
         closeButtonClassName="search-menu-close-btn"
         onOpenAutoFocus={(e) => e.preventDefault()}
