@@ -19,11 +19,15 @@
   padding: clamp(0.7625vh, 1.8375vw, 1.1875em) 0.459375vw;
 }
 
-.search-menu-footer,
 .search-menu-input {
   margin: max(0.6vw, 0.6vh) 0;
 }
+
 .search-menu-footer {
+  margin-top: max(0.6vw, 0.6vh);
+}
+
+.search-menu-footer-items {
   gap: max(0.6vw, 0.6vh);
 }
 
