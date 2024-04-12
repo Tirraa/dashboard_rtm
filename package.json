@@ -78,7 +78,7 @@
     "intl-locale-textinfo-polyfill": "^2.1.1",
     "lucide-react": "^0.331.0",
     "mobile-detect": "^1.4.5",
-    "next": "^14.1.4",
+    "next": "^14.2.0",
     "next-auth": "^4.24.7",
     "next-contentlayer": "^0.3.4",
     "next-international": "1.2.4",
