@@ -49,7 +49,7 @@ const quickAccessBtnsObj = {
   [ROUTES_ROOTS.WEBSITE]: { icon: HomeIcon, i18nTitle: `${i18ns.searchMenuSrOnly}.homepage-access` },
   [ROUTES_ROOTS.BLOG]: { icon: PilcrowIcon, i18nTitle: `${i18ns.searchMenuSrOnly}.blog-access` },
   [ROUTES_ROOTS.DASHBOARD]: { icon: LayoutDashboardIcon, i18nTitle: `${i18ns.searchMenuSrOnly}.dashboard-access` }
-} as const satisfies Record<AppPath, { i18nTitle: I18nVocabTarget; icon: IconComponentType }>;
+} as const satisfies Record<AppPath, QuickAccessBtnMetadatas>;
 /* eslint-enable perfectionist/sort-objects */
 
 const banners = Object.entries(bannersObj) as [keyof typeof bannersObj, (typeof bannersObj)[keyof typeof bannersObj]][];
@@ -342,6 +342,7 @@ export default NavbarSearchButton;
 
 type TabValue = (typeof ALL_TAB_VALUES)[Index];
 type IconComponentType<P = { className?: string }> = ComponentType<P>;
+type QuickAccessBtnMetadatas = { i18nTitle: I18nVocabTarget; icon: IconComponentType };
 
 enum EBannerPosition {
   FIRST,
