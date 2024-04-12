@@ -21,6 +21,7 @@ import { useDebounce } from 'use-debounce';
 import { i18ns } from '##/config/i18n';
 import { capitalize } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
+import Link from 'next/link';
 
 interface NavbarSearchButtonProps {}
 
@@ -179,12 +180,14 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
             <div className="search-menu-footer-items flex w-full flex-wrap justify-center">
               {quickAccessBtns.map(([href, __Icon]) => (
                 <NavigationMenu.Item className="flex w-full flex-1 items-center justify-center" key={href}>
-                  <NavigationMenu.Link
-                    className="flex h-fit flex-1 flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
-                    onClick={() => setIsOpened(false)}
-                    href={href}
-                  >
-                    <__Icon className="h-10 w-10" />
+                  <NavigationMenu.Link asChild>
+                    <Link
+                      className="flex h-fit flex-1 flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
+                      onClick={() => setIsOpened(false)}
+                      href={href}
+                    >
+                      <__Icon className="h-10 w-10" />
+                    </Link>
                   </NavigationMenu.Link>
                 </NavigationMenu.Item>
               ))}
