@@ -143,7 +143,7 @@ const TagsCommandWidget: FunctionComponent<TagsCommandWidgetProps> = ({
         </button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0" align="start">
-        <Command>
+        <Command label={title}>
           <CommandInput placeholder={title} />
           <CommandList>
             <CommandEmpty>{noResultFound}</CommandEmpty>

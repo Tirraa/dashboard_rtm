@@ -77,7 +77,10 @@ export default {
     'sr-only': {
       'choose-search-mode': _,
       'close-search-menu': _,
+      'dashboard-access': _,
+      'homepage-access': _,
       'quick-access': _,
+      'blog-access': _,
       'next-screen': _,
       'prev-screen': _
     },

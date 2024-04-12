@@ -115,7 +115,10 @@ export default {
     'sr-only': {
       'choose-search-mode': 'Choisir le mode de recherche',
       'close-search-menu': 'Fermer le menu de recherche',
+      'homepage-access': "Accès à la page d'accueil",
+      'dashboard-access': 'Accès au dashboard',
       'prev-screen': 'Écran précédent',
+      'blog-access': 'Accès au blog',
       'quick-access': 'Accès rapide',
       'next-screen': 'Écran suivant'
     },

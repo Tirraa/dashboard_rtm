@@ -6,12 +6,12 @@ import buildPageLanguageFlag from '../language';
 
 const EXT = '.FAKE_EXT';
 
-describe('language', () => {
-  const PREFIX = '$';
-  let prefixAcc = PREFIX;
-  while (LANGUAGES.includes((prefixAcc + DEFAULT_LANGUAGE) as any)) prefixAcc += PREFIX;
-  const invalidLanguage = prefixAcc + DEFAULT_LANGUAGE;
+const PREFIX = '$';
+let prefixAcc = PREFIX;
+while (LANGUAGES.includes((prefixAcc + DEFAULT_LANGUAGE) as any)) prefixAcc += PREFIX;
+const invalidLanguage = prefixAcc + DEFAULT_LANGUAGE;
 
+describe('language', () => {
   it('should be fault tolerant, given an invalid language in the flattenedPath (fallback on default language)', () => {
     expect(
       buildPageLanguageFlag({

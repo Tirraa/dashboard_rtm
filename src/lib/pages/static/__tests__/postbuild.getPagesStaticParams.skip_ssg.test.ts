@@ -14,7 +14,7 @@ vi.mock('../../../../../interop/config/i18n', async (orgImport) => {
   const mod = await orgImport<typeof import('../../../../../interop/config/i18n')>();
   return {
     ...mod,
-    LANGUAGES: [mod.DEFAULT_LANGUAGE, ...TESTING_PAGES_FAKE_LANGUAGES]
+    LANGUAGES: Array.from(new Set<string>([mod.DEFAULT_LANGUAGE, ...TESTING_PAGES_FAKE_LANGUAGES]))
   };
 });
 

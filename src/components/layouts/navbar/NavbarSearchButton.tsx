@@ -15,7 +15,6 @@ import { LayoutDashboardIcon, HomeIcon } from 'lucide-react';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { getClientSideI18n } from '@/i18n/client';
 import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Label';
 import ROUTES_ROOTS from '##/config/routes';
 import { useDebounce } from 'use-debounce';
 import { i18ns } from '##/config/i18n';
@@ -47,10 +46,10 @@ const tabTriggersObj = {
 
 /* eslint-disable perfectionist/sort-objects */
 const quickAccessBtnsObj = {
-  [ROUTES_ROOTS.WEBSITE]: HomeIcon,
-  [ROUTES_ROOTS.BLOG]: PilcrowIcon,
-  [ROUTES_ROOTS.DASHBOARD]: LayoutDashboardIcon
-} as const satisfies Record<AppPath, IconComponentType>;
+  [ROUTES_ROOTS.WEBSITE]: { icon: HomeIcon, i18nTitle: `${i18ns.searchMenuSrOnly}.homepage-access` },
+  [ROUTES_ROOTS.BLOG]: { icon: PilcrowIcon, i18nTitle: `${i18ns.searchMenuSrOnly}.blog-access` },
+  [ROUTES_ROOTS.DASHBOARD]: { icon: LayoutDashboardIcon, i18nTitle: `${i18ns.searchMenuSrOnly}.dashboard-access` }
+} as const satisfies Record<AppPath, { i18nTitle: I18nVocabTarget; icon: IconComponentType }>;
 /* eslint-enable perfectionist/sort-objects */
 
 const banners = Object.entries(bannersObj) as [keyof typeof bannersObj, (typeof bannersObj)[keyof typeof bannersObj]][];
@@ -178,7 +177,7 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
 
           <nav aria-label={globalT(`${i18ns.searchMenuSrOnly}.quick-access`)} className="search-menu-footer flex w-full flex-col">
             <div className="search-menu-footer-items flex w-full flex-wrap justify-center">
-              {quickAccessBtns.map(([href, __Icon]) => (
+              {quickAccessBtns.map(([href, { icon: __Icon, i18nTitle }]) => (
                 <NavigationMenu.Item className="flex w-full flex-1 items-center justify-center" key={href}>
                   <NavigationMenu.Link asChild>
                     <Link
@@ -187,6 +186,7 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
                       href={href}
                     >
                       <__Icon className="h-10 w-10" />
+                      <span className="sr-only">{globalT(i18nTitle)}</span>
                     </Link>
                   </NavigationMenu.Link>
                 </NavigationMenu.Item>
@@ -284,9 +284,9 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
               ))}
             </TabsList>
             <div className="flex w-full flex-col" style={{ marginTop: '0' }}>
-              <Label htmlFor="modal-search" className="sr-only">
+              <label htmlFor="modal-search" className="sr-only">
                 {globalT(`${i18ns.searchMenuOptions}.${tabValue}`)}
-              </Label>
+              </label>
               <Input
                 placeholder={`${capitalize(globalT(`${i18ns.vocab}.start-typing`))}…`}
                 value={isOpened ? searchText : debouncedSearchText}
