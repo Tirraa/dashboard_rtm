@@ -5,7 +5,7 @@ import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
 import type { Index } from '@rtm/shared-types/Numbers';
 
 import { MagnifyingGlassIcon, ChevronRightIcon, ChevronLeftIcon, PilcrowIcon, ReaderIcon, GlobeIcon } from '@radix-ui/react-icons';
-import { DialogContent, DialogTrigger, DialogHeader, DialogFooter, Dialog } from '@/components/ui/Dialog';
+import { DialogContent, DialogTrigger, DialogHeader, Dialog } from '@/components/ui/Dialog';
 import { TabsContent, TabsTrigger, TabsList, Tabs } from '@/components/ui/Tabs';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
@@ -149,11 +149,11 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
             );
           })}
 
-          <DialogFooter className="search-menu-footer flex w-full flex-col">
-            <div className="search-menu-footer-items flex w-full flex-wrap justify-center p-0">
-              <NavigationMenu.Item className="w-fit items-center justify-center max-lg:w-full max-lg:flex-1 lg:flex">
+          <nav className="search-menu-footer flex w-full flex-col">
+            <div className="search-menu-footer-items flex w-full flex-wrap justify-center">
+              <NavigationMenu.Item className="flex w-full flex-1 items-center justify-center">
                 <NavigationMenu.Link
-                  className="flex h-fit flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
+                  className="flex h-fit flex-1 flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
                   onClick={() => setIsOpened(false)}
                   href={ROUTES_ROOTS.WEBSITE}
                 >
@@ -161,9 +161,9 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
                 </NavigationMenu.Link>
               </NavigationMenu.Item>
 
-              <NavigationMenu.Item className="w-fit items-center justify-center max-lg:w-full max-lg:flex-1 lg:flex">
+              <NavigationMenu.Item className="flex w-full flex-1 items-center justify-center">
                 <NavigationMenu.Link
-                  className="flex h-fit flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
+                  className="flex h-fit flex-1 flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
                   onClick={() => setIsOpened(false)}
                   href={ROUTES_ROOTS.BLOG}
                 >
@@ -171,9 +171,9 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
                 </NavigationMenu.Link>
               </NavigationMenu.Item>
 
-              <NavigationMenu.Item className="w-fit items-center justify-center max-lg:w-full max-lg:flex-1 lg:flex">
+              <NavigationMenu.Item className="flex w-full flex-1 items-center justify-center">
                 <NavigationMenu.Link
-                  className="flex h-fit flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
+                  className="flex h-fit flex-1 flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
                   onClick={() => setIsOpened(false)}
                   href={ROUTES_ROOTS.DASHBOARD}
                 >
@@ -181,7 +181,7 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
                 </NavigationMenu.Link>
               </NavigationMenu.Item>
             </div>
-          </DialogFooter>
+          </nav>
         </NavigationMenu.List>
       </NavigationMenu.Root>
     ),
