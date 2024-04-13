@@ -43,7 +43,7 @@ describe('hrefAndPathnameExactMatch', () => {
     expect(hrefAndPathnameExactMatch('/foo', `/${DEFAULT_LANGUAGE}/foo`)).toBe(true);
     expect(hrefAndPathnameExactMatch(`/${DEFAULT_LANGUAGE}/foo`, '/foo')).toBe(true);
     expect(hrefAndPathnameExactMatch(`/${DEFAULT_LANGUAGE}/dashboard`, `/${DEFAULT_LANGUAGE}/dashboard`)).toBe(true);
-    expect(hrefAndPathnameExactMatch(`/foo`, `/${NOT_DEFAULT_LANGUAGE}/foo`)).toBe(true);
+    expect(hrefAndPathnameExactMatch('/foo', `/${NOT_DEFAULT_LANGUAGE}/foo`)).toBe(true);
     expect(hrefAndPathnameExactMatch('/', `/${NOT_DEFAULT_LANGUAGE}`)).toBe(true);
   });
 

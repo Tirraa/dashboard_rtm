@@ -1,18 +1,20 @@
 'use client';
 
-import type { KeyboardEvent as ReactKeyboardEvent, ChangeEventHandler, FunctionComponent } from 'react';
+import type { KeyboardEvent as ReactKeyboardEvent, ChangeEventHandler, FunctionComponent, ReactElement } from 'react';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
-import type { WithClassname, AppPath } from '@rtm/shared-types/Next';
 import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
+import type { AppPath } from '@rtm/shared-types/Next';
 
+import { doUpdateMemorizedTabValueAndSetTabValue, doBuildTabTrigger } from '@/components/ui/search/helpers/functions/navbarSearchButton';
 import { MagnifyingGlassIcon, ChevronRightIcon, ChevronLeftIcon } from '@radix-ui/react-icons';
 import { DialogContent, DialogTrigger, DialogHeader, Dialog } from '@/components/ui/Dialog';
-import { TabsContent, TabsTrigger, TabsList, Tabs } from '@/components/ui/Tabs';
 import { useCallback, useEffect, useState, Fragment, useRef } from 'react';
+import { TabsContent, TabsList, Tabs } from '@/components/ui/Tabs';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import { hrefAndPathnameExactMatch, capitalize } from '@/lib/str';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
+import Result from '@/components/ui/search/Result';
 import { getClientSideI18n } from '@/i18n/client';
 import { Input } from '@/components/ui/Input';
 import { usePathname } from 'next/navigation';
@@ -29,43 +31,13 @@ interface NavbarSearchButtonProps {}
 
 const TAB_VALUE_INITIAL_STATE: TabValue = 'all';
 const SEARCH_TEXT_INITIAL_STATE = '';
-const RESULTS_INITIAL_STATE: unknown[] = [];
-
-function Result({ className, result }: { result: any } & Partial<WithClassname>) {
-  const [data, setData] = useState<MaybeNull<unknown>>(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      const data = await result.data();
-      setData(data);
-    }
-    fetchData();
-  }, [result]);
-
-  if (!data) return null;
-
-  // {ToDo} Type this
-  const yoloData = data as any;
-
-  const url = yoloData.raw_url;
-  const prefix = '/server/app';
-  const suffix = '.html';
-
-  const cleanedUrl = url.replace(new RegExp(`^${prefix}`), '').replace(new RegExp(`${suffix}$`), '');
-
-  return (
-    <Link className={cn(className)} href={cleanedUrl}>
-      <h3>{yoloData.meta.title}</h3>
-      <p>{yoloData.excerpt}</p>
-    </Link>
-  );
-}
+const RESULTS_INITIAL_STATE: MaybeNull<ReactElement[]> = null;
 
 const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
   const currentPathname = usePathname();
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const [searchText, setSearchText] = useState<string>(SEARCH_TEXT_INITIAL_STATE);
-  const [results, setResults] = useState(RESULTS_INITIAL_STATE);
+  const [results, setResults] = useState<MaybeNull<ReactElement[]>>(RESULTS_INITIAL_STATE);
   const [tabValue, setTabValue] = useState<TabValue>(TAB_VALUE_INITIAL_STATE);
   const pathnameAtOpen = useRef<MaybeNull<AppPath>>(null);
   const inputFieldRef = useRef<HTMLInputElement>(null);
@@ -86,8 +58,6 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
   }, [currentPathname]);
 
   useEffect(() => {
-    if (!window.pagefind) return;
-
     if (debouncedSearchText === SEARCH_TEXT_INITIAL_STATE) {
       setResults(RESULTS_INITIAL_STATE);
       return;
@@ -96,34 +66,65 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
     async function tryToComputeAndSetResults() {
       try {
         const search = await window.pagefind.search(debouncedSearchText);
-        setResults(search.results);
-      } catch {}
+
+        // {ToDo} Type this
+        const searchResults: any[] = search.results;
+        const results: ReactElement[] = [];
+
+        for (const result of searchResults) {
+          const data = await result.data();
+          if (!data) continue;
+
+          // {ToDo} WTF
+          const { raw_url } = data;
+          if (!raw_url) continue;
+          const [prefix, suffix] = ['/server/app', '.html'];
+          const cleanedUrl = raw_url.replace(new RegExp(`^${prefix}`), '').replace(new RegExp(`${suffix}$`), '');
+
+          // {ToDo} Type this
+          const yoloData = data as any;
+          const metaTitle = yoloData.meta.title as string;
+          const excerpt = yoloData.excerpt as string;
+
+          results.push(
+            <Result key={(result as any).id} metaTitle={metaTitle} excerpt={excerpt} href={cleanedUrl} className="mt-2" result={result} />
+          );
+        }
+
+        setResults(results);
+      } catch (e) {
+        throw e;
+      }
     }
 
-    tryToComputeAndSetResults();
+    try {
+      tryToComputeAndSetResults();
+    } catch {
+      setResults([]);
+    }
   }, [debouncedSearchText]);
 
-  const updateMemorizedTabValueAndSetTabValue = useCallback((v: TabValue) => {
-    memorizedTabValue.current = v;
-    setTabValue(v);
-  }, []);
+  const updateMemorizedTabValueAndSetTabValue = useCallback(
+    (v: TabValue) => doUpdateMemorizedTabValueAndSetTabValue(v, memorizedTabValue, setTabValue),
+    []
+  );
 
   const quickMenuLeftCustomHandler = useCallback((e: ReactKeyboardEvent<HTMLAnchorElement>) => {
-    if (e.key === 'ArrowLeft') {
-      const prevScreenBtnInstance = getRefCurrentPtr(prevScreenBtnRef);
-      if (!prevScreenBtnInstance) return;
-      e.preventDefault();
-      prevScreenBtnInstance.focus();
-    }
+    if (e.key !== 'ArrowLeft') return;
+
+    const prevScreenBtnInstance = getRefCurrentPtr(prevScreenBtnRef);
+    if (!prevScreenBtnInstance) return;
+    e.preventDefault();
+    prevScreenBtnInstance.focus();
   }, []);
 
   const quickMenuRightCustomHandler = useCallback((e: ReactKeyboardEvent<HTMLAnchorElement>) => {
-    if (e.key === 'ArrowRight') {
-      const nextScreenBtnInstance = getRefCurrentPtr(nextScreenBtnRef);
-      if (!nextScreenBtnInstance) return;
-      e.preventDefault();
-      nextScreenBtnInstance.focus();
-    }
+    if (e.key !== 'ArrowRight') return;
+
+    const nextScreenBtnInstance = getRefCurrentPtr(nextScreenBtnRef);
+    if (!nextScreenBtnInstance) return;
+    e.preventDefault();
+    nextScreenBtnInstance.focus();
   }, []);
 
   const quickMenuLeftRightCustomHandler = useCallback(
@@ -141,31 +142,9 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
   }, []);
 
   const buildTabTrigger = useCallback(
-    (tabValue: TabValue, i18nTitle: I18nVocabTarget) => {
-      return (
-        <TabsTrigger
-          onFocusCapture={(e) => {
-            if (memorizedTabValue.current) {
-              e.preventDefault();
-              setTabValue(memorizedTabValue.current);
-            }
-          }}
-          onFocus={(e) => {
-            e.preventDefault();
-            updateMemorizedTabValueAndSetTabValue(tabValue);
-          }}
-          className="search-menu-tabslist-item w-full flex-1 font-semibold hover:bg-primary hover:text-white max-lg:h-10 lg:w-fit"
-          value={tabValue}
-        >
-          {capitalize(globalT(i18nTitle))}
-        </TabsTrigger>
-      );
-    },
-    [globalT, updateMemorizedTabValueAndSetTabValue]
+    (tabValue: TabValue, i18nTitle: I18nVocabTarget) => doBuildTabTrigger(tabValue, globalT(i18nTitle), memorizedTabValue, setTabValue),
+    [globalT]
   );
-
-  // {ToDo} Type this
-  const buildResults = useCallback(() => results.map((result) => <Result key={(result as any).id} className="mt-2" result={result} />), [results]);
 
   const buildDefaultView = useCallback(
     () => (
@@ -353,7 +332,7 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
               value={'all' satisfies TabValue}
               tabIndex={-1}
             >
-              {debouncedSearchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : buildResults()}
+              {results === null || debouncedSearchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : results}
             </TabsContent>
             <TabsContent
               className={cn('mt-0 flex h-full max-h-full w-full flex-col items-center', {
@@ -362,7 +341,7 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
               value={'pages' satisfies TabValue}
               tabIndex={-1}
             >
-              {debouncedSearchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : buildResults()}
+              {results === null || debouncedSearchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : results}
             </TabsContent>
             <TabsContent
               className={cn('mt-0 flex h-full max-h-full w-full flex-col items-center', {
@@ -371,7 +350,7 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
               value={'blog' satisfies TabValue}
               tabIndex={-1}
             >
-              {debouncedSearchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : buildResults()}
+              {results === null || debouncedSearchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : results}
             </TabsContent>
           </div>
         </Tabs>

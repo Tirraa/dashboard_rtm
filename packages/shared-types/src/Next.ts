@@ -10,6 +10,7 @@ import type { LanguageFlag } from './I18n';
 import type { ClassName } from './React';
 
 export type Path = string;
+export type Href = string;
 export type AppPath = string;
 export type PathSegment = string;
 export type AppPathAsIs = AppPath;
