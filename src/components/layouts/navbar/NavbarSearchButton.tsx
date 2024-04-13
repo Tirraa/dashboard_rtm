@@ -94,13 +94,13 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
     }
 
     async function tryToComputeAndSetResults() {
-      const search = await window.pagefind.search(debouncedSearchText);
-      setResults(search.results);
+      try {
+        const search = await window.pagefind.search(debouncedSearchText);
+        setResults(search.results);
+      } catch {}
     }
 
-    try {
-      tryToComputeAndSetResults();
-    } catch {}
+    tryToComputeAndSetResults();
   }, [debouncedSearchText]);
 
   const updateMemorizedTabValueAndSetTabValue = useCallback((v: TabValue) => {
