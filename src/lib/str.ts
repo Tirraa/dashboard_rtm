@@ -33,15 +33,15 @@ export function hrefAndPathnameExactMatch(href: AppPath, pathname: AppPath): boo
   const pathnameI18nFlag = getPathnameMaybeI18nFlag(_pathname);
   const pathnameWithoutI18nflag = getPathnameWithoutI18nFlag(_pathname);
 
-  if ((pathnameI18nFlag === DEFAULT_LANGUAGE || pathnameI18nFlag === '') && pathnameWithoutI18nflag === _href) return true;
+  if ((pathnameI18nFlag === DEFAULT_LANGUAGE || pathnameI18nFlag === null) && pathnameWithoutI18nflag === _href) return true;
 
   const hrefWithoutI18nFlag = getPathnameWithoutI18nFlag(_href);
   const hrefI18nFlag = getPathnameMaybeI18nFlag(_href);
 
   if (hrefI18nFlag === DEFAULT_LANGUAGE && pathnameWithoutI18nflag === hrefWithoutI18nFlag) return true;
-  if (hrefI18nFlag === '' && pathnameWithoutI18nflag === _href) return true;
+  if (hrefI18nFlag === null && pathnameWithoutI18nflag === _href) return true;
 
-  if (hrefI18nFlag === '' && pathnameWithoutI18nflag === href) return true;
+  if (hrefI18nFlag === null && pathnameWithoutI18nflag === href) return true;
 
   if (hrefI18nFlag === pathnameI18nFlag && pathnameWithoutI18nflag === hrefWithoutI18nFlag) return true;
   return false;

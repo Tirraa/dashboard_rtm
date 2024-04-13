@@ -1,3 +1,4 @@
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { AppPathAsIs, AppPath } from '@rtm/shared-types/Next';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { Index } from '@rtm/shared-types/Numbers';
@@ -30,8 +31,8 @@ export function getPathnameWithoutI18nFlag(pathname: AppPath): AppPathAsIs | App
   return pathnameWithouti18n;
 }
 
-export function getPathnameMaybeI18nFlag(pathname: AppPath): LanguageFlag | '' {
+export function getPathnameMaybeI18nFlag(pathname: AppPath): MaybeNull<LanguageFlag> {
   const languageFlag = computePathnameI18nFlagUnstrict(pathname);
-  if (!isValidLanguageFlag(languageFlag)) return '';
+  if (!isValidLanguageFlag(languageFlag)) return null;
   return languageFlag;
 }
