@@ -35,15 +35,20 @@ describe('hrefMatchesPathname', () => {
 describe('hrefAndPathnameExactMatch', () => {
   it('should return true', () => {
     expect(hrefAndPathnameExactMatch('foo', 'foo')).toBe(true);
+    expect(hrefAndPathnameExactMatch('/foo', '/foo/')).toBe(true);
+    expect(hrefAndPathnameExactMatch('/foo/', '/foo')).toBe(true);
+    expect(hrefAndPathnameExactMatch('/foo', '/foo////')).toBe(true);
+    expect(hrefAndPathnameExactMatch('/foo////', '/foo')).toBe(true);
     expect(hrefAndPathnameExactMatch('/foo', '/foo')).toBe(true);
     expect(hrefAndPathnameExactMatch('/foo', `/${DEFAULT_LANGUAGE}/foo`)).toBe(true);
     expect(hrefAndPathnameExactMatch(`/${DEFAULT_LANGUAGE}/foo`, '/foo')).toBe(true);
     expect(hrefAndPathnameExactMatch(`/${DEFAULT_LANGUAGE}/dashboard`, `/${DEFAULT_LANGUAGE}/dashboard`)).toBe(true);
+    expect(hrefAndPathnameExactMatch(`/foo`, `/${NOT_DEFAULT_LANGUAGE}/foo`)).toBe(true);
+    expect(hrefAndPathnameExactMatch('/', `/${NOT_DEFAULT_LANGUAGE}`)).toBe(true);
   });
 
   it('should return false', () => {
     expect(hrefAndPathnameExactMatch(`/${NOT_DEFAULT_LANGUAGE}/dashboard`, '/dashboard')).toBe(false);
-    expect(hrefAndPathnameExactMatch(`/dashboard`, `/${NOT_DEFAULT_LANGUAGE}/dashboard`)).toBe(false);
     expect(hrefAndPathnameExactMatch('/dashboard', '/dashboard/bar')).toBe(false);
     // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     expect(hrefAndPathnameExactMatch(`/${LANGUAGES[0]}/dashboard`, `/${LANGUAGES[1]}/dashboard/bar`)).toBe(false);

@@ -25,15 +25,23 @@ export function hrefMatchesPathname(href: AppPath, pathname: AppPath, root: AppP
 }
 
 export function hrefAndPathnameExactMatch(href: AppPath, pathname: AppPath): boolean {
-  if (pathname === href) return true;
+  const _pathname = pathname.replace(/\/+$/, '');
+  const _href = href.replace(/\/+$/, '');
 
-  const pathnameI18nFlag = getPathnameMaybeI18nFlag(pathname) || DEFAULT_LANGUAGE;
-  const pathnameWithoutI18nflag = getPathnameWithoutI18nFlag(pathname);
+  if (_pathname === _href) return true;
 
-  if (pathnameI18nFlag === DEFAULT_LANGUAGE && pathnameWithoutI18nflag === href) return true;
+  const pathnameI18nFlag = getPathnameMaybeI18nFlag(_pathname);
+  const pathnameWithoutI18nflag = getPathnameWithoutI18nFlag(_pathname);
 
-  const hrefWithoutI18nFlag = getPathnameWithoutI18nFlag(href);
-  const hrefI18nFlag = getPathnameMaybeI18nFlag(href) || DEFAULT_LANGUAGE;
+  if ((pathnameI18nFlag === DEFAULT_LANGUAGE || pathnameI18nFlag === '') && pathnameWithoutI18nflag === _href) return true;
+
+  const hrefWithoutI18nFlag = getPathnameWithoutI18nFlag(_href);
+  const hrefI18nFlag = getPathnameMaybeI18nFlag(_href);
+
+  if (hrefI18nFlag === DEFAULT_LANGUAGE && pathnameWithoutI18nflag === hrefWithoutI18nFlag) return true;
+  if (hrefI18nFlag === '' && pathnameWithoutI18nflag === _href) return true;
+
+  if (hrefI18nFlag === '' && pathnameWithoutI18nflag === href) return true;
 
   if (hrefI18nFlag === pathnameI18nFlag && pathnameWithoutI18nflag === hrefWithoutI18nFlag) return true;
   return false;

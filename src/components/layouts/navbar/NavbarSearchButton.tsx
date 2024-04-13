@@ -2,8 +2,8 @@
 
 import type { KeyboardEvent as ReactKeyboardEvent, ChangeEventHandler, FunctionComponent } from 'react';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { WithClassname, AppPath } from '@rtm/shared-types/Next';
 import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
-import type { WithClassname } from '@rtm/shared-types/Next';
 
 import { MagnifyingGlassIcon, ChevronRightIcon, ChevronLeftIcon } from '@radix-ui/react-icons';
 import { DialogContent, DialogTrigger, DialogHeader, Dialog } from '@/components/ui/Dialog';
@@ -11,12 +11,13 @@ import { TabsContent, TabsTrigger, TabsList, Tabs } from '@/components/ui/Tabs';
 import { useCallback, useEffect, useState, Fragment, useRef } from 'react';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
+import { hrefAndPathnameExactMatch, capitalize } from '@/lib/str';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { getClientSideI18n } from '@/i18n/client';
 import { Input } from '@/components/ui/Input';
+import { usePathname } from 'next/navigation';
 import { useDebounce } from 'use-debounce';
 import { i18ns } from '##/config/i18n';
-import { capitalize } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
@@ -30,7 +31,7 @@ const TAB_VALUE_INITIAL_STATE: TabValue = 'all';
 const SEARCH_TEXT_INITIAL_STATE = '';
 const RESULTS_INITIAL_STATE: unknown[] = [];
 
-function Result({ setIsOpened, className, result }: { setIsOpened: (s: boolean) => unknown; result: any } & Partial<WithClassname>) {
+function Result({ className, result }: { result: any } & Partial<WithClassname>) {
   const [data, setData] = useState<MaybeNull<unknown>>(null);
 
   useEffect(() => {
@@ -53,7 +54,7 @@ function Result({ setIsOpened, className, result }: { setIsOpened: (s: boolean) 
   const cleanedUrl = url.replace(new RegExp(`^${prefix}`), '').replace(new RegExp(`${suffix}$`), '');
 
   return (
-    <Link onClick={() => setIsOpened(false)} className={cn(className)} href={cleanedUrl}>
+    <Link className={cn(className)} href={cleanedUrl}>
       <h3>{yoloData.meta.title}</h3>
       <p>{yoloData.excerpt}</p>
     </Link>
@@ -61,10 +62,12 @@ function Result({ setIsOpened, className, result }: { setIsOpened: (s: boolean) 
 }
 
 const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
+  const currentPathname = usePathname();
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const [searchText, setSearchText] = useState<string>(SEARCH_TEXT_INITIAL_STATE);
   const [results, setResults] = useState(RESULTS_INITIAL_STATE);
   const [tabValue, setTabValue] = useState<TabValue>(TAB_VALUE_INITIAL_STATE);
+  const pathnameAtOpen = useRef<MaybeNull<AppPath>>(null);
   const inputFieldRef = useRef<HTMLInputElement>(null);
   const prevScreenBtnRef = useRef<HTMLButtonElement>(null);
   const nextScreenBtnRef = useRef<HTMLButtonElement>(null);
@@ -76,6 +79,11 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
   const globalT = getClientSideI18n();
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => setSearchText(e.target.value);
+
+  useEffect(() => {
+    if (pathnameAtOpen.current === null || pathnameAtOpen.current === currentPathname) return;
+    setIsOpened(false);
+  }, [currentPathname]);
 
   useEffect(() => {
     if (!window.pagefind) return;
@@ -157,10 +165,7 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
   );
 
   // {ToDo} Type this
-  const buildResults = useCallback(
-    () => results.map((result) => <Result setIsOpened={setIsOpened} key={(result as any).id} className="mt-2" result={result} />),
-    [results]
-  );
+  const buildResults = useCallback(() => results.map((result) => <Result key={(result as any).id} className="mt-2" result={result} />), [results]);
 
   const buildDefaultView = useCallback(
     () => (
@@ -204,26 +209,35 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
 
           <nav aria-label={globalT(`${i18ns.searchMenuSrOnly}.quick-access`)} className="search-menu-footer flex w-full flex-col">
             <div className="search-menu-footer-items flex w-full flex-wrap justify-center">
-              {quickAccessBtns.map(([href, { icon: __Icon, i18nTitle }]) => (
-                <NavigationMenu.Item className="flex w-full flex-1 items-center justify-center" key={href}>
-                  <NavigationMenu.Link asChild>
-                    <Link
-                      className="flex h-fit flex-1 flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]"
-                      onClick={() => setIsOpened(false)}
-                      href={href}
-                    >
-                      <__Icon className="h-10 w-10" />
-                      <span className="sr-only">{globalT(i18nTitle)}</span>
-                    </Link>
-                  </NavigationMenu.Link>
-                </NavigationMenu.Item>
-              ))}
+              {quickAccessBtns.map(([href, { icon: __Icon, i18nTitle }]) => {
+                const exactMatch = hrefAndPathnameExactMatch(href, currentPathname);
+
+                return (
+                  <NavigationMenu.Item className="flex w-full flex-1 items-center justify-center" key={href}>
+                    <NavigationMenu.Link asChild>
+                      <Link
+                        className={cn(
+                          'flex h-fit flex-1 flex-col items-center justify-center rounded-md bg-accent p-4 font-semibold transition-colors hover:bg-primary hover:text-white focus:bg-primary focus:text-white focus:outline-none lg:min-w-[200px]',
+                          {
+                            'pointer-events-none opacity-50': exactMatch
+                          }
+                        )}
+                        aria-current={exactMatch ? 'page' : undefined}
+                        href={href}
+                      >
+                        <__Icon className="h-10 w-10" />
+                        <span className="sr-only">{globalT(i18nTitle)}</span>
+                      </Link>
+                    </NavigationMenu.Link>
+                  </NavigationMenu.Item>
+                );
+              })}
             </div>
           </nav>
         </NavigationMenu.List>
       </NavigationMenu.Root>
     ),
-    [tabValue, globalT, updateMemorizedTabValueAndSetTabValue, quickMenuLeftRightCustomHandler, focusInputField]
+    [tabValue, globalT, updateMemorizedTabValueAndSetTabValue, quickMenuLeftRightCustomHandler, focusInputField, currentPathname]
   );
 
   const prevScreenBtn = (
@@ -276,6 +290,7 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
   return (
     <Dialog
       onOpenChange={(_isOpened: boolean) => {
+        pathnameAtOpen.current = _isOpened ? currentPathname : null;
         setIsOpened(_isOpened);
         updateMemorizedTabValueAndSetTabValue(TAB_VALUE_INITIAL_STATE);
         setSearchText(SEARCH_TEXT_INITIAL_STATE);
