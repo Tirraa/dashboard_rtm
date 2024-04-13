@@ -1,66 +1,69 @@
 'use client';
 
-import type { KeyboardEvent as ReactKeyboardEvent, ChangeEventHandler, FunctionComponent, ComponentType } from 'react';
+import type { KeyboardEvent as ReactKeyboardEvent, ChangeEventHandler, FunctionComponent } from 'react';
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
-import type { Index } from '@rtm/shared-types/Numbers';
-import type { AppPath } from '@rtm/shared-types/Next';
+import type { WithClassname } from '@rtm/shared-types/Next';
 
-import { MagnifyingGlassIcon, ChevronRightIcon, ChevronLeftIcon, PilcrowIcon, ReaderIcon, GlobeIcon } from '@radix-ui/react-icons';
+import { MagnifyingGlassIcon, ChevronRightIcon, ChevronLeftIcon } from '@radix-ui/react-icons';
 import { DialogContent, DialogTrigger, DialogHeader, Dialog } from '@/components/ui/Dialog';
 import { TabsContent, TabsTrigger, TabsList, Tabs } from '@/components/ui/Tabs';
+import { useCallback, useEffect, useState, Fragment, useRef } from 'react';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
-import { useCallback, useState, Fragment, useRef } from 'react';
-import { LayoutDashboardIcon, HomeIcon } from 'lucide-react';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { getClientSideI18n } from '@/i18n/client';
 import { Input } from '@/components/ui/Input';
-import ROUTES_ROOTS from '##/config/routes';
 import { useDebounce } from 'use-debounce';
 import { i18ns } from '##/config/i18n';
 import { capitalize } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
+import type { TabValue } from '../../ui/search/helpers/consts';
+
+import { quickAccessBtns, ALL_TAB_VALUES, tabTriggers, banners } from '../../ui/search/helpers/consts';
+
 interface NavbarSearchButtonProps {}
 
 const TAB_VALUE_INITIAL_STATE: TabValue = 'all';
 const SEARCH_TEXT_INITIAL_STATE = '';
-const ALL_TAB_VALUES = ['all', 'pages', 'blog'] as const;
+const RESULTS_INITIAL_STATE: unknown[] = [];
 
-/* eslint-disable perfectionist/sort-objects */
-const bannersObj = {
-  all: GlobeIcon,
-  pages: ReaderIcon,
-  blog: PilcrowIcon
-} as const satisfies Record<TabValue, IconComponentType>;
-/* eslint-enable perfectionist/sort-objects */
+function Result({ setIsOpened, className, result }: { setIsOpened: (s: boolean) => unknown; result: any } & Partial<WithClassname>) {
+  const [data, setData] = useState<MaybeNull<unknown>>(null);
 
-/* eslint-disable perfectionist/sort-objects */
-const tabTriggersObj = {
-  all: `${i18ns.vocab}.all`,
-  pages: `${i18ns.vocab}.pages`,
-  blog: `${i18ns.vocab}.blog`
-} as const satisfies Record<TabValue, I18nVocabTarget>;
-/* eslint-enable perfectionist/sort-objects */
+  useEffect(() => {
+    async function fetchData() {
+      const data = await result.data();
+      setData(data);
+    }
+    fetchData();
+  }, [result]);
 
-/* eslint-disable perfectionist/sort-objects */
-const quickAccessBtnsObj = {
-  [ROUTES_ROOTS.WEBSITE]: { icon: HomeIcon, i18nTitle: `${i18ns.searchMenuSrOnly}.homepage-access` },
-  [ROUTES_ROOTS.BLOG]: { icon: PilcrowIcon, i18nTitle: `${i18ns.searchMenuSrOnly}.blog-access` },
-  [ROUTES_ROOTS.DASHBOARD]: { icon: LayoutDashboardIcon, i18nTitle: `${i18ns.searchMenuSrOnly}.dashboard-access` }
-} as const satisfies Record<AppPath, QuickAccessBtnMetadatas>;
-/* eslint-enable perfectionist/sort-objects */
+  if (!data) return null;
 
-const banners = Object.entries(bannersObj) as [keyof typeof bannersObj, (typeof bannersObj)[keyof typeof bannersObj]][];
+  // {ToDo} Type this
+  const yoloData = data as any;
 
-const tabTriggers = Object.entries(tabTriggersObj) as [keyof typeof tabTriggersObj, (typeof tabTriggersObj)[keyof typeof tabTriggersObj]][];
+  const url = yoloData.raw_url;
+  const prefix = '/server/app';
+  const suffix = '.html';
 
-const quickAccessBtns = Object.entries(quickAccessBtnsObj) as [AppPath, (typeof quickAccessBtnsObj)[keyof typeof quickAccessBtnsObj]][];
+  const cleanedUrl = url.replace(new RegExp(`^${prefix}`), '').replace(new RegExp(`${suffix}$`), '');
+
+  return (
+    <Link onClick={() => setIsOpened(false)} className={cn(className)} href={cleanedUrl}>
+      <h3>{yoloData.meta.title}</h3>
+      <p>{yoloData.excerpt}</p>
+    </Link>
+  );
+}
 
 const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const [searchText, setSearchText] = useState<string>(SEARCH_TEXT_INITIAL_STATE);
+  const [results, setResults] = useState(RESULTS_INITIAL_STATE);
   const [tabValue, setTabValue] = useState<TabValue>(TAB_VALUE_INITIAL_STATE);
   const inputFieldRef = useRef<HTMLInputElement>(null);
   const prevScreenBtnRef = useRef<HTMLButtonElement>(null);
@@ -73,6 +76,24 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
   const globalT = getClientSideI18n();
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => setSearchText(e.target.value);
+
+  useEffect(() => {
+    if (!window.pagefind) return;
+
+    if (debouncedSearchText === SEARCH_TEXT_INITIAL_STATE) {
+      setResults(RESULTS_INITIAL_STATE);
+      return;
+    }
+
+    async function tryToComputeAndSetResults() {
+      const search = await window.pagefind.search(debouncedSearchText);
+      setResults(search.results);
+    }
+
+    try {
+      tryToComputeAndSetResults();
+    } catch {}
+  }, [debouncedSearchText]);
 
   const updateMemorizedTabValueAndSetTabValue = useCallback((v: TabValue) => {
     memorizedTabValue.current = v;
@@ -133,6 +154,12 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
       );
     },
     [globalT, updateMemorizedTabValueAndSetTabValue]
+  );
+
+  // {ToDo} Type this
+  const buildResults = useCallback(
+    () => results.map((result) => <Result setIsOpened={setIsOpened} key={(result as any).id} className="mt-2" result={result} />),
+    [results]
   );
 
   const buildDefaultView = useCallback(
@@ -253,6 +280,7 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
         updateMemorizedTabValueAndSetTabValue(TAB_VALUE_INITIAL_STATE);
         setSearchText(SEARCH_TEXT_INITIAL_STATE);
         setDebouncedSearchText(SEARCH_TEXT_INITIAL_STATE);
+        setResults(RESULTS_INITIAL_STATE);
       }}
       open={isOpened}
     >
@@ -310,7 +338,7 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
               value={'all' satisfies TabValue}
               tabIndex={-1}
             >
-              {debouncedSearchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : debouncedSearchText}
+              {debouncedSearchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : buildResults()}
             </TabsContent>
             <TabsContent
               className={cn('mt-0 flex h-full max-h-full w-full flex-col items-center', {
@@ -319,7 +347,7 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
               value={'pages' satisfies TabValue}
               tabIndex={-1}
             >
-              {debouncedSearchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : debouncedSearchText}
+              {debouncedSearchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : buildResults()}
             </TabsContent>
             <TabsContent
               className={cn('mt-0 flex h-full max-h-full w-full flex-col items-center', {
@@ -328,7 +356,7 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
               value={'blog' satisfies TabValue}
               tabIndex={-1}
             >
-              {debouncedSearchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : debouncedSearchText}
+              {debouncedSearchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : buildResults()}
             </TabsContent>
           </div>
         </Tabs>
@@ -339,10 +367,6 @@ const NavbarSearchButton: FunctionComponent<NavbarSearchButtonProps> = () => {
 };
 
 export default NavbarSearchButton;
-
-type TabValue = (typeof ALL_TAB_VALUES)[Index];
-type IconComponentType<P = { className?: string }> = ComponentType<P>;
-type QuickAccessBtnMetadatas = { i18nTitle: I18nVocabTarget; icon: IconComponentType };
 
 enum EBannerPosition {
   FIRST,

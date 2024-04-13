@@ -4,7 +4,7 @@
 'use client';
 
 import type { HTMLAttributes as ReactHTMLAttributes, ComponentPropsWithoutRef, ElementRef } from 'react';
-import type { I18nVocabTarget } from 'packages/shared-types/src/I18n';
+import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
 import type { DialogProps } from '@radix-ui/react-dialog';
 
 import { DialogContent, Dialog } from '@/components/ui/Dialog';

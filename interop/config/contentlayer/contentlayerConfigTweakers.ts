@@ -114,6 +114,11 @@ const _ALL_BLOG_FIELDS = {
 } as const satisfies FieldDefs;
 
 const _ALL_LANDING_PAGES_FIELDS = {
+  doNotExcludeFromLocalSearch: {
+    type: 'boolean',
+    required: false,
+    default: false
+  },
   draft: {
     type: 'boolean',
     required: false,
@@ -223,6 +228,7 @@ export const LANDING_PAGES_DOCUMENTS_COMPUTED_FIELDS = {
 /* v8 ignore stop */
 
 export const LANDING_PAGES_DOCUMENTS_FIELDS = {
+  doNotExcludeFromLocalSearch: _ALL_LANDING_PAGES_FIELDS.doNotExcludeFromLocalSearch,
   metadescription: _ALL_LANDING_PAGES_FIELDS.metadescription,
   draft: _ALL_LANDING_PAGES_FIELDS.draft,
   title: _ALL_LANDING_PAGES_FIELDS.title
