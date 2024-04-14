@@ -4,7 +4,7 @@ import type { WithIsMobile, WithSession } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
 import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
-import { SignalSlashIcon, KeyIcon } from '@heroicons/react/20/solid';
+import { SignalSlashIcon, KeyIcon } from '@heroicons/react/16/solid';
 import UserImage from '@/components/ui/hoc/UserImage';
 import { useSession, signIn } from 'next-auth/react';
 import handleSignOut from '@/lib/misc/handleSignOut';

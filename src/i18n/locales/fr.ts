@@ -22,14 +22,18 @@ const SHARED: SharedVocabType = {
   },
 
   vocab: {
+    'start-typing': 'commencer à écrire',
     brand: 'Rust Team Management',
     breadcrumbs: "fil d'ariane",
     toc: 'table des matières',
     'sign-up': "s'inscrire",
     draft: 'ébauche',
+    pages: 'pages',
     logo: 'logo',
     page: 'page',
-    tags: 'tags'
+    tags: 'tags',
+    blog: 'blog',
+    all: 'tout'
   }
 } as const;
 
@@ -69,6 +73,22 @@ export default {
     'blog-testing-category': SHARED_TESTING_BLOG_CATEGORY_METADATAS
   },
 
+  navbar: {
+    'sr-only': {
+      'close-hamburger-menu': 'Fermer le menu de la barre de navigation (sections du site)',
+      'open-hamburger-menu': 'Ouvrir le menu de la barre de navigation (sections du site)',
+      'close-language-switcher-menu': 'Fermer le menu du choix de la langue',
+      'open-language-switcher-menu': 'Ouvrir le menu du choix de la langue',
+      'switch-to-light-mode': 'Passer sur le thème clair',
+      'switch-to-dark-mode': 'Passer sur le thème sombre',
+      'open-search-menu': 'Ouvrir le menu de recherche',
+      'language-switcher-menu': 'Choix de la langue',
+      'hamburger-menu': 'Sections du site'
+    },
+
+    assistance: 'Support'
+  },
+
   vocab: {
     ...SHARED.vocab,
     'sr-only': {
@@ -91,19 +111,22 @@ export default {
     next: 'Suivant'
   },
 
-  navbar: {
+  'search-menu': {
     'sr-only': {
-      'close-hamburger-menu': 'Fermer le menu de la barre de navigation (sections du site)',
-      'open-hamburger-menu': 'Ouvrir le menu de la barre de navigation (sections du site)',
-      'close-language-switcher-menu': 'Fermer le menu du choix de la langue',
-      'open-language-switcher-menu': 'Ouvrir le menu du choix de la langue',
-      'switch-to-light-mode': 'Passer sur le thème clair',
-      'switch-to-dark-mode': 'Passer sur le thème sombre',
-      'language-switcher-menu': 'Choix de la langue',
-      'hamburger-menu': 'Sections du site'
+      'choose-search-mode': 'Choisir le mode de recherche',
+      'close-search-menu': 'Fermer le menu de recherche',
+      'homepage-access': "Accès à la page d'accueil",
+      'dashboard-access': 'Accès au dashboard',
+      'prev-screen': 'Écran précédent',
+      'blog-access': 'Accès au blog',
+      'quick-access': 'Accès rapide',
+      'next-screen': 'Écran suivant'
     },
-
-    assistance: 'Support'
+    options: {
+      blog: "Recherche d'articles de blog",
+      pages: 'Recherche de pages',
+      all: 'Recherche globale'
+    }
   },
 
   dashboard: {
@@ -127,7 +150,7 @@ export default {
     'alphabet-asc': 'Alphabétique A-Z'
   },
 
-  blogToc: {
+  'blog-toc': {
     'sr-only': {
       'show-toc': `Afficher la ${SHARED.vocab.toc}`,
       'hide-toc': `Masquer la ${SHARED.vocab.toc}`
@@ -141,7 +164,7 @@ export default {
     drums: 'Batterie'
   },
 
-  blogTagsFilters: {
+  'blog-tags-filters': {
     'no-result-found': 'Rien trouvé !',
     'clear-filters': 'Réinitialiser'
   },

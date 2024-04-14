@@ -4,8 +4,8 @@ import type { WithClassname } from '@rtm/shared-types/Next';
 import type { PxValue } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
 
-import DesktopBlogTocCollapseButtonIconStyle, { SIZE_PX_VALUE } from '@/components/config/styles/blogToc/desktopTocCollapseButtonIconStyle';
-import { ArrowSmallDownIcon } from '@heroicons/react/20/solid';
+import DesktopBlogTocCollapseButtonIconStyle from '@/components/config/styles/blogToc/desktopTocCollapseButtonIconStyle';
+import { ArrowDownIcon } from '@radix-ui/react-icons';
 import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
@@ -48,7 +48,7 @@ const BlogPostTocCollapseButton: FunctionComponent<BlogPostTocCollapseButtonProp
           aria-label={ariaLabel}
           type={type}
         >
-          <ArrowSmallDownIcon className={tocCollapseBtnIconClassList} height={SIZE_PX_VALUE} width={SIZE_PX_VALUE} />
+          <ArrowDownIcon className={tocCollapseBtnIconClassList} />
         </button>
       )) || (
         <div
@@ -56,7 +56,7 @@ const BlogPostTocCollapseButton: FunctionComponent<BlogPostTocCollapseButtonProp
           style={{ height: COLLAPSE_BUTTON_HEIGTH_IN_PX + 'px' }}
           aria-hidden="true"
         >
-          <ArrowSmallDownIcon className={tocCollapseBtnIconClassList} height={SIZE_PX_VALUE} width={SIZE_PX_VALUE} />
+          <ArrowDownIcon className={tocCollapseBtnIconClassList} />
         </div>
       )}
     </div>

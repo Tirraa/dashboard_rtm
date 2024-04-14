@@ -44,6 +44,7 @@ const getAllDocumentHeadingsFromDOM = () => Array.from(document.querySelectorAll
 
 const getMdxBodyFromDOM = () => document.getElementById(ELEMENTS_ID.MDX_BODY);
 
+// {ToDo} https://github.com/Tirraa/dashboard_rtm/issues/126
 const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({
   setIsMagnetized,
   setIsCollapsed,

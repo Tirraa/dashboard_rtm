@@ -12,7 +12,7 @@ const { NOT_ACTIVE_CLASSNAME, ACTIVE_CLASSNAME } = BUTTON_CONFIG;
 const SidebarButtonStyle: IButtonStyleReactIcon = {
   isNotActiveClassList: cn(COMMONS, NOT_ACTIVE_CLASSNAME),
   isActiveClassList: cn(COMMONS, ACTIVE_CLASSNAME),
-  sidebarIconProps: { size: 25 }
+  sidebarIconProps: { fontSize: 25 }
 } as const;
 
 export default SidebarButtonStyle;

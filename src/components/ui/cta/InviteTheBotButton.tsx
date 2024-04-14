@@ -6,7 +6,7 @@
 import type { WithClassname } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
-import { CogIcon } from '@heroicons/react/20/solid';
+import { CogIcon } from '@heroicons/react/16/solid';
 import { getClientSideI18n } from '@/i18n/client';
 import { Button } from '@/components/ui/Button';
 import DISCORD_CONFIG from '@/config/discord';

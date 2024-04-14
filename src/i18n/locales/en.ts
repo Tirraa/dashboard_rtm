@@ -22,14 +22,18 @@ const SHARED: SharedVocabType = {
   },
 
   vocab: {
+    'start-typing': 'start typing',
     brand: 'Rust Team Management',
     breadcrumbs: 'breadcrumbs',
     toc: 'table of contents',
     'sign-up': 'sign up',
     draft: 'draft',
+    pages: 'pages',
     logo: 'logo',
     page: 'page',
-    tags: 'tags'
+    tags: 'tags',
+    blog: 'blog',
+    all: 'all'
   }
 } as const;
 
@@ -100,10 +104,29 @@ export default {
       'switch-to-light-mode': 'Switch to light mode',
       'switch-to-dark-mode': 'Switch to dark mode',
       'language-switcher-menu': 'Language choice',
+      'open-search-menu': 'Open search menu',
       'hamburger-menu': 'Website sections'
     },
 
     assistance: 'Assistance'
+  },
+
+  'search-menu': {
+    'sr-only': {
+      'choose-search-mode': 'Choose search mode',
+      'close-search-menu': 'Close search menu',
+      'dashboard-access': 'Dashboard access',
+      'homepage-access': 'Homepage access',
+      'prev-screen': 'Previous screen',
+      'quick-access': 'Quick access',
+      'blog-access': 'Blog access',
+      'next-screen': 'Next screen'
+    },
+    options: {
+      blog: 'Search blog posts',
+      pages: 'Search pages',
+      all: 'Global search'
+    }
   },
 
   dashboard: {
@@ -127,7 +150,7 @@ export default {
     'date-asc': 'Oldest first'
   },
 
-  blogToc: {
+  'blog-toc': {
     'sr-only': {
       'hide-toc': `Hide the ${SHARED.vocab.toc}`,
       'show-toc': `Show the ${SHARED.vocab.toc}`
@@ -141,7 +164,7 @@ export default {
     cello: 'Cello'
   },
 
-  blogTagsFilters: {
+  'blog-tags-filters': {
     'no-result-found': 'Nothing found!',
     'clear-filters': 'Clear'
   },

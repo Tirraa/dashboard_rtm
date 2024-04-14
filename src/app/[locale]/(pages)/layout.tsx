@@ -4,6 +4,7 @@
 import type { WithChildren } from '@rtm/shared-types/Next';
 
 import PagesRootElement from '@/components/layouts/base/PagesRootElement';
+import '@/app/pages-layout.css';
 
 export default function PagesLayout({ children }: WithChildren) {
   return <PagesRootElement>{children}</PagesRootElement>;

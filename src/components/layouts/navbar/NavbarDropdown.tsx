@@ -9,12 +9,12 @@ import NavbarDropdownMenuButtonStyle, {
 } from '@/components/config/styles/navbar/NavbarDropdownMenuButtonStyle';
 import { DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem, DropdownMenu } from '@/components/ui/DropdownMenu';
 import NavbarDropdownButtonIconStyle from '@/components/config/styles/navbar/NavbarDropdownButtonIconStyle';
+import { hrefAndPathnameExactMatch, hrefMatchesPathname } from '@/lib/str';
 import { getRefCurrentPtr, getLinkTarget } from '@rtm/shared-lib/react';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
-import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { useEffect, useState, useRef } from 'react';
 import { getClientSideI18n } from '@/i18n/client';
-import { hrefMatchesPathname } from '@/lib/str';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
@@ -36,6 +36,7 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities, currentPathname:
     const triggerRefInstance = getRefCurrentPtr(triggerRef);
     const minWidth = triggerRefInstance ? window.getComputedStyle(triggerRefInstance).width : '0';
     const isActive = hrefMatchesPathname(href, currentPathname);
+    const exactMatch = hrefAndPathnameExactMatch(href, currentPathname);
 
     return (
       <DropdownMenuItem
@@ -51,6 +52,7 @@ const menuItemsGenerator = (embeddedEntities: EmbeddedEntities, currentPathname:
           className={cn(NAVBAR_DROPDOWN_MENU_INNER_BUTTONS_CLASSLIST, {
             'font-bold text-white opacity-100 dark:text-white': isActive
           })}
+          aria-current={exactMatch ? 'page' : undefined}
           target={target}
           title={title}
           href={href}

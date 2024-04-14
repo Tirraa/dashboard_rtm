@@ -13,11 +13,16 @@ const BASE64URL_MAP: Base64UrlAssoc = {
 
 const FLIPPED_BASE64URL_MAP: Base64UrlAssoc = Object.fromEntries(Object.entries(BASE64URL_MAP).map(([k, v]) => [v, k]));
 
-// NOTE: Unsafe hard-coded RegEx for performance concerns, be diligent if you edit BASE64URL_MAP.
-const base64UrlEncode = (bufferString: BufferGarbage): EncodedString => btoa(bufferString).replace(/[+/=]/g, (c: Char) => BASE64URL_MAP[c]);
+const [BASE64_URL_ENCODE_REGEX, BASE64_URL_DECODE_REGEX] = [
+  new RegExp(`[${Object.keys(BASE64URL_MAP).join('')}]`, 'g'),
+  new RegExp(`[${Object.keys(FLIPPED_BASE64URL_MAP).join('')}]`, 'g')
+];
 
-// NOTE: Unsafe hard-coded RegEx for performance concerns, be diligent if you edit BASE64URL_MAP.
-const base64UrlDecode = (encodedString: EncodedString): BufferGarbage => atob(encodedString.replace(/[-_]/g, (c: Char) => FLIPPED_BASE64URL_MAP[c]));
+const base64UrlEncode = (bufferString: BufferGarbage): EncodedString =>
+  btoa(bufferString).replace(BASE64_URL_ENCODE_REGEX, (c: Char) => BASE64URL_MAP[c]);
+
+const base64UrlDecode = (encodedString: EncodedString): BufferGarbage =>
+  atob(encodedString.replace(BASE64_URL_DECODE_REGEX, (c: Char) => FLIPPED_BASE64URL_MAP[c]));
 
 /**
  * @throws {RangeError}

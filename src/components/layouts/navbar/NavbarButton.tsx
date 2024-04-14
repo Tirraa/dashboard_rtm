@@ -5,10 +5,10 @@ import type { AtomicNavDataEntity } from '@/types/NavData';
 import type { AppPath } from '@rtm/shared-types/Next';
 
 import NavbarButtonStyle from '@/components/config/styles/navbar/NavbarButtonStyle';
+import { hrefAndPathnameExactMatch, hrefMatchesPathname } from '@/lib/str';
 import getLinkTarget from '@rtm/shared-lib/portable/react/getLinkTarget';
 import { getClientSideI18n } from '@/i18n/client';
 import { Button } from '@/components/ui/Button';
-import { hrefMatchesPathname } from '@/lib/str';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
@@ -54,19 +54,22 @@ const ButtonAsIs: FunctionComponent<Pick<NavbarButtonProps, 'i18nTitle' | 'onCli
 const ButtonAsLink: FunctionComponent<Pick<AtomicNavDataEntity, 'i18nTitle' | 'path'> & OptionalIcon> = ({ path: href, i18nTitle, icon }) => {
   const globalT = getClientSideI18n();
   const currentPathname = usePathname();
-  const className = hrefMatchesPathname(href, currentPathname) ? isActiveClassList : isNotActiveClassList;
+  const isActive = hrefMatchesPathname(href, currentPathname);
+  const className = isActive ? isActiveClassList : isNotActiveClassList;
   const target = getLinkTarget(href);
+  const exactMatch = hrefAndPathnameExactMatch(href, currentPathname);
 
   if (icon) {
     return (
-      <Link className={cn(className, 'flex items-center')} target={target} href={href}>
+      <Link className={cn(className, 'flex items-center')} aria-current={exactMatch ? 'page' : undefined} target={target} href={href}>
         {icon}
         {globalT(i18nTitle)}
       </Link>
     );
   }
+
   return (
-    <Link className={className} target={target} href={href}>
+    <Link aria-current={exactMatch ? 'page' : undefined} className={className} target={target} href={href}>
       {globalT(i18nTitle)}
     </Link>
   );

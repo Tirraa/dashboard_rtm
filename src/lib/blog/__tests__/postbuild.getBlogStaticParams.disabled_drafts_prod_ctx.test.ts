@@ -16,7 +16,7 @@ vi.mock('##/config/i18n', async (orgImport) => {
 
   return {
     ...mod,
-    LANGUAGES: [mod.DEFAULT_LANGUAGE, ...TESTING_BLOG_CATEGORY_FAKE_LANGUAGES]
+    LANGUAGES: Array.from(new Set<string>([mod.DEFAULT_LANGUAGE, ...TESTING_BLOG_CATEGORY_FAKE_LANGUAGES]))
   };
 });
 

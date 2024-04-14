@@ -8,11 +8,11 @@ import DASHBOARD_ROUTES, { DASHBOARD_ROUTES_TITLES } from '@/config/DashboardSid
 import DASHBOARD_ROUTES_SIDEBAR_COMPONENTS from '@/config/DashboardSidebar/utils/IconsMapping';
 import SidebarButtonStyle from '@/components/config/styles/sidebar/SidebarButtonStyle';
 import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
+import { hrefAndPathnameExactMatch, hrefMatchesPathname } from '@/lib/str';
 import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { getDirection } from '@rtm/shared-lib/html';
 import { useEffect, useState, useRef } from 'react';
-import { hrefMatchesPathname } from '@/lib/str';
 import { usePathname } from 'next/navigation';
 import ROUTES_ROOTS from '##/config/routes';
 import { cn } from '@/lib/tailwind';
@@ -38,9 +38,17 @@ function sidebarBtnsGenerator(currentPathname: AppPath): ReactElement[] {
 
     const sidebarButtonClassName = hrefMatchesPathname(href, currentPathname, ROUTES_ROOTS.DASHBOARD) ? isActiveClassList : isNotActiveClassList;
 
+    const exactMatch = hrefAndPathnameExactMatch(href, currentPathname);
+
     return (
       <li key={`${k}-sidebar-btn-component`}>
-        <Link className={cn('flex w-fit max-w-full flex-col rounded-lg', sidebarButtonClassName)} title={title} href={href}>
+        <Link
+          className={cn('flex w-fit max-w-full flex-col rounded-lg', sidebarButtonClassName)}
+          aria-current={exactMatch ? 'page' : undefined}
+          role="menuitem"
+          title={title}
+          href={href}
+        >
           <span className="sr-only">{title}</span>
           {btnComponent}
         </Link>
@@ -50,6 +58,7 @@ function sidebarBtnsGenerator(currentPathname: AppPath): ReactElement[] {
   });
 }
 
+// {ToDo} https://github.com/Tirraa/dashboard_rtm/issues/126
 const DashboardSidebar: FunctionComponent<DashboardSidebarProps> = () => {
   const wasCollapsed = useRef<boolean>(false);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(wasCollapsed.current);

@@ -1,9 +1,11 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import type { Href } from '@rtm/shared-types/Next';
+
 type DiscordConfigType = {
-  SUPPORT_SERVER_INVITE_LINK: string;
-  BOT_INVITE_LINK: string;
+  SUPPORT_SERVER_INVITE_LINK: Href;
+  BOT_INVITE_LINK: Href;
 };
 
 const [CLIENT_ID, PERMISSIONS]: [string, string] = ['1120800430897778700', '8'];

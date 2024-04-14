@@ -3,32 +3,33 @@
 
 import type { PxValue, Count } from '@rtm/shared-types/Numbers';
 import type { ButtonProps } from '@/components/ui/Button';
+import type { ComponentProps, ReactElement } from 'react';
 
 import { DotsHorizontalIcon, ChevronRightIcon, ChevronLeftIcon } from '@radix-ui/react-icons';
 import { DropdownMenuTrigger, DropdownMenu } from '@radix-ui/react-dropdown-menu';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { buttonVariants } from '@/components/ui/Button';
+import { forwardRef, useState, useRef } from 'react';
 import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
-import * as React from 'react';
 import Link from 'next/link';
 
 import { DropdownMenuContent } from './DropdownMenu';
 
-const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => {
+const Pagination = ({ className, ...props }: ComponentProps<'nav'>) => {
   const scopedT = useScopedI18n(i18ns.vocab);
 
   return <nav className={cn('mx-auto flex w-full justify-center', className)} aria-label={scopedT('pagination')} role="navigation" {...props} />;
 };
 Pagination.displayName = 'Pagination';
 
-const PaginationContent = React.forwardRef<HTMLUListElement, React.ComponentProps<'ul'>>(({ className, ...props }, ref) => (
+const PaginationContent = forwardRef<HTMLUListElement, ComponentProps<'ul'>>(({ className, ...props }, ref) => (
   <ul className={cn('flex flex-row items-center gap-1', className)} ref={ref} {...props} />
 ));
 PaginationContent.displayName = 'PaginationContent';
 
-const PaginationItem = React.forwardRef<HTMLLIElement, React.ComponentProps<'li'>>(({ className, ...props }, ref) => (
+const PaginationItem = forwardRef<HTMLLIElement, ComponentProps<'li'>>(({ className, ...props }, ref) => (
   <li className={className} ref={ref} {...props} />
 ));
 PaginationItem.displayName = 'PaginationItem';
@@ -36,7 +37,7 @@ PaginationItem.displayName = 'PaginationItem';
 type PaginationLinkProps = {
   isActive?: boolean;
 } & Pick<ButtonProps, 'size'> &
-  React.ComponentProps<typeof Link>;
+  ComponentProps<typeof Link>;
 
 const PaginationLink = ({ size = 'icon', className, isActive, ...props }: PaginationLinkProps) => (
   <Link
@@ -53,7 +54,7 @@ const PaginationLink = ({ size = 'icon', className, isActive, ...props }: Pagina
 );
 PaginationLink.displayName = 'PaginationLink';
 
-const PaginationPrevious = ({ className, ...props }: React.ComponentProps<typeof PaginationLink>) => {
+const PaginationPrevious = ({ className, ...props }: ComponentProps<typeof PaginationLink>) => {
   const scopedT = useScopedI18n(i18ns.vocab);
 
   return (
@@ -65,7 +66,7 @@ const PaginationPrevious = ({ className, ...props }: React.ComponentProps<typeof
 };
 PaginationPrevious.displayName = 'PaginationPrevious';
 
-const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof PaginationLink>) => {
+const PaginationNext = ({ className, ...props }: ComponentProps<typeof PaginationLink>) => {
   const scopedT = useScopedI18n(i18ns.vocab);
 
   return (
@@ -83,10 +84,10 @@ const PaginationEllipsis = ({
   dropdownItems,
   className,
   ...props
-}: React.ComponentProps<'button'> & { dropdownItems: React.ReactElement[]; pageNumberIndicator?: Count; isBottomWidget?: boolean }) => {
+}: ComponentProps<'button'> & { dropdownItems: ReactElement[]; pageNumberIndicator?: Count; isBottomWidget?: boolean }) => {
   const scopedT = useScopedI18n(i18ns.vocab);
-  const [isOpened, setIsOpened] = React.useState<boolean>(false);
-  const dropdownContentRef = React.useRef<HTMLDivElement>(null);
+  const [isOpened, setIsOpened] = useState<boolean>(false);
+  const dropdownContentRef = useRef<HTMLDivElement>(null);
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (dropdownItems.length === 0) return null;
@@ -111,6 +112,26 @@ const PaginationEllipsis = ({
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
+        onAnimationEnd={() => {
+          if (!isOpened) return;
+          const dropdownContentInstance = getRefCurrentPtr(dropdownContentRef);
+          if (!dropdownContentInstance) return;
+
+          const SCROLL_OFFSET_Y: PxValue = 4;
+
+          let activePageNodeIndex = 0;
+          const links = dropdownContentInstance.querySelectorAll('a');
+          for (let i = 0; i < links.length; i++) {
+            if (links[i].getAttribute('aria-current') === 'page') break;
+            activePageNodeIndex++;
+          }
+
+          let scrollDist = 0;
+          for (let i = 0; i < activePageNodeIndex; i++) scrollDist += links[i].getBoundingClientRect().height;
+          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          if (activePageNodeIndex !== 0) scrollDist += SCROLL_OFFSET_Y;
+          dropdownContentInstance.scrollTo({ behavior: 'smooth', top: scrollDist });
+        }}
         onClick={(event) => {
           if (isBottomWidget) setIsOpened(false);
           if (!(event.target instanceof HTMLAnchorElement)) return;
@@ -130,25 +151,6 @@ const PaginationEllipsis = ({
           let scrollDist = 0;
           for (let i = 0; i < newActivePageNodeIndex; i++) scrollDist += links[i].getBoundingClientRect().height;
           dropdownContentInstance.scrollTo({ top: scrollDist - SCROLL_OFFSET_Y, behavior: 'smooth' });
-        }}
-        onAnimationEnd={() => {
-          const dropdownContentInstance = getRefCurrentPtr(dropdownContentRef);
-          if (!dropdownContentInstance) return;
-
-          const SCROLL_OFFSET_Y: PxValue = 4;
-
-          let activePageNodeIndex = 0;
-          const links = dropdownContentInstance.querySelectorAll('a');
-          for (let i = 0; i < links.length; i++) {
-            if (links[i].getAttribute('aria-current') === 'page') break;
-            activePageNodeIndex++;
-          }
-
-          let scrollDist = 0;
-          for (let i = 0; i < activePageNodeIndex; i++) scrollDist += links[i].getBoundingClientRect().height;
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-          if (activePageNodeIndex !== 0) scrollDist += SCROLL_OFFSET_Y;
-          dropdownContentInstance.scrollTo({ behavior: 'smooth', top: scrollDist });
         }}
         className={cn('max-h-[228px] w-fit overflow-y-auto', {
           'max-h-[210px] overflow-y-auto': pageNumberIndicator

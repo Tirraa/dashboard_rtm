@@ -18,6 +18,7 @@ export interface PaginationWidgetProps extends Partial<WithClassname> {
   currentPage: Count;
 }
 
+// {ToDo} https://github.com/Tirraa/dashboard_rtm/issues/126
 const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmount, currentPage, className }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();

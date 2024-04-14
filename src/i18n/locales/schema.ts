@@ -17,13 +17,17 @@ export const PAGES_TITLES = {
 
 export const SHARED_VOCAB_SCHEMA = {
   vocab: {
+    'start-typing': _,
     breadcrumbs: _,
     'sign-up': _,
     brand: _,
     draft: _,
+    pages: _,
     logo: _,
     page: _,
     tags: _,
+    blog: _,
+    all: _,
     toc: _
   },
 
@@ -62,10 +66,29 @@ export default {
       'switch-to-light-mode': _,
       'open-hamburger-menu': _,
       'switch-to-dark-mode': _,
+      'open-search-menu': _,
       'hamburger-menu': _
     },
 
     assistance: _
+  },
+
+  'search-menu': {
+    'sr-only': {
+      'choose-search-mode': _,
+      'close-search-menu': _,
+      'dashboard-access': _,
+      'homepage-access': _,
+      'quick-access': _,
+      'blog-access': _,
+      'next-screen': _,
+      'prev-screen': _
+    },
+    options: {
+      pages: _,
+      blog: _,
+      all: _
+    }
   },
 
   dashboard: {
@@ -89,14 +112,14 @@ export default {
     'date-asc': _
   },
 
-  blogToc: {
+  'blog-toc': {
     'sr-only': {
       'hide-toc': _,
       'show-toc': _
     }
   },
 
-  blogTagsFilters: {
+  'blog-tags-filters': {
     'no-result-found': _,
     'clear-filters': _
   },

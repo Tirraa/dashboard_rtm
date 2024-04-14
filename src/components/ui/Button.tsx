@@ -1,19 +1,20 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import type { ButtonHTMLAttributes as ReactButtonHTMLAttributes, FunctionComponent, MouseEventHandler } from 'react';
 import type { VariantProps } from 'class-variance-authority';
 
 import getLinkTarget from '@rtm/shared-lib/portable/react/getLinkTarget';
 import { cva } from 'class-variance-authority';
 import { Slot } from '@radix-ui/react-slot';
 import { cn } from '@/lib/tailwind';
-import * as React from 'react';
+import { forwardRef } from 'react';
 import Link from 'next/link';
 
 import BUTTON_CONFIG from '../config/styles/buttons';
 
 interface ButtonHoCProps extends ButtonProps {
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   withTransparentBackground?: boolean;
   href?: string;
 }
@@ -44,11 +45,11 @@ const buttonVariants = cva(
   }
 );
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
+export interface ButtonProps extends ReactButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 
-const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(({ asChild = false, className, variant, size, ...props }, ref) => {
+const ButtonBase = forwardRef<HTMLButtonElement, ButtonProps>(({ asChild = false, className, variant, size, ...props }, ref) => {
   const Comp = asChild ? Slot : 'button';
   return <Comp className={cn(buttonVariants({ className, variant, size }))} ref={ref} {...props} />;
 });
@@ -58,7 +59,7 @@ ButtonBase.displayName = 'Button';
  * @hoc
  * @extends {ButtonBase} - AsLink?, LinkTarget?
  */
-const Button: React.FunctionComponent<ButtonHoCProps> = ({
+const Button: FunctionComponent<ButtonHoCProps> = ({
   className: classNameValue,
   withTransparentBackground,
   onClick: maybeOnClick,

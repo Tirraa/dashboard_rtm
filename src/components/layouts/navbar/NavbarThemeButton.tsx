@@ -4,7 +4,7 @@ import type { FunctionComponent } from 'react';
 
 import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
 import { DEFAULT_DARK_VARIANT, DEFAULT_VARIANT } from '@/config/themes';
-import { MoonIcon, SunIcon } from '@heroicons/react/20/solid';
+import { MoonIcon, SunIcon } from '@heroicons/react/16/solid';
 import { Button } from '@/components/ui/Button';
 import { useScopedI18n } from '@/i18n/client';
 import { useEffect, useState } from 'react';

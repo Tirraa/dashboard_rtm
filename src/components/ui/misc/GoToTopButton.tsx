@@ -6,7 +6,7 @@ import type { FunctionComponent } from 'react';
 import { APPROX_120_FPS_THROTTLE_TIMING_IN_MS } from '@/config/throttling';
 import { useCallback, useEffect, useState, useRef } from 'react';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
-import { ArrowUpIcon } from '@heroicons/react/20/solid';
+import { ArrowUpIcon } from '@radix-ui/react-icons';
 import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
 import { getFooter } from '@/lib/html';
@@ -128,7 +128,7 @@ const GoToTopButton: FunctionComponent<GoToTopButtonProps> = ({ scrollYthreshold
       disabled={!isShown}
       ref={btnRef}
     >
-      <ArrowUpIcon />
+      <ArrowUpIcon className="h-full w-full" />
     </button>
   );
 };

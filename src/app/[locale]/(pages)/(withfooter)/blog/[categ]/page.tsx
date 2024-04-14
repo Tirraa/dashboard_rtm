@@ -26,7 +26,7 @@ export default function Page({ params }: BlogCategoryPageProps) {
   setStaticParamsLocale(language);
 
   return (
-    <div className="mx-8 flex flex-col items-center lg:mx-auto lg:max-w-[750px]">
+    <div className="mx-8 flex flex-col items-center lg:mx-auto lg:max-w-[750px]" data-pagefind-ignore>
       <Breadcrumbs className="my-4 w-fit self-start" />
       <CategoryRelatedSubcategoriesAndBlogPosts params={params} />
     </div>

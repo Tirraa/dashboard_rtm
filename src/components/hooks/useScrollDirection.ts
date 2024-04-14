@@ -1,5 +1,7 @@
 // https://www.robinwieruch.de/react-hook-scroll-direction/
 
+import type { SetStateAction, Dispatch } from 'react';
+
 import { MINIMAL_THROTTLE_TIMING_IN_MS } from '@/config/throttling';
 import { useEffect, useState, useRef } from 'react';
 import throttle from 'throttleit';
@@ -8,7 +10,7 @@ const THRESHOLD = 0;
 
 type ScrollDirection = 'down' | 'up';
 
-const useScrollDirection = (): [ScrollDirection, React.Dispatch<React.SetStateAction<ScrollDirection>>] => {
+const useScrollDirection = (): [ScrollDirection, Dispatch<SetStateAction<ScrollDirection>>] => {
   const [scrollDirection, setScrollDirection] = useState<ScrollDirection>('down');
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers

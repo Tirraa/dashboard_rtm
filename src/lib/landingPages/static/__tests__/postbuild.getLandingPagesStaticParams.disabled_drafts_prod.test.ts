@@ -15,7 +15,7 @@ vi.mock('##/config/i18n', async (orgImport) => {
 
   return {
     ...mod,
-    LANGUAGES: [mod.DEFAULT_LANGUAGE, ...TESTING_LP_FAKE_LANGUAGES]
+    LANGUAGES: Array.from(new Set<string>([mod.DEFAULT_LANGUAGE, ...TESTING_LP_FAKE_LANGUAGES]))
   };
 });
 
@@ -149,7 +149,7 @@ vi.mock('@/config/landingPages', async (orgImport) => {
       title: 'FAKE',
       draft: false
     }
-  ] satisfies Omit<LandingPage, 'body'>[];
+  ] satisfies Omit<LandingPage, 'doNotExcludeFromLocalSearch' | 'body'>[];
 
   return {
     default: {

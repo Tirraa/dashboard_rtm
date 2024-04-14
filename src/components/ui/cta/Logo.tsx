@@ -4,7 +4,9 @@ import type { FunctionComponent } from 'react';
 
 import { getRefCurrentPtr, getLinkTarget } from '@rtm/shared-lib/react';
 import { useCallback, useEffect, useState, useRef } from 'react';
+import { getClientSideI18n } from '@/i18n/client';
 import DISCORD_CONFIG from '@/config/discord';
+import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -22,6 +24,7 @@ const Logo: FunctionComponent<LogoProps> = ({ onPageEnterAnimation, animatedOnHo
   const target = getLinkTarget(href);
   const imgRef = useRef<HTMLImageElement>(null);
   const [onLoadAnimation, setOnLoadAnimation] = useState<string>(onPageEnterAnimation ? ON_PAGE_ENTER_CLS : '');
+  const globalT = getClientSideI18n();
 
   const onMouseEnterCb = useCallback(() => {
     if (onLoadAnimation || !animatedOnHover) return;
@@ -73,13 +76,13 @@ const Logo: FunctionComponent<LogoProps> = ({ onPageEnterAnimation, animatedOnHo
     <Image
       src="/assets/medias/img/rust-team-management-logo-full-body.svg"
       className={cn('m-auto select-none', onLoadAnimation)}
+      alt={globalT(`${i18ns.srOnly}.brand-logo`)}
       onMouseEnter={onMouseEnterCb}
       draggable={false}
       height={201.45}
       ref={imgRef}
       width={226}
       priority
-      alt=""
     />
   );
 
