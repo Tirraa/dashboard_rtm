@@ -102,8 +102,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       lucide-react:
-        specifier: ^0.331.0
-        version: 0.331.0(react@18.2.0)
+        specifier: ^0.368.0
+        version: 0.368.0(react@18.2.0)
       mobile-detect:
         specifier: ^1.4.5
         version: 1.4.5
@@ -7146,8 +7146,8 @@ packages:
     dependencies:
       yallist: 4.0.0
 
-  /lucide-react@0.331.0(react@18.2.0):
-    resolution: {integrity: sha512-CHFJ0ve9vaZ7bB2VRAl27SlX1ELh6pfNC0jS96qGpPEEzLkLDGq4pDBFU8RhOoRMqsjXqTzLm9U6bZ1OcIHq7Q==}
+  /lucide-react@0.368.0(react@18.2.0):
+    resolution: {integrity: sha512-soryVrCjheZs8rbXKdINw9B8iPi5OajBJZMJ1HORig89ljcOcEokKKAgGbg3QWxSXel7JwHOfDFUdDHAKyUAMw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:

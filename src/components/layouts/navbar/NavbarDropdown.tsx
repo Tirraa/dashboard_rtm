@@ -12,7 +12,7 @@ import NavbarDropdownButtonIconStyle from '@/components/config/styles/navbar/Nav
 import { hrefAndPathnameExactMatch, hrefMatchesPathname } from '@/lib/str';
 import { getRefCurrentPtr, getLinkTarget } from '@rtm/shared-lib/react';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
-import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { useEffect, useState, useRef } from 'react';
 import { getClientSideI18n } from '@/i18n/client';
 import { usePathname } from 'next/navigation';

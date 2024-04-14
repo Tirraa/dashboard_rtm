@@ -2,9 +2,9 @@
 
 import type { FunctionComponent } from 'react';
 
-import SidebarCollapseButtonIconStyle, { SIZE_PX_VALUE } from '@/components/config/styles/sidebar/SidebarCollapseButtonIconStyle';
 import SidebarCollapseButtonWrapperStyle from '@/components/config/styles/sidebar/SidebarCollapseButtonWrapperStyle';
-import { ArrowSmallRightIcon, ArrowSmallDownIcon } from '@heroicons/react/20/solid';
+import SidebarCollapseButtonIconStyle from '@/components/config/styles/sidebar/SidebarCollapseButtonIconStyle';
+import { ArrowRightIcon, ArrowDownIcon } from '@radix-ui/react-icons';
 import { useScopedI18n } from '@/i18n/client';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
@@ -32,11 +32,11 @@ const DashboardSidebarCollapseButton: FunctionComponent<DashboardSidebarCollapse
   return (
     <div className={sidebarCollapseBtnWrapperClassList} onClick={() => setIsCollapsed(!isCollapsed)}>
       <button className={cn(sidebarCollapseBtnClassList, 'hidden lg:inline')} aria-expanded={ariaExpanded} aria-label={ariaLabel} type={type}>
-        <ArrowSmallRightIcon className={sidebarCollapseBtnIconClassList} height={SIZE_PX_VALUE} width={SIZE_PX_VALUE} />
+        <ArrowRightIcon className={sidebarCollapseBtnIconClassList} />
       </button>
 
       <button className={cn(sidebarCollapseBtnClassList, 'lg:hidden')} aria-expanded={ariaExpanded} aria-label={ariaLabel} type={type}>
-        <ArrowSmallDownIcon className={sidebarCollapseBtnIconClassList} height={SIZE_PX_VALUE} width={SIZE_PX_VALUE} />
+        <ArrowDownIcon className={sidebarCollapseBtnIconClassList} />
       </button>
     </div>
   );
