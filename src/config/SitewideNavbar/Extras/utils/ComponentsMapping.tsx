@@ -1,8 +1,8 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import NavbarSearchButton from '@/components/layouts/navbar/search/NavbarSearchButton';
 import NavbarLanguageMenu from '@/components/layouts/navbar/NavbarLanguageMenu';
-import NavbarSearchButton from '@/components/layouts/navbar/NavbarSearchButton';
 import NavbarLoginButton from '@/components/layouts/navbar/NavbarLoginButton';
 import NavbarThemeButton from '@/components/layouts/navbar/NavbarThemeButton';
 

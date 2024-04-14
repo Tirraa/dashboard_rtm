@@ -3,8 +3,8 @@ import type { FunctionComponent } from 'react';
 
 import { hrefAndPathnameExactMatch } from '@/lib/str';
 import { usePathname } from 'next/navigation';
-import { Link } from 'lucide-react';
 import { cn } from '@/lib/tailwind';
+import Link from 'next/link';
 
 // {ToDo} Type this
 type PagefindResult = any;
