@@ -251,8 +251,9 @@ const NavbarSearchButton = <AllTabValues extends readonly string[]>({
             </div>
           </DialogHeader>
           <div
-            className={cn("flex-1 rounded-md after:block after:h-10 after:content-['']", {
-              'border border-input': debouncedSearchText !== SEARCH_TEXT_INITIAL_STATE
+            className={cn('flex-1 rounded-md', {
+              'min-h-0 overflow-y-auto border border-input px-2 [&>*>*]:pb-2 first:[&>*>*]:py-2': results !== null,
+              "after:block after:h-10 after:content-['']": debouncedSearchText === SEARCH_TEXT_INITIAL_STATE
             })}
           >
             {/* {ToDo} Generate these TabsContent programmatically */}

@@ -9,6 +9,49 @@ import { capitalize } from '@/lib/str';
 
 import Result from '../../Result';
 
+// {ToDo} WTF
+const __fakeResults = [
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} href={'#osef'} key={'stupid'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid1'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid2'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid3'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid4'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid5'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid6'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid7'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid8'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid9'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid10'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid11'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid12'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid13'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid14'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid15'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid16'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid17'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid18'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid19'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid20'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid21'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid22'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid23'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid24'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid25'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid26'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid27'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid28'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid29'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid30'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid31'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid32'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid33'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid34'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid35'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid36'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid37'} href={'#osef'} />,
+  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid38'} href={'#osef'} />
+];
+
 export function doUpdateMemorizedTabValueAndSetTabValue(v: string, memorizedTabValue: MutableRefObject<string>, setTabValue: (v: string) => unknown) {
   memorizedTabValue.current = v;
   setTabValue(v);
@@ -65,6 +108,12 @@ export const createNavbarSearchButtonProps = <
  * @throws
  */
 export async function computeAndSetResults(debouncedSearchText: string, setResults: (results: ReactElement[]) => void) {
+  // {ToDo} Find a better way to handle this on its root
+  if (process.env.NODE_ENV === 'development') {
+    setResults(__fakeResults);
+    return;
+  }
+
   const search = await window.pagefind.search(debouncedSearchText);
 
   // {ToDo} Type this
@@ -86,7 +135,7 @@ export async function computeAndSetResults(debouncedSearchText: string, setResul
     const metaTitle = yoloData.meta.title as string;
     const excerpt = yoloData.excerpt as string;
 
-    results.push(<Result key={(result as any).id} metaTitle={metaTitle} excerpt={excerpt} href={cleanedUrl} className="mt-2" result={result} />);
+    results.push(<Result key={(result as any).id} metaTitle={metaTitle} excerpt={excerpt} href={cleanedUrl} />);
   }
 
   setResults(results);

@@ -6,11 +6,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
-// {ToDo} Type this
-type PagefindResult = any;
-
 interface ResultProps extends Partial<WithClassname> {
-  result: PagefindResult;
   metaTitle: string;
   excerpt: string;
   href: AppPath;
