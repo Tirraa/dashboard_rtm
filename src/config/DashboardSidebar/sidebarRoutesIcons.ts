@@ -3,13 +3,13 @@
 
 import type { DashboardRoutesIcons } from '@/config/DashboardSidebar/utils/IconsMapping';
 
-import { RxActivityLog, RxSketchLogo, RxDashboard } from 'react-icons/rx';
+import { ActivityLogIcon, SketchLogoIcon, DashboardIcon } from '@radix-ui/react-icons';
 
 /* eslint-disable perfectionist/sort-objects */
 const SIDEBAR_ROUTES_ICONS: DashboardRoutesIcons = {
-  MAIN_PAGE: RxSketchLogo,
-  BAR_PAGE: RxActivityLog,
-  FOO_PAGE: RxDashboard
+  MAIN_PAGE: SketchLogoIcon,
+  BAR_PAGE: ActivityLogIcon,
+  FOO_PAGE: DashboardIcon
 };
 /* eslint-enable perfectionist/sort-objects */
 

@@ -22,5 +22,5 @@
     "@rtm/shared-types": "*",
     "typescript": "^5.4.4"
   },
-  "packageManager": "^pnpm@8.15.6"
+  "packageManager": "^pnpm@8.15.7"
 }

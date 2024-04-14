@@ -1,12 +1,12 @@
 /* v8 ignore start */
 // Stryker disable all
 
-import type { IconBaseProps } from 'react-icons';
+import type { IconProps } from '@radix-ui/react-icons/dist/types';
 
 import type IButtonStyleBase from './IButtonStyleBase';
 
 interface IButtonStyleReactIcon extends IButtonStyleBase {
-  sidebarIconProps: IconBaseProps;
+  sidebarIconProps: IconProps;
 }
 
 export default IButtonStyleReactIcon;

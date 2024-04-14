@@ -87,7 +87,6 @@
     "pagefind": "^1.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^5.0.1",
     "react-spinners": "^0.13.8",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-external-links": "^3.0.0",
@@ -154,5 +153,5 @@
   "engines": {
     "node": "^20.x"
   },
-  "packageManager": "^pnpm@8.15.6"
+  "packageManager": "^pnpm@8.15.7"
 }
