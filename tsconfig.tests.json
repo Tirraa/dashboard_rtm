@@ -32,6 +32,14 @@
     }
   },
 
-  "include": ["next-env.d.ts", ".next/types/**/*.ts", ".contentlayer/generated", ".rtm-generated", "vitest.config.mts", "**/*.test.ts"],
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    ".contentlayer/generated",
+    ".rtm-generated",
+    "vitest.config.mts",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ],
   "exclude": ["node_modules", "**/*.test-d.ts"]
 }

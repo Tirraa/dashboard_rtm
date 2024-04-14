@@ -149,7 +149,7 @@ vi.mock('@/config/landingPages', async (orgImport) => {
       title: 'FAKE',
       draft: false
     }
-  ] satisfies Omit<LandingPage, 'body'>[];
+  ] satisfies Omit<LandingPage, 'doNotExcludeFromLocalSearch' | 'body'>[];
 
   return {
     default: {
