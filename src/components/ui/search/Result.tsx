@@ -23,6 +23,7 @@ const Result: FunctionComponent<ResultProps> = ({ className, metaTitle, excerpt,
   return (
     <Link
       className={cn(
+        'w-full',
         {
           'pointer-events-none opacity-50': exactMatch
         },
