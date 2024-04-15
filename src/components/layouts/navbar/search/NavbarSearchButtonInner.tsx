@@ -18,7 +18,7 @@ import { DialogContent, DialogTrigger, DialogHeader, Dialog } from '@/components
 import { useCallback, useEffect, useState, Fragment, useMemo, useRef } from 'react';
 import { TabsContent, TabsList, Tabs } from '@/components/ui/Tabs';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
-import { initPagefind } from '@/components/hooks/usePagefind';
+import { preloadPagefind } from '@/components/hooks/usePagefind';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { getClientSideI18n } from '@/i18n/client';
 import { Input } from '@/components/ui/Input';
@@ -210,12 +210,9 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
       open={isOpened}
     >
       <DialogTrigger
-        onMouseOver={() => {
-          try {
-            initPagefind();
-          } catch {}
-        }}
         aria-label={globalT(`${i18ns.navbar}.sr-only.open-search-menu`)}
+        onMouseOver={preloadPagefind}
+        onFocus={preloadPagefind}
         className="h-full w-4"
       >
         <MagnifyingGlassIcon />

@@ -4,6 +4,7 @@
 public/robots.txt
 public/sitemap*.xml
 public/sitemap.xml
+public/pagefind/*
 
 # * ... 割れたガラスの先　滲む鉄の色; 味わい吐き出せば　無意味に朽ちたさえずり;;
 .env

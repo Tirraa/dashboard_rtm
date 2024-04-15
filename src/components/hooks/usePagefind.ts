@@ -5,9 +5,15 @@ import type { LanguageFlag } from '@rtm/shared-types/I18n';
 
 import { useEffect } from 'react';
 
-export async function initPagefind() {
+async function initPagefind() {
   if (typeof window.pagefind === 'undefined') return;
   await window.pagefind.init();
+}
+
+export function preloadPagefind() {
+  try {
+    initPagefind();
+  } catch {}
 }
 
 // {ToDo} https://github.com/CloudCannon/pagefind/issues/596
@@ -16,7 +22,7 @@ function usePagefind(currentLocale: LanguageFlag) {
     async function bootOrRebootPagefind() {
       async function bootPagefind() {
         // @ts-ignore generated after build
-        const pagefindInstance = await import(/* webpackIgnore: true */ '../pagefind/pagefind.js');
+        const pagefindInstance = await import(/* webpackIgnore: true */ '/pagefind/pagefind.js');
         window.pagefind = pagefindInstance;
       }
 
