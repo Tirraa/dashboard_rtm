@@ -29,7 +29,7 @@ const Result: FunctionComponent<ResultProps> = ({ className, metaTitle, excerpt,
       href={href}
     >
       <h3>{metaTitle}</h3>
-      <p>{excerpt}</p>
+      <p dangerouslySetInnerHTML={{ __html: excerpt }} />
     </Link>
   );
 };
