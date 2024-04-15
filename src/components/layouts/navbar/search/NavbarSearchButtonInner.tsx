@@ -29,7 +29,7 @@ import { cn } from '@/lib/tailwind';
 
 import NavbarSearchButtonDialogDefaultView from './NavbarSearchButtonDialogDefaultView';
 
-export interface NavbarSearchButtonProps<AllTabValues extends readonly string[]> {
+interface NavbarSearchButtonProps<AllTabValues extends readonly string[]> {
   tabInputLabels: Record<AllTabValues[Index], I18nVocabTarget>;
   quickAccessBtns: Record<AppPath, QuickAccessBtnMetadatas>;
   tabTriggers: Record<AllTabValues[Index], I18nVocabTarget>;
@@ -41,7 +41,7 @@ export interface NavbarSearchButtonProps<AllTabValues extends readonly string[]>
 const SEARCH_TEXT_INITIAL_STATE = '';
 const RESULTS_INITIAL_STATE: MaybeNull<ReactElement[]> = null;
 
-const NavbarSearchButton = <AllTabValues extends readonly string[]>({
+const NavbarSearchButtonInner = <AllTabValues extends readonly string[]>({
   quickAccessBtns: orgQuickAccessBtns,
   allTabValues: orgAllTabValues,
   tabTriggers: orgTabTriggers,
@@ -292,4 +292,4 @@ const NavbarSearchButton = <AllTabValues extends readonly string[]>({
   );
 };
 
-export default NavbarSearchButton;
+export default NavbarSearchButtonInner;

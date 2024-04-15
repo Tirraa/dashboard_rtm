@@ -114,6 +114,8 @@ export async function computeAndSetResults(debouncedSearchText: string, setResul
     return;
   }
 
+  if (typeof window.pagefind === 'undefined' || typeof window.pagefind.search !== 'function') return;
+
   // {ToDo} Type this
   // @ts-ignore
   const search = await window.pagefind.search(debouncedSearchText);

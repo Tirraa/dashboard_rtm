@@ -8,18 +8,34 @@ import { useEffect } from 'react';
 // {ToDo} https://github.com/CloudCannon/pagefind/issues/596
 function usePagefind(currentLocale: LanguageFlag) {
   useEffect(() => {
-    async function loadPagefind() {
-      try {
+    async function bootOrRebootPagefind() {
+      async function bootPagefind() {
         // @ts-ignore generated after build
-        const freshPagefind = await import(/* webpackIgnore: true */ '../pagefind/pagefind.js');
-        window.pagefind = undefined;
-        window.pagefind = freshPagefind;
+        const pagefindInstance = await import(/* webpackIgnore: true */ '../pagefind/pagefind.js');
+        window.pagefind = pagefindInstance;
+      }
+
+      async function rebootPagefind() {
+        await window.pagefind.destroy();
+        await window.pagefind.init();
+      }
+
+      try {
+        if (typeof window.pagefind !== 'undefined') {
+          try {
+            await rebootPagefind();
+            return;
+          } catch {
+            await bootPagefind();
+          }
+        }
+        await bootPagefind();
       } catch (error) {
         console.warn('Pagefind failed to load, search will not work');
         window.pagefind = { debouncedSearch: () => ({ results: [] }), search: () => ({ results: [] }) };
       }
     }
-    loadPagefind();
+    bootOrRebootPagefind();
   }, [currentLocale]);
 }
 
