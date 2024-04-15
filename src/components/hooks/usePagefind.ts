@@ -5,6 +5,11 @@ import type { LanguageFlag } from '@rtm/shared-types/I18n';
 
 import { useEffect } from 'react';
 
+export async function initPagefind() {
+  if (typeof window.pagefind === 'undefined') return;
+  await window.pagefind.init();
+}
+
 // {ToDo} https://github.com/CloudCannon/pagefind/issues/596
 function usePagefind(currentLocale: LanguageFlag) {
   useEffect(() => {
@@ -17,7 +22,7 @@ function usePagefind(currentLocale: LanguageFlag) {
 
       async function rebootPagefind() {
         await window.pagefind.destroy();
-        await window.pagefind.init();
+        await initPagefind();
       }
 
       try {
@@ -32,7 +37,7 @@ function usePagefind(currentLocale: LanguageFlag) {
         await bootPagefind();
       } catch (error) {
         console.warn('Pagefind failed to load, search will not work');
-        window.pagefind = { debouncedSearch: () => ({ results: [] }), search: () => ({ results: [] }) };
+        window.pagefind = { debouncedSearch: () => ({ results: [] }), search: () => ({ results: [] }), destroy: () => {}, init: () => {} };
       }
     }
     bootOrRebootPagefind();

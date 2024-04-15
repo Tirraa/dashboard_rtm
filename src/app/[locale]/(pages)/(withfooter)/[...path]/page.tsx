@@ -5,9 +5,11 @@ import isSkippedPath from '@/lib/pages/static/helpers/isSkippedPath';
 import { getPageByLanguageAndPathUnstrict } from '@/lib/pages/api';
 import { setStaticParamsLocale } from 'next-international/server';
 import MDX from '@/components/layouts/blog/MdxComponent';
+import MAIN_CLS from '@/components/config/styles/main';
 import PageTaxonomy from '##/config/taxonomies/pages';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { notFound } from 'next/navigation';
+import { cn } from '@/lib/tailwind';
 
 export async function generateMetadata({ params }: PageProps) {
   const metadatas = await getPagesMetadatas({ params });
@@ -30,7 +32,7 @@ export default function Page({ params }: PageProps) {
   if (!page) notFound();
 
   return (
-    <main className="max-w-full">
+    <main className={cn('max-w-full', MAIN_CLS)}>
       <MDX code={page.body.code} />
     </main>
   );

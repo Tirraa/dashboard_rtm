@@ -18,6 +18,7 @@ import { DialogContent, DialogTrigger, DialogHeader, Dialog } from '@/components
 import { useCallback, useEffect, useState, Fragment, useMemo, useRef } from 'react';
 import { TabsContent, TabsList, Tabs } from '@/components/ui/Tabs';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
+import { initPagefind } from '@/components/hooks/usePagefind';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { getClientSideI18n } from '@/i18n/client';
 import { Input } from '@/components/ui/Input';
@@ -208,7 +209,15 @@ const NavbarSearchButtonInner = <AllTabValues extends readonly string[]>({
       }}
       open={isOpened}
     >
-      <DialogTrigger aria-label={globalT(`${i18ns.navbar}.sr-only.open-search-menu`)} className="h-full w-4">
+      <DialogTrigger
+        onMouseOver={() => {
+          try {
+            initPagefind();
+          } catch {}
+        }}
+        aria-label={globalT(`${i18ns.navbar}.sr-only.open-search-menu`)}
+        className="h-full w-4"
+      >
         <MagnifyingGlassIcon />
       </DialogTrigger>
       <DialogContent
@@ -252,7 +261,7 @@ const NavbarSearchButtonInner = <AllTabValues extends readonly string[]>({
           </DialogHeader>
           <div
             className={cn('flex-1 rounded-md', {
-              'min-h-0 overflow-y-auto border border-input px-2 [&>*>*]:pb-2 first:[&>*>*]:py-2': results !== null,
+              'min-h-0 overflow-y-auto break-words border border-input px-2 [&>*>*]:pb-2 first:[&>*>*]:py-2': results !== null,
               "after:block after:h-10 after:content-['']": debouncedSearchText === SEARCH_TEXT_INITIAL_STATE
             })}
           >

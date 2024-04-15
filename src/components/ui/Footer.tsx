@@ -118,15 +118,14 @@ const FooterHeadline: FunctionComponent = () => {
   );
 };
 
-const Footer: FunctionComponent<FooterProps> = () => {
-  return (
-    <footer
-      className="z-10 flex min-h-20 flex-col items-center justify-center border-t-[1px] border-transparent bg-black text-center text-white dark:border-card dark:bg-black"
-      id={ELEMENTS_ID.FOOTER_CONTAINER}
-    >
-      <FooterHeadline />
-    </footer>
-  );
-};
+const Footer: FunctionComponent<FooterProps> = () => (
+  <footer
+    className="z-10 flex min-h-20 flex-col items-center justify-center border-t-[1px] border-transparent bg-black text-center text-white dark:border-card dark:bg-black"
+    id={ELEMENTS_ID.FOOTER_CONTAINER}
+    data-pagefind-ignore="all"
+  >
+    <FooterHeadline />
+  </footer>
+);
 
 export default Footer;

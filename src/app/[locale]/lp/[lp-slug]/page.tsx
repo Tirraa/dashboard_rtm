@@ -32,7 +32,7 @@ export default function Page({ params }: LandingPageProps) {
   if (!lp) notFound();
 
   return (
-    <main data-pagefind-ignore={lp.doNotExcludeFromLocalSearch ? undefined : true} className="max-w-full">
+    <main data-pagefind-ignore={lp.doNotExcludeFromLocalSearch ? undefined : 'all'} className="max-w-full">
       <MDX code={lp.body.code} />
     </main>
   );
