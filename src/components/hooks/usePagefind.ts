@@ -5,6 +5,7 @@ import type { Path } from '@rtm/shared-types/Next';
 
 import { useEffect } from 'react';
 
+// https://github.com/CloudCannon/pagefind/issues/596
 function usePagefind(pagefindGeneratedFileRelativePath: Path) {
   useEffect(() => {
     async function loadPagefind() {
