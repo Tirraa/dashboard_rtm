@@ -11,11 +11,11 @@ import Link from 'next/link';
 
 interface NavbarSearchButtonDialogDefaultViewProps {
   quickMenuLeftRightCustomHandler: (e: ReactKeyboardEvent<HTMLAnchorElement>) => void;
-  updateMemorizedTabValueAndSetTabValue: (v: string) => void;
+  updateMemorizedTabValueAndSetTabValue: (v: WeakTabValue) => void;
   quickAccessBtns: [string, QuickAccessBtnMetadatas][];
   banners: [string, BannersMetadatas][];
   focusInputField: () => void;
-  tabValue: string;
+  tabValue: WeakTabValue;
 }
 
 const NavbarSearchButtonDialogDefaultView: FunctionComponent<NavbarSearchButtonDialogDefaultViewProps> = ({
@@ -58,7 +58,7 @@ const NavbarSearchButtonDialogDefaultView: FunctionComponent<NavbarSearchButtonD
                     }
                   )}
                   onClick={() => {
-                    updateMemorizedTabValueAndSetTabValue(category);
+                    updateMemorizedTabValueAndSetTabValue(category as WeakTabValue);
                     focusInputField();
                   }}
                   aria-label={title}
@@ -110,3 +110,5 @@ enum EBannerPosition {
   MIDDLE,
   LAST
 }
+
+type WeakTabValue = string;

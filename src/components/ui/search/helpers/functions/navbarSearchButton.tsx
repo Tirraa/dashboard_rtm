@@ -52,16 +52,20 @@ const __fakeResults = [
   <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid38'} href={'#osef'} />
 ];
 
-export function doUpdateMemorizedTabValueAndSetTabValue(v: string, memorizedTabValue: MutableRefObject<string>, setTabValue: (v: string) => unknown) {
+export function doUpdateMemorizedTabValueAndSetTabValue<TabValue extends string>(
+  v: TabValue,
+  memorizedTabValue: MutableRefObject<string>,
+  setTabValue: (v: TabValue) => unknown
+) {
   memorizedTabValue.current = v;
   setTabValue(v);
 }
 
-export const doBuildTabTrigger = (
-  tabValue: string,
+export const doBuildTabTrigger = <TabValue extends string>(
+  tabValue: TabValue,
   title: string,
-  memorizedTabValue: MutableRefObject<string>,
-  setTabValue: (v: string) => unknown
+  memorizedTabValue: MutableRefObject<TabValue>,
+  setTabValue: (v: TabValue) => unknown
 ) => (
   <TabsTrigger
     onFocusCapture={(e) => {

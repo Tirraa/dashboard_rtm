@@ -1,7 +1,7 @@
 'use client';
 
+import type { QuickAccessBtnMetadatas, navbarSearchBtnProps, BannersMetadatas } from '@/config/searchMenu';
 import type { KeyboardEvent as ReactKeyboardEvent, ChangeEventHandler, ReactElement } from 'react';
-import type { QuickAccessBtnMetadatas, BannersMetadatas } from '@/config/searchMenu';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
 import type { Index } from '@rtm/shared-types/Numbers';
@@ -42,7 +42,7 @@ interface NavbarSearchButtonProps<AllTabValues extends readonly string[]> {
 const SEARCH_TEXT_INITIAL_STATE = '';
 const RESULTS_INITIAL_STATE: MaybeNull<ReactElement[]> = null;
 
-const NavbarSearchButtonInner = <AllTabValues extends readonly string[]>({
+const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProps.allTabValues>({
   quickAccessBtns: orgQuickAccessBtns,
   allTabValues: orgAllTabValues,
   tabTriggers: orgTabTriggers,
@@ -67,7 +67,7 @@ const NavbarSearchButtonInner = <AllTabValues extends readonly string[]>({
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const [searchText, setSearchText] = useState<string>(SEARCH_TEXT_INITIAL_STATE);
   const [results, setResults] = useState<MaybeNull<ReactElement[]>>(RESULTS_INITIAL_STATE);
-  const [tabValue, setTabValue] = useState<TabValue>(tabValueInitialState);
+  const [tabValue, setTabValue] = useState(tabValueInitialState);
   const pathnameAtOpen = useRef<MaybeNull<AppPath>>(null);
   const inputFieldRef = useRef<HTMLInputElement>(null);
   const prevScreenBtnRef = useRef<HTMLButtonElement>(null);
@@ -188,7 +188,7 @@ const NavbarSearchButtonInner = <AllTabValues extends readonly string[]>({
 
   const defaultView = (
     <NavbarSearchButtonDialogDefaultView
-      updateMemorizedTabValueAndSetTabValue={updateMemorizedTabValueAndSetTabValue}
+      updateMemorizedTabValueAndSetTabValue={updateMemorizedTabValueAndSetTabValue as (v: string) => void}
       quickMenuLeftRightCustomHandler={quickMenuLeftRightCustomHandler}
       focusInputField={focusInputField}
       quickAccessBtns={quickAccessBtns}
