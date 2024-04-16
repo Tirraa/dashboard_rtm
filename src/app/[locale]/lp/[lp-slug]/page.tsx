@@ -6,6 +6,7 @@ import type { LandingPageProps } from '@/types/LandingPage';
 import type { LandingPage } from 'contentlayer/generated';
 
 import { getLandingPagesStaticParams, getLandingPageMetadatas } from '@/lib/landingPages/staticGeneration';
+import documentTypeInlineFilter from '@/lib/pagefind/builders/documentTypeInlineFilter';
 import { getLandingPageByLanguageAndSlugUnstrict } from '@/lib/landingPages/api';
 import LandingPageTaxonomy from '##/config/taxonomies/landingPages';
 import { setStaticParamsLocale } from 'next-international/server';
@@ -32,7 +33,11 @@ export default function Page({ params }: LandingPageProps) {
   if (!lp) notFound();
 
   return (
-    <main data-pagefind-ignore={lp.doNotExcludeFromLocalSearch ? undefined : 'all'} className="max-w-full">
+    <main
+      data-pagefind-ignore={lp.doNotExcludeFromLocalSearch ? undefined : 'all'}
+      data-pagefind-filter={documentTypeInlineFilter('LandingPage')}
+      className="max-w-full"
+    >
       <MDX code={lp.body.code} />
     </main>
   );

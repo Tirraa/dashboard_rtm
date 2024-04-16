@@ -5,6 +5,7 @@ import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { BlogPostPageProps, BlogPostType } from '@/types/Blog';
 
 import { getBlogPostMetadatas, getBlogStaticParams, blogPostGuard } from '@/lib/blog/staticGeneration';
+import documentTypeInlineFilter from '@/lib/pagefind/builders/documentTypeInlineFilter';
 import BlogPostCrumb from '@/components/ui/breadcrumbs/custom/BlogPostCrumb';
 import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
 import { setStaticParamsLocale } from 'next-international/server';
@@ -55,7 +56,7 @@ export default async function Page({ params }: BlogPostPageProps) {
           className="my-4 w-fit self-start"
         />
       </div>
-      <div className="mx-4 flex flex-col items-center lg:mx-24">
+      <div data-pagefind-filter={documentTypeInlineFilter('BlogPost')} className="mx-4 flex flex-col items-center lg:mx-24">
         <BlogPost className="mx-4" params={params} />
       </div>
     </>

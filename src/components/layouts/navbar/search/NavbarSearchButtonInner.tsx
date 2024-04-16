@@ -15,10 +15,10 @@ import {
 } from '@/components/ui/search/helpers/functions/navbarSearchButton';
 import { MagnifyingGlassIcon, ChevronRightIcon, ChevronLeftIcon } from '@radix-ui/react-icons';
 import { DialogContent, DialogTrigger, DialogHeader, Dialog } from '@/components/ui/Dialog';
+import { tryToPreloadPagefind, tryToInitPagefind } from '@/components/hooks/usePagefind';
 import { useCallback, useEffect, useState, Fragment, useMemo, useRef } from 'react';
 import { TabsContent, TabsList, Tabs } from '@/components/ui/Tabs';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
-import { preloadPagefind } from '@/components/hooks/usePagefind';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { getClientSideI18n } from '@/i18n/client';
 import { Input } from '@/components/ui/Input';
@@ -79,7 +79,12 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
 
   const globalT = getClientSideI18n();
 
-  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => setSearchText(e.target.value);
+  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setSearchText(e.target.value);
+    try {
+      tryToPreloadPagefind(e.target.value);
+    } catch {}
+  };
 
   useEffect(() => {
     if (pathnameAtOpen.current === null || pathnameAtOpen.current === currentPathname) return;
@@ -211,8 +216,8 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
     >
       <DialogTrigger
         aria-label={globalT(`${i18ns.navbar}.sr-only.open-search-menu`)}
-        onMouseOver={preloadPagefind}
-        onFocus={preloadPagefind}
+        onMouseOver={tryToInitPagefind}
+        onFocus={tryToInitPagefind}
         className="h-full w-4"
       >
         <MagnifyingGlassIcon />
@@ -226,6 +231,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
         closeButtonI18nTitle={`${i18ns.searchMenuSrOnly}.close-search-menu`}
         closeButtonClassName="search-menu-close-btn"
         onOpenAutoFocus={(e) => e.preventDefault()}
+        data-pagefind-ignore="all"
         dir="ltr"
       >
         {prevScreenBtn}

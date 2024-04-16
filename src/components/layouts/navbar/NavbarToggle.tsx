@@ -63,6 +63,7 @@ const NavbarToggle: FunctionComponent<NavbarToggleProps> = ({ items }) => {
       <DropdownMenuContent
         className="relative min-w-[145px] dark:border-card dark:bg-card ltr:right-4 rtl:left-4"
         aria-label={scopedT('hamburger-menu')}
+        data-pagefind-ignore="all"
       >
         <nav className="max-w-[156px] text-center text-black [&>*>*]:h-12">{menuItemsGenerator(items)}</nav>
       </DropdownMenuContent>

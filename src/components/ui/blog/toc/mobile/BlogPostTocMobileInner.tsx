@@ -12,7 +12,7 @@ import type { BlogPostTocMobileInnerProps } from '../types';
 
 const accordionContentGenerator = (headings: DocumentHeading[]): ReactElement[] =>
   headings.map((heading) => (
-    <AccordionContent key={heading.slug}>
+    <AccordionContent data-pagefind-ignore="all" key={heading.slug}>
       <Link
         className={cn('text-lg font-bold transition-colors duration-200 ease-in-out hover:text-primary', {
           // eslint-disable-next-line @typescript-eslint/no-magic-numbers

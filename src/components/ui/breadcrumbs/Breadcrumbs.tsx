@@ -83,7 +83,7 @@ const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = ({ withHomepageElement:
   if (pathname === ROUTES_ROOTS.WEBSITE) return withHomepageElement ? <HomepageCrumb isLeaf /> : null;
 
   return (
-    <nav aria-label={capitalize(scopedT2('breadcrumbs'))} className={className}>
+    <nav aria-label={capitalize(scopedT2('breadcrumbs'))} data-pagefind-ignore="all" className={className}>
       <ol className="flex w-fit flex-wrap justify-center gap-y-1 rounded-lg bg-accent bg-opacity-75 px-3 py-2 text-center lg:justify-normal">
         {crumbsGenerator(pathParts, withHomepageElement, scopedT, customCrumbs)}
       </ol>

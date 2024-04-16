@@ -92,7 +92,9 @@ const NavbarDropdown: FunctionComponent<NavbarButtonProps> = ({ embeddedEntities
           <ChevronDownIcon className={navbarDropdownBtnClassName} aria-hidden="true" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent aria-label={title}>{menuItemsGenerator(embeddedEntities, pathname, triggerRef)}</DropdownMenuContent>
+      <DropdownMenuContent data-pagefind-ignore="all" aria-label={title}>
+        {menuItemsGenerator(embeddedEntities, pathname, triggerRef)}
+      </DropdownMenuContent>
     </DropdownMenu>
   );
 };

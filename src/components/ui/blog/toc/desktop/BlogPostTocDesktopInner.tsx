@@ -597,7 +597,12 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   }, [isLargeScreen, setDocumentHeadingsOnClickEvent]);
 
   return (
-    <nav className="flex flex-col items-center self-start transition-[margin-top] duration-300" aria-label={ariaLabel} ref={tocRef}>
+    <nav
+      className="flex flex-col items-center self-start transition-[margin-top] duration-300"
+      data-pagefind-ignore="all"
+      aria-label={ariaLabel}
+      ref={tocRef}
+    >
       <ol className="mb-1 max-h-[354px] w-full list-none space-y-3 overflow-auto px-4" ref={headingsRef}>
         {headings.map((heading) => (
           <li

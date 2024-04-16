@@ -2,7 +2,9 @@
 // Stryker disable all
 
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
+import type { Quantity } from '@rtm/shared-types/Numbers';
 
+import PAGEFIND_CONFIG from '@/config/pagefind';
 import { useEffect } from 'react';
 
 async function initPagefind() {
@@ -10,13 +12,28 @@ async function initPagefind() {
   await window.pagefind.init();
 }
 
-export function preloadPagefind() {
+async function preloadPagefind(req: string, minReqLengthToTriggerPreload: Quantity) {
+  if (typeof window.pagefind === 'undefined') return;
+  if (req.length < minReqLengthToTriggerPreload) return;
+  await window.pagefind.preload(req);
+}
+
+export function tryToInitPagefind() {
   try {
     initPagefind();
   } catch {}
 }
 
-// {ToDo} https://github.com/CloudCannon/pagefind/issues/596
+export function tryToPreloadPagefind(
+  req: string,
+  minReqLengthToTriggerPreload: Quantity = PAGEFIND_CONFIG.DEFAULT_MIN_REQ_LENGTH_TO_TRIGGER_PRELOAD
+) {
+  try {
+    preloadPagefind(req, minReqLengthToTriggerPreload);
+  } catch {}
+}
+
+// https://github.com/CloudCannon/pagefind/issues/596
 function usePagefind(currentLocale: LanguageFlag) {
   useEffect(() => {
     async function bootOrRebootPagefind() {
@@ -24,6 +41,8 @@ function usePagefind(currentLocale: LanguageFlag) {
         // @ts-ignore generated after build
         const pagefindInstance = await import(/* webpackIgnore: true */ '/pagefind/pagefind.js');
         window.pagefind = pagefindInstance;
+        const filters = await window.pagefind.filters(); // {ToDo} Inspect this
+        console.log(filters); // {ToDo} Inspect this
       }
 
       async function rebootPagefind() {
