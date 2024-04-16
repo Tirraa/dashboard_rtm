@@ -14,8 +14,6 @@ function usePagefind(currentLocale: LanguageFlag) {
         // @ts-ignore generated after build
         const pagefindInstance = await import(/* webpackIgnore: true */ '/pagefind/pagefind.js');
         window.pagefind = pagefindInstance;
-        const filters = await window.pagefind.filters(); // {ToDo} Inspect this
-        console.log(filters); // {ToDo} Inspect this
       }
 
       async function rebootPagefind() {

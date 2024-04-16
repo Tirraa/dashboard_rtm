@@ -1,9 +1,11 @@
 import type { QuickAccessBtnMetadatas, BannersMetadatas } from '@/config/searchMenu';
+import type { SearchDocumentFlag } from '@/lib/pagefind/helpers/search';
 import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
 import type { MutableRefObject, ReactElement } from 'react';
 import type { Index } from '@rtm/shared-types/Numbers';
 import type { AppPath } from '@rtm/shared-types/Next';
 
+import { searchDocument } from '@/lib/pagefind/helpers/search';
 import { TabsTrigger } from '@/components/ui/Tabs';
 import { capitalize } from '@/lib/str';
 
@@ -111,18 +113,19 @@ export const createNavbarSearchButtonProps = <
 /**
  * @throws
  */
-export async function computeAndSetResults(debouncedSearchText: string, setResults: (results: ReactElement[]) => void) {
+export async function computeAndSetResults(
+  debouncedSearchText: string,
+  documentType: SearchDocumentFlag,
+  setResults: (results: ReactElement[]) => void
+) {
   // {ToDo} Find a better way to handle this on its root
   if (process.env.NODE_ENV === 'development') {
     setResults(__fakeResults);
     return;
   }
 
-  if (typeof window.pagefind === 'undefined' || typeof window.pagefind.search !== 'function') return;
-
   // {ToDo} Type this
-  // @ts-ignore
-  const search = await window.pagefind.search(debouncedSearchText);
+  const search: any = await searchDocument(debouncedSearchText, documentType);
 
   // {ToDo} Type this
   const searchResults: any[] = search.results;

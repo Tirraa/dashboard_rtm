@@ -2,9 +2,9 @@
 
 import type { QuickAccessBtnMetadatas, navbarSearchBtnProps, BannersMetadatas } from '@/config/searchMenu';
 import type { KeyboardEvent as ReactKeyboardEvent, ChangeEventHandler, ReactElement } from 'react';
+import type { MsValue, Index, Limit, Count } from '@rtm/shared-types/Numbers';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
-import type { Index } from '@rtm/shared-types/Numbers';
 import type { AppPath } from '@rtm/shared-types/Next';
 
 import {
@@ -20,6 +20,7 @@ import { useCallback, useEffect, useState, Fragment, useMemo, useRef } from 'rea
 import { TabsContent, TabsList, Tabs } from '@/components/ui/Tabs';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
+import { DEBOUNCE_DELAY } from '@/config/searchMenu';
 import { getClientSideI18n } from '@/i18n/client';
 import { Input } from '@/components/ui/Input';
 import { usePathname } from 'next/navigation';
@@ -72,11 +73,10 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
   const inputFieldRef = useRef<HTMLInputElement>(null);
   const prevScreenBtnRef = useRef<HTMLButtonElement>(null);
   const nextScreenBtnRef = useRef<HTMLButtonElement>(null);
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const [debouncedSearchText, setDebouncedSearchText] = useDebounce(searchText, 200);
+  const [debouncedSearchText, setDebouncedSearchText] = useDebounce(searchText, DEBOUNCE_DELAY);
   const isLargeScreen = useIsLargeScreen();
   const memorizedTabValue = useRef(tabValue);
-  const [animationClass, setAnimationClass] = useState<string>('');
+  const [transitionClass, setTransitionClass] = useState<string>('');
 
   const globalT = getClientSideI18n();
 
@@ -98,12 +98,33 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
       return;
     }
 
-    try {
-      computeAndSetResults(debouncedSearchText, setResults);
-    } catch {
-      setResults([]);
-    }
-  }, [debouncedSearchText]);
+    let retries: Count = 0;
+    const maxRetries: Limit = 4;
+    const interval: MsValue = 250;
+    let isComputing = false;
+
+    const intervalId = setInterval(async () => {
+      try {
+        if (isComputing && retries < maxRetries) throw 'SKIP';
+        isComputing = true;
+        await computeAndSetResults(debouncedSearchText, tabValue, setResults);
+        clearInterval(intervalId);
+      } catch {
+        retries++;
+        if (maxRetries >= retries) {
+          // {ToDo} Show an error alert
+          setResults([]);
+          clearInterval(intervalId);
+        }
+      } finally {
+        isComputing = false;
+      }
+    }, interval);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [debouncedSearchText, tabValue]);
 
   const updateMemorizedTabValueAndSetTabValue = useCallback(
     (v: TabValue) => doUpdateMemorizedTabValueAndSetTabValue(v, memorizedTabValue, setTabValue),
@@ -226,15 +247,15 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
       <DialogContent
         className={cn(
           'search-menu-dialog flex h-fit max-h-[90vh] min-h-[90vh] w-full max-w-[90vw] overflow-y-auto overflow-x-hidden',
-          animationClass
+          transitionClass
         )}
         onAnimationEnd={() => {
-          setAnimationClass('transition-none');
+          setTransitionClass('transition-none');
           if (!isOpened) return;
           focusInputField();
         }}
         onAnimationStart={() => {
-          setAnimationClass('');
+          setTransitionClass('');
         }}
         closeButtonI18nTitle={`${i18ns.searchMenuSrOnly}.close-search-menu`}
         closeButtonClassName="search-menu-close-btn"
@@ -279,27 +300,27 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
             {/* {ToDo} Generate these TabsContent programmatically */}
             <TabsContent
               className={cn('mt-0 flex h-full max-h-full w-full flex-col items-center', {
-                hidden: tabValue !== 'all'
+                hidden: tabValue !== 'All'
               })}
-              value={'all' satisfies TabValue}
+              value={'All' satisfies TabValue}
               tabIndex={-1}
             >
               {results === null || debouncedSearchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : results}
             </TabsContent>
             <TabsContent
               className={cn('mt-0 flex h-full max-h-full w-full flex-col items-center', {
-                hidden: tabValue !== 'pages'
+                hidden: tabValue !== 'Page'
               })}
-              value={'pages' satisfies TabValue}
+              value={'Page' satisfies TabValue}
               tabIndex={-1}
             >
               {results === null || debouncedSearchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : results}
             </TabsContent>
             <TabsContent
               className={cn('mt-0 flex h-full max-h-full w-full flex-col items-center', {
-                hidden: tabValue !== 'blog'
+                hidden: tabValue !== 'BlogPost'
               })}
-              value={'blog' satisfies TabValue}
+              value={'BlogPost' satisfies TabValue}
               tabIndex={-1}
             >
               {results === null || debouncedSearchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : results}
