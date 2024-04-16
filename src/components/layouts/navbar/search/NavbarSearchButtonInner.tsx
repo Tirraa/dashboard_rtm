@@ -20,14 +20,14 @@ import { useCallback, useEffect, useState, Fragment, useMemo, useRef } from 'rea
 import { TabsContent, TabsList, Tabs } from '@/components/ui/Tabs';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
-import { DEBOUNCE_DELAY } from '@/config/searchMenu';
+import { THROTTLE_DELAY } from '@/config/searchMenu';
 import { getClientSideI18n } from '@/i18n/client';
 import { Input } from '@/components/ui/Input';
 import { usePathname } from 'next/navigation';
-import { useDebounce } from 'use-debounce';
 import { capitalize } from '@/lib/str';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
+import throttle from 'throttleit';
 
 import NavbarSearchButtonDialogDefaultView from './NavbarSearchButtonDialogDefaultView';
 
@@ -53,6 +53,14 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
 }: NavbarSearchButtonProps<AllTabValues>) => {
   type TabValue = AllTabValues[Index];
 
+  const throttledComputeAndSetResults = useMemo(
+    () =>
+      throttle(async (searchText: string, tabValue: TabValue, setResults: (results: ReactElement[]) => void) => {
+        await computeAndSetResults(searchText, tabValue, setResults);
+      }, THROTTLE_DELAY),
+    []
+  );
+
   const { quickAccessBtns, allTabValues, tabTriggers, banners } = useMemo(
     () =>
       createNavbarSearchButtonProps({
@@ -73,7 +81,6 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
   const inputFieldRef = useRef<HTMLInputElement>(null);
   const prevScreenBtnRef = useRef<HTMLButtonElement>(null);
   const nextScreenBtnRef = useRef<HTMLButtonElement>(null);
-  const [debouncedSearchText, setDebouncedSearchText] = useDebounce(searchText, DEBOUNCE_DELAY);
   const isLargeScreen = useIsLargeScreen();
   const memorizedTabValue = useRef(tabValue);
   const [transitionClass, setTransitionClass] = useState<string>('');
@@ -93,38 +100,43 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
   }, [currentPathname]);
 
   useEffect(() => {
-    if (debouncedSearchText === SEARCH_TEXT_INITIAL_STATE) {
+    if (searchText === SEARCH_TEXT_INITIAL_STATE) {
       setResults(RESULTS_INITIAL_STATE);
       return;
     }
 
     let retries: Count = 0;
     const maxRetries: Limit = 4;
-    const interval: MsValue = 250;
+    const intervalMs: MsValue = 250;
     let isComputing = false;
 
-    const intervalId = setInterval(async () => {
+    const retryInterval = setInterval(async () => {
+      function disposeRetryInterval() {
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        retries = 0;
+        isComputing = false;
+        clearInterval(retryInterval);
+      }
+
       try {
-        if (isComputing && retries < maxRetries) throw 'SKIP';
+        if (isComputing) return;
         isComputing = true;
-        await computeAndSetResults(debouncedSearchText, tabValue, setResults);
-        clearInterval(intervalId);
+        await throttledComputeAndSetResults(searchText, tabValue, setResults);
+        disposeRetryInterval();
       } catch {
         retries++;
         if (maxRetries >= retries) {
           // {ToDo} Show an error alert
           setResults([]);
-          clearInterval(intervalId);
+          disposeRetryInterval();
         }
-      } finally {
-        isComputing = false;
       }
-    }, interval);
+    }, intervalMs);
 
     return () => {
-      clearInterval(intervalId);
+      clearInterval(retryInterval);
     };
-  }, [debouncedSearchText, tabValue]);
+  }, [searchText, tabValue, throttledComputeAndSetResults]);
 
   const updateMemorizedTabValueAndSetTabValue = useCallback(
     (v: TabValue) => doUpdateMemorizedTabValueAndSetTabValue(v, memorizedTabValue, setTabValue),
@@ -231,7 +243,6 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
         setIsOpened(_isOpened);
         updateMemorizedTabValueAndSetTabValue(tabValueInitialState);
         setSearchText(SEARCH_TEXT_INITIAL_STATE);
-        setDebouncedSearchText(SEARCH_TEXT_INITIAL_STATE);
         setResults(RESULTS_INITIAL_STATE);
       }}
       open={isOpened}
@@ -282,7 +293,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
               </label>
               <Input
                 placeholder={`${capitalize(globalT(`${i18ns.vocab}.start-typing`))}…`}
-                value={isOpened ? searchText : debouncedSearchText}
+                value={isOpened ? searchText : SEARCH_TEXT_INITIAL_STATE}
                 className="search-menu-input"
                 onChange={onChange}
                 ref={inputFieldRef}
@@ -294,7 +305,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
           <div
             className={cn('flex-1 rounded-md', {
               'min-h-0 overflow-y-auto break-words border border-input px-2 [&>*>*]:pb-2 first:[&>*>*]:py-2': results !== null,
-              "after:block after:h-10 after:content-['']": debouncedSearchText === SEARCH_TEXT_INITIAL_STATE
+              "after:block after:h-10 after:content-['']": searchText === SEARCH_TEXT_INITIAL_STATE
             })}
           >
             {/* {ToDo} Generate these TabsContent programmatically */}
@@ -305,7 +316,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
               value={'All' satisfies TabValue}
               tabIndex={-1}
             >
-              {results === null || debouncedSearchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : results}
+              {results === null || searchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : results}
             </TabsContent>
             <TabsContent
               className={cn('mt-0 flex h-full max-h-full w-full flex-col items-center', {
@@ -314,7 +325,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
               value={'Page' satisfies TabValue}
               tabIndex={-1}
             >
-              {results === null || debouncedSearchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : results}
+              {results === null || searchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : results}
             </TabsContent>
             <TabsContent
               className={cn('mt-0 flex h-full max-h-full w-full flex-col items-center', {
@@ -323,7 +334,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
               value={'BlogPost' satisfies TabValue}
               tabIndex={-1}
             >
-              {results === null || debouncedSearchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : results}
+              {results === null || searchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : results}
             </TabsContent>
           </div>
         </Tabs>

@@ -6,9 +6,9 @@ import type { FunctionComponent } from 'react';
 import { isValidBlogCategoryAndSubcategoryPair, getBlogPostUnstrict } from '@/lib/blog/api';
 import BlogPostTocDesktop from '@/components/ui/blog/toc/desktop/BlogPostTocDesktop';
 import BlogPostTocMobile from '@/components/ui/blog/toc/mobile/BlogPostTocMobile';
+import BlogPostMDX from '@/components/layouts/blog/MdxComponent';
 import tagsGenerator from '@/components/ui/blog/tagsGenerator';
 import BlogPostDate from '@/components/ui/blog/BlogPostDate';
-import MDX from '@/components/layouts/blog/MdxComponent';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getScopedI18n } from '@/i18n/server';
@@ -44,7 +44,7 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className:
       </header>
       <div className="flex max-w-full flex-col lg:flex-row">
         {showToC && <BlogPostTocMobile headings={post.headings} />}
-        <MDX code={post.body.code} />
+        <BlogPostMDX code={post.body.code} />
         {showToC && <BlogPostTocDesktop headings={post.headings} />}
       </div>
     </section>

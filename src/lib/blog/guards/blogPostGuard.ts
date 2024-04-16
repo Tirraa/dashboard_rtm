@@ -1,5 +1,6 @@
 import type { BlogPostPageProps } from '@/types/Blog';
 
+import { buildAbsolutePathFromParts } from '@rtm/shared-lib/str';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import ROUTES_ROOTS from '##/config/routes';
@@ -27,6 +28,6 @@ export default async function blogPostGuard({ params }: BlogPostPageProps) {
   } else if (!post && isValidBlogCategory(category)) {
     redirectToBlogCategoryPage(category);
   } else if (!post) {
-    redirect(ROUTES_ROOTS.WEBSITE + category);
+    redirect(buildAbsolutePathFromParts(ROUTES_ROOTS.WEBSITE, category));
   }
 }

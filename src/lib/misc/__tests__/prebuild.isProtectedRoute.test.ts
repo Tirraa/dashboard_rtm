@@ -1,11 +1,24 @@
-import { APP_PROTECTED_PATHS } from '@/middleware';
-import { describe, expect, it } from 'vitest';
+import { APP_PROTECTED_PATHS } from '##/config/auth';
+import { describe, expect, it, vi } from 'vitest';
 
 import isProtectedRoute from '../isProtectedRoute';
 
+vi.mock('##/config/auth', async (orgImport) => {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+  const mod = await orgImport<typeof import('##/config/auth')>();
+
+  return {
+    ...mod,
+    APP_PROTECTED_PATHS: ['/protected']
+  };
+});
+
 describe('isProtectedRoute', () => {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  it('should return true, given simple valid input', () => expect(isProtectedRoute(APP_PROTECTED_PATHS[0])).toBe(true));
+  const protectedPrefix = APP_PROTECTED_PATHS[0];
+  it('should return true, given simple valid input', () => expect(isProtectedRoute(protectedPrefix)).toBe(true));
+
+  it('should return true, given valid prefixed input', () => expect(isProtectedRoute(protectedPrefix + '/' + 'foo')).toBe(true));
 
   it('should return false, given simple invalid input', () => {
     const INVALID_INPUT_PREFIX = '$';
@@ -16,3 +29,5 @@ describe('isProtectedRoute', () => {
     expect(isProtectedRoute(invalidInput)).toBe(false);
   });
 });
+
+vi.doUnmock('##/config/auth');

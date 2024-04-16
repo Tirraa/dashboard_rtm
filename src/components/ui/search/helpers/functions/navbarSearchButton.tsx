@@ -5,7 +5,7 @@ import type { MutableRefObject, ReactElement } from 'react';
 import type { Index } from '@rtm/shared-types/Numbers';
 import type { AppPath } from '@rtm/shared-types/Next';
 
-import { searchDocument } from '@/lib/pagefind/helpers/search';
+import { searchDocument, getCleanedURL } from '@/lib/pagefind/helpers/search';
 import { TabsTrigger } from '@/components/ui/Tabs';
 import { capitalize } from '@/lib/str';
 
@@ -79,20 +79,22 @@ export async function computeAndSetResults(
   const searchResults = search.results;
   const results: ReactElement[] = [];
 
-  for (const result of searchResults) {
-    const data = await result.data();
+  // {ToDo} Optimize this lmao
+  // eslint-disable-next-line promise/catch-or-return
+  const mountedData = await Promise.all(searchResults.map((r) => r.data()));
+
+  for (let i = 0; i < searchResults.length; i++) {
+    const data = mountedData[i];
     if (!data) continue;
 
-    // {ToDo} Move this into a lib function and config
     const { url } = data;
     if (!url) continue;
-    const [prefix, suffix] = ['/server/app', '.html'];
-    const cleanedUrl = url.replace(new RegExp(`^${prefix}`), '').replace(new RegExp(`${suffix}$`), '');
 
+    const cleanedUrl = getCleanedURL(url);
     const metaTitle = data.meta.title;
     const excerpt = data.excerpt;
 
-    results.push(<Result metaTitle={metaTitle} excerpt={excerpt} href={cleanedUrl} key={result.id} />);
+    results.push(<Result key={searchResults[i].id} metaTitle={metaTitle} excerpt={excerpt} href={cleanedUrl} />);
   }
 
   setResults(results);

@@ -10,7 +10,7 @@ import documentTypeInlineFilter from '@/lib/pagefind/builders/documentTypeInline
 import { getLandingPageByLanguageAndSlugUnstrict } from '@/lib/landingPages/api';
 import LandingPageTaxonomy from '##/config/taxonomies/landingPages';
 import { setStaticParamsLocale } from 'next-international/server';
-import MDX from '@/components/layouts/blog/MdxComponent';
+import LandingPageMDX from '@/components/layouts/lp/MdxComponent';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { notFound } from 'next/navigation';
 
@@ -38,7 +38,7 @@ export default function Page({ params }: LandingPageProps) {
       data-pagefind-filter={documentTypeInlineFilter('LandingPage')}
       className="max-w-full"
     >
-      <MDX code={lp.body.code} />
+      <LandingPageMDX code={lp.body.code} />
     </main>
   );
 }

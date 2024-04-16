@@ -21,7 +21,7 @@ interface MdxProps extends Partial<WithClassname> {
   code: string;
 }
 
-const BlogPostMDX: FunctionComponent<MdxProps> = ({ className: classNameValue, code }) => {
+const LandingPageMDX: FunctionComponent<MdxProps> = ({ className: classNameValue, code }) => {
   const MDXComponent = useMDXComponent(code);
   const className = classNameValue ?? '';
 
@@ -32,7 +32,7 @@ const BlogPostMDX: FunctionComponent<MdxProps> = ({ className: classNameValue, c
   );
 };
 
-export default BlogPostMDX;
+export default LandingPageMDX;
 
 // Stryker restore all
 /* v8 ignore stop */

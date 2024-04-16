@@ -4,7 +4,7 @@ import { getPagesStaticParams, getPagesMetadatas } from '@/lib/pages/staticGener
 import isSkippedPath from '@/lib/pages/static/helpers/isSkippedPath';
 import { getPageByLanguageAndPathUnstrict } from '@/lib/pages/api';
 import { setStaticParamsLocale } from 'next-international/server';
-import MDX from '@/components/layouts/blog/MdxComponent';
+import PageMDX from '@/components/layouts/pages/MdxComponent';
 import MAIN_CLS from '@/components/config/styles/main';
 import PageTaxonomy from '##/config/taxonomies/pages';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
@@ -33,7 +33,7 @@ export default function Page({ params }: PageProps) {
 
   return (
     <main className={cn('max-w-full', MAIN_CLS)}>
-      <MDX code={page.body.code} />
+      <PageMDX code={page.body.code} />
     </main>
   );
 }

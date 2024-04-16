@@ -10,7 +10,7 @@ export async function searchDocument(req: string, documentType: SearchDocumentFl
     Page: async (req) =>
       await window.pagefind.search(req, {
         filters: {
-          not: [
+          none: [
             {
               [PAGEFIND_CONFIG.DOCUMENT_TYPE_FILTER_KEY]: PAGEFIND_CONFIG.DOCUMENT_TYPES.BlogPost
             },
@@ -33,6 +33,12 @@ export async function searchDocument(req: string, documentType: SearchDocumentFl
 
   const results = await handlers[documentType](req);
   return results;
+}
+
+export function getCleanedURL(url: string) {
+  const [prefix, suffix] = [PAGEFIND_CONFIG.URL_UNWANTED_PREFIX, PAGEFIND_CONFIG.URL_UNWANTED_SUFFIX];
+  const cleanedUrl = url.replace(new RegExp(`^${prefix}`), '').replace(new RegExp(`${suffix}$`), '');
+  return cleanedUrl;
 }
 
 export type SearchDocumentFlag = PagefindFilterDocumentType | 'All';

@@ -9,7 +9,7 @@ import { LayoutDashboardIcon, HomeIcon } from 'lucide-react';
 import ROUTES_ROOTS from '##/config/routes';
 import { i18ns } from '##/config/i18n';
 
-export const DEBOUNCE_DELAY = 200;
+export const THROTTLE_DELAY = 200;
 
 const allTabValues = ['All', 'Page', 'BlogPost'] as const satisfies SearchDocumentFlag[];
 
@@ -27,23 +27,23 @@ export const navbarSearchBtnProps = {
     Page: { icon: ReaderIcon, i18nTitle: `${i18ns.searchMenuOptions}.pages` },
     BlogPost: { icon: PilcrowIcon, i18nTitle: `${i18ns.searchMenuOptions}.blog` }
     /* eslint-enable perfectionist/sort-objects */
-  } as const satisfies Record<AllTabValues, BannersMetadatas>,
+  } as const satisfies Record<TabValue, BannersMetadatas>,
   tabInputLabels: {
     /* eslint-disable perfectionist/sort-objects */
     All: `${i18ns.searchMenuOptions}.all` satisfies I18nVocabTarget,
     Page: `${i18ns.searchMenuOptions}.pages` satisfies I18nVocabTarget,
     BlogPost: `${i18ns.searchMenuOptions}.blog` satisfies I18nVocabTarget
     /* eslint-enable perfectionist/sort-objects */
-  } as const satisfies Record<AllTabValues, I18nVocabTarget>,
+  } as const satisfies Record<TabValue, I18nVocabTarget>,
   tabTriggers: {
     /* eslint-disable perfectionist/sort-objects */
     All: `${i18ns.vocab}.all`,
     Page: `${i18ns.vocab}.pages`,
     BlogPost: `${i18ns.vocab}.blog`
     /* eslint-enable perfectionist/sort-objects */
-  } as const satisfies Record<AllTabValues, I18nVocabTarget>,
+  } as const satisfies Record<TabValue, I18nVocabTarget>,
 
-  tabValueInitialState: 'All' as const satisfies AllTabValues,
+  tabValueInitialState: 'All' as const satisfies TabValue,
   allTabValues
 } as const;
 
@@ -51,4 +51,4 @@ type IconComponentType<P = { className?: string }> = ComponentType<P>;
 export type QuickAccessBtnMetadatas = { i18nTitle: I18nVocabTarget; icon: IconComponentType };
 export type BannersMetadatas = { i18nTitle: I18nVocabTarget; icon: IconComponentType };
 
-type AllTabValues = (typeof allTabValues)[Index];
+type TabValue = (typeof allTabValues)[Index];

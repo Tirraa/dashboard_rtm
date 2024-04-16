@@ -12,7 +12,7 @@ function usePagefind(currentLocale: LanguageFlag) {
   useEffect(() => {
     async function bootOrRebootPagefind() {
       async function bootPagefind() {
-        if (process.env.NODE_ENV === 'development') {
+        if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
           window.pagefind = DEV_PAGEFIND_STUB;
           return;
         }

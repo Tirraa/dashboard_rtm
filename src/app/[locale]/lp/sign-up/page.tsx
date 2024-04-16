@@ -6,9 +6,9 @@ import type { I18nPageProps } from '@/types/Next';
 
 import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
 import { setStaticParamsLocale } from 'next-international/server';
+import LandingPageMDX from '@/components/layouts/lp/MdxComponent';
 import { getPageByLanguageAndPathStrict } from '@/lib/pages/api';
 import { getStaticParams, getScopedI18n } from '@/i18n/server';
-import MDX from '@/components/layouts/blog/MdxComponent';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSession } from 'next-auth';
 import ROUTES_ROOTS from '##/config/routes';
@@ -35,11 +35,12 @@ export default async function Page({ params }: I18nPageProps) {
   const language = params[I18nTaxonomy.LANGUAGE];
   setStaticParamsLocale(language);
 
+  // {ToDo} Handle this guests only route middleware-side to avoid SSG break
   const session = await getServerSession();
   if (session) redirect(ROUTES_ROOTS.DASHBOARD);
 
   const document = getPageByLanguageAndPathStrict({ path: 'lp/sign-up', lang: language }) as Page;
-  return <MDX code={document.body.code} />;
+  return <LandingPageMDX code={document.body.code} />;
 }
 
 // Stryker restore all
