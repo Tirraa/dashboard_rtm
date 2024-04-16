@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/search/helpers/functions/navbarSearchButton';
 import { MagnifyingGlassIcon, ChevronRightIcon, ChevronLeftIcon } from '@radix-ui/react-icons';
 import { DialogContent, DialogTrigger, DialogHeader, Dialog } from '@/components/ui/Dialog';
-import { tryToPreloadPagefind, tryToInitPagefind } from '@/components/hooks/usePagefind';
+import { tryToPreloadPagefind, tryToInitPagefind } from '@/lib/pagefind/helpers/perf';
 import { useCallback, useEffect, useState, Fragment, useMemo, useRef } from 'react';
 import { TabsContent, TabsList, Tabs } from '@/components/ui/Tabs';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
@@ -76,6 +76,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
   const [debouncedSearchText, setDebouncedSearchText] = useDebounce(searchText, 200);
   const isLargeScreen = useIsLargeScreen();
   const memorizedTabValue = useRef(tabValue);
+  const [animationClass, setAnimationClass] = useState<string>('');
 
   const globalT = getClientSideI18n();
 
@@ -223,10 +224,17 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
         <MagnifyingGlassIcon />
       </DialogTrigger>
       <DialogContent
-        className="search-menu-dialog flex h-fit max-h-[90vh] min-h-[90vh] w-full max-w-[90vw] overflow-y-auto overflow-x-hidden"
+        className={cn(
+          'search-menu-dialog flex h-fit max-h-[90vh] min-h-[90vh] w-full max-w-[90vw] overflow-y-auto overflow-x-hidden',
+          animationClass
+        )}
         onAnimationEnd={() => {
+          setAnimationClass('transition-none');
           if (!isOpened) return;
           focusInputField();
+        }}
+        onAnimationStart={() => {
+          setAnimationClass('');
         }}
         closeButtonI18nTitle={`${i18ns.searchMenuSrOnly}.close-search-menu`}
         closeButtonClassName="search-menu-close-btn"

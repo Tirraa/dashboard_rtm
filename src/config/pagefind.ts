@@ -5,7 +5,8 @@ import type { Quantity } from '@rtm/shared-types/Numbers';
 
 const DOCUMENT_TYPES = {
   LandingPage: 'LandingPage',
-  BlogPost: 'BlogPost'
+  BlogPost: 'BlogPost',
+  Page: 'Page'
 } as const;
 
 type PagefindConfigType = {

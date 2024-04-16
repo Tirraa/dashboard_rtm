@@ -2,36 +2,9 @@
 // Stryker disable all
 
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
-import type { Quantity } from '@rtm/shared-types/Numbers';
 
-import PAGEFIND_CONFIG from '@/config/pagefind';
+import { initPagefind } from '@/lib/pagefind/helpers/perf';
 import { useEffect } from 'react';
-
-async function initPagefind() {
-  if (typeof window.pagefind === 'undefined') return;
-  await window.pagefind.init();
-}
-
-async function preloadPagefind(req: string, minReqLengthToTriggerPreload: Quantity) {
-  if (typeof window.pagefind === 'undefined') return;
-  if (req.length < minReqLengthToTriggerPreload) return;
-  await window.pagefind.preload(req);
-}
-
-export function tryToInitPagefind() {
-  try {
-    initPagefind();
-  } catch {}
-}
-
-export function tryToPreloadPagefind(
-  req: string,
-  minReqLengthToTriggerPreload: Quantity = PAGEFIND_CONFIG.DEFAULT_MIN_REQ_LENGTH_TO_TRIGGER_PRELOAD
-) {
-  try {
-    preloadPagefind(req, minReqLengthToTriggerPreload);
-  } catch {}
-}
 
 // https://github.com/CloudCannon/pagefind/issues/596
 function usePagefind(currentLocale: LanguageFlag) {
