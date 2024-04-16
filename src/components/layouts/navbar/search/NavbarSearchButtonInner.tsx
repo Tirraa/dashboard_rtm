@@ -180,6 +180,13 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
     [globalT]
   );
 
+  const resetDialog = useCallback(() => {
+    setSearchText(SEARCH_TEXT_INITIAL_STATE);
+    setResults(RESULTS_INITIAL_STATE);
+    setTransitionClass('transition-none');
+    updateMemorizedTabValueAndSetTabValue(tabValueInitialState);
+  }, [tabValueInitialState, updateMemorizedTabValueAndSetTabValue]);
+
   const prevScreenBtn = (
     <button
       onClick={() => {
@@ -239,11 +246,9 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
   return (
     <Dialog
       onOpenChange={(_isOpened: boolean) => {
+        if (_isOpened) resetDialog();
         pathnameAtOpen.current = _isOpened ? currentPathname : null;
         setIsOpened(_isOpened);
-        updateMemorizedTabValueAndSetTabValue(tabValueInitialState);
-        setSearchText(SEARCH_TEXT_INITIAL_STATE);
-        setResults(RESULTS_INITIAL_STATE);
       }}
       open={isOpened}
     >
@@ -261,8 +266,10 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
           transitionClass
         )}
         onAnimationEnd={() => {
-          setTransitionClass('transition-none');
-          if (!isOpened) return;
+          if (!isOpened) {
+            resetDialog();
+            return;
+          }
           focusInputField();
         }}
         onAnimationStart={() => {

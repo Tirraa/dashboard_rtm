@@ -103,8 +103,7 @@
   .search-menu-tabslist-item {
     border-radius: clamp(0.1953125vh, 0.2578125vw, 1.1875em);
     font-size: max(clamp(1.45vh, 2.35vw, 1.1875em), max(2.35vh, 2.35vw));
-    padding: min(0.78125vh, 1.03125vw) min(0.390625vh, 0.515625vw, 1.1875em);
-    height: fit-content;
+    padding: clamp(1.2890625vh, 1.7015625vw, 1.1875em) 0;
   }
 }
 
