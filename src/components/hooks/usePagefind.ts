@@ -3,6 +3,7 @@
 
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 
+import { BROKEN_PAGEFIND_STUB, DEV_PAGEFIND_STUB } from '@/config/pagefind';
 import { initPagefind } from '@/lib/pagefind/helpers/perf';
 import { useEffect } from 'react';
 
@@ -11,6 +12,10 @@ function usePagefind(currentLocale: LanguageFlag) {
   useEffect(() => {
     async function bootOrRebootPagefind() {
       async function bootPagefind() {
+        if (process.env.NODE_ENV === 'development') {
+          window.pagefind = DEV_PAGEFIND_STUB;
+          return;
+        }
         // @ts-ignore generated after build
         const pagefindInstance = await import(/* webpackIgnore: true */ '/pagefind/pagefind.js');
         window.pagefind = pagefindInstance;
@@ -33,7 +38,7 @@ function usePagefind(currentLocale: LanguageFlag) {
         await bootPagefind();
       } catch (error) {
         console.warn('Pagefind failed to load, search will not work');
-        window.pagefind = { debouncedSearch: () => ({ results: [] }), search: () => ({ results: [] }), destroy: () => {}, init: () => {} };
+        window.pagefind = BROKEN_PAGEFIND_STUB;
       }
     }
     bootOrRebootPagefind();

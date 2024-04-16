@@ -11,49 +11,6 @@ import { capitalize } from '@/lib/str';
 
 import Result from '../../Result';
 
-// {ToDo} WTF
-const __fakeResults = [
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} href={'#osef'} key={'stupid'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid1'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid2'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid3'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid4'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid5'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid6'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid7'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid8'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid9'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid10'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid11'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid12'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid13'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid14'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid15'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid16'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid17'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid18'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid19'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid20'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid21'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid22'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid23'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid24'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid25'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid26'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid27'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid28'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid29'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid30'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid31'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid32'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid33'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid34'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid35'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid36'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid37'} href={'#osef'} />,
-  <Result metaTitle={'metaTitle'} excerpt={'excerpt'} key={'stupid38'} href={'#osef'} />
-];
-
 export function doUpdateMemorizedTabValueAndSetTabValue<TabValue extends string>(
   v: TabValue,
   memorizedTabValue: MutableRefObject<string>,
@@ -118,35 +75,24 @@ export async function computeAndSetResults(
   documentType: SearchDocumentFlag,
   setResults: (results: ReactElement[]) => void
 ) {
-  // {ToDo} Find a better way to handle this on its root
-  if (process.env.NODE_ENV === 'development') {
-    setResults(__fakeResults);
-    return;
-  }
-
-  // {ToDo} Type this
-  const search: any = await searchDocument(debouncedSearchText, documentType);
-
-  // {ToDo} Type this
-  const searchResults: any[] = search.results;
+  const search = await searchDocument(debouncedSearchText, documentType);
+  const searchResults = search.results;
   const results: ReactElement[] = [];
 
   for (const result of searchResults) {
     const data = await result.data();
     if (!data) continue;
 
-    // {ToDo} WTF
-    const { raw_url } = data;
-    if (!raw_url) continue;
+    // {ToDo} Move this into a lib function and config
+    const { url } = data;
+    if (!url) continue;
     const [prefix, suffix] = ['/server/app', '.html'];
-    const cleanedUrl = raw_url.replace(new RegExp(`^${prefix}`), '').replace(new RegExp(`${suffix}$`), '');
+    const cleanedUrl = url.replace(new RegExp(`^${prefix}`), '').replace(new RegExp(`${suffix}$`), '');
 
-    // {ToDo} Type this
-    const yoloData = data as any;
-    const metaTitle = yoloData.meta.title as string;
-    const excerpt = yoloData.excerpt as string;
+    const metaTitle = data.meta.title;
+    const excerpt = data.excerpt;
 
-    results.push(<Result key={(result as any).id} metaTitle={metaTitle} excerpt={excerpt} href={cleanedUrl} />);
+    results.push(<Result metaTitle={metaTitle} excerpt={excerpt} href={cleanedUrl} key={result.id} />);
   }
 
   setResults(results);

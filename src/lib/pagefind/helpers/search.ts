@@ -6,7 +6,7 @@ import type { PagefindFilterDocumentType } from '@/config/pagefind';
 import PAGEFIND_CONFIG from '@/config/pagefind';
 
 export async function searchDocument(req: string, documentType: SearchDocumentFlag = 'All') {
-  const handlers: Record<SearchDocumentFlag, Awaited<(req: string) => unknown>> = {
+  const handlers: Record<SearchDocumentFlag, (req: string) => Promise<PagefindSearchResults>> = {
     Page: async (req) =>
       await window.pagefind.search(req, {
         filters: {
