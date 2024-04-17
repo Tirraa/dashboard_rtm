@@ -21,7 +21,7 @@ type RequiredPath = Required<OptionalPath>;
 type RequiredOnClick = Required<OptionalOnClick>;
 
 interface INavbarButtonProps extends Pick<AtomicNavDataEntity, 'i18nTitle'>, OptionalPath, OptionalOnClick, OptionalIcon {}
-type NavbarButtonProps = INavbarButtonProps & (RequiredOnClick | RequiredPath);
+type NavbarButtonProps = (RequiredOnClick | RequiredPath) & INavbarButtonProps;
 
 const { isNotActiveClassList, isActiveClassList } = NavbarButtonStyle;
 

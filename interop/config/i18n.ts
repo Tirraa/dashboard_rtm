@@ -31,7 +31,7 @@ export const i18ns = {
   searchMenuOptions: 'search-menu.options',
   searchMenuSrOnly: 'search-menu.sr-only',
   srOnly: 'vocab.sr-only'
-} as const satisfies typeof i18nsBase & Record<PropertyKey, I18nVocabScope>;
+} as const satisfies Record<PropertyKey, I18nVocabScope> & typeof i18nsBase;
 
 export const DEFAULT_LANGUAGE = DEFAULT_LANGUAGE_OBJ._infos.lng satisfies LanguageFlag;
 export const LANGUAGES: LanguageFlag[] = getEnumKeys(ELanguagesFlag);

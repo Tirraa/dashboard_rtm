@@ -3,7 +3,7 @@
 
 type ColorScheme = 'light' | 'dark';
 type ThemeVariantKey = 'LIGHT' | 'DARK';
-type ThemeConfig = Record<'VARIANTS', Record<ThemeVariantKey, string>> & Record<'VARIANTS_COLORS_SCHEME', Record<ThemeVariantKey, ColorScheme>>;
+type ThemeConfig = Record<'VARIANTS_COLORS_SCHEME', Record<ThemeVariantKey, ColorScheme>> & Record<'VARIANTS', Record<ThemeVariantKey, string>>;
 
 const THEME_CONFIG = {
   VARIANTS_COLORS_SCHEME: {

@@ -24,6 +24,7 @@ export type KeySeparator = '.';
 export type DeepPathToLiteralKeys<DeepPath extends string> = JoinKeys<SplitKeys<DeepPath>>;
 
 // https://github.com/microsoft/TypeScript/issues/56080
+// eslint-disable-next-line perfectionist/sort-intersection-types
 export type Couple<Left, Right = never> = /*__CAST `never` TO__*/ [] & Right extends never ? [Left, Left] : [Left, Right];
 
 export type MaybeNull<T> = null | T;

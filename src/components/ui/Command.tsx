@@ -29,7 +29,7 @@ const CommandDialog = ({
   closeButtonClassName,
   children,
   ...props
-}: CommandDialogProps & { closeButtonI18nTitle: I18nVocabTarget; closeButtonClassName?: string }) => {
+}: { closeButtonI18nTitle: I18nVocabTarget; closeButtonClassName?: string } & CommandDialogProps) => {
   return (
     <Dialog {...props}>
       <DialogContent closeButtonClassName={closeButtonClassName} closeButtonI18nTitle={closeButtonI18nTitle} className="overflow-hidden p-0">

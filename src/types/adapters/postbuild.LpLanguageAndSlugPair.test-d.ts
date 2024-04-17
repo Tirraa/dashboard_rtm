@@ -70,9 +70,9 @@ describe('LpLanguageAndSlugPair (Valid structure)', () => {
           | 'landing-pages-testing-category-fake-lp-00';
       };
       'dummy-category': {
-        [_ in DefaultLanguageToken]: 'dummy-category-lp-00';
-      } & {
         en: 'dummy-category-en-exclusivity' | 'dummy-category-lp-00';
+      } & {
+        [_ in DefaultLanguageToken]: 'dummy-category-lp-00';
       };
     }>;
 

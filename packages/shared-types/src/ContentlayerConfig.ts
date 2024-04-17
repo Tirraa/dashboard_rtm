@@ -21,10 +21,10 @@ export type DocumentsConfigType<
   __Fields extends DocumentsFields = {},
   __ComputedFields extends ComputedFields = {},
   __TypeName extends string = TypeName
-> = DocumentsConfigTypeContentlayerMetadatas<__TypeName> & {
+> = {
   computedFields: __ComputedFields;
   fields: __Fields;
-};
+} & DocumentsConfigTypeContentlayerMetadatas<__TypeName>;
 
 export type DocumentsFields<
   __AllFields extends Record<string, unknown> & FieldDefs = {},
@@ -33,10 +33,12 @@ export type DocumentsFields<
 
 type AtomicBlogDocumentConfig = DocumentsConfigType;
 export type AtomicContentlayerDocumentConfig = AtomicBlogDocumentConfig & ContentlayerContentType;
-export type ContentlayerDocumentsConfigType<__TypeName extends string = TypeName, __AllBlogFields extends FieldDefs = {}> = {
+export type ContentlayerDocumentsConfigType<
+  __TypeName extends string = TypeName,
+  __AllBlogFields extends FieldDefs = {}
+> = DocumentsConfigTypeContentlayerMetadatas<__TypeName> & {
   fields: __AllBlogFields;
-} & ContentlayerContentType &
-  DocumentsConfigTypeContentlayerMetadatas<__TypeName>;
+} & ContentlayerContentType;
 
 export type MakeDocumentsAllFieldsSumType<T extends keyof __AllFields, __AllFields extends FieldDefs = {}> = T;
 

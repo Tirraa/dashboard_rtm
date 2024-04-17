@@ -34,10 +34,9 @@ const PaginationItem = forwardRef<HTMLLIElement, ComponentProps<'li'>>(({ classN
 ));
 PaginationItem.displayName = 'PaginationItem';
 
-type PaginationLinkProps = {
+type PaginationLinkProps = ComponentProps<typeof Link> & {
   isActive?: boolean;
-} & Pick<ButtonProps, 'size'> &
-  ComponentProps<typeof Link>;
+} & Pick<ButtonProps, 'size'>;
 
 const PaginationLink = ({ size = 'icon', className, isActive, ...props }: PaginationLinkProps) => (
   <Link
@@ -84,7 +83,7 @@ const PaginationEllipsis = ({
   dropdownItems,
   className,
   ...props
-}: ComponentProps<'button'> & { dropdownItems: ReactElement[]; pageNumberIndicator?: Count; isBottomWidget?: boolean }) => {
+}: { dropdownItems: ReactElement[]; pageNumberIndicator?: Count; isBottomWidget?: boolean } & ComponentProps<'button'>) => {
   const scopedT = useScopedI18n(i18ns.vocab);
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const dropdownContentRef = useRef<HTMLDivElement>(null);

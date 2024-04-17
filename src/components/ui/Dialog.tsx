@@ -36,7 +36,7 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 const DialogContent = forwardRef<
   ElementRef<typeof DialogPrimitive.Content>,
-  ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & { closeButtonI18nTitle: I18nVocabTarget; closeButtonClassName?: string }
+  { closeButtonI18nTitle: I18nVocabTarget; closeButtonClassName?: string } & ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
 >(({ closeButtonI18nTitle, closeButtonClassName, className, children, ...props }, ref) => {
   const globalT = getClientSideI18n();
 

@@ -3,6 +3,7 @@
 
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 /* eslint-disable require-await */
+/* eslint-disable perfectionist/sort-objects */
 
 export const FAKE_RESULTS: PagefindSearchResult[] = [
   {
@@ -662,6 +663,7 @@ export const FAKE_RESULTS: PagefindSearchResult[] = [
 
 /* eslint-enable @typescript-eslint/no-magic-numbers */
 /* eslint-enable require-await */
+/* eslint-enable perfectionist/sort-objects */
 
 // Stryker restore all
 /* v8 ignore stop */
