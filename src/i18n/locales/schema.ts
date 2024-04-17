@@ -17,6 +17,10 @@ export const PAGES_TITLES = {
 
 export const SHARED_VOCAB_SCHEMA = {
   vocab: {
+    metadescriptions: {
+      homepage: _
+    },
+
     'start-typing': _,
     breadcrumbs: _,
     'sign-up': _,

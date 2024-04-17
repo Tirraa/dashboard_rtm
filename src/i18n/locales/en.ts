@@ -5,6 +5,24 @@ import { SHARED_TESTING_BLOG_SUBCATEGORIES_PAGES_TITLES, SHARED_TESTING_BLOG_CAT
 import capitalize from '../../lib/portable/str/capitalize';
 
 const SHARED: SharedVocabType = {
+  vocab: {
+    metadescriptions: {
+      homepage: 'Homepage Metadescription'
+    },
+    'start-typing': 'start typing',
+    brand: 'Rust Team Management',
+    breadcrumbs: 'breadcrumbs',
+    toc: 'table of contents',
+    'sign-up': 'sign up',
+    draft: 'draft',
+    pages: 'pages',
+    logo: 'logo',
+    page: 'page',
+    tags: 'tags',
+    blog: 'blog',
+    all: 'all'
+  },
+
   'pages-titles': {
     ...SHARED_TESTING_BLOG_SUBCATEGORIES_PAGES_TITLES,
 
@@ -19,21 +37,6 @@ const SHARED: SharedVocabType = {
     homepage: 'Homepage',
 
     blog: 'Blog'
-  },
-
-  vocab: {
-    'start-typing': 'start typing',
-    brand: 'Rust Team Management',
-    breadcrumbs: 'breadcrumbs',
-    toc: 'table of contents',
-    'sign-up': 'sign up',
-    draft: 'draft',
-    pages: 'pages',
-    logo: 'logo',
-    page: 'page',
-    tags: 'tags',
-    blog: 'blog',
-    all: 'all'
   }
 } as const;
 

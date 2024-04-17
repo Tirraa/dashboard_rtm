@@ -1,5 +1,6 @@
 'use client';
 
+import type { PxValue } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
 
 import { getRefCurrentPtr, getLinkTarget } from '@rtm/shared-lib/react';
@@ -11,15 +12,19 @@ import { cn } from '@/lib/tailwind';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import logoPic from '/public/assets/medias/img/rust-team-management-logo-full-body.svg';
+
 interface LogoProps {
   onPageEnterAnimation?: boolean;
   animatedOnHover?: boolean;
   clickable?: boolean;
+  height?: PxValue;
+  width?: PxValue;
 }
 
 const ON_PAGE_ENTER_CLS = 'animate-[swing_1234ms_ease-out]';
 
-const Logo: FunctionComponent<LogoProps> = ({ onPageEnterAnimation, animatedOnHover, clickable }) => {
+const Logo: FunctionComponent<LogoProps> = ({ onPageEnterAnimation, animatedOnHover, clickable, height, width }) => {
   const href = DISCORD_CONFIG.BOT_INVITE_LINK;
   const target = getLinkTarget(href);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -74,14 +79,14 @@ const Logo: FunctionComponent<LogoProps> = ({ onPageEnterAnimation, animatedOnHo
 
   const logo = (
     <Image
-      src="/assets/medias/img/rust-team-management-logo-full-body.svg"
-      className={cn('m-auto select-none', onLoadAnimation)}
+      className={cn('select-none', onLoadAnimation)}
       alt={globalT(`${i18ns.srOnly}.brand-logo`)}
       onMouseEnter={onMouseEnterCb}
       draggable={false}
-      height={201.45}
+      height={height}
+      src={logoPic}
+      width={width}
       ref={imgRef}
-      width={226}
       priority
     />
   );

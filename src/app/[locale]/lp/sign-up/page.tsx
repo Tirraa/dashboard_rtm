@@ -36,6 +36,7 @@ export default async function Page({ params }: I18nPageProps) {
   setStaticParamsLocale(language);
 
   // {ToDo} Handle this guests only route middleware-side to avoid SSG break
+  // https://github.com/nextauthjs/next-auth/discussions/10628
   const session = await getServerSession();
   if (session) redirect(ROUTES_ROOTS.DASHBOARD);
 

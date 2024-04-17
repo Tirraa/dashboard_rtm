@@ -14,8 +14,9 @@ import ELEMENTS_ID from '@/config/elementsId';
 import ROUTES_ROOTS from '##/config/routes';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
-import Image from 'next/image';
 import Link from 'next/link';
+
+import LogoHead from '../cta/LogoHead';
 
 interface SitewideNavbarProps {}
 
@@ -66,7 +67,7 @@ const SitewideNavbar: FunctionComponent<SitewideNavbarProps> = async () => {
   const navbarExtrasClassNameBase = 'gap-4 h-full flex-row flex-nowrap items-center';
   const navbarBrand = (
     <Link className="relative left-[-9px] scale-100 transition-transform hover:scale-105 rtl:left-[9px]" href={ROUTES_ROOTS.WEBSITE}>
-      <Image src="/assets/medias/img/rtm-logo-head.svg" height={LOGO_HEIGHT} width={LOGO_WIDTH} alt={logoAlt} priority />
+      <LogoHead height={LOGO_HEIGHT} width={LOGO_WIDTH} alt={logoAlt} priority />
     </Link>
   );
 

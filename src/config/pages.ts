@@ -12,7 +12,13 @@ export type PagesConfigType = {
 
 const TESTING_ROOT = 'testing-pages-root' as const satisfies PageRoot;
 const PagesConfig: PagesConfigType = {
-  SKIP_AUTOMOUNT: { paths: ['index'], prefixes: [] },
+  SKIP_AUTOMOUNT: {
+    paths: [
+      // @ts-ignore always skip 'index.mdx' (homepage cannot be notFound) automount
+      'index'
+    ],
+    prefixes: []
+  },
   ENABLE_DRAFTS_IN_PROD: false,
   allPages: () => allPages,
   TESTING_ROOT
