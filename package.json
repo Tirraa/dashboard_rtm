@@ -78,7 +78,7 @@
     "intl-locale-textinfo-polyfill": "^2.1.1",
     "lucide-react": "^0.368.0",
     "mobile-detect": "^1.4.5",
-    "next": "^14.2.0",
+    "next": "^14.2.2",
     "next-auth": "^4.24.7",
     "next-contentlayer": "^0.3.4",
     "next-international": "1.2.4",
@@ -128,7 +128,7 @@
     "cross-env": "^7.0.3",
     "editorconfig": "^2.0.0",
     "eslint": "^8.57.0",
-    "eslint-config-next": "^14.1.4",
+    "eslint-config-next": "^14.2.2",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-only-error": "^1.0.2",
     "eslint-plugin-perfectionist": "^2.8.0",
@@ -152,5 +152,5 @@
   "engines": {
     "node": "^20.x"
   },
-  "packageManager": "pnpm@9.0.2"
+  "packageManager": "pnpm@9.0.4"
 }
