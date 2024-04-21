@@ -5,34 +5,34 @@ import type { FunctionComponent } from 'react';
 
 import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
 import { SignalSlashIcon, KeyIcon } from '@heroicons/react/16/solid';
-import { signInProviderActionFlag } from '@/config/authMisc';
 import UserImage from '@/components/ui/hoc/UserImage';
-import { useSession, signIn } from 'next-auth/react';
-import handleSignOut from '@/lib/misc/handleSignOut';
+import { useSession, signOut } from 'next-auth/react';
+import { signInAction } from '@/lib/authServer';
 import { Button } from '@/components/ui/Button';
 import { useScopedI18n } from '@/i18n/client';
-import { usePathname } from 'next/navigation';
-import ROUTES_ROOTS from '##/config/routes';
 import { i18ns } from '##/config/i18n';
 
 import NavbarButton from './NavbarButton';
 
-interface NavbarLoginButtonMobileProps extends WithSession {
-  currentPathname: string;
-}
+interface NavbarLoginButtonMobileProps extends WithSession {}
 
 interface NavbarLoginButtonProps extends WithIsMobile {}
 
 const { SIZE_PX_VALUE: SIZE } = NAVBAR_ICON_STYLE;
-const provider = signInProviderActionFlag;
 
-const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> = ({ currentPathname, session }) => {
+const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> = ({ session }) => {
   const scopedT = useScopedI18n(i18ns.auth);
   const className = 'h-full min-w-0 p-0';
 
   if (session) {
     return (
-      <Button onClick={() => handleSignOut(currentPathname)} withTransparentBackground className={className}>
+      <Button
+        onClick={() => {
+          signOut();
+        }}
+        withTransparentBackground
+        className={className}
+      >
         <UserImage className="absolute rounded-full brightness-75" user={session?.user} height={SIZE} width={SIZE} />
         <SignalSlashIcon className="relative shadow-xl" height={SIZE} width={SIZE} />
         <span className="sr-only">{scopedT('logout')}</span>
@@ -41,30 +41,40 @@ const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> =
   }
 
   return (
-    <Button onClick={() => signIn(provider, { callbackUrl: ROUTES_ROOTS.DASHBOARD })} withTransparentBackground className={className}>
-      <KeyIcon height={SIZE} width={SIZE} />
-      <span className="sr-only">{scopedT('login')}</span>
-    </Button>
+    <form action={signInAction} className="contents">
+      <Button withTransparentBackground className={className} type="submit">
+        <KeyIcon height={SIZE} width={SIZE} />
+        <span className="sr-only">{scopedT('login')}</span>
+      </Button>
+    </form>
   );
 };
 
 const NavbarLoginButton: FunctionComponent<NavbarLoginButtonProps> = ({ isMobile }) => {
   const { data: session } = useSession();
-  const currentPathname = usePathname();
   const { auth } = i18ns;
 
-  if (isMobile) return <NavbarLoginButtonMobile currentPathname={currentPathname} session={session} />;
+  if (isMobile) return <NavbarLoginButtonMobile session={session} />;
 
-  if (session)
+  if (session) {
     return (
       <NavbarButton
         icon={<UserImage className="rounded-full" user={session?.user} height={SIZE} width={SIZE} />}
-        onClick={() => handleSignOut(currentPathname)}
+        onClick={() => {
+          signOut();
+        }}
         i18nTitle={`${auth}.logout`}
+        className="flex gap-2"
+        type="submit"
       />
     );
+  }
 
-  return <NavbarButton onClick={() => signIn(provider, { callbackUrl: ROUTES_ROOTS.DASHBOARD })} i18nTitle={`${auth}.login`} />;
+  return (
+    <form action={signInAction} className="contents">
+      <NavbarButton i18nTitle={`${auth}.login`} type="submit" />
+    </form>
+  );
 };
 
 export default NavbarLoginButton;

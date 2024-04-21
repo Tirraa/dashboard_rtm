@@ -53,5 +53,5 @@ export async function getSession(session: Session, __discordApi: IDiscordApi = d
   } satisfies Session;
 }
 
-const { handlers, auth } = NextAuth(config);
-export { handlers, auth };
+const { handlers, signIn, auth } = NextAuth(config);
+export { handlers, signIn, auth };

@@ -6,11 +6,9 @@
 import type { FunctionComponent } from 'react';
 
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
-import { signInProviderActionFlag } from '@/config/authMisc';
 import { Button } from '@/components/ui/Button';
+import { signInAction } from '@/lib/authServer';
 import { useScopedI18n } from '@/i18n/client';
-import ROUTES_ROOTS from '##/config/routes';
-import { signIn } from 'next-auth/react';
 import { i18ns } from '##/config/i18n';
 import { capitalize } from '@/lib/str';
 
@@ -21,9 +19,11 @@ const SignupButton: FunctionComponent<SignUpButtonProps> = () => {
   const className = BUTTON_CONFIG.CLASSNAME;
 
   return (
-    <Button onClick={() => signIn(signInProviderActionFlag, { callbackUrl: ROUTES_ROOTS.DASHBOARD })} className={className} size="lg">
-      {capitalize(scopedT('signup'))}
-    </Button>
+    <form action={signInAction} className="contents">
+      <Button className={className} type="submit" size="lg">
+        {capitalize(scopedT('signup'))}
+      </Button>
+    </form>
   );
 };
 
