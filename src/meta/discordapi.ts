@@ -1,6 +1,7 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import { NETWORK_CONNECT_TIMEOUT_ERROR, BAD_REQUEST } from '##/config/httpCodes';
 import { keysFactory, get } from '@/cache/auth';
 
 type FreshProfile = { epicFail?: boolean; avatar: string; id: string };
@@ -22,7 +23,7 @@ class DiscordApi implements IDiscordApi {
       });
 
       // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-      if (400 <= req.status && req.status <= 599) throw new Error('Discord API error');
+      if (BAD_REQUEST <= req.status && req.status <= NETWORK_CONNECT_TIMEOUT_ERROR) throw new Error('Discord API error');
 
       const response = await req.json();
       return response;

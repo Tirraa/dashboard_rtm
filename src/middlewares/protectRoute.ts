@@ -12,7 +12,7 @@ import { NextResponse } from 'next/server';
 function protectRoute(req: NextRequest) {
   const maybeI18nFlag = getMaybeI18nFlagFromRequest(req);
   const i18nPrefix = maybeI18nFlag || '';
-  const head = process.env.NEXTAUTH_URL as Href;
+  const head = process.env.AUTH_URL as Href;
 
   const dest = i18nPrefix
     ? buildPathFromParts(head, i18nPrefix, ROUTES_ROOTS.LANDING_PAGES, 'sign-up')

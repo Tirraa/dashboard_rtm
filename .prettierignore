@@ -10,3 +10,5 @@ FAKE_CODEGEN
 .stryker-tmp
 .next
 .ts-prune
+
+interop/config/httpCodes.ts

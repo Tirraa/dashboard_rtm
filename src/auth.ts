@@ -4,8 +4,8 @@ import type { Href } from '@rtm/shared-types/Next';
 import type { Session } from 'next-auth';
 
 import { keysFactory, getOrSet } from '@/cache/auth';
-import Discord from 'next-auth/providers/discord';
 import discordApi from '@/meta/discordapi';
+import config from '@/config/auth';
 import NextAuth from 'next-auth';
 
 export async function getDiscordProfilePicture(sub: string, __discordApi: IDiscordApi): Promise<MaybeNull<Href>> {
@@ -53,23 +53,5 @@ export async function getSession(session: Session, __discordApi: IDiscordApi = d
   } satisfies Session;
 }
 
-export const { handlers, auth } = NextAuth({
-  providers: [
-    Discord({
-      authorization: {
-        params: {
-          scope: 'identify+guilds'
-        }
-      },
-      clientSecret: process.env.DISCORD_CLIENT_SECRET ?? '',
-      clientId: process.env.DISCORD_CLIENT_ID ?? ''
-    })
-  ],
-
-  callbacks: {
-    async session({ session }) {
-      const s = await getSession(session);
-      return s;
-    }
-  }
-});
+const { handlers, auth } = NextAuth(config);
+export { handlers, auth };

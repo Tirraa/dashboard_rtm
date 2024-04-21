@@ -3,13 +3,14 @@
 
 import type { MiddlewareFactory } from '@rtm/shared-types/Next';
 
-import withAuth from '@/middlewares/withAuth';
 import { stackMiddlewares } from '@/lib/next';
 import withI18n from '@/middlewares/withI18n';
 
-const CHAIN: MiddlewareFactory[] = [withAuth, withI18n];
+import withAuth from './middlewares/withAuth';
 
-export const withAuthMiddlewaresChain = stackMiddlewares(CHAIN);
+const middlewares: MiddlewareFactory[] = [withI18n, withAuth];
+
+export const withAuthMiddlewaresChain = stackMiddlewares(middlewares);
 
 // Stryker restore all
 /* v8 ignore stop */

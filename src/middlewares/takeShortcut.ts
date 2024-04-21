@@ -11,7 +11,7 @@ import { NextResponse } from 'next/server';
 function takeShortcut(req: NextRequest, shortcut: AppPath) {
   const maybeI18nFlag = getMaybeI18nFlagFromRequest(req);
   const i18nPrefix = maybeI18nFlag || '';
-  const head = process.env.NEXTAUTH_URL as Href;
+  const head = process.env.AUTH_URL as Href;
 
   const dest = i18nPrefix ? buildPathFromParts(head, i18nPrefix, shortcut) : buildPathFromParts(head, shortcut);
 
