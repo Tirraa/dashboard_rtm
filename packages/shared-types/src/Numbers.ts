@@ -12,7 +12,7 @@ export type Count = number;
 
 export type PxValue = number;
 export type MsValue = number;
-export type TimestampInMs = number;
+export type MsTimestamp = number;
 
 // Stryker restore all
 /* v8 ignore stop */
