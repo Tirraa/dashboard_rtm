@@ -5,6 +5,7 @@ import type { FunctionComponent } from 'react';
 
 import NAVBAR_ICON_STYLE from '@/components/config/styles/navbar/NavbarIconStyle';
 import { SignalSlashIcon, KeyIcon } from '@heroicons/react/16/solid';
+import { signInProviderActionFlag } from '@/config/authMisc';
 import UserImage from '@/components/ui/hoc/UserImage';
 import { useSession, signIn } from 'next-auth/react';
 import handleSignOut from '@/lib/misc/handleSignOut';
@@ -23,6 +24,7 @@ interface NavbarLoginButtonMobileProps extends WithSession {
 interface NavbarLoginButtonProps extends WithIsMobile {}
 
 const { SIZE_PX_VALUE: SIZE } = NAVBAR_ICON_STYLE;
+const provider = signInProviderActionFlag;
 
 const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> = ({ currentPathname, session }) => {
   const scopedT = useScopedI18n(i18ns.auth);
@@ -39,7 +41,7 @@ const NavbarLoginButtonMobile: FunctionComponent<NavbarLoginButtonMobileProps> =
   }
 
   return (
-    <Button onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} withTransparentBackground className={className}>
+    <Button onClick={() => signIn(provider, { callbackUrl: ROUTES_ROOTS.DASHBOARD })} withTransparentBackground className={className}>
       <KeyIcon height={SIZE} width={SIZE} />
       <span className="sr-only">{scopedT('login')}</span>
     </Button>
@@ -62,7 +64,7 @@ const NavbarLoginButton: FunctionComponent<NavbarLoginButtonProps> = ({ isMobile
       />
     );
 
-  return <NavbarButton onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} i18nTitle={`${auth}.login`} />;
+  return <NavbarButton onClick={() => signIn(provider, { callbackUrl: ROUTES_ROOTS.DASHBOARD })} i18nTitle={`${auth}.login`} />;
 };
 
 export default NavbarLoginButton;
