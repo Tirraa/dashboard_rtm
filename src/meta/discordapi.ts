@@ -1,7 +1,10 @@
 /* v8 ignore start */
 // Stryker disable all
 
-import bentocache, { keysFactory } from '@/config/bentocache';
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { Href } from '@rtm/shared-types/Next';
+
+import { keysFactory, get } from '@/cache/generic';
 
 type FreshProfile = { epicFail?: boolean; avatar: string; id: string };
 
@@ -21,7 +24,7 @@ class DiscordApi implements IDiscordApi {
         })
       ).json();
     } catch {
-      const cachedURL = await bentocache.get(keysFactory.discordProfilePicture(sub));
+      const cachedURL = get(keysFactory.discordProfilePicture(sub)) as MaybeNull<Href>;
       if (cachedURL) return { avatar: cachedURL, id: sub };
       const randint = Math.floor(Math.random() * MAX_DEFAULT_AVATAR_ID);
       return { avatar: `https://cdn.discordapp.com/embed/avatars/${randint}.png`, epicFail: true, id: sub };

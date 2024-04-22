@@ -1,13 +1,13 @@
 /* v8 ignore start */
 // Stryker disable all
 
-import type { TimestampInMs, MsValue } from '@rtm/shared-types/Numbers';
+import type { MsTimestamp, MsValue } from '@rtm/shared-types/Numbers';
 
 import { watch } from 'chokidar';
 
 import type { Path } from '../types/Metadatas';
 
-let lastEventTimestamp: TimestampInMs | null = null;
+let lastEventTimestamp: MsTimestamp | null = null;
 
 const DEBOUNCE_THRESHOLD_IN_MS: MsValue = 10;
 
