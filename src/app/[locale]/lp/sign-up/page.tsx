@@ -10,9 +10,6 @@ import LandingPageMDX from '@/components/layouts/lp/MdxComponent';
 import { getPageByLanguageAndPathStrict } from '@/lib/pages/api';
 import { getStaticParams, getScopedI18n } from '@/i18n/server';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
-import { getServerSession } from 'next-auth';
-import ROUTES_ROOTS from '##/config/routes';
-import { redirect } from 'next/navigation';
 import { i18ns } from '##/config/i18n';
 
 export async function generateMetadata({ params }: I18nPageProps) {
@@ -31,14 +28,9 @@ export function generateStaticParams() {
   return getStaticParams();
 }
 
-export default async function Page({ params }: I18nPageProps) {
+export default function Page({ params }: I18nPageProps) {
   const language = params[I18nTaxonomy.LANGUAGE];
   setStaticParamsLocale(language);
-
-  // {ToDo} Handle this guests only route middleware-side to avoid SSG break
-  // https://github.com/nextauthjs/next-auth/discussions/10628
-  const session = await getServerSession();
-  if (session) redirect(ROUTES_ROOTS.DASHBOARD);
 
   const document = getPageByLanguageAndPathStrict({ path: 'lp/sign-up', lang: language }) as Page;
   return <LandingPageMDX code={document.body.code} />;

@@ -1,6 +1,8 @@
 import type { MaybeUndefined } from '@rtm/shared-types/CustomUtilityTypes';
 import type { MsTimestamp, MsValue } from '@rtm/shared-types/Numbers';
 
+// * ... Inspired from https://github.com/Julien-R44/bentocache
+
 namespace GenericInMemoryCache {
   export const data = {} as DataCache;
 }
@@ -24,12 +26,18 @@ export function get(key: string) {
   return GenericInMemoryCache.data[key]?.value;
 }
 
-export function set(key: string, data: Data, ttl: MsValue) {
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+export function set(key: string, data: Data, ttl: MsValue = 0) {
   function setClock(key: string, ttl: MsValue) {
     GenericInMemoryCache.data[key].clock = {
       cachedAt: Date.now(),
       ttl
     };
+  }
+
+  function disposeClock(key: string) {
+    // @ts-expect-error - IDGAF lemme manipulate the RAM
+    GenericInMemoryCache.data[key].clock = undefined;
   }
 
   if (!GenericInMemoryCache.data[key]) GenericInMemoryCache.data[key] = {} as DataCacheEntry;
@@ -38,9 +46,12 @@ export function set(key: string, data: Data, ttl: MsValue) {
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   if (ttl > 0) setClock(key, ttl);
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  else if (ttl < 0) disposeClock(key);
 }
 
-export async function getOrSet(key: string, data: () => Promise<Data>, ttl: MsValue) {
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+export async function getOrSet(key: string, data: () => Promise<Data>, ttl: MsValue = 0) {
   const value: MaybeUndefined<Data> = get(key);
   if (value !== undefined) return value;
 

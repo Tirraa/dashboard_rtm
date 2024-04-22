@@ -7,6 +7,8 @@ import withProtectedRoutes from '@/middlewares/withProtectedRoutes';
 import { stackMiddlewares } from '@/lib/next';
 import withI18n from '@/middlewares/withI18n';
 
+// {ToDo} Put withI18n at head when Next International's middleware will be properly chainable (Next International V2)
+// https://github.com/QuiiBz/next-international/issues/359
 const MAIN_CHAIN: MiddlewareFactory[] = [withI18n];
 const WITH_AUTH_CHAIN: MiddlewareFactory[] = [withProtectedRoutes, ...MAIN_CHAIN];
 
