@@ -9,8 +9,8 @@ import UserImage from '@/components/ui/hoc/UserImage';
 import { useSession, signIn } from 'next-auth/react';
 import handleSignOut from '@/lib/misc/handleSignOut';
 import { Button } from '@/components/ui/Button';
-import { useScopedI18n } from '@/i18n/client';
 import { usePathname } from 'next/navigation';
+import { useScopedI18n } from '@/i18n/client';
 import ROUTES_ROOTS from '##/config/routes';
 import { i18ns } from '##/config/i18n';
 
