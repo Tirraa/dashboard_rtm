@@ -28,10 +28,10 @@ async function blogCategoryPageBuilder(
       const curSubcateg = post.subcategory as BlogSubcategoryFromUnknownCategory;
       if (histogram[curSubcateg] === undefined) continue;
 
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       if (histogram[curSubcateg].length < limit + 1 && post.language === language) {
         histogram[curSubcateg].push(post);
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         if (Object.values(histogram).every((posts2) => posts2.length >= limit + 1)) break;
       }
     }
@@ -45,7 +45,7 @@ async function blogCategoryPageBuilder(
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const isEmptySnippets = () => Object.values(postsCollectionsSnippets).every((posts2) => posts2.length === 0);
 
   function contentGenerator(): ReactElement[] {
@@ -57,7 +57,7 @@ async function blogCategoryPageBuilder(
     for (const [subcategory, posts] of Object.entries(postsCollectionsSnippets)) {
       ++counter;
       isLast = counter >= max;
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       if (posts.length === 0) continue;
       const narrowedCategoryAndSubcategoryAssoc = `${category}.${subcategory}` as BlogCategoriesAndSubcategoriesAssoc;
       const curSubcategTitle = globalT(`${i18ns.blogCategories}.${narrowedCategoryAndSubcategoryAssoc}.title`);
@@ -98,14 +98,14 @@ async function blogCategoryPageBuilder(
       );
 
       result.push(section);
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       if (!isLast && !showMoreLink && max > 1) result.push(sep);
     }
 
     return result;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (posts.length === 0) return <BlogPostsNotFound />;
 
   const globalT = await getServerSideI18n();

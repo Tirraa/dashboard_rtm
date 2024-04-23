@@ -8,7 +8,7 @@ import { sortNumbers, unpackIds } from '@rtm/shared-lib/misc';
  */
 function buildUnpackedAndSanitizedFilters(packedIds: string, expectedIds: Set<Id>) {
   const unpackedAndSanitizedFilters = sortNumbers(
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     Array.from(new Set<Id>(unpackIds(packedIds).filter((id) => expectedIds.has(id))))
   );
 

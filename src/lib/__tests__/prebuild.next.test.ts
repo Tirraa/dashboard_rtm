@@ -17,7 +17,7 @@ const fakeMiddleware: MiddlewareFactory = (next: NextMiddleware) => {
 const fakeSlowAsyncMiddleware: MiddlewareFactory = (next: NextMiddleware) => {
   return async (request: NextRequest, _next: NextFetchEvent) => {
     const res = await next(request, _next);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     await new Promise((resolve) => setTimeout(resolve, 10));
     return res;
   };
@@ -54,12 +54,12 @@ describe('stackMiddlewares', () => {
   it('calls middlewares in the correct order', () => {
     const order: Index[] = [];
     const middleware1: MiddlewareFactory = (next) => (req, evt) => {
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       order.push(1);
       next(req, evt);
     };
     const middleware2: MiddlewareFactory = (next) => (req, evt) => {
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       order.push(2);
       next(req, evt);
     };
@@ -67,7 +67,7 @@ describe('stackMiddlewares', () => {
     const stackedMiddleware = stackMiddlewares([middleware1, middleware2]);
     stackedMiddleware(fakeRequest, fakeEvent);
 
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(order).toStrictEqual([1, 2]);
   });
 

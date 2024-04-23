@@ -22,7 +22,7 @@ function buildSlugsFeedback(foldersWithDefects: Record<Path, Filename[]>) {
     feedback +=
       formatMessage('invalidSlugs' satisfies VocabKey, { count: defects.length, folderWithDefects }) +
       ' ' +
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       (defects.length === 1 ? `${defects}` : `${LIST_ELEMENT_PREFIX}${defects.join(LIST_ELEMENT_PREFIX)}`) +
       '\n' +
       formatMessage('pagesNamingConstraint' satisfies VocabKey) +
@@ -36,7 +36,7 @@ function buildSlugsFeedback(foldersWithDefects: Record<Path, Filename[]>) {
  * @effect {Prints Warning}
  */
 function warnIfUglyIndexStrategy(indexStrategyDefects: Record<Path, Filename>) {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (Object.keys(indexStrategyDefects).length <= 0) return;
 
   const defectsAmount = Object.values(indexStrategyDefects).length;
@@ -44,9 +44,9 @@ function warnIfUglyIndexStrategy(indexStrategyDefects: Record<Path, Filename>) {
 
   const shouldTriggerJustMove = (file: Filename) => file.endsWith(INDEX_TOKEN + PAGE_FILE_EXT);
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (Object.keys(indexStrategyDefects).length === 1) {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const [file, folder] = [Object.values(indexStrategyDefects)[0], Object.keys(indexStrategyDefects)[0]];
     if (shouldTriggerJustMove(file)) {
       console.warn(formatMessage('uglyIndexStrategyWarningJustMoveMsg' satisfies VocabKey, { folder, file }) + '\n');
@@ -68,12 +68,12 @@ function warnIfUglyIndexStrategy(indexStrategyDefects: Record<Path, Filename>) {
 }
 
 function buildNestingsFeedback(nestingsDefects: Path[]): MaybeEmptyErrorsDetectionFeedback {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (nestingsDefects.length <= 0) return '';
   const feedback =
     formatMessage('invalidNestings' satisfies VocabKey, { count: nestingsDefects.length }) +
     ' ' +
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     (nestingsDefects.length === 1 ? `${nestingsDefects}` : `${LIST_ELEMENT_PREFIX}${nestingsDefects.join(LIST_ELEMENT_PREFIX)}`) +
     '\n' +
     formatMessage('pagesNamingConstraint' satisfies VocabKey) +
@@ -82,11 +82,11 @@ function buildNestingsFeedback(nestingsDefects: Path[]): MaybeEmptyErrorsDetecti
 }
 
 async function hasUglyIndexStrategy(filename: Filename, directoriesChain: PathSegment[], pagesFolderPrefix: PathSegment) {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const filenameWithoutPageExt = filename.slice(0, -PAGE_FILE_EXT.length);
 
   const suffix = '/' + filenameWithoutPageExt;
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const directoryPath = directoriesChain.length <= 0 ? pagesFolderPrefix + suffix : path.join(pagesFolderPrefix, ...directoriesChain) + suffix;
 
   const hasUglyIndexStrategy = await fileExists(directoryPath);
@@ -112,7 +112,7 @@ export default async function sysPagesValidator(
     for (let i = 0; i < directoriesChain.length; i++) {
       const currentNesting = directoriesChain[i];
       if (!isValidPageTaxonomy(currentNesting, __MAX_LEN)) {
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         const currentPath = path.join(pagesFolderPrefix, ...directoriesChain.slice(0, i + 1));
         nestingsDefects.add(currentPath + ' ' + '(' + currentNesting + ')');
       }
@@ -120,7 +120,7 @@ export default async function sysPagesValidator(
 
     const uglyIndexStrategy = await hasUglyIndexStrategy(filename, directoriesChain, pagesFolderPrefix);
     if (uglyIndexStrategy) {
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       const expectedFolder = path.join(pagesFolderPrefix, ...directoriesChain, filename.slice(0, -PAGE_FILE_EXT.length));
       const currentFolder = path.normalize(path.join(pagesFolderPrefix, ...directoriesChain));
       indexStrategyDefects[expectedFolder] = path.join(currentFolder, filename);
@@ -128,9 +128,9 @@ export default async function sysPagesValidator(
 
     if (!filename.endsWith(PAGE_FILE_EXT)) continue;
 
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const currentSlugPath = directoriesChain.length <= 0 ? path.normalize(pagesFolderPrefix) : path.join(pagesFolderPrefix, ...directoriesChain);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const slug = filename.slice(0, -PAGE_FILE_EXT.length);
     if (!isValidPageTaxonomy(slug, __MAX_LEN)) {
       if (foldersWithSlugDefects[currentSlugPath] === undefined) foldersWithSlugDefects[currentSlugPath] = [];

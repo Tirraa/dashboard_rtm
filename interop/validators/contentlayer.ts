@@ -22,7 +22,7 @@ function validateContentlayerConfigDocumentTypes(documentTypes: DocumentType<str
   }
 
   const duplicates = Array.from(duplicatesSet);
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (duplicates.length > 0) return new ContentlayerDuplicateTypesError(duplicates);
   return null;
 }
@@ -40,7 +40,7 @@ function validateContentlayerBlogTagsList(__BLOG_TAGS_OPTIONS: readonly string[]
   }
 
   const duplicates = Array.from(duplicatesSet);
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (duplicates.length > 0) return new ContentlayerDuplicateBlogTagsError(duplicates);
   return null;
 }
@@ -54,7 +54,7 @@ function validateContentlayerConfig(documentTypes: DocumentType<string>[], __BLO
 
   const mergedErrors = [maybeDuplicateTypesError, maybeDuplicateBlogTagsError].filter((e) => e !== null);
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (mergedErrors.length > 0) throw mergedErrors;
 }
 

@@ -16,10 +16,10 @@ export function getSanitizedCurrentPage(searchParams: URLSearchParams, maxPage: 
 }
 
 function findPageNumberByPaginatedElementIndex(paginatedElementIndex: Index, elementsPerPage: Quantity): Count {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const sanitizedIndex: Index = Math.max(0, paginatedElementIndex);
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const retrievedPage: Count = Math.trunc(sanitizedIndex / elementsPerPage) + 1;
   return retrievedPage;
 }
@@ -27,15 +27,15 @@ function findPageNumberByPaginatedElementIndex(paginatedElementIndex: Index, ele
 function findFirstCommonElementIndex(
   oldSliceIds: ReactElementKey[],
   maybeFilteredPostsCollection: BlogPostPreviewComponentWithMetadatas[]
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
 ): Index | -1 {
   for (const postId of oldSliceIds) {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const maybeFirstCommonElementIndex: Index | -1 = maybeFilteredPostsCollection.findIndex((post) => post._id === postId);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     if (maybeFirstCommonElementIndex !== -1) return maybeFirstCommonElementIndex;
   }
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   return -1;
 }
 
@@ -43,11 +43,11 @@ export function computeReconciliatedPageIndex(
   oldSliceIds: ReactElementKey[],
   maybeFilteredPostsCollection: BlogPostPreviewComponentWithMetadatas[],
   elementsPerPage: Quantity
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
 ): Index {
   const commonElementIndex = findFirstCommonElementIndex(oldSliceIds, maybeFilteredPostsCollection);
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (commonElementIndex === -1) return FIRST_PAGE_PARAM;
 
   const newPage = findPageNumberByPaginatedElementIndex(commonElementIndex, elementsPerPage);

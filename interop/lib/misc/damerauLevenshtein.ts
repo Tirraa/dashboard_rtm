@@ -1,6 +1,6 @@
 import type { Score } from '@rtm/shared-types/Numbers';
 
-/* eslint-disable @typescript-eslint/no-magic-numbers */
+/* eslint-disable no-magic-numbers */
 function damerauLevenshtein(s1: string, s2: string): Score {
   if (s1 === s2) return 0;
 
@@ -25,6 +25,6 @@ function damerauLevenshtein(s1: string, s2: string): Score {
 
   return matrix[s1len][s2len];
 }
-/* eslint-enable @typescript-eslint/no-magic-numbers */
+/* eslint-enable no-magic-numbers */
 
 export default damerauLevenshtein;

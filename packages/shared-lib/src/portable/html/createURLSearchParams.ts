@@ -6,7 +6,7 @@ const EMPTY_QUERY_STRING = '?';
 
 function createURLSearchParams(params: Record<PropertyKey, JSPrimitives>, currentSearchParams?: URLSearchParams): string {
   const emptyParams = isEmptyObject(params);
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if ((emptyParams && !currentSearchParams) || (emptyParams && currentSearchParams && currentSearchParams.size === 0)) return EMPTY_QUERY_STRING;
 
   const newSearchParams = new URLSearchParams(currentSearchParams?.toString() ?? '');

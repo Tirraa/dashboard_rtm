@@ -109,14 +109,14 @@ export const getAllBlogCategories: () => BlogCategory[] = () => Object.keys(Blog
 
 export function blogSubcategoryShouldTriggerNotFound(postsCollection: Partial<BlogPostType>[]): boolean {
   const isForcedPath = BlogConfig.USE_BLOG_POSTS_NOTFOUND_WHEN_SUBCATEGORY_IS_EMPTY_INSTEAD_OF_NOT_FOUND;
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   return !isForcedPath && postsCollection.length === 0;
 }
 
 export function getBlogPostFormattedDate(language: LanguageFlag, date: IsoDateTimeString): string {
   // Stryker Workaround 6. Mutant will be killed with `if (true)` as expected, but `if (false)` mutant is pointless.
   // Stryker disable next-line ConditionalExpression
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const postDateHasTime = (date: IsoDateTimeString) => date.substring(date.indexOf('T') + 1) !== '00:00:00.000Z';
 
   const giveTime = postDateHasTime(date);
@@ -174,11 +174,11 @@ export function getBlogPostPathWithoutI18nPart(language: string, url: string): A
 }
 
 export function getSlicedBlogPostDescription(description: string): CroppedDescription | DescriptionAsIs {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const takeLimit = BlogConfig.BLOG_POST_PREVIEW_DESCRIPTION_CHARACTERS_LIMIT - 1;
   if (description.length <= takeLimit) return description;
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const slicedDescription = description.substring(0, takeLimit) + '…';
   return slicedDescription;
 }

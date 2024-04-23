@@ -24,9 +24,9 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
   const pathname = usePathname();
   const isLargeScreen = useIsLargeScreen();
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const prevBtnPageId = useMemo(() => Math.max(FIRST_PAGE_PARAM, currentPage - 1), [currentPage]);
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const nextBtnPageId = useMemo(() => Math.min(pagesAmount, currentPage + 1), [pagesAmount, currentPage]);
 
   const buildPaginationItems = useCallback(
@@ -34,7 +34,7 @@ const PaginationWidget: FunctionComponent<PaginationWidgetProps> = ({ pagesAmoun
     [pagesAmount, currentPage, pathname, searchParams, isLargeScreen]
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (pagesAmount <= 1) return null;
 
   const previousBtn = buildPreviousBtn(prevBtnPageId, pathname, searchParams, currentPage, PAGE_KEY);

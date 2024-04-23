@@ -13,7 +13,7 @@ type ScrollDirection = 'down' | 'up';
 const useScrollDirection = (): [ScrollDirection, Dispatch<SetStateAction<ScrollDirection>>] => {
   const [scrollDirection, setScrollDirection] = useState<ScrollDirection>('down');
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const prevScrollY = useRef(-1);
   const blocking = useRef(false);
 
@@ -26,7 +26,7 @@ const useScrollDirection = (): [ScrollDirection, Dispatch<SetStateAction<ScrollD
       if (Math.abs(scrollY - prevScrollY.current) >= THRESHOLD) {
         const newScrollDirection = scrollY > prevScrollY.current ? 'down' : 'up';
         setScrollDirection(newScrollDirection);
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         prevScrollY.current = Math.max(0, scrollY);
       }
       blocking.current = false;

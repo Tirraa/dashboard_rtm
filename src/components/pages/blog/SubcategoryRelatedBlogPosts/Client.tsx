@@ -165,7 +165,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   }, [selectedTagSwitch, currentPage, elementsPerPage, paginatedElements, postsCollection, selectedFilter, selectedTagsIds, router, searchParams]);
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     if (selectedTagsIds.length !== 0) return;
     memorizedPageBeforeFiltering.current = getSanitizedCurrentPage(searchParams, pagesAmount, PAGE_KEY);
   }, [searchParams, selectedTagsIds, pagesAmount]);

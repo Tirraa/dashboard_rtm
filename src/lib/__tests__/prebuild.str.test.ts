@@ -50,7 +50,7 @@ describe('hrefAndPathnameExactMatch', () => {
   it('should return false', () => {
     expect(hrefAndPathnameExactMatch(`/${NOT_DEFAULT_LANGUAGE}/dashboard`, '/dashboard')).toBe(false);
     expect(hrefAndPathnameExactMatch('/dashboard', '/dashboard/bar')).toBe(false);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(hrefAndPathnameExactMatch(`/${LANGUAGES[0]}/dashboard`, `/${LANGUAGES[1]}/dashboard/bar`)).toBe(false);
   });
 });

@@ -30,19 +30,19 @@ function buildBlogPostUrl(post: DocumentToCompute): AppPath {
 
   if (filepathWithoutExt.endsWith(INDEX_TOKEN)) pathParts.push(INDEX_TOKEN);
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (pathParts.length !== 3 && pathParts.length !== 4) {
     throw new InvalidArgumentsError(buildBlogPostUrl.name, { path }, 'Invalid path! Expected 3 or 4 parts, but got: ' + pathParts.length);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (pathParts.length <= OPTIONAL_LOCALE_PART_INDEX + 1) {
     const url = '/' + DEFAULT_LANGUAGE + root + pathParts.join('/');
     return url;
   }
 
   const localePart = pathParts[OPTIONAL_LOCALE_PART_INDEX];
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   pathParts.splice(OPTIONAL_LOCALE_PART_INDEX, 1);
   const url = '/' + localePart + root + pathParts.join('/');
   return url;

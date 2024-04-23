@@ -38,10 +38,10 @@ const NavbarSearchButtonDialogDefaultView: FunctionComponent<NavbarSearchButtonD
       <NavigationMenu.List className="contents">
         {banners.map(([category, { icon: __Icon, i18nTitle }], index) => {
           const title = globalT(i18nTitle);
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          // eslint-disable-next-line no-magic-numbers
           const maxIndex = banners.length - 1;
 
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          // eslint-disable-next-line no-magic-numbers
           const pos = index === 0 ? EBannerPosition.FIRST : index === maxIndex ? EBannerPosition.LAST : EBannerPosition.MIDDLE;
 
           return (

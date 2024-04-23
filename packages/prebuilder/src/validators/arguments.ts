@@ -194,7 +194,7 @@ function crashIfArgumentsAreInvalid({ ...args }) {
   const breakingBlogDependencyToI18n: boolean = BLOG_POSTS_FOLDER !== undefined && NO_I18N;
   const breakingLpDependencyToI18n: boolean = LANDING_PAGES_FOLDER !== undefined && NO_I18N;
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const havingUnknownOptions: boolean = UNKNOWN_OPTIONS.length > 0;
 
   const unknownOptionsFeedback: MaybeEmptyErrorsDetectionFeedback = getUnknownOptionsFeedback(UNKNOWN_OPTIONS, havingUnknownOptions);
@@ -223,7 +223,7 @@ function crashIfArgumentsAreInvalid({ ...args }) {
   );
   if (!feedback) return;
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   feedback += '\n\n' + JSON.stringify(args, (k, v) => ((k === '_' && !havingUnknownOptions) || !v ? undefined : v), 2);
   throw new ArgumentsValidatorError(prefixFeedback(feedback, getErrorPrefix() + '\n' + formatMessage('optionsAreInvalid' satisfies VocabKey) + '\n'));
 }

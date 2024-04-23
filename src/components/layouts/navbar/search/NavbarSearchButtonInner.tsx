@@ -112,7 +112,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
 
     const retryInterval = setInterval(async () => {
       function disposeRetryInterval() {
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         retries = 0;
         isComputing = false;
         clearInterval(retryInterval);
@@ -190,11 +190,11 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
   const prevScreenBtn = (
     <button
       onClick={() => {
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         const indexOf = allTabValues.indexOf(tabValue) - 1;
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         const newIdx = indexOf < 0 ? allTabValues.length - 1 : indexOf;
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         updateMemorizedTabValueAndSetTabValue(allTabValues[newIdx]);
       }}
       className="search-menu-prev-next-btn sticky top-[calc(50%-1rem)] h-fit scale-125 self-center rounded-full bg-accent transition-all hover:scale-150 hover:bg-primary hover:text-white focus:scale-150 focus:bg-primary focus:text-white dark:opacity-75 hover:dark:opacity-100 dark:focus:opacity-100"
@@ -216,7 +216,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
       className="search-menu-prev-next-btn sticky top-[calc(50%-1rem)] h-fit scale-125 self-center rounded-full bg-accent transition-all hover:scale-150 hover:bg-primary hover:text-white focus:scale-150 focus:bg-primary focus:text-white dark:opacity-75 hover:dark:opacity-100 focus:dark:opacity-100"
       onClick={() => {
         const indexOf = allTabValues.indexOf(tabValue);
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         updateMemorizedTabValueAndSetTabValue(allTabValues[(indexOf + 1) % allTabValues.length]);
       }}
       onKeyDown={(e) => {

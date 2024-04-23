@@ -6,7 +6,7 @@ import { blogTagOptions } from '../lib/builders/unifiedImport';
 
 export const DAMERAU_LEVENSHTEIN_THRESHOLD = 4;
 
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+// eslint-disable-next-line no-magic-numbers
 const tabulation = EMPTY_BULLET + ' '.repeat(TAB_SIZE - 1);
 const doesNotExist = "doesn't exist";
 const doNotExist = "don't exist";
@@ -101,11 +101,11 @@ function buildFeedback(scoresMap: ScoresMap): string {
       .sort(([, score1], [, score2]) => score1 - score2)
       .map(([suggestion]) => suggestion);
 
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     if (sortedSuggestions.length > 1) {
       feedbacks.push(`${keyDoesNotExist}, ${didYouMean}: “${sortedSuggestions.join('”, or “')}”?`);
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       feedbacks.push(`${keyDoesNotExist}, ${didYouMean}: “${sortedSuggestions[0]}”?`);
     }
   }
@@ -122,11 +122,11 @@ function buildHint(invalidBlogTags: InvalidTag[], __BLOG_TAGS_OPTIONS: readonly 
   const invalidTagsNotInScoresMap: InvalidTag[] = invalidBlogTags.filter((tag) => !(tag in scoresMap));
   let invalidTagsNotInScoresMapFeedback = '';
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (invalidTagsNotInScoresMap.length === 1) {
     invalidTagsNotInScoresMapFeedback = tabulation + `“${invalidTagsNotInScoresMap}” ${doesNotExist}. ${noSuggestionFound}.`;
   }
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   else if (invalidTagsNotInScoresMap.length > 1) {
     invalidTagsNotInScoresMapFeedback = tabulation + `[“${invalidTagsNotInScoresMap.join('”, “')}”] ${doNotExist}. ${noSuggestionFound}.`;
   }
@@ -145,7 +145,7 @@ class InvalidBlogTag extends Error {
     __BLOG_TAGS_OPTIONS: readonly Tag[] = blogTagOptions,
     __DAMERAU_THRESHOLD: Limit = DAMERAU_LEVENSHTEIN_THRESHOLD
   ) {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const tag = invalidBlogTags.length === 1 ? 'tag' : 'tags';
     const message = `Invalid blog ${tag} detected!` + '\n' + buildHint(invalidBlogTags, __BLOG_TAGS_OPTIONS, __DAMERAU_THRESHOLD);
     super(message);

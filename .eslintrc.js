@@ -2,7 +2,7 @@
 // Stryker disable all
 // @ts-check
 
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+// eslint-disable-next-line no-magic-numbers
 const [_OFF, _WARN, _ERROR] = [0, 1, 2];
 const [OFF, , ERROR] = [_OFF, _WARN, _ERROR];
 
@@ -13,10 +13,10 @@ module.exports = {
     '@typescript-eslint/consistent-type-imports': [ERROR, { fixStyle: 'separate-type-imports' }],
     'import/no-extraneous-dependencies': [ERROR, { devDependencies: false }],
     'import/consistent-type-specifier-style': [ERROR, 'prefer-top-level'],
-    '@typescript-eslint/no-magic-numbers': ERROR,
     'unused-imports/no-unused-imports': ERROR,
     'react/jsx-no-useless-fragment': ERROR,
     'import/no-duplicates': ERROR,
+    'no-magic-numbers': ERROR,
 
     'no-unreachable': ERROR,
     'require-await': ERROR,

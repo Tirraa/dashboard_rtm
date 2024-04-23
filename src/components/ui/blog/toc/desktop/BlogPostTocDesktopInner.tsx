@@ -25,9 +25,9 @@ import BlogPostTocCollapseButton, { COLLAPSE_BUTTON_HEIGTH_IN_PX } from './BlogP
 require('scrollyfills').scrollend;
 
 const navbarElement: MaybeNull<HTMLElement> = getNavbar();
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+// eslint-disable-next-line no-magic-numbers
 const navbarHeight: PxValue = navbarElement ? navbarElement.getBoundingClientRect().height : 0;
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+// eslint-disable-next-line no-magic-numbers
 const BOTTOM_DEAD_ZONE_PX: PxValue = navbarHeight * 2;
 const TOP_DEAD_ZONE_PX: PxValue = navbarHeight;
 
@@ -35,7 +35,7 @@ const SCROLL_TOP_OFFSET_ONCLICK_MAGIC: PxValue = navbarHeight;
 
 const TOC_SCROLL_TOP_OFFSET_IN_PX: PxValue = 172;
 
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+// eslint-disable-next-line no-magic-numbers
 const isAtTop = () => window.scrollY === 0;
 
 const getTotalVerticalScrollDistance = () => Math.ceil(window.scrollY + window.innerHeight);
@@ -94,7 +94,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     );
 
     if (!maybeCurrentlyFocusedHeadingParent) return;
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const maybeCurrentlyFocusedHeading = maybeCurrentlyFocusedHeadingParent.children[0] as MaybeUndefined<HTMLElement>;
     if (maybeCurrentlyFocusedHeading) maybeCurrentlyFocusedHeading.blur();
   }, []);
@@ -115,7 +115,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
     for (const heading of headingsFromDOM) {
       const distance = yStart - heading.offsetTop;
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       if (0 <= distance && distance <= closestDistance) {
         closestHeading = heading;
         closestDistance = distance;
@@ -133,7 +133,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     for (const heading of headingsFromDOM) {
       if (heading.offsetTop > yMax) continue;
       const distance = yMin - heading.offsetTop;
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       if (0 >= distance && distance >= closestDistance) {
         closestHeading = heading;
         closestDistance = distance;
@@ -148,7 +148,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       const hash = window.location.hash;
       if (!hash) return null;
 
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       const maybeHeadingSlug = hash.substring(1);
       const maybeHeadingSlugIdx = slugAndIndexAssoc[maybeHeadingSlug];
       if (maybeHeadingSlugIdx === undefined) return null;
@@ -171,13 +171,13 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
     if (infered1) {
       const inferedElementHeading = infered1.id;
       const inferedElementYTopInViewport = infered1.getBoundingClientRect().top;
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       const midViewportHeight = window.innerHeight / 2;
       if (midViewportHeight < inferedElementYTopInViewport) {
         const idx = slugAndIndexAssoc[inferedElementHeading];
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         if (idx === 0) return infered1;
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         const rescueHeading = headings[idx - 1].slug;
         forcedHeadingSlugRef.current = '';
         muteUpdatesUntilScrollEnd.current = true;
@@ -224,7 +224,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       if (skip) return;
 
       if (isAtTop()) {
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         const veryFirstHeadingSlug = headings[0].slug;
         forcedHeadingSlugRef.current = '';
         dropOldHeadingFocusAndSetCurrentHeading(veryFirstHeadingSlug);
@@ -239,7 +239,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
           dropOldHeadingFocusAndSetCurrentHeading(maybeRescueHeading);
           return;
         }
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         const veryFirstHeadingSlug = headings[0].slug;
         dropOldHeadingFocusAndSetCurrentHeading(veryFirstHeadingSlug);
         return;
@@ -275,7 +275,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       if (skip) return;
 
       if (isAtBottom()) {
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         const veryLastHeadingSlug = headings[headings.length - 1].slug;
         forcedHeadingSlugRef.current = '';
         dropOldHeadingFocusAndSetCurrentHeading(veryLastHeadingSlug);
@@ -326,7 +326,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
 
       forcedHeadingSlugRef.current = slug;
 
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       const isLastHeading = slug === headings[headings.length - 1].slug;
 
       if (isLastHeading && isAtBottom()) {
@@ -338,7 +338,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       muteUpdatesUntilScrollEnd.current = true;
       muteScrollEndNextDoubleCheck.current = true;
       const scrollYTarget = Math.min(
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         Math.trunc(document.documentElement.scrollHeight) - Math.trunc(window.innerHeight) - 2,
         elem.offsetTop - SCROLL_TOP_OFFSET_ONCLICK_MAGIC
       );
@@ -370,7 +370,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   const setDocumentHeadingsOnClickEvent = useCallback(
     (doSet: boolean = true) => {
       for (const heading of headingsFromDOM) {
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         const firstChild = heading.children[0];
         if (!firstChild) continue;
 
@@ -607,15 +607,15 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         {headings.map((heading) => (
           <li
             className={cn('w-fit list-none text-sm font-bold text-white transition-all duration-200 ease-in-out', {
-              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+              // eslint-disable-next-line no-magic-numbers
               'mt-2': heading.slug === currentHeading && slugAndIndexAssoc[heading.slug] === 0,
-              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+              // eslint-disable-next-line no-magic-numbers
               'font-medium': 3 <= heading.depth && heading.depth <= 6,
-              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+              // eslint-disable-next-line no-magic-numbers
               'ml-6': heading.depth === 5 || heading.depth === 6,
-              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+              // eslint-disable-next-line no-magic-numbers
               'ml-4': heading.depth === 4,
-              // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+              // eslint-disable-next-line no-magic-numbers
               'ml-2': heading.depth === 3
             })}
             key={heading.slug}
@@ -625,7 +625,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
                 className={cn('block transition-all', {
                   'rounded-md bg-primary p-1 font-bold': heading.slug === currentHeading,
                   'hover:underline focus:text-primary': heading.slug !== currentHeading,
-                  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+                  // eslint-disable-next-line no-magic-numbers
                   'p-1': slugAndIndexAssoc[heading.slug] === headings.length - 1
                 })}
                 onClick={(event) => {

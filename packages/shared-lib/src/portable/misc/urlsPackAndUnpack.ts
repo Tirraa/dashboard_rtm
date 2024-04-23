@@ -2,7 +2,7 @@ import type { Quantity, Id } from '@rtm/shared-types/Numbers';
 
 export const MIN_ID: Id = 0;
 
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+// eslint-disable-next-line no-magic-numbers
 const [SEVEN_BITS_MASK, EIGHTH_BIT_MASK, SHIFT_STEP] = [0x7f, 0x80, 7];
 
 const BASE64URL_MAP: Base64UrlAssoc = {
@@ -28,7 +28,7 @@ const base64UrlDecode = (encodedString: EncodedString): BufferGarbage =>
  * @throws {RangeError}
  */
 export function packIds(unpacked: Id[]): EncodedString {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (unpacked.length === 0) return '';
 
   const packed: Id[] = [];
@@ -76,18 +76,18 @@ export function unpackIds(encodedString: EncodedString): Id[] {
     const byte = packed[i];
     currentUnpackedId |= (byte & SEVEN_BITS_MASK) << currentShift;
 
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     if ((byte & EIGHTH_BIT_MASK) !== 0) {
       currentShift += SHIFT_STEP;
       continue;
     }
 
     unpacked.push(currentUnpackedId);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     currentUnpackedId = currentShift = 0;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (currentShift !== 0) throw new RangeError();
   return unpacked;
 }

@@ -152,7 +152,7 @@ export function buildDropdown(
   isBottomWidget?: boolean
 ) {
   const dropdownItems: ReactElement[] = [];
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (pagesAmount === 1) return null;
 
   for (let i = FIRST_PAGE_PARAM; i <= pagesAmount; i++) {

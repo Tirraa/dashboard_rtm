@@ -9,14 +9,14 @@ const BIG_LENGTH = 1e6;
 const RIDICULOUSLY_LARGE_ID_RANGE = Array.from({ length: BIG_LENGTH }, (_, n) => n);
 
 const VALID_IDS = {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   B: [10, 200, 3000, 4, 5, 0xfffffff, 60, 700, 80, 9, 0xffffff, 0xf, 0xff, 0xfff, 0xffff, 0xfffff, 11],
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   A: [1, MIN_ID, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   C: RIDICULOUSLY_LARGE_ID_RANGE
 };
 
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+// eslint-disable-next-line no-magic-numbers
 const INVALID_IDS = [MIN_ID, MIN_ID - 1];
 
 const packedA = packIds(VALID_IDS.A);

@@ -18,7 +18,7 @@ const PopoverAnchor = PopoverPrimitive.Anchor;
 const PopoverContent = forwardRef<
   ElementRef<typeof PopoverPrimitive.Content>,
   ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
 >(({ align = 'center', sideOffset = 4, className, ...props }, ref) => (
   <PopoverPrimitive.Portal>
     <PopoverPrimitive.Content

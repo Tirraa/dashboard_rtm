@@ -40,7 +40,7 @@ export default async function Page({ params }: BlogPostPageProps) {
   const post: MaybeNull<BlogPostType> = await getBlogPostUnstrict(category, subcategory, slug, language);
   if (!post) notFound();
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const depth = countCharacter(ROUTES_ROOTS.BLOG, '/') - 1 + CUSTOM_CRUMB_MIN_DEPTH;
 
   return (

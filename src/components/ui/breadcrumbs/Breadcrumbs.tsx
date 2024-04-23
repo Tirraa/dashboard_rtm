@@ -32,7 +32,7 @@ function crumbsGenerator(
   customCrumbs?: CustomCrumbs
 ): ReactElement[] {
   function buildCurrentPath(pathParts: string[], depth: Index) {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const currentPathParts = pathParts.slice(0, depth + 1);
     const currentPath = buildAbsolutePathFromParts(...currentPathParts);
     return currentPath;
@@ -50,7 +50,7 @@ function crumbsGenerator(
   function crumbGenerator(depth: Index, isLeaf: boolean, href: string) {
     if (customCrumbs) {
       for (const customComponent of customCrumbs) {
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         if (customComponent.depth === depth + 1) return customComponent.jsx;
       }
     }
@@ -63,7 +63,7 @@ function crumbsGenerator(
   }
 
   for (let depth = 0; depth < pathParts.length; depth++) {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const isLeaf = pathParts[depth + 1] === undefined;
     const href = buildCurrentPath(pathParts, depth);
     const crumb = crumbGenerator(depth, isLeaf, href);

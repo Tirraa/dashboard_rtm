@@ -25,12 +25,12 @@ export default async function sysBlogCategoriesValidator(
     if (!isValidBlogTaxonomy(category, __MAX_LEN)) categoriesWithDefects.push(category);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (categoriesWithDefects.length > 0) {
     feedback +=
       formatMessage('invalidCategories' satisfies VocabKey, { count: categoriesWithDefects.length }) +
       ' ' +
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       (categoriesWithDefects.length === 1 ? `${categoriesWithDefects}` : `${LIST_ELEMENT_PREFIX}${categoriesWithDefects.join(LIST_ELEMENT_PREFIX)}`) +
       '\n' +
       formatMessage('blogNamingConstraint' satisfies VocabKey) +

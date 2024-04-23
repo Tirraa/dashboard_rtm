@@ -41,9 +41,9 @@ export function localesInfosInnerToObj(objInner: string): I18nJSONPart {
         plugins: []
       });
 
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       if (parsedObject.program.body[0]?.type === 'ExpressionStatement' && parsedObject.program.body[0].expression.type === 'ObjectExpression') {
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         const objExpression = parsedObject.program.body[0].expression;
         const obj: I18nJSONPart = objExpression.properties.reduce((accumulator: I18nJSONPart, prop) => {
           if (prop.type === 'ObjectProperty') {

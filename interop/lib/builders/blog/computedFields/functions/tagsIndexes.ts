@@ -27,7 +27,7 @@ function validateTagNames(
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (defects.length > 0) return new InvalidBlogTag(defects, __BLOG_TAGS_OPTIONS, __DAMERAU_THRESHOLD);
   return null;
 }
@@ -45,7 +45,7 @@ function validateTagNoDuplicates(tagsArray: BlogTag[]): MaybeNull<BlogTagDuplica
   }
 
   const duplicates = Array.from(duplicatesSet);
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (duplicates.length > 0) return new BlogTagDuplicates(duplicates);
   return null;
 }
@@ -66,7 +66,7 @@ function buildBlogTagsIndexesFromPostObj(
 
   const mergedErrors = [maybeValidateTagNamesError, maybeValidateTagNoDuplicatesError].filter((e) => e !== null);
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (mergedErrors.length > 0) throw mergedErrors.join('\n' + BULLET + ' ');
 
   const res: Id[] = [];

@@ -34,7 +34,7 @@ export async function getSession(session: Session, token: JWT, __discordApi: IDi
   const imageURL = (await getOrSet(
     keysFactory.discordProfilePicture(id),
     () => getDiscordProfilePicture(id, __discordApi),
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     660_000
   )) as MaybeNull<Href>; // TTL: https://discord.com/developers/docs/topics/rate-limits#invalid-request-limit-aka-cloudflare-bans
 

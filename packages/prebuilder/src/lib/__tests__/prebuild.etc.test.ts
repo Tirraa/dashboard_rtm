@@ -14,7 +14,7 @@ describe('localesInfosInnerToObj', () => {
 
   it('should return an obj, given a valid obj inner', () => {
     const initialObj = { foo: 'bar', bar: 'foo' };
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const objInner = getRawDataFromBracesDeclaration(JSON.stringify(initialObj), 0);
     expect(objInner).not.toBe(null);
     expect(localesInfosInnerToObj(objInner as string)).toStrictEqual(initialObj);
@@ -35,7 +35,7 @@ describe('localesInfosInnerToObj', () => {
 
     const objInner = getRawDataFromBracesDeclaration(
       JSON.stringify(initialObj),
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       0
     );
     expect(objInner).not.toBe(null);

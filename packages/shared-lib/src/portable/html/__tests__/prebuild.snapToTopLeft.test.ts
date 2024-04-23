@@ -11,7 +11,7 @@ describe('snapToTopLeft', () => {
 
   it("should call window.scrollTo with { behavior: 'instant', left: 0, top: 0 }", () => {
     snapToTopLeft();
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(global.scrollTo).toHaveBeenCalledWith({ behavior: 'instant', left: 0, top: 0 });
   });
 
@@ -20,7 +20,7 @@ describe('snapToTopLeft', () => {
     const spy = vi.spyOn(fakeDiv, 'scrollTo');
 
     snapToTopLeft(fakeDiv);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(spy).toHaveBeenCalledWith({ behavior: 'instant', left: 0, top: 0 });
   });
 });

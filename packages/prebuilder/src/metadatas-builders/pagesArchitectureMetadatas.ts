@@ -8,18 +8,18 @@ const path = require('path');
 const TOP_LEVEL_ROOT = '/';
 
 function getEntityUrl(directoriesChain: PathSegment[], filenameWithoutExt: Filename) {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (directoriesChain.length === 1) return TOP_LEVEL_ROOT + directoriesChain[0] + '/' + filenameWithoutExt;
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const head = directoriesChain[0];
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const tail = directoriesChain.slice(1);
 
   return TOP_LEVEL_ROOT + head + '/' + tail.join('/') + '/' + filenameWithoutExt;
 }
 
 function getEntityPath(directoriesChain: PathSegment[], filenameWithoutExt: Filename) {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (directoriesChain.length === 1) return directoriesChain[0] + '/' + filenameWithoutExt;
   return directoriesChain.join('/') + '/' + filenameWithoutExt;
 }
@@ -32,7 +32,7 @@ export default function getPagesArchitectureMetadatas(arborescence: Arborescence
     if (ext !== PAGE_FILE_EXT) continue;
     const filenameWithoutExt = path.basename(filename, ext);
 
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     if (directoriesChain.length <= 0) {
       if (metadatas[TOP_LEVEL_ROOT] === undefined) metadatas[TOP_LEVEL_ROOT] = [];
       /* eslint-disable perfectionist/sort-objects */
@@ -49,11 +49,11 @@ export default function getPagesArchitectureMetadatas(arborescence: Arborescence
     }
     const url = getEntityUrl(directoriesChain, filenameWithoutExt);
     const _path = getEntityPath(directoriesChain, filenameWithoutExt);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const head = directoriesChain[0];
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const nestingLevelTwo = directoriesChain[1] ?? '';
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const pathWithoutHead = nestingLevelTwo === '' ? filenameWithoutExt : directoriesChain.slice(1).join('/') + '/' + filenameWithoutExt;
     const flattenedDirectoriesChain = directoriesChain.join('/');
 

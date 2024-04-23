@@ -17,9 +17,9 @@ vi.mock('tailwind.config', () => {
 
 describe('getBreakpoint', () => {
   it('should return the correct breakpoint value', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(getBreakpoint('sm')).toBe(279);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(getBreakpoint('md')).toBe(729);
   });
 

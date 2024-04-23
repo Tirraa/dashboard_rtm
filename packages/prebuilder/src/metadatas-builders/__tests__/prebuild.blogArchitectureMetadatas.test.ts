@@ -9,7 +9,7 @@ const VALID_BLOG_POSTS_FOLDER_PATH = './packages/prebuilder/src/metadatas-builde
 
 describe('getBlogArchitectureMetadatas', () => {
   it('should throw ENOENT, given invalid path', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
     try {

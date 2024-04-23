@@ -52,19 +52,19 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
       )
     : buildBottomRightWidgets(pathname, searchParams, { pagesAmount, currentPage });
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (rightWidgets.length + leftWidgets.length <= 0) return null;
 
   return (
     <nav
       className={cn('my-4 flex items-end justify-between', {
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         'justify-end': isBottomWidget || leftWidgets.length <= 0
       })}
     >
-      {/* eslint-disable-next-line @typescript-eslint/no-magic-numbers */}
+      {/* eslint-disable-next-line no-magic-numbers */}
       {leftWidgets.length > 0 && leftWidgets}
-      {/* eslint-disable-next-line @typescript-eslint/no-magic-numbers */}
+      {/* eslint-disable-next-line no-magic-numbers */}
       {rightWidgets.length > 0 && <div className="flex flex-col">{rightWidgets}</div>}
     </nav>
   );

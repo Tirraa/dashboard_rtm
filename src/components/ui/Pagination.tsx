@@ -88,7 +88,7 @@ const PaginationEllipsis = ({
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const dropdownContentRef = useRef<HTMLDivElement>(null);
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (dropdownItems.length === 0) return null;
 
   const onOpenChange = (opened: boolean) => setIsOpened(opened);
@@ -127,7 +127,7 @@ const PaginationEllipsis = ({
 
           let scrollDist = 0;
           for (let i = 0; i < activePageNodeIndex; i++) scrollDist += links[i].getBoundingClientRect().height;
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          // eslint-disable-next-line no-magic-numbers
           if (activePageNodeIndex !== 0) scrollDist += SCROLL_OFFSET_Y;
           dropdownContentInstance.scrollTo({ behavior: 'smooth', top: scrollDist });
         }}

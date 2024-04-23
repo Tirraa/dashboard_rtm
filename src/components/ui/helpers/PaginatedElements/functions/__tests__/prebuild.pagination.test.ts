@@ -43,7 +43,7 @@ describe('getSanitizedCurrentPage', () => {
 
   it('should return maxPage, given a too big page number', () => {
     const params = new URLSearchParams();
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const page = maxPage + 1;
     params.append(__PAGE_KEY, String(page));
 

@@ -14,9 +14,9 @@ describe('useScrollDirection', () => {
   beforeAll(() => {
     windowRequestAnimationFrameMock = vi.spyOn(window, 'requestAnimationFrame').mockImplementation(
       vi.fn((cb) => {
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         cb(0);
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        // eslint-disable-next-line no-magic-numbers
         return 0;
       })
     );

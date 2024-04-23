@@ -7,7 +7,7 @@ import { Fragment } from 'react';
 
 export function doGetMaybeFilteredPostsCollection(selectedTagsIds: BlogTagId[], postsCollection: BlogPostPreviewComponentWithMetadatas[]) {
   const maybeFilteredPostsCollection =
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     selectedTagsIds.length === 0
       ? postsCollection
       : postsCollection.filter((post) => post.tagsIndexes.some((tagId) => selectedTagsIds.includes(tagId)));
@@ -39,8 +39,8 @@ export function doComputePaginatedElements(
   return paginatedElements;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+// eslint-disable-next-line no-magic-numbers
 export const shouldShowTopToolbar = (postsCollection: BlogPostPreviewComponentWithMetadatas[]): boolean => postsCollection.length > 1;
 
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+// eslint-disable-next-line no-magic-numbers
 export const shouldShowBottomToolbar = (pagesAmount: Quantity): boolean => pagesAmount > 1;

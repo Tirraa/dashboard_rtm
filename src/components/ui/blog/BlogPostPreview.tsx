@@ -27,7 +27,7 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
   const { metadescription, description, draft, title, date, tags, url } = post;
 
   const descriptionSnippet = description ? getSlicedBlogPostDescription(description) : getSlicedBlogPostDescription(metadescription);
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const hasTags = tags.length > 0;
   const showDraftSuffix = BlogConfig.SHOW_DRAFTS_BADGE && draft;
 

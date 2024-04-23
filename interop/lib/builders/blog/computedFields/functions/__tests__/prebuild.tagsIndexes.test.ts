@@ -29,14 +29,14 @@ describe('buildBlogTagsIndexes (happy path)', () => {
 
     const tagsIndexes = buildBlogTagsIndexes(partialFakePost, fakeIndexedBlogTagOptions, fakeBlogTags, damerauThreshold);
 
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(tagsIndexes).toStrictEqual([1, 0]);
   });
 });
 
 describe('buildBlogTagsIndexes (unhappy path, duplicate tags)', () => {
   it('should throw an error message, given one duplicate tag', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
     const tagsArray = ['fake_tag_one', 'fake_tag_one', 'fake_tag_two'];
@@ -55,7 +55,7 @@ describe('buildBlogTagsIndexes (unhappy path, duplicate tags)', () => {
   });
 
   it('should throw an error message, given many duplicate tags', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
     const tagsArray = ['fake_tag_one', 'fake_tag_one', 'fake_tag_two', 'fake_tag_two', 'fake_tag_three'];
@@ -76,7 +76,7 @@ describe('buildBlogTagsIndexes (unhappy path, duplicate tags)', () => {
 
 describe('buildBlogTagsIndexes (unhappy path, unknown tags without suggestion)', () => {
   it('should throw an error message, given one unknown tag', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
     const tagsArray = ['tag_one'];
@@ -96,7 +96,7 @@ describe('buildBlogTagsIndexes (unhappy path, unknown tags without suggestion)',
   });
 
   it('should throw an error message, given many unknown tags', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
     const tagsArray = ['tag_one', 'tag_two', 'tag_three'];
@@ -118,7 +118,7 @@ describe('buildBlogTagsIndexes (unhappy path, unknown tags without suggestion)',
 
 describe('buildBlogTagsIndexes (unhappy path, unknown tags with suggestions)', () => {
   it('should throw an error message, given one unknown tag, StartsWith', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
     const tagsArray = ['uniq_fake_tag_startswith'];
@@ -138,7 +138,7 @@ describe('buildBlogTagsIndexes (unhappy path, unknown tags with suggestions)', (
   });
 
   it('should throw an error message, given one unknown tag, Damerau', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
     const tagsArray = ['fake_tag_oen'];
@@ -160,7 +160,7 @@ describe('buildBlogTagsIndexes (unhappy path, unknown tags with suggestions)', (
 
 describe('buildBlogTagsIndexes (unhappy path, error combinations)', () => {
   it('should throw an error message, given many duplicate tags', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
     const tagsArray = ['fake_tag', 'fake_tag_oen', 'fake_tag_oen', 'fake_tag_one', 'fake_tag_one', 'fake_tag_two', 'fake_tag_two', 'fake_tag_three'];

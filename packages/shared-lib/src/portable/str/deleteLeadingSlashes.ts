@@ -1,10 +1,10 @@
 function deleteLeadingSlashes(str: string): string {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const maxStartIndex = str.length - 1;
   let startIndex = 0;
 
   while (startIndex <= maxStartIndex && str.charAt(startIndex) === '/') ++startIndex;
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (startIndex === 0) return str;
   if (startIndex > maxStartIndex) return '';
 

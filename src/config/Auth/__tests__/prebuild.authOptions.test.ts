@@ -54,7 +54,6 @@ describe('getDiscordProfilePicture (rate limited)', () => {
 
   it('should return the cached ImageURL as fallback, given unhappy path (all is valid, but we got rate limited)', async () => {
     vi.stubEnv('DISCORD_BOT_TOKEN', 'FAKE');
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
     set(keysFactory.discordProfilePicture('FAKE_ID'), 'FAKE_URL');
 
     const FAKE_ID = 'FAKE_ID';

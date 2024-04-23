@@ -52,7 +52,7 @@ describe('useResetScroll', () => {
   });
 
   it('should call resetScroll on initial render and additional dep state change', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const [firstState, secondState] = [1, 2];
     const resetScrollMock = vi.spyOn(resetScrollModule, 'default');
 

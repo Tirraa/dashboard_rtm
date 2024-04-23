@@ -16,11 +16,11 @@ export const getMaybeI18nFlagFromRequest = (request: NextRequest) => getPathname
 // Stryker restore all
 /* v8 ignore stop */
 
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+// eslint-disable-next-line no-magic-numbers
 export function stackMiddlewares(functions: MiddlewareFactory[] = [], index = 0): NextMiddleware {
   const currentMiddleware = functions[index];
   if (currentMiddleware) {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const nextMiddleware = stackMiddlewares(functions, index + 1);
     return currentMiddleware(nextMiddleware);
   }

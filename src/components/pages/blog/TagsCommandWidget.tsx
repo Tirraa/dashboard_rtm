@@ -57,7 +57,7 @@ const TagsCommandWidget: FunctionComponent<TagsCommandWidgetProps> = ({
         const onSelect = () => {
           if (isSelected) {
             newSelectedTagsIds.current = selectedTagsIds.filter((id) => id !== tagId);
-            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+            // eslint-disable-next-line no-magic-numbers
             if (newSelectedTagsIds.current.length === 0) setSelectedTagSwitch(ETagsSwitch.CLEARING);
             else setSelectedTagSwitch(ETagsSwitch.UNSELECTING);
           } else {
@@ -89,7 +89,7 @@ const TagsCommandWidget: FunctionComponent<TagsCommandWidgetProps> = ({
 
   useEffect(() => {
     function killswitchMemorizedPageBeforeFilteringOnPaginationWidgetClick() {
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       if (isOpenedRef.current || selectedTagsIds.length === 0) return;
       memorizedPageBeforeFiltering.current = null;
     }
@@ -138,7 +138,7 @@ const TagsCommandWidget: FunctionComponent<TagsCommandWidgetProps> = ({
             className={cn('h-5 w-5 transition-transform duration-300 ltr:mr-2 rtl:ml-2', { 'ltr:-rotate-45 rtl:rotate-45': isOpened })}
           />
           {title}
-          {/* eslint-disable-next-line @typescript-eslint/no-magic-numbers */}
+          {/* eslint-disable-next-line no-magic-numbers */}
           {selectedTagsIds.length > 0 && activeFiltersIndicator}
         </button>
       </PopoverTrigger>
@@ -148,7 +148,7 @@ const TagsCommandWidget: FunctionComponent<TagsCommandWidgetProps> = ({
           <CommandList>
             <CommandEmpty>{noResultFound}</CommandEmpty>
             <CommandGroup>{buildCommandItems()}</CommandGroup>
-            {/* eslint-disable-next-line @typescript-eslint/no-magic-numbers */}
+            {/* eslint-disable-next-line no-magic-numbers */}
             {selectedTagsIds.length > 0 && clearFiltersBtn}
           </CommandList>
         </Command>

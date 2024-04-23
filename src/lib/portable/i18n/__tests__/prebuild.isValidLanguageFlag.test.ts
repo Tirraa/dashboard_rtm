@@ -3,7 +3,7 @@ import { LANGUAGES } from '##/config/i18n';
 
 import isValidLanguageFlag from '../isValidLanguageFlag';
 
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+// eslint-disable-next-line no-magic-numbers
 const FIRST_LANG = LANGUAGES[0];
 
 const PREFIX = '$';

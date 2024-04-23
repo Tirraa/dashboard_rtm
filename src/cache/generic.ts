@@ -26,7 +26,7 @@ export function get(key: string) {
   return GenericInMemoryCache.data[key]?.value;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+// eslint-disable-next-line no-magic-numbers
 export function set(key: string, data: Data, ttl: MsValue = 0) {
   function setClock(key: string, ttl: MsValue) {
     GenericInMemoryCache.data[key].clock = {
@@ -44,13 +44,13 @@ export function set(key: string, data: Data, ttl: MsValue = 0) {
 
   GenericInMemoryCache.data[key].value = typeof data === 'object' ? structuredClone(data) : data;
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (ttl > 0) setClock(key, ttl);
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   else if (ttl < 0) disposeClock(key);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+// eslint-disable-next-line no-magic-numbers
 export async function getOrSet(key: string, data: () => Promise<Data>, ttl: MsValue = 0) {
   const value: MaybeUndefined<Data> = get(key);
   if (value !== undefined) return value;

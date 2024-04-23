@@ -13,7 +13,7 @@ import {
  * @throws {InvalidArgumentsError}
  */
 function buildLandingPageCategoryFromStr(flattenedPath: string): UnknownLandingPageCategory {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const categBuilder = (flattenedPath: string, firstSlashIndex: Index) => flattenedPath.substring(0, firstSlashIndex);
 
   const firstSlashIndex = flattenedPath.indexOf('/');

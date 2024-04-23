@@ -18,7 +18,7 @@ const FooterHeadline: FunctionComponent = () => {
   const [heart, setHeart] = useState<string>('❤️');
   const [nextHeart, setNextHeart] = useState<string>('❤️');
   const [heartToggler, setHeartToggler] = useState<boolean>(true);
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const [heartContainerWidthInPx, setHeartContainerWidthInPx] = useState<number>(0);
 
   const heartsCollectionRef = useRef<string[]>(['❤️', '🧡', '💛', '💚', '💙', '💜', '💕', '💓', '💗', '💖']);
@@ -82,7 +82,7 @@ const FooterHeadline: FunctionComponent = () => {
     <p className="relative flex select-none">
       <span
         className={cn('opacity-100 transition-opacity delay-75 duration-500', {
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          // eslint-disable-next-line no-magic-numbers
           'opacity-0': heartContainerWidthInPx === 0
         })}
       >
@@ -90,7 +90,7 @@ const FooterHeadline: FunctionComponent = () => {
       </span>
       <span
         className={cn('relative opacity-100 transition-opacity delay-200 duration-500', {
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          // eslint-disable-next-line no-magic-numbers
           'opacity-0': heartContainerWidthInPx === 0
         })}
         style={{ width: heartContainerWidthInPx + 'px' }}

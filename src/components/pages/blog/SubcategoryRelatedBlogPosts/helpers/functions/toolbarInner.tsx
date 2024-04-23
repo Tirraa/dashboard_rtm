@@ -17,7 +17,7 @@ import FiltersSelectWidget from '../../../FiltersSelectWidget';
 import TagsCommandWidget from '../../../TagsCommandWidget';
 import PaginationWidget from '../../../PaginationWidget';
 
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+// eslint-disable-next-line no-magic-numbers
 const shouldShowFiltersSelectWidget = (postsAmount: Quantity): boolean => postsAmount > 1;
 
 const getMaybeDropdown = (

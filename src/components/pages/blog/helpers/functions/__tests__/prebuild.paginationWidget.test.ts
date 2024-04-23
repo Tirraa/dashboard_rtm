@@ -15,7 +15,7 @@ const pageKey = 'page';
 describe('buildNextBtn', () => {
   it('should build an active nextBtn, given a pagesAmount bigger than currentPage', () => {
     const currentPage = 1;
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const [nextBtnPageId, pagesAmount] = [currentPage + 1, currentPage + 1];
 
     const nextBtn = buildNextBtn(nextBtnPageId, pathname, searchParams, currentPage, pagesAmount, pageKey);
@@ -24,7 +24,7 @@ describe('buildNextBtn', () => {
 
   it('should build a disabled nextBtn, given a currentPage bigger than pagesAmount', () => {
     const pagesAmount = 1;
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const [nextBtnPageId, currentPage] = [pagesAmount + 1, pagesAmount + 1];
 
     const nextBtn = buildNextBtn(nextBtnPageId, pathname, searchParams, currentPage, pagesAmount, pageKey);
@@ -34,7 +34,7 @@ describe('buildNextBtn', () => {
 
   it('should build a disabled nextBtn, given a currentPage equal to pagesAmount', () => {
     const pagesAmount = 1;
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const [nextBtnPageId, currentPage] = [pagesAmount + 1, pagesAmount];
 
     const nextBtn = buildNextBtn(nextBtnPageId, pathname, searchParams, currentPage, pagesAmount, pageKey);
@@ -45,9 +45,9 @@ describe('buildNextBtn', () => {
 
 describe('buildPreviousBtn', () => {
   it('should build an active previousBtn with cleaned page param, given a currentPage just bigger than FIRST_PAGE_PARAM', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const currentPage = FIRST_PAGE_PARAM + 1;
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const prevBtnPageId = currentPage - 1;
 
     const previousBtn = buildPreviousBtn(prevBtnPageId, pathname, searchParams, currentPage, pageKey);
@@ -55,9 +55,9 @@ describe('buildPreviousBtn', () => {
   });
 
   it('should build an active previousBtn, given a currentPage 2 steps after FIRST_PAGE_PARAM', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const currentPage = FIRST_PAGE_PARAM + 2;
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const prevBtnPageId = currentPage - 1;
 
     const previousBtn = buildPreviousBtn(prevBtnPageId, pathname, searchParams, currentPage, pageKey);
@@ -66,7 +66,7 @@ describe('buildPreviousBtn', () => {
 
   it('should build a disabled previousBtn, given a currentPage equal to FIRST_PAGE_PARAM', () => {
     const currentPage = FIRST_PAGE_PARAM;
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const prevBtnPageId = currentPage - 1;
 
     const previousBtn = buildPreviousBtn(prevBtnPageId, pathname, searchParams, currentPage, pageKey);
@@ -75,9 +75,9 @@ describe('buildPreviousBtn', () => {
   });
 
   it('should build a disabled previousBtn, given FIRST_PAGE_PARAM is bigger than currentPage', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const currentPage = FIRST_PAGE_PARAM - 1;
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const prevBtnPageId = currentPage - 1;
 
     const previousBtn = buildPreviousBtn(prevBtnPageId, pathname, searchParams, currentPage, pageKey);
@@ -125,9 +125,9 @@ describe('doBuildPaginationItems', () => {
     const dispatchClickOnLinkOrButtonFirstChildSpy = vi.spyOn(dispatchClickOnLinkOrButtonFirstChild, 'default');
 
     const dummyEventTarget = new EventTarget();
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     (paginationItems as ReactElement[])[1].props.children.props.dropdownItems[0].props.onClick(dummyEventTarget);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(dispatchClickOnLinkOrButtonFirstChildSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -142,9 +142,9 @@ describe('doBuildPaginationItems', () => {
     const dispatchClickOnLinkOrButtonFirstChildSpy = vi.spyOn(dispatchClickOnLinkOrButtonFirstChild, 'default');
 
     const dummyEventTarget = new EventTarget();
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     (paginationItems as ReactElement).props.children.props.dropdownItems[0].props.onClick(dummyEventTarget);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(dispatchClickOnLinkOrButtonFirstChildSpy).toHaveBeenCalledTimes(1);
   });
 

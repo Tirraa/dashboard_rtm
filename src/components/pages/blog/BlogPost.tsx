@@ -24,9 +24,9 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className:
   const scopedT = await getScopedI18n(i18ns.vocab);
   const scopedT2 = await getScopedI18n(i18ns.blogTags);
 
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const hasTags = post.tags.length > 0;
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   const showToC = post.headings.length > 1;
   const showDraftSuffix = BlogConfig.SHOW_DRAFTS_BADGE && post.draft;
   const draftSuffix = showDraftSuffix ? ' (' + scopedT('draft') + ')' : undefined;

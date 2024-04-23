@@ -15,13 +15,13 @@ const accordionContentGenerator = (headings: DocumentHeading[]): ReactElement[] 
     <AccordionContent data-pagefind-ignore="all" key={heading.slug}>
       <Link
         className={cn('text-lg font-bold transition-colors duration-200 ease-in-out hover:text-primary', {
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          // eslint-disable-next-line no-magic-numbers
           'font-medium': 3 <= heading.depth && heading.depth <= 6,
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          // eslint-disable-next-line no-magic-numbers
           'ml-6': heading.depth === 5 || heading.depth === 6,
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          // eslint-disable-next-line no-magic-numbers
           'ml-4': heading.depth === 4,
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          // eslint-disable-next-line no-magic-numbers
           'ml-2': heading.depth === 3
         })}
         href={'#' + heading.slug}

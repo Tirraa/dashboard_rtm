@@ -17,10 +17,10 @@ function buildBlogPostHeadingsFromPostObj(post: DocumentToCompute): DocumentHead
     const matches = line.match(MATCHER);
     if (!matches) continue;
 
-    /* eslint-disable @typescript-eslint/no-magic-numbers */
+    /* eslint-disable no-magic-numbers */
     const depth = matches[0].length;
     if (depth > MAX_HEADING_DEPTH) continue;
-    /* eslint-enable @typescript-eslint/no-magic-numbers */
+    /* eslint-enable no-magic-numbers */
 
     const content = line.replace(MATCHER, '').trim();
     if (!content) continue;

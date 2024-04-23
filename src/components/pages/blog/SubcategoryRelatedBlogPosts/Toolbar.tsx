@@ -20,7 +20,7 @@ function buildPlaceholder(isBottomWidget: boolean, pagesAmount: Quantity) {
   const topWidgetOneColPlaceholder = <div className={cn(margin, 'min-h-[40px]')} />;
 
   if (isBottomWidget) return bottomWidgetPlaceholder;
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // eslint-disable-next-line no-magic-numbers
   if (shouldShowPaginationWidget(pagesAmount)) return topWidgetTwoColsPlaceholder;
   return topWidgetOneColPlaceholder;
 }

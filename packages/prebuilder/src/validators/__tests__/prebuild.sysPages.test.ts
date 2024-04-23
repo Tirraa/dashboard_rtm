@@ -53,7 +53,7 @@ const EMPTY_FEEDBACK: EmptyString = '';
 
 describe('sysPagesValidator', () => {
   it('should throw ENOENT, given invalid path', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
     try {
@@ -104,7 +104,7 @@ describe('sysPagesValidator (ugly index strategy tests, top-level root)', () => 
     const { feedback } = await sysPagesValidator(VALID_PAGES_FOLDER_WITH_ONE_UGLY_INDEX_STRATEGY);
     expect(feedback).toBe(EMPTY_FEEDBACK);
 
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(warnSpy).toHaveBeenCalledTimes(2);
 
     expect(warnSpy).toHaveBeenCalledWith(formatMessage('uglyIndexStrategyWarning' satisfies VocabKey, { count: 1 }));
@@ -130,7 +130,7 @@ describe('sysPagesValidator (ugly index strategy tests, top-level root)', () => 
     const { feedback } = await sysPagesValidator(VALID_PAGES_FOLDER_WITH_ONE_UGLY_INDEX_STRATEGY_JUST_MOVE);
     expect(feedback).toBe(EMPTY_FEEDBACK);
 
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(warnSpy).toHaveBeenCalledTimes(2);
 
     expect(warnSpy).toHaveBeenCalledWith(formatMessage('uglyIndexStrategyWarning' satisfies VocabKey, { count: 1 }));
@@ -177,7 +177,7 @@ describe('sysPagesValidator (ugly index strategy tests, top-level root)', () => 
     const { feedback } = await sysPagesValidator(VALID_PAGES_FOLDER_WITH_ONE_UGLY_INDEX_STRATEGY_JUST_MOVE_AND_ONE_UGLY_INDEX_STRATEGY);
     expect(feedback).toBe(EMPTY_FEEDBACK);
 
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(warnSpy).toHaveBeenCalledTimes(2);
 
     expect(warnSpy).toHaveBeenCalledWith(formatMessage('uglyIndexStrategyWarning' satisfies VocabKey, { count: 2 }));

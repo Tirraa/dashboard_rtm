@@ -19,18 +19,18 @@ import { FIRST_PAGE_PARAM } from '../../constants';
 const emptyPostsCollection: BlogPostPreviewComponentWithMetadatas[] = [];
 
 const fakeTags = ['tag1', 'tag2', 'tag3', 'tag4'];
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+// eslint-disable-next-line no-magic-numbers
 const fakeTagsIndexes = [0, 1, 2, 3];
 
 const __filtersAssoc: FiltersAssoc = [
   {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers,@typescript-eslint/no-unused-vars
+    // eslint-disable-next-line no-magic-numbers,no-unused-vars
     score: (post1: BlogPostPreviewComponentWithMetadatas, post2: BlogPostPreviewComponentWithMetadatas) => 0,
     // @ts-ignore
     i18nTitle: ''
   },
   {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers,@typescript-eslint/no-unused-vars
+    // eslint-disable-next-line no-magic-numbers,no-unused-vars
     score: (post1: BlogPostPreviewComponentWithMetadatas, post2: BlogPostPreviewComponentWithMetadatas) =>
       compareDesc(new Date(post1.date), new Date(post2.date)),
     // @ts-ignore
@@ -52,11 +52,11 @@ const onlyOnePostPostsCollection: BlogPostPreviewComponentWithMetadatas[] = [
 
 const twoPostsPostsCollection: BlogPostPreviewComponentWithMetadatas[] = [
   {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     tagsIndexes: [fakeTagsIndexes[0], fakeTagsIndexes[1], fakeTagsIndexes[3]],
     blogPostPreviewComp: React.createElement('div', {}, 'The first'),
     // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     tags: [fakeTags[0], fakeTags[1], fakeTags[3]],
     date: '2021-01-01',
     title: 'Title',
@@ -76,11 +76,11 @@ const twoPostsPostsCollection: BlogPostPreviewComponentWithMetadatas[] = [
 
 const fivePostsPostsCollection: BlogPostPreviewComponentWithMetadatas[] = [
   {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     tagsIndexes: [fakeTagsIndexes[0], fakeTagsIndexes[1], fakeTagsIndexes[3]],
     blogPostPreviewComp: React.createElement('div', {}, 'The first'),
     // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     tags: [fakeTags[0], fakeTags[1], fakeTags[3]],
     date: '2021-01-01',
     title: 'Title',
@@ -97,11 +97,11 @@ const fivePostsPostsCollection: BlogPostPreviewComponentWithMetadatas[] = [
     tags: []
   },
   {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     tagsIndexes: [fakeTagsIndexes[0], fakeTagsIndexes[1], fakeTagsIndexes[3]],
     blogPostPreviewComp: React.createElement('div', {}, 'The third'),
     // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     tags: [fakeTags[0], fakeTags[1], fakeTags[3]],
     date: '2021-01-01',
     title: 'Title',
@@ -109,11 +109,11 @@ const fivePostsPostsCollection: BlogPostPreviewComponentWithMetadatas[] = [
     _id: '3'
   },
   {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     tagsIndexes: [fakeTagsIndexes[0], fakeTagsIndexes[1], fakeTagsIndexes[3]],
     blogPostPreviewComp: React.createElement('div', {}, 'The fourth'),
     // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     tags: [fakeTags[0], fakeTags[1], fakeTags[3]],
     date: '2021-01-01',
     title: 'Title',
@@ -121,11 +121,11 @@ const fivePostsPostsCollection: BlogPostPreviewComponentWithMetadatas[] = [
     _id: '4'
   },
   {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     tagsIndexes: [fakeTagsIndexes[0], fakeTagsIndexes[1], fakeTagsIndexes[3]],
     blogPostPreviewComp: React.createElement('div', {}, 'The fifth'),
     // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     tags: [fakeTags[0], fakeTags[1], fakeTags[3]],
     date: '2021-01-01',
     title: 'Title',
@@ -144,11 +144,11 @@ describe('shouldShowTopToolbar', () => {
 
 describe('shouldShowBottomToolbar', () => {
   it('should return false or true depending on pagesAmount', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(shouldShowBottomToolbar(0)).toBe(false);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(shouldShowBottomToolbar(1)).toBe(false);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(shouldShowBottomToolbar(2)).toBe(true);
   });
 });
@@ -160,14 +160,14 @@ describe('doGetMaybeFilteredPostsCollection', () => {
   });
 
   it('should return a filtered list, given selected tags', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const maybeFilteredPostsCollection = doGetMaybeFilteredPostsCollection([fakeTagsIndexes[0]], twoPostsPostsCollection);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(maybeFilteredPostsCollection).toStrictEqual([twoPostsPostsCollection[0]]);
   });
 
   it('should return an empty list, given invalid selected tags', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     const invalidTagIndex = Math.max(...fakeTagsIndexes) + 1;
     const maybeFilteredPostsCollection = doGetMaybeFilteredPostsCollection([invalidTagIndex], twoPostsPostsCollection);
     expect(maybeFilteredPostsCollection).toStrictEqual([]);
@@ -190,7 +190,7 @@ describe('getSortedPostsCollection', () => {
 
     const toSorted = getSortedPostsCollection(filterFunIndex, maybeFilteredPostsCollection, __filtersAssoc);
 
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(toSorted).toStrictEqual([twoPostsPostsCollection[1], twoPostsPostsCollection[0]]);
   });
 });
@@ -203,9 +203,9 @@ describe('doComputePaginatedElements', () => {
     const paginatedElements = doComputePaginatedElements(filterFunIndex, maybeFilteredPostsCollection, __filtersAssoc);
 
     expect(paginatedElements).toStrictEqual([
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       React.createElement(React.Fragment, { key: twoPostsPostsCollection[0]._id }, twoPostsPostsCollection[0].blogPostPreviewComp),
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       React.createElement(React.Fragment, { key: twoPostsPostsCollection[1]._id }, twoPostsPostsCollection[1].blogPostPreviewComp)
     ]);
   });
@@ -217,9 +217,9 @@ describe('doComputePaginatedElements', () => {
     const paginatedElements = doComputePaginatedElements(filterFunIndex, maybeFilteredPostsCollection, __filtersAssoc);
 
     expect(paginatedElements).toStrictEqual([
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       React.createElement(React.Fragment, { key: twoPostsPostsCollection[1]._id }, twoPostsPostsCollection[1].blogPostPreviewComp),
-      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
       React.createElement(React.Fragment, { key: twoPostsPostsCollection[0]._id }, twoPostsPostsCollection[0].blogPostPreviewComp)
     ]);
   });

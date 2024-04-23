@@ -14,7 +14,7 @@ describe('isValidPageTaxonomy', () => {
     expect(isValidPageTaxonomy('_foo-bar_$!§%&/()=?')).toBe(false);
     expect(isValidPageTaxonomy('_foo-bar')).toBe(false);
     expect(isValidPageTaxonomy('$foo-bar')).toBe(false);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(isValidPageTaxonomy(tooLong, TOO_LONG_SIZE - 1)).toBe(false);
   });
 
@@ -35,7 +35,7 @@ describe('isValidBlogTaxonomy', () => {
     expect(isValidBlogTaxonomy('_foo-bar_$!§%&/()=?')).toBe(false);
     expect(isValidBlogTaxonomy('_foo-bar')).toBe(false);
     expect(isValidBlogTaxonomy('$foo-bar')).toBe(false);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(isValidBlogTaxonomy(tooLong, TOO_LONG_SIZE - 1)).toBe(false);
   });
 
@@ -56,7 +56,7 @@ describe('isValidLpTaxonomy', () => {
     expect(isValidLpTaxonomy('_foo-bar_$!§%&/()=?')).toBe(false);
     expect(isValidLpTaxonomy('_foo-bar')).toBe(false);
     expect(isValidLpTaxonomy('$foo-bar')).toBe(false);
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    // eslint-disable-next-line no-magic-numbers
     expect(isValidLpTaxonomy(tooLong, TOO_LONG_SIZE - 1)).toBe(false);
   });
 
