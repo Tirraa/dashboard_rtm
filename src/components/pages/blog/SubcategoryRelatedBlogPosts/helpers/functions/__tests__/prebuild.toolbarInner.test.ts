@@ -79,7 +79,7 @@ describe('buildTopLeftWidgets', () => {
 describe('buildTopRightWidgets', () => {
   const __filtersAssoc: FiltersAssoc = [
     {
-      // eslint-disable-next-line no-magic-numbers,no-unused-vars
+      // eslint-disable-next-line no-magic-numbers, @typescript-eslint/no-unused-vars
       score: (post1: BlogPostPreviewComponentWithMetadatas, post2: BlogPostPreviewComponentWithMetadatas) => 0,
       // @ts-ignore
       i18nTitle: ''

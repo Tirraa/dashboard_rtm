@@ -111,26 +111,6 @@ const PaginationEllipsis = ({
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        onAnimationEnd={() => {
-          if (!isOpened) return;
-          const dropdownContentInstance = getRefCurrentPtr(dropdownContentRef);
-          if (!dropdownContentInstance) return;
-
-          const SCROLL_OFFSET_Y: PxValue = 4;
-
-          let activePageNodeIndex = 0;
-          const links = dropdownContentInstance.querySelectorAll('a');
-          for (let i = 0; i < links.length; i++) {
-            if (links[i].getAttribute('aria-current') === 'page') break;
-            activePageNodeIndex++;
-          }
-
-          let scrollDist = 0;
-          for (let i = 0; i < activePageNodeIndex; i++) scrollDist += links[i].getBoundingClientRect().height;
-          // eslint-disable-next-line no-magic-numbers
-          if (activePageNodeIndex !== 0) scrollDist += SCROLL_OFFSET_Y;
-          dropdownContentInstance.scrollTo({ behavior: 'smooth', top: scrollDist });
-        }}
         onClick={(event) => {
           if (isBottomWidget) setIsOpened(false);
           if (!(event.target instanceof HTMLAnchorElement)) return;
@@ -150,6 +130,26 @@ const PaginationEllipsis = ({
           let scrollDist = 0;
           for (let i = 0; i < newActivePageNodeIndex; i++) scrollDist += links[i].getBoundingClientRect().height;
           dropdownContentInstance.scrollTo({ top: scrollDist - SCROLL_OFFSET_Y, behavior: 'smooth' });
+        }}
+        onAnimationEnd={() => {
+          if (!isOpened) return;
+          const dropdownContentInstance = getRefCurrentPtr(dropdownContentRef);
+          if (!dropdownContentInstance) return;
+
+          const SCROLL_OFFSET_Y: PxValue = 4;
+
+          let activePageNodeIndex = 0;
+          const links = dropdownContentInstance.querySelectorAll('a');
+          for (let i = 0; i < links.length; i++) {
+            if (links[i].getAttribute('aria-current') === 'page') break;
+            activePageNodeIndex++;
+          }
+
+          let scrollDist = 0;
+          for (let i = 0; i < activePageNodeIndex; i++) scrollDist += links[i].getBoundingClientRect().height;
+          // eslint-disable-next-line no-magic-numbers
+          if (activePageNodeIndex !== 0) scrollDist += SCROLL_OFFSET_Y;
+          dropdownContentInstance.scrollTo({ behavior: 'smooth', top: scrollDist });
         }}
         className={cn('max-h-[228px] w-fit overflow-y-auto', {
           'max-h-[210px] overflow-y-auto': pageNumberIndicator

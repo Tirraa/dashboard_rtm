@@ -8,7 +8,7 @@ describe('getPaginatedElementsCurrentSlice', () => {
   const pagesAmount = 10;
   const totalPages = pageSize * pagesAmount;
 
-  // eslint-disable-next-line no-magic-numbers, no-unused-vars
+  // eslint-disable-next-line no-magic-numbers, @typescript-eslint/no-unused-vars
   const elements = Array.from({ length: totalPages }, (_, i) => createElement('div', { key: i }, `ReactElement ${i + 1}`));
 
   it('should return the correct slice for the first page', () => {
