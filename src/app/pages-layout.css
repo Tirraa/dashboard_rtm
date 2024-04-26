@@ -64,7 +64,7 @@
   margin-right: max(1vw, 1rem);
 }
 
-@media (max-width: 1024px) {
+@media only screen and (max-width: 1024px) {
   .search-menu-tabslist-item {
     height: max(4vw, 4vh);
   }
@@ -75,7 +75,7 @@
   }
 }
 
-@media (max-width: 675px) {
+@media only screen and (max-width: 675px) {
   .search-menu-banner > svg {
     border-color: transparent !important;
   }
@@ -96,18 +96,37 @@
   .search-menu-input {
     border-radius: clamp(0.390625vh, 0.515625vw, 1.1875em);
     padding: clamp(1.5625vh, 2.0625vw, 1.1875em) clamp(0.390625vh, 0.515625vw, 1.1875em);
-    font-size: max(clamp(1.45vh, 2.35vw, 1.1875em), max(2.35vh, 2.35vw));
     --tw-ring-offset-color: none;
   }
 
   .search-menu-tabslist-item {
     border-radius: clamp(0.1953125vh, 0.2578125vw, 1.1875em);
-    font-size: max(clamp(1.45vh, 2.35vw, 1.1875em), max(2.35vh, 2.35vw));
     padding: clamp(1.2890625vh, 1.7015625vw, 1.1875em) 0;
   }
 }
 
-@media (max-width: 470px) {
+@media only screen and (max-width: 675px) and (min-height: 650px) {
+  .search-menu-input {
+    font-size: max(clamp(1.45vh, 2.35vw, 1.1875em), max(2.35vh, 2.35vw));
+  }
+
+  .search-menu-tabslist-item {
+    font-size: max(clamp(1.45vh, 2.35vw, 1.1875em), max(2.35vh, 2.35vw));
+  }
+}
+
+@media only screen and (max-width: 675px) and (max-height: 630px) {
+  .search-menu-input {
+    font-size: max(clamp(2.9vh, 4.7vw, 1.1875em, max(4.7vh, 4.7vw)));
+    padding: clamp(3.90625vh, 5.15625vw, 1.1875em) clamp(1.5625vh, 2.0625vw, 1.1875em);
+  }
+
+  .search-menu-tabslist-item {
+    font-size: max(clamp(2.9vh, 4.7vw, 1.1875em), max(4.7vh, 4.7vw));
+  }
+}
+
+@media only screen and (max-width: 470px) {
   .search-menu-dialog {
     padding-left: 0;
     padding-right: 0;
