@@ -53,7 +53,7 @@ const NavbarLoginButton: FunctionComponent<NavbarLoginButtonProps> = ({ isMobile
 
   if (isMobile) return <NavbarLoginButtonMobile currentPathname={currentPathname} session={session} />;
 
-  if (session)
+  if (session) {
     return (
       <NavbarButton
         icon={<UserImage className="rounded-full" user={session?.user} height={SIZE} width={SIZE} />}
@@ -61,6 +61,7 @@ const NavbarLoginButton: FunctionComponent<NavbarLoginButtonProps> = ({ isMobile
         i18nTitle={`${auth}.logout`}
       />
     );
+  }
 
   return <NavbarButton onClick={() => signIn('discord', { callbackUrl: ROUTES_ROOTS.DASHBOARD })} i18nTitle={`${auth}.login`} />;
 };
