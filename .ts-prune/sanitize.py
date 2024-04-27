@@ -14,7 +14,7 @@ import re
 import time
 from typing import Tuple, TypeAlias, Type
 
-PrintSideEffect: TypeAlias = Type[None]
+PrintSideEffect: TypeAlias = None
 
 def normalize_tsprune_output() -> str:
     """I love Windows..."""
