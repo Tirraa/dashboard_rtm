@@ -19,6 +19,7 @@ const Result: FunctionComponent<ResultProps> = ({ className, metaTitle, excerpt,
   return (
     <Link
       className={cn(
+        'search-menu-result-link',
         'w-full',
         {
           'pointer-events-none opacity-50': exactMatch
