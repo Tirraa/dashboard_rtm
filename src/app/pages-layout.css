@@ -64,6 +64,22 @@
   margin-right: max(1vw, 1rem);
 }
 
+.search-menu-result-link {
+  font-size: max(clamp(1.6625vh, 2.0625vw, 1.1875em), 3.75vh);
+  padding-left: max(0.2vh, 0.2vw);
+  padding-right: max(0.2vh, 0.2vw);
+}
+
+.search-menu-result-link h3 {
+  font-size: max(clamp(1.82875vh, 2.26875vw, 1.1875em), 4.125vh);
+}
+
+.search-menu-result-link mark {
+  background-color: hsl(var(--primary));
+  padding: 0 0.2em;
+  color: white;
+}
+
 @media only screen and (max-width: 1024px) {
   .search-menu-tabslist-item {
     height: max(4vw, 4vh);
@@ -110,6 +126,14 @@
     font-size: max(clamp(1.45vh, 2.35vw, 1.1875em), max(2.35vh, 2.35vw));
   }
 
+  .search-menu-result-link {
+    font-size: max(clamp(1.45vh, 2.35vw, 1.1875em), max(2.35vh, 2.35vw));
+  }
+
+  .search-menu-result-link h3 {
+    font-size: max(clamp(1.595vh, 2.585vw, 1.1875em), max(2.585vh, 2.585vw));
+  }
+
   .search-menu-tabslist-item {
     font-size: max(clamp(1.45vh, 2.35vw, 1.1875em), max(2.35vh, 2.35vw));
   }
@@ -119,6 +143,14 @@
   .search-menu-input {
     font-size: max(clamp(2.9vh, 4.7vw, 1.1875em, max(4.7vh, 4.7vw)));
     padding: clamp(3.90625vh, 5.15625vw, 1.1875em) clamp(1.5625vh, 2.0625vw, 1.1875em);
+  }
+
+  .search-menu-result-link {
+    font-size: max(clamp(2.9vh, 4.7vw, 1.1875em, max(4.7vh, 4.7vw)));
+  }
+
+  .search-menu-result-link h3 {
+    font-size: max(clamp(3.19vh, 5.17vw, 1.1875em, max(5.17vh, 5.17vw)));
   }
 
   .search-menu-tabslist-item {
