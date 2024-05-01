@@ -66,10 +66,18 @@
 
 .search-menu-result-link {
   font-size: max(clamp(1.6625vh, 2.0625vw, 1.1875em), 3.75vh);
+  padding-left: max(0.2vh, 0.2vw);
+  padding-right: max(0.2vh, 0.2vw);
 }
 
 .search-menu-result-link h3 {
   font-size: max(clamp(1.82875vh, 2.26875vw, 1.1875em), 4.125vh);
+}
+
+.search-menu-result-link mark {
+  background-color: hsl(var(--primary));
+  padding: 0 0.2em;
+  color: white;
 }
 
 @media only screen and (max-width: 1024px) {

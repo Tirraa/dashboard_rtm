@@ -314,7 +314,8 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
           </DialogHeader>
           <div
             className={cn('flex-1 rounded-md', {
-              'min-h-0 overflow-y-auto break-words border border-input px-2 [&>*>*]:pb-2 first:[&>*>*]:py-2': results !== null,
+              "min-h-0 overflow-y-auto break-words border border-input px-8 [&>*>*]:mb-8 first:[&>*>*]:my-8 last:[&>*>*]:after:block last:[&>*>*]:after:h-8 last:[&>*>*]:after:content-['']":
+                results !== null,
               "after:block after:h-10 after:content-['']": searchText === SEARCH_TEXT_INITIAL_STATE
             })}
           >
