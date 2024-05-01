@@ -33,6 +33,7 @@ function authenticatedShortcutsAuthMiddleware(request: NextRequest, shortcut: Ap
 }
 
 // {ToDo} Rewrite this when we'll get rid of Next Auth in this project
+// https://github.com/Tirraa/dashboard_rtm/issues/130
 const withProtectedRoutes: MiddlewareFactory = (next: NextMiddleware) => async (req: NextRequest, _next: NextFetchEvent) => {
   const request = req as NextRequestWithAuth;
   if (isProtectedRoute(request.nextUrl.pathname)) return protectedRoutesAuthMiddleware(request)(request, _next);
