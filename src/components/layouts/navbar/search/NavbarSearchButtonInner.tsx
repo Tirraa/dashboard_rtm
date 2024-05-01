@@ -283,7 +283,10 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
       >
         {prevScreenBtn}
         <Tabs
-          onValueChange={(v) => updateMemorizedTabValueAndSetTabValue(v as TabValue)}
+          onValueChange={(v) => {
+            computeAndSetResults(searchText, tabValue, setResults);
+            updateMemorizedTabValueAndSetTabValue(v as TabValue);
+          }}
           className="search-menu-gap-y flex w-full flex-col lg:px-5"
           orientation={isLargeScreen ? 'horizontal' : 'vertical'}
           value={tabValue}
