@@ -284,7 +284,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
         {prevScreenBtn}
         <Tabs
           onValueChange={(v) => {
-            computeAndSetResults(searchText, tabValue, setResults);
+            if (searchText !== SEARCH_TEXT_INITIAL_STATE) computeAndSetResults(searchText, tabValue, setResults);
             updateMemorizedTabValueAndSetTabValue(v as TabValue);
           }}
           className="search-menu-gap-y flex w-full flex-col lg:px-5"
