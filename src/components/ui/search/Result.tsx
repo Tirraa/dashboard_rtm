@@ -22,7 +22,7 @@ const Result: FunctionComponent<ResultProps> = ({ className, metaTitle, excerpt,
     <Link
       className={cn(
         'search-menu-result-link',
-        'flex h-full w-full flex-col transition-transform duration-300 hover:delay-0 hover:duration-100 focus:delay-0 focus:duration-100 dark:hover:brightness-125 dark:focus:brightness-125',
+        'flex h-fit w-full flex-col transition-transform duration-300 hover:delay-0 hover:duration-100 focus:delay-0 focus:duration-100 dark:hover:brightness-125 dark:focus:brightness-125',
         {
           'pointer-events-none opacity-50': exactMatch
         },
@@ -31,7 +31,7 @@ const Result: FunctionComponent<ResultProps> = ({ className, metaTitle, excerpt,
       aria-current={exactMatch ? 'page' : undefined}
       href={href}
     >
-      <Card className="overflow-hidden rounded shadow-lg transition-[box-shadow] duration-300 hover:shadow-xl focus:shadow-xl">
+      <Card className="h-fit overflow-hidden rounded shadow-lg transition-[box-shadow] duration-300 hover:shadow-xl focus:shadow-xl">
         <CardHeader className="pb-2">
           <CardTitle className="flex justify-between" titleType="h3">
             {metaTitle}

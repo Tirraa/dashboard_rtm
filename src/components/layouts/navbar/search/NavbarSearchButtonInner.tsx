@@ -314,8 +314,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
           </DialogHeader>
           <div
             className={cn('flex-1 rounded-md', {
-              "min-h-0 overflow-y-auto break-words border border-input px-8 [&>*>*]:mb-8 first:[&>*>*]:my-8 last:[&>*>*]:after:block last:[&>*>*]:after:h-8 last:[&>*>*]:after:content-['']":
-                results !== null,
+              'min-h-0 overflow-y-auto break-words border border-input px-8 [&>*>*]:mb-8 first:[&>*>*]:my-8': results !== null,
               "after:block after:h-10 after:content-['']": searchText === SEARCH_TEXT_INITIAL_STATE
             })}
           >
@@ -327,7 +326,14 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
               value={'All' satisfies TabValue}
               tabIndex={-1}
             >
-              {results === null || searchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : results}
+              {results === null || searchText === SEARCH_TEXT_INITIAL_STATE ? (
+                defaultView
+              ) : (
+                <>
+                  {results}
+                  <div className="relative bottom-[1px] min-h-[1px] w-full" />
+                </>
+              )}
             </TabsContent>
             <TabsContent
               className={cn('mt-0 flex h-full max-h-full w-full flex-col items-center', {
@@ -336,7 +342,14 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
               value={'Page' satisfies TabValue}
               tabIndex={-1}
             >
-              {results === null || searchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : results}
+              {results === null || searchText === SEARCH_TEXT_INITIAL_STATE ? (
+                defaultView
+              ) : (
+                <>
+                  {results}
+                  <div className="relative bottom-[1px] min-h-[1px] w-full" />
+                </>
+              )}
             </TabsContent>
             <TabsContent
               className={cn('mt-0 flex h-full max-h-full w-full flex-col items-center', {
@@ -345,7 +358,14 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
               value={'BlogPost' satisfies TabValue}
               tabIndex={-1}
             >
-              {results === null || searchText === SEARCH_TEXT_INITIAL_STATE ? defaultView : results}
+              {results === null || searchText === SEARCH_TEXT_INITIAL_STATE ? (
+                defaultView
+              ) : (
+                <>
+                  {results}
+                  <div className="relative bottom-[1px] min-h-[1px] w-full" />
+                </>
+              )}
             </TabsContent>
           </div>
         </Tabs>
