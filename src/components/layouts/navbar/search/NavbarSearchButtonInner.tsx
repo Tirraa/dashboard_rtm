@@ -55,12 +55,41 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
 }: NavbarSearchButtonProps<AllTabValues>) => {
   type TabValue = AllTabValues[Index];
 
+  const prevScreenBtnRef = useRef<HTMLButtonElement>(null);
+  const nextScreenBtnRef = useRef<HTMLButtonElement>(null);
+
+  const quickMenuLeftCustomHandler = useCallback((e: ReactKeyboardEvent<HTMLAnchorElement>) => {
+    if (e.key !== 'ArrowLeft') return;
+
+    const prevScreenBtnInstance = getRefCurrentPtr(prevScreenBtnRef);
+    if (!prevScreenBtnInstance) return;
+    e.preventDefault();
+    prevScreenBtnInstance.focus();
+  }, []);
+
+  const quickMenuRightCustomHandler = useCallback((e: ReactKeyboardEvent<HTMLAnchorElement>) => {
+    if (e.key !== 'ArrowRight') return;
+
+    const nextScreenBtnInstance = getRefCurrentPtr(nextScreenBtnRef);
+    if (!nextScreenBtnInstance) return;
+    e.preventDefault();
+    nextScreenBtnInstance.focus();
+  }, []);
+
+  const quickMenuLeftRightCustomHandler = useCallback(
+    (e: ReactKeyboardEvent<HTMLAnchorElement>) => {
+      quickMenuLeftCustomHandler(e);
+      quickMenuRightCustomHandler(e);
+    },
+    [quickMenuLeftCustomHandler, quickMenuRightCustomHandler]
+  );
+
   const throttledComputeAndSetResults = useMemo(
     () =>
       throttle(async (searchText: string, tabValue: TabValue, setResults: (results: ReactElement[]) => void) => {
-        await computeAndSetResults(searchText, tabValue, resultsContainerRef, setResults);
+        await computeAndSetResults(searchText, tabValue, resultsContainerRef, quickMenuLeftRightCustomHandler, setResults);
       }, THROTTLE_DELAY),
-    []
+    [quickMenuLeftRightCustomHandler]
   );
 
   const { quickAccessBtns, allTabValues, tabTriggers, banners } = useMemo(
@@ -81,8 +110,6 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
   const [tabValue, setTabValue] = useState(tabValueInitialState);
   const pathnameAtOpen = useRef<MaybeNull<AppPath>>(null);
   const inputFieldRef = useRef<HTMLInputElement>(null);
-  const prevScreenBtnRef = useRef<HTMLButtonElement>(null);
-  const nextScreenBtnRef = useRef<HTMLButtonElement>(null);
   const resultsContainerRef = useRef<HTMLDivElement>(null);
   const isLargeScreen = useIsLargeScreen();
   const memorizedTabValue = useRef(tabValue);
@@ -144,32 +171,6 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
   const updateMemorizedTabValueAndSetTabValue = useCallback(
     (v: TabValue) => doUpdateMemorizedTabValueAndSetTabValue(v, memorizedTabValue, setTabValue),
     []
-  );
-
-  const quickMenuLeftCustomHandler = useCallback((e: ReactKeyboardEvent<HTMLAnchorElement>) => {
-    if (e.key !== 'ArrowLeft') return;
-
-    const prevScreenBtnInstance = getRefCurrentPtr(prevScreenBtnRef);
-    if (!prevScreenBtnInstance) return;
-    e.preventDefault();
-    prevScreenBtnInstance.focus();
-  }, []);
-
-  const quickMenuRightCustomHandler = useCallback((e: ReactKeyboardEvent<HTMLAnchorElement>) => {
-    if (e.key !== 'ArrowRight') return;
-
-    const nextScreenBtnInstance = getRefCurrentPtr(nextScreenBtnRef);
-    if (!nextScreenBtnInstance) return;
-    e.preventDefault();
-    nextScreenBtnInstance.focus();
-  }, []);
-
-  const quickMenuLeftRightCustomHandler = useCallback(
-    (e: ReactKeyboardEvent<HTMLAnchorElement>) => {
-      quickMenuLeftCustomHandler(e);
-      quickMenuRightCustomHandler(e);
-    },
-    [quickMenuLeftCustomHandler, quickMenuRightCustomHandler]
   );
 
   const focusInputField = useCallback(() => {
@@ -287,7 +288,8 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
         {prevScreenBtn}
         <Tabs
           onValueChange={(v) => {
-            if (searchText !== SEARCH_TEXT_INITIAL_STATE) computeAndSetResults(searchText, tabValue, resultsContainerRef, setResults);
+            if (searchText !== SEARCH_TEXT_INITIAL_STATE)
+              computeAndSetResults(searchText, tabValue, resultsContainerRef, quickMenuLeftRightCustomHandler, setResults);
             updateMemorizedTabValueAndSetTabValue(v as TabValue);
           }}
           className="search-menu-gap-y flex w-full flex-col lg:px-5"

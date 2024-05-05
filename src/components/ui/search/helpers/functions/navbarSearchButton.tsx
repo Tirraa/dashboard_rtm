@@ -1,4 +1,4 @@
-import type { FocusEventHandler, MutableRefObject, ReactElement, RefObject } from 'react';
+import type { KeyboardEvent as ReactKeyboardEvent, FocusEventHandler, MutableRefObject, ReactElement, RefObject } from 'react';
 import type { QuickAccessBtnMetadatas, BannersMetadatas } from '@/config/searchMenu';
 import type { SearchDocumentFlag } from '@/lib/pagefind/helpers/search';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
@@ -109,6 +109,7 @@ export async function computeAndSetResults(
   debouncedSearchText: string,
   documentType: SearchDocumentFlag,
   resultsContainerRef: RefObject<MaybeNull<HTMLDivElement>>,
+  quickMenuLeftRightCustomHandler: (e: ReactKeyboardEvent<HTMLAnchorElement>) => void,
   setResults: (results: ReactElement[]) => void
 ) {
   const search = await searchDocument(debouncedSearchText, documentType);
@@ -135,7 +136,7 @@ export async function computeAndSetResults(
 
     results.push(
       <Result
-        navigationMenuItemKey={String(i)}
+        navigationMenuItemProps={{ onKeyDown: quickMenuLeftRightCustomHandler, key: String(i) }}
         key={searchResults[i].id}
         metaTitle={metaTitle}
         onFocus={onFocus}

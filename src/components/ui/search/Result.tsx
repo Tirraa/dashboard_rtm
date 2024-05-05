@@ -1,4 +1,4 @@
-import type { AnchorHTMLAttributes as ReactAnchorHTMLAttributes, FunctionComponent } from 'react';
+import type { AnchorHTMLAttributes as ReactAnchorHTMLAttributes, KeyboardEventHandler, FunctionComponent } from 'react';
 import type { WithClassname, AppPath } from '@rtm/shared-types/Next';
 import type { LinkProps } from 'next/link';
 
@@ -11,14 +11,17 @@ import Link from 'next/link';
 import { CardContent, CardHeader, CardTitle, Card } from '../Card';
 
 interface ResultProps extends Partial<WithClassname> {
-  navigationMenuItemKey?: string;
+  navigationMenuItemProps?: {
+    onKeyDown?: KeyboardEventHandler<HTMLAnchorElement>;
+    key: string;
+  };
   metaTitle: string;
   excerpt: string;
   href: AppPath;
 }
 
 const Result: FunctionComponent<Omit<ReactAnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> & ResultProps & LinkProps> = ({
-  navigationMenuItemKey,
+  navigationMenuItemProps,
   className,
   metaTitle,
   excerpt,
@@ -55,11 +58,13 @@ const Result: FunctionComponent<Omit<ReactAnchorHTMLAttributes<HTMLAnchorElement
     </Link>
   );
 
-  if (navigationMenuItemKey === undefined) return inner;
+  if (navigationMenuItemProps === undefined) return inner;
 
   return (
-    <NavigationMenu.Item key={navigationMenuItemKey}>
-      <NavigationMenu.Link asChild>{inner}</NavigationMenu.Link>
+    <NavigationMenu.Item key={navigationMenuItemProps.key}>
+      <NavigationMenu.Link onKeyDown={navigationMenuItemProps.onKeyDown} asChild>
+        {inner}
+      </NavigationMenu.Link>
     </NavigationMenu.Item>
   );
 };
