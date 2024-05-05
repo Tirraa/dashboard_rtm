@@ -1,5 +1,6 @@
+import type { AnchorHTMLAttributes as ReactAnchorHTMLAttributes, FunctionComponent } from 'react';
 import type { WithClassname, AppPath } from '@rtm/shared-types/Next';
-import type { FunctionComponent } from 'react';
+import type { LinkProps } from 'next/link';
 
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import { hrefAndPathnameExactMatch } from '@/lib/str';
@@ -16,7 +17,14 @@ interface ResultProps extends Partial<WithClassname> {
   href: AppPath;
 }
 
-const Result: FunctionComponent<ResultProps> = ({ navigationMenuItemKey, className, metaTitle, excerpt, href }) => {
+const Result: FunctionComponent<Omit<ReactAnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> & ResultProps & LinkProps> = ({
+  navigationMenuItemKey,
+  className,
+  metaTitle,
+  excerpt,
+  href,
+  ...props
+}) => {
   const currentPathname = usePathname();
   const exactMatch = hrefAndPathnameExactMatch(href, currentPathname);
 
@@ -32,6 +40,7 @@ const Result: FunctionComponent<ResultProps> = ({ navigationMenuItemKey, classNa
       )}
       aria-current={exactMatch ? 'page' : undefined}
       href={href}
+      {...props}
     >
       <Card className="h-fit overflow-hidden rounded shadow-lg transition-[box-shadow] duration-300 hover:shadow-xl focus:shadow-xl">
         <CardHeader className="pb-2">

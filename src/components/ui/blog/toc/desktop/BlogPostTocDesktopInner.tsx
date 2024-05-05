@@ -8,7 +8,7 @@ import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
 import useScrollDirection from '@/components/hooks/useScrollDirection';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
-import ELEMENTS_ID from '@/config/elementsId';
+import { MDX_BODY_ID } from '@/config/elementsId';
 import { useRouter } from 'next/navigation';
 import { getNavbar } from '@/lib/html';
 import { cn } from '@/lib/tailwind';
@@ -42,7 +42,7 @@ const getTotalVerticalScrollDistance = () => Math.ceil(window.scrollY + window.i
 
 const getAllDocumentHeadingsFromDOM = () => Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')) as HTMLElement[];
 
-const getMdxBodyFromDOM = () => document.getElementById(ELEMENTS_ID.MDX_BODY);
+const getMdxBodyFromDOM = () => document.getElementById(MDX_BODY_ID);
 
 // {ToDo} https://github.com/Tirraa/dashboard_rtm/issues/126
 const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> = ({

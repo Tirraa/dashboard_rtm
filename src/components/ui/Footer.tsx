@@ -4,9 +4,9 @@ import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { FunctionComponent } from 'react';
 
 import { useCallback, useEffect, useState, useRef } from 'react';
+import { FOOTER_CONTAINER_ID } from '@/config/elementsId';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { useScopedI18n } from '@/i18n/client';
-import ELEMENTS_ID from '@/config/elementsId';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 
@@ -121,8 +121,8 @@ const FooterHeadline: FunctionComponent = () => {
 const Footer: FunctionComponent<FooterProps> = () => (
   <footer
     className="z-10 flex min-h-20 flex-col items-center justify-center border-t-[1px] border-transparent bg-black text-center text-white dark:border-card dark:bg-black"
-    id={ELEMENTS_ID.FOOTER_CONTAINER}
     data-pagefind-ignore="all"
+    id={FOOTER_CONTAINER_ID}
   >
     <FooterHeadline />
   </footer>

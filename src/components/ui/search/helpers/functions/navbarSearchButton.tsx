@@ -1,7 +1,8 @@
+import type { FocusEventHandler, MutableRefObject, ReactElement, RefObject } from 'react';
 import type { QuickAccessBtnMetadatas, BannersMetadatas } from '@/config/searchMenu';
 import type { SearchDocumentFlag } from '@/lib/pagefind/helpers/search';
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
-import type { MutableRefObject, ReactElement } from 'react';
 import type { Index } from '@rtm/shared-types/Numbers';
 import type { AppPath } from '@rtm/shared-types/Next';
 
@@ -67,12 +68,47 @@ export const createNavbarSearchButtonProps = <
     allTabValues
   }) as const;
 
+function buildResultOnFocus(
+  currentElementIndex: Index,
+  maxIndex: Index,
+  resultsContainerRef: RefObject<MaybeNull<HTMLDivElement>>
+): FocusEventHandler<HTMLAnchorElement> {
+  // eslint-disable-next-line no-magic-numbers
+  if (currentElementIndex === 0) {
+    return () => {
+      const maybeContainer = resultsContainerRef.current;
+      if (maybeContainer === null) return;
+      // eslint-disable-next-line no-magic-numbers
+      maybeContainer.scrollTo(0, 0);
+    };
+  }
+
+  if (currentElementIndex === maxIndex) {
+    return () => {
+      const maybeContainer = resultsContainerRef.current;
+      if (maybeContainer === null) return;
+      // eslint-disable-next-line no-magic-numbers
+      maybeContainer.scrollTo(0, maybeContainer.scrollHeight);
+    };
+  }
+
+  return (e) => {
+    const maybeContainer = resultsContainerRef.current;
+    const { target } = e;
+    if (maybeContainer === null) return;
+    target.scrollIntoView({ block: 'end' });
+    // eslint-disable-next-line no-magic-numbers
+    maybeContainer.scrollTo(0, maybeContainer.scrollTop + 15);
+  };
+}
+
 /**
  * @throws
  */
 export async function computeAndSetResults(
   debouncedSearchText: string,
   documentType: SearchDocumentFlag,
+  resultsContainerRef: RefObject<MaybeNull<HTMLDivElement>>,
   setResults: (results: ReactElement[]) => void
 ) {
   const search = await searchDocument(debouncedSearchText, documentType);
@@ -94,7 +130,19 @@ export async function computeAndSetResults(
     const metaTitle = data.meta.title;
     const excerpt = data.excerpt;
 
-    results.push(<Result navigationMenuItemKey={String(i)} key={searchResults[i].id} metaTitle={metaTitle} excerpt={excerpt} href={cleanedUrl} />);
+    // eslint-disable-next-line no-magic-numbers
+    const onFocus = buildResultOnFocus(i, searchResults.length - 1, resultsContainerRef);
+
+    results.push(
+      <Result
+        navigationMenuItemKey={String(i)}
+        key={searchResults[i].id}
+        metaTitle={metaTitle}
+        onFocus={onFocus}
+        excerpt={excerpt}
+        href={cleanedUrl}
+      />
+    );
   }
 
   setResults(results);

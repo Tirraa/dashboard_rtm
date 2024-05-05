@@ -21,6 +21,7 @@ import { TabsContent, TabsList, Tabs } from '@/components/ui/Tabs';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
+import { SEARCH_MODAL_ID } from '@/config/elementsId';
 import { THROTTLE_DELAY } from '@/config/searchMenu';
 import { getClientSideI18n } from '@/i18n/client';
 import { Input } from '@/components/ui/Input';
@@ -57,7 +58,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
   const throttledComputeAndSetResults = useMemo(
     () =>
       throttle(async (searchText: string, tabValue: TabValue, setResults: (results: ReactElement[]) => void) => {
-        await computeAndSetResults(searchText, tabValue, setResults);
+        await computeAndSetResults(searchText, tabValue, resultsContainerRef, setResults);
       }, THROTTLE_DELAY),
     []
   );
@@ -82,6 +83,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
   const inputFieldRef = useRef<HTMLInputElement>(null);
   const prevScreenBtnRef = useRef<HTMLButtonElement>(null);
   const nextScreenBtnRef = useRef<HTMLButtonElement>(null);
+  const resultsContainerRef = useRef<HTMLDivElement>(null);
   const isLargeScreen = useIsLargeScreen();
   const memorizedTabValue = useRef(tabValue);
   const [transitionClass, setTransitionClass] = useState<string>('');
@@ -285,7 +287,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
         {prevScreenBtn}
         <Tabs
           onValueChange={(v) => {
-            if (searchText !== SEARCH_TEXT_INITIAL_STATE) computeAndSetResults(searchText, tabValue, setResults);
+            if (searchText !== SEARCH_TEXT_INITIAL_STATE) computeAndSetResults(searchText, tabValue, resultsContainerRef, setResults);
             updateMemorizedTabValueAndSetTabValue(v as TabValue);
           }}
           className="search-menu-gap-y flex w-full flex-col lg:px-5"
@@ -306,9 +308,9 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
                 placeholder={`${capitalize(globalT(`${i18ns.vocab}.start-typing`))}…`}
                 value={isOpened ? searchText : SEARCH_TEXT_INITIAL_STATE}
                 className="search-menu-input"
+                id={SEARCH_MODAL_ID}
                 onChange={onChange}
                 ref={inputFieldRef}
-                id="modal-search"
                 type="text"
               />
             </div>
@@ -318,6 +320,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
               'min-h-0 overflow-y-auto break-words border border-input px-8 max-lg:px-4 [&>*>*>*>*>*]:mb-8 first:[&>*>*>*>*>*]:my-8 max-lg:[&>*>*>*>*>*]:mb-4 max-lg:first:[&>*>*>*>*>*]:my-4':
                 results !== null
             })}
+            ref={resultsContainerRef}
             tabIndex={-1}
           >
             {allTabValues.map((v) => (
