@@ -19,6 +19,7 @@ import { tryToPreloadPagefind, tryToInitPagefind } from '@/lib/pagefind/helpers/
 import { useCallback, useEffect, useState, Fragment, useMemo, useRef } from 'react';
 import { TabsContent, TabsList, Tabs } from '@/components/ui/Tabs';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
+import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { THROTTLE_DELAY } from '@/config/searchMenu';
 import { getClientSideI18n } from '@/i18n/client';
@@ -314,25 +315,27 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
           </DialogHeader>
           <div
             className={cn('flex-1 rounded-md', {
-              'min-h-0 overflow-y-auto break-words border border-input px-8 max-lg:px-4 [&>*>*]:mb-8 first:[&>*>*]:my-8 max-lg:[&>*>*]:mb-4 max-lg:first:[&>*>*]:my-4':
-                results !== null,
-              "after:block after:h-10 after:content-['']": searchText === SEARCH_TEXT_INITIAL_STATE
+              'min-h-0 overflow-y-auto break-words border border-input px-8 max-lg:px-4 [&>*>*>*>*>*]:mb-8 first:[&>*>*>*>*>*]:my-8 max-lg:[&>*>*>*>*>*]:mb-4 max-lg:first:[&>*>*>*>*>*]:my-4':
+                results !== null
             })}
+            tabIndex={-1}
           >
-            {allTabValues.map((value) => (
+            {allTabValues.map((v) => (
               <TabsContent
                 className={cn('mt-0 flex h-full max-h-full w-full flex-col items-center', {
-                  hidden: tabValue !== value
+                  hidden: tabValue !== v
                 })}
-                value={value}
                 tabIndex={-1}
-                key={value}
+                value={v}
+                key={v}
               >
                 {results === null || searchText === SEARCH_TEXT_INITIAL_STATE ? (
                   defaultView
                 ) : (
                   <>
-                    {results}
+                    <NavigationMenu.Root className="contents [&>div]:contents" orientation="vertical" aria-label={'todo'}>
+                      <NavigationMenu.List className="contents">{results}</NavigationMenu.List>
+                    </NavigationMenu.Root>
                     <div className="relative bottom-[1px] min-h-[1px] w-full" />
                   </>
                 )}

@@ -94,7 +94,7 @@ export async function computeAndSetResults(
     const metaTitle = data.meta.title;
     const excerpt = data.excerpt;
 
-    results.push(<Result key={searchResults[i].id} metaTitle={metaTitle} excerpt={excerpt} href={cleanedUrl} />);
+    results.push(<Result navigationMenuItemKey={String(i)} key={searchResults[i].id} metaTitle={metaTitle} excerpt={excerpt} href={cleanedUrl} />);
   }
 
   setResults(results);

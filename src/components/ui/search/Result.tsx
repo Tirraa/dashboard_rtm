@@ -1,6 +1,7 @@
 import type { WithClassname, AppPath } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
+import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import { hrefAndPathnameExactMatch } from '@/lib/str';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/tailwind';
@@ -9,16 +10,17 @@ import Link from 'next/link';
 import { CardContent, CardHeader, CardTitle, Card } from '../Card';
 
 interface ResultProps extends Partial<WithClassname> {
+  navigationMenuItemKey?: string;
   metaTitle: string;
   excerpt: string;
   href: AppPath;
 }
 
-const Result: FunctionComponent<ResultProps> = ({ className, metaTitle, excerpt, href }) => {
+const Result: FunctionComponent<ResultProps> = ({ navigationMenuItemKey, className, metaTitle, excerpt, href }) => {
   const currentPathname = usePathname();
   const exactMatch = hrefAndPathnameExactMatch(href, currentPathname);
 
-  return (
+  const inner = (
     <Link
       className={cn(
         'search-menu-result-link',
@@ -42,6 +44,14 @@ const Result: FunctionComponent<ResultProps> = ({ className, metaTitle, excerpt,
         </CardContent>
       </Card>
     </Link>
+  );
+
+  if (navigationMenuItemKey === undefined) return inner;
+
+  return (
+    <NavigationMenu.Item key={navigationMenuItemKey}>
+      <NavigationMenu.Link asChild>{inner}</NavigationMenu.Link>
+    </NavigationMenu.Item>
   );
 };
 
