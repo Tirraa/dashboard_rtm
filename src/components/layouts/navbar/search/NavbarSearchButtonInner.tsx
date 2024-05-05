@@ -319,55 +319,25 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
               "after:block after:h-10 after:content-['']": searchText === SEARCH_TEXT_INITIAL_STATE
             })}
           >
-            {/* {ToDo} Generate these TabsContent programmatically */}
-            <TabsContent
-              className={cn('mt-0 flex h-full max-h-full w-full flex-col items-center', {
-                hidden: tabValue !== 'All'
-              })}
-              value={'All' satisfies TabValue}
-              tabIndex={-1}
-            >
-              {results === null || searchText === SEARCH_TEXT_INITIAL_STATE ? (
-                defaultView
-              ) : (
-                <>
-                  {results}
-                  <div className="relative bottom-[1px] min-h-[1px] w-full" />
-                </>
-              )}
-            </TabsContent>
-            <TabsContent
-              className={cn('mt-0 flex h-full max-h-full w-full flex-col items-center', {
-                hidden: tabValue !== 'Page'
-              })}
-              value={'Page' satisfies TabValue}
-              tabIndex={-1}
-            >
-              {results === null || searchText === SEARCH_TEXT_INITIAL_STATE ? (
-                defaultView
-              ) : (
-                <>
-                  {results}
-                  <div className="relative bottom-[1px] min-h-[1px] w-full" />
-                </>
-              )}
-            </TabsContent>
-            <TabsContent
-              className={cn('mt-0 flex h-full max-h-full w-full flex-col items-center', {
-                hidden: tabValue !== 'BlogPost'
-              })}
-              value={'BlogPost' satisfies TabValue}
-              tabIndex={-1}
-            >
-              {results === null || searchText === SEARCH_TEXT_INITIAL_STATE ? (
-                defaultView
-              ) : (
-                <>
-                  {results}
-                  <div className="relative bottom-[1px] min-h-[1px] w-full" />
-                </>
-              )}
-            </TabsContent>
+            {allTabValues.map((value) => (
+              <TabsContent
+                className={cn('mt-0 flex h-full max-h-full w-full flex-col items-center', {
+                  hidden: tabValue !== value
+                })}
+                value={value}
+                tabIndex={-1}
+                key={value}
+              >
+                {results === null || searchText === SEARCH_TEXT_INITIAL_STATE ? (
+                  defaultView
+                ) : (
+                  <>
+                    {results}
+                    <div className="relative bottom-[1px] min-h-[1px] w-full" />
+                  </>
+                )}
+              </TabsContent>
+            ))}
           </div>
         </Tabs>
         {nextScreenBtn}
