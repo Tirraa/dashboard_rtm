@@ -17,9 +17,9 @@ import { cn } from '@/lib/tailwind';
 
 export async function generateMetadata() {
   const globalT = await getServerSideI18n();
-  const { pagesTitles, vocab } = i18ns;
+  const { metadescriptions, pagesTitles, vocab } = i18ns;
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), globalT(`${pagesTitles}.homepage`), true);
-  const description = globalT(`${vocab}.metadescriptions.homepage`);
+  const description = globalT(`${metadescriptions}.homepage`);
   return { description, title };
 }
 

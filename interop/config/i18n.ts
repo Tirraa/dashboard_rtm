@@ -10,6 +10,7 @@ export enum ELanguagesFlag {
 
 const _i18nsBase = {
   blogTagsFilters: 'blog-tags-filters',
+  metadescriptions: 'metadescriptions',
   blogCategories: 'blog-categories',
   pagesTitles: 'pages-titles',
   searchMenu: 'search-menu',
@@ -18,6 +19,7 @@ const _i18nsBase = {
   blogToc: 'blog-toc',
   filters: 'filters',
   navbar: 'navbar',
+  errors: 'errors',
   infos: '_infos',
   vocab: 'vocab',
   auth: 'auth'
@@ -27,6 +29,7 @@ const i18nsBase: MakeI18nsBase<typeof _i18nsBase> = _i18nsBase;
 
 export const i18ns = {
   ...i18nsBase,
+  brokenPagefindIntegrationError: 'errors.brokenPagefindIntegration',
   dashboardPagesTitles: 'dashboard.pages-titles',
   searchMenuOptions: 'search-menu.options',
   searchMenuSrOnly: 'search-menu.sr-only',

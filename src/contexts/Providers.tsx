@@ -6,6 +6,7 @@
 import type { FunctionComponent } from 'react';
 
 import PagefindPhantom from '@/components/phantoms/Pagefind';
+import { Toaster } from '@/components/ui/toast/Toaster';
 import { SessionProvider } from 'next-auth/react';
 
 import type { I18nProviderProps } from './I18nProvider';
@@ -19,6 +20,7 @@ const Providers: FunctionComponent<ProvidersProps> = ({ children, locale }) => (
   <SessionProvider>
     <I18nProvider locale={locale}>
       <UIProvider>
+        <Toaster />
         <PagefindPhantom>{children}</PagefindPhantom>
       </UIProvider>
     </I18nProvider>

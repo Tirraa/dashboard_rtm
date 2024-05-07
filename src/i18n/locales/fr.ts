@@ -1,28 +1,11 @@
 /* v8 ignore start */
+
 import type { SharedVocabType, VocabType } from '@rtm/shared-types/I18n';
 
 import { SHARED_TESTING_BLOG_SUBCATEGORIES_PAGES_TITLES, SHARED_TESTING_BLOG_CATEGORY_METADATAS } from '../lazybones';
 import capitalize from '../../lib/portable/str/capitalize';
 
 const SHARED: SharedVocabType = {
-  vocab: {
-    metadescriptions: {
-      homepage: "Metadescription Page d'accueil"
-    },
-    'start-typing': 'commencer à écrire',
-    brand: 'Rust Team Management',
-    breadcrumbs: "fil d'ariane",
-    toc: 'table des matières',
-    'sign-up': "s'inscrire",
-    draft: 'ébauche',
-    pages: 'pages',
-    logo: 'logo',
-    page: 'page',
-    tags: 'tags',
-    blog: 'blog',
-    all: 'tout'
-  },
-
   'pages-titles': {
     ...SHARED_TESTING_BLOG_SUBCATEGORIES_PAGES_TITLES,
 
@@ -37,10 +20,36 @@ const SHARED: SharedVocabType = {
 
     homepage: 'Accueil',
     blog: 'Blog'
+  },
+
+  vocab: {
+    'start-typing': 'commencer à écrire',
+    brand: 'Rust Team Management',
+    breadcrumbs: "fil d'ariane",
+    toc: 'table des matières',
+    'sign-up': "s'inscrire",
+    draft: 'ébauche',
+    pages: 'pages',
+    logo: 'logo',
+    page: 'page',
+    tags: 'tags',
+    blog: 'blog',
+    all: 'tout'
   }
 } as const;
 
 export default {
+  errors: {
+    brokenPagefindIntegration: {
+      message: 'La recherche ne fonctionne pas. Nous avons été alerté de ce problème. Veuillez réessayer plus tard.',
+      title: 'Anomalie de la fonctionnalité de recherche'
+    }
+  },
+
+  metadescriptions: {
+    homepage: "Metadescription Page d'accueil"
+  },
+
   // eslint-disable-next-line perfectionist/sort-objects
   'blog-categories': {
     'patch-notes-bis': {
@@ -181,4 +190,5 @@ export default {
 
   _infos: { lng: 'fr' }
 } as const satisfies VocabType;
+
 /* v8 ignore stop */

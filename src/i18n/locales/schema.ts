@@ -4,23 +4,14 @@
 import type { TypedLeafsJSONData } from '@rtm/shared-types/JSON';
 
 import { blogTagOptionsVocabSchema } from '##/config/contentlayer/blog/blogTagsMetadatas';
-import { blogCategories, pagesTitles } from '@rtm/generated';
+import { blogCategories } from '@rtm/generated';
+
+import PAGES_TITLES from './fragments/schema/pagesTitles';
 
 const _: NotScanned = '';
 
-export const PAGES_TITLES = {
-  ...pagesTitles,
-
-  homepage: _,
-  blog: _
-} as const;
-
 export const SHARED_VOCAB_SCHEMA = {
   vocab: {
-    metadescriptions: {
-      homepage: _
-    },
-
     'start-typing': _,
     breadcrumbs: _,
     'sign-up': _,
@@ -116,6 +107,13 @@ export default {
     'date-asc': _
   },
 
+  errors: {
+    brokenPagefindIntegration: {
+      message: _,
+      title: _
+    }
+  },
+
   'blog-toc': {
     'sr-only': {
       'hide-toc': _,
@@ -135,6 +133,10 @@ export default {
   },
 
   'pages-titles': SHARED_VOCAB_SCHEMA['pages-titles'],
+
+  metadescriptions: {
+    homepage: _
+  },
 
   'blog-tags': blogTagOptionsVocabSchema,
 

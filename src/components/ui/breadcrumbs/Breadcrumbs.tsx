@@ -7,7 +7,7 @@ import type { Index } from '@rtm/shared-types/Numbers';
 import type { getScopedI18n } from '@/i18n/server';
 
 import buildAbsolutePathFromParts from '@rtm/shared-lib/portable/str/buildAbsolutePathFromParts';
-import { PAGES_TITLES } from '@/i18n/locales/schema';
+import PAGES_TITLES from '@/i18n/locales/fragments/schema/pagesTitles';
 import getPathParts from '@/lib/misc/getPathParts';
 import { useScopedI18n } from '@/i18n/client';
 import { usePathname } from 'next/navigation';

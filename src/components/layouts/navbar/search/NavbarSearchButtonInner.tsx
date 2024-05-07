@@ -21,6 +21,7 @@ import { TabsContent, TabsList, Tabs } from '@/components/ui/Tabs';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
+import { useToast } from '@/components/hooks/useToast';
 import { SEARCH_MODAL_ID } from '@/config/elementsId';
 import { THROTTLE_DELAY } from '@/config/searchMenu';
 import { getClientSideI18n } from '@/i18n/client';
@@ -114,6 +115,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
   const isLargeScreen = useIsLargeScreen();
   const memorizedTabValue = useRef(tabValue);
   const [transitionClass, setTransitionClass] = useState<string>('');
+  const { toast } = useToast();
 
   const globalT = getClientSideI18n();
 
@@ -156,7 +158,12 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
       } catch {
         retries++;
         if (maxRetries >= retries) {
-          // {ToDo} Show an error alert
+          // {ToDo} This should be logged
+          toast({
+            description: globalT(`${i18ns.brokenPagefindIntegrationError}.message`),
+            title: globalT(`${i18ns.brokenPagefindIntegrationError}.title`),
+            variant: 'destructive'
+          });
           setResults([]);
           disposeRetryInterval();
         }
@@ -166,7 +173,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
     return () => {
       clearInterval(retryInterval);
     };
-  }, [searchText, tabValue, throttledComputeAndSetResults]);
+  }, [searchText, tabValue, throttledComputeAndSetResults, toast, globalT]);
 
   const updateMemorizedTabValueAndSetTabValue = useCallback(
     (v: TabValue) => doUpdateMemorizedTabValueAndSetTabValue(v, memorizedTabValue, setTabValue),

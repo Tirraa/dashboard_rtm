@@ -1,28 +1,11 @@
 /* v8 ignore start */
+
 import type { SharedVocabType, VocabType } from '@rtm/shared-types/I18n';
 
 import { SHARED_TESTING_BLOG_SUBCATEGORIES_PAGES_TITLES, SHARED_TESTING_BLOG_CATEGORY_METADATAS } from '../lazybones';
 import capitalize from '../../lib/portable/str/capitalize';
 
 const SHARED: SharedVocabType = {
-  vocab: {
-    metadescriptions: {
-      homepage: 'Homepage Metadescription'
-    },
-    'start-typing': 'start typing',
-    brand: 'Rust Team Management',
-    breadcrumbs: 'breadcrumbs',
-    toc: 'table of contents',
-    'sign-up': 'sign up',
-    draft: 'draft',
-    pages: 'pages',
-    logo: 'logo',
-    page: 'page',
-    tags: 'tags',
-    blog: 'blog',
-    all: 'all'
-  },
-
   'pages-titles': {
     ...SHARED_TESTING_BLOG_SUBCATEGORIES_PAGES_TITLES,
 
@@ -37,10 +20,36 @@ const SHARED: SharedVocabType = {
     homepage: 'Homepage',
 
     blog: 'Blog'
+  },
+
+  vocab: {
+    'start-typing': 'start typing',
+    brand: 'Rust Team Management',
+    breadcrumbs: 'breadcrumbs',
+    toc: 'table of contents',
+    'sign-up': 'sign up',
+    draft: 'draft',
+    pages: 'pages',
+    logo: 'logo',
+    page: 'page',
+    tags: 'tags',
+    blog: 'blog',
+    all: 'all'
   }
 } as const;
 
 export default {
+  errors: {
+    brokenPagefindIntegration: {
+      message: 'Search is broken. We have been alerted of this issue. Please try again later.',
+      title: 'Search feature anomaly'
+    }
+  },
+
+  metadescriptions: {
+    homepage: 'Homepage Metadescription'
+  },
+
   // eslint-disable-next-line perfectionist/sort-objects
   'blog-categories': {
     'patch-notes-bis': {
@@ -182,4 +191,5 @@ export default {
 
   _infos: { lng: 'en' }
 } as const satisfies VocabType;
+
 /* v8 ignore stop */
