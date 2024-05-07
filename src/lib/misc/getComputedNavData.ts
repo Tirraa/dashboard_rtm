@@ -3,7 +3,8 @@ import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
 import type RoutesKeysUnion from '@/types/RoutesKeysUnion';
 import type { AppPath } from '@rtm/shared-types/Next';
 
-// {ToDo} Recursive embeddedEntities?
+// {ToDo} Recursive embeddedEntities
+// https://github.com/Tirraa/dashboard_rtm/issues/132
 function getComputedNavData<ScopedRoutesK extends RoutesKeysUnion>(
   routes: Record<ScopedRoutesK, AppPath>,
   routesTitles: Record<ScopedRoutesK, I18nVocabTarget>,
