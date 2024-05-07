@@ -33,6 +33,7 @@ import { cn } from '@/lib/tailwind';
 import throttle from 'throttleit';
 
 import NavbarSearchButtonDialogDefaultView from './NavbarSearchButtonDialogDefaultView';
+import NoResultFound from './NoResultFound';
 
 interface NavbarSearchButtonProps<AllTabValues extends readonly string[]> {
   tabInputLabels: Record<AllTabValues[Index], I18nVocabTarget>;
@@ -295,8 +296,9 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
         {prevScreenBtn}
         <Tabs
           onValueChange={(v) => {
-            if (searchText !== SEARCH_TEXT_INITIAL_STATE)
+            if (searchText !== SEARCH_TEXT_INITIAL_STATE) {
               computeAndSetResults(searchText, tabValue, resultsContainerRef, quickMenuLeftRightCustomHandler, setResults);
+            }
             updateMemorizedTabValueAndSetTabValue(v as TabValue);
           }}
           className="search-menu-gap-y flex w-full flex-col lg:px-5"
@@ -341,16 +343,21 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
                 value={v}
                 key={v}
               >
-                {results === null || searchText === SEARCH_TEXT_INITIAL_STATE ? (
-                  defaultView
-                ) : (
-                  <>
-                    <NavigationMenu.Root className="contents [&>div]:contents" orientation="vertical" aria-label={'todo'}>
-                      <NavigationMenu.List className="contents">{results}</NavigationMenu.List>
-                    </NavigationMenu.Root>
-                    <div className="relative bottom-[1px] min-h-[1px] w-full" />
-                  </>
-                )}
+                {results === null || searchText === SEARCH_TEXT_INITIAL_STATE
+                  ? defaultView
+                  : // eslint-disable-next-line no-magic-numbers
+                    (results.length > 0 && (
+                      <>
+                        <NavigationMenu.Root
+                          aria-label={globalT(`${i18ns.searchMenu}.sr-only.results`)}
+                          className="contents [&>div]:contents"
+                          orientation="vertical"
+                        >
+                          <NavigationMenu.List className="contents">{results}</NavigationMenu.List>
+                        </NavigationMenu.Root>
+                        <div className="relative bottom-[1px] min-h-[1px] w-full" />
+                      </>
+                    )) || <NoResultFound />}
               </TabsContent>
             ))}
           </div>

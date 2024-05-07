@@ -13,6 +13,7 @@ import { CardContent, CardHeader, CardTitle, Card } from '../Card';
 interface ResultProps extends Partial<WithClassname> {
   navigationMenuItemProps?: {
     onKeyDown?: KeyboardEventHandler<HTMLAnchorElement>;
+    className?: string;
     key: string;
   };
   metaTitle: string;
@@ -61,7 +62,7 @@ const Result: FunctionComponent<Omit<ReactAnchorHTMLAttributes<HTMLAnchorElement
   if (navigationMenuItemProps === undefined) return inner;
 
   return (
-    <NavigationMenu.Item key={navigationMenuItemProps.key}>
+    <NavigationMenu.Item className={navigationMenuItemProps.className} key={navigationMenuItemProps.key}>
       <NavigationMenu.Link onKeyDown={navigationMenuItemProps.onKeyDown} asChild>
         {inner}
       </NavigationMenu.Link>

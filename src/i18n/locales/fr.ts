@@ -129,6 +129,7 @@ export default {
       'close-search-menu': 'Fermer le menu de recherche',
       'homepage-access': "Accès à la page d'accueil",
       'dashboard-access': 'Accès au dashboard',
+      results: 'Résultats de la recherche',
       'prev-screen': 'Écran précédent',
       'blog-access': 'Accès au blog',
       'quick-access': 'Accès rapide',
@@ -138,7 +139,8 @@ export default {
       blog: "Recherche d'articles de blog",
       pages: 'Recherche de pages',
       all: 'Recherche globale'
-    }
+    },
+    'nothing-found': 'Aucun résultat !'
   },
 
   dashboard: {

@@ -132,13 +132,15 @@ export default {
       'prev-screen': 'Previous screen',
       'quick-access': 'Quick access',
       'blog-access': 'Blog access',
-      'next-screen': 'Next screen'
+      'next-screen': 'Next screen',
+      results: 'Search results'
     },
     options: {
       blog: 'Search blog posts',
       pages: 'Search pages',
       all: 'Global search'
-    }
+    },
+    'nothing-found': 'Nothing found!'
   },
 
   dashboard: {

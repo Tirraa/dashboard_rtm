@@ -30,6 +30,26 @@ export const SHARED_VOCAB_SCHEMA = {
 } as const satisfies TypedLeafsJSONData<NotScanned>;
 
 export default {
+  'search-menu': {
+    'sr-only': {
+      'choose-search-mode': _,
+      'close-search-menu': _,
+      'dashboard-access': _,
+      'homepage-access': _,
+      'quick-access': _,
+      'blog-access': _,
+      'next-screen': _,
+      'prev-screen': _,
+      results: _
+    },
+    options: {
+      pages: _,
+      blog: _,
+      all: _
+    },
+    'nothing-found': _
+  },
+
   vocab: {
     ...SHARED_VOCAB_SCHEMA.vocab,
     'sr-only': {
@@ -66,24 +86,6 @@ export default {
     },
 
     assistance: _
-  },
-
-  'search-menu': {
-    'sr-only': {
-      'choose-search-mode': _,
-      'close-search-menu': _,
-      'dashboard-access': _,
-      'homepage-access': _,
-      'quick-access': _,
-      'blog-access': _,
-      'next-screen': _,
-      'prev-screen': _
-    },
-    options: {
-      pages: _,
-      blog: _,
-      all: _
-    }
   },
 
   dashboard: {

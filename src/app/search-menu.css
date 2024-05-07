@@ -15,8 +15,18 @@
   text-indent: min(1vw, 0.25rem);
   border-radius: 0.459375vw;
   height: max(clamp(2.49375vh, 3.09375vw, 1.1875em), 5.625vh);
-  font-size: max(clamp(1.6625vh, 2.0625vw, 1.1875em), 3.75vh);
   padding: clamp(0.7625vh, 1.8375vw, 1.1875em) 0.459375vw;
+}
+
+.search-menu-input,
+.search-menu-result-link,
+.search-menu-no-result-found {
+  font-size: max(clamp(1.6625vh, 2.0625vw, 1.1875em), 3.75vh);
+}
+
+.search-menu-no-result-found-icon {
+  height: max(clamp(2.49375vh, 3.09375vw, 1.1875em), 5.625vh);
+  width: auto;
 }
 
 .search-menu-input {
@@ -65,7 +75,6 @@
 }
 
 .search-menu-result-link {
-  font-size: max(clamp(1.6625vh, 2.0625vw, 1.1875em), 3.75vh);
   padding-left: max(0.2vh, 0.2vw);
   padding-right: max(0.2vh, 0.2vw);
 }
@@ -122,39 +131,42 @@
 }
 
 @media only screen and (max-width: 675px) and (min-height: 650px) {
-  .search-menu-input {
+  .search-menu-no-result-found,
+  .search-menu-input,
+  .search-menu-result-link,
+  .search-menu-tabslist-item {
     font-size: max(clamp(1.45vh, 2.35vw, 1.1875em), max(2.35vh, 2.35vw));
   }
 
-  .search-menu-result-link {
-    font-size: max(clamp(1.45vh, 2.35vw, 1.1875em), max(2.35vh, 2.35vw));
+  .search-menu-no-result-found-icon {
+    height: max(clamp(2.175vh, 3.525vw, 1.1875em), max(3.525vh, 3.525vw));
+    width: auto;
   }
 
   .search-menu-result-link h3 {
     font-size: max(clamp(1.595vh, 2.585vw, 1.1875em), max(2.585vh, 2.585vw));
   }
-
-  .search-menu-tabslist-item {
-    font-size: max(clamp(1.45vh, 2.35vw, 1.1875em), max(2.35vh, 2.35vw));
-  }
 }
 
 @media only screen and (max-width: 675px) and (max-height: 630px) {
   .search-menu-input {
-    font-size: max(clamp(2.9vh, 4.7vw, 1.1875em, max(4.7vh, 4.7vw)));
     padding: clamp(3.90625vh, 5.15625vw, 1.1875em) clamp(1.5625vh, 2.0625vw, 1.1875em);
   }
 
-  .search-menu-result-link {
+  .search-menu-input,
+  .search-menu-result-link,
+  .search-menu-tabslist-item,
+  .search-menu-no-result-found {
     font-size: max(clamp(2.9vh, 4.7vw, 1.1875em, max(4.7vh, 4.7vw)));
+  }
+
+  .search-menu-no-result-found-icon {
+    height: max(clamp(4.35vh, 7.05vw, 1.1875em, max(7.05vh, 7.05vw)));
+    width: auto;
   }
 
   .search-menu-result-link h3 {
     font-size: max(clamp(3.19vh, 5.17vw, 1.1875em, max(5.17vh, 5.17vw)));
-  }
-
-  .search-menu-tabslist-item {
-    font-size: max(clamp(2.9vh, 4.7vw, 1.1875em), max(4.7vh, 4.7vw));
   }
 }
 

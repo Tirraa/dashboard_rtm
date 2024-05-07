@@ -136,7 +136,7 @@ export async function computeAndSetResults(
 
     results.push(
       <Result
-        navigationMenuItemProps={{ onKeyDown: quickMenuLeftRightCustomHandler, key: String(i) }}
+        navigationMenuItemProps={{ onKeyDown: quickMenuLeftRightCustomHandler, className: 'w-full', key: String(i) }}
         key={searchResults[i].id}
         metaTitle={metaTitle}
         onFocus={onFocus}
