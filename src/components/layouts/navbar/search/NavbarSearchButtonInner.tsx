@@ -2,38 +2,34 @@
 
 import type { QuickAccessBtnMetadatas, navbarSearchBtnProps, BannersMetadatas } from '@/config/searchMenu';
 import type { KeyboardEvent as ReactKeyboardEvent, ChangeEventHandler, ReactElement } from 'react';
-import type { MsValue, Index, Limit, Count } from '@rtm/shared-types/Numbers';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
+import type { Index } from '@rtm/shared-types/Numbers';
 import type { AppPath } from '@rtm/shared-types/Next';
 
 import {
   doUpdateMemorizedTabValueAndSetTabValue,
   createNavbarSearchButtonProps,
-  computeAndSetResults,
   doBuildTabTrigger
 } from '@/components/ui/search/helpers/functions/navbarSearchButton';
 import { MagnifyingGlassIcon, ChevronRightIcon, ChevronLeftIcon } from '@radix-ui/react-icons';
 import { DialogContent, DialogTrigger, DialogHeader, Dialog } from '@/components/ui/Dialog';
+import { SEARCH_TEXT_INITIAL_STATE, RESULTS_INITIAL_STATE } from '@/config/searchMenu';
 import { tryToPreloadPagefind, tryToInitPagefind } from '@/lib/pagefind/helpers/perf';
 import { useCallback, useEffect, useState, Fragment, useMemo, useRef } from 'react';
 import { TabsContent, TabsList, Tabs } from '@/components/ui/Tabs';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
-import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
-import { useToast } from '@/components/hooks/useToast';
 import { SEARCH_MODAL_ID } from '@/config/elementsId';
-import { THROTTLE_DELAY } from '@/config/searchMenu';
 import { getClientSideI18n } from '@/i18n/client';
 import { Input } from '@/components/ui/Input';
 import { usePathname } from 'next/navigation';
 import { capitalize } from '@/lib/str';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
-import throttle from 'throttleit';
 
-import NavbarSearchButtonDialogDefaultView from './NavbarSearchButtonDialogDefaultView';
-import NoResultFound from './NoResultFound';
+import NavbarSearchButtonDialogSearchBoxDefaultView from './NavbarSearchButtonDialogSearchBoxDefaultView';
+import ProgressiveResults from './ProgressiveResults';
 
 interface NavbarSearchButtonProps<AllTabValues extends readonly string[]> {
   tabInputLabels: Record<AllTabValues[Index], I18nVocabTarget>;
@@ -43,9 +39,6 @@ interface NavbarSearchButtonProps<AllTabValues extends readonly string[]> {
   tabValueInitialState: AllTabValues[Index];
   allTabValues: AllTabValues;
 }
-
-const SEARCH_TEXT_INITIAL_STATE = '';
-const RESULTS_INITIAL_STATE: MaybeNull<ReactElement[]> = null;
 
 const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProps.allTabValues>({
   quickAccessBtns: orgQuickAccessBtns,
@@ -86,14 +79,6 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
     [quickMenuLeftCustomHandler, quickMenuRightCustomHandler]
   );
 
-  const throttledComputeAndSetResults = useMemo(
-    () =>
-      throttle(async (searchText: string, tabValue: TabValue, setResults: (results: ReactElement[]) => void) => {
-        await computeAndSetResults(searchText, tabValue, resultsContainerRef, quickMenuLeftRightCustomHandler, setResults);
-      }, THROTTLE_DELAY),
-    [quickMenuLeftRightCustomHandler]
-  );
-
   const { quickAccessBtns, allTabValues, tabTriggers, banners } = useMemo(
     () =>
       createNavbarSearchButtonProps({
@@ -116,7 +101,6 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
   const isLargeScreen = useIsLargeScreen();
   const memorizedTabValue = useRef(tabValue);
   const [transitionClass, setTransitionClass] = useState<string>('');
-  const { toast } = useToast();
 
   const globalT = getClientSideI18n();
 
@@ -131,50 +115,6 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
     if (pathnameAtOpen.current === null || pathnameAtOpen.current === currentPathname) return;
     setIsOpened(false);
   }, [currentPathname]);
-
-  useEffect(() => {
-    if (searchText === SEARCH_TEXT_INITIAL_STATE) {
-      setResults(RESULTS_INITIAL_STATE);
-      return;
-    }
-
-    let retries: Count = 0;
-    const maxRetries: Limit = 4;
-    const intervalMs: MsValue = 250;
-    let isComputing = false;
-
-    const retryInterval = setInterval(async () => {
-      function disposeRetryInterval() {
-        // eslint-disable-next-line no-magic-numbers
-        retries = 0;
-        isComputing = false;
-        clearInterval(retryInterval);
-      }
-
-      try {
-        if (isComputing) return;
-        isComputing = true;
-        await throttledComputeAndSetResults(searchText, tabValue, setResults);
-        disposeRetryInterval();
-      } catch {
-        retries++;
-        if (maxRetries >= retries) {
-          // {ToDo} This should be logged
-          toast({
-            description: globalT(`${i18ns.brokenPagefindIntegrationError}.message`),
-            title: globalT(`${i18ns.brokenPagefindIntegrationError}.title`),
-            variant: 'destructive'
-          });
-          setResults([]);
-          disposeRetryInterval();
-        }
-      }
-    }, intervalMs);
-
-    return () => {
-      clearInterval(retryInterval);
-    };
-  }, [searchText, tabValue, throttledComputeAndSetResults, toast, globalT]);
 
   const updateMemorizedTabValueAndSetTabValue = useCallback(
     (v: TabValue) => doUpdateMemorizedTabValueAndSetTabValue(v, memorizedTabValue, setTabValue),
@@ -198,6 +138,10 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
     setTransitionClass('transition-none');
     updateMemorizedTabValueAndSetTabValue(tabValueInitialState);
   }, [tabValueInitialState, updateMemorizedTabValueAndSetTabValue]);
+
+  useEffect(() => {
+    if (searchText === SEARCH_TEXT_INITIAL_STATE) setResults(RESULTS_INITIAL_STATE);
+  }, [searchText]);
 
   const prevScreenBtn = (
     <button
@@ -244,8 +188,8 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
     </button>
   );
 
-  const defaultView = (
-    <NavbarSearchButtonDialogDefaultView
+  const defaultSearchBoxView = (
+    <NavbarSearchButtonDialogSearchBoxDefaultView
       updateMemorizedTabValueAndSetTabValue={updateMemorizedTabValueAndSetTabValue as (v: string) => void}
       quickMenuLeftRightCustomHandler={quickMenuLeftRightCustomHandler}
       focusInputField={focusInputField}
@@ -296,9 +240,6 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
         {prevScreenBtn}
         <Tabs
           onValueChange={(v) => {
-            if (searchText !== SEARCH_TEXT_INITIAL_STATE) {
-              computeAndSetResults(searchText, tabValue, resultsContainerRef, quickMenuLeftRightCustomHandler, setResults);
-            }
             updateMemorizedTabValueAndSetTabValue(v as TabValue);
           }}
           className="search-menu-gap-y flex w-full flex-col lg:px-5"
@@ -329,7 +270,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
           <div
             className={cn('flex-1 rounded-md', {
               'min-h-0 overflow-y-auto break-words border border-input px-8 max-lg:px-4 [&>*>*>*>*>*]:mb-8 first:[&>*>*>*>*>*]:my-8 max-lg:[&>*>*>*>*>*]:mb-4 max-lg:first:[&>*>*>*>*>*]:my-4':
-                results !== null
+                searchText !== SEARCH_TEXT_INITIAL_STATE && results !== null
             })}
             ref={resultsContainerRef}
             tabIndex={-1}
@@ -343,21 +284,19 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
                 value={v}
                 key={v}
               >
-                {results === null || searchText === SEARCH_TEXT_INITIAL_STATE
-                  ? defaultView
-                  : // eslint-disable-next-line no-magic-numbers
-                    (results.length > 0 && (
-                      <>
-                        <NavigationMenu.Root
-                          aria-label={globalT(`${i18ns.searchMenu}.sr-only.results`)}
-                          className="contents [&>div]:contents"
-                          orientation="vertical"
-                        >
-                          <NavigationMenu.List className="contents">{results}</NavigationMenu.List>
-                        </NavigationMenu.Root>
-                        <div className="relative bottom-[1px] min-h-[1px] w-full" />
-                      </>
-                    )) || <NoResultFound />}
+                {searchText === SEARCH_TEXT_INITIAL_STATE ? (
+                  defaultSearchBoxView
+                ) : (
+                  <ProgressiveResults
+                    quickMenuLeftRightCustomHandler={quickMenuLeftRightCustomHandler}
+                    firstLoadPlaceholder={defaultSearchBoxView}
+                    resultsContainerRef={resultsContainerRef}
+                    searchDocumentType={tabValue}
+                    searchText={searchText}
+                    setResults={setResults}
+                    results={results}
+                  />
+                )}
               </TabsContent>
             ))}
           </div>

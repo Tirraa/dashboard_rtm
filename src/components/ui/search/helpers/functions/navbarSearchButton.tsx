@@ -1,16 +1,12 @@
-import type { KeyboardEvent as ReactKeyboardEvent, FocusEventHandler, MutableRefObject, ReactElement, RefObject } from 'react';
 import type { QuickAccessBtnMetadatas, BannersMetadatas } from '@/config/searchMenu';
-import type { SearchDocumentFlag } from '@/lib/pagefind/helpers/search';
+import type { FocusEventHandler, MutableRefObject, RefObject } from 'react';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
 import type { Index } from '@rtm/shared-types/Numbers';
 import type { AppPath } from '@rtm/shared-types/Next';
 
-import { searchDocument, getCleanedURL } from '@/lib/pagefind/helpers/search';
 import { TabsTrigger } from '@/components/ui/Tabs';
 import { capitalize } from '@/lib/str';
-
-import Result from '../../Result';
 
 export function doUpdateMemorizedTabValueAndSetTabValue<TabValue extends string>(
   v: TabValue,
@@ -68,7 +64,7 @@ export const createNavbarSearchButtonProps = <
     allTabValues
   }) as const;
 
-function buildResultOnFocus(
+export function buildResultOnFocus(
   currentElementIndex: Index,
   maxIndex: Index,
   resultsContainerRef: RefObject<MaybeNull<HTMLDivElement>>
@@ -100,51 +96,4 @@ function buildResultOnFocus(
     // eslint-disable-next-line no-magic-numbers
     maybeContainer.scrollTo(0, maybeContainer.scrollTop + 15);
   };
-}
-
-/**
- * @throws
- */
-export async function computeAndSetResults(
-  debouncedSearchText: string,
-  documentType: SearchDocumentFlag,
-  resultsContainerRef: RefObject<MaybeNull<HTMLDivElement>>,
-  quickMenuLeftRightCustomHandler: (e: ReactKeyboardEvent<HTMLAnchorElement>) => void,
-  setResults: (results: ReactElement[]) => void
-) {
-  const search = await searchDocument(debouncedSearchText, documentType);
-  const searchResults = search.results;
-  const results: ReactElement[] = [];
-
-  // {ToDo} Optimize this lmao
-  // eslint-disable-next-line promise/catch-or-return
-  const mountedData = await Promise.all(searchResults.map((r) => r.data()));
-
-  for (let i = 0; i < searchResults.length; i++) {
-    const data = mountedData[i];
-    if (!data) continue;
-
-    const { url } = data;
-    if (!url) continue;
-
-    const cleanedUrl = getCleanedURL(url);
-    const metaTitle = data.meta.title;
-    const excerpt = data.excerpt;
-
-    // eslint-disable-next-line no-magic-numbers
-    const onFocus = buildResultOnFocus(i, searchResults.length - 1, resultsContainerRef);
-
-    results.push(
-      <Result
-        navigationMenuItemProps={{ onKeyDown: quickMenuLeftRightCustomHandler, className: 'w-full', key: String(i) }}
-        key={searchResults[i].id}
-        metaTitle={metaTitle}
-        onFocus={onFocus}
-        excerpt={excerpt}
-        href={cleanedUrl}
-      />
-    );
-  }
-
-  setResults(results);
 }

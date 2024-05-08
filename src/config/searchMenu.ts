@@ -1,8 +1,9 @@
 import type { SearchDocumentFlag } from '@/lib/pagefind/helpers/search';
+import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
+import type { ComponentType, ReactElement } from 'react';
 import type { Index } from '@rtm/shared-types/Numbers';
 import type { AppPath } from '@rtm/shared-types/Next';
-import type { ComponentType } from 'react';
 
 import { PilcrowIcon, ReaderIcon, GlobeIcon } from '@radix-ui/react-icons';
 import { LayoutDashboardIcon, HomeIcon } from 'lucide-react';
@@ -10,6 +11,8 @@ import ROUTES_ROOTS from '##/config/routes';
 import { i18ns } from '##/config/i18n';
 
 export const THROTTLE_DELAY = 200;
+export const SEARCH_TEXT_INITIAL_STATE = '';
+export const RESULTS_INITIAL_STATE: MaybeNull<ReactElement[]> = null;
 
 const allTabValues = ['All', 'Page', 'BlogPost'] as const satisfies SearchDocumentFlag[];
 

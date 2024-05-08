@@ -9,7 +9,7 @@ import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
-interface NavbarSearchButtonDialogDefaultViewProps {
+interface NavbarSearchButtonDialogSearchBoxDefaultViewProps {
   quickMenuLeftRightCustomHandler: (e: ReactKeyboardEvent<HTMLAnchorElement>) => void;
   updateMemorizedTabValueAndSetTabValue: (v: WeakTabValue) => void;
   quickAccessBtns: [string, QuickAccessBtnMetadatas][];
@@ -18,7 +18,7 @@ interface NavbarSearchButtonDialogDefaultViewProps {
   tabValue: WeakTabValue;
 }
 
-const NavbarSearchButtonDialogDefaultView: FunctionComponent<NavbarSearchButtonDialogDefaultViewProps> = ({
+const NavbarSearchButtonDialogSearchBoxDefaultView: FunctionComponent<NavbarSearchButtonDialogSearchBoxDefaultViewProps> = ({
   updateMemorizedTabValueAndSetTabValue,
   quickMenuLeftRightCustomHandler,
   focusInputField,
@@ -103,7 +103,7 @@ const NavbarSearchButtonDialogDefaultView: FunctionComponent<NavbarSearchButtonD
   );
 };
 
-export default NavbarSearchButtonDialogDefaultView;
+export default NavbarSearchButtonDialogSearchBoxDefaultView;
 
 enum EBannerPosition {
   FIRST,
