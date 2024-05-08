@@ -42,11 +42,13 @@ export default {
       'prev-screen': _,
       results: _
     },
+
     options: {
       pages: _,
       blog: _,
       all: _
     },
+
     'nothing-found': _
   },
 
