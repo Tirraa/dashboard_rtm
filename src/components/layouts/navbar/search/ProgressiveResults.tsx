@@ -10,7 +10,7 @@ import { buildResultOnFocus } from '@/components/ui/search/helpers/functions/nav
 import { searchDocument, getCleanedURL } from '@/lib/pagefind/helpers/search';
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
-import { getRefCurrentPtr } from 'packages/shared-lib/src/react';
+import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { useToast } from '@/components/hooks/useToast';
 import Result from '@/components/ui/search/Result';
 import { getClientSideI18n } from '@/i18n/client';
@@ -47,17 +47,30 @@ const ProgressiveResults: FunctionComponent<ProgressiveResultsProps> = ({
 
   const currentSearchResultsRef = useRef<ReactElement[]>(currentSearchResults);
   const currentSearchResultsSliceStartIndexRef = useRef<number>(currentSearchResultsSliceStartIndex);
+  const resultsRef = useRef<MaybeNull<ReactElement[]>>(results);
   const lastResultRef = useRef<HTMLAnchorElement>(null);
+
+  const resetResultsBoxScroll = useCallback(() => {
+    const maybeContainer = getRefCurrentPtr(resultsContainerRef);
+    if (maybeContainer === null) return;
+    // eslint-disable-next-line no-magic-numbers
+    maybeContainer.scrollTo(0, 0);
+  }, [resultsContainerRef]);
 
   useEffect(() => {
     // eslint-disable-next-line no-magic-numbers
     setCurrentSearchResultsSliceStartIndex(0);
     setCurrentSearchResults([]);
-  }, [searchText]);
+    resetResultsBoxScroll();
+  }, [searchText, resetResultsBoxScroll]);
 
   useEffect(() => {
     currentSearchResultsRef.current = currentSearchResults;
   }, [currentSearchResults]);
+
+  useEffect(() => {
+    resultsRef.current = results;
+  }, [results]);
 
   useEffect(() => {
     currentSearchResultsSliceStartIndexRef.current = currentSearchResultsSliceStartIndex;
@@ -69,7 +82,7 @@ const ProgressiveResults: FunctionComponent<ProgressiveResultsProps> = ({
       currentSearchResultsSliceStartIndexRef.current,
       currentSearchResultsSliceStartIndexRef.current + RESULTS_SLICE_LEN
     );
-    const results: ReactElement[] = [];
+    const freshResults: ReactElement[] = [];
 
     // eslint-disable-next-line promise/catch-or-return
     const mountedData = await Promise.all(searchResultsSlice.map((r) => r.data()));
@@ -88,7 +101,7 @@ const ProgressiveResults: FunctionComponent<ProgressiveResultsProps> = ({
       // eslint-disable-next-line no-magic-numbers
       const onFocus = buildResultOnFocus(currentSearchResultsSliceStartIndexRef.current + i, search.results.length - 1, resultsContainerRef);
 
-      results.push(
+      freshResults.push(
         <Result
           navigationMenuItemProps={{ onKeyDown: quickMenuLeftRightCustomHandler, className: 'w-full', key: String(i) }}
           // eslint-disable-next-line no-magic-numbers
@@ -102,7 +115,7 @@ const ProgressiveResults: FunctionComponent<ProgressiveResultsProps> = ({
       );
     }
 
-    const newResults = [...currentSearchResultsRef.current, ...results];
+    const newResults = [...currentSearchResultsRef.current, ...freshResults];
     const newCurrentSearchResultsSliceStartIndex = currentSearchResultsSliceStartIndexRef.current + RESULTS_SLICE_LEN;
     setCurrentSearchResults(newResults);
     setResults(newResults);

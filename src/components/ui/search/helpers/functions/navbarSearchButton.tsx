@@ -5,6 +5,7 @@ import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
 import type { Index } from '@rtm/shared-types/Numbers';
 import type { AppPath } from '@rtm/shared-types/Next';
 
+import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { TabsTrigger } from '@/components/ui/Tabs';
 import { capitalize } from '@/lib/str';
 
@@ -72,7 +73,7 @@ export function buildResultOnFocus(
   // eslint-disable-next-line no-magic-numbers
   if (currentElementIndex === 0) {
     return () => {
-      const maybeContainer = resultsContainerRef.current;
+      const maybeContainer = getRefCurrentPtr(resultsContainerRef);
       if (maybeContainer === null) return;
       // eslint-disable-next-line no-magic-numbers
       maybeContainer.scrollTo(0, 0);
@@ -81,7 +82,7 @@ export function buildResultOnFocus(
 
   if (currentElementIndex === maxIndex) {
     return () => {
-      const maybeContainer = resultsContainerRef.current;
+      const maybeContainer = getRefCurrentPtr(resultsContainerRef);
       if (maybeContainer === null) return;
       // eslint-disable-next-line no-magic-numbers
       maybeContainer.scrollTo(0, maybeContainer.scrollHeight);
@@ -89,7 +90,7 @@ export function buildResultOnFocus(
   }
 
   return (e) => {
-    const maybeContainer = resultsContainerRef.current;
+    const maybeContainer = getRefCurrentPtr(resultsContainerRef);
     const { target } = e;
     if (maybeContainer === null) return;
     target.scrollIntoView({ block: 'end' });

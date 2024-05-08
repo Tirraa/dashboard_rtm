@@ -101,6 +101,7 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
   const isLargeScreen = useIsLargeScreen();
   const memorizedTabValue = useRef(tabValue);
   const [transitionClass, setTransitionClass] = useState<string>('');
+  const shouldResetResultsBoxScroll = useRef<boolean>(true);
 
   const globalT = getClientSideI18n();
 
@@ -115,6 +116,22 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
     if (pathnameAtOpen.current === null || pathnameAtOpen.current === currentPathname) return;
     setIsOpened(false);
   }, [currentPathname]);
+
+  useEffect(() => {
+    // eslint-disable-next-line no-magic-numbers
+    if (results === null || results.length <= 0) {
+      shouldResetResultsBoxScroll.current = true;
+      return;
+    }
+
+    if (!shouldResetResultsBoxScroll.current) return;
+    shouldResetResultsBoxScroll.current = false;
+
+    const maybeContainer = getRefCurrentPtr(resultsContainerRef);
+    if (maybeContainer === null) return;
+    // eslint-disable-next-line no-magic-numbers
+    maybeContainer.scrollTo(0, 0);
+  }, [results]);
 
   const updateMemorizedTabValueAndSetTabValue = useCallback(
     (v: TabValue) => doUpdateMemorizedTabValueAndSetTabValue(v, memorizedTabValue, setTabValue),
