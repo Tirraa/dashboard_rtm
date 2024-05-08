@@ -10,6 +10,7 @@ import { LayoutDashboardIcon, HomeIcon } from 'lucide-react';
 import ROUTES_ROOTS from '##/config/routes';
 import { i18ns } from '##/config/i18n';
 
+export const RESULTS_SLICE_LEN = 5;
 export const THROTTLE_DELAY = 200;
 export const SEARCH_TEXT_INITIAL_STATE = '';
 export const RESULTS_INITIAL_STATE: MaybeNull<ReactElement[]> = null;

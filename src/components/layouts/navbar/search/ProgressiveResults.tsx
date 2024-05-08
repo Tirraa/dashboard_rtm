@@ -5,14 +5,15 @@ import type { SearchDocumentFlag } from '@/lib/pagefind/helpers/search';
 import type { MsValue, Count, Limit } from '@rtm/shared-types/Numbers';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 
+import { SEARCH_TEXT_INITIAL_STATE, RESULTS_SLICE_LEN, THROTTLE_DELAY } from '@/config/searchMenu';
 import { buildResultOnFocus } from '@/components/ui/search/helpers/functions/navbarSearchButton';
-import { SEARCH_TEXT_INITIAL_STATE, THROTTLE_DELAY } from '@/config/searchMenu';
 import { searchDocument, getCleanedURL } from '@/lib/pagefind/helpers/search';
+import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
+import { getRefCurrentPtr } from 'packages/shared-lib/src/react';
 import { useToast } from '@/components/hooks/useToast';
 import Result from '@/components/ui/search/Result';
 import { getClientSideI18n } from '@/i18n/client';
-import { useCallback, useEffect } from 'react';
 import { i18ns } from '##/config/i18n';
 import throttle from 'throttleit';
 
@@ -39,17 +40,41 @@ const ProgressiveResults: FunctionComponent<ProgressiveResultsProps> = ({
 }) => {
   const globalT = getClientSideI18n();
   const { toast } = useToast();
+  // eslint-disable-next-line no-magic-numbers
+  const [currentSearchResultsSliceStartIndex, setCurrentSearchResultsSliceStartIndex] = useState<number>(0);
+  const [currentSearchResults, setCurrentSearchResults] = useState<ReactElement[]>([]);
+  const [displayShowMoreBtn, setDisplayShowMoreBtn] = useState<boolean>(false);
+
+  const currentSearchResultsRef = useRef<ReactElement[]>(currentSearchResults);
+  const currentSearchResultsSliceStartIndexRef = useRef<number>(currentSearchResultsSliceStartIndex);
+  const lastResultRef = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    // eslint-disable-next-line no-magic-numbers
+    setCurrentSearchResultsSliceStartIndex(0);
+    setCurrentSearchResults([]);
+  }, [searchText]);
+
+  useEffect(() => {
+    currentSearchResultsRef.current = currentSearchResults;
+  }, [currentSearchResults]);
+
+  useEffect(() => {
+    currentSearchResultsSliceStartIndexRef.current = currentSearchResultsSliceStartIndex;
+  }, [currentSearchResultsSliceStartIndex]);
 
   const computeAndSetResults = useCallback(async () => {
     const search = await searchDocument(searchText, searchDocumentType);
-    const searchResults = search.results;
+    const searchResultsSlice = search.results.slice(
+      currentSearchResultsSliceStartIndexRef.current,
+      currentSearchResultsSliceStartIndexRef.current + RESULTS_SLICE_LEN
+    );
     const results: ReactElement[] = [];
 
-    // {ToDo} Optimize this lmao
     // eslint-disable-next-line promise/catch-or-return
-    const mountedData = await Promise.all(searchResults.map((r) => r.data()));
+    const mountedData = await Promise.all(searchResultsSlice.map((r) => r.data()));
 
-    for (let i = 0; i < searchResults.length; i++) {
+    for (let i = 0; i < searchResultsSlice.length; i++) {
       const data = mountedData[i];
       if (!data) continue;
 
@@ -61,12 +86,14 @@ const ProgressiveResults: FunctionComponent<ProgressiveResultsProps> = ({
       const excerpt = data.excerpt;
 
       // eslint-disable-next-line no-magic-numbers
-      const onFocus = buildResultOnFocus(i, searchResults.length - 1, resultsContainerRef);
+      const onFocus = buildResultOnFocus(currentSearchResultsSliceStartIndexRef.current + i, search.results.length - 1, resultsContainerRef);
 
       results.push(
         <Result
           navigationMenuItemProps={{ onKeyDown: quickMenuLeftRightCustomHandler, className: 'w-full', key: String(i) }}
-          key={searchResults[i].id}
+          // eslint-disable-next-line no-magic-numbers
+          ref={searchResultsSlice.length <= i + 1 ? lastResultRef : undefined}
+          key={searchResultsSlice[i].id}
           metaTitle={metaTitle}
           onFocus={onFocus}
           excerpt={excerpt}
@@ -75,10 +102,16 @@ const ProgressiveResults: FunctionComponent<ProgressiveResultsProps> = ({
       );
     }
 
-    setResults(results);
+    const newResults = [...currentSearchResultsRef.current, ...results];
+    const newCurrentSearchResultsSliceStartIndex = currentSearchResultsSliceStartIndexRef.current + RESULTS_SLICE_LEN;
+    setCurrentSearchResults(newResults);
+    setResults(newResults);
+    setCurrentSearchResultsSliceStartIndex(newCurrentSearchResultsSliceStartIndex);
+    // eslint-disable-next-line no-magic-numbers
+    setDisplayShowMoreBtn(newCurrentSearchResultsSliceStartIndex < search.results.length - 1);
   }, [setResults, searchText, searchDocumentType, resultsContainerRef, quickMenuLeftRightCustomHandler]);
 
-  const throttledComputeAndSetResults = throttle(computeAndSetResults, THROTTLE_DELAY);
+  const throttledComputeAndSetResults = useMemo(() => throttle(computeAndSetResults, THROTTLE_DELAY), [computeAndSetResults]);
 
   useEffect(() => {
     if (searchText === SEARCH_TEXT_INITIAL_STATE) return;
@@ -88,12 +121,15 @@ const ProgressiveResults: FunctionComponent<ProgressiveResultsProps> = ({
     const intervalMs: MsValue = 250;
     let isComputing = false;
 
-    const retryInterval = setInterval(async () => {
+    let retryInterval: MaybeNull<NodeJS.Timeout> = setInterval(async () => {
       function disposeRetryInterval() {
         // eslint-disable-next-line no-magic-numbers
         retries = 0;
         isComputing = false;
-        clearInterval(retryInterval);
+        if (retryInterval) {
+          clearInterval(retryInterval);
+          retryInterval = null;
+        }
       }
 
       try {
@@ -117,7 +153,10 @@ const ProgressiveResults: FunctionComponent<ProgressiveResultsProps> = ({
     }, intervalMs);
 
     return () => {
-      clearInterval(retryInterval);
+      if (retryInterval) {
+        clearInterval(retryInterval);
+        retryInterval = null;
+      }
     };
   }, [searchText, searchDocumentType, throttledComputeAndSetResults, toast, globalT, setResults]);
 
@@ -128,7 +167,26 @@ const ProgressiveResults: FunctionComponent<ProgressiveResultsProps> = ({
     (results.length > 0 && (
       <>
         <NavigationMenu.Root aria-label={globalT(`${i18ns.searchMenu}.sr-only.results`)} className="contents [&>div]:contents" orientation="vertical">
-          <NavigationMenu.List className="contents">{results}</NavigationMenu.List>
+          <NavigationMenu.List className="contents">
+            {results}
+            {displayShowMoreBtn && (
+              <NavigationMenu.Item key={'show-more-btn'}>
+                <NavigationMenu.Link asChild>
+                  <button
+                    onClick={async () => {
+                      const oldLastResultInstance = getRefCurrentPtr(lastResultRef);
+                      setDisplayShowMoreBtn(false);
+                      await computeAndSetResults();
+                      if (oldLastResultInstance) oldLastResultInstance.focus();
+                    }}
+                    className="search-menu-see-more-btn bg-primary font-semibold text-white"
+                  >
+                    {globalT(`${i18ns.vocab}.see-more`)}
+                  </button>
+                </NavigationMenu.Link>
+              </NavigationMenu.Item>
+            )}
+          </NavigationMenu.List>
         </NavigationMenu.Root>
         <div className="relative bottom-[1px] min-h-[1px] w-full" />
       </>

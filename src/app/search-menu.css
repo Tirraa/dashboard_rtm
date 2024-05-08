@@ -20,7 +20,8 @@
 
 .search-menu-input,
 .search-menu-result-link,
-.search-menu-no-result-found {
+.search-menu-no-result-found,
+.search-menu-see-more-btn {
   font-size: max(clamp(1.6625vh, 2.0625vw, 1.1875em), 3.75vh);
 }
 
@@ -89,6 +90,11 @@
   color: white;
 }
 
+.search-menu-see-more-btn {
+  border-radius: 0.25em;
+  padding: 0.25em 0.5em;
+}
+
 @media only screen and (max-width: 1024px) {
   .search-menu-tabslist-item {
     height: max(4vw, 4vh);
@@ -134,7 +140,8 @@
   .search-menu-no-result-found,
   .search-menu-input,
   .search-menu-result-link,
-  .search-menu-tabslist-item {
+  .search-menu-tabslist-item,
+  .search-menu-see-more-btn {
     font-size: max(clamp(1.45vh, 2.35vw, 1.1875em), max(2.35vh, 2.35vw));
   }
 
@@ -156,7 +163,8 @@
   .search-menu-input,
   .search-menu-result-link,
   .search-menu-tabslist-item,
-  .search-menu-no-result-found {
+  .search-menu-no-result-found,
+  .search-menu-see-more-btn {
     font-size: max(clamp(2.9vh, 4.7vw, 1.1875em, max(4.7vh, 4.7vw)));
   }
 

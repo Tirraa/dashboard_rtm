@@ -135,7 +135,6 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
   const resetDialog = useCallback(() => {
     setSearchText(SEARCH_TEXT_INITIAL_STATE);
     setResults(RESULTS_INITIAL_STATE);
-    setTransitionClass('transition-none');
     updateMemorizedTabValueAndSetTabValue(tabValueInitialState);
   }, [tabValueInitialState, updateMemorizedTabValueAndSetTabValue]);
 
@@ -217,17 +216,18 @@ const NavbarSearchButtonInner = <AllTabValues extends typeof navbarSearchBtnProp
         <MagnifyingGlassIcon />
       </DialogTrigger>
       <DialogContent
-        className={cn(
-          'search-menu-dialog flex h-fit max-h-[90vh] min-h-[90vh] w-full max-w-[90vw] overflow-y-auto overflow-x-hidden',
-          transitionClass
-        )}
         onAnimationEnd={() => {
           if (!isOpened) {
             resetDialog();
             return;
           }
+          setTransitionClass('transition-none');
           focusInputField();
         }}
+        className={cn(
+          'search-menu-dialog flex h-fit max-h-[90vh] min-h-[90vh] w-full max-w-[90vw] overflow-y-auto overflow-x-hidden',
+          transitionClass
+        )}
         onAnimationStart={() => {
           setTransitionClass('');
         }}
