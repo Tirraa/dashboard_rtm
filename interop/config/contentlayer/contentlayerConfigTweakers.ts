@@ -119,31 +119,38 @@ const _ALL_LANDING_PAGES_FIELDS = {
     required: false,
     default: false
   },
+
   draft: {
     type: 'boolean',
     required: false,
     default: false
   },
+
   metadescription: {
     type: 'string',
     required: true
   },
+
   language: {
     type: 'string',
     required: true
   },
+
   category: {
     type: 'string',
     required: true
   },
+
   title: {
     type: 'string',
     required: true
   },
+
   slug: {
     type: 'string',
     required: true
   },
+
   url: {
     type: 'string',
     required: true
@@ -156,26 +163,32 @@ const _ALL_PAGES_FIELDS = {
     required: false,
     default: false
   },
+
   metadescription: {
     type: 'string',
     required: true
   },
+
   language: {
     type: 'string',
     required: true
   },
+
   title: {
     type: 'string',
     required: true
   },
+
   path: {
     type: 'string',
     required: true
   },
+
   root: {
     type: 'string',
     required: true
   },
+
   url: {
     type: 'string',
     required: true
