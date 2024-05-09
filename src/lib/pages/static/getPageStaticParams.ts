@@ -5,7 +5,7 @@ import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getPageByLanguageAndPathUnstrict, getAllPages } from '../api';
 import isSkippedPath from './helpers/isSkippedPath';
 
-function getPagesStaticParams() {
+function getPageStaticParams() {
   const staticParams = [];
   const allPages = getAllPages();
 
@@ -22,4 +22,4 @@ function getPagesStaticParams() {
   return staticParams;
 }
 
-export default getPagesStaticParams;
+export default getPageStaticParams;

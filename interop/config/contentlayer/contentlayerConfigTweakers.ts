@@ -25,6 +25,7 @@ import {
   buildPageUrl
 } from '../../lib/builders';
 import { blogTagOptions } from './blog/blogTags';
+import SEO from './nested-types/SEO';
 
 export const PAGES_FOLDER = 'pages';
 export const BLOG_POSTS_FOLDER = 'blog';
@@ -107,6 +108,8 @@ const _ALL_BLOG_FIELDS = {
     required: true
   },
 
+  seo: { required: false, type: 'nested', of: SEO },
+
   date: {
     required: true,
     type: 'date'
@@ -151,6 +154,8 @@ const _ALL_LANDING_PAGES_FIELDS = {
     required: true
   },
 
+  seo: { required: false, type: 'nested', of: SEO },
+
   url: {
     type: 'string',
     required: true
@@ -189,6 +194,8 @@ const _ALL_PAGES_FIELDS = {
     required: true
   },
 
+  seo: { required: false, type: 'nested', of: SEO },
+
   url: {
     type: 'string',
     required: true
@@ -217,7 +224,8 @@ export const BLOG_DOCUMENTS_FIELDS = {
   draft: _ALL_BLOG_FIELDS.draft,
   title: _ALL_BLOG_FIELDS.title,
   tags: _ALL_BLOG_FIELDS.tags,
-  date: _ALL_BLOG_FIELDS.date
+  date: _ALL_BLOG_FIELDS.date,
+  seo: _ALL_BLOG_FIELDS.seo
 } as const satisfies DocumentsFields<_AllBlogFields, _BlogDocumentsComputedFieldsKeys>;
 
 export const BLOG_POST_SCHEMA_CONFIG: ContentlayerDocumentsConfigType<BlogPostSchemaKey> = {
@@ -244,7 +252,8 @@ export const LANDING_PAGES_DOCUMENTS_FIELDS = {
   doNotExcludeFromLocalSearch: _ALL_LANDING_PAGES_FIELDS.doNotExcludeFromLocalSearch,
   metadescription: _ALL_LANDING_PAGES_FIELDS.metadescription,
   draft: _ALL_LANDING_PAGES_FIELDS.draft,
-  title: _ALL_LANDING_PAGES_FIELDS.title
+  title: _ALL_LANDING_PAGES_FIELDS.title,
+  seo: _ALL_LANDING_PAGES_FIELDS.seo
 } as const satisfies DocumentsFields<_AllLandingPagesFields, _LandingPagesDocumentsComputedFieldsKeys>;
 
 /* v8 ignore start */
@@ -263,7 +272,8 @@ export const PAGES_DOCUMENTS_COMPUTED_FIELDS = {
 export const PAGES_DOCUMENTS_FIELDS = {
   metadescription: _ALL_PAGES_FIELDS.metadescription,
   draft: _ALL_PAGES_FIELDS.draft,
-  title: _ALL_PAGES_FIELDS.title
+  title: _ALL_PAGES_FIELDS.title,
+  seo: _ALL_PAGES_FIELDS.seo
 } as const satisfies DocumentsFields<_AllPagesFields, _PagesDocumentsComputedFieldsKeys>;
 
 type BlogPostSchemaKey = 'BlogPostSchema';
