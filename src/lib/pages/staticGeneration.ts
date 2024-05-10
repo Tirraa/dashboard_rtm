@@ -10,16 +10,16 @@ import { getServerSideI18n } from '@/i18n/server';
 import { notFound } from 'next/navigation';
 import { i18ns } from '##/config/i18n';
 
-import doGetPagesStaticParams from './static/getPagesStaticParams';
+import doGetPageStaticParams from './static/getPageStaticParams';
 import isSkippedPath from './static/helpers/isSkippedPath';
 import { getPageByLanguageAndPathUnstrict } from './api';
 
-export function getPagesStaticParams() {
-  const pagesStaticParams = doGetPagesStaticParams();
-  return pagesStaticParams;
+export function getPageStaticParams() {
+  const pageStaticParams = doGetPageStaticParams();
+  return pageStaticParams;
 }
 
-export async function getPagesMetadatas({ params }: PageProps) {
+export async function getPageMetadatas({ params }: PageProps) {
   const [path, language] = [params[PageTaxonomy.PATH].join('/'), params[I18nTaxonomy.LANGUAGE]];
   if (isSkippedPath(path)) notFound();
 
@@ -27,12 +27,18 @@ export async function getPagesMetadatas({ params }: PageProps) {
   if (!page) notFound();
 
   const globalT = await getServerSideI18n();
-  const { metadescription: description, title: pageTitle } = page;
+  const { metadescription: description, title: pageTitle, seo } = page;
 
   const { vocab } = i18ns;
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), pageTitle);
 
-  return { description, title };
+  // {ToDo} Generate languages alternates
+  // https://github.com/Tirraa/dashboard_rtm/issues/58#issuecomment-2103311665
+
+  if (seo === undefined) return { description, title };
+
+  const { alternates, openGraph, robots } = seo;
+  return { description, alternates, openGraph, robots, title };
 }
 
 // Stryker restore all

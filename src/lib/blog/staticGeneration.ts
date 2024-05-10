@@ -10,6 +10,7 @@ import type {
   BlogPostType
 } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { Metadata } from 'next';
 
 import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
 import BlogTaxonomy from '##/config/taxonomies/blog';
@@ -51,7 +52,7 @@ export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPag
   return { description, title };
 }
 
-export async function getBlogPostMetadatas({ params }: BlogPostPageProps) {
+export async function getBlogPostMetadatas({ params }: BlogPostPageProps): Promise<Metadata> {
   const [category, subcategory, slug, language] = [
     params[BlogTaxonomy.CATEGORY],
     params[BlogTaxonomy.SUBCATEGORY],
@@ -67,8 +68,15 @@ export async function getBlogPostMetadatas({ params }: BlogPostPageProps) {
   if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory, language)) return {};
 
   const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), currentPost.title);
-  const { metadescription: description } = post as BlogPostType;
-  return { description, title };
+  const { metadescription: description, seo } = currentPost;
+
+  // {ToDo} Generate languages alternates
+  // https://github.com/Tirraa/dashboard_rtm/issues/58#issuecomment-2103311665
+
+  if (seo === undefined) return { description, title };
+
+  const { alternates, openGraph, robots } = seo;
+  return { description, alternates, openGraph, robots, title };
 }
 
 export { blogSubcategoryGuard, blogCategoryGuard, blogPostGuard };

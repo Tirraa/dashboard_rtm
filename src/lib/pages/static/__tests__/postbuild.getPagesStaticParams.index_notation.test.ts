@@ -6,7 +6,7 @@ import PageTaxonomy from '##/config/taxonomies/pages';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { describe, expect, it, vi } from 'vitest';
 
-import getPagesStaticParams from '../getPagesStaticParams';
+import getPageStaticParams from '../getPageStaticParams';
 
 vi.mock('../../../../../interop/config/i18n', async (orgImport) => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
@@ -369,9 +369,9 @@ vi.mock('@/config/pages', async (orgImport) => {
   };
 });
 
-describe('getPagesStaticParams (index notation)', () => {
+describe('getPageStaticParams (index notation)', () => {
   it('should return static params according to the allPages mock', () => {
-    const staticParams = getPagesStaticParams();
+    const staticParams = getPageStaticParams();
 
     expect(staticParams).toStrictEqual([
       { [PageTaxonomy.PATH]: ['index'], [I18nTaxonomy.LANGUAGE]: 'fr' },
