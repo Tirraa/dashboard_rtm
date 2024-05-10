@@ -134,6 +134,8 @@ const ProgressiveResults: FunctionComponent<ProgressiveResultsProps> = ({
     const intervalMs: MsValue = 250;
     let isComputing = false;
 
+    // {ToDo} Remove this line
+    // eslint-disable-next-line
     let retryInterval: MaybeNull<NodeJS.Timeout> = setInterval(async () => {
       function disposeRetryInterval() {
         // eslint-disable-next-line no-magic-numbers
@@ -148,12 +150,18 @@ const ProgressiveResults: FunctionComponent<ProgressiveResultsProps> = ({
       try {
         if (isComputing) return;
         isComputing = true;
-        await throttledComputeAndSetResults();
-        disposeRetryInterval();
+        throw new Error('lol'); // {ToDo} Remove this line and uncomment the next lines
+        // await throttledComputeAndSetResults();
+        // disposeRetryInterval();
       } catch {
         retries++;
         if (maxRetries >= retries) {
-          // {ToDo} This should be logged
+          fetch('/api/error', {
+            body: JSON.stringify({ message: 'pagefindIntegrationError' }),
+            headers: { 'Content-Type': 'application/json' },
+            method: 'POST'
+          });
+
           toast({
             description: globalT(`${i18ns.brokenPagefindIntegrationError}.message`),
             title: globalT(`${i18ns.brokenPagefindIntegrationError}.title`),
