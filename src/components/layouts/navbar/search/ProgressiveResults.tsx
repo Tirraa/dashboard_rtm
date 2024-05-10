@@ -14,6 +14,7 @@ import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { useToast } from '@/components/hooks/useToast';
 import Result from '@/components/ui/search/Result';
 import { getClientSideI18n } from '@/i18n/client';
+import { traceError } from '@/lib/next';
 import { i18ns } from '##/config/i18n';
 import throttle from 'throttleit';
 
@@ -156,11 +157,7 @@ const ProgressiveResults: FunctionComponent<ProgressiveResultsProps> = ({
       } catch {
         retries++;
         if (maxRetries >= retries) {
-          fetch('/api/error', {
-            body: JSON.stringify({ message: 'pagefindIntegrationError' }),
-            headers: { 'Content-Type': 'application/json' },
-            method: 'POST'
-          });
+          traceError({ message: 'pagefindIntegrationError' });
 
           toast({
             description: globalT(`${i18ns.brokenPagefindIntegrationError}.message`),

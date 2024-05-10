@@ -1,7 +1,8 @@
-import type { MiddlewareFactory } from '@rtm/shared-types/Next';
+import type { MiddlewareFactory, TracedError } from '@rtm/shared-types/Next';
 import type { NextMiddleware, NextRequest } from 'next/server';
 import type { NextFont } from 'next/dist/compiled/@next/font';
 
+import { API_ERROR_TRACE_ENDPOINT } from '@/config/utils';
 import { NextResponse } from 'next/server';
 
 import { getPathnameMaybeI18nFlag } from './i18n';
@@ -12,6 +13,13 @@ import { getPathnameMaybeI18nFlag } from './i18n';
 export const fcn = (f: NextFont): string => f.className;
 
 export const getMaybeI18nFlagFromRequest = (request: NextRequest) => getPathnameMaybeI18nFlag(request.nextUrl.pathname);
+
+export const traceError = (error: TracedError) =>
+  fetch(API_ERROR_TRACE_ENDPOINT, {
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(error),
+    method: 'POST'
+  });
 
 // Stryker restore all
 /* v8 ignore stop */
