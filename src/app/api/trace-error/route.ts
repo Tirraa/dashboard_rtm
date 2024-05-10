@@ -3,6 +3,7 @@
 
 import { NextResponse } from 'next/server';
 
+// {ToDo} Also ping RTM API to log the error on the admins Discord server.
 export async function POST(request: Request) {
   const error = await request.json();
   console.error(error);

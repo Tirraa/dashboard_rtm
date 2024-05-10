@@ -18,6 +18,8 @@ export type MakeHomogeneousValuesObjType<Obj extends object, ObjValuesType> = {
 };
 
 export type JSPrimitives = undefined | boolean | string | number | null;
+// * ... https://dev.to/ankittanna/how-to-create-a-type-for-complex-json-object-in-typescript-d81
+export type JSONValue = { [k: string]: JSONValue } | Array<JSONValue> | boolean | string | number;
 
 export type KeySeparator = '.';
 

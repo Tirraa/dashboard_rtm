@@ -9,6 +9,7 @@ import { SEARCH_TEXT_INITIAL_STATE, RESULTS_SLICE_LEN, THROTTLE_DELAY } from '@/
 import { buildResultOnFocus } from '@/components/ui/search/helpers/functions/navbarSearchButton';
 import { searchDocument, getCleanedURL } from '@/lib/pagefind/helpers/search';
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
+import PagefindIntegrationError from '@/errors/PagefindIntegrationError';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { useToast } from '@/components/hooks/useToast';
@@ -135,8 +136,6 @@ const ProgressiveResults: FunctionComponent<ProgressiveResultsProps> = ({
     const intervalMs: MsValue = 250;
     let isComputing = false;
 
-    // {ToDo} Remove this line
-    // eslint-disable-next-line
     let retryInterval: MaybeNull<NodeJS.Timeout> = setInterval(async () => {
       function disposeRetryInterval() {
         // eslint-disable-next-line no-magic-numbers
@@ -150,23 +149,33 @@ const ProgressiveResults: FunctionComponent<ProgressiveResultsProps> = ({
 
       try {
         if (isComputing) return;
+
         isComputing = true;
-        throw new Error('lol'); // {ToDo} Remove this line and uncomment the next lines
-        // await throttledComputeAndSetResults();
-        // disposeRetryInterval();
-      } catch {
+        await throttledComputeAndSetResults();
+        disposeRetryInterval();
+      } catch (e) {
         retries++;
-        if (maxRetries >= retries) {
-          traceError({ message: 'pagefindIntegrationError' });
+
+        if (retries >= maxRetries) {
+          const tracedError = new PagefindIntegrationError(
+            (e instanceof Error && e.message) || 'Invalid throw usage, intercepted in a traceError catch.'
+          );
+
+          tracedError.cause = (e instanceof Error && e.cause) || undefined;
+          tracedError.stack = (e instanceof Error && e.stack) || undefined;
+          traceError(tracedError, { userAgent: navigator.userAgent });
 
           toast({
             description: globalT(`${i18ns.brokenPagefindIntegrationError}.message`),
             title: globalT(`${i18ns.brokenPagefindIntegrationError}.title`),
             variant: 'destructive'
           });
+
           setResults([]);
           disposeRetryInterval();
         }
+
+        isComputing = false;
       }
     }, intervalMs);
 

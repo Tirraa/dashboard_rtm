@@ -1,4 +1,5 @@
-import type { MiddlewareFactory, TracedError } from '@rtm/shared-types/Next';
+import type { JSONValue } from '@rtm/shared-types/CustomUtilityTypes';
+import type { MiddlewareFactory } from '@rtm/shared-types/Next';
 import type { NextMiddleware, NextRequest } from 'next/server';
 import type { NextFont } from 'next/dist/compiled/@next/font';
 
@@ -14,12 +15,16 @@ export const fcn = (f: NextFont): string => f.className;
 
 export const getMaybeI18nFlagFromRequest = (request: NextRequest) => getPathnameMaybeI18nFlag(request.nextUrl.pathname);
 
-export const traceError = (error: TracedError) =>
+export function traceError(error: Error, additionalInfo?: JSONValue) {
+  const report = { ...error, additionalInfo: additionalInfo ? JSON.stringify(additionalInfo) : undefined };
+
   fetch(API_ERROR_TRACE_ENDPOINT, {
+    // * ... https://goulet.dev/posts/error-serialization-in-js/
+    body: JSON.stringify(report, ['message', 'name', 'stack', 'cause', 'additionalInfo']),
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(error),
     method: 'POST'
   });
+}
 
 // Stryker restore all
 /* v8 ignore stop */
