@@ -41,11 +41,8 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
           {post.featuredPictureUrl && (
             <div className="h-[60%] overflow-hidden max-lg:w-full lg:h-auto">
               <div
-                style={{
-                  backgroundImage: `url(${post.featuredPictureUrl})`,
-                  backgroundSize: 'cover'
-                }}
-                className="h-[160px] w-full max-lg:rounded-t-lg lg:h-full lg:w-[240px] lg:ltr:rounded-l-lg lg:rtl:rounded-r-lg"
+                className="h-[max(200px,30vw)] w-full bg-cover max-lg:rounded-t-lg max-lg:bg-center lg:h-full lg:w-[240px] lg:ltr:rounded-l-lg lg:rtl:rounded-r-lg"
+                style={{ backgroundImage: `url(${post.featuredPictureUrl})` }}
                 aria-hidden="true"
               />
             </div>
