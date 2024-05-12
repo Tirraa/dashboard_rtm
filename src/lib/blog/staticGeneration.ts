@@ -9,14 +9,17 @@ import type {
   BlogStaticParams,
   BlogPostType
 } from '@/types/Blog';
+import type { AlternateURLs } from 'next/dist/lib/metadata/types/alternative-urls-types';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { LanguageFlag } from '@rtm/shared-types/I18n';
+import type { Href } from '@rtm/shared-types/Next';
 import type { Metadata } from 'next';
 
 import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSideI18n } from '@/i18n/server';
-import { i18ns } from '##/config/i18n';
+import { LANGUAGES, i18ns } from '##/config/i18n';
 
 import { isValidBlogCategoryAndSubcategoryPair, getBlogPostUnstrict } from './api';
 import blogSubcategoryGuard from './guards/blogSubcategoryGuard';
@@ -70,12 +73,19 @@ export async function getBlogPostMetadatas({ params }: BlogPostPageProps): Promi
   const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), currentPost.title);
   const { metadescription: description, seo } = currentPost;
 
-  // {ToDo} Generate languages alternates
-  // https://github.com/Tirraa/dashboard_rtm/issues/58#issuecomment-2103311665
+  const alternateLanguages = LANGUAGES.filter((lang) => lang !== language);
+  const languages = {} as Record<LanguageFlag, Href>;
 
-  if (seo === undefined) return { description, title };
+  for (const alternateLanguage of alternateLanguages) {
+    const post = await getBlogPostUnstrict(category, subcategory, slug, alternateLanguage);
+    if (!post) continue;
+    languages[alternateLanguage] = post.url;
+  }
+
+  if (seo === undefined) return { alternates: { languages }, description, title };
 
   const { alternates, openGraph, robots } = seo;
+  if (alternates) (alternates as AlternateURLs).languages = languages;
   return { description, alternates, openGraph, robots, title };
 }
 

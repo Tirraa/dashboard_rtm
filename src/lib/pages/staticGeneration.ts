@@ -1,6 +1,9 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import type { AlternateURLs } from 'next/dist/lib/metadata/types/alternative-urls-types';
+import type { LanguageFlag } from '@rtm/shared-types/I18n';
+import type { Href } from '@rtm/shared-types/Next';
 import type { PageProps } from '@/types/Page';
 import type { Metadata } from 'next';
 
@@ -8,8 +11,8 @@ import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
 import PageTaxonomy from '##/config/taxonomies/pages';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSideI18n } from '@/i18n/server';
+import { LANGUAGES, i18ns } from '##/config/i18n';
 import { notFound } from 'next/navigation';
-import { i18ns } from '##/config/i18n';
 
 import doGetPageStaticParams from './static/getPageStaticParams';
 import isSkippedPath from './static/helpers/isSkippedPath';
@@ -33,12 +36,19 @@ export async function getPageMetadatas({ params }: PageProps): Promise<Metadata>
   const { vocab } = i18ns;
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), pageTitle);
 
-  // {ToDo} Generate languages alternates
-  // https://github.com/Tirraa/dashboard_rtm/issues/58#issuecomment-2103311665
+  const alternateLanguages = LANGUAGES.filter((lang) => lang !== language);
+  const languages = {} as Record<LanguageFlag, Href>;
 
-  if (seo === undefined) return { description, title };
+  for (const alternateLanguage of alternateLanguages) {
+    const page = getPageByLanguageAndPathUnstrict(alternateLanguage, path);
+    if (!page) continue;
+    languages[alternateLanguage] = page.url;
+  }
+
+  if (seo === undefined) return { alternates: { languages }, description, title };
 
   const { alternates, openGraph, robots } = seo;
+  if (alternates) (alternates as AlternateURLs).languages = languages;
   return { description, alternates, openGraph, robots, title };
 }
 
