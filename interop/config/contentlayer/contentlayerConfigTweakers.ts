@@ -68,6 +68,11 @@ const _ALL_BLOG_FIELDS = {
     default: false
   },
 
+  featuredPictureUrl: {
+    required: false,
+    type: 'string'
+  },
+
   metadescription: {
     type: 'string',
     required: true
@@ -219,6 +224,7 @@ export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
 /* v8 ignore stop */
 
 export const BLOG_DOCUMENTS_FIELDS = {
+  featuredPictureUrl: _ALL_BLOG_FIELDS.featuredPictureUrl,
   metadescription: _ALL_BLOG_FIELDS.metadescription,
   description: _ALL_BLOG_FIELDS.description,
   draft: _ALL_BLOG_FIELDS.draft,

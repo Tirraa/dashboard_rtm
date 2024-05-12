@@ -75,6 +75,7 @@ export async function getBlogPostMetadatas({ params }: BlogPostPageProps): Promi
 
   const alternateLanguages = LANGUAGES.filter((lang) => lang !== language);
   const languages = {} as Record<LanguageFlag, Href>;
+  const featuredPictureUrl = currentPost.featuredPictureUrl;
 
   for (const alternateLanguage of alternateLanguages) {
     const post = await getBlogPostUnstrict(category, subcategory, slug, alternateLanguage);
@@ -82,11 +83,30 @@ export async function getBlogPostMetadatas({ params }: BlogPostPageProps): Promi
     languages[alternateLanguage] = post.url;
   }
 
-  if (seo === undefined) return { alternates: { languages }, description, title };
+  const openGraphImages = featuredPictureUrl ? { url: featuredPictureUrl } : undefined;
 
-  const { alternates, openGraph, robots } = seo;
+  if (seo === undefined) {
+    if (openGraphImages === undefined) return { alternates: { languages }, description, title };
+    return { openGraph: { images: openGraphImages }, alternates: { languages }, description, title };
+  }
+
+  const { alternates, robots } = seo;
+  let { openGraph } = seo;
+
+  if (openGraphImages) {
+    if (openGraph === undefined) openGraph = { images: [openGraphImages] };
+    else if (openGraph.images === undefined) openGraph.images = [openGraphImages];
+  }
+
   if (alternates) (alternates as AlternateURLs).languages = languages;
-  return { description, alternates, openGraph, robots, title };
+
+  return {
+    description,
+    alternates,
+    openGraph,
+    robots,
+    title
+  };
 }
 
 export { blogSubcategoryGuard, blogCategoryGuard, blogPostGuard };
