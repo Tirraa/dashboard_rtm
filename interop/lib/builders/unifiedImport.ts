@@ -1,5 +1,6 @@
 import { throwIfForbiddenToUseIndexErrorBlogCtx, throwIfForbiddenToUseIndexErrorLpCtx, getPathWithIndexSuffix } from './helpers';
 import { LANDING_PAGES_FOLDER, BLOG_POSTS_FOLDER, PAGES_FOLDER } from '../../config/contentlayer/contentlayerConfigTweakers';
+import buildAbsolutePathFromParts from '../../../packages/shared-lib/src/portable/str/buildAbsolutePathFromParts';
 import getPathWithoutExtension from '../../../packages/shared-lib/src/portable/str/getPathWithoutExtension';
 import InvalidBlogTag, { DAMERAU_LEVENSHTEIN_THRESHOLD } from '../../errors/InvalidBlogTag';
 import { indexedBlogTagOptions } from '../../config/contentlayer/blog/blogTagsMetadatas';
@@ -21,6 +22,7 @@ export {
   throwIfForbiddenToUseIndexErrorLpCtx,
   getFlattenedPathWithoutRootFolder,
   DAMERAU_LEVENSHTEIN_THRESHOLD,
+  buildAbsolutePathFromParts,
   ForbiddenToUseIndexError,
   getPathWithoutExtension,
   getPathWithIndexSuffix,

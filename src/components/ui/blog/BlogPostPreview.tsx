@@ -19,7 +19,19 @@ import BlogPostDate from './BlogPostDate';
 import DraftBadge from './DraftBadge';
 
 interface BlogPostPreviewProps extends WithLanguage {
-  post: Pick<BlogPostType, 'featuredPictureUrl' | 'metadescription' | 'description' | 'draft' | 'title' | 'tags' | 'date' | 'url'>;
+  post: Pick<
+    BlogPostType,
+    | 'featuredPictureBlurPlaceholderDataUrl'
+    | 'featuredPictureBlurPlaceholderUrl'
+    | 'featuredPictureUrl'
+    | 'metadescription'
+    | 'description'
+    | 'draft'
+    | 'title'
+    | 'tags'
+    | 'date'
+    | 'url'
+  >;
   isNotOnBlogSubcategoryPage?: boolean;
 }
 
@@ -43,11 +55,13 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
             <div className="h-[60%] overflow-hidden max-lg:w-full lg:h-auto">
               <Image
                 className="relative h-[max(200px,30vw)] w-full object-cover max-lg:rounded-t-lg max-lg:bg-center lg:h-full lg:w-[200px] lg:ltr:rounded-l-lg lg:rtl:rounded-r-lg"
+                blurDataURL={post.featuredPictureBlurPlaceholderDataUrl}
                 src={post.featuredPictureUrl}
                 aria-hidden="true"
                 placeholder="blur"
                 height={300}
                 width={300}
+                priority
                 alt=""
               />
             </div>
