@@ -30,12 +30,18 @@ const nextConfig = {
     ];
   },
 
-  eslint: {
-    ignoreDuringBuilds: ignoreEslintDuringBuilds
+  images: {
+    remotePatterns: [
+      {
+        hostname: 'cdn.discordapp.com',
+        protocol: 'https',
+        pathname: '**'
+      }
+    ]
   },
 
-  images: {
-    domains: ['cdn.discordapp.com']
+  eslint: {
+    ignoreDuringBuilds: ignoreEslintDuringBuilds
   },
 
   typescript: {

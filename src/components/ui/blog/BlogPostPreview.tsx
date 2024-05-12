@@ -10,6 +10,7 @@ import { getScopedI18n } from '@/i18n/server';
 import BlogConfig from '@/config/Blog/server';
 import { i18ns } from '##/config/i18n';
 import { cn } from '@/lib/tailwind';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { CardDescription, CardContent, CardHeader, CardFooter, CardTitle, Card } from '../Card';
@@ -40,10 +41,14 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
         <Card className="flex h-full flex-col lg:flex-row">
           {post.featuredPictureUrl && (
             <div className="h-[60%] overflow-hidden max-lg:w-full lg:h-auto">
-              <div
-                className="h-[max(200px,30vw)] w-full bg-cover max-lg:rounded-t-lg max-lg:bg-center lg:h-full lg:w-[240px] lg:ltr:rounded-l-lg lg:rtl:rounded-r-lg"
-                style={{ backgroundImage: `url(${post.featuredPictureUrl})` }}
+              <Image
+                className="relative h-[max(200px,30vw)] w-full object-cover max-lg:rounded-t-lg max-lg:bg-center lg:h-full lg:w-[200px] lg:ltr:rounded-l-lg lg:rtl:rounded-r-lg"
+                src={post.featuredPictureUrl}
                 aria-hidden="true"
+                placeholder="blur"
+                height={300}
+                width={300}
+                alt=""
               />
             </div>
           )}
