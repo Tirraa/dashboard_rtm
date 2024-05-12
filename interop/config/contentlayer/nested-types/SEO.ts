@@ -1,3 +1,6 @@
+/* v8 ignore start */
+// Stryker disable all
+
 import { defineNestedType } from '../adapters';
 
 // * ... Inspired from https://github.com/contentlayerdev/contentlayer/blob/main/examples/archive/playground-azimuth/src/contentlayer/nested/SEO.ts
@@ -96,3 +99,6 @@ const SEO = defineNestedType(() => ({
 }));
 
 export default SEO;
+
+// Stryker restore all
+/* v8 ignore stop */

@@ -4,6 +4,7 @@
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { LandingPageProps } from '@/types/LandingPage';
 import type { LandingPage } from 'contentlayer/generated';
+import type { Metadata } from 'next';
 
 import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
 import LandingPageTaxonomy from '##/config/taxonomies/landingPages';
@@ -20,7 +21,7 @@ export function getLandingPagesStaticParams() {
   return landingPagesStaticParams;
 }
 
-export async function getLandingPageMetadatas({ params }: LandingPageProps) {
+export async function getLandingPageMetadatas({ params }: LandingPageProps): Promise<Metadata> {
   const [lang, slug] = [params[I18nTaxonomy.LANGUAGE], params[LandingPageTaxonomy.SLUG]];
   const lp: MaybeNull<LandingPage> = getLandingPageByLanguageAndSlugUnstrict(lang, slug);
   if (!lp) notFound();

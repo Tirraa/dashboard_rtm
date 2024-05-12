@@ -2,6 +2,7 @@
 // Stryker disable all
 
 import type { PageProps } from '@/types/Page';
+import type { Metadata } from 'next';
 
 import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
 import PageTaxonomy from '##/config/taxonomies/pages';
@@ -19,7 +20,7 @@ export function getPageStaticParams() {
   return pageStaticParams;
 }
 
-export async function getPageMetadatas({ params }: PageProps) {
+export async function getPageMetadatas({ params }: PageProps): Promise<Metadata> {
   const [path, language] = [params[PageTaxonomy.PATH].join('/'), params[I18nTaxonomy.LANGUAGE]];
   if (isSkippedPath(path)) notFound();
 
