@@ -12,7 +12,7 @@
     "prebuild": "pnpm --filter @rtm/prebuilder start --blog-posts-folder ./content/blog --i18n-locales-schema ./src/i18n/locales/schema.ts --lp-folder ./content/landing-pages --pages-folder ./content/pages --pretty-codegen",
     "before-build:tricky-typechecks": "tsc --noEmit --skipLibCheck --pretty ./packages/prebuilder/src/generators/pages/__tests__/prebuild.pagesType.test.ts",
     "build": "next build",
-    "postbuild": "next-sitemap && pagefind --verbose",
+    "postbuild": "next-sitemap && pagefind --site .next --output-path public/pagefind --glob \"**/[!(404|500)]*.{html}\" --verbose",
     "start": "next start",
     "---------- DEV ----------": "",
     "dev": "next dev",

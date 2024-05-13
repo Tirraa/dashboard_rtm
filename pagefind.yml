@@ -1,3 +1,0 @@
-glob: '**/[!(404|500)]*.{html}'
-output-path: public/pagefind
-site: .next

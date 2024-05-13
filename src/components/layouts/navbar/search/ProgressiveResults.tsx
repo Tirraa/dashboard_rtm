@@ -131,6 +131,26 @@ const ProgressiveResults: FunctionComponent<ProgressiveResultsProps> = ({
   useEffect(() => {
     if (searchText === SEARCH_TEXT_INITIAL_STATE) return;
 
+    if (window.pagefind.isBroken) {
+      const e = new PagefindIntegrationError('Pagefind failed to load');
+      const tracedError = new PagefindIntegrationError(
+        (e instanceof Error && e.message) || 'Invalid throw usage, intercepted in a traceError catch.'
+      );
+
+      tracedError.cause = (e instanceof Error && e.cause) || undefined;
+      tracedError.stack = (e instanceof Error && e.stack) || undefined;
+      traceError(tracedError, { userAgent: navigator.userAgent });
+
+      toast({
+        description: globalT(`${i18ns.brokenPagefindIntegrationError}.message`),
+        title: globalT(`${i18ns.brokenPagefindIntegrationError}.title`),
+        variant: 'destructive'
+      });
+
+      setResults([]);
+      return;
+    }
+
     let retries: Count = 0;
     const maxRetries: Limit = 4;
     const intervalMs: MsValue = 250;

@@ -4,7 +4,9 @@
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 
 import { BROKEN_PAGEFIND_STUB, DEV_PAGEFIND_STUB } from '@/config/pagefind';
+import PagefindIntegrationError from '@/errors/PagefindIntegrationError';
 import { initPagefind } from '@/lib/pagefind/helpers/perf';
+import { traceError } from '@/lib/next';
 import { useEffect } from 'react';
 
 // https://github.com/CloudCannon/pagefind/issues/596
@@ -36,8 +38,14 @@ function usePagefind(currentLocale: LanguageFlag) {
           }
         }
         await bootPagefind();
-      } catch (error) {
-        console.warn('Pagefind failed to load, search will not work');
+      } catch (e) {
+        const tracedError = new PagefindIntegrationError(
+          (e instanceof Error && e.message) || 'Invalid throw usage, intercepted in a traceError catch.'
+        );
+
+        tracedError.cause = (e instanceof Error && e.cause) || undefined;
+        tracedError.stack = (e instanceof Error && e.stack) || undefined;
+        traceError(tracedError, { userAgent: navigator.userAgent });
         window.pagefind = BROKEN_PAGEFIND_STUB;
       }
     }
