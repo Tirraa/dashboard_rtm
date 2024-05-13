@@ -52,23 +52,25 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
               />
             </div>
           )}
-          <div className="flex flex-1 flex-col">
-            <CardHeader className="pb-2">
-              <CardTitle titleType={isNotOnBlogSubcategoryPage ? 'h3' : 'h2'} className="is-h3 flex justify-between">
-                {title}
-                {showDraftSuffix && <DraftBadge className="relative bottom-1 left-2 rtl:-left-2" />}
-              </CardTitle>
-              <CardDescription>
-                <BlogPostDate className="bg-secondary p-1 text-black dark:text-white" language={language} date={date} />
-              </CardDescription>
-            </CardHeader>
-            <CardContent
-              className={cn('p-6 pt-0', {
-                'pb-3': hasTags
-              })}
-            >
-              <div className="break-word text-sm [&>*:last-child]:mb-0 [&>*]:mb-3">{descriptionSnippet}</div>
-            </CardContent>
+          <div className="flex flex-1 flex-col justify-between">
+            <div>
+              <CardHeader className="pb-2">
+                <CardTitle titleType={isNotOnBlogSubcategoryPage ? 'h3' : 'h2'} className="is-h3 flex justify-between">
+                  {title}
+                  {showDraftSuffix && <DraftBadge className="relative bottom-1 left-2 rtl:-left-2" />}
+                </CardTitle>
+                <CardDescription>
+                  <BlogPostDate className="bg-secondary p-1 text-black dark:text-white" language={language} date={date} />
+                </CardDescription>
+              </CardHeader>
+              <CardContent
+                className={cn('p-6 pt-0', {
+                  'pb-3': hasTags
+                })}
+              >
+                <div className="break-word text-sm [&>*:last-child]:mb-0 [&>*]:mb-3">{descriptionSnippet}</div>
+              </CardContent>
+            </div>
             {hasTags && <CardFooter className="flex flex-wrap gap-2">{tagsGenerator({ language, scopedT, tags })}</CardFooter>}
           </div>
         </Card>
