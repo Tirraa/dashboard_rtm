@@ -8,7 +8,6 @@ import type {
 import type { DocumentContentType, ComputedFields, FieldDefs } from 'contentlayer/source-files';
 
 import {
-  buildFeaturedPictureBlurPlaceholderDataUrl,
   buildLandingPageLanguageFlag,
   buildBlogPostLanguageFlag,
   buildBlogPostSubcategory,
@@ -61,16 +60,6 @@ const _ALL_BLOG_FIELDS = {
     },
     type: 'list',
     default: []
-  },
-
-  featuredPictureBlurPlaceholderDataUrl: {
-    required: false,
-    type: 'string'
-  },
-
-  featuredPictureBlurPlaceholderUrl: {
-    required: false,
-    type: 'string'
   },
 
   draft: {
@@ -222,10 +211,6 @@ const _ALL_PAGES_FIELDS = {
 // Stryker disable all
 
 export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
-  featuredPictureBlurPlaceholderDataUrl: {
-    resolve: (post) => buildFeaturedPictureBlurPlaceholderDataUrl(post),
-    type: _ALL_BLOG_FIELDS.featuredPictureBlurPlaceholderDataUrl.type
-  },
   subcategory: { resolve: (post) => buildBlogPostSubcategory(post), type: _ALL_BLOG_FIELDS.subcategory.type },
   tagsIndexes: { resolve: (post) => buildBlogTagsIndexes(post), type: _ALL_BLOG_FIELDS.tagsIndexes.type },
   language: { resolve: (post) => buildBlogPostLanguageFlag(post), type: _ALL_BLOG_FIELDS.language.type },
@@ -239,7 +224,6 @@ export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
 /* v8 ignore stop */
 
 export const BLOG_DOCUMENTS_FIELDS = {
-  featuredPictureBlurPlaceholderUrl: _ALL_BLOG_FIELDS.featuredPictureBlurPlaceholderUrl,
   featuredPictureUrl: _ALL_BLOG_FIELDS.featuredPictureUrl,
   metadescription: _ALL_BLOG_FIELDS.metadescription,
   description: _ALL_BLOG_FIELDS.description,

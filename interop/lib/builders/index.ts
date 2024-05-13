@@ -1,4 +1,3 @@
-import buildFeaturedPictureBlurPlaceholderDataUrl from './blog/computedFields/functions/featuredPictureBlurPlaceholderDataUrl';
 import buildLandingPageLanguageFlag from './landing-pages/computedFields/functions/language';
 import buildLandingPageCategory from './landing-pages/computedFields/functions/category';
 import buildBlogPostSubcategory from './blog/computedFields/functions/subcategory';
@@ -16,7 +15,6 @@ import buildPageRoot from './pages/computedFields/functions/root';
 import buildPageUrl from './pages/computedFields/functions/url';
 
 export {
-  buildFeaturedPictureBlurPlaceholderDataUrl,
   buildLandingPageLanguageFlag,
   buildBlogPostLanguageFlag,
   buildLandingPageCategory,
