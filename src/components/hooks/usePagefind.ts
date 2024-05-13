@@ -19,7 +19,7 @@ function usePagefind(currentLocale: LanguageFlag) {
           return;
         }
         // @ts-ignore generated after build
-        const pagefindInstance = await import(/* webpackIgnore: true */ '/pagefind/CACA.js');
+        const pagefindInstance = await import(/* webpackIgnore: true */ '/pagefind/pagefind.js');
         window.pagefind = pagefindInstance;
       }
 
