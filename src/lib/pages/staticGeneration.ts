@@ -2,6 +2,7 @@
 // Stryker disable all
 
 import type { AlternateURLs } from 'next/dist/lib/metadata/types/alternative-urls-types';
+import type { MaybeUndefined } from '@rtm/shared-types/CustomUtilityTypes';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { Href } from '@rtm/shared-types/Next';
 import type { PageProps } from '@/types/Page';
@@ -23,7 +24,10 @@ export function getPageStaticParams() {
   return pageStaticParams;
 }
 
-export async function getPageMetadatas({ params }: PageProps): Promise<Metadata> {
+export async function getPageMetadatas(
+  { params }: PageProps,
+  metadataBase: MaybeUndefined<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined
+): Promise<Metadata> {
   const [path, language] = [params[PageTaxonomy.PATH].join('/'), params[I18nTaxonomy.LANGUAGE]];
   if (isSkippedPath(path)) notFound();
 
@@ -45,11 +49,11 @@ export async function getPageMetadatas({ params }: PageProps): Promise<Metadata>
     languages[alternateLanguage] = page.url;
   }
 
-  if (seo === undefined) return { alternates: { languages }, description, title };
+  if (seo === undefined) return { alternates: { languages }, metadataBase, description, title };
 
   const { alternates, openGraph, robots } = seo;
   if (alternates) (alternates as AlternateURLs).languages = languages;
-  return { description, alternates, openGraph, robots, title };
+  return { metadataBase, description, alternates, openGraph, robots, title };
 }
 
 // Stryker restore all

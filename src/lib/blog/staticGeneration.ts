@@ -10,7 +10,7 @@ import type {
   BlogPostType
 } from '@/types/Blog';
 import type { AlternateURLs } from 'next/dist/lib/metadata/types/alternative-urls-types';
-import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { MaybeUndefined, MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { Href } from '@rtm/shared-types/Next';
 import type { Metadata } from 'next';
@@ -55,7 +55,10 @@ export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPag
   return { description, title };
 }
 
-export async function getBlogPostMetadatas({ params }: BlogPostPageProps): Promise<Metadata> {
+export async function getBlogPostMetadatas(
+  { params }: BlogPostPageProps,
+  metadataBase: MaybeUndefined<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined
+): Promise<Metadata> {
   const [category, subcategory, slug, language] = [
     params[BlogTaxonomy.CATEGORY],
     params[BlogTaxonomy.SUBCATEGORY],
@@ -86,8 +89,8 @@ export async function getBlogPostMetadatas({ params }: BlogPostPageProps): Promi
   const openGraphImages = featuredPictureUrl ? { url: featuredPictureUrl } : undefined;
 
   if (seo === undefined) {
-    if (openGraphImages === undefined) return { alternates: { languages }, description, title };
-    return { openGraph: { images: openGraphImages }, alternates: { languages }, description, title };
+    if (openGraphImages === undefined) return { alternates: { languages }, metadataBase, description, title };
+    return { openGraph: { images: openGraphImages }, alternates: { languages }, metadataBase, description, title };
   }
 
   const { alternates, robots } = seo;
@@ -101,6 +104,7 @@ export async function getBlogPostMetadatas({ params }: BlogPostPageProps): Promi
   if (alternates) (alternates as AlternateURLs).languages = languages;
 
   return {
+    metadataBase,
     description,
     alternates,
     openGraph,

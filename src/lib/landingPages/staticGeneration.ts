@@ -2,7 +2,7 @@
 // Stryker disable all
 
 import type { AlternateURLs } from 'next/dist/lib/metadata/types/alternative-urls-types';
-import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { MaybeUndefined, MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { LandingPageProps } from '@/types/LandingPage';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { LandingPage } from 'contentlayer/generated';
@@ -24,7 +24,10 @@ export function getLandingPagesStaticParams() {
   return landingPagesStaticParams;
 }
 
-export async function getLandingPageMetadatas({ params }: LandingPageProps): Promise<Metadata> {
+export async function getLandingPageMetadatas(
+  { params }: LandingPageProps,
+  metadataBase: MaybeUndefined<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined
+): Promise<Metadata> {
   const [language, slug] = [params[I18nTaxonomy.LANGUAGE], params[LandingPageTaxonomy.SLUG]];
   const lp: MaybeNull<LandingPage> = getLandingPageByLanguageAndSlugUnstrict(language, slug);
   if (!lp) notFound();
@@ -44,11 +47,11 @@ export async function getLandingPageMetadatas({ params }: LandingPageProps): Pro
     languages[alternateLanguage] = lp.url;
   }
 
-  if (seo === undefined) return { alternates: { languages }, description, title };
+  if (seo === undefined) return { alternates: { languages }, metadataBase, description, title };
 
   const { alternates, openGraph, robots } = seo;
   if (alternates) (alternates as AlternateURLs).languages = languages;
-  return { description, alternates, openGraph, robots, title };
+  return { metadataBase, description, alternates, openGraph, robots, title };
 }
 
 // Stryker restore all
