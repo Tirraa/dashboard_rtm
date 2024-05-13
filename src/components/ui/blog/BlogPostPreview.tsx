@@ -40,14 +40,14 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
       >
         <Card className="flex h-full flex-col lg:flex-row">
           {post.featuredPictureUrl && (
-            <div className="h-[60%] overflow-hidden max-lg:w-full lg:h-auto">
+            <div className="h-[60%] overflow-hidden bg-black bg-opacity-40 max-lg:w-full lg:h-auto">
               <Image
                 className="relative h-[max(200px,30vw)] w-full object-cover max-lg:rounded-t-lg max-lg:bg-center lg:h-full lg:w-[200px] lg:ltr:rounded-l-lg lg:rtl:rounded-r-lg"
                 src={post.featuredPictureUrl}
                 aria-hidden="true"
-                placeholder="blur"
-                height={300}
-                width={300}
+                height={384}
+                width={384}
+                priority
                 alt=""
               />
             </div>
