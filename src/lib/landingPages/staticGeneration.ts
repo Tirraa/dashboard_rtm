@@ -57,8 +57,7 @@ export async function getLandingPageMetadatas(
     languages[maybeAlternateLanguage] = maybeLp.url;
   }
 
-  // eslint-disable-next-line no-magic-numbers
-  const canonical = Object.keys(languages).length === 0 ? currentLp.url : undefined;
+  const canonical = currentLp.url;
 
   const defaultOpenGraph: OpenGraph = { url: currentLp.url };
   if (seo === undefined) return { alternates: { canonical, languages }, openGraph: defaultOpenGraph, metadataBase, description, title };

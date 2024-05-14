@@ -59,8 +59,7 @@ export async function getPageMetadatas(
     languages[alternateLanguage] = maybePage.url;
   }
 
-  // eslint-disable-next-line no-magic-numbers
-  const canonical = Object.keys(languages).length === 0 ? currentPage.url : undefined;
+  const canonical = currentPage.url;
 
   const defaultOpenGraph: OpenGraph = { url: currentPage.url };
   if (seo === undefined) return { alternates: { canonical, languages }, openGraph: defaultOpenGraph, metadataBase, description, title };

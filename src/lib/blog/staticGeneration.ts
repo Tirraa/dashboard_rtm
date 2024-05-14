@@ -96,8 +96,7 @@ export async function getBlogPostMetadatas(
     languages[maybeAlternateLanguage] = maybePost.url;
   }
 
-  // eslint-disable-next-line no-magic-numbers
-  const canonical = Object.keys(languages).length === 0 ? currentPost.url : undefined;
+  const canonical = currentPost.url;
 
   const openGraphImages = featuredPictureUrl ? { url: featuredPictureUrl } : undefined;
 
