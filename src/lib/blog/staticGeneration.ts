@@ -11,6 +11,7 @@ import type {
 } from '@/types/Blog';
 import type { AlternateURLs } from 'next/dist/lib/metadata/types/alternative-urls-types';
 import type { MaybeUndefined, MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { Href } from '@rtm/shared-types/Next';
 import type { Metadata } from 'next';
@@ -102,8 +103,9 @@ export async function getBlogPostMetadatas(
 
   if (seo === undefined) {
     const alternates = { canonical, languages };
-    if (openGraphImages === undefined) return { metadataBase, description, alternates, title };
-    const openGraph = { images: openGraphImages };
+    const openGraph: OpenGraph = { url: currentPost.url };
+    if (openGraphImages === undefined) return { metadataBase, description, alternates, openGraph, title };
+    openGraph.images = openGraphImages;
     return { metadataBase, description, alternates, openGraph, title };
   }
 
@@ -115,6 +117,8 @@ export async function getBlogPostMetadatas(
     else if (openGraph.images === undefined) openGraph.images = [openGraphImages];
   }
 
+  if (openGraph === undefined) openGraph = {};
+  (openGraph as OpenGraph).url = currentPost.url;
   if (alternates) (alternates as AlternateURLs).languages = languages;
   if (alternates && !alternates.canonical) (alternates as AlternateURLs).canonical = canonical;
 

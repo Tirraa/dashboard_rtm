@@ -3,6 +3,7 @@
 
 import type { AlternateURLs } from 'next/dist/lib/metadata/types/alternative-urls-types';
 import type { MaybeUndefined, MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
 import type { LandingPageProps } from '@/types/LandingPage';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { LandingPage } from 'contentlayer/generated';
@@ -59,10 +60,12 @@ export async function getLandingPageMetadatas(
   // eslint-disable-next-line no-magic-numbers
   const canonical = Object.keys(languages).length === 0 ? currentLp.url : undefined;
 
-  if (seo === undefined) return { alternates: { canonical, languages }, metadataBase, description, title };
+  const defaultOpenGraph: OpenGraph = { url: currentLp.url };
+  if (seo === undefined) return { alternates: { canonical, languages }, openGraph: defaultOpenGraph, metadataBase, description, title };
 
-  const { alternates, openGraph, robots } = seo;
+  const { openGraph = defaultOpenGraph, alternates, robots } = seo;
 
+  if ((openGraph as OpenGraph).url === undefined) (openGraph as OpenGraph).url = currentLp.url;
   if (alternates) (alternates as AlternateURLs).languages = languages;
   if (alternates && !alternates.canonical) (alternates as AlternateURLs).canonical = canonical;
 
