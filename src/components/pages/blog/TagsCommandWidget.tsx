@@ -142,7 +142,7 @@ const TagsCommandWidget: FunctionComponent<TagsCommandWidgetProps> = ({
           {selectedTagsIds.length > 0 && activeFiltersIndicator}
         </button>
       </PopoverTrigger>
-      <PopoverContent className="z-20 w-[200px] p-0" align="start">
+      <PopoverContent className="z-20 w-[200px] p-0" avoidCollisions={false} side={'bottom'} align="start">
         <Command label={title}>
           <CommandInput placeholder={title} />
           <CommandList>
