@@ -1,30 +1,44 @@
-/* v8 ignore start */
-// Stryker disable all
-
 import type { AlternateURLs } from 'next/dist/lib/metadata/types/alternative-urls-types';
+import type { MaybeUndefined, Couple } from '@rtm/shared-types/CustomUtilityTypes';
 import type { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
-import type { MaybeUndefined } from '@rtm/shared-types/CustomUtilityTypes';
+import type { UnknownPagePath, PageProps } from '@/types/Page';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { Href } from '@rtm/shared-types/Next';
-import type { PageProps } from '@/types/Page';
+import type { Page } from 'contentlayer/generated';
 import type { Metadata } from 'next';
 
 import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
+import { DEFAULT_LANGUAGE, LANGUAGES, i18ns } from '##/config/i18n';
 import InvalidArgumentsError from '##/errors/InvalidArguments';
 import PageTaxonomy from '##/config/taxonomies/pages';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSideI18n } from '@/i18n/server';
-import { LANGUAGES, i18ns } from '##/config/i18n';
 import { notFound } from 'next/navigation';
 
 import { invalidMetadataBaseArgumentHint } from '../__internals/vocab';
 import doGetPageStaticParams from './static/getPageStaticParams';
 import isSkippedPath from './static/helpers/isSkippedPath';
 import { getPageByLanguageAndPathUnstrict } from './api';
+import { getPathnameWithoutI18nFlag } from '../i18n';
 
+/* v8 ignore start */
+// Stryker disable all
 export function getPageStaticParams() {
   const pageStaticParams = doGetPageStaticParams();
   return pageStaticParams;
+}
+/* v8 ignore stop */
+// Stryker restore all
+
+// {ToDo} Write tests
+function getXDefaultAndCanonical(currentPage: Page, path: UnknownPagePath, language: LanguageFlag): Couple<MaybeUndefined<Href>, Href> {
+  const maybeDefaultLanguagePage = getPageByLanguageAndPathUnstrict(language, path);
+
+  const urlWithoutI18nFlag = getPathnameWithoutI18nFlag(currentPage.url);
+  const xDefault = language !== DEFAULT_LANGUAGE && maybeDefaultLanguagePage !== null ? urlWithoutI18nFlag : undefined;
+
+  const canonical = language === DEFAULT_LANGUAGE ? urlWithoutI18nFlag : currentPage.url;
+  return [xDefault, canonical];
 }
 
 /**
@@ -51,7 +65,7 @@ export async function getPageMetadatas(
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), pageTitle);
 
   const alternateLanguages = LANGUAGES.filter((lang) => lang !== language);
-  const languages = {} as Record<LanguageFlag, Href>;
+  const languages = {} as Record<LanguageFlag | 'x-default', Href>;
 
   for (const alternateLanguage of alternateLanguages) {
     const maybePage = getPageByLanguageAndPathUnstrict(alternateLanguage, path);
@@ -59,7 +73,11 @@ export async function getPageMetadatas(
     languages[alternateLanguage] = maybePage.url;
   }
 
-  const canonical = currentPage.url;
+  const maybeDefaultLanguagePage = getPageByLanguageAndPathUnstrict(DEFAULT_LANGUAGE, path);
+  if (maybeDefaultLanguagePage !== null) languages['x-default'] = getPathnameWithoutI18nFlag(currentPage.url);
+
+  const [xDefault, canonical] = getXDefaultAndCanonical(currentPage, path, language);
+  if (xDefault !== undefined) languages['x-default'] = xDefault;
 
   const defaultOpenGraph: OpenGraph = { url: currentPage.url };
   if (seo === undefined) return { alternates: { canonical, languages }, openGraph: defaultOpenGraph, metadataBase, description, title };
@@ -72,6 +90,3 @@ export async function getPageMetadatas(
 
   return { metadataBase, description, alternates, openGraph, robots, title };
 }
-
-// Stryker restore all
-/* v8 ignore stop */

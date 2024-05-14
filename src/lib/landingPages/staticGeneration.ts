@@ -1,10 +1,7 @@
-/* v8 ignore start */
-// Stryker disable all
-
+import type { MaybeUndefined, MaybeNull, Couple } from '@rtm/shared-types/CustomUtilityTypes';
 import type { AlternateURLs } from 'next/dist/lib/metadata/types/alternative-urls-types';
-import type { MaybeUndefined, MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { UnknownLandingPageSlug, LandingPageProps } from '@/types/LandingPage';
 import type { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
-import type { LandingPageProps } from '@/types/LandingPage';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { LandingPage } from 'contentlayer/generated';
 import type { Href } from '@rtm/shared-types/Next';
@@ -12,19 +9,35 @@ import type { Metadata } from 'next';
 
 import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
 import LandingPageTaxonomy from '##/config/taxonomies/landingPages';
+import { DEFAULT_LANGUAGE, LANGUAGES, i18ns } from '##/config/i18n';
 import InvalidArgumentsError from '##/errors/InvalidArguments';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSideI18n } from '@/i18n/server';
-import { LANGUAGES, i18ns } from '##/config/i18n';
 import { notFound } from 'next/navigation';
 
 import doGetLandingPagesStaticParams from './static/getLandingPagesStaticParams';
 import { invalidMetadataBaseArgumentHint } from '../__internals/vocab';
 import { getLandingPageByLanguageAndSlugUnstrict } from './api';
+import { getPathnameWithoutI18nFlag } from '../i18n';
 
+/* v8 ignore start */
+// Stryker disable all
 export function getLandingPagesStaticParams() {
   const landingPagesStaticParams = doGetLandingPagesStaticParams();
   return landingPagesStaticParams;
+}
+/* v8 ignore stop */
+// Stryker restore all
+
+// {ToDo} Write tests
+function getXDefaultAndCanonical(currentLp: LandingPage, slug: UnknownLandingPageSlug, language: LanguageFlag): Couple<MaybeUndefined<Href>, Href> {
+  const maybeDefaultLanguageLp = getLandingPageByLanguageAndSlugUnstrict(language, slug);
+
+  const urlWithoutI18nFlag = getPathnameWithoutI18nFlag(currentLp.url);
+  const xDefault = language !== DEFAULT_LANGUAGE && maybeDefaultLanguageLp !== null ? urlWithoutI18nFlag : undefined;
+
+  const canonical = language === DEFAULT_LANGUAGE ? urlWithoutI18nFlag : currentLp.url;
+  return [xDefault, canonical];
 }
 
 /**
@@ -49,7 +62,7 @@ export async function getLandingPageMetadatas(
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), lpTitle);
 
   const maybeAlternateLanguages = LANGUAGES.filter((lang) => lang !== language);
-  const languages = {} as Record<LanguageFlag, Href>;
+  const languages = {} as Record<LanguageFlag | 'x-default', Href>;
 
   for (const maybeAlternateLanguage of maybeAlternateLanguages) {
     const maybeLp = getLandingPageByLanguageAndSlugUnstrict(maybeAlternateLanguage, slug);
@@ -57,7 +70,8 @@ export async function getLandingPageMetadatas(
     languages[maybeAlternateLanguage] = maybeLp.url;
   }
 
-  const canonical = currentLp.url;
+  const [xDefault, canonical] = getXDefaultAndCanonical(currentLp, slug, language);
+  if (xDefault !== undefined) languages['x-default'] = xDefault;
 
   const defaultOpenGraph: OpenGraph = { url: currentLp.url };
   if (seo === undefined) return { alternates: { canonical, languages }, openGraph: defaultOpenGraph, metadataBase, description, title };
@@ -70,6 +84,3 @@ export async function getLandingPageMetadatas(
 
   return { metadataBase, description, alternates, openGraph, robots, title };
 }
-
-// Stryker restore all
-/* v8 ignore stop */

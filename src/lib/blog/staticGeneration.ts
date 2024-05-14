@@ -1,35 +1,38 @@
-/* v8 ignore start */
-// Stryker disable all
-
 import type {
   BlogCategoriesAndSubcategoriesAssoc,
+  BlogSubcategoryFromUnknownCategory,
   BlogSubcategoryPageProps,
   BlogCategoryPageProps,
   BlogPostPageProps,
   BlogStaticParams,
-  BlogPostType
+  UnknownBlogSlug,
+  BlogPostType,
+  BlogCategory
 } from '@/types/Blog';
+import type { MaybeUndefined, MaybeNull, Couple } from '@rtm/shared-types/CustomUtilityTypes';
 import type { AlternateURLs } from 'next/dist/lib/metadata/types/alternative-urls-types';
-import type { MaybeUndefined, MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { Href } from '@rtm/shared-types/Next';
 import type { Metadata } from 'next';
 
 import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
+import { DEFAULT_LANGUAGE, LANGUAGES, i18ns } from '##/config/i18n';
 import InvalidArgumentsError from '##/errors/InvalidArguments';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSideI18n } from '@/i18n/server';
-import { LANGUAGES, i18ns } from '##/config/i18n';
 
 import { isValidBlogCategoryAndSubcategoryPair, getBlogPostUnstrict } from './api';
 import { invalidMetadataBaseArgumentHint } from '../__internals/vocab';
 import blogSubcategoryGuard from './guards/blogSubcategoryGuard';
 import doGetBlogStaticParams from './static/getBlogStaticParams';
 import blogCategoryGuard from './guards/blogCategoryGuard';
+import { getPathnameWithoutI18nFlag } from '../i18n';
 import blogPostGuard from './guards/blogPostGuard';
 
+/* v8 ignore start */
+// Stryker disable all
 export async function getBlogStaticParams(): Promise<BlogStaticParams[]> {
   const blogStaticParams = await doGetBlogStaticParams();
   return blogStaticParams;
@@ -44,7 +47,10 @@ export async function getBlogCategoryMetadatas({ params }: BlogCategoryPageProps
 
   return { description, title };
 }
+// Stryker restore all
+/* v8 ignore stop */
 
+// {ToDo} Write tests
 export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPageProps) {
   const [category, subcategory, language] = [params[BlogTaxonomy.CATEGORY], params[BlogTaxonomy.SUBCATEGORY], params[I18nTaxonomy.LANGUAGE]];
 
@@ -56,6 +62,22 @@ export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPag
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), globalT(`${blogCategories}.${narrowedCategoryAndSubcategoryAssoc}.title`));
   const description = globalT(`${blogCategories}.${narrowedCategoryAndSubcategoryAssoc}.meta-description`);
   return { description, title };
+}
+
+async function getXDefaultAndCanonical(
+  currentPost: BlogPostType,
+  category: BlogCategory,
+  subcategory: BlogSubcategoryFromUnknownCategory,
+  slug: UnknownBlogSlug,
+  language: LanguageFlag
+): Promise<Couple<MaybeUndefined<Href>, Href>> {
+  const maybeDefaultLanguageBlogPost = await getBlogPostUnstrict(category, subcategory, slug, DEFAULT_LANGUAGE);
+
+  const urlWithoutI18nFlag = getPathnameWithoutI18nFlag(currentPost.url);
+  const xDefault = language !== DEFAULT_LANGUAGE && maybeDefaultLanguageBlogPost !== null ? urlWithoutI18nFlag : undefined;
+
+  const canonical = language === DEFAULT_LANGUAGE ? urlWithoutI18nFlag : currentPost.url;
+  return [xDefault, canonical];
 }
 
 /**
@@ -87,7 +109,7 @@ export async function getBlogPostMetadatas(
   const { metadescription: description, seo } = currentPost;
 
   const maybeAlternateLanguages = LANGUAGES.filter((lang) => lang !== language);
-  const languages = {} as Record<LanguageFlag, Href>;
+  const languages = {} as Record<LanguageFlag | 'x-default', Href>;
   const featuredPictureUrl = currentPost.featuredPictureUrl;
 
   for (const maybeAlternateLanguage of maybeAlternateLanguages) {
@@ -96,7 +118,8 @@ export async function getBlogPostMetadatas(
     languages[maybeAlternateLanguage] = maybePost.url;
   }
 
-  const canonical = currentPost.url;
+  const [xDefault, canonical] = await getXDefaultAndCanonical(currentPost, category, subcategory, slug, language);
+  if (xDefault !== undefined) languages['x-default'] = xDefault;
 
   const openGraphImages = featuredPictureUrl ? { url: featuredPictureUrl } : undefined;
 
@@ -132,6 +155,3 @@ export async function getBlogPostMetadatas(
 }
 
 export { blogSubcategoryGuard, blogCategoryGuard, blogPostGuard };
-
-// Stryker restore all
-/* v8 ignore stop */
