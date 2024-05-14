@@ -3,6 +3,7 @@
 exports[`buildBottomRightWidgets > should match snapshot 1`] = `
 [
   <PaginationEllipsis
+    dropdownContentClassName="z-20"
     dropdownItems={
       [
         <DropdownMenuItem

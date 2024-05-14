@@ -28,7 +28,9 @@ const getMaybeDropdown = (
   searchParams: URLSearchParams,
   isBottomWidget?: boolean
 ): MaybeNull<ReactElement> =>
-  !showPaginationWidget ? null : buildDropdown(pagesAmount, currentPage, pathname, searchParams, PAGE_KEY, isBottomWidget);
+  !showPaginationWidget
+    ? null
+    : buildDropdown(pagesAmount, currentPage, pathname, searchParams, PAGE_KEY, { dropdownContentClassName: 'z-20', isBottomWidget });
 
 function buildWidgetsForTopRight(
   paginationWidgetProps: {
@@ -54,6 +56,7 @@ function buildWidgetsForTopRight(
         selectedFilter={filtersWidgetProps.selectedFilter}
         filtersAssoc={filtersWidgetProps.filtersAssoc}
         triggerClassName="z-20 mb-1 self-end"
+        selectContentClassName="z-20"
         key="filters-widget"
       />
     );

@@ -16,8 +16,18 @@ const MAX_USER_INTERFACE_ITEMS_AMOUNT: Quantity = 3;
 const getItemHref = (i: Count, pathname: AppPath, searchParams: URLSearchParams, pageKey: string) =>
   pathname + createURLSearchParams({ [pageKey]: i === FIRST_PAGE_PARAM ? null : i }, searchParams);
 
-const buildDropdownMenu = (dropdownItems: ReactElement[], pageNumberIndicator?: Count, isBottomWidget?: boolean): ReactElement => (
-  <PaginationEllipsis pageNumberIndicator={pageNumberIndicator} isBottomWidget={isBottomWidget} dropdownItems={dropdownItems} key={'ellipsis'} />
+const buildDropdownMenu = (
+  dropdownItems: ReactElement[],
+  pageNumberIndicator?: Count,
+  options?: { dropdownContentClassName?: string; isBottomWidget?: boolean }
+): ReactElement => (
+  <PaginationEllipsis
+    dropdownContentClassName={options?.dropdownContentClassName}
+    pageNumberIndicator={pageNumberIndicator}
+    isBottomWidget={options?.isBottomWidget}
+    dropdownItems={dropdownItems}
+    key={'ellipsis'}
+  />
 );
 
 const buildPaginationItem = (i: Count, isActive: boolean, pathname: AppPath, searchParams: URLSearchParams, pageKey: string) => (
@@ -42,7 +52,9 @@ function buildPaginationItemsForMobile(
   searchParams: URLSearchParams,
   pageKey: string
 ): MaybeNull<ReactElement> {
-  const maybeDropdown: MaybeNull<ReactElement> = buildDropdown(pagesAmount, currentPage, pathname, searchParams, pageKey);
+  const maybeDropdown: MaybeNull<ReactElement> = buildDropdown(pagesAmount, currentPage, pathname, searchParams, pageKey, {
+    dropdownContentClassName: 'z-20'
+  });
   if (maybeDropdown === null) return null;
   return <li key="pagination-dropdown-mobile">{maybeDropdown}</li>;
 }
@@ -149,7 +161,7 @@ export function buildDropdown(
   pathname: AppPath,
   searchParams: URLSearchParams,
   pageKey: string,
-  isBottomWidget?: boolean
+  options?: { dropdownContentClassName?: string; isBottomWidget?: boolean }
 ) {
   const dropdownItems: ReactElement[] = [];
   // eslint-disable-next-line no-magic-numbers
@@ -177,7 +189,7 @@ export function buildDropdown(
     dropdownItems.push(dropdownItem);
   }
 
-  return buildDropdownMenu(dropdownItems, pageFromUrl, isBottomWidget);
+  return buildDropdownMenu(dropdownItems, pageFromUrl, options);
 }
 
 export const doBuildPaginationItems = (

@@ -78,12 +78,18 @@ const PaginationNext = ({ className, ...props }: ComponentProps<typeof Paginatio
 PaginationNext.displayName = 'PaginationNext';
 
 const PaginationEllipsis = ({
+  dropdownContentClassName,
   pageNumberIndicator,
   isBottomWidget,
   dropdownItems,
   className,
   ...props
-}: { dropdownItems: ReactElement[]; pageNumberIndicator?: Count; isBottomWidget?: boolean } & ComponentProps<'button'>) => {
+}: {
+  dropdownContentClassName?: string;
+  dropdownItems: ReactElement[];
+  pageNumberIndicator?: Count;
+  isBottomWidget?: boolean;
+} & ComponentProps<'button'>) => {
   const scopedT = useScopedI18n(i18ns.vocab);
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const dropdownContentRef = useRef<HTMLDivElement>(null);
@@ -151,7 +157,7 @@ const PaginationEllipsis = ({
           if (activePageNodeIndex !== 0) scrollDist += SCROLL_OFFSET_Y;
           dropdownContentInstance.scrollTo({ behavior: 'smooth', top: scrollDist });
         }}
-        className={cn('max-h-[228px] w-fit overflow-y-auto', {
+        className={cn('max-h-[228px] w-fit overflow-y-auto', dropdownContentClassName, {
           'max-h-[210px] overflow-y-auto': pageNumberIndicator
         })}
         onCloseAutoFocus={(event) => {

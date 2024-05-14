@@ -14,6 +14,7 @@ import { cn } from '@/lib/tailwind';
 export interface FiltersSelectWidgetProps {
   newSelectedFilter: MutableRefObject<MaybeNull<Id>>;
   setSelectedFilterSwitch: (s: boolean) => unknown;
+  selectContentClassName?: string;
   filtersAssoc: FiltersAssoc;
   triggerClassName?: string;
   selectedFilter: Id;
@@ -21,6 +22,7 @@ export interface FiltersSelectWidgetProps {
 
 const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({
   setSelectedFilterSwitch,
+  selectContentClassName,
   newSelectedFilter,
   triggerClassName,
   selectedFilter,
@@ -72,7 +74,7 @@ const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({
       >
         <SelectValue />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className={selectContentClassName}>
         <SelectGroup aria-label={globalT(`${i18ns.srOnly}.sort-by`)}>{selectItems}</SelectGroup>
       </SelectContent>
     </Select>

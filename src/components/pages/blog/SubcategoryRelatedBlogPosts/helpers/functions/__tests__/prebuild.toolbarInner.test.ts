@@ -124,6 +124,7 @@ describe('buildTopRightWidgets', () => {
       selectedFilter: filtersWidgetProps.selectedFilter,
       filtersAssoc: filtersWidgetProps.filtersAssoc,
       triggerClassName: 'z-20 mb-1 self-end',
+      selectContentClassName: 'z-20',
       key: 'filters-widget'
     });
 
@@ -153,6 +154,7 @@ describe('buildTopRightWidgets', () => {
       selectedFilter: filtersWidgetProps.selectedFilter,
       filtersAssoc: filtersWidgetProps.filtersAssoc,
       triggerClassName: 'z-20 mb-1 self-end',
+      selectContentClassName: 'z-20',
       key: 'filters-widget'
     });
 

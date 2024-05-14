@@ -181,7 +181,7 @@ describe('buildDropdown', () => {
     const pagesAmount = 4;
     const isBottomWidget = true;
 
-    const dropdown = buildDropdown(pagesAmount, currentPage, pathname, searchParams, pageKey, isBottomWidget);
+    const dropdown = buildDropdown(pagesAmount, currentPage, pathname, searchParams, pageKey, { isBottomWidget });
 
     expect(dropdown).toMatchSnapshot();
   });
@@ -191,7 +191,7 @@ describe('buildDropdown', () => {
     const pagesAmount = 4;
     const isBottomWidget = false;
 
-    const dropdown = buildDropdown(pagesAmount, currentPage, pathname, searchParams, pageKey, isBottomWidget);
+    const dropdown = buildDropdown(pagesAmount, currentPage, pathname, searchParams, pageKey, { isBottomWidget });
 
     expect(dropdown).toMatchSnapshot();
   });
@@ -201,7 +201,7 @@ describe('buildDropdown', () => {
     const pagesAmount = 1;
     const isBottomWidget = false;
 
-    const dropdown = buildDropdown(pagesAmount, currentPage, pathname, searchParams, pageKey, isBottomWidget);
+    const dropdown = buildDropdown(pagesAmount, currentPage, pathname, searchParams, pageKey, { isBottomWidget });
 
     expect(dropdown).toBe(null);
   });
