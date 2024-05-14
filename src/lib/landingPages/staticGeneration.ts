@@ -1,8 +1,8 @@
 import type { MaybeUndefined, MaybeNull, Couple } from '@rtm/shared-types/CustomUtilityTypes';
 import type { AlternateURLs } from 'next/dist/lib/metadata/types/alternative-urls-types';
 import type { UnknownLandingPageSlug, LandingPageProps } from '@/types/LandingPage';
+import type { I18nMiddlewareConfig, LanguageFlag } from '@rtm/shared-types/I18n';
 import type { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { LandingPage } from 'contentlayer/generated';
 import type { Href } from '@rtm/shared-types/Next';
 import type { Metadata } from 'next';
@@ -30,13 +30,19 @@ export function getLandingPagesStaticParams() {
 // Stryker restore all
 
 // {ToDo} Write tests
-function getXDefaultAndCanonical(currentLp: LandingPage, slug: UnknownLandingPageSlug, language: LanguageFlag): Couple<MaybeUndefined<Href>, Href> {
+function getXDefaultAndCanonical(
+  currentLp: LandingPage,
+  slug: UnknownLandingPageSlug,
+  language: LanguageFlag,
+  middlewareStrategy: I18nMiddlewareConfig['urlMappingStrategy']
+): Couple<MaybeUndefined<Href>, Href> {
   const maybeDefaultLanguageLp = getLandingPageByLanguageAndSlugUnstrict(language, slug);
 
-  const urlWithoutI18nFlag = getPathnameWithoutI18nFlag(currentLp.url);
-  const xDefault = language !== DEFAULT_LANGUAGE && maybeDefaultLanguageLp !== null ? urlWithoutI18nFlag : undefined;
+  const defaultUrl = middlewareStrategy !== 'redirect' ? getPathnameWithoutI18nFlag(currentLp.url) : currentLp.url;
 
-  const canonical = language === DEFAULT_LANGUAGE ? urlWithoutI18nFlag : currentLp.url;
+  const xDefault = language !== DEFAULT_LANGUAGE && maybeDefaultLanguageLp !== null ? defaultUrl : undefined;
+
+  const canonical = language === DEFAULT_LANGUAGE ? defaultUrl : currentLp.url;
   return [xDefault, canonical];
 }
 
@@ -45,6 +51,7 @@ function getXDefaultAndCanonical(currentLp: LandingPage, slug: UnknownLandingPag
  */
 export async function getLandingPageMetadatas(
   { params }: LandingPageProps,
+  middlewareStrategy: I18nMiddlewareConfig['urlMappingStrategy'],
   metadataBase: MaybeUndefined<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined
 ): Promise<Metadata> {
   if (metadataBase === undefined) {
@@ -70,7 +77,7 @@ export async function getLandingPageMetadatas(
     languages[maybeAlternateLanguage] = maybeLp.url;
   }
 
-  const [xDefault, canonical] = getXDefaultAndCanonical(currentLp, slug, language);
+  const [xDefault, canonical] = getXDefaultAndCanonical(currentLp, slug, language, middlewareStrategy);
   if (xDefault !== undefined) languages['x-default'] = xDefault;
 
   const defaultOpenGraph: OpenGraph = { url: currentLp.url };

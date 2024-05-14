@@ -11,8 +11,8 @@ import type {
 } from '@/types/Blog';
 import type { MaybeUndefined, MaybeNull, Couple } from '@rtm/shared-types/CustomUtilityTypes';
 import type { AlternateURLs } from 'next/dist/lib/metadata/types/alternative-urls-types';
+import type { I18nMiddlewareConfig, LanguageFlag } from '@rtm/shared-types/I18n';
 import type { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { Href } from '@rtm/shared-types/Next';
 import type { Metadata } from 'next';
 
@@ -69,14 +69,16 @@ async function getXDefaultAndCanonical(
   category: BlogCategory,
   subcategory: BlogSubcategoryFromUnknownCategory,
   slug: UnknownBlogSlug,
-  language: LanguageFlag
+  language: LanguageFlag,
+  middlewareStrategy: I18nMiddlewareConfig['urlMappingStrategy']
 ): Promise<Couple<MaybeUndefined<Href>, Href>> {
   const maybeDefaultLanguageBlogPost = await getBlogPostUnstrict(category, subcategory, slug, DEFAULT_LANGUAGE);
 
-  const urlWithoutI18nFlag = getPathnameWithoutI18nFlag(currentPost.url);
-  const xDefault = language !== DEFAULT_LANGUAGE && maybeDefaultLanguageBlogPost !== null ? urlWithoutI18nFlag : undefined;
+  const defaultUrl = middlewareStrategy !== 'redirect' ? getPathnameWithoutI18nFlag(currentPost.url) : currentPost.url;
 
-  const canonical = language === DEFAULT_LANGUAGE ? urlWithoutI18nFlag : currentPost.url;
+  const xDefault = language !== DEFAULT_LANGUAGE && maybeDefaultLanguageBlogPost !== null ? defaultUrl : undefined;
+
+  const canonical = language === DEFAULT_LANGUAGE ? defaultUrl : currentPost.url;
   return [xDefault, canonical];
 }
 
@@ -85,6 +87,7 @@ async function getXDefaultAndCanonical(
  */
 export async function getBlogPostMetadatas(
   { params }: BlogPostPageProps,
+  middlewareStrategy: I18nMiddlewareConfig['urlMappingStrategy'],
   metadataBase: MaybeUndefined<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined
 ): Promise<Metadata> {
   if (metadataBase === undefined) {
@@ -118,7 +121,7 @@ export async function getBlogPostMetadatas(
     languages[maybeAlternateLanguage] = maybePost.url;
   }
 
-  const [xDefault, canonical] = await getXDefaultAndCanonical(currentPost, category, subcategory, slug, language);
+  const [xDefault, canonical] = await getXDefaultAndCanonical(currentPost, category, subcategory, slug, language, middlewareStrategy);
   if (xDefault !== undefined) languages['x-default'] = xDefault;
 
   const openGraphImages = featuredPictureUrl ? { url: featuredPictureUrl } : undefined;

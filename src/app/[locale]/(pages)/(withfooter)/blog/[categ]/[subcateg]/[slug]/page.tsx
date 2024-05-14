@@ -9,6 +9,7 @@ import documentTypeInlineFilter from '@/lib/pagefind/builders/documentTypeInline
 import BlogPostCrumb from '@/components/ui/breadcrumbs/custom/BlogPostCrumb';
 import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
 import { setStaticParamsLocale } from 'next-international/server';
+import { I18N_MIDDLEWARE_CONFIG } from '@/middlewares/withI18n';
 import BlogPost from '@/components/pages/blog/BlogPost';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
@@ -19,7 +20,7 @@ import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }: BlogPostPageProps) {
   await blogPostGuard({ params });
-  const blogPostMetadatas = await getBlogPostMetadatas({ params });
+  const blogPostMetadatas = await getBlogPostMetadatas({ params }, I18N_MIDDLEWARE_CONFIG.urlMappingStrategy);
 
   return blogPostMetadatas;
 }

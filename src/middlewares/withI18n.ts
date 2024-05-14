@@ -8,7 +8,7 @@ import type { NextResponse, NextRequest } from 'next/server';
 import { createI18nMiddleware } from 'next-international/middleware';
 import { DEFAULT_LANGUAGE, LANGUAGES } from '##/config/i18n';
 
-const I18N_MIDDLEWARE_CONFIG: I18nMiddlewareConfig = {
+export const I18N_MIDDLEWARE_CONFIG: I18nMiddlewareConfig = {
   urlMappingStrategy: 'rewriteDefault',
   defaultLocale: DEFAULT_LANGUAGE,
   locales: LANGUAGES

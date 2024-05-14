@@ -11,11 +11,12 @@ import { getLandingPageByLanguageAndSlugUnstrict } from '@/lib/landingPages/api'
 import LandingPageTaxonomy from '##/config/taxonomies/landingPages';
 import { setStaticParamsLocale } from 'next-international/server';
 import LandingPageMDX from '@/components/layouts/lp/MdxComponent';
+import { I18N_MIDDLEWARE_CONFIG } from '@/middlewares/withI18n';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }: LandingPageProps) {
-  const metadatas = await getLandingPageMetadatas({ params });
+  const metadatas = await getLandingPageMetadatas({ params }, I18N_MIDDLEWARE_CONFIG.urlMappingStrategy);
   return metadatas;
 }
 

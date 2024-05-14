@@ -1,8 +1,8 @@
 import type { AlternateURLs } from 'next/dist/lib/metadata/types/alternative-urls-types';
 import type { MaybeUndefined, Couple } from '@rtm/shared-types/CustomUtilityTypes';
+import type { I18nMiddlewareConfig, LanguageFlag } from '@rtm/shared-types/I18n';
 import type { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
 import type { UnknownPagePath, PageProps } from '@/types/Page';
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { Href } from '@rtm/shared-types/Next';
 import type { Page } from 'contentlayer/generated';
 import type { Metadata } from 'next';
@@ -31,13 +31,19 @@ export function getPageStaticParams() {
 // Stryker restore all
 
 // {ToDo} Write tests
-function getXDefaultAndCanonical(currentPage: Page, path: UnknownPagePath, language: LanguageFlag): Couple<MaybeUndefined<Href>, Href> {
+function getXDefaultAndCanonical(
+  currentPage: Page,
+  path: UnknownPagePath,
+  language: LanguageFlag,
+  middlewareStrategy: I18nMiddlewareConfig['urlMappingStrategy']
+): Couple<MaybeUndefined<Href>, Href> {
   const maybeDefaultLanguagePage = getPageByLanguageAndPathUnstrict(language, path);
 
-  const urlWithoutI18nFlag = getPathnameWithoutI18nFlag(currentPage.url);
-  const xDefault = language !== DEFAULT_LANGUAGE && maybeDefaultLanguagePage !== null ? urlWithoutI18nFlag : undefined;
+  const defaultUrl = middlewareStrategy !== 'redirect' ? getPathnameWithoutI18nFlag(currentPage.url) : currentPage.url;
 
-  const canonical = language === DEFAULT_LANGUAGE ? urlWithoutI18nFlag : currentPage.url;
+  const xDefault = language !== DEFAULT_LANGUAGE && maybeDefaultLanguagePage !== null ? defaultUrl : undefined;
+
+  const canonical = language === DEFAULT_LANGUAGE ? defaultUrl : currentPage.url;
   return [xDefault, canonical];
 }
 
@@ -46,6 +52,7 @@ function getXDefaultAndCanonical(currentPage: Page, path: UnknownPagePath, langu
  */
 export async function getPageMetadatas(
   { params }: PageProps,
+  middlewareStrategy: I18nMiddlewareConfig['urlMappingStrategy'],
   metadataBase: MaybeUndefined<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined
 ): Promise<Metadata> {
   if (metadataBase === undefined) {
@@ -76,7 +83,7 @@ export async function getPageMetadatas(
   const maybeDefaultLanguagePage = getPageByLanguageAndPathUnstrict(DEFAULT_LANGUAGE, path);
   if (maybeDefaultLanguagePage !== null) languages['x-default'] = getPathnameWithoutI18nFlag(currentPage.url);
 
-  const [xDefault, canonical] = getXDefaultAndCanonical(currentPage, path, language);
+  const [xDefault, canonical] = getXDefaultAndCanonical(currentPage, path, language, middlewareStrategy);
   if (xDefault !== undefined) languages['x-default'] = xDefault;
 
   const defaultOpenGraph: OpenGraph = { url: currentPage.url };

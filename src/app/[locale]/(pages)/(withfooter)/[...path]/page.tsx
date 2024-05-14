@@ -4,6 +4,7 @@ import { getPageStaticParams, getPageMetadatas } from '@/lib/pages/staticGenerat
 import isSkippedPath from '@/lib/pages/static/helpers/isSkippedPath';
 import { getPageByLanguageAndPathUnstrict } from '@/lib/pages/api';
 import { setStaticParamsLocale } from 'next-international/server';
+import { I18N_MIDDLEWARE_CONFIG } from '@/middlewares/withI18n';
 import PageMDX from '@/components/layouts/pages/MdxComponent';
 import MAIN_CLS from '@/components/config/styles/main';
 import PageTaxonomy from '##/config/taxonomies/pages';
@@ -12,7 +13,7 @@ import { notFound } from 'next/navigation';
 import { cn } from '@/lib/tailwind';
 
 export async function generateMetadata({ params }: PageProps) {
-  const metadatas = await getPageMetadatas({ params });
+  const metadatas = await getPageMetadatas({ params }, I18N_MIDDLEWARE_CONFIG.urlMappingStrategy);
   return metadatas;
 }
 
