@@ -18,13 +18,11 @@ import type { Metadata } from 'next';
 
 import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
 import { DEFAULT_LANGUAGE, LANGUAGES, i18ns } from '##/config/i18n';
-import InvalidArgumentsError from '##/errors/InvalidArguments';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSideI18n } from '@/i18n/server';
 
 import { isValidBlogCategoryAndSubcategoryPair, getBlogPostUnstrict } from './api';
-import { invalidMetadataBaseArgumentHint } from '../__internals/vocab';
 import blogSubcategoryGuard from './guards/blogSubcategoryGuard';
 import doGetBlogStaticParams from './static/getBlogStaticParams';
 import blogCategoryGuard from './guards/blogCategoryGuard';
@@ -82,18 +80,11 @@ async function getXDefaultAndCanonical(
   return [xDefault, canonical];
 }
 
-/**
- * @throws {InvalidArgumentsError}
- */
 export async function getBlogPostMetadatas(
   { params }: BlogPostPageProps,
   middlewareStrategy: I18nMiddlewareConfig['urlMappingStrategy'],
   metadataBase: MaybeUndefined<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined
 ): Promise<Metadata> {
-  if (metadataBase === undefined) {
-    throw new InvalidArgumentsError(getBlogPostMetadatas.name, { metadataBase }, invalidMetadataBaseArgumentHint);
-  }
-
   const [category, subcategory, slug, language] = [
     params[BlogTaxonomy.CATEGORY],
     params[BlogTaxonomy.SUBCATEGORY],

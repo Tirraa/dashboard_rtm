@@ -9,13 +9,11 @@ import type { Metadata } from 'next';
 
 import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
 import { DEFAULT_LANGUAGE, LANGUAGES, i18ns } from '##/config/i18n';
-import InvalidArgumentsError from '##/errors/InvalidArguments';
 import PageTaxonomy from '##/config/taxonomies/pages';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSideI18n } from '@/i18n/server';
 import { notFound } from 'next/navigation';
 
-import { invalidMetadataBaseArgumentHint } from '../__internals/vocab';
 import doGetPageStaticParams from './static/getPageStaticParams';
 import isSkippedPath from './static/helpers/isSkippedPath';
 import { getPageByLanguageAndPathUnstrict } from './api';
@@ -47,18 +45,11 @@ function getXDefaultAndCanonical(
   return [xDefault, canonical];
 }
 
-/**
- * @throws {InvalidArgumentsError}
- */
 export async function getPageMetadatas(
   { params }: PageProps,
   middlewareStrategy: I18nMiddlewareConfig['urlMappingStrategy'],
   metadataBase: MaybeUndefined<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined
 ): Promise<Metadata> {
-  if (metadataBase === undefined) {
-    throw new InvalidArgumentsError(getPageMetadatas.name, { metadataBase }, invalidMetadataBaseArgumentHint);
-  }
-
   const [path, language] = [params[PageTaxonomy.PATH].join('/'), params[I18nTaxonomy.LANGUAGE]];
   if (isSkippedPath(path)) notFound();
 

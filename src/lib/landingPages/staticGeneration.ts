@@ -10,13 +10,11 @@ import type { Metadata } from 'next';
 import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
 import LandingPageTaxonomy from '##/config/taxonomies/landingPages';
 import { DEFAULT_LANGUAGE, LANGUAGES, i18ns } from '##/config/i18n';
-import InvalidArgumentsError from '##/errors/InvalidArguments';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSideI18n } from '@/i18n/server';
 import { notFound } from 'next/navigation';
 
 import doGetLandingPagesStaticParams from './static/getLandingPagesStaticParams';
-import { invalidMetadataBaseArgumentHint } from '../__internals/vocab';
 import { getLandingPageByLanguageAndSlugUnstrict } from './api';
 import { getPathnameWithoutI18nFlag } from '../i18n';
 
@@ -46,18 +44,11 @@ function getXDefaultAndCanonical(
   return [xDefault, canonical];
 }
 
-/**
- * @throws {InvalidArgumentsError}
- */
 export async function getLandingPageMetadatas(
   { params }: LandingPageProps,
   middlewareStrategy: I18nMiddlewareConfig['urlMappingStrategy'],
   metadataBase: MaybeUndefined<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined
 ): Promise<Metadata> {
-  if (metadataBase === undefined) {
-    throw new InvalidArgumentsError(getLandingPageMetadatas.name, { metadataBase }, invalidMetadataBaseArgumentHint);
-  }
-
   const [language, slug] = [params[I18nTaxonomy.LANGUAGE], params[LandingPageTaxonomy.SLUG]];
   const currentLp: MaybeNull<LandingPage> = getLandingPageByLanguageAndSlugUnstrict(language, slug);
   if (!currentLp) notFound();
