@@ -29,17 +29,15 @@ const CommandDialog = ({
   closeButtonClassName,
   children,
   ...props
-}: { closeButtonI18nTitle: I18nVocabTarget; closeButtonClassName?: string } & CommandDialogProps) => {
-  return (
-    <Dialog {...props}>
-      <DialogContent closeButtonClassName={closeButtonClassName} closeButtonI18nTitle={closeButtonI18nTitle} className="overflow-hidden p-0">
-        <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
-          {children}
-        </Command>
-      </DialogContent>
-    </Dialog>
-  );
-};
+}: { closeButtonI18nTitle: I18nVocabTarget; closeButtonClassName?: string } & CommandDialogProps) => (
+  <Dialog {...props}>
+    <DialogContent closeButtonClassName={closeButtonClassName} closeButtonI18nTitle={closeButtonI18nTitle} className="overflow-hidden p-0">
+      <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
+        {children}
+      </Command>
+    </DialogContent>
+  </Dialog>
+);
 
 const CommandInput = forwardRef<ElementRef<typeof CommandPrimitive.Input>, ComponentPropsWithoutRef<typeof CommandPrimitive.Input>>(
   ({ className, ...props }, ref) => (
