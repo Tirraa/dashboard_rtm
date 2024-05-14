@@ -126,7 +126,7 @@ const TagsCommandWidget: FunctionComponent<TagsCommandWidgetProps> = ({
   );
 
   return (
-    <Popover onOpenChange={(_isOpened: boolean) => setIsOpened(_isOpened)} open={isOpened}>
+    <Popover onOpenChange={(_isOpened: boolean) => setIsOpened(_isOpened)} open={isOpened} modal={true}>
       <PopoverTrigger asChild>
         <button
           className={cn(classNameBase, BUTTON_CONFIG.CLASSNAME, {
