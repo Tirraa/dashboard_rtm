@@ -16,12 +16,14 @@ import type { Href } from '@rtm/shared-types/Next';
 import type { Metadata } from 'next';
 
 import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';
+import InvalidArgumentsError from '##/errors/InvalidArguments';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSideI18n } from '@/i18n/server';
 import { LANGUAGES, i18ns } from '##/config/i18n';
 
 import { isValidBlogCategoryAndSubcategoryPair, getBlogPostUnstrict } from './api';
+import { invalidMetadataBaseArgumentHint } from '../__internals/vocab';
 import blogSubcategoryGuard from './guards/blogSubcategoryGuard';
 import doGetBlogStaticParams from './static/getBlogStaticParams';
 import blogCategoryGuard from './guards/blogCategoryGuard';
@@ -55,10 +57,17 @@ export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPag
   return { description, title };
 }
 
+/**
+ * @throws {InvalidArgumentsError}
+ */
 export async function getBlogPostMetadatas(
   { params }: BlogPostPageProps,
   metadataBase: MaybeUndefined<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined
 ): Promise<Metadata> {
+  if (metadataBase === undefined) {
+    throw new InvalidArgumentsError(getBlogPostMetadatas.name, { metadataBase }, invalidMetadataBaseArgumentHint);
+  }
+
   const [category, subcategory, slug, language] = [
     params[BlogTaxonomy.CATEGORY],
     params[BlogTaxonomy.SUBCATEGORY],
@@ -76,21 +85,26 @@ export async function getBlogPostMetadatas(
   const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), currentPost.title);
   const { metadescription: description, seo } = currentPost;
 
-  const alternateLanguages = LANGUAGES.filter((lang) => lang !== language);
+  const maybeAlternateLanguages = LANGUAGES.filter((lang) => lang !== language);
   const languages = {} as Record<LanguageFlag, Href>;
   const featuredPictureUrl = currentPost.featuredPictureUrl;
 
-  for (const alternateLanguage of alternateLanguages) {
-    const post = await getBlogPostUnstrict(category, subcategory, slug, alternateLanguage);
-    if (!post) continue;
-    languages[alternateLanguage] = post.url;
+  for (const maybeAlternateLanguage of maybeAlternateLanguages) {
+    const maybePost = await getBlogPostUnstrict(category, subcategory, slug, maybeAlternateLanguage);
+    if (maybePost === null) continue;
+    languages[maybeAlternateLanguage] = maybePost.url;
   }
+
+  // eslint-disable-next-line no-magic-numbers
+  const canonical = Object.keys(languages).length === 0 ? currentPost.url : undefined;
 
   const openGraphImages = featuredPictureUrl ? { url: featuredPictureUrl } : undefined;
 
   if (seo === undefined) {
-    if (openGraphImages === undefined) return { alternates: { languages }, metadataBase, description, title };
-    return { openGraph: { images: openGraphImages }, alternates: { languages }, metadataBase, description, title };
+    const alternates = { canonical, languages };
+    if (openGraphImages === undefined) return { metadataBase, description, alternates, title };
+    const openGraph = { images: openGraphImages };
+    return { metadataBase, description, alternates, openGraph, title };
   }
 
   const { alternates, robots } = seo;
@@ -102,6 +116,7 @@ export async function getBlogPostMetadatas(
   }
 
   if (alternates) (alternates as AlternateURLs).languages = languages;
+  if (alternates && !alternates.canonical) (alternates as AlternateURLs).canonical = canonical;
 
   return {
     metadataBase,
