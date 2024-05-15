@@ -11,9 +11,9 @@ import getPathParts from '@/lib/misc/getPathParts';
 import { getClientSideI18n } from '@/i18n/client';
 import { usePathname } from 'next/navigation';
 import ROUTES_ROOTS from '##/config/routes';
+import { Fragment, useMemo } from 'react';
 import { i18ns } from '##/config/i18n';
 import { capitalize } from '@/lib/str';
-import { useMemo } from 'react';
 
 import HomepageCrumb from './custom/HomepageCrumb';
 import CrumbSeparator from './CrumbSeparator';
@@ -41,10 +41,10 @@ function crumbsGenerator(
 
   const crumbs: ReactElement[] = withHomepageElement
     ? [
-        <>
+        <Fragment key="breadcrumbs-homepage-part">
           <HomepageCrumb />
           <CrumbSeparator />
-        </>
+        </Fragment>
       ]
     : [];
 
@@ -66,6 +66,7 @@ function crumbsGenerator(
     const crumb = crumbGenerator(depth, isLeaf, href);
     crumbs.push(<li key={`breadcrumbs-part-${depth}`}>{crumb}</li>);
   }
+
   return crumbs;
 }
 
