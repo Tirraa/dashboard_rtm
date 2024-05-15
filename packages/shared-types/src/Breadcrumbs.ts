@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 
 import type { Index } from './Numbers';
 
-type CustomCrumb = {
+export type CustomCrumb = {
   jsx: ReactNode;
   depth: Index;
 };

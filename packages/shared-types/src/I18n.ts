@@ -56,8 +56,6 @@ export type LocalesGetterConfigObjTypeConstraint = Record<LanguageFlag, () => Pr
 
 export type ChangeLocaleFun = (language: LanguageFlag) => void;
 
-export type PagesTitlesKey = keyof VocabType['pages-titles'];
-
 type NamespacesKeys<__VocabType extends UnknownVocabObj = VocabType> = {
   [K in keyof __VocabType]-?: __VocabType[K] extends UnknownVocabObj
     ? K
