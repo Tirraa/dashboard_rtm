@@ -35,7 +35,7 @@
     "mutations-tests": "make mutations-tests",
     "mutations-tests:run": "stryker run",
     "coverage": "vitest --run --coverage.enabled --coverage.all=false",
-    "coverage-all": "vitest --run --coverage",
+    "coverage-all": "vitest --run --coverage.enabled --coverage.all",
     "before-build:test": "vitest --run prebuild",
     "after-build:test": "vitest --run postbuild",
     "vitest:ui": "vitest --ui",
