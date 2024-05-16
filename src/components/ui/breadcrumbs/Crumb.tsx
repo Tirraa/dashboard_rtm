@@ -18,8 +18,8 @@ const Crumb: FunctionComponent<CrumbProps> = ({ isLeaf: maybeIsLeaf, label, href
   return (
     <>
       <Link
-        className={cn('duration-250 transition-colors', {
-          'opacity-60 hover:text-primary hover:opacity-100 focus:text-primary focus:opacity-100': !isLeaf,
+        className={cn('duration-250 transition-opacity', {
+          'opacity-60 hover:opacity-100 focus:opacity-100': !isLeaf,
           'pointer-events-none font-semibold': isLeaf
         })}
         aria-disabled={isLeaf ? 'true' : undefined}
