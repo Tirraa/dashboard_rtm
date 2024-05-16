@@ -1,3 +1,5 @@
+// Stryker disable all
+
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 // Error will not be thrown in test ctx
 import type { DefaultLanguage } from '##/config/i18n';
@@ -296,3 +298,5 @@ describe('PageAdapter (Valid alternative language, top root level index notation
     }>(fake);
   });
 });
+
+// Stryker restore all

@@ -1,3 +1,5 @@
+// Stryker disable all
+
 import { expectType } from 'jest-tsd';
 import { describe, it } from 'vitest';
 
@@ -62,3 +64,5 @@ describe('MakePagesLangAndPathPairs (index notation)', () => {
     expectType<{ path: IndexToken; lang: 'fr' } | { path: 'bar'; lang: 'en' }>(fake);
   });
 });
+
+// Stryker restore all

@@ -1,3 +1,5 @@
+// Stryker disable all
+
 // Error will not be thrown in test ctx
 import type { DefaultLanguageToken } from '@rtm/generated';
 
@@ -91,3 +93,5 @@ describe('LpLanguageAndSlugPair (Valid structure)', () => {
     expectAssignable<typeof fake>({ slug: 'dummy-category-lp-00', lang: 'en' } as const);
   });
 });
+
+// Stryker restore all
