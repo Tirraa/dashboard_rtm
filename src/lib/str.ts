@@ -40,10 +40,8 @@ export function hrefAndPathnameExactMatch(href: AppPath, pathname: AppPath): boo
 
   if (hrefI18nFlag === DEFAULT_LANGUAGE && pathnameWithoutI18nflag === hrefWithoutI18nFlag) return true;
   if (hrefI18nFlag === null && pathnameWithoutI18nflag === _href) return true;
-
   if (hrefI18nFlag === null && pathnameWithoutI18nflag === href) return true;
 
-  if (hrefI18nFlag === pathnameI18nFlag && pathnameWithoutI18nflag === hrefWithoutI18nFlag) return true;
   return false;
 }
 

@@ -26,6 +26,11 @@ export function get(key: string) {
   return GenericInMemoryCache.data[key]?.value;
 }
 
+export function getClock(key: string) {
+  invalidateExpiredCacheData(key);
+  return GenericInMemoryCache.data[key]?.clock;
+}
+
 // eslint-disable-next-line no-magic-numbers
 export function set(key: string, data: Data, ttl: MsValue = 0) {
   function setClock(key: string, ttl: MsValue) {
@@ -35,17 +40,12 @@ export function set(key: string, data: Data, ttl: MsValue = 0) {
     };
   }
 
-  // v8 ignore start
-  // Stryker disable all
   function disposeClock(key: string) {
     // @ts-expect-error - IDGAF lemme manipulate the RAM
     GenericInMemoryCache.data[key].clock = undefined;
   }
-  // Stryker restore all
-  // v8 ignore stop
 
   if (!GenericInMemoryCache.data[key]) GenericInMemoryCache.data[key] = {} as DataCacheEntry;
-
   GenericInMemoryCache.data[key].value = typeof data === 'object' ? structuredClone(data) : data;
 
   // eslint-disable-next-line no-magic-numbers
