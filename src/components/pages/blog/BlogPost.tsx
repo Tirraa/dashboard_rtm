@@ -4,6 +4,8 @@ import type { WithClassname } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
 import { isValidBlogCategoryAndSubcategoryPair, getBlogPostUnstrict } from '@/lib/blog/api';
+import BlogPostTocDesktop from '@/components/ui/blog/toc/desktop/BlogPostTocDesktop';
+import BlogPostTocMobile from '@/components/ui/blog/toc/mobile/BlogPostTocMobile';
 import BlogPostMDX from '@/components/layouts/blog/MdxComponent';
 import tagsGenerator from '@/components/ui/blog/tagsGenerator';
 import BlogPostDate from '@/components/ui/blog/BlogPostDate';
@@ -24,6 +26,8 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className:
 
   // eslint-disable-next-line no-magic-numbers
   const hasTags = post.tags.length > 0;
+  // eslint-disable-next-line no-magic-numbers
+  const showToC = post.headings.length > 1;
   const showDraftSuffix = BlogConfig.SHOW_DRAFTS_BADGE && post.draft;
   const draftSuffix = showDraftSuffix ? ' (' + scopedT('draft') + ')' : undefined;
 
@@ -39,9 +43,9 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className:
         )}
       </header>
       <div className="flex max-w-full flex-col lg:flex-row">
-        {/* {showToC && <BlogPostTocMobile headings={post.headings} />} */}
+        {showToC && <BlogPostTocMobile headings={post.headings} />}
         <BlogPostMDX code={post.body.code} />
-        {/* {showToC && <BlogPostTocDesktop headings={post.headings} />} */}
+        {showToC && <BlogPostTocDesktop headings={post.headings} />}
       </div>
     </section>
   );
