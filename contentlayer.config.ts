@@ -55,6 +55,7 @@ export default makeSource({
     ],
     remarkPlugins: [remarkGfm]
   },
+  disableImportAliasWarning: true,
   contentDirInclude,
   contentDirPath,
   documentTypes

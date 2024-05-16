@@ -36,9 +36,5 @@ export interface WithIsMobile {
 
 export type MiddlewareFactory = (middleware: NextMiddleware) => NextMiddleware;
 
-export type TracedError = {
-  message: string;
-};
-
 // Stryker restore all
 /* v8 ignore stop */

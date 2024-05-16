@@ -35,10 +35,14 @@ export function set(key: string, data: Data, ttl: MsValue = 0) {
     };
   }
 
+  // v8 ignore start
+  // Stryker disable all
   function disposeClock(key: string) {
     // @ts-expect-error - IDGAF lemme manipulate the RAM
     GenericInMemoryCache.data[key].clock = undefined;
   }
+  // Stryker restore all
+  // v8 ignore stop
 
   if (!GenericInMemoryCache.data[key]) GenericInMemoryCache.data[key] = {} as DataCacheEntry;
 

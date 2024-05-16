@@ -25,6 +25,7 @@ import {
   buildPageUrl
 } from '../../lib/builders';
 import { blogTagOptions } from './blog/blogTags';
+import { authorNames } from './blog/authors';
 import SEO from './nested-types/SEO';
 
 export const PAGES_FOLDER = 'pages';
@@ -44,6 +45,15 @@ const _ALL_BLOG_FIELDS = {
     required: false,
     type: 'list',
     default: []
+  },
+
+  authors: {
+    of: {
+      options: authorNames,
+      type: 'enum'
+    },
+    required: false,
+    type: 'list'
   },
 
   tagsIndexes: {
@@ -227,6 +237,7 @@ export const BLOG_DOCUMENTS_FIELDS = {
   featuredPictureUrl: _ALL_BLOG_FIELDS.featuredPictureUrl,
   metadescription: _ALL_BLOG_FIELDS.metadescription,
   description: _ALL_BLOG_FIELDS.description,
+  authors: _ALL_BLOG_FIELDS.authors,
   draft: _ALL_BLOG_FIELDS.draft,
   title: _ALL_BLOG_FIELDS.title,
   tags: _ALL_BLOG_FIELDS.tags,
