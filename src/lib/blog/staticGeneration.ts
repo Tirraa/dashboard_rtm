@@ -92,12 +92,14 @@ export async function getBlogPostMetadatas(
     params[I18nTaxonomy.LANGUAGE]
   ];
 
-  const post: MaybeNull<BlogPostType> = await getBlogPostUnstrict(category, subcategory, slug, language);
-
   const globalT = await getServerSideI18n();
-  const currentPost = post as BlogPostType;
 
-  if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory, language)) return {};
+  const post: MaybeNull<BlogPostType> = await getBlogPostUnstrict(category, subcategory, slug, language);
+  if (post === null || !isValidBlogCategoryAndSubcategoryPair(category, subcategory, language)) return {};
+
+  const currentPost = post as BlogPostType;
+  const { date: publishedTime, tags, url } = currentPost;
+  const type = 'article';
 
   const title = buildPageTitle(globalT(`${i18ns.vocab}.brand-short`), currentPost.title);
   const { metadescription: description, seo } = currentPost;
@@ -119,14 +121,14 @@ export async function getBlogPostMetadatas(
 
   if (seo === undefined) {
     const alternates = { canonical, languages };
-    const openGraph: OpenGraph = { url: currentPost.url };
+    const openGraph: OpenGraph = { publishedTime, tags, type, url };
     if (openGraphImages === undefined) return { metadataBase, description, alternates, openGraph, title };
     openGraph.images = openGraphImages;
     return { metadataBase, description, alternates, openGraph, title };
   }
 
   const { alternates, robots } = seo;
-  let { openGraph } = seo;
+  let openGraph: OpenGraph = { publishedTime, type, tags, ...seo.openGraph };
 
   if (openGraphImages) {
     if (openGraph === undefined) openGraph = { images: [openGraphImages] };
@@ -134,7 +136,7 @@ export async function getBlogPostMetadatas(
   }
 
   if (openGraph === undefined) openGraph = {};
-  (openGraph as OpenGraph).url = currentPost.url;
+  (openGraph as OpenGraph).url = url;
   if (alternates) (alternates as AlternateURLs).languages = languages;
   if (alternates && !alternates.canonical) (alternates as AlternateURLs).canonical = canonical;
 
