@@ -57,7 +57,7 @@ export async function getPageMetadatas(
   if (!currentPage) notFound();
 
   const globalT = await getServerSideI18n();
-  const { metadescription: description, title: pageTitle, seo } = currentPage;
+  const { metadescription: description, title: pageTitle, seo, url } = currentPage;
 
   const { vocab } = i18ns;
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), pageTitle);
@@ -72,17 +72,17 @@ export async function getPageMetadatas(
   }
 
   const maybeDefaultLanguagePage = getPageByLanguageAndPathUnstrict(DEFAULT_LANGUAGE, path);
-  if (maybeDefaultLanguagePage !== null) languages['x-default'] = getPathnameWithoutI18nFlag(currentPage.url);
+  if (maybeDefaultLanguagePage !== null) languages['x-default'] = getPathnameWithoutI18nFlag(url);
 
   const [xDefault, canonical] = getXDefaultAndCanonical(currentPage, path, language, middlewareStrategy);
   if (xDefault !== undefined) languages['x-default'] = xDefault;
 
-  const defaultOpenGraph: OpenGraph = { url: currentPage.url };
+  const defaultOpenGraph: OpenGraph = { url };
   if (seo === undefined) return { alternates: { canonical, languages }, openGraph: defaultOpenGraph, metadataBase, description, title };
 
   const { openGraph = defaultOpenGraph, alternates, robots } = seo;
 
-  if ((openGraph as OpenGraph).url === undefined) (openGraph as OpenGraph).url = currentPage.url;
+  if ((openGraph as OpenGraph).url === undefined) (openGraph as OpenGraph).url = url;
   if (alternates) (alternates as AlternateURLs).languages = languages;
   if (alternates && !alternates.canonical) (alternates as AlternateURLs).canonical = canonical;
 

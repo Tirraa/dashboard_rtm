@@ -54,7 +54,7 @@ export async function getLandingPageMetadatas(
   if (!currentLp) notFound();
 
   const globalT = await getServerSideI18n();
-  const { metadescription: description, title: lpTitle, seo } = currentLp;
+  const { metadescription: description, title: lpTitle, seo, url } = currentLp;
 
   const { vocab } = i18ns;
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), lpTitle);
@@ -71,12 +71,12 @@ export async function getLandingPageMetadatas(
   const [xDefault, canonical] = getXDefaultAndCanonical(currentLp, slug, language, middlewareStrategy);
   if (xDefault !== undefined) languages['x-default'] = xDefault;
 
-  const defaultOpenGraph: OpenGraph = { url: currentLp.url };
+  const defaultOpenGraph: OpenGraph = { url };
   if (seo === undefined) return { alternates: { canonical, languages }, openGraph: defaultOpenGraph, metadataBase, description, title };
 
   const { openGraph = defaultOpenGraph, alternates, robots } = seo;
 
-  if ((openGraph as OpenGraph).url === undefined) (openGraph as OpenGraph).url = currentLp.url;
+  if ((openGraph as OpenGraph).url === undefined) (openGraph as OpenGraph).url = url;
   if (alternates) (alternates as AlternateURLs).languages = languages;
   if (alternates && !alternates.canonical) (alternates as AlternateURLs).canonical = canonical;
 
