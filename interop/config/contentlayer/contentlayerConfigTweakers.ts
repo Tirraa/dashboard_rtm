@@ -24,6 +24,7 @@ import {
   buildPagePath,
   buildPageUrl
 } from '../../lib/builders';
+import { indexedBlogTagOptions } from './blog/blogTagsMetadatas';
 import { blogTagOptions } from './blog/blogTags';
 import { authorNames } from './blog/authors';
 import SEO from './nested-types/SEO';
@@ -221,8 +222,8 @@ const _ALL_PAGES_FIELDS = {
 // Stryker disable all
 
 export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
+  tagsIndexes: { resolve: (post) => buildBlogTagsIndexes(post, indexedBlogTagOptions, blogTagOptions), type: _ALL_BLOG_FIELDS.tagsIndexes.type },
   subcategory: { resolve: (post) => buildBlogPostSubcategory(post), type: _ALL_BLOG_FIELDS.subcategory.type },
-  tagsIndexes: { resolve: (post) => buildBlogTagsIndexes(post), type: _ALL_BLOG_FIELDS.tagsIndexes.type },
   language: { resolve: (post) => buildBlogPostLanguageFlag(post), type: _ALL_BLOG_FIELDS.language.type },
   category: { resolve: (post) => buildBlogPostCategory(post), type: _ALL_BLOG_FIELDS.category.type },
   headings: { resolve: (post) => buildBlogPostHeadings(post), type: _ALL_BLOG_FIELDS.headings.type },
