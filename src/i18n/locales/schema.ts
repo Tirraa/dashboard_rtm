@@ -3,6 +3,7 @@
 
 import type { TypedLeafsJSONData } from '@rtm/shared-types/JSON';
 
+import { blogAuthorOptionsVocabSchema } from '##/config/contentlayer/blog/authorsMetadatas';
 import { blogTagOptionsVocabSchema } from '##/config/contentlayer/blog/blogTagsMetadatas';
 import { blogCategories } from '@rtm/generated';
 
@@ -137,6 +138,8 @@ export default {
   },
 
   'pages-titles': SHARED_VOCAB_SCHEMA['pages-titles'],
+
+  'blog-authors': blogAuthorOptionsVocabSchema,
 
   metadescriptions: {
     homepage: _

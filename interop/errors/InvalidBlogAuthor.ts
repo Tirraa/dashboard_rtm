@@ -1,11 +1,10 @@
-import type { AuthorName } from '##/config/contentlayer/blog/authors';
-
 import { TAB_SIZE } from '../lib/misc/contentlayerCornerCases';
 
 type InvalidAuthor = string;
+type ValidAuthor = string;
 
 class InvalidBlogAuthor extends Error {
-  constructor(invalidBlogAuthors: InvalidAuthor[], validAuthorsNames: readonly AuthorName[]) {
+  constructor(invalidBlogAuthors: InvalidAuthor[], validAuthorsNames: readonly ValidAuthor[]) {
     const invalidAuthorPart =
       // eslint-disable-next-line no-magic-numbers
       invalidBlogAuthors.length > 1
