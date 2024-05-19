@@ -1,5 +1,5 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
-import type { DocumentHeading } from '@rtm/shared-types/Documents';
+import type { DocumentHeading } from '##/config/contentlayer/blog/headings';
 
 import GithubSlugger from 'github-slugger';
 

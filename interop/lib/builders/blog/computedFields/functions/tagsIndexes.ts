@@ -24,7 +24,7 @@ function validateTagNames<BlogTagOption extends string>(
   return null;
 }
 
-function validateTagNoDuplicates<BlogTagOption extends string>(tagsArray: BlogTagOption[]): MaybeNull<BlogTagDuplicates> {
+function validateTagNoDuplicates(tagsArray: string[]): MaybeNull<BlogTagDuplicates> {
   const tagsMemory: unknown[] = [];
   const duplicatesSet = new Set<unknown>();
 
@@ -54,9 +54,9 @@ function buildBlogTagsIndexesFromPostObj<BlogTagOption extends string>(
   const tagsArrayUniq = Array.from(new Set<BlogTagOption>(tagsArray));
 
   const maybeValidateTagNamesError = validateTagNames(tagsArrayUniq, indexedBlogTagOptions, blogTagOptions, __DAMERAU_THRESHOLD);
-  const maybeValidateTagNoDuplicatesError = validateTagNoDuplicates(tagsArray);
+  const maybeValidateTagsNoDuplicatesError = validateTagNoDuplicates(tagsArray);
 
-  const mergedErrors = [maybeValidateTagNamesError, maybeValidateTagNoDuplicatesError].filter((e) => e !== null);
+  const mergedErrors = [maybeValidateTagNamesError, maybeValidateTagsNoDuplicatesError].filter((e) => e !== null);
 
   // eslint-disable-next-line no-magic-numbers
   if (mergedErrors.length > 0) throw mergedErrors.join('\n' + BULLET + ' ');

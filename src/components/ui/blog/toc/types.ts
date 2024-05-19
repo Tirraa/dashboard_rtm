@@ -1,4 +1,4 @@
-import type { DocumentHeading } from '@rtm/shared-types/Documents';
+import type { DocumentHeading } from '##/config/contentlayer/blog/headings';
 
 export interface SharedBlogPostTocProps {
   headings: DocumentHeading[];

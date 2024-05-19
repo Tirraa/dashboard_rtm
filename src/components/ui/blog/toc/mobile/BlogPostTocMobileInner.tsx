@@ -1,4 +1,4 @@
-import type { DocumentHeading } from '@rtm/shared-types/Documents';
+import type { DocumentHeading } from '##/config/contentlayer/blog/headings';
 import type { FunctionComponent, ReactElement } from 'react';
 
 import { AccordionContent, AccordionTrigger, AccordionItem, Accordion } from '@/components/ui/Accordion';
