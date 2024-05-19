@@ -1,6 +1,7 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import type { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
 import type { Page } from 'contentlayer/generated';
 import type { I18nPageProps } from '@/types/Next';
 
@@ -20,7 +21,8 @@ export async function generateMetadata() {
   const { metadescriptions, pagesTitles, vocab } = i18ns;
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), globalT(`${pagesTitles}.homepage`), true);
   const description = globalT(`${metadescriptions}.homepage`);
-  return { description, title };
+  const openGraph: OpenGraph = { images: { url: '/assets/medias/img/og/logo/head.jpeg' } };
+  return { description, openGraph, title };
 }
 
 export function generateStaticParams() {

@@ -41,34 +41,34 @@ const SHARED: SharedVocabType = {
 export default {
   blog: {
     categories: {
-      'patch-notes-bis': {
-        'discord-bot-bis': {
-          'meta-description': 'Metadescription Patch-notes -> Bot Discord (bis)',
-          title: SHARED['pages-titles']['discord-bot-bis']
-        },
-
-        'dashboard-bis': {
-          'meta-description': 'Metadescription Patch-notes -> Dashboard (bis)',
-          title: SHARED['pages-titles']['dashboard-bis']
-        },
-
-        '_meta-description': 'Metadescription Notes de patch (bis)',
-        _title: SHARED['pages-titles']['patch-notes-bis']
-      },
-
       'patch-notes': {
         'discord-bot': {
-          'meta-description': 'Metadescription Patch-notes -> Bot Discord',
+          'meta-description': 'Découvrez les dernières mises à jour et améliorations du bot Discord',
           title: SHARED['pages-titles']['discord-bot']
         },
 
         dashboard: {
-          'meta-description': 'Metadescription Patch-notes -> Dashboard',
+          'meta-description': 'Découvrez les dernières mises à jour et améliorations du dashboard',
           title: SHARED['pages-titles'].dashboard
         },
 
-        '_meta-description': 'Metadescription Notes de patch',
+        '_meta-description': 'Découvrez les dernières mises à jour et améliorations du bot Discord et du dashboard',
         _title: SHARED['pages-titles']['patch-notes']
+      },
+
+      'patch-notes-bis': {
+        'discord-bot-bis': {
+          'meta-description': 'Contenu juste à des fins de tests',
+          title: SHARED['pages-titles']['discord-bot-bis']
+        },
+
+        'dashboard-bis': {
+          'meta-description': 'Contenu juste à des fins de tests',
+          title: SHARED['pages-titles']['dashboard-bis']
+        },
+
+        '_meta-description': 'Contenu juste à des fins de tests',
+        _title: SHARED['pages-titles']['patch-notes-bis']
       },
 
       'blog-testing-category': SHARED_TESTING_BLOG_CATEGORY_METADATAS
@@ -192,14 +192,14 @@ export default {
     'alphabet-asc': 'Alphabétique A-Z'
   },
 
+  metadescriptions: {
+    homepage: "Découvrez Rust Team Management, une nouvelle façon de jouer en équipe. Votre serveur Discord n'aura jamais été aussi bien géré !"
+  },
+
   auth: {
     signup: SHARED.vocab['sign-up'],
     logout: 'Déconnexion',
     login: 'Connexion'
-  },
-
-  metadescriptions: {
-    homepage: "Metadescription Page d'accueil"
   },
 
   'pages-titles': SHARED['pages-titles'],

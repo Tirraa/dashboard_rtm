@@ -5,7 +5,7 @@ import type { FunctionComponent } from 'react';
 
 import Image from 'next/image';
 
-import logoHeadPic from '/public/assets/medias/img/rtm-logo-head.svg';
+import logoHeadPic from '/public/assets/medias/img/vectors/logo/rtm-head.svg';
 
 interface LogoHeadProps {
   priority?: boolean;

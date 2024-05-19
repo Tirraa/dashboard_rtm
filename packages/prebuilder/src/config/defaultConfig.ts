@@ -4,9 +4,9 @@
 import type Config from '../types/Config';
 
 const defaultConfig: Required<Config> = {
-  i18nSubcategoriesRequiredExtraFields: [],
+  i18nBlogSubcategoriesRequiredExtraFields: [],
+  i18nBlogCategoriesRequiredExtraFields: [],
   defaultLanguageKey: 'DEFAULT_LANGUAGE',
-  i18nCategoriesRequiredExtraFields: [],
   maxPageTaxonomyLen: 80,
   maxBlogTaxonomyLen: 34,
   maxLpTaxonomyLen: 128

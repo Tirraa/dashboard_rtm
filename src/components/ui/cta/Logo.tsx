@@ -12,7 +12,7 @@ import { cn } from '@/lib/tailwind';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import logoPic from '/public/assets/medias/img/rust-team-management-logo-full-body.svg';
+import logoPic from '/public/assets/medias/img/vectors/logo/rtm-full-body.svg';
 
 interface LogoProps {
   onPageEnterAnimation?: boolean;

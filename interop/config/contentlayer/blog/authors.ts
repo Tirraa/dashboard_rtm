@@ -3,10 +3,10 @@
 
 const authors = {
   Gustave: {
-    profilePicUrl: '/assets/medias/img/dev/placeholders/placeholder-54.jpeg'
+    profilePictureUrl: '/assets/medias/img/dev/placeholders/placeholder-54.jpeg'
   },
   Arnaud: {
-    profilePicUrl: '/assets/medias/img/dev/placeholders/placeholder-55.jpeg'
+    profilePictureUrl: '/assets/medias/img/dev/placeholders/placeholder-55.jpeg'
   }
 } as const satisfies Record<string, Author>;
 
@@ -23,7 +23,7 @@ export type Author = {
     medium?: undefined | string;
     github?: undefined | string;
   };
-  profilePicUrl: string;
+  profilePictureUrl: string;
 };
 
 type AuthorName = keyof typeof authors;

@@ -576,7 +576,7 @@ export const FAKE_RESULTS: PagefindSearchResult[] = [
       excerpt:
         "OLOL. 24 déc. 2021, 19:00 Bonjour, ceci est un titre ! Test de note relative au Dashboard <mark>Salut</mark> tout le monde ! function lol() { konsole.log('Hello world'); } Bonjour, ceci",
       meta: {
-        image: '/assets/medias/img/rust-team-management-logo-full-body.svg',
+        image: '/assets/medias/img/vectors/logo/rtm-full-body.svg',
         image_alt: 'Image',
         title: 'OLOL'
       },

@@ -4,8 +4,8 @@
 import type { Limit } from '@rtm/shared-types/Numbers';
 
 type Config = Partial<{
-  i18nSubcategoriesRequiredExtraFields: string[];
-  i18nCategoriesRequiredExtraFields: string[];
+  i18nBlogSubcategoriesRequiredExtraFields: string[];
+  i18nBlogCategoriesRequiredExtraFields: string[];
   defaultLanguageKey: string;
   maxPageTaxonomyLen: Limit;
   maxBlogTaxonomyLen: Limit;

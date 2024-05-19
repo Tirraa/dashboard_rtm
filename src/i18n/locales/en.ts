@@ -41,34 +41,34 @@ const SHARED: SharedVocabType = {
 export default {
   blog: {
     categories: {
-      'patch-notes-bis': {
-        'discord-bot-bis': {
-          'meta-description': 'Metadescription Patch-notes -> Bot Discord (bis)',
-          title: SHARED['pages-titles']['discord-bot-bis']
-        },
-
-        'dashboard-bis': {
-          'meta-description': 'Metadescription Patch-notes -> Dashboard (bis)',
-          title: SHARED['pages-titles']['dashboard-bis']
-        },
-
-        '_meta-description': 'Metadescription Patch Notes (bis)',
-        _title: SHARED['pages-titles']['patch-notes-bis']
-      },
-
       'patch-notes': {
         'discord-bot': {
-          'meta-description': 'Patch-notes -> Discord Bot - Metadescription',
+          'meta-description': 'Discover the latest updates and improvements to the Discord bot',
           title: SHARED['pages-titles']['discord-bot']
         },
 
         dashboard: {
-          'meta-description': 'Patch-notes -> Dashboard - Metadescription',
+          'meta-description': 'Discover the latest updates and improvements to the dashboard',
           title: SHARED['pages-titles'].dashboard
         },
 
-        '_meta-description': 'Patch Notes Metadescription',
+        '_meta-description': 'Discover the latest updates and improvements to the Discord bot and dashboard',
         _title: SHARED['pages-titles']['patch-notes']
+      },
+
+      'patch-notes-bis': {
+        'discord-bot-bis': {
+          'meta-description': 'Content just for testing purposes',
+          title: SHARED['pages-titles']['discord-bot-bis']
+        },
+
+        'dashboard-bis': {
+          'meta-description': 'Content just for testing purposes',
+          title: SHARED['pages-titles']['dashboard-bis']
+        },
+
+        '_meta-description': 'Content just for testing purposes',
+        _title: SHARED['pages-titles']['patch-notes-bis']
       },
 
       'blog-testing-category': SHARED_TESTING_BLOG_CATEGORY_METADATAS
@@ -192,14 +192,14 @@ export default {
     }
   },
 
+  metadescriptions: {
+    homepage: 'Discover Rust Team Management, a new way to teamplay. Your Discord game changer!'
+  },
+
   auth: {
     signup: SHARED.vocab['sign-up'],
     logout: 'Logout',
     login: 'Login'
-  },
-
-  metadescriptions: {
-    homepage: 'Homepage Metadescription'
   },
 
   'pages-titles': SHARED['pages-titles'],

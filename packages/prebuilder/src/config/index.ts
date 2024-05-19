@@ -11,9 +11,9 @@ const MY_MAX_PAGE_TAXONOMY_LEN: Limit = config.maxPageTaxonomyLen ?? defaultConf
 const MY_MAX_BLOG_TAXONOMY_LEN: Limit = config.maxBlogTaxonomyLen ?? defaultConfig.maxBlogTaxonomyLen;
 const MY_MAX_LP_TAXONOMY_LEN: Limit = config.maxLpTaxonomyLen ?? defaultConfig.maxLpTaxonomyLen;
 const MY_I18N_CATEGORIES_REQUIRED_EXTRA_FIELDS: string[] =
-  config.i18nCategoriesRequiredExtraFields ?? defaultConfig.i18nCategoriesRequiredExtraFields;
+  config.i18nBlogCategoriesRequiredExtraFields ?? defaultConfig.i18nBlogCategoriesRequiredExtraFields;
 const MY_I18N_SUBCATEGORIES_REQUIRED_EXTRA_FIELDS: string[] =
-  config.i18nSubcategoriesRequiredExtraFields ?? defaultConfig.i18nSubcategoriesRequiredExtraFields;
+  config.i18nBlogSubcategoriesRequiredExtraFields ?? defaultConfig.i18nBlogSubcategoriesRequiredExtraFields;
 const MY_DEFAULT_LANGUAGE_KEY: string = config.defaultLanguageKey ?? defaultConfig.defaultLanguageKey;
 
 export const FLAGS = {
