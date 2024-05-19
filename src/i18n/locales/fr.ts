@@ -24,6 +24,7 @@ const SHARED: SharedVocabType = {
 
   vocab: {
     'start-typing': 'commencer à écrire',
+    notifications: 'notifications',
     brand: 'Rust Team Management',
     breadcrumbs: "fil d'ariane",
     toc: 'table des matières',

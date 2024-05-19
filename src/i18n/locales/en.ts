@@ -23,6 +23,7 @@ const SHARED: SharedVocabType = {
   },
 
   vocab: {
+    notifications: 'notifications',
     'start-typing': 'start typing',
     brand: 'Rust Team Management',
     breadcrumbs: 'breadcrumbs',

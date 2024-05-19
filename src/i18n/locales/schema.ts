@@ -14,6 +14,7 @@ const _: NotScanned = '';
 export const SHARED_VOCAB_SCHEMA = {
   vocab: {
     'start-typing': _,
+    notifications: _,
     breadcrumbs: _,
     'sign-up': _,
     brand: _,

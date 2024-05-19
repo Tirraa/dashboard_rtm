@@ -2,6 +2,7 @@
 // Stryker disable all
 
 import type { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
+import type { MaybeUndefined } from '@rtm/shared-types/CustomUtilityTypes';
 import type { Page } from 'contentlayer/generated';
 import type { I18nPageProps } from '@/types/Next';
 
@@ -18,11 +19,15 @@ import { cn } from '@/lib/tailwind';
 
 export async function generateMetadata() {
   const globalT = await getServerSideI18n();
+
+  const metadataBase: MaybeUndefined<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined;
+  const openGraph: OpenGraph = { images: { url: '/assets/medias/img/og/logo/head.jpeg' } };
+
   const { metadescriptions, pagesTitles, vocab } = i18ns;
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), globalT(`${pagesTitles}.homepage`), true);
   const description = globalT(`${metadescriptions}.homepage`);
-  const openGraph: OpenGraph = { images: { url: '/assets/medias/img/og/logo/head.jpeg' } };
-  return { description, openGraph, title };
+
+  return { metadataBase, description, openGraph, title };
 }
 
 export function generateStaticParams() {

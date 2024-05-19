@@ -7,7 +7,10 @@ import type { ComponentPropsWithoutRef, ReactElement, ElementRef } from 'react';
 import type { VariantProps } from 'class-variance-authority';
 
 import * as ToastPrimitives from '@radix-ui/react-toast';
+import { getClientSideI18n } from '@/i18n/client';
 import { cva } from 'class-variance-authority';
+import { i18ns } from '##/config/i18n';
+import { capitalize } from '@/lib/str';
 import { cn } from '@/lib/tailwind';
 import { forwardRef } from 'react';
 import { X } from 'lucide-react';
@@ -15,16 +18,21 @@ import { X } from 'lucide-react';
 const ToastProvider = ToastPrimitives.Provider;
 
 const ToastViewport = forwardRef<ElementRef<typeof ToastPrimitives.Viewport>, ComponentPropsWithoutRef<typeof ToastPrimitives.Viewport>>(
-  ({ className, ...props }, ref) => (
-    <ToastPrimitives.Viewport
-      className={cn(
-        'fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]',
-        className
-      )}
-      ref={ref}
-      {...props}
-    />
-  )
+  ({ className, ...props }, ref) => {
+    const globalT = getClientSideI18n();
+
+    return (
+      <ToastPrimitives.Viewport
+        className={cn(
+          'fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]',
+          className
+        )}
+        label={`${capitalize(globalT(`${i18ns.vocab}.notifications`))} ({hotkey})`}
+        ref={ref}
+        {...props}
+      />
+    );
+  }
 );
 ToastViewport.displayName = ToastPrimitives.Viewport.displayName;
 
