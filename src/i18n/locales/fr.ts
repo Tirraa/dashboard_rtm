@@ -39,17 +39,6 @@ const SHARED: SharedVocabType = {
 } as const;
 
 export default {
-  errors: {
-    brokenPagefindIntegration: {
-      message: 'La recherche ne fonctionne pas. Nous avons été alerté de ce problème. Veuillez réessayer plus tard.',
-      title: 'Anomalie de la fonctionnalité de recherche'
-    }
-  },
-
-  metadescriptions: {
-    homepage: "Metadescription Page d'accueil"
-  },
-
   // eslint-disable-next-line perfectionist/sort-objects
   'blog-categories': {
     'patch-notes-bis': {
@@ -156,6 +145,13 @@ export default {
     }
   },
 
+  errors: {
+    brokenPagefindIntegration: {
+      message: 'La recherche ne fonctionne pas. Nous avons été alerté de ce problème. Veuillez réessayer plus tard.',
+      title: 'Anomalie de la fonctionnalité de recherche'
+    }
+  },
+
   filters: {
     'date-desc': "Les plus récents d'abord",
     'select-a-filter': 'Choisir un filtre',
@@ -188,6 +184,21 @@ export default {
     logout: 'Déconnexion',
     login: 'Connexion'
   },
+
+  'blog-authors': {
+    Gustave: {
+      bio: ''
+    },
+
+    Arnaud: {
+      bio: ''
+    }
+  },
+
+  metadescriptions: {
+    homepage: "Metadescription Page d'accueil"
+  },
+
   'pages-titles': SHARED['pages-titles'],
 
   _infos: { lng: 'fr' }

@@ -39,17 +39,6 @@ const SHARED: SharedVocabType = {
 } as const;
 
 export default {
-  errors: {
-    brokenPagefindIntegration: {
-      message: 'Search is broken. We have been alerted of this issue. Please try again later.',
-      title: 'Search feature anomaly'
-    }
-  },
-
-  metadescriptions: {
-    homepage: 'Homepage Metadescription'
-  },
-
   // eslint-disable-next-line perfectionist/sort-objects
   'blog-categories': {
     'patch-notes-bis': {
@@ -164,6 +153,13 @@ export default {
     'date-asc': 'Oldest first'
   },
 
+  errors: {
+    brokenPagefindIntegration: {
+      message: 'Search is broken. We have been alerted of this issue. Please try again later.',
+      title: 'Search feature anomaly'
+    }
+  },
+
   'blog-toc': {
     'sr-only': {
       'hide-toc': `Hide the ${SHARED.vocab.toc}`,
@@ -183,10 +179,24 @@ export default {
     'clear-filters': 'Clear'
   },
 
+  'blog-authors': {
+    Gustave: {
+      bio: ''
+    },
+
+    Arnaud: {
+      bio: ''
+    }
+  },
+
   auth: {
     signup: SHARED.vocab['sign-up'],
     logout: 'Logout',
     login: 'Login'
+  },
+
+  metadescriptions: {
+    homepage: 'Homepage Metadescription'
   },
 
   'pages-titles': SHARED['pages-titles'],

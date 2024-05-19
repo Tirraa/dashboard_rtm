@@ -12,6 +12,7 @@ import {
   buildBlogPostLanguageFlag,
   buildBlogPostSubcategory,
   buildLandingPageCategory,
+  buildBlogAuthorsIndexes,
   buildBlogPostHeadings,
   buildBlogPostCategory,
   buildPageLanguageFlag,
@@ -19,17 +20,16 @@ import {
   buildBlogTagsIndexes,
   buildLandingPageUrl,
   buildBlogPostSlug,
-  buildBlogAuthors,
   buildBlogPostUrl,
   buildPageRoot,
   buildPagePath,
   buildPageUrl
 } from '../../lib/builders';
 import { indexedBlogTagOptions } from './blog/blogTagsMetadatas';
+import { indexedBlogAuthorNames } from './blog/authorsMetadatas';
 import DocumentHeading from './nested-types/DocumentHeading';
-import authors, { authorNames } from './blog/authors';
 import { blogTagOptions } from './blog/blogTags';
-import Author from './nested-types/Author';
+import { authorNames } from './blog/authors';
 import SEO from './nested-types/SEO';
 
 export const PAGES_FOLDER = 'pages';
@@ -57,6 +57,15 @@ const _ALL_BLOG_FIELDS = {
       type: 'enum'
     },
     required: false,
+    type: 'list',
+    default: []
+  },
+
+  authorsIndexes: {
+    of: {
+      type: 'number'
+    },
+    required: true,
     type: 'list'
   },
 
@@ -69,12 +78,6 @@ const _ALL_BLOG_FIELDS = {
   },
 
   headings: { of: DocumentHeading, required: false, type: 'list', default: [] },
-
-  authorsMetadatas: {
-    required: true,
-    type: 'list',
-    of: Author
-  },
 
   draft: {
     type: 'boolean',
@@ -225,8 +228,11 @@ const _ALL_PAGES_FIELDS = {
 // Stryker disable all
 
 export const BLOG_DOCUMENTS_COMPUTED_FIELDS = {
+  authorsIndexes: {
+    resolve: (post) => buildBlogAuthorsIndexes(post, indexedBlogAuthorNames, authorNames),
+    type: _ALL_BLOG_FIELDS.authorsIndexes.type
+  },
   tagsIndexes: { resolve: (post) => buildBlogTagsIndexes(post, indexedBlogTagOptions, blogTagOptions), type: _ALL_BLOG_FIELDS.tagsIndexes.type },
-  authorsMetadatas: { resolve: (post) => buildBlogAuthors(post, authors), type: _ALL_BLOG_FIELDS.authorsMetadatas.type },
   subcategory: { resolve: (post) => buildBlogPostSubcategory(post), type: _ALL_BLOG_FIELDS.subcategory.type },
   language: { resolve: (post) => buildBlogPostLanguageFlag(post), type: _ALL_BLOG_FIELDS.language.type },
   category: { resolve: (post) => buildBlogPostCategory(post), type: _ALL_BLOG_FIELDS.category.type },
@@ -313,5 +319,4 @@ type _BlogDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _Blo
 type _PagesDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _PagesComputedFields, _AllPagesFields>;
 type _LandingPagesDocumentsComputedFieldsKeys = MakeDocumentsAllFieldsSumType<keyof _LandingPagesComputedFields, _AllLandingPagesFields>;
 
-// export const badlyTypedBlogHeadings = 'headings' as const satisfies keyof typeof _ALL_BLOG_FIELDS;
-// export const badlyTypedTagsIndexes = 'tagsIndexes' as const satisfies keyof typeof _ALL_BLOG_FIELDS;
+export const DAMERAU_LEVENSHTEIN_THRESHOLD = 4;

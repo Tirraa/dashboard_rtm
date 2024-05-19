@@ -12,6 +12,7 @@ const _i18nsBase = {
   blogTagsFilters: 'blog-tags-filters',
   metadescriptions: 'metadescriptions',
   blogCategories: 'blog-categories',
+  blogAuthors: 'blog-authors',
   pagesTitles: 'pages-titles',
   searchMenu: 'search-menu',
   dashboard: 'dashboard',

@@ -1,12 +1,12 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
-import type { Limit, Id } from '@rtm/shared-types/Numbers';
+import type { Limit, Index } from '@rtm/shared-types/Numbers';
 
 import { DAMERAU_LEVENSHTEIN_THRESHOLD, BlogTagDuplicates, InvalidBlogTag, BULLET } from '../../../unifiedImport';
 
 function validateTagNames<BlogTagOption extends string>(
   tagsArrayUniq: BlogTagOption[],
-  indexedBlogTagOptions: Record<BlogTagOption, Id>,
+  indexedBlogTagOptions: Record<BlogTagOption, Index>,
   blogTagOptions: readonly BlogTagOption[],
   __DAMERAU_THRESHOLD: Limit
 ): MaybeNull<InvalidBlogTag> {
@@ -47,10 +47,10 @@ function validateTagNoDuplicates(tagsArray: string[]): MaybeNull<BlogTagDuplicat
  */
 function buildBlogTagsIndexesFromPostObj<BlogTagOption extends string>(
   tagsArray: BlogTagOption[],
-  indexedBlogTagOptions: Record<BlogTagOption, Id>,
+  indexedBlogTagOptions: Record<BlogTagOption, Index>,
   blogTagOptions: readonly BlogTagOption[],
   __DAMERAU_THRESHOLD: Limit
-): Id[] {
+): Index[] {
   const tagsArrayUniq = Array.from(new Set<BlogTagOption>(tagsArray));
 
   const maybeValidateTagNamesError = validateTagNames(tagsArrayUniq, indexedBlogTagOptions, blogTagOptions, __DAMERAU_THRESHOLD);
@@ -61,7 +61,7 @@ function buildBlogTagsIndexesFromPostObj<BlogTagOption extends string>(
   // eslint-disable-next-line no-magic-numbers
   if (mergedErrors.length > 0) throw mergedErrors.join('\n' + BULLET + ' ');
 
-  const res: Id[] = [];
+  const res: Index[] = [];
   for (const tag of tagsArrayUniq) res.push(indexedBlogTagOptions[tag]);
 
   return res;
@@ -69,9 +69,9 @@ function buildBlogTagsIndexesFromPostObj<BlogTagOption extends string>(
 
 const buildBlogTagsIndexes = <BlogTagOption extends string>(
   post: DocumentToCompute,
-  indexedBlogTagOptions: Record<BlogTagOption, Id>,
+  indexedBlogTagOptions: Record<BlogTagOption, Index>,
   blogTagOptions: readonly BlogTagOption[],
   __DAMERAU_THRESHOLD: Limit = DAMERAU_LEVENSHTEIN_THRESHOLD
-): Id[] => buildBlogTagsIndexesFromPostObj(post.tags._array as BlogTagOption[], indexedBlogTagOptions, blogTagOptions, __DAMERAU_THRESHOLD);
+): Index[] => buildBlogTagsIndexesFromPostObj(post.tags._array as BlogTagOption[], indexedBlogTagOptions, blogTagOptions, __DAMERAU_THRESHOLD);
 
 export default buildBlogTagsIndexes;

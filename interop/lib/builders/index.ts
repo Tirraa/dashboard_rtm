@@ -1,5 +1,6 @@
 import buildLandingPageLanguageFlag from './landing-pages/computedFields/functions/language';
 import buildLandingPageCategory from './landing-pages/computedFields/functions/category';
+import buildBlogAuthorsIndexes from './blog/computedFields/functions/authorsIndexes';
 import buildBlogPostSubcategory from './blog/computedFields/functions/subcategory';
 import buildBlogPostLanguageFlag from './blog/computedFields/functions/language';
 import buildLandingPageSlug from './landing-pages/computedFields/functions/slug';
@@ -8,7 +9,6 @@ import buildBlogTagsIndexes from './blog/computedFields/functions/tagsIndexes';
 import buildPageLanguageFlag from './pages/computedFields/functions/language';
 import buildBlogPostCategory from './blog/computedFields/functions/category';
 import buildBlogPostHeadings from './blog/computedFields/functions/headings';
-import buildBlogAuthors from './blog/computedFields/functions/authors';
 import buildBlogPostSlug from './blog/computedFields/functions/slug';
 import buildBlogPostUrl from './blog/computedFields/functions/url';
 import buildPagePath from './pages/computedFields/functions/path';
@@ -20,6 +20,7 @@ export {
   buildBlogPostLanguageFlag,
   buildLandingPageCategory,
   buildBlogPostSubcategory,
+  buildBlogAuthorsIndexes,
   buildBlogPostHeadings,
   buildBlogPostCategory,
   buildPageLanguageFlag,
@@ -27,7 +28,6 @@ export {
   buildBlogTagsIndexes,
   buildLandingPageUrl,
   buildBlogPostSlug,
-  buildBlogAuthors,
   buildBlogPostUrl,
   buildPagePath,
   buildPageRoot,
