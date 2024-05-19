@@ -6,7 +6,11 @@ import type { Author as NestedTypeAuthor } from 'contentlayer/generated';
 
 const authors = {
   Gustave: {
-    profilePicUrl: '/assets/medias/img/dev/placeholders/placeholder-54.jpeg'
+    profilePicUrl: '/assets/medias/img/dev/placeholders/placeholder-54.jpeg',
+    bio: 'Je suis très chouette'
+  },
+  Arnaud: {
+    profilePicUrl: '/assets/medias/img/dev/placeholders/placeholder-55.jpeg'
   }
 } as const satisfies Authors;
 

@@ -23,6 +23,7 @@ const Author = defineNestedType(() => ({
       type: 'nested',
       of: Medias
     },
+    bio: { required: false, type: 'string', default: '' },
     profilePicUrl: { required: true, type: 'string' }
   },
 

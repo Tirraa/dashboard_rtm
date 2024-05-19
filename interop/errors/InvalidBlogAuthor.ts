@@ -6,24 +6,23 @@ type InvalidAuthor = string;
 
 class InvalidBlogAuthor extends Error {
   constructor(invalidBlogAuthors: InvalidAuthor[], validAuthorsNames: readonly AuthorName[]) {
-    // eslint-disable-next-line no-magic-numbers
-    const author = invalidBlogAuthors.length === 1 ? 'author' : 'authors';
-
-    const invalidAuthor =
+    const invalidAuthorPart =
       // eslint-disable-next-line no-magic-numbers
       invalidBlogAuthors.length > 1
-        ? `Invalid ${author}: [“${invalidBlogAuthors.join('”, “')}”]`
+        ? `Invalid authors: [“${invalidBlogAuthors.join('”, “')}”]`
         : // eslint-disable-next-line no-magic-numbers
-          `Invalid ${author}: “${invalidBlogAuthors[0]}”`;
+          `Invalid author: “${invalidBlogAuthors[0]}”`;
 
-    const validAuthor =
+    const validAuthorPart =
       // eslint-disable-next-line no-magic-numbers
       validAuthorsNames.length > 1
         ? `Valid authors are: [“${validAuthorsNames.join('”, “')}”]`
         : // eslint-disable-next-line no-magic-numbers
           `Valid author is: “${validAuthorsNames[0]}”`;
 
-    const message = invalidAuthor + '\n' + ' '.repeat(TAB_SIZE) + validAuthor;
+    const tab = ' '.repeat(TAB_SIZE);
+
+    const message = invalidAuthorPart + '\n' + tab + validAuthorPart;
     super(message);
     this.name = 'InvalidBlogAuthorError';
   }
