@@ -1,6 +1,6 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
-import type { Index } from 'packages/shared-types/src/Numbers';
+import type { Index } from '@rtm/shared-types/Numbers';
 
 import { BlogAuthorDuplicates, InvalidBlogAuthor, BULLET } from '../../../unifiedImport';
 

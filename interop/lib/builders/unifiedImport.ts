@@ -14,7 +14,6 @@ import { blogTagOptions } from '../../config/contentlayer/blog/blogTags';
 import ForbiddenToUseIndexError from '../../errors/ForbiddenToUseIndex';
 import { INDEX_TOKEN, BULLET } from '../misc/contentlayerCornerCases';
 import BlogAuthorDuplicates from '../../errors/BlogAuthorDuplicates';
-import { authorNames } from '../../config/contentlayer/blog/authors';
 import capitalize from '../../../src/lib/portable/str/capitalize';
 import InvalidArgumentsError from '../../errors/InvalidArguments';
 import BlogTagDuplicates from '../../errors/BlogTagDuplicates';
@@ -46,7 +45,6 @@ export {
   blogTagOptions,
   PAGES_FOLDER,
   ROUTES_ROOTS,
-  authorNames,
   INDEX_TOKEN,
   capitalize,
   BULLET
