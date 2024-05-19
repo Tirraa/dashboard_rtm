@@ -9,20 +9,16 @@ export enum ELanguagesFlag {
 }
 
 const _i18nsBase = {
-  blogTagsFilters: 'blog-tags-filters',
   metadescriptions: 'metadescriptions',
-  blogCategories: 'blog-categories',
-  blogAuthors: 'blog-authors',
   pagesTitles: 'pages-titles',
   searchMenu: 'search-menu',
   dashboard: 'dashboard',
-  blogTags: 'blog-tags',
-  blogToc: 'blog-toc',
   filters: 'filters',
   navbar: 'navbar',
   errors: 'errors',
   infos: '_infos',
   vocab: 'vocab',
+  blog: 'blog',
   auth: 'auth'
 } as const satisfies I18nsBase;
 
@@ -30,11 +26,16 @@ const i18nsBase: MakeI18nsBase<typeof _i18nsBase> = _i18nsBase;
 
 export const i18ns = {
   ...i18nsBase,
-  brokenPagefindIntegrationError: 'errors.brokenPagefindIntegration',
-  dashboardPagesTitles: 'dashboard.pages-titles',
-  searchMenuOptions: 'search-menu.options',
-  searchMenuSrOnly: 'search-menu.sr-only',
-  srOnly: 'vocab.sr-only'
+  brokenPagefindIntegrationError: `${i18nsBase.errors}.brokenPagefindIntegration`,
+  dashboardPagesTitles: `${i18nsBase.dashboard}.pages-titles`,
+  searchMenuOptions: `${i18nsBase.searchMenu}.options`,
+  searchMenuSrOnly: `${i18nsBase.searchMenu}.sr-only`,
+  blogTagsFilters: `${i18nsBase.blog}.tags-filters`,
+  blogCategories: `${i18nsBase.blog}.categories`,
+  blogAuthors: `${i18nsBase.blog}.authors`,
+  srOnly: `${i18nsBase.vocab}.sr-only`,
+  blogTags: `${i18nsBase.blog}.tags`,
+  blogToc: `${i18nsBase.blog}.toc`
 } as const satisfies Record<PropertyKey, I18nVocabScope> & typeof i18nsBase;
 
 export const DEFAULT_LANGUAGE = DEFAULT_LANGUAGE_OBJ._infos.lng satisfies LanguageFlag;

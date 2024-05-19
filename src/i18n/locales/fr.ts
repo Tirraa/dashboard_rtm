@@ -39,39 +39,69 @@ const SHARED: SharedVocabType = {
 } as const;
 
 export default {
-  // eslint-disable-next-line perfectionist/sort-objects
-  'blog-categories': {
-    'patch-notes-bis': {
-      'discord-bot-bis': {
-        'meta-description': 'Metadescription Patch-notes -> Bot Discord (bis)',
-        title: SHARED['pages-titles']['discord-bot-bis']
+  blog: {
+    categories: {
+      'patch-notes-bis': {
+        'discord-bot-bis': {
+          'meta-description': 'Metadescription Patch-notes -> Bot Discord (bis)',
+          title: SHARED['pages-titles']['discord-bot-bis']
+        },
+
+        'dashboard-bis': {
+          'meta-description': 'Metadescription Patch-notes -> Dashboard (bis)',
+          title: SHARED['pages-titles']['dashboard-bis']
+        },
+
+        '_meta-description': 'Metadescription Notes de patch (bis)',
+        _title: SHARED['pages-titles']['patch-notes-bis']
       },
 
-      'dashboard-bis': {
-        'meta-description': 'Metadescription Patch-notes -> Dashboard (bis)',
-        title: SHARED['pages-titles']['dashboard-bis']
+      'patch-notes': {
+        'discord-bot': {
+          'meta-description': 'Metadescription Patch-notes -> Bot Discord',
+          title: SHARED['pages-titles']['discord-bot']
+        },
+
+        dashboard: {
+          'meta-description': 'Metadescription Patch-notes -> Dashboard',
+          title: SHARED['pages-titles'].dashboard
+        },
+
+        '_meta-description': 'Metadescription Notes de patch',
+        _title: SHARED['pages-titles']['patch-notes']
       },
 
-      '_meta-description': 'Metadescription Notes de patch (bis)',
-      _title: SHARED['pages-titles']['patch-notes-bis']
+      'blog-testing-category': SHARED_TESTING_BLOG_CATEGORY_METADATAS
     },
 
-    'patch-notes': {
-      'discord-bot': {
-        'meta-description': 'Metadescription Patch-notes -> Bot Discord',
-        title: SHARED['pages-titles']['discord-bot']
-      },
-
-      dashboard: {
-        'meta-description': 'Metadescription Patch-notes -> Dashboard',
-        title: SHARED['pages-titles'].dashboard
-      },
-
-      '_meta-description': 'Metadescription Notes de patch',
-      _title: SHARED['pages-titles']['patch-notes']
+    toc: {
+      'sr-only': {
+        'show-toc': `Afficher la ${SHARED.vocab.toc}`,
+        'hide-toc': `Masquer la ${SHARED.vocab.toc}`
+      }
     },
 
-    'blog-testing-category': SHARED_TESTING_BLOG_CATEGORY_METADATAS
+    tags: {
+      xylophone: 'Xylophone',
+      bagpipes: 'Cornemuse',
+      cello: 'Violoncelle',
+      drums: 'Batterie'
+    },
+
+    'tags-filters': {
+      'no-result-found': 'Rien trouvé !',
+      'clear-filters': 'Réinitialiser'
+    },
+
+    authors: {
+      Gustave: {
+        bio: ''
+      },
+
+      Arnaud: {
+        bio: ''
+      }
+    }
   },
 
   navbar: {
@@ -124,11 +154,13 @@ export default {
       'quick-access': 'Accès rapide',
       'next-screen': 'Écran suivant'
     },
+
     options: {
       blog: "Recherche d'articles de blog",
       pages: 'Recherche de pages',
       all: 'Recherche globale'
     },
+
     'nothing-found': 'Aucun résultat !'
   },
 
@@ -160,39 +192,10 @@ export default {
     'alphabet-asc': 'Alphabétique A-Z'
   },
 
-  'blog-toc': {
-    'sr-only': {
-      'show-toc': `Afficher la ${SHARED.vocab.toc}`,
-      'hide-toc': `Masquer la ${SHARED.vocab.toc}`
-    }
-  },
-
-  'blog-tags': {
-    xylophone: 'Xylophone',
-    bagpipes: 'Cornemuse',
-    cello: 'Violoncelle',
-    drums: 'Batterie'
-  },
-
-  'blog-tags-filters': {
-    'no-result-found': 'Rien trouvé !',
-    'clear-filters': 'Réinitialiser'
-  },
-
   auth: {
     signup: SHARED.vocab['sign-up'],
     logout: 'Déconnexion',
     login: 'Connexion'
-  },
-
-  'blog-authors': {
-    Gustave: {
-      bio: ''
-    },
-
-    Arnaud: {
-      bio: ''
-    }
   },
 
   metadescriptions: {

@@ -91,6 +91,24 @@ export default {
     assistance: _
   },
 
+  blog: {
+    toc: {
+      'sr-only': {
+        'hide-toc': _,
+        'show-toc': _
+      }
+    },
+
+    'tags-filters': {
+      'no-result-found': _,
+      'clear-filters': _
+    },
+
+    authors: blogAuthorOptionsVocabSchema,
+    tags: blogTagOptionsVocabSchema,
+    categories: blogCategories
+  },
+
   dashboard: {
     'sr-only': {
       'hide-sidebar': _,
@@ -119,18 +137,6 @@ export default {
     }
   },
 
-  'blog-toc': {
-    'sr-only': {
-      'hide-toc': _,
-      'show-toc': _
-    }
-  },
-
-  'blog-tags-filters': {
-    'no-result-found': _,
-    'clear-filters': _
-  },
-
   auth: {
     logout: _,
     signup: _,
@@ -139,19 +145,13 @@ export default {
 
   'pages-titles': SHARED_VOCAB_SCHEMA['pages-titles'],
 
-  'blog-authors': blogAuthorOptionsVocabSchema,
-
   metadescriptions: {
     homepage: _
   },
 
-  'blog-tags': blogTagOptionsVocabSchema,
-
   _infos: {
     lng: '__SCANNED__'
-  },
-
-  'blog-categories': blogCategories
+  }
 } as const satisfies TypedLeafsJSONData<MaybeScanned>;
 
 type NotScanned = '';

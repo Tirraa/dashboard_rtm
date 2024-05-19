@@ -39,39 +39,69 @@ const SHARED: SharedVocabType = {
 } as const;
 
 export default {
-  // eslint-disable-next-line perfectionist/sort-objects
-  'blog-categories': {
-    'patch-notes-bis': {
-      'discord-bot-bis': {
-        'meta-description': 'Metadescription Patch-notes -> Bot Discord (bis)',
-        title: SHARED['pages-titles']['discord-bot-bis']
+  blog: {
+    categories: {
+      'patch-notes-bis': {
+        'discord-bot-bis': {
+          'meta-description': 'Metadescription Patch-notes -> Bot Discord (bis)',
+          title: SHARED['pages-titles']['discord-bot-bis']
+        },
+
+        'dashboard-bis': {
+          'meta-description': 'Metadescription Patch-notes -> Dashboard (bis)',
+          title: SHARED['pages-titles']['dashboard-bis']
+        },
+
+        '_meta-description': 'Metadescription Patch Notes (bis)',
+        _title: SHARED['pages-titles']['patch-notes-bis']
       },
 
-      'dashboard-bis': {
-        'meta-description': 'Metadescription Patch-notes -> Dashboard (bis)',
-        title: SHARED['pages-titles']['dashboard-bis']
+      'patch-notes': {
+        'discord-bot': {
+          'meta-description': 'Patch-notes -> Discord Bot - Metadescription',
+          title: SHARED['pages-titles']['discord-bot']
+        },
+
+        dashboard: {
+          'meta-description': 'Patch-notes -> Dashboard - Metadescription',
+          title: SHARED['pages-titles'].dashboard
+        },
+
+        '_meta-description': 'Patch Notes Metadescription',
+        _title: SHARED['pages-titles']['patch-notes']
       },
 
-      '_meta-description': 'Metadescription Patch Notes (bis)',
-      _title: SHARED['pages-titles']['patch-notes-bis']
+      'blog-testing-category': SHARED_TESTING_BLOG_CATEGORY_METADATAS
     },
 
-    'patch-notes': {
-      'discord-bot': {
-        'meta-description': 'Patch-notes -> Discord Bot - Metadescription',
-        title: SHARED['pages-titles']['discord-bot']
-      },
-
-      dashboard: {
-        'meta-description': 'Patch-notes -> Dashboard - Metadescription',
-        title: SHARED['pages-titles'].dashboard
-      },
-
-      '_meta-description': 'Patch Notes Metadescription',
-      _title: SHARED['pages-titles']['patch-notes']
+    toc: {
+      'sr-only': {
+        'hide-toc': `Hide the ${SHARED.vocab.toc}`,
+        'show-toc': `Show the ${SHARED.vocab.toc}`
+      }
     },
 
-    'blog-testing-category': SHARED_TESTING_BLOG_CATEGORY_METADATAS
+    tags: {
+      xylophone: 'Xylophone',
+      bagpipes: 'Bagpipes',
+      drums: 'Drums',
+      cello: 'Cello'
+    },
+
+    authors: {
+      Gustave: {
+        bio: ''
+      },
+
+      Arnaud: {
+        bio: ''
+      }
+    },
+
+    'tags-filters': {
+      'no-result-found': 'Nothing found!',
+      'clear-filters': 'Clear'
+    }
   },
 
   vocab: {
@@ -124,11 +154,13 @@ export default {
       'next-screen': 'Next screen',
       results: 'Search results'
     },
+
     options: {
       blog: 'Search blog posts',
       pages: 'Search pages',
       all: 'Global search'
     },
+
     'nothing-found': 'Nothing found!'
   },
 
@@ -157,35 +189,6 @@ export default {
     brokenPagefindIntegration: {
       message: 'Search is broken. We have been alerted of this issue. Please try again later.',
       title: 'Search feature anomaly'
-    }
-  },
-
-  'blog-toc': {
-    'sr-only': {
-      'hide-toc': `Hide the ${SHARED.vocab.toc}`,
-      'show-toc': `Show the ${SHARED.vocab.toc}`
-    }
-  },
-
-  'blog-tags': {
-    xylophone: 'Xylophone',
-    bagpipes: 'Bagpipes',
-    drums: 'Drums',
-    cello: 'Cello'
-  },
-
-  'blog-tags-filters': {
-    'no-result-found': 'Nothing found!',
-    'clear-filters': 'Clear'
-  },
-
-  'blog-authors': {
-    Gustave: {
-      bio: ''
-    },
-
-    Arnaud: {
-      bio: ''
     }
   },
 

@@ -5,21 +5,21 @@ import type { Index } from 'packages/shared-types/src/Numbers';
 import { BlogAuthorDuplicates, InvalidBlogAuthor, BULLET } from '../../../unifiedImport';
 
 function validateAuthorNames<AuthorName extends string>(
-  tagsArrayUniq: AuthorName[],
-  indexedBlogTagOptions: Record<AuthorName, Index>,
-  blogTagOptions: readonly AuthorName[]
+  authorsNamesArrayUniq: AuthorName[],
+  indexedAuthorsNames: Record<AuthorName, Index>,
+  authorsNames: readonly AuthorName[]
 ): MaybeNull<InvalidBlogAuthor> {
   const defects: string[] = [];
 
-  for (const tag of tagsArrayUniq) {
-    if (indexedBlogTagOptions[tag] === undefined) {
-      defects.push(tag);
+  for (const authorName of authorsNamesArrayUniq) {
+    if (indexedAuthorsNames[authorName] === undefined) {
+      defects.push(authorName);
       continue;
     }
   }
 
   // eslint-disable-next-line no-magic-numbers
-  if (defects.length > 0) return new InvalidBlogAuthor(defects, blogTagOptions);
+  if (defects.length > 0) return new InvalidBlogAuthor(defects, authorsNames);
   return null;
 }
 
