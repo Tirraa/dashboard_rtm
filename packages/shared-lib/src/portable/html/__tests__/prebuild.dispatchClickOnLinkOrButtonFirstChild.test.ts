@@ -1,4 +1,4 @@
-import type { IElement } from 'happy-dom';
+import type { Element } from 'happy-dom';
 
 import { describe, expect, it } from 'vitest';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -15,8 +15,8 @@ describe('dispatchClickOnLinkOrButtonFirstChild', () => {
       </div>
     `;
 
-    const element = window.document.body.querySelector('#element') as IElement;
-    const linkElement = element.querySelector('a') as IElement;
+    const element = window.document.body.querySelector('#element') as Element;
+    const linkElement = element.querySelector('a') as Element;
 
     let clicked = false;
     linkElement.onclick = () => {
@@ -35,8 +35,8 @@ describe('dispatchClickOnLinkOrButtonFirstChild', () => {
       </div>
     `;
 
-    const element = window.document.body.querySelector('#element') as IElement;
-    const buttonElement = element.querySelector('button') as IElement;
+    const element = window.document.body.querySelector('#element') as Element;
+    const buttonElement = element.querySelector('button') as Element;
 
     let clicked = false;
     buttonElement.onclick = () => {
