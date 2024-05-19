@@ -1,5 +1,5 @@
 import type { MaybeUndefined, MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
-import type { DocumentHeading } from '@rtm/shared-types/Documents';
+import type { DocumentHeading } from '##/config/contentlayer/blog/headings';
 import type { PxValue, Index } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
 

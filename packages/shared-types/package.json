@@ -10,7 +10,6 @@
   ],
   "exports": {
     "./Auth": "./src/Auth.ts",
-    "./Blog": "./src/Blog.ts",
     "./Breadcrumbs": "./src/Breadcrumbs.ts",
     "./ContentlayerConfig": "./src/ContentlayerConfig.ts",
     "./CustomUtilityTypes": "./src/CustomUtilityTypes.ts",
@@ -30,9 +29,6 @@
     "*": {
       "Auth": [
         "./src/Auth.ts"
-      ],
-      "Blog": [
-        "./src/Blog.ts"
       ],
       "Breadcrumbs": [
         "./src/Breadcrumbs.ts"

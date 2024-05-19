@@ -1,10 +1,8 @@
 import type { Limit, Score } from '@rtm/shared-types/Numbers';
 
+import { DAMERAU_LEVENSHTEIN_THRESHOLD, blogTagOptions } from '../lib/builders/unifiedImport';
 import { EMPTY_BULLET, TAB_SIZE } from '../lib/misc/contentlayerCornerCases';
 import damerauLevenshtein from '../lib/misc/damerauLevenshtein';
-import { blogTagOptions } from '../lib/builders/unifiedImport';
-
-export const DAMERAU_LEVENSHTEIN_THRESHOLD = 4;
 
 // eslint-disable-next-line no-magic-numbers
 const tabulation = EMPTY_BULLET + ' '.repeat(TAB_SIZE - 1);
