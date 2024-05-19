@@ -23,6 +23,6 @@
     "typescript": "^5.4.4"
   },
   "engines": {
-    "pnpm": "8.x || 9.x"
+    "pnpm": "9.x"
   }
 }
