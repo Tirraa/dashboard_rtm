@@ -54,7 +54,7 @@ export async function getLandingPageMetadatas(
   if (!currentLp) notFound();
 
   const globalT = await getServerSideI18n();
-  const { metadescription: description, title: lpTitle, seo, url } = currentLp;
+  const { metadescription: description, featuredPictureUrl, title: lpTitle, seo, url } = currentLp;
 
   const { vocab } = i18ns;
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), lpTitle);
@@ -72,6 +72,8 @@ export async function getLandingPageMetadatas(
   if (xDefault !== undefined) languages['x-default'] = xDefault;
 
   const defaultOpenGraph: OpenGraph = { url };
+  if (featuredPictureUrl !== undefined) defaultOpenGraph.images = [{ url: featuredPictureUrl }];
+
   if (seo === undefined) return { alternates: { canonical, languages }, openGraph: defaultOpenGraph, metadataBase, description, title };
 
   const { openGraph = defaultOpenGraph, alternates, robots } = seo;
@@ -79,6 +81,7 @@ export async function getLandingPageMetadatas(
   if ((openGraph as OpenGraph).url === undefined) (openGraph as OpenGraph).url = url;
   if (alternates) (alternates as AlternateURLs).languages = languages;
   if (alternates && !alternates.canonical) (alternates as AlternateURLs).canonical = canonical;
+  if (featuredPictureUrl !== undefined) openGraph.images = [{ url: featuredPictureUrl }];
 
   return { metadataBase, description, alternates, openGraph, robots, title };
 }

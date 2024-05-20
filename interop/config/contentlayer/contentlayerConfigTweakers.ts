@@ -151,6 +151,11 @@ const _ALL_LANDING_PAGES_FIELDS = {
     default: false
   },
 
+  featuredPictureUrl: {
+    required: false,
+    type: 'string'
+  },
+
   metadescription: {
     type: 'string',
     required: true
@@ -283,6 +288,7 @@ export const LANDING_PAGES_DOCUMENTS_COMPUTED_FIELDS = {
 
 export const LANDING_PAGES_DOCUMENTS_FIELDS = {
   doNotExcludeFromLocalSearch: _ALL_LANDING_PAGES_FIELDS.doNotExcludeFromLocalSearch,
+  featuredPictureUrl: _ALL_LANDING_PAGES_FIELDS.featuredPictureUrl,
   metadescription: _ALL_LANDING_PAGES_FIELDS.metadescription,
   draft: _ALL_LANDING_PAGES_FIELDS.draft,
   title: _ALL_LANDING_PAGES_FIELDS.title,
