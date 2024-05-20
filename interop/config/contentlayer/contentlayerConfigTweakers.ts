@@ -191,6 +191,11 @@ const _ALL_PAGES_FIELDS = {
     default: false
   },
 
+  featuredPictureUrl: {
+    required: false,
+    type: 'string'
+  },
+
   metadescription: {
     type: 'string',
     required: true
@@ -298,6 +303,7 @@ export const PAGES_DOCUMENTS_COMPUTED_FIELDS = {
 /* v8 ignore stop */
 
 export const PAGES_DOCUMENTS_FIELDS = {
+  featuredPictureUrl: _ALL_PAGES_FIELDS.featuredPictureUrl,
   metadescription: _ALL_PAGES_FIELDS.metadescription,
   draft: _ALL_PAGES_FIELDS.draft,
   title: _ALL_PAGES_FIELDS.title,

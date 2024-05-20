@@ -57,7 +57,7 @@ export async function getPageMetadatas(
   if (!currentPage) notFound();
 
   const globalT = await getServerSideI18n();
-  const { metadescription: description, title: pageTitle, seo, url } = currentPage;
+  const { metadescription: description, featuredPictureUrl, title: pageTitle, seo, url } = currentPage;
 
   const { vocab } = i18ns;
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), pageTitle);
@@ -78,6 +78,8 @@ export async function getPageMetadatas(
   if (xDefault !== undefined) languages['x-default'] = xDefault;
 
   const defaultOpenGraph: OpenGraph = { url };
+  if (featuredPictureUrl !== undefined) defaultOpenGraph.images = [{ url: featuredPictureUrl }];
+
   if (seo === undefined) return { alternates: { canonical, languages }, openGraph: defaultOpenGraph, metadataBase, description, title };
 
   const { openGraph = defaultOpenGraph, alternates, robots } = seo;
@@ -85,6 +87,7 @@ export async function getPageMetadatas(
   if ((openGraph as OpenGraph).url === undefined) (openGraph as OpenGraph).url = url;
   if (alternates) (alternates as AlternateURLs).languages = languages;
   if (alternates && !alternates.canonical) (alternates as AlternateURLs).canonical = canonical;
+  if (featuredPictureUrl !== undefined) openGraph.images = [{ url: featuredPictureUrl }];
 
   return { metadataBase, description, alternates, openGraph, robots, title };
 }
