@@ -47,6 +47,7 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
                 aria-hidden="true"
                 height={384}
                 width={384}
+                priority
                 alt=""
               />
             </div>
