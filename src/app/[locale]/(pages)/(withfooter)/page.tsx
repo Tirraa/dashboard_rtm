@@ -27,7 +27,7 @@ export async function generateMetadata() {
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), globalT(`${pagesTitles}.homepage`), true);
   const description = globalT(`${metadescriptions}.homepage`);
 
-  return { alternates: { canonical: '/' }, metadataBase, description, openGraph, title };
+  return { metadataBase, description, openGraph, title };
 }
 
 export function generateStaticParams() {

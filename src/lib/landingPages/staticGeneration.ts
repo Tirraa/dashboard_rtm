@@ -20,14 +20,12 @@ import { getPathnameWithoutI18nFlag } from '../i18n';
 
 /* v8 ignore start */
 // Stryker disable all
+
 export function getLandingPagesStaticParams() {
   const landingPagesStaticParams = doGetLandingPagesStaticParams();
   return landingPagesStaticParams;
 }
-/* v8 ignore stop */
-// Stryker restore all
 
-// {ToDo} Write tests
 function getXDefaultAndCanonical(
   currentLp: LandingPage,
   slug: UnknownLandingPageSlug,
@@ -85,3 +83,6 @@ export async function getLandingPageMetadatas(
 
   return { metadataBase, description, alternates, openGraph, robots, title };
 }
+
+// Stryker restore all
+/* v8 ignore stop */

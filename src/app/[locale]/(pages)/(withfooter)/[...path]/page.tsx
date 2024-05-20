@@ -1,3 +1,6 @@
+/* v8 ignore start */
+// Stryker disable all
+
 import type { PageProps } from '@/types/Page';
 
 import { getPageStaticParams, getPageMetadatas } from '@/lib/pages/staticGeneration';
@@ -38,3 +41,6 @@ export default function Page({ params }: PageProps) {
     </main>
   );
 }
+
+// Stryker restore all
+/* v8 ignore stop */

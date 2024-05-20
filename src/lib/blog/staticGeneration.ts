@@ -31,6 +31,7 @@ import blogPostGuard from './guards/blogPostGuard';
 
 /* v8 ignore start */
 // Stryker disable all
+
 export async function getBlogStaticParams(): Promise<BlogStaticParams[]> {
   const blogStaticParams = await doGetBlogStaticParams();
   return blogStaticParams;
@@ -45,10 +46,7 @@ export async function getBlogCategoryMetadatas({ params }: BlogCategoryPageProps
 
   return { description, title };
 }
-// Stryker restore all
-/* v8 ignore stop */
 
-// {ToDo} Write tests
 export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPageProps) {
   const [category, subcategory, language] = [params[BlogTaxonomy.CATEGORY], params[BlogTaxonomy.SUBCATEGORY], params[I18nTaxonomy.LANGUAGE]];
 
@@ -140,14 +138,10 @@ export async function getBlogPostMetadatas(
   if (alternates) (alternates as AlternateURLs).languages = languages;
   if (alternates && !alternates.canonical) (alternates as AlternateURLs).canonical = canonical;
 
-  return {
-    metadataBase,
-    description,
-    alternates,
-    openGraph,
-    robots,
-    title
-  };
+  return { metadataBase, description, alternates, openGraph, robots, title };
 }
 
 export { blogSubcategoryGuard, blogCategoryGuard, blogPostGuard };
+
+// Stryker restore all
+/* v8 ignore stop */

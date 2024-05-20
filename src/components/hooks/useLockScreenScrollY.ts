@@ -1,3 +1,5 @@
+// Stryker disable all
+
 import { getBodyContainer } from '@/lib/html';
 import { useLayoutEffect } from 'react';
 
@@ -11,3 +13,5 @@ const useLockScreenScrollY = () =>
   }, []);
 
 export default useLockScreenScrollY;
+
+// Stryker restore all

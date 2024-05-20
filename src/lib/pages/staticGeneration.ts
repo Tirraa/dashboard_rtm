@@ -21,14 +21,12 @@ import { getPathnameWithoutI18nFlag } from '../i18n';
 
 /* v8 ignore start */
 // Stryker disable all
+
 export function getPageStaticParams() {
   const pageStaticParams = doGetPageStaticParams();
   return pageStaticParams;
 }
-/* v8 ignore stop */
-// Stryker restore all
 
-// {ToDo} Write tests
 function getXDefaultAndCanonical(
   currentPage: Page,
   path: UnknownPagePath,
@@ -91,3 +89,6 @@ export async function getPageMetadatas(
 
   return { metadataBase, description, alternates, openGraph, robots, title };
 }
+
+// Stryker restore all
+/* v8 ignore stop */

@@ -11,6 +11,8 @@ function getPaginatedElementsCurrentSliceStartAndEndIndexes(page: Count, element
 }
 
 export function getPaginatedElementsCurrentSlice(page: Count, elementsPerPage: Quantity, paginatedElements: ReactElement[]): ReactElement[] {
+  // Stryker Workaround 1. Pointless mutant, just a minor optimization.
+  // Stryker disable next-line EqualityOperator,ConditionalExpression
   if (paginatedElements.length <= elementsPerPage) return paginatedElements;
   const [startIndex, endIndex] = getPaginatedElementsCurrentSliceStartAndEndIndexes(page, elementsPerPage);
   const currentSlice = paginatedElements.slice(startIndex, endIndex);

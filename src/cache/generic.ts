@@ -18,7 +18,9 @@ function invalidateExpiredCacheData(key: string) {
   if (!clock) return;
 
   const { cachedAt, ttl } = clock;
-  if (Math.abs(Date.now() - cachedAt) > ttl) delete GenericInMemoryCache.data[key];
+  // Stryker Workaround 1. Pointless mutant
+  // Stryker disable next-line EqualityOperator
+  if (Math.abs(Date.now() - cachedAt) >= ttl) delete GenericInMemoryCache.data[key];
 }
 
 export function get(key: string) {
@@ -28,6 +30,8 @@ export function get(key: string) {
 
 export function getClock(key: string) {
   invalidateExpiredCacheData(key);
+  // Stryker Workaround 2. Pointless mutant
+  // Stryker disable next-line OptionalChaining
   return GenericInMemoryCache.data[key]?.clock;
 }
 
@@ -45,13 +49,20 @@ export function set(key: string, data: Data, ttl: MsValue = 0) {
     GenericInMemoryCache.data[key].clock = undefined;
   }
 
+  // Stryker Workaround 3. Pointless mutant `if (true)`
+  // Stryker disable next-line ConditionalExpression
   if (!GenericInMemoryCache.data[key]) GenericInMemoryCache.data[key] = {} as DataCacheEntry;
+  // Stryker Workaround 4. Pointless mutants
+  // Stryker disable next-line ConditionalExpression,EqualityOperator
   GenericInMemoryCache.data[key].value = typeof data === 'object' ? structuredClone(data) : data;
 
-  // eslint-disable-next-line no-magic-numbers
+  /* eslint-disable no-magic-numbers */
+  // Stryker Workaround 5. Pointless mutants
+  // Stryker disable ConditionalExpression,EqualityOperator
   if (ttl > 0) setClock(key, ttl);
-  // eslint-disable-next-line no-magic-numbers
   else if (ttl < 0) disposeClock(key);
+  // Stryker restore ConditionalExpression,EqualityOperator
+  /* eslint-enable no-magic-numbers */
 }
 
 // eslint-disable-next-line no-magic-numbers

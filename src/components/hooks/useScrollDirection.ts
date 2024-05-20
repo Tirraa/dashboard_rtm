@@ -1,3 +1,5 @@
+// Stryker disable all
+
 // https://www.robinwieruch.de/react-hook-scroll-direction/
 
 import type { SetStateAction, Dispatch } from 'react';
@@ -48,3 +50,5 @@ const useScrollDirection = (): [ScrollDirection, Dispatch<SetStateAction<ScrollD
 };
 
 export default useScrollDirection;
+
+// Stryker restore all
