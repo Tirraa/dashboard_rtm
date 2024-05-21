@@ -38,7 +38,10 @@ export async function getBlogStaticParams(): Promise<BlogStaticParams[]> {
   return blogStaticParams;
 }
 
-export async function getBlogCategoryMetadatas({ params }: BlogCategoryPageProps) {
+export async function getBlogCategoryMetadatas(
+  { params }: BlogCategoryPageProps,
+  metadataBase: MaybeObjectValue<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined
+) {
   const globalT = await getServerSideI18n();
   const category = params[BlogTaxonomy.CATEGORY];
   const { blogCategories, vocab } = i18ns;
@@ -50,10 +53,13 @@ export async function getBlogCategoryMetadatas({ params }: BlogCategoryPageProps
   ] as unknown as MaybeObjectValue<Href[]>;
   const openGraph: MaybeObjectValue<OpenGraph> = maybeOpenGraphImages ? { images: maybeOpenGraphImages } : undefined;
 
-  return { description, openGraph, title };
+  return { metadataBase, description, openGraph, title };
 }
 
-export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPageProps) {
+export async function getBlogSubcategoryMetadatas(
+  { params }: BlogSubcategoryPageProps,
+  metadataBase: MaybeObjectValue<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined
+) {
   const [category, subcategory, language] = [params[BlogTaxonomy.CATEGORY], params[BlogTaxonomy.SUBCATEGORY], params[I18nTaxonomy.LANGUAGE]];
 
   if (!isValidBlogCategoryAndSubcategoryPair(category, subcategory, language)) return {};
@@ -77,7 +83,7 @@ export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPag
 
   const openGraph: MaybeObjectValue<OpenGraph> = maybeOpenGraphImages ? { images: maybeOpenGraphImages } : undefined;
 
-  return { description, openGraph, title };
+  return { metadataBase, description, openGraph, title };
 }
 
 async function getXDefaultAndCanonical(
