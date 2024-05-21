@@ -9,7 +9,7 @@ import type {
   BlogPostType,
   BlogCategory
 } from '@/types/Blog';
-import type { MaybeUndefined, MaybeNull, Couple } from '@rtm/shared-types/CustomUtilityTypes';
+import type { MaybeObjectValue, MaybeUndefined, MaybeNull, Couple } from '@rtm/shared-types/CustomUtilityTypes';
 import type { AlternateURLs } from 'next/dist/lib/metadata/types/alternative-urls-types';
 import type { I18nMiddlewareConfig, LanguageFlag } from '@rtm/shared-types/I18n';
 import type { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
@@ -21,6 +21,7 @@ import { DEFAULT_LANGUAGE, LANGUAGES, i18ns } from '##/config/i18n';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSideI18n } from '@/i18n/server';
+import BlogConfig from '@/config/Blog/server';
 
 import { isValidBlogCategoryAndSubcategoryPair, getBlogPostUnstrict } from './api';
 import blogSubcategoryGuard from './guards/blogSubcategoryGuard';
@@ -44,7 +45,12 @@ export async function getBlogCategoryMetadatas({ params }: BlogCategoryPageProps
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), globalT(`${blogCategories}.${category}._title`));
   const description = globalT(`${blogCategories}.${category}._meta-description`);
 
-  return { description, title };
+  const maybeOpenGraphImages = BlogConfig.OG.SUBCATEGORIES_PICTURES[
+    category as keyof typeof BlogConfig.OG.SUBCATEGORIES_PICTURES
+  ] as unknown as MaybeObjectValue<Href[]>;
+  const openGraph: MaybeObjectValue<OpenGraph> = maybeOpenGraphImages ? { images: maybeOpenGraphImages } : undefined;
+
+  return { description, openGraph, title };
 }
 
 export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPageProps) {
@@ -57,7 +63,21 @@ export async function getBlogSubcategoryMetadatas({ params }: BlogSubcategoryPag
   const narrowedCategoryAndSubcategoryAssoc = `${category}.${subcategory}` as BlogCategoriesAndSubcategoriesAssoc;
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), globalT(`${blogCategories}.${narrowedCategoryAndSubcategoryAssoc}.title`));
   const description = globalT(`${blogCategories}.${narrowedCategoryAndSubcategoryAssoc}.meta-description`);
-  return { description, title };
+
+  const maybeCategoryAndSubcategoriesOGPicturesAssoc = BlogConfig.OG.SUBCATEGORIES_PICTURES[
+    category as keyof typeof BlogConfig.OG.SUBCATEGORIES_PICTURES
+  ] as unknown;
+
+  const maybeOpenGraphImages =
+    typeof maybeCategoryAndSubcategoriesOGPicturesAssoc === 'object'
+      ? ((maybeCategoryAndSubcategoriesOGPicturesAssoc as object)[
+          subcategory as keyof typeof maybeCategoryAndSubcategoriesOGPicturesAssoc
+        ] as MaybeObjectValue<Href[]>)
+      : undefined;
+
+  const openGraph: MaybeObjectValue<OpenGraph> = maybeOpenGraphImages ? { images: maybeOpenGraphImages } : undefined;
+
+  return { description, openGraph, title };
 }
 
 async function getXDefaultAndCanonical(
@@ -81,7 +101,7 @@ async function getXDefaultAndCanonical(
 export async function getBlogPostMetadatas(
   { params }: BlogPostPageProps,
   middlewareStrategy: I18nMiddlewareConfig['urlMappingStrategy'],
-  metadataBase: MaybeUndefined<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined
+  metadataBase: MaybeObjectValue<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined
 ): Promise<Metadata> {
   const [category, subcategory, slug, language] = [
     params[BlogTaxonomy.CATEGORY],

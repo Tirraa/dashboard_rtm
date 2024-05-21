@@ -1,4 +1,4 @@
-import type { MaybeUndefined, MaybeNull, Couple } from '@rtm/shared-types/CustomUtilityTypes';
+import type { MaybeObjectValue, MaybeUndefined, MaybeNull, Couple } from '@rtm/shared-types/CustomUtilityTypes';
 import type { AlternateURLs } from 'next/dist/lib/metadata/types/alternative-urls-types';
 import type { UnknownLandingPageSlug, LandingPageProps } from '@/types/LandingPage';
 import type { I18nMiddlewareConfig, LanguageFlag } from '@rtm/shared-types/I18n';
@@ -45,7 +45,7 @@ function getXDefaultAndCanonical(
 export async function getLandingPageMetadatas(
   { params }: LandingPageProps,
   middlewareStrategy: I18nMiddlewareConfig['urlMappingStrategy'],
-  metadataBase: MaybeUndefined<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined
+  metadataBase: MaybeObjectValue<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined
 ): Promise<Metadata> {
   const [language, slug] = [params[I18nTaxonomy.LANGUAGE], params[LandingPageTaxonomy.SLUG]];
   const currentLp: MaybeNull<LandingPage> = getLandingPageByLanguageAndSlugUnstrict(language, slug);

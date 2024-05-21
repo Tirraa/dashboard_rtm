@@ -1,7 +1,7 @@
 /* v8 ignore start */
 // Stryker disable all
 
-import type { WithClassname, WithLanguage } from '@rtm/shared-types/Next';
+import type { WithClassname, WithLanguage, Href } from '@rtm/shared-types/Next';
 import type { KeySeparator } from '@rtm/shared-types/CustomUtilityTypes';
 import type { BlogTaxonomyType } from '##/config/taxonomies/blog';
 import type { BlogPostSchema } from 'contentlayer/generated';
@@ -61,6 +61,16 @@ export type PostsCollectionAssoc = Record<BlogCategory, AllPostsGetter>;
 
 type BlogStaticParamsValue = string;
 export type BlogStaticParams = Record<keyof BlogTaxonomyType, BlogStaticParamsValue>;
+
+export type BlogCategoriesOGPictures = Record<keyof StrictBlog, Href[]>;
+
+export type BlogSubcategoriesOGPictures = {
+  [Categ in keyof StrictBlog]: StrictBlog[Categ] extends object
+    ? {
+        [_ in keyof StrictBlog[Categ]]: Href[];
+      }
+    : never;
+};
 
 export type StrictBlogPost = {
   [Category in keyof StrictBlog]: {

@@ -1,4 +1,4 @@
-import type { MaybeUndefined } from '@rtm/shared-types/CustomUtilityTypes';
+import type { MaybeObjectValue } from '@rtm/shared-types/CustomUtilityTypes';
 import type { MsTimestamp, MsValue } from '@rtm/shared-types/Numbers';
 
 // * ... Inspired from https://github.com/Julien-R44/bentocache
@@ -67,7 +67,7 @@ export function set(key: string, data: Data, ttl: MsValue = 0) {
 
 // eslint-disable-next-line no-magic-numbers
 export async function getOrSet(key: string, data: () => Promise<Data>, ttl: MsValue = 0) {
-  const value: MaybeUndefined<Data> = get(key);
+  const value: MaybeObjectValue<Data> = get(key);
   if (value !== undefined) return value;
 
   const mountedData = await data();

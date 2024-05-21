@@ -1,5 +1,5 @@
+import type { MaybeObjectValue, MaybeUndefined, Couple } from '@rtm/shared-types/CustomUtilityTypes';
 import type { AlternateURLs } from 'next/dist/lib/metadata/types/alternative-urls-types';
-import type { MaybeUndefined, Couple } from '@rtm/shared-types/CustomUtilityTypes';
 import type { I18nMiddlewareConfig, LanguageFlag } from '@rtm/shared-types/I18n';
 import type { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
 import type { UnknownPagePath, PageProps } from '@/types/Page';
@@ -46,7 +46,7 @@ function getXDefaultAndCanonical(
 export async function getPageMetadatas(
   { params }: PageProps,
   middlewareStrategy: I18nMiddlewareConfig['urlMappingStrategy'],
-  metadataBase: MaybeUndefined<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined
+  metadataBase: MaybeObjectValue<URL> = process.env.METADABASE_URL ? new URL(process.env.METADABASE_URL) : undefined
 ): Promise<Metadata> {
   const [path, language] = [params[PageTaxonomy.PATH].join('/'), params[I18nTaxonomy.LANGUAGE]];
   if (isSkippedPath(path)) notFound();
