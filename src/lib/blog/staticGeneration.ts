@@ -48,8 +48,8 @@ export async function getBlogCategoryMetadatas(
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), globalT(`${blogCategories}.${category}._title`));
   const description = globalT(`${blogCategories}.${category}._meta-description`);
 
-  const maybeOpenGraphImages = BlogConfig.OG.SUBCATEGORIES_PICTURES[
-    category as keyof typeof BlogConfig.OG.SUBCATEGORIES_PICTURES
+  const maybeOpenGraphImages = BlogConfig.OG.CATEGORIES_PICTURES[
+    category as keyof typeof BlogConfig.OG.CATEGORIES_PICTURES
   ] as unknown as MaybeObjectValue<Href[]>;
   const openGraph: MaybeObjectValue<OpenGraph> = maybeOpenGraphImages ? { images: maybeOpenGraphImages } : undefined;
 
