@@ -32,7 +32,7 @@ const TESTING_CATEGORY = 'blog-testing-category' as const satisfies BlogCategory
 const CATEGORIES_OG_PICTURES = {
   'patch-notes-bis': ['/assets/medias/img/dev/placeholders/placeholder-59.jpeg'],
   'patch-notes': ['/assets/medias/img/dev/placeholders/placeholder-60.jpeg']
-} as const satisfies Omit<BlogCategoriesOGPictures, typeof TESTING_CATEGORY>;
+} as const satisfies Partial<Omit<BlogCategoriesOGPictures, typeof TESTING_CATEGORY>>;
 
 const SUBCATEGORIES_OG_PICTURES = {
   'patch-notes-bis': {
@@ -43,7 +43,7 @@ const SUBCATEGORIES_OG_PICTURES = {
     'discord-bot': ['/assets/medias/img/dev/placeholders/placeholder-62.jpeg'],
     dashboard: ['/assets/medias/img/dev/placeholders/placeholder-61.jpeg']
   }
-} as const satisfies Omit<BlogSubcategoriesOGPictures, typeof TESTING_CATEGORY>;
+} as const satisfies Partial<Omit<BlogSubcategoriesOGPictures, typeof TESTING_CATEGORY>>;
 
 const BlogConfig: BlogConfigType = {
   BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC: Object.fromEntries(
