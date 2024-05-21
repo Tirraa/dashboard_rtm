@@ -10,7 +10,7 @@ import { getPathnameWithoutI18nFlag } from '../i18n';
 
 function getAuthenticatedUserRouteShortcut(pathname: AppPath): MaybeUndefined<AppPath> {
   const currentRoute = getPathnameWithoutI18nFlag(pathname);
-  const vipShortcut = VIP_SHORTCUTS[currentRoute as keyof typeof VIP_SHORTCUTS] as MaybeObjectValue<AppPath>;
+  const vipShortcut = (VIP_SHORTCUTS as Record<PropertyKey, MaybeObjectValue<AppPath>>)[currentRoute];
   return vipShortcut;
 }
 

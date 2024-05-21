@@ -11,8 +11,8 @@ import BlogConfigClient from './client';
 
 export type BlogConfigType = {
   OG: {
-    SUBCATEGORIES_PICTURES: typeof SUBCATEGORIES_OG_PICTURES;
-    CATEGORIES_PICTURES: typeof CATEGORIES_OG_PICTURES;
+    SUBCATEGORIES_PICTURES: SubcategoriesOGPictures;
+    CATEGORIES_PICTURES: CategoriesOGPictures;
   };
   DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_SUBCATEGORIES_ON_BLOG_CATEGORY_PAGE: StringsCompareFun;
   DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_CATEGORY_PAGE: DatesCompareFun;
@@ -22,8 +22,8 @@ export type BlogConfigType = {
   DISPLAYED_BLOG_POSTS_PER_SUBCATEGORY_ON_BLOG_CATEGORY_PAGE_LIMIT: Limit;
   BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC: PostsCollectionAssoc;
   BLOG_POST_PREVIEW_DESCRIPTION_CHARACTERS_LIMIT: Limit;
-  TESTING_CATEGORY: typeof TESTING_CATEGORY;
   ENABLE_DRAFTS_IN_PROD: boolean;
+  TESTING_CATEGORY: BlogCategory;
   SHOW_DRAFTS_BADGE: boolean;
 };
 
@@ -32,7 +32,7 @@ const TESTING_CATEGORY = 'blog-testing-category' as const satisfies BlogCategory
 const CATEGORIES_OG_PICTURES = {
   'patch-notes-bis': ['/assets/medias/img/dev/placeholders/placeholder-59.jpeg'],
   'patch-notes': ['/assets/medias/img/dev/placeholders/placeholder-60.jpeg']
-} as const satisfies Partial<Omit<BlogCategoriesOGPictures, typeof TESTING_CATEGORY>>;
+} as const satisfies CategoriesOGPictures;
 
 const SUBCATEGORIES_OG_PICTURES = {
   'patch-notes-bis': {
@@ -43,9 +43,9 @@ const SUBCATEGORIES_OG_PICTURES = {
     'discord-bot': ['/assets/medias/img/dev/placeholders/placeholder-62.jpeg'],
     dashboard: ['/assets/medias/img/dev/placeholders/placeholder-61.jpeg']
   }
-} as const satisfies Partial<Omit<BlogSubcategoriesOGPictures, typeof TESTING_CATEGORY>>;
+} as const satisfies SubcategoriesOGPictures;
 
-const BlogConfig: BlogConfigType = {
+const BlogConfig = {
   BLOG_CATEGORIES_ALL_POSTS_CONSTS_ASSOC: Object.fromEntries(
     Object.entries(categoriesBlogDataAssoc).map(([categoryFolder, blogDataName]) => [
       categoryFolder,
@@ -69,6 +69,9 @@ const BlogConfig: BlogConfigType = {
   TESTING_CATEGORY,
 
   ...BlogConfigClient
-} as const;
+} as const satisfies BlogConfigType;
 
 export default BlogConfig;
+
+type CategoriesOGPictures = Partial<Omit<BlogCategoriesOGPictures, typeof TESTING_CATEGORY>>;
+type SubcategoriesOGPictures = Partial<Omit<BlogSubcategoriesOGPictures, typeof TESTING_CATEGORY>>;

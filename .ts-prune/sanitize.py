@@ -12,7 +12,7 @@ if sys.stdin.isatty() or __name__ != "__main__":
 import os
 import re
 import time
-from typing import Tuple, TypeAlias, Type
+from typing import Tuple, TypeAlias
 
 PrintSideEffect: TypeAlias = None
 

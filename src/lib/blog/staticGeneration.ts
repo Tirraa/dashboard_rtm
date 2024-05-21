@@ -48,10 +48,8 @@ export async function getBlogCategoryMetadatas(
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), globalT(`${blogCategories}.${category}._title`));
   const description = globalT(`${blogCategories}.${category}._meta-description`);
 
-  const maybeOpenGraphImages = BlogConfig.OG.CATEGORIES_PICTURES[
-    category as keyof typeof BlogConfig.OG.CATEGORIES_PICTURES
-  ] as unknown as MaybeObjectValue<Href[]>;
-  const openGraph: MaybeObjectValue<OpenGraph> = maybeOpenGraphImages ? { images: maybeOpenGraphImages } : undefined;
+  const maybeOpenGraphImages = (BlogConfig.OG.CATEGORIES_PICTURES as Record<PropertyKey, MaybeObjectValue<Href[]>>)[category];
+  const openGraph: MaybeObjectValue<OpenGraph> = maybeOpenGraphImages !== undefined ? { images: maybeOpenGraphImages } : undefined;
 
   return { metadataBase, description, openGraph, title };
 }
@@ -70,18 +68,14 @@ export async function getBlogSubcategoryMetadatas(
   const title = buildPageTitle(globalT(`${vocab}.brand-short`), globalT(`${blogCategories}.${narrowedCategoryAndSubcategoryAssoc}.title`));
   const description = globalT(`${blogCategories}.${narrowedCategoryAndSubcategoryAssoc}.meta-description`);
 
-  const maybeCategoryAndSubcategoriesOGPicturesAssoc = BlogConfig.OG.SUBCATEGORIES_PICTURES[
-    category as keyof typeof BlogConfig.OG.SUBCATEGORIES_PICTURES
-  ] as unknown;
+  const maybeCategoryAndSubcategoriesOGPicturesAssoc = (
+    BlogConfig.OG.SUBCATEGORIES_PICTURES as Record<PropertyKey, MaybeObjectValue<Record<PropertyKey, MaybeObjectValue<Href[]>>>>
+  )[category];
 
   const maybeOpenGraphImages =
-    typeof maybeCategoryAndSubcategoriesOGPicturesAssoc === 'object'
-      ? ((maybeCategoryAndSubcategoriesOGPicturesAssoc as object)[
-          subcategory as keyof typeof maybeCategoryAndSubcategoriesOGPicturesAssoc
-        ] as MaybeObjectValue<Href[]>)
-      : undefined;
+    maybeCategoryAndSubcategoriesOGPicturesAssoc !== undefined ? maybeCategoryAndSubcategoriesOGPicturesAssoc[subcategory] : undefined;
 
-  const openGraph: MaybeObjectValue<OpenGraph> = maybeOpenGraphImages ? { images: maybeOpenGraphImages } : undefined;
+  const openGraph: MaybeObjectValue<OpenGraph> = maybeOpenGraphImages !== undefined ? { images: maybeOpenGraphImages } : undefined;
 
   return { metadataBase, description, openGraph, title };
 }

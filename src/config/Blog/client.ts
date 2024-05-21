@@ -30,11 +30,11 @@ const COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE: FiltersAsso
   }
 ];
 
-const BlogConfigClient: BlogConfigClientType = {
+const BlogConfigClient = {
   DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_SUBCATEGORIES_ON_BLOG_CATEGORY_PAGE: compareAlphabeticallyAsc,
   DEFAULT_COMPARE_FUNCTION_USED_TO_SORT_POSTS_ON_BLOG_CATEGORY_PAGE: compareDesc,
   COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE
-} as const;
+} as const satisfies BlogConfigClientType;
 
 // eslint-disable-next-line no-magic-numbers
 export const MAX_FILTER_INDEX = BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE.length - 1;
