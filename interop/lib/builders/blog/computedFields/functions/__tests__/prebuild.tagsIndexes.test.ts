@@ -19,7 +19,7 @@ const fakeIndexedBlogTagOptions = fakeBlogTags.reduce(
 
 describe('buildBlogTagsIndexes (happy path)', () => {
   it('should return a valid tag indexes array, given valid tagsArray', () => {
-    const tagsArray = ['fake_tag_two', 'fake_tag_one'];
+    const tagsArray: FakeBlogTag[] = ['fake_tag_two', 'fake_tag_one'];
 
     const partialFakePost = {
       tags: {
@@ -39,7 +39,7 @@ describe('buildBlogTagsIndexes (unhappy path, duplicate tags)', () => {
     // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
-    const tagsArray = ['fake_tag_one', 'fake_tag_one', 'fake_tag_two'];
+    const tagsArray: FakeBlogTag[] = ['fake_tag_one', 'fake_tag_one', 'fake_tag_two'];
 
     const partialFakePost = {
       tags: {
@@ -50,7 +50,7 @@ describe('buildBlogTagsIndexes (unhappy path, duplicate tags)', () => {
     try {
       buildBlogTagsIndexes(partialFakePost, fakeIndexedBlogTagOptions, fakeBlogTags, damerauThreshold);
     } catch (e) {
-      expect(e).toBe(`BlogTagDuplicatesError: “fake_tag_one” is defined several times.`);
+      expect(e).toBe('BlogTagDuplicatesError: “fake_tag_one” is defined several times.');
     }
   });
 
@@ -58,7 +58,7 @@ describe('buildBlogTagsIndexes (unhappy path, duplicate tags)', () => {
     // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
-    const tagsArray = ['fake_tag_one', 'fake_tag_one', 'fake_tag_two', 'fake_tag_two', 'fake_tag_three'];
+    const tagsArray: FakeBlogTag[] = ['fake_tag_one', 'fake_tag_one', 'fake_tag_two', 'fake_tag_two', 'fake_tag_three'];
 
     const partialFakePost = {
       tags: {
@@ -69,7 +69,7 @@ describe('buildBlogTagsIndexes (unhappy path, duplicate tags)', () => {
     try {
       buildBlogTagsIndexes(partialFakePost, fakeIndexedBlogTagOptions, fakeBlogTags, damerauThreshold);
     } catch (e) {
-      expect(e).toBe(`BlogTagDuplicatesError: [“fake_tag_one”, “fake_tag_two”] are defined several times.`);
+      expect(e).toBe('BlogTagDuplicatesError: [“fake_tag_one”, “fake_tag_two”] are defined several times.');
     }
   });
 });
@@ -79,7 +79,8 @@ describe('buildBlogTagsIndexes (unhappy path, unknown tags without suggestion)',
     // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
-    const tagsArray = ['tag_one'];
+    // @ts-expect-error
+    const tagsArray: FakeBlogTag[] = ['tag_one'];
 
     const partialFakePost = {
       tags: {
@@ -99,7 +100,8 @@ describe('buildBlogTagsIndexes (unhappy path, unknown tags without suggestion)',
     // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
-    const tagsArray = ['tag_one', 'tag_two', 'tag_three'];
+    // @ts-expect-error
+    const tagsArray: FakeBlogTag[] = ['tag_one', 'tag_two', 'tag_three'];
 
     const partialFakePost = {
       tags: {
@@ -121,7 +123,8 @@ describe('buildBlogTagsIndexes (unhappy path, unknown tags with suggestions)', (
     // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
-    const tagsArray = ['uniq_fake_tag_startswith'];
+    // @ts-expect-error
+    const tagsArray: FakeBlogTag[] = ['uniq_fake_tag_startswith'];
 
     const partialFakePost = {
       tags: {
@@ -141,7 +144,8 @@ describe('buildBlogTagsIndexes (unhappy path, unknown tags with suggestions)', (
     // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
-    const tagsArray = ['fake_tag_oen'];
+    // @ts-expect-error
+    const tagsArray: FakeBlogTag[] = ['fake_tag_oen'];
 
     const partialFakePost = {
       tags: {
@@ -163,7 +167,19 @@ describe('buildBlogTagsIndexes (unhappy path, error combinations)', () => {
     // eslint-disable-next-line no-magic-numbers
     expect.assertions(1);
 
-    const tagsArray = ['fake_tag', 'fake_tag_oen', 'fake_tag_oen', 'fake_tag_one', 'fake_tag_one', 'fake_tag_two', 'fake_tag_two', 'fake_tag_three'];
+    const tagsArray: FakeBlogTag[] = [
+      // @ts-expect-error
+      'fake_tag',
+      // @ts-expect-error
+      'fake_tag_oen',
+      // @ts-expect-error
+      'fake_tag_oen',
+      'fake_tag_one',
+      'fake_tag_one',
+      'fake_tag_two',
+      'fake_tag_two',
+      'fake_tag_three'
+    ];
 
     const partialFakePost = {
       tags: {
