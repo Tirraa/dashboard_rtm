@@ -10,7 +10,7 @@ import type { BlogArchitecture } from '@rtm/generated';
 import type { Id } from '@rtm/shared-types/Numbers';
 import type { ReactElement } from 'react';
 
-import type StrictBlog from './adapters/StrictBlog';
+import type BlogAdapter from './adapters/BlogAdapter';
 import type { I18nParams } from './Next';
 
 type ContentlayerPhantomTypeKey = 'type';
@@ -62,30 +62,30 @@ export type PostsCollectionAssoc = Record<BlogCategory, AllPostsGetter>;
 type BlogStaticParamsValue = string;
 export type BlogStaticParams = Record<keyof BlogTaxonomyType, BlogStaticParamsValue>;
 
-export type BlogCategoriesOGPictures = Record<keyof StrictBlog, Href[]>;
+export type BlogCategoriesOGPictures = Record<keyof BlogAdapter, Href[]>;
 
 export type BlogSubcategoriesOGPictures = {
-  [Categ in keyof StrictBlog]: StrictBlog[Categ] extends object
+  [Categ in keyof BlogAdapter]: BlogAdapter[Categ] extends object
     ? {
-        [_ in keyof StrictBlog[Categ]]: Href[];
+        [_ in keyof BlogAdapter[Categ]]: Href[];
       }
     : never;
 };
 
 export type StrictBlogPost = {
-  [Category in keyof StrictBlog]: {
-    [Subcategory in keyof StrictBlog[Category]]: {
-      [Language in keyof StrictBlog[Category][Subcategory]]: {
-        slug: StrictBlog[Category][Subcategory][Language];
+  [Category in keyof BlogAdapter]: {
+    [Subcategory in keyof BlogAdapter[Category]]: {
+      [Language in keyof BlogAdapter[Category][Subcategory]]: {
+        slug: BlogAdapter[Category][Subcategory][Language];
         subcategory: Subcategory;
         category: Category;
         lang: Language;
       };
-    }[keyof StrictBlog[Category][Subcategory]];
-  }[keyof StrictBlog[Category]];
-}[keyof StrictBlog];
+    }[keyof BlogAdapter[Category][Subcategory]];
+  }[keyof BlogAdapter[Category]];
+}[keyof BlogAdapter];
 
-export { type StrictBlog };
+export { type BlogAdapter };
 
 // Stryker restore all
 /* v8 ignore stop */

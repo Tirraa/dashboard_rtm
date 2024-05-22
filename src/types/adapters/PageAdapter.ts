@@ -16,7 +16,7 @@ type PageAdapter<P extends PagesFromCodegenSchema> = P extends { head: LanguageF
   ? P extends { head: DefaultLanguage }
     ? {
         path: P['path'] extends `${infer Head}${PathSeparator}${IndexToken}`
-          ? Head extends `${DefaultLanguage}/${infer Tail}`
+          ? Head extends `${DefaultLanguage}${PathSeparator}${infer Tail}`
             ? Tail
             : Head extends DefaultLanguage
               ? IndexToken

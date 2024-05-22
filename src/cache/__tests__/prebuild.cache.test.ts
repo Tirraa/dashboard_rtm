@@ -33,8 +33,7 @@ describe('get and set', () => {
     const [key, data, ttl] = ['key', '__VALUE__', 1];
     set(key, data, ttl);
 
-    // eslint-disable-next-line no-magic-numbers
-    vi.advanceTimersByTime(ttl * 2);
+    vi.advanceTimersByTime(ttl);
 
     const value = get(key);
     expect(value).toBe(undefined);
@@ -62,8 +61,7 @@ describe('get or set', () => {
     await getOrSet(key, async () => data2, ttl);
     const stillFirstValue = get(key);
 
-    // eslint-disable-next-line no-magic-numbers
-    vi.advanceTimersByTime(ttl * 2);
+    vi.advanceTimersByTime(ttl);
 
     const invalidatedFirstValue = get(key);
 

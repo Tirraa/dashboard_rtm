@@ -6,7 +6,7 @@ import type { DefaultLanguageToken, Blog } from '@rtm/generated';
 import type { DefaultLanguage } from '##/config/i18n';
 
 // * ... Adapter (rewriting)
-type StrictBlog<__Blog extends object = Blog> = {
+type BlogAdapter<__Blog extends object = Blog> = {
   [Category in keyof __Blog]: {
     [Subcategory in keyof __Blog[Category]]: {
       [Language in keyof __Blog[Category][Subcategory] as Language extends DefaultLanguageToken
@@ -16,7 +16,7 @@ type StrictBlog<__Blog extends object = Blog> = {
   };
 };
 
-export default StrictBlog;
+export default BlogAdapter;
 
 // Stryker restore all
 /* v8 ignore stop */

@@ -1,4 +1,4 @@
-import type { BlogSubcategoryFromUnknownCategory, UnknownBlogSlug, StrictBlogPost, BlogCategory, BlogPostType, StrictBlog } from '@/types/Blog';
+import type { BlogSubcategoryFromUnknownCategory, UnknownBlogSlug, StrictBlogPost, BlogCategory, BlogPostType, BlogAdapter } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { IsoDateTimeString } from 'contentlayer/core';
@@ -87,10 +87,10 @@ export async function getBlogPostUnstrict(
   return ComputedBlogCtx.ALLOWED_DRAFTS ? getBlogPostWithAllowedDraftsCtx() : getBlogPostWithDisallowedDraftsCtx();
 }
 
-export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict<C extends keyof StrictBlog>(
+export async function getAllBlogPostsByCategoryAndSubcategoryAndLanguageStrict<C extends keyof BlogAdapter>(
   category: C,
-  subcategory: keyof StrictBlog[C],
-  language: keyof StrictBlog[C][keyof StrictBlog[C]] | LanguageFlag
+  subcategory: keyof BlogAdapter[C],
+  language: keyof BlogAdapter[C][keyof BlogAdapter[C]] | LanguageFlag
 ): Promise<BlogPostType[]> {
   const allPosts: BlogPostType[] = await getAllBlogPostsByCategoryAndSubcategoryAndLanguageUnstrict(
     category as any,

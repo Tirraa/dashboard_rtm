@@ -8,25 +8,25 @@ import { expectAssignable, expectType } from 'jest-tsd';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, it } from 'vitest';
 
-import type StrictBlog from './StrictBlog';
+import type BlogAdapter from './BlogAdapter';
 
 const _ = {};
 
-describe('StrictBlog (Valid structure)', () => {
+describe('BlogAdapter (Valid structure)', () => {
   it('should pass (empty structure)', () => {
-    const fake = _ as StrictBlog<{}>;
+    const fake = _ as BlogAdapter<{}>;
 
     expectType<{}>(fake);
   });
 
   it('should pass (mono-empty-category structure)', () => {
-    const fake = _ as StrictBlog<{ 'dummy-category': {} }>;
+    const fake = _ as BlogAdapter<{ 'dummy-category': {} }>;
 
     expectType<{ 'dummy-category': {} }>(fake);
   });
 
   it('should pass (mono-category structure, different slugs)', () => {
-    const fake = _ as StrictBlog<{
+    const fake = _ as BlogAdapter<{
       'patch-notes': {
         dashboard: {
           [_ in DefaultLanguageToken]: 'post-01';
@@ -47,7 +47,7 @@ describe('StrictBlog (Valid structure)', () => {
   });
 
   it('should pass (mono-category structure, same slugs)', () => {
-    const fake = _ as StrictBlog<{
+    const fake = _ as BlogAdapter<{
       'patch-notes': {
         dashboard: {
           [_ in DefaultLanguageToken]: 'post-01';
@@ -68,7 +68,7 @@ describe('StrictBlog (Valid structure)', () => {
   });
 
   it('should pass (mixed structure, different slugs)', () => {
-    const fake = _ as StrictBlog<{
+    const fake = _ as BlogAdapter<{
       'patch-notes-bis': {
         'dashboard-bis': {
           [_ in DefaultLanguageToken]: 'post-01';
@@ -102,7 +102,7 @@ describe('StrictBlog (Valid structure)', () => {
   });
 
   it('should pass (mixed category structure, same slugs)', () => {
-    const fake = _ as StrictBlog<{
+    const fake = _ as BlogAdapter<{
       'patch-notes-bis': {
         'dashboard-bis': {
           [_ in DefaultLanguageToken]: 'post-01';
