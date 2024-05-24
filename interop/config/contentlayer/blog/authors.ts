@@ -1,6 +1,8 @@
 /* v8 ignore start */
 // Stryker disable all
 
+import type { Href } from '@rtm/shared-types/Next';
+
 const authors = {
   Gustave: {
     profilePictureUrl: '/assets/medias/img/dev/placeholders/placeholder-54.jpeg'
@@ -16,16 +18,16 @@ export const authorsEntries = Object.entries(authors);
 
 export type Author = {
   medias?: {
-    instagram?: undefined | string;
-    goodreads?: undefined | string;
-    linkedin?: undefined | string;
-    twitter?: undefined | string;
-    keybase?: undefined | string;
-    reddit?: undefined | string;
-    medium?: undefined | string;
-    github?: undefined | string;
+    instagram?: Href;
+    goodreads?: Href;
+    linkedin?: Href;
+    twitter?: Href;
+    keybase?: Href;
+    reddit?: Href;
+    medium?: Href;
+    github?: Href;
   };
-  profilePictureUrl: string;
+  profilePictureUrl: Href;
 };
 
 export type AuthorName = keyof typeof authors;
