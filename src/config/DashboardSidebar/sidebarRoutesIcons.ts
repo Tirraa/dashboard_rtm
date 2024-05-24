@@ -10,7 +10,7 @@ const SIDEBAR_ROUTES_ICONS: DashboardRoutesIcons = {
   MAIN_PAGE: SketchLogoIcon,
   BAR_PAGE: ActivityLogIcon,
   FOO_PAGE: DashboardIcon
-};
+} as const;
 /* eslint-enable perfectionist/sort-objects */
 
 export default SIDEBAR_ROUTES_ICONS;

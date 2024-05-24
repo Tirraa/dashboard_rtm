@@ -37,12 +37,13 @@ const NavbarLanguageMenu: FunctionComponent<NavbarLanguageMenuProps> = ({ isMobi
   const changeLocale = useChangeLocale();
   const currentLocale = useCurrentLocale();
   const scopedT = useScopedI18n(`${i18ns.navbar}.sr-only`);
-  const [open, setOpen] = useState<boolean>(false);
-  const onOpenChange = (opened: boolean) => setOpen(opened);
+
+  const [opened, setOpened] = useState<boolean>(false);
+  const onOpenChange = (opened: boolean) => setOpened(opened);
 
   return (
-    <DropdownMenu withDeepResetOnLgBreakpointEvents onOpenChange={onOpenChange} open={open}>
-      <DropdownMenuTrigger aria-label={!open ? scopedT('open-language-switcher-menu') : scopedT('close-language-switcher-menu')} asChild>
+    <DropdownMenu withDeepResetOnLgBreakpointEvents onOpenChange={onOpenChange} open={opened}>
+      <DropdownMenuTrigger aria-label={!opened ? scopedT('open-language-switcher-menu') : scopedT('close-language-switcher-menu')} asChild>
         <button className="h-full bg-transparent text-primary-foreground">{localesEmojis[currentLocale]}</button>
       </DropdownMenuTrigger>
       <DropdownMenuContent

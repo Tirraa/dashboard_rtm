@@ -1,7 +1,7 @@
 'use client';
 
-import type { AuthorHoverCardProps } from '@/components/ui/blog/AuthorHoverCard';
 import type { AuthorName, Author } from '##/config/contentlayer/blog/authors';
+import type { AuthorTooltipProps } from '@/components/ui/blog/AuthorTooltip';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { WithClassname } from '@rtm/shared-types/Next';
 import type { Index } from '@rtm/shared-types/Numbers';
@@ -25,14 +25,12 @@ interface BlogPostAuthorProps {
 }
 
 const BlogPostPreviewAuthor: FunctionComponent<BlogPostAuthorProps> = (props) => {
-  const placeholder = (
-    <Image className="h-[40px] w-[40px] rounded-full" src={props.author.profilePictureUrl} alt={props.alt} height={40} width={40} />
-  );
+  const placeholder = <Image src={props.author.profilePictureUrl} className="rounded-full" alt={props.alt} height={40} width={40} />;
 
-  const [Component, setComponent] = useState<MaybeNull<FunctionComponent<AuthorHoverCardProps>>>(null);
+  const [Component, setComponent] = useState<MaybeNull<FunctionComponent<AuthorTooltipProps>>>(null);
   useEffect(() => {
     // eslint-disable-next-line promise/catch-or-return
-    import('@/components/ui/blog/AuthorHoverCard').then((component) => setComponent(() => component.default));
+    import('@/components/ui/blog/AuthorTooltip').then((component) => setComponent(() => component.default));
   }, []);
   if (Component === null) return placeholder;
   return <Component {...props} />;

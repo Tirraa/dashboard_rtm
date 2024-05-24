@@ -30,8 +30,8 @@ const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({
 }) => {
   const globalT = getClientSideI18n();
 
-  const [open, setOpen] = useState<boolean>(false);
-  const onOpenChange = (opened: boolean) => setOpen(opened);
+  const [opened, setOpened] = useState<boolean>(false);
+  const onOpenChange = (opened: boolean) => setOpened(opened);
 
   const selectItems = useMemo(
     () =>
@@ -63,7 +63,7 @@ const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({
       }}
       onOpenChange={(isOpen: boolean) => onOpenChange(isOpen)}
       value={String(selectedFilter)}
-      open={open}
+      open={opened}
     >
       <SelectTrigger
         chevronClassName={cn('transition-transform', {

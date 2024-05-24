@@ -37,10 +37,7 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
 
   return (
     <article>
-      <Link
-        className="flex h-full w-full flex-col transition-transform duration-300 hover:delay-0 hover:duration-100 focus:delay-0 focus:duration-100 dark:hover:brightness-125 dark:focus:brightness-125 lg:hover:scale-105 lg:focus:scale-105"
-        href={getBlogPostPathWithoutI18nPart(language, url)}
-      >
+      <div className="group flex h-full w-full flex-col transition-transform duration-300 hover:relative hover:delay-0 hover:duration-100 focus:delay-0 focus:duration-100 dark:hover:brightness-125 dark:focus:brightness-125 lg:hover:scale-105 lg:focus:scale-105">
         <Card className="flex h-full flex-col lg:flex-row">
           {post.featuredPictureUrl && (
             <div className="h-[60%] bg-black bg-opacity-40 max-lg:w-full max-lg:rounded-t-lg lg:h-auto lg:ltr:rounded-l-lg lg:rtl:rounded-r-lg">
@@ -78,7 +75,11 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
             {hasTags && <CardFooter className="flex flex-wrap gap-2">{tagsGenerator({ language, scopedT, tags })}</CardFooter>}
           </div>
         </Card>
-      </Link>
+
+        <Link className="inset-0 z-[1] hidden group-hover:absolute group-hover:inline" href={getBlogPostPathWithoutI18nPart(language, url)}>
+          <span className="sr-only">{title}</span>
+        </Link>
+      </div>
     </article>
   );
 };
