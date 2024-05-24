@@ -14,12 +14,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { CardDescription, CardContent, CardHeader, CardFooter, CardTitle, Card } from '../Card';
+import BlogPostPreviewAuthors from './BlogPostPreviewAuthors';
 import tagsGenerator from './tagsGenerator';
 import BlogPostDate from './BlogPostDate';
 import DraftBadge from './DraftBadge';
 
 interface BlogPostPreviewProps extends WithLanguage {
-  post: Pick<BlogPostType, 'featuredPictureUrl' | 'metadescription' | 'description' | 'draft' | 'title' | 'tags' | 'date' | 'url'>;
+  post: Pick<BlogPostType, 'featuredPictureUrl' | 'metadescription' | 'authorsIndexes' | 'description' | 'draft' | 'title' | 'tags' | 'date' | 'url'>;
   isNotOnBlogSubcategoryPage?: boolean;
 }
 
@@ -30,6 +31,8 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
   const descriptionSnippet = description ? getSlicedBlogPostDescription(description) : getSlicedBlogPostDescription(metadescription);
   // eslint-disable-next-line no-magic-numbers
   const hasTags = tags.length > 0;
+  // eslint-disable-next-line no-magic-numbers
+  const hasAuthors = post.authorsIndexes.length > 0;
   const showDraftSuffix = BlogConfig.SHOW_DRAFTS_BADGE && draft;
 
   return (
@@ -42,7 +45,7 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
           {post.featuredPictureUrl && (
             <div className="h-[60%] bg-black bg-opacity-40 max-lg:w-full max-lg:rounded-t-lg lg:h-auto lg:ltr:rounded-l-lg lg:rtl:rounded-r-lg">
               <Image
-                className="relative h-[max(200px,30vw)] w-full object-cover max-lg:rounded-t-lg lg:h-full lg:w-[200px] lg:ltr:rounded-l-lg lg:rtl:rounded-r-lg"
+                className="h-[max(200px,30vw)] w-full object-cover max-lg:rounded-t-lg lg:h-full lg:w-[200px] lg:ltr:rounded-l-lg lg:rtl:rounded-r-lg"
                 src={post.featuredPictureUrl}
                 aria-hidden="true"
                 height={384}
@@ -68,6 +71,7 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
                   'pb-3': hasTags
                 })}
               >
+                {hasAuthors && <BlogPostPreviewAuthors authorsIndexes={post.authorsIndexes} />}
                 <div className="break-word text-sm [&>*:last-child]:mb-0 [&>*]:mb-3">{descriptionSnippet}</div>
               </CardContent>
             </div>

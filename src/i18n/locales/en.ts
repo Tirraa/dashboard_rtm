@@ -75,6 +75,18 @@ export default {
       'blog-testing-category': SHARED_TESTING_BLOG_CATEGORY_METADATAS
     },
 
+    authors: {
+      Gustave: {
+        bio: "I'm a nice guy.",
+        alt: 'Gustave'
+      },
+
+      Arnaud: {
+        bio: "I'm a mad guy.",
+        alt: 'Arnaud'
+      }
+    },
+
     toc: {
       'sr-only': {
         'hide-toc': `Hide the ${SHARED.vocab.toc}`,
@@ -87,16 +99,6 @@ export default {
       bagpipes: 'Bagpipes',
       drums: 'Drums',
       cello: 'Cello'
-    },
-
-    authors: {
-      Gustave: {
-        bio: ''
-      },
-
-      Arnaud: {
-        bio: ''
-      }
     },
 
     'tags-filters': {

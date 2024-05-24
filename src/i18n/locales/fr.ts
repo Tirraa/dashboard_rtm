@@ -75,6 +75,18 @@ export default {
       'blog-testing-category': SHARED_TESTING_BLOG_CATEGORY_METADATAS
     },
 
+    authors: {
+      Arnaud: {
+        bio: 'Je suis complètement zinzolin.',
+        alt: 'Arnaud'
+      },
+
+      Gustave: {
+        bio: 'Je suis très chouette.',
+        alt: 'Gustave'
+      }
+    },
+
     toc: {
       'sr-only': {
         'show-toc': `Afficher la ${SHARED.vocab.toc}`,
@@ -92,16 +104,6 @@ export default {
     'tags-filters': {
       'no-result-found': 'Rien trouvé !',
       'clear-filters': 'Réinitialiser'
-    },
-
-    authors: {
-      Gustave: {
-        bio: ''
-      },
-
-      Arnaud: {
-        bio: ''
-      }
     }
   },
 

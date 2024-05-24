@@ -12,6 +12,8 @@ const authors = {
 
 export const authorNames = Object.keys(authors) as readonly AuthorName[];
 
+export const authorsEntries = Object.entries(authors);
+
 export type Author = {
   medias?: {
     instagram?: undefined | string;
@@ -26,7 +28,7 @@ export type Author = {
   profilePictureUrl: string;
 };
 
-type AuthorName = keyof typeof authors;
+export type AuthorName = keyof typeof authors;
 
 // Stryker restore all
 /* v8 ignore stop */

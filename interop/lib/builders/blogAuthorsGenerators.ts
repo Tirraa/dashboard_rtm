@@ -15,10 +15,10 @@ export const generateIndexedAuthorNames = <T extends readonly string[]>(authorNa
 export const generateBlogAuthorOptionsVocabSchema = <T extends readonly string[]>(authorNames: T): Record<T[Index], AuthorVocabArborescence> =>
   authorNames.reduce(
     (acc, tag) => {
-      acc[tag] = { bio: emptyString };
+      acc[tag] = { alt: emptyString, bio: emptyString };
       return acc;
     },
     {} as Record<string, AuthorVocabArborescence>
   ) as Record<T[Index], AuthorVocabArborescence>;
 
-type AuthorVocabArborescence = { bio: EmptyString };
+type AuthorVocabArborescence = { alt: EmptyString; bio: EmptyString };
