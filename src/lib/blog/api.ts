@@ -1,6 +1,6 @@
 import type { BlogSubcategoryFromUnknownCategory, UnknownBlogSlug, StrictBlogPost, BlogCategory, BlogPostType, BlogAdapter } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
+import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
 import type { IsoDateTimeString } from 'contentlayer/core';
 import type { AppPath } from '@rtm/shared-types/Next';
 

@@ -1,5 +1,5 @@
 import type { DocumentToCompute } from '@rtm/shared-types/ContentlayerConfig';
-import type { LanguageFlag } from '@rtm/shared-types/LanguageFlag';
+import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
 
 import {
   getFlattenedPathWithoutRootFolder,

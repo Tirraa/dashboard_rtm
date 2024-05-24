@@ -1,6 +1,6 @@
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { AppPathAsIs, AppPath } from '@rtm/shared-types/Next';
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
+import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
 import type { Index } from '@rtm/shared-types/Numbers';
 
 import ROUTES_ROOTS from '##/config/routes';

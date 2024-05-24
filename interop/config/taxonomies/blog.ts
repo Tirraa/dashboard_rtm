@@ -2,7 +2,7 @@
 // Stryker disable all
 
 import type { BlogSubcategoryFromUnknownCategory, UnknownBlogSlug, BlogCategory } from '@/types/Blog';
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
+import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
 
 import type I18nTaxonomy from './i18n';
 

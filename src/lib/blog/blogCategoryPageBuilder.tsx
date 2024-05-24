@@ -1,5 +1,5 @@
 import type { BlogCategoriesAndSubcategoriesAssoc, BlogSubcategoryFromUnknownCategory, BlogCategory, BlogPostType } from '@/types/Blog';
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
+import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
 import type { ReactElement } from 'react';
 
 import buildPathFromParts from '@rtm/shared-lib/portable/str/buildPathFromParts';

@@ -3,8 +3,8 @@
 
 'use client';
 
+import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
 import type { WithChildren } from '@rtm/shared-types/Next';
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { FunctionComponent } from 'react';
 
 import { I18nProviderClient } from '@/i18n/client';

@@ -2,8 +2,8 @@
 // Stryker disable all
 //!\ TESTED VIA JEST-TSD
 
+import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
 import type { PagesFromCodegenSchema } from '@rtm/generated';
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type { DefaultLanguage } from '##/config/i18n';
 
 import type { IndexToken } from '../Page';

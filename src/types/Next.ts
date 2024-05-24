@@ -2,8 +2,8 @@
 // Stryker disable all
 
 import type NotFoundTaxonomy from '##/config/taxonomies/notfound';
+import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
 import type { WithChildren } from '@rtm/shared-types/Next';
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
 import type I18nTaxonomy from '##/config/taxonomies/i18n';
 
 export interface I18nParams {

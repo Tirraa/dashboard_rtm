@@ -1,6 +1,6 @@
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { UnknownPagePath, LangAndPathPair } from '@/types/Page';
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
+import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
 import type { Page } from 'contentlayer/generated';
 
 import PagesConfig from '@/config/pages';

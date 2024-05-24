@@ -1,7 +1,7 @@
 import type LpLanguageAndSlugPair from '@/types/adapters/LpLanguageAndSlugPair';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { UnknownLandingPageSlug } from '@/types/LandingPage';
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
+import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
 import type { LandingPage } from 'contentlayer/generated';
 
 import LandingPagesConfig from '@/config/landingPages';

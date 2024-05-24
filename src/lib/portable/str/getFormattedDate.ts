@@ -1,4 +1,4 @@
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
+import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
 
 import capitalize from './capitalize';
 

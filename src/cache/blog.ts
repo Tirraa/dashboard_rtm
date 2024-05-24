@@ -1,6 +1,6 @@
 import type { BlogSubcategoryFromUnknownCategory, BlogCategory, BlogPostType } from '@/types/Blog';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
+import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
 
 import { getAllBlogPostsByCategoryAndLanguage } from '@/lib/blog/api';
 import { LANGUAGES } from '##/config/i18n';

@@ -1,7 +1,7 @@
 /* v8 ignore start */
 // Stryker disable all
 
-import type { LanguageFlag } from '@rtm/shared-types/I18n';
+import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
 
 import { BROKEN_PAGEFIND_STUB, DEV_PAGEFIND_STUB } from '@/config/pagefind';
 import PagefindIntegrationError from '@/errors/PagefindIntegrationError';

@@ -6,7 +6,7 @@ import type { Session } from 'next-auth';
 import type { ReactNode } from 'react';
 
 import type { MaybeNull } from './CustomUtilityTypes';
-import type { LanguageFlag } from './I18n';
+import type LanguageFlag from './LanguageFlag';
 import type { ClassName } from './React';
 
 export type Path = string;
