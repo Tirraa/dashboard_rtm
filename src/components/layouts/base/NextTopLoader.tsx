@@ -5,7 +5,7 @@
 
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 
-import { getPathnameWithoutI18nFlag } from '@/lib/i18n';
+import getPathnameWithoutI18nFlag from '@/lib/notPortable/i18n/getPathnameWithoutI18nFlag';
 import { useEffect, useState } from 'react';
 import MobileDetect from 'mobile-detect';
 

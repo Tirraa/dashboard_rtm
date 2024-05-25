@@ -3,14 +3,14 @@
 import type { PxValue } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
 
+import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
 import { APPROX_120_FPS_THROTTLE_TIMING_IN_MS } from '@/config/throttling';
 import { useCallback, useEffect, useState, useRef } from 'react';
-import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { ArrowUpIcon } from '@radix-ui/react-icons';
 import { useScopedI18n } from '@/i18n/client';
+import cn from '@/lib/portable/tailwind/cn';
 import { i18ns } from '##/config/i18n';
 import { getFooter } from '@/lib/html';
-import { cn } from '@/lib/tailwind';
 import throttle from 'throttleit';
 
 // {ToDo} Remove this if, one day, this bug is fixed: https://bugs.webkit.org/show_bug.cgi?id=201556

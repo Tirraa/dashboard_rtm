@@ -5,9 +5,9 @@ import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
 import type { Index } from '@rtm/shared-types/Numbers';
 import type { AppPath } from '@rtm/shared-types/Next';
 
-import { getRefCurrentPtr } from '@rtm/shared-lib/react';
+import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
+import capitalize from '@/lib/portable/str/capitalize';
 import { TabsTrigger } from '@/components/ui/Tabs';
-import { capitalize } from '@/lib/str';
 
 export function doUpdateMemorizedTabValueAndSetTabValue<TabValue extends string>(
   v: TabValue,

@@ -3,15 +3,15 @@ import type { DocumentHeading } from '##/config/contentlayer/blog/headings';
 import type { PxValue, Index } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
 
+import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
 import { APPROX_120_FPS_THROTTLE_TIMING_IN_MS } from '@/config/throttling';
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
 import useScrollDirection from '@/components/hooks/useScrollDirection';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
-import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { MDX_BODY_ID } from '@/config/elementsId';
 import { useRouter } from 'next/navigation';
+import cn from '@/lib/portable/tailwind/cn';
 import { getNavbar } from '@/lib/html';
-import { cn } from '@/lib/tailwind';
 import throttle from 'throttleit';
 import Link from 'next/link';
 

@@ -5,7 +5,7 @@ import type { VariantProps } from 'class-variance-authority';
 import type { HTMLAttributes } from 'react';
 
 import { cva } from 'class-variance-authority';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import { forwardRef } from 'react';
 
 const alertVariants = cva(

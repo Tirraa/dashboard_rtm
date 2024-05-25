@@ -4,7 +4,7 @@
 import type IButtonStyleBase from '@/components/config/styles/types/IButtonStyleBase';
 
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 
 export const COMMONS = 'transition-colors duration-200 flex h-fit flex-1 break-word items-center justify-center rounded-md px-3 py-2 font-semibold';
 

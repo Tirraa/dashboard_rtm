@@ -4,7 +4,7 @@
 import type { HTMLAttributes as ReactHTMLAttributes, ReactNode } from 'react';
 import type { TitleType } from '@rtm/shared-types/HTML';
 
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import { forwardRef } from 'react';
 
 const Card = forwardRef<HTMLDivElement, ReactHTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (

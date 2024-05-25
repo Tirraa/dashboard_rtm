@@ -6,7 +6,7 @@ import type { Quantity } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
 
 import { useEffect, useState } from 'react';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 
 import shouldShowPaginationWidget from './helpers/functions/shouldShowPaginationWidget';
 

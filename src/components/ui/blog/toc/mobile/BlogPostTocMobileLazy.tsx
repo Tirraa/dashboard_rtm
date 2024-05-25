@@ -4,10 +4,10 @@ import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { FunctionComponent } from 'react';
 
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
+import capitalize from '@/lib/portable/str/capitalize';
 import { useScopedI18n } from '@/i18n/client';
 import { useEffect, useState } from 'react';
 import { i18ns } from '##/config/i18n';
-import { capitalize } from '@/lib/str';
 
 import type { BlogPostTocMobileInnerProps, SharedBlogPostTocProps } from '../types';
 

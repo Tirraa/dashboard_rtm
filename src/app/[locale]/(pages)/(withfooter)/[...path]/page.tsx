@@ -12,8 +12,8 @@ import PageMDX from '@/components/layouts/pages/MdxComponent';
 import MAIN_CLS from '@/components/config/styles/main';
 import PageTaxonomy from '##/config/taxonomies/pages';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
+import cn from '@/lib/portable/tailwind/cn';
 import { notFound } from 'next/navigation';
-import { cn } from '@/lib/tailwind';
 
 export async function generateMetadata({ params }: PageProps) {
   const metadatas = await getPageMetadatas({ params }, I18N_MIDDLEWARE_CONFIG.urlMappingStrategy);

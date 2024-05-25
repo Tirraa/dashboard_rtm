@@ -2,10 +2,10 @@ import type { AnchorHTMLAttributes as ReactAnchorHTMLAttributes, KeyboardEventHa
 import type { WithClassname, AppPath } from '@rtm/shared-types/Next';
 import type { LinkProps } from 'next/link';
 
+import hrefAndPathnameExactMatch from '@/lib/notPortable/str/hrefAndPathnameExactMatch';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
-import { hrefAndPathnameExactMatch } from '@/lib/str';
 import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import { forwardRef } from 'react';
 import Link from 'next/link';
 

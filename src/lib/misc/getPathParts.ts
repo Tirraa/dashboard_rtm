@@ -1,6 +1,6 @@
 import type { AppPath } from '@rtm/shared-types/Next';
 
-import { getPathnameWithoutI18nFlag } from '../i18n';
+import getPathnameWithoutI18nFlag from '../notPortable/i18n/getPathnameWithoutI18nFlag';
 
 function getPathParts(pathname: AppPath) {
   let pathnameWithoutI18nFlag = getPathnameWithoutI18nFlag(pathname);

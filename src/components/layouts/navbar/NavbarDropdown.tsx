@@ -9,14 +9,16 @@ import NavbarDropdownMenuButtonStyle, {
 } from '@/components/config/styles/navbar/NavbarDropdownMenuButtonStyle';
 import { DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem, DropdownMenu } from '@/components/ui/DropdownMenu';
 import NavbarDropdownButtonIconStyle from '@/components/config/styles/navbar/NavbarDropdownButtonIconStyle';
-import { hrefAndPathnameExactMatch, hrefMatchesPathname } from '@/lib/str';
-import { getRefCurrentPtr, getLinkTarget } from '@rtm/shared-lib/react';
+import hrefAndPathnameExactMatch from '@/lib/notPortable/str/hrefAndPathnameExactMatch';
+import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
+import hrefMatchesPathname from '@/lib/notPortable/str/hrefMatchesPathname';
+import getLinkTarget from '@rtm/shared-lib/portable/react/getLinkTarget';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { useEffect, useState, useRef } from 'react';
 import { getClientSideI18n } from '@/i18n/client';
 import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import Link from 'next/link';
 
 interface NavbarButtonProps extends NavbarDropdownElement {}

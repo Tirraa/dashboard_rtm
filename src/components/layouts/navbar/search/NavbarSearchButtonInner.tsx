@@ -17,16 +17,16 @@ import { DialogContent, DialogTrigger, DialogHeader, Dialog } from '@/components
 import { SEARCH_TEXT_INITIAL_STATE, RESULTS_INITIAL_STATE } from '@/config/searchMenu';
 import { tryToPreloadPagefind, tryToInitPagefind } from '@/lib/pagefind/helpers/perf';
 import { useCallback, useEffect, useState, Fragment, useMemo, useRef } from 'react';
+import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
 import { TabsContent, TabsList, Tabs } from '@/components/ui/Tabs';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
-import { getRefCurrentPtr } from '@rtm/shared-lib/react';
+import capitalize from '@/lib/portable/str/capitalize';
 import { SEARCH_MODAL_ID } from '@/config/elementsId';
 import { getClientSideI18n } from '@/i18n/client';
 import { Input } from '@/components/ui/Input';
 import { usePathname } from 'next/navigation';
-import { capitalize } from '@/lib/str';
+import cn from '@/lib/portable/tailwind/cn';
 import { i18ns } from '##/config/i18n';
-import { cn } from '@/lib/tailwind';
 
 import NavbarSearchButtonDialogSearchBoxDefaultView from './NavbarSearchButtonDialogSearchBoxDefaultView';
 import ProgressiveResults from './ProgressiveResults';

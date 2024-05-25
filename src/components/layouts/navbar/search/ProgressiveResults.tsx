@@ -7,15 +7,15 @@ import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 
 import { SEARCH_TEXT_INITIAL_STATE, RESULTS_SLICE_LEN, THROTTLE_DELAY } from '@/config/searchMenu';
 import { buildResultOnFocus } from '@/components/ui/search/helpers/functions/navbarSearchButton';
+import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
 import { searchDocument, getCleanedURL } from '@/lib/pagefind/helpers/search';
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
 import PagefindIntegrationError from '@/errors/PagefindIntegrationError';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
-import { getRefCurrentPtr } from '@rtm/shared-lib/react';
+import traceError from '@/lib/notPortable/next/traceError';
 import { useToast } from '@/components/hooks/useToast';
 import Result from '@/components/ui/search/Result';
 import { getClientSideI18n } from '@/i18n/client';
-import { traceError } from '@/lib/next';
 import { i18ns } from '##/config/i18n';
 import throttle from 'throttleit';
 

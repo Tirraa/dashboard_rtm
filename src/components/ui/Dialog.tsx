@@ -9,7 +9,7 @@ import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { getClientSideI18n } from '@/i18n/client';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import { forwardRef } from 'react';
 
 const Dialog = DialogPrimitive.Root;

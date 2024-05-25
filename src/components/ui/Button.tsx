@@ -7,7 +7,7 @@ import type { VariantProps } from 'class-variance-authority';
 import getLinkTarget from '@rtm/shared-lib/portable/react/getLinkTarget';
 import { cva } from 'class-variance-authority';
 import { Slot } from '@radix-ui/react-slot';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import { forwardRef } from 'react';
 import Link from 'next/link';
 

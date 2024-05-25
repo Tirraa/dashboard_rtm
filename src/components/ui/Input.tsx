@@ -3,7 +3,7 @@
 
 import type { InputHTMLAttributes as ReactInputHTMLAttributes } from 'react';
 
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import { forwardRef } from 'react';
 
 export interface InputProps extends ReactInputHTMLAttributes<HTMLInputElement> {}

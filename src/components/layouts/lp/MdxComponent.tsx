@@ -9,7 +9,7 @@ import NextComponents from '@/components/config/mdx/NextComponents';
 import SharedCTAs from '@/components/config/mdx/SharedCTAs';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import { MDX_BODY_ID } from '@/config/elementsId';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 
 const components: Record<PropertyKey, (...args: any[]) => JSX.Element | ReactNode> = {
   ...PrimitiveComponents,

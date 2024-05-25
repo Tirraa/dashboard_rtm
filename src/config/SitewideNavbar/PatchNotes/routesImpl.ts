@@ -3,7 +3,7 @@
 
 import type { PatchNotesRoutesTitles, PatchNotesRoutes } from '@/config/SitewideNavbar/PatchNotes/utils/RoutesMapping';
 
-import { getSlashEnvelope } from '@/lib/str';
+import getSlashEnvelope from '@/lib/portable/str/getSlashEnvelope';
 import ROUTES_ROOTS from '##/config/routes';
 import { i18ns } from '##/config/i18n';
 

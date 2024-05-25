@@ -11,7 +11,7 @@ import ROUTES_ROOTS from '##/config/routes';
 import { LANGUAGES } from '##/config/i18n';
 import { redirect } from 'next/navigation';
 
-import { getFormattedDate } from '../str';
+import getFormattedDate from '../portable/str/getFormattedDate';
 import ComputedBlogCtx from './ctx';
 
 export async function getAllBlogPostsByCategory(categ: BlogCategory): Promise<MaybeNull<BlogPostType[]>> {

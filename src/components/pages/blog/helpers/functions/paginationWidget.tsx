@@ -4,10 +4,11 @@ import type { AppPath } from '@rtm/shared-types/Next';
 import type { ReactElement } from 'react';
 
 import { PaginationEllipsis, PaginationPrevious, PaginationItem, PaginationLink, PaginationNext } from '@/components/ui/Pagination';
-import { dispatchClickOnLinkOrButtonFirstChild, createURLSearchParams } from '@rtm/shared-lib/html';
+import dispatchClickOnLinkOrButtonFirstChild from '@rtm/shared-lib/portable/html/dispatchClickOnLinkOrButtonFirstChild';
+import createURLSearchParams from '@rtm/shared-lib/portable/html/createURLSearchParams';
 import { FIRST_PAGE_PARAM } from '@/components/ui/helpers/PaginatedElements/constants';
 import { DropdownMenuItem } from '@/components/ui/DropdownMenu';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import Link from 'next/link';
 
 const MIN_USER_INTERFACE_ITEMS_AMOUNT: Quantity = 2;

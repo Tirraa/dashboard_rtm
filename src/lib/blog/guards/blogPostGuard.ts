@@ -1,6 +1,6 @@
 import type { BlogPostPageProps } from '@/types/Blog';
 
-import { buildAbsolutePathFromParts } from '@rtm/shared-lib/str';
+import buildAbsolutePathFromParts from '@rtm/shared-lib/portable/str/buildAbsolutePathFromParts';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import ROUTES_ROOTS from '##/config/routes';

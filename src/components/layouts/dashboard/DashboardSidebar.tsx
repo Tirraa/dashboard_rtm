@@ -9,16 +9,17 @@ import type {
 import type { FunctionComponent, ReactElement } from 'react';
 import type { AppPath } from '@rtm/shared-types/Next';
 
+import hrefAndPathnameExactMatch from '@/lib/notPortable/str/hrefAndPathnameExactMatch';
 import SidebarButtonStyle from '@/components/config/styles/sidebar/SidebarButtonStyle';
 import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
-import { hrefAndPathnameExactMatch, hrefMatchesPathname } from '@/lib/str';
+import hrefMatchesPathname from '@/lib/notPortable/str/hrefMatchesPathname';
+import getDirection from '@rtm/shared-lib/portable/html/getDirection';
 import { getClientSideI18n, useCurrentLocale } from '@/i18n/client';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
-import { getDirection } from '@rtm/shared-lib/html';
 import { useEffect, useState, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import ROUTES_ROOTS from '##/config/routes';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import Link from 'next/link';
 
 import DashboardSidebarCollapseButton from './DashboardSidebarCollapseButton';

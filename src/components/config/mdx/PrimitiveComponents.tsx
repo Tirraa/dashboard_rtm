@@ -4,7 +4,7 @@
 import type { ImgHTMLAttributes, HTMLAttributes } from 'react';
 
 import MdxCopyToClipboard from '@/components/ui/blog/MdxCopyToClipboard';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 
 /* eslint-disable perfectionist/sort-objects */
 const PrimitiveComponents: Record<PropertyKey, (...args: any[]) => JSX.Element> = {

@@ -5,7 +5,7 @@ import type IButtonStyleBase from '@/components/config/styles/types/IButtonStyle
 
 import { COMMONS } from '@/components/config/styles/navbar/NavbarButtonStyle';
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 
 const { NOT_ACTIVE_CLASSNAME, ACTIVE_CLASSNAME } = BUTTON_CONFIG;
 

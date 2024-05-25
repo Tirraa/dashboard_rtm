@@ -11,8 +11,8 @@ import { authorsEntries } from '##/config/contentlayer/blog/authors';
 import { AUTHOR_TOOLTIP_SIZE } from '@/config/Blog/etc';
 import { getClientSideI18n } from '@/i18n/client';
 import { useEffect, useState } from 'react';
+import cn from '@/lib/portable/tailwind/cn';
 import { i18ns } from '##/config/i18n';
-import { cn } from '@/lib/tailwind';
 import Image from 'next/image';
 
 interface BlogPostAuthorsProps extends Partial<WithClassname> {

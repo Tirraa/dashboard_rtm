@@ -6,7 +6,7 @@
 import type { ComponentPropsWithoutRef, ElementRef } from 'react';
 
 import * as SeparatorPrimitive from '@radix-ui/react-separator';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import { forwardRef } from 'react';
 
 const Separator = forwardRef<ElementRef<typeof SeparatorPrimitive.Root>, ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>>(

@@ -23,11 +23,11 @@ import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSideI18n } from '@/i18n/server';
 import BlogConfig from '@/config/Blog/server';
 
+import getPathnameWithoutI18nFlag from '../notPortable/i18n/getPathnameWithoutI18nFlag';
 import { isValidBlogCategoryAndSubcategoryPair, getBlogPostUnstrict } from './api';
 import blogSubcategoryGuard from './guards/blogSubcategoryGuard';
 import doGetBlogStaticParams from './static/getBlogStaticParams';
 import blogCategoryGuard from './guards/blogCategoryGuard';
-import { getPathnameWithoutI18nFlag } from '../i18n';
 import blogPostGuard from './guards/blogPostGuard';
 
 /* v8 ignore start */

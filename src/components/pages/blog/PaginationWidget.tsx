@@ -9,7 +9,7 @@ import { PaginationContent, PaginationItem, Pagination } from '@/components/ui/P
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 
 import { doBuildPaginationItems, buildPreviousBtn, buildNextBtn } from './helpers/functions/paginationWidget';
 

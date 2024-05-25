@@ -9,7 +9,7 @@ import { useCurrentLocale, useChangeLocale, useScopedI18n } from '@/i18n/client'
 import localesLabels, { localesEmojis } from '@/i18n/localesLabels';
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
 import { LANGUAGES, i18ns } from '##/config/i18n';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import { useState } from 'react';
 
 interface NavbarLanguageMenuProps extends WithIsMobile {}

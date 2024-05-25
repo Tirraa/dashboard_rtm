@@ -8,9 +8,9 @@ import { HTML_STYLE } from '@/components/config/styles/html';
 import BODY_CLS from '@/components/config/styles/body';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import Locale from 'intl-locale-textinfo-polyfill';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
+import fcn from '@/lib/portable/next/fcn';
 import { fInter } from '@/fonts';
-import { fcn } from '@/lib/next';
 
 const HtmlElement: FunctionComponent<LayoutBaseProps> = ({ children, params }) => {
   const language = params[I18nTaxonomy.LANGUAGE];

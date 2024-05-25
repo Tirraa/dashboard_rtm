@@ -6,8 +6,8 @@
 import type { ComponentPropsWithoutRef, ElementRef } from 'react';
 
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
+import cn from '@/lib/portable/tailwind/cn';
 import { ChevronDown } from 'lucide-react';
-import { cn } from '@/lib/tailwind';
 import { forwardRef } from 'react';
 
 const Accordion = AccordionPrimitive.Root;

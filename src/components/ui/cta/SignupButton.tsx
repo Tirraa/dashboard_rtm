@@ -6,12 +6,12 @@
 import type { FunctionComponent } from 'react';
 
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
+import capitalize from '@/lib/portable/str/capitalize';
 import { Button } from '@/components/ui/Button';
 import { useScopedI18n } from '@/i18n/client';
 import ROUTES_ROOTS from '##/config/routes';
 import { signIn } from 'next-auth/react';
 import { i18ns } from '##/config/i18n';
-import { capitalize } from '@/lib/str';
 
 export interface SignUpButtonProps {}
 

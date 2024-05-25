@@ -4,7 +4,7 @@ import type { FunctionComponent, ReactElement } from 'react';
 import type { Quantity } from '@rtm/shared-types/Numbers';
 
 import { useSearchParams, usePathname } from 'next/navigation';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 
 import type { FiltersSelectWidgetProps } from '../FiltersSelectWidget';
 import type { TagsCommandWidgetProps } from '../TagsCommandWidget';

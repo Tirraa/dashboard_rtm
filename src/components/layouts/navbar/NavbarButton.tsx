@@ -4,13 +4,14 @@ import type { FunctionComponent, MouseEventHandler, ReactNode } from 'react';
 import type { AtomicNavDataEntity } from '@/types/NavData';
 import type { AppPath } from '@rtm/shared-types/Next';
 
+import hrefAndPathnameExactMatch from '@/lib/notPortable/str/hrefAndPathnameExactMatch';
 import NavbarButtonStyle from '@/components/config/styles/navbar/NavbarButtonStyle';
-import { hrefAndPathnameExactMatch, hrefMatchesPathname } from '@/lib/str';
+import hrefMatchesPathname from '@/lib/notPortable/str/hrefMatchesPathname';
 import getLinkTarget from '@rtm/shared-lib/portable/react/getLinkTarget';
 import { getClientSideI18n } from '@/i18n/client';
 import { Button } from '@/components/ui/Button';
 import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import Link from 'next/link';
 
 type OptionalIcon = { icon?: ReactNode };

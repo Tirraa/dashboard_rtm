@@ -4,7 +4,7 @@
 import type { MiddlewareFactory } from '@rtm/shared-types/Next';
 
 import withProtectedRoutes from '@/middlewares/withProtectedRoutes';
-import { stackMiddlewares } from '@/lib/next';
+import stackMiddlewares from '@/lib/portable/next/stackMiddlewares';
 import withI18n from '@/middlewares/withI18n';
 
 // {ToDo} Put withI18n at head when Next International's middleware will be properly chainable (Next International V2)

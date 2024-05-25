@@ -5,9 +5,9 @@ import type { FunctionComponent } from 'react';
 
 import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
 import { getClientSideI18n } from '@/i18n/client';
+import cn from '@/lib/portable/tailwind/cn';
 import { useState, useRef } from 'react';
 import { i18ns } from '##/config/i18n';
-import { cn } from '@/lib/tailwind';
 
 export interface CopyToClipboardProps extends WithChildren {}
 

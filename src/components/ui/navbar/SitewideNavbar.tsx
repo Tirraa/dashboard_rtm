@@ -12,8 +12,8 @@ import NavbarElement from '@/components/ui/hoc/NavbarElement';
 import { SITEWIDE_NAVBAR_ID } from '@/config/elementsId';
 import { getServerSideI18n } from '@/i18n/server';
 import ROUTES_ROOTS from '##/config/routes';
+import cn from '@/lib/portable/tailwind/cn';
 import { i18ns } from '##/config/i18n';
-import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
 import LogoHead from '../cta/LogoHead';

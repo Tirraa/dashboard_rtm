@@ -6,8 +6,8 @@ import SidebarCollapseButtonWrapperStyle from '@/components/config/styles/sideba
 import SidebarCollapseButtonIconStyle from '@/components/config/styles/sidebar/SidebarCollapseButtonIconStyle';
 import { ArrowRightIcon, ArrowDownIcon } from '@radix-ui/react-icons';
 import { useScopedI18n } from '@/i18n/client';
+import cn from '@/lib/portable/tailwind/cn';
 import { i18ns } from '##/config/i18n';
-import { cn } from '@/lib/tailwind';
 
 interface DashboardSidebarCollapseButtonProps {
   setIsCollapsed: (isCollapsed: boolean) => unknown;

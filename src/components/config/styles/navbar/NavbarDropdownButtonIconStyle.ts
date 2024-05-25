@@ -3,7 +3,7 @@
 
 import type IButtonStyleBase from '@/components/config/styles/types/IButtonStyleBase';
 
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 
 const COMMONS = 'transition-transform relative ml-[2px] h-5 w-5';
 

@@ -7,12 +7,12 @@ import type { ComponentProps, ReactElement } from 'react';
 
 import { DotsHorizontalIcon, ChevronRightIcon, ChevronLeftIcon } from '@radix-ui/react-icons';
 import { DropdownMenuTrigger, DropdownMenu } from '@radix-ui/react-dropdown-menu';
-import { getRefCurrentPtr } from '@rtm/shared-lib/react';
+import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
 import { buttonVariants } from '@/components/ui/Button';
 import { forwardRef, useState, useRef } from 'react';
 import { useScopedI18n } from '@/i18n/client';
+import cn from '@/lib/portable/tailwind/cn';
 import { i18ns } from '##/config/i18n';
-import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
 import { DropdownMenuContent } from './DropdownMenu';

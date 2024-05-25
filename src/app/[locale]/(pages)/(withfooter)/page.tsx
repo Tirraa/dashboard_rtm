@@ -14,8 +14,8 @@ import HomepageVideo from '@/components/ui/misc/HomepageVideo';
 import { MAIN_CLS } from '@/components/config/styles/main';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import Logo from '@/components/ui/cta/Logo';
+import cn from '@/lib/portable/tailwind/cn';
 import { i18ns } from '##/config/i18n';
-import { cn } from '@/lib/tailwind';
 
 export async function generateMetadata() {
   const globalT = await getServerSideI18n();

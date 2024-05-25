@@ -7,7 +7,7 @@ import type { ComponentPropsWithoutRef, ElementRef } from 'react';
 
 import { ChevronDown, ChevronUp, Check } from 'lucide-react';
 import * as SelectPrimitive from '@radix-ui/react-select';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import { forwardRef } from 'react';
 
 const Select = SelectPrimitive.Root;

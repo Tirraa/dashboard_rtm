@@ -7,9 +7,9 @@ import type { Id } from '@rtm/shared-types/Numbers';
 
 import { SelectContent, SelectTrigger, SelectGroup, SelectValue, SelectItem, Select } from '@/components/ui/Select';
 import { getClientSideI18n } from '@/i18n/client';
+import cn from '@/lib/portable/tailwind/cn';
 import { useState, useMemo } from 'react';
 import { i18ns } from '##/config/i18n';
-import { cn } from '@/lib/tailwind';
 
 export interface FiltersSelectWidgetProps {
   newSelectedFilter: MutableRefObject<MaybeNull<Id>>;

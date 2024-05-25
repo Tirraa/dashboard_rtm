@@ -4,12 +4,12 @@ import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { PxValue } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
 
+import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
 import { useCallback, useEffect, useState, useRef } from 'react';
 import { FOOTER_CONTAINER_ID } from '@/config/elementsId';
-import { getRefCurrentPtr } from '@rtm/shared-lib/react';
 import { useScopedI18n } from '@/i18n/client';
+import cn from '@/lib/portable/tailwind/cn';
 import { i18ns } from '##/config/i18n';
-import { cn } from '@/lib/tailwind';
 
 const INTERVAL_DURATION = 10_100;
 

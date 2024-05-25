@@ -7,13 +7,13 @@ import type { Index } from '@rtm/shared-types/Numbers';
 
 import buildAbsolutePathFromParts from '@rtm/shared-lib/portable/str/buildAbsolutePathFromParts';
 import PAGES_TITLES from '@/i18n/locales/fragments/schema/pagesTitles';
+import capitalize from '@/lib/portable/str/capitalize';
 import getPathParts from '@/lib/misc/getPathParts';
 import { getClientSideI18n } from '@/i18n/client';
 import { usePathname } from 'next/navigation';
 import ROUTES_ROOTS from '##/config/routes';
 import { Fragment, useMemo } from 'react';
 import { i18ns } from '##/config/i18n';
-import { capitalize } from '@/lib/str';
 
 import HomepageCrumb from './custom/HomepageCrumb';
 import CrumbSeparator from './CrumbSeparator';

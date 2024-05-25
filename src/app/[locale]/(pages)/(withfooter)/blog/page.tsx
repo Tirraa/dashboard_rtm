@@ -4,7 +4,7 @@ import { setStaticParamsLocale } from 'next-international/server';
 import MAIN_CLS from '@/components/config/styles/main';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getStaticParams } from '@/i18n/server';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 
 export function generateStaticParams() {
   return getStaticParams();

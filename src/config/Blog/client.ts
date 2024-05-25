@@ -5,7 +5,7 @@ import type { I18nVocabTarget, LanguageFlag } from '@rtm/shared-types/I18n';
 import type { BlogPostPreviewComponentWithMetadatas } from '@/types/Blog';
 import type { Score } from '@rtm/shared-types/Numbers';
 
-import { compareAlphabeticallyDesc, compareAlphabeticallyAsc } from '@/lib/str';
+import { compareAlphabeticallyDesc, compareAlphabeticallyAsc } from '@/lib/portable/str/compareAlphabetically';
 import { compareDesc } from 'date-fns/compareDesc';
 import { compareAsc } from 'date-fns/compareAsc';
 

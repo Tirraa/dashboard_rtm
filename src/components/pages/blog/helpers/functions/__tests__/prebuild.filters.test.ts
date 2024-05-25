@@ -1,4 +1,4 @@
-import { packIds } from '@rtm/shared-lib/misc';
+import { packIds } from '@rtm/shared-lib/portable/misc/urlsPackAndUnpack';
 import { describe, expect, it } from 'vitest';
 
 import { getUnpackedAndSanitizedFilters } from '../filters';

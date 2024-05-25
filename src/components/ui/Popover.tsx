@@ -6,7 +6,7 @@
 import type { ComponentPropsWithoutRef, ElementRef } from 'react';
 
 import * as PopoverPrimitive from '@radix-ui/react-popover';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import { forwardRef } from 'react';
 
 const Popover = PopoverPrimitive.Root;

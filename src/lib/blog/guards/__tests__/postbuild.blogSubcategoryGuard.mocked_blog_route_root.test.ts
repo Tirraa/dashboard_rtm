@@ -1,10 +1,10 @@
 import { TESTING_BLOG_FAKE_SUBCATEGORY } from '𝕍/testingContentCategoryDatas';
+import indexOfNthOccurrence from '@/lib/portable/str/indexOfNthOccurrence';
 import { isRedirectError } from 'next/dist/client/components/redirect';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { DEFAULT_LANGUAGE } from '##/config/i18n';
 import { describe, expect, it, vi } from 'vitest';
-import { indexOfNthOccurrence } from '@/lib/str';
 import BlogConfig from '@/config/Blog/server';
 import ROUTES_ROOTS from '##/config/routes';
 

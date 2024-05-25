@@ -3,12 +3,13 @@
 import type { PxValue } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
 
-import { getRefCurrentPtr, getLinkTarget } from '@rtm/shared-lib/react';
+import getRefCurrentPtr from '@rtm/shared-lib/portable/react/getRefCurrentPtr';
+import getLinkTarget from '@rtm/shared-lib/portable/react/getLinkTarget';
 import { useCallback, useEffect, useState, useRef } from 'react';
 import { getClientSideI18n } from '@/i18n/client';
 import DISCORD_CONFIG from '@/config/discord';
+import cn from '@/lib/portable/tailwind/cn';
 import { i18ns } from '##/config/i18n';
-import { cn } from '@/lib/tailwind';
 import Image from 'next/image';
 import Link from 'next/link';
 

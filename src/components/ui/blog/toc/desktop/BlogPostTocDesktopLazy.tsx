@@ -5,11 +5,11 @@ import type { FunctionComponent } from 'react';
 
 import { CardContent, CardHeader, CardTitle, Card } from '@/components/ui/Card';
 import useIsLargeScreen from '@/components/hooks/useIsLargeScreen';
+import capitalize from '@/lib/portable/str/capitalize';
 import { useScopedI18n } from '@/i18n/client';
 import { useEffect, useState } from 'react';
+import cn from '@/lib/portable/tailwind/cn';
 import { i18ns } from '##/config/i18n';
-import { capitalize } from '@/lib/str';
-import { cn } from '@/lib/tailwind';
 
 import type { BlogPostTocDesktopInnerProps, SharedBlogPostTocProps } from '../types';
 

@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import Link from 'next/link';
 
 import CrumbSeparator from './CrumbSeparator';

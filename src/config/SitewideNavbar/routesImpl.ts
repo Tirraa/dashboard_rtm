@@ -3,8 +3,8 @@
 
 import type { SitewideNavbarRoutesTitles, SitewideNavbarRoutes } from '@/config/SitewideNavbar/utils/RoutesMapping';
 
+import getSlashEnvelope from '@/lib/portable/str/getSlashEnvelope';
 import DISCORD_CONFIG from '@/config/discord';
-import { getSlashEnvelope } from '@/lib/str';
 import ROUTES_ROOTS from '##/config/routes';
 import { i18ns } from '##/config/i18n';
 

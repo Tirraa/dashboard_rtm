@@ -6,7 +6,7 @@
 import type { ComponentPropsWithoutRef, ElementRef } from 'react';
 
 import * as TabsPrimitive from '@radix-ui/react-tabs';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import { forwardRef } from 'react';
 
 const Tabs = TabsPrimitive.Root;

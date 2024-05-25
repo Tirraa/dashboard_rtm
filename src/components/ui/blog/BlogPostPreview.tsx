@@ -8,8 +8,8 @@ import type { FunctionComponent } from 'react';
 import { getBlogPostPathWithoutI18nPart, getSlicedBlogPostDescription } from '@/lib/blog/api';
 import { getScopedI18n } from '@/i18n/server';
 import BlogConfig from '@/config/Blog/server';
+import cn from '@/lib/portable/tailwind/cn';
 import { i18ns } from '##/config/i18n';
-import { cn } from '@/lib/tailwind';
 import Image from 'next/image';
 import Link from 'next/link';
 

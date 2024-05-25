@@ -10,13 +10,13 @@ import { indexedBlogTagOptions } from '##/lib/builders/unifiedImport';
 import { PlusCircledIcon, CheckIcon } from '@radix-ui/react-icons';
 import { useCallback, useEffect, useState, useRef } from 'react';
 import BUTTON_CONFIG from '@/components/config/styles/buttons';
+import capitalize from '@/lib/portable/str/capitalize';
 import { Separator } from '@/components/ui/Separator';
 import { getClientSideI18n } from '@/i18n/client';
 import { useSearchParams } from 'next/navigation';
 import { Badge } from '@/components/ui/Badge';
-import { capitalize } from '@/lib/str';
+import cn from '@/lib/portable/tailwind/cn';
 import { i18ns } from '##/config/i18n';
-import { cn } from '@/lib/tailwind';
 
 import { ETagsSwitch } from './SubcategoryRelatedBlogPosts/helpers/enums';
 

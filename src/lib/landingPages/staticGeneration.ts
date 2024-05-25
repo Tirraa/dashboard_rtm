@@ -14,9 +14,9 @@ import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getServerSideI18n } from '@/i18n/server';
 import { notFound } from 'next/navigation';
 
+import getPathnameWithoutI18nFlag from '../notPortable/i18n/getPathnameWithoutI18nFlag';
 import doGetLandingPagesStaticParams from './static/getLandingPagesStaticParams';
 import { getLandingPageByLanguageAndSlugUnstrict } from './api';
-import { getPathnameWithoutI18nFlag } from '../i18n';
 
 /* v8 ignore start */
 // Stryker disable all

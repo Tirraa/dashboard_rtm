@@ -11,7 +11,7 @@ import getDirection from '@rtm/shared-lib/portable/html/getDirection';
 import { ChevronRight, Circle, Check } from 'lucide-react';
 import { forwardRef, useEffect, useState } from 'react';
 import { getBodyContainer } from '@/lib/html';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 
 import useIsLargeScreen from '../hooks/useIsLargeScreen';
 

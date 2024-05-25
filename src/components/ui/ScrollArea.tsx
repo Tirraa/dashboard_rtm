@@ -6,7 +6,7 @@
 import type { ComponentPropsWithoutRef, ElementRef } from 'react';
 
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import { forwardRef } from 'react';
 
 const ScrollArea = forwardRef<ElementRef<typeof ScrollAreaPrimitive.Root>, ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>>(

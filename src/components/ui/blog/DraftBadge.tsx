@@ -3,10 +3,10 @@
 import type { WithClassname } from '@rtm/shared-types/Next';
 import type { FunctionComponent } from 'react';
 
+import capitalize from '@/lib/portable/str/capitalize';
 import { useScopedI18n } from '@/i18n/client';
-import { capitalize } from '@/lib/str';
+import cn from '@/lib/portable/tailwind/cn';
 import { i18ns } from '##/config/i18n';
-import { cn } from '@/lib/tailwind';
 
 import { Badge } from '../Badge';
 

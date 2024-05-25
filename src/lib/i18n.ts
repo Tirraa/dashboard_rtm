@@ -1,38 +1,11 @@
-import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
-import type { AppPathAsIs, AppPath } from '@rtm/shared-types/Next';
-import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
-import type { Index } from '@rtm/shared-types/Numbers';
+/* v8 ignore start */
+// Stryker disable all
 
-import ROUTES_ROOTS from '##/config/routes';
+import computePathnameI18nFlagUnstrict from './portable/i18n/computePathnameI18nFlagUnstrict';
+import getPathnameWithoutI18nFlag from './notPortable/i18n/getPathnameWithoutI18nFlag';
+import getPathnameMaybeI18nFlag from './notPortable/i18n/getPathnameMaybeI18nFlag';
 
-import indexOfNthOccurrence from './portable/str/indexOfNthOccurrence';
-import isValidLanguageFlag from './portable/i18n/isValidLanguageFlag';
+export { computePathnameI18nFlagUnstrict, getPathnameWithoutI18nFlag, getPathnameMaybeI18nFlag };
 
-function computePathnameI18nFlagUnstrict(pathname: AppPath, providedEndIndex?: Index): string {
-  // eslint-disable-next-line no-magic-numbers
-  const compute = (pathname: AppPath, endIndex: Index) => (endIndex === -1 ? pathname.substring(1) : pathname.substring(1, endIndex));
-
-  if (providedEndIndex !== undefined) return compute(pathname, providedEndIndex);
-
-  // eslint-disable-next-line no-magic-numbers
-  const endIndex = indexOfNthOccurrence(pathname, '/', 2);
-  return compute(pathname, endIndex);
-}
-
-export function getPathnameWithoutI18nFlag(pathname: AppPath): AppPathAsIs | AppPath {
-  // eslint-disable-next-line no-magic-numbers
-  const secondSlashIndex = indexOfNthOccurrence(pathname, '/', 2);
-
-  const pathnameI18nFlag = computePathnameI18nFlagUnstrict(pathname, secondSlashIndex);
-  if (!isValidLanguageFlag(pathnameI18nFlag)) return pathname;
-
-  // eslint-disable-next-line no-magic-numbers
-  const pathnameWithouti18n = secondSlashIndex === -1 ? ROUTES_ROOTS.WEBSITE : pathname.substring(secondSlashIndex);
-  return pathnameWithouti18n;
-}
-
-export function getPathnameMaybeI18nFlag(pathname: AppPath): MaybeNull<LanguageFlag> {
-  const languageFlag = computePathnameI18nFlagUnstrict(pathname);
-  if (!isValidLanguageFlag(languageFlag)) return null;
-  return languageFlag;
-}
+// Stryker restore all
+/* v8 ignore stop */

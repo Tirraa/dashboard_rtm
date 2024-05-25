@@ -6,10 +6,10 @@ import type { MiddlewareFactory, AppPath } from '@rtm/shared-types/Next';
 import type { NextRequestWithAuth } from 'next-auth/middleware';
 
 import getAuthenticatedUserRouteShortcut from '@/lib/misc/getAuthenticatedUserRouteShortcut';
+import getMaybeI18nFlagFromRequest from '@/lib/notPortable/next/getMaybeI18nFlagFromRequest';
+import buildPathFromParts from '@rtm/shared-lib/portable/str/buildAbsolutePathFromParts';
 import isProtectedRoute from '@/lib/misc/isProtectedRoute';
 import { mainMiddlewaresChain } from '@/middlewaresChain';
-import { buildPathFromParts } from '@rtm/shared-lib/str';
-import { getMaybeI18nFlagFromRequest } from '@/lib/next';
 import { withAuth } from 'next-auth/middleware';
 import ROUTES_ROOTS from '##/config/routes';
 

@@ -10,9 +10,9 @@ import { getBlogSubcategoriesByCategory } from '@/cache/blog';
 import { getServerSideI18n } from '@/i18n/server';
 import { Button } from '@/components/ui/Button';
 import BlogConfig from '@/config/Blog/server';
+import cn from '@/lib/portable/tailwind/cn';
 import GithubSlugger from 'github-slugger';
 import { i18ns } from '##/config/i18n';
-import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
 const slugger = new GithubSlugger();

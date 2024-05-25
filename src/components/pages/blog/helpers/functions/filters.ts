@@ -1,7 +1,8 @@
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { Id } from '@rtm/shared-types/Numbers';
 
-import { sortNumbers, unpackIds } from '@rtm/shared-lib/misc';
+import { unpackIds } from '@rtm/shared-lib/portable/misc/urlsPackAndUnpack';
+import sortNumbers from '@rtm/shared-lib/portable/misc/sortNumbers';
 
 /**
  * @throws {RangeError}

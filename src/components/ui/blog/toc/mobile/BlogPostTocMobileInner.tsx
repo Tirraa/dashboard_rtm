@@ -2,10 +2,10 @@ import type { DocumentHeading } from '##/config/contentlayer/blog/headings';
 import type { FunctionComponent, ReactElement } from 'react';
 
 import { AccordionContent, AccordionTrigger, AccordionItem, Accordion } from '@/components/ui/Accordion';
+import capitalize from '@/lib/portable/str/capitalize';
 import { useScopedI18n } from '@/i18n/client';
+import cn from '@/lib/portable/tailwind/cn';
 import { i18ns } from '##/config/i18n';
-import { capitalize } from '@/lib/str';
-import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
 import type { BlogPostTocMobileInnerProps } from '../types';

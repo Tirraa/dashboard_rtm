@@ -3,7 +3,7 @@
 
 import type IButtonStyleBase from '@/components/config/styles/types/IButtonStyleBase';
 
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 
 const COMMONS = 'transition-transform duration-1000 m-auto w-[25px] h-[25px] p-1 text-primary-foreground lg:rtl:-scale-x-100';
 

@@ -1,12 +1,12 @@
 import type { QuickAccessBtnMetadatas, BannersMetadatas } from '@/config/searchMenu';
 import type { KeyboardEvent as ReactKeyboardEvent, FunctionComponent } from 'react';
 
+import hrefAndPathnameExactMatch from '@/lib/notPortable/str/hrefAndPathnameExactMatch';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
-import { hrefAndPathnameExactMatch } from '@/lib/str';
 import { getClientSideI18n } from '@/i18n/client';
 import { usePathname } from 'next/navigation';
+import cn from '@/lib/portable/tailwind/cn';
 import { i18ns } from '##/config/i18n';
-import { cn } from '@/lib/tailwind';
 import Link from 'next/link';
 
 interface NavbarSearchButtonDialogSearchBoxDefaultViewProps {

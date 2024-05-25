@@ -7,8 +7,8 @@ import type { FunctionComponent } from 'react';
 import DesktopBlogTocCollapseButtonIconStyle from '@/components/config/styles/blogToc/desktopTocCollapseButtonIconStyle';
 import { ArrowDownIcon } from '@radix-ui/react-icons';
 import { useScopedI18n } from '@/i18n/client';
+import cn from '@/lib/portable/tailwind/cn';
 import { i18ns } from '##/config/i18n';
-import { cn } from '@/lib/tailwind';
 
 export const COLLAPSE_BUTTON_HEIGTH_IN_PX: PxValue = 30;
 

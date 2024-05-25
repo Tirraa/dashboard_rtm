@@ -12,7 +12,7 @@ import useLockScreenScrollY from '@/components/hooks/useLockScreenScrollY';
 import MAIN_NEXT_UI_CLS from '@/components/config/styles/main';
 import useResetScroll from '@/components/hooks/useResetScroll';
 import { useSelectedLayoutSegment } from 'next/navigation';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import { useRef } from 'react';
 
 interface DashboardLayoutClientProps extends LayoutMinimalProps {

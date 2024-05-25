@@ -6,7 +6,7 @@ import type { IsoDateTimeString } from 'contentlayer/core';
 import type { FunctionComponent } from 'react';
 
 import { getBlogPostFormattedDate } from '@/lib/blog/api';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 
 interface BlogPostDateProps extends WithLanguage, Partial<WithClassname> {
   date: IsoDateTimeString;

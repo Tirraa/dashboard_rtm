@@ -6,7 +6,7 @@ import type { AppPath } from '@rtm/shared-types/Next';
 
 import { VIP_SHORTCUTS } from '@/middleware';
 
-import { getPathnameWithoutI18nFlag } from '../i18n';
+import getPathnameWithoutI18nFlag from '../notPortable/i18n/getPathnameWithoutI18nFlag';
 
 function getAuthenticatedUserRouteShortcut(pathname: AppPath): MaybeUndefined<AppPath> {
   const currentRoute = getPathnameWithoutI18nFlag(pathname);

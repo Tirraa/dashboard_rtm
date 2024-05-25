@@ -1,6 +1,6 @@
 import type { BlogSubcategoryPageProps } from '@/types/Blog';
 
-import { buildAbsolutePathFromParts } from '@rtm/shared-lib/str';
+import buildAbsolutePathFromParts from '@rtm/shared-lib/portable/str/buildAbsolutePathFromParts';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import ROUTES_ROOTS from '##/config/routes';
 import { redirect } from 'next/navigation';

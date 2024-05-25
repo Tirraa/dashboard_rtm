@@ -10,7 +10,7 @@ import type { DialogProps } from '@radix-ui/react-dialog';
 import { DialogContent, Dialog } from '@/components/ui/Dialog';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { Command as CommandPrimitive } from 'cmdk';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import { forwardRef } from 'react';
 
 const Command = forwardRef<ElementRef<typeof CommandPrimitive>, ComponentPropsWithoutRef<typeof CommandPrimitive>>(({ className, ...props }, ref) => (

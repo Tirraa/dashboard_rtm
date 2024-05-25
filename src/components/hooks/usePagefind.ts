@@ -6,7 +6,7 @@ import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
 import { BROKEN_PAGEFIND_STUB, DEV_PAGEFIND_STUB } from '@/config/pagefind';
 import PagefindIntegrationError from '@/errors/PagefindIntegrationError';
 import { initPagefind } from '@/lib/pagefind/helpers/perf';
-import { traceError } from '@/lib/next';
+import traceError from '@/lib/notPortable/next/traceError';
 import { useEffect } from 'react';
 
 // https://github.com/CloudCannon/pagefind/issues/596

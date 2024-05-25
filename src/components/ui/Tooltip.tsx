@@ -3,7 +3,7 @@
 import type { ComponentPropsWithoutRef, ElementRef } from 'react';
 
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
-import { cn } from '@/lib/tailwind';
+import cn from '@/lib/portable/tailwind/cn';
 import { forwardRef } from 'react';
 
 const TooltipProvider = TooltipPrimitive.Provider;
