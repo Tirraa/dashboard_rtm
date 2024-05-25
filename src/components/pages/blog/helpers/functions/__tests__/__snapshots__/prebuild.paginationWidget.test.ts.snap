@@ -412,3 +412,137 @@ exports[`doBuildPaginationItems > should match snapshot (mobile) 1`] = `
   />
 </li>
 `;
+
+exports[`doBuildPaginationItems should match snapshot (desktop, trivial pagesAmount === 2 case, i.e: 2 parts UI without dropdown) 1`] = `
+[
+  <NoName key="page-1">
+    <NoName className="border-none font-bold transition-opacity pointer-events-none underline opacity-50" href="pathname?foo=bar&bar=bar&baz=baz" aria-current="page" isActive=true />
+  </NoName>,
+  <NoName key="page-2">
+    <NoName className="border-none font-bold transition-opacity" href="pathname?foo=bar&bar=bar&baz=baz&page=2" aria-current=undefined isActive=false />
+  </NoName>,
+]
+`;
+
+exports[`doBuildPaginationItems should match snapshot (desktop, trivial pagesAmount === 3 case, i.e: 3 parts UI without dropdown) 1`] = `
+[
+  <NoName key="page-1">
+    <NoName className="border-none font-bold transition-opacity pointer-events-none underline opacity-50" href="pathname?foo=bar&bar=bar&baz=baz" aria-current="page" isActive=true />
+  </NoName>,
+  <NoName key="page-2">
+    <NoName className="border-none font-bold transition-opacity" href="pathname?foo=bar&bar=bar&baz=baz&page=2" aria-current=undefined isActive=false />
+  </NoName>,
+  <NoName key="page-3">
+    <NoName className="border-none font-bold transition-opacity" href="pathname?foo=bar&bar=bar&baz=baz&page=3" aria-current=undefined isActive=false />
+  </NoName>,
+]
+`;
+
+exports[`doBuildPaginationItems should match snapshot (desktop, 3 parts UI with dropdown) 1`] = `
+[
+  <NoName key="page-1">
+    <NoName className="border-none font-bold transition-opacity pointer-events-none underline opacity-50" href="pathname?foo=bar&bar=bar&baz=baz" aria-current="page" isActive=true />
+  </NoName>,
+  <li key="pagination-dropdown-desktop">
+    <NoName key="ellipsis" dropdownContentClassName=undefined pageNumberIndicator=undefined isBottomWidget=undefined dropdownItems=[
+        <NoName key="page-1" className="p-0 opacity-50" onClick=[Function]>
+          <NoName className="block w-full border-none px-2 py-1.5 text-center font-bold" aria-current="page" title="1" href="pathname?foo=bar&bar=bar&baz=baz" />
+        </NoName>,
+        <NoName key="page-2" className="p-0" onClick=[Function]>
+          <NoName className="block w-full border-none px-2 py-1.5 text-center font-bold" aria-current=undefined title="2" href="pathname?foo=bar&bar=bar&baz=baz&page=2" />
+        </NoName>,
+        <NoName key="page-3" className="p-0" onClick=[Function]>
+          <NoName className="block w-full border-none px-2 py-1.5 text-center font-bold" aria-current=undefined title="3" href="pathname?foo=bar&bar=bar&baz=baz&page=3" />
+        </NoName>,
+        <NoName key="page-4" className="p-0" onClick=[Function]>
+          <NoName className="block w-full border-none px-2 py-1.5 text-center font-bold" aria-current=undefined title="4" href="pathname?foo=bar&bar=bar&baz=baz&page=4" />
+        </NoName>,
+      ] />
+  </li>,
+  <NoName key="page-4">
+    <NoName className="border-none font-bold transition-opacity" href="pathname?foo=bar&bar=bar&baz=baz&page=4" aria-current=undefined isActive=false />
+  </NoName>,
+]
+`;
+
+exports[`doBuildPaginationItems should match snapshot (desktop, 3 parts UI with dropdown, current page being last page) 1`] = `
+[
+  <NoName key="page-1">
+    <NoName className="border-none font-bold transition-opacity" href="pathname?foo=bar&bar=bar&baz=baz" aria-current=undefined isActive=false />
+  </NoName>,
+  <li key="pagination-dropdown-desktop">
+    <NoName key="ellipsis" dropdownContentClassName=undefined pageNumberIndicator=undefined isBottomWidget=undefined dropdownItems=[
+        <NoName key="page-1" className="p-0" onClick=[Function]>
+          <NoName className="block w-full border-none px-2 py-1.5 text-center font-bold" aria-current=undefined title="1" href="pathname?foo=bar&bar=bar&baz=baz" />
+        </NoName>,
+        <NoName key="page-2" className="p-0" onClick=[Function]>
+          <NoName className="block w-full border-none px-2 py-1.5 text-center font-bold" aria-current=undefined title="2" href="pathname?foo=bar&bar=bar&baz=baz&page=2" />
+        </NoName>,
+        <NoName key="page-3" className="p-0" onClick=[Function]>
+          <NoName className="block w-full border-none px-2 py-1.5 text-center font-bold" aria-current=undefined title="3" href="pathname?foo=bar&bar=bar&baz=baz&page=3" />
+        </NoName>,
+        <NoName key="page-4" className="p-0 opacity-50" onClick=[Function]>
+          <NoName className="block w-full border-none px-2 py-1.5 text-center font-bold" aria-current="page" title="4" href="pathname?foo=bar&bar=bar&baz=baz&page=4" />
+        </NoName>,
+      ] />
+  </li>,
+  <NoName key="page-4">
+    <NoName className="border-none font-bold transition-opacity pointer-events-none underline opacity-50" href="pathname?foo=bar&bar=bar&baz=baz&page=4" aria-current="page" isActive=true />
+  </NoName>,
+]
+`;
+
+exports[`doBuildPaginationItems should match snapshot (mobile) 1`] = `<li key="pagination-dropdown-mobile">
+  <NoName key="ellipsis" dropdownContentClassName="z-20" pageNumberIndicator=1 isBottomWidget=undefined dropdownItems=[
+      <NoName key="page-1" onClick=[Function] className="h-10 p-0">
+        <NoName className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold rounded-md bg-primary" aria-current="page" title="1" href="pathname?foo=bar&bar=bar&baz=baz" />
+      </NoName>,
+      <NoName key="page-2" onClick=[Function] className="h-10 p-0">
+        <NoName className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold" aria-current=undefined title="2" href="pathname?foo=bar&bar=bar&baz=baz&page=2" />
+      </NoName>,
+      <NoName key="page-3" onClick=[Function] className="h-10 p-0">
+        <NoName className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold" aria-current=undefined title="3" href="pathname?foo=bar&bar=bar&baz=baz&page=3" />
+      </NoName>,
+    ] />
+</li>`;
+
+exports[`doBuildPaginationItems should match snapshot (desktop) 1`] = `
+[
+  <NoName key="page-1">
+    <NoName className="border-none font-bold transition-opacity pointer-events-none underline opacity-50" href="pathname?" aria-current="page" isActive=true />
+  </NoName>,
+  <NoName key="page-2">
+    <NoName className="border-none font-bold transition-opacity" href="pathname?page=2" aria-current=undefined isActive=false />
+  </NoName>,
+]
+`;
+
+exports[`buildDropdown should match snapshot (bottom widget) 1`] = `<NoName key="ellipsis" dropdownContentClassName=undefined pageNumberIndicator=1 isBottomWidget=true dropdownItems=[
+    <NoName key="page-1" onClick=[Function] className="h-10 p-0">
+      <NoName className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold rounded-md bg-primary" aria-current="page" title="1" href="pathname?foo=bar&bar=bar&baz=baz" />
+    </NoName>,
+    <NoName key="page-2" onClick=[Function] className="h-10 p-0">
+      <NoName className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold" aria-current=undefined title="2" href="pathname?foo=bar&bar=bar&baz=baz&page=2" />
+    </NoName>,
+    <NoName key="page-3" onClick=[Function] className="h-10 p-0">
+      <NoName className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold" aria-current=undefined title="3" href="pathname?foo=bar&bar=bar&baz=baz&page=3" />
+    </NoName>,
+    <NoName key="page-4" onClick=[Function] className="h-10 p-0">
+      <NoName className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold" aria-current=undefined title="4" href="pathname?foo=bar&bar=bar&baz=baz&page=4" />
+    </NoName>,
+  ] />`;
+
+exports[`buildDropdown should match snapshot (NOT bottom widget) 1`] = `<NoName key="ellipsis" dropdownContentClassName=undefined pageNumberIndicator=1 isBottomWidget=false dropdownItems=[
+    <NoName key="page-1" onClick=[Function] className="h-10 p-0">
+      <NoName className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold rounded-md bg-primary" aria-current="page" title="1" href="pathname?foo=bar&bar=bar&baz=baz" />
+    </NoName>,
+    <NoName key="page-2" onClick=[Function] className="h-10 p-0">
+      <NoName className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold" aria-current=undefined title="2" href="pathname?foo=bar&bar=bar&baz=baz&page=2" />
+    </NoName>,
+    <NoName key="page-3" onClick=[Function] className="h-10 p-0">
+      <NoName className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold" aria-current=undefined title="3" href="pathname?foo=bar&bar=bar&baz=baz&page=3" />
+    </NoName>,
+    <NoName key="page-4" onClick=[Function] className="h-10 p-0">
+      <NoName className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold" aria-current=undefined title="4" href="pathname?foo=bar&bar=bar&baz=baz&page=4" />
+    </NoName>,
+  ] />`;

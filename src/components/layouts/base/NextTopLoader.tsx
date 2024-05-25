@@ -134,10 +134,10 @@ const NextTopLoader = ({
       return element as HTMLAnchorElement;
     }
 
-    function handleClick(event: MouseEvent) {
-      if (event.ctrlKey) return;
+    function handleClick(e: MouseEvent) {
+      if (e.ctrlKey) return;
       try {
-        const target = event.target as HTMLElement;
+        const target = e.target as HTMLElement;
         const anchor = findClosestAnchor(target);
         if (anchor) {
           const currentUrl = window.location.href;

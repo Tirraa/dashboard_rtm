@@ -25,7 +25,7 @@ import sysBlogCategoriesValidator from './validators/sysBlogCategories';
 import getLpMetadatas from './metadatas-builders/landingPagesMetadatas';
 import generateI18nPagesTitles from './generators/blog/i18nPagesTitles';
 import ArgumentsValidatorError from './errors/ArgumentsValidatorError';
-import { prefixFeedback, foldFeedbacks } from './lib/feedbacksMerge';
+import { prefixFeedback, foldFeedbacks } from './lib/mergeFeedbacks';
 import sysLpCategoriesValidator from './validators/sysLpCategories';
 import localesInfosValidator from './validators/localesInfos';
 import sysBlogSlugsValidator from './validators/sysBlogSlugs';

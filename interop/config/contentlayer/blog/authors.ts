@@ -9,10 +9,13 @@ import { InstagramLogoIcon, LinkedInLogoIcon, TwitterLogoIcon, GitHubLogoIcon } 
 
 const authors = {
   Gustave: {
-    profilePictureUrl: '/assets/medias/img/dev/placeholders/placeholder-54.jpeg',
     medias: {
+      linkedin: 'https://www.linkedin.com/in/terry-a-davis',
+      instagram: 'https://www.instagram.com/justinbieber',
+      twitter: 'https://twitter.com/realdonaldtrump',
       github: 'https://github.com/gustaveWPM'
-    }
+    },
+    profilePictureUrl: '/assets/medias/img/dev/placeholders/placeholder-54.jpeg'
   },
 
   Arnaud: {

@@ -100,10 +100,10 @@ function buildPaginationItemsForDesktop(
     const href = getItemHref(i, pathname, searchParams, pageKey);
     const item = (
       <DropdownMenuItem
-        onClick={(event) => dispatchClickOnLinkOrButtonFirstChild(event.target)}
         className={cn('p-0', {
           'opacity-50': isCurrent
         })}
+        onClick={(e) => dispatchClickOnLinkOrButtonFirstChild(e.target)}
         key={`page-${i}`}
       >
         <Link
@@ -173,7 +173,7 @@ export function buildDropdown(
     const href = getItemHref(i, pathname, searchParams, pageKey);
 
     const dropdownItem = (
-      <DropdownMenuItem onClick={(event) => dispatchClickOnLinkOrButtonFirstChild(event.target)} className="h-10 p-0" key={`page-${i}`}>
+      <DropdownMenuItem onClick={(e) => dispatchClickOnLinkOrButtonFirstChild(e.target)} className="h-10 p-0" key={`page-${i}`}>
         <Link
           className={cn('flex h-full w-full items-center justify-center border-none px-2 text-center font-bold', {
             'rounded-md bg-primary': isActive

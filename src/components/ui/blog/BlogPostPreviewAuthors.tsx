@@ -1,7 +1,7 @@
 'use client';
 
+import type { AuthorTooltipLazyProps } from '@/components/ui/blog/AuthorTooltipLazy';
 import type { AuthorName, Author } from '##/config/contentlayer/blog/authors';
-import type { AuthorTooltipProps } from '@/components/ui/blog/AuthorTooltip';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 import type { WithClassname, Href } from '@rtm/shared-types/Next';
 import type { Index } from '@rtm/shared-types/Numbers';
@@ -43,10 +43,10 @@ const BlogPostPreviewAuthor: FunctionComponent<BlogPostAuthorProps> = (props) =>
     />
   );
 
-  const [Component, setComponent] = useState<MaybeNull<FunctionComponent<AuthorTooltipProps>>>(null);
+  const [Component, setComponent] = useState<MaybeNull<FunctionComponent<AuthorTooltipLazyProps>>>(null);
   useEffect(() => {
     // eslint-disable-next-line promise/catch-or-return
-    import('@/components/ui/blog/AuthorTooltip').then((component) => setComponent(() => component.default));
+    import('@/components/ui/blog/AuthorTooltipLazy').then((component) => setComponent(() => component.default));
   }, []);
   if (Component === null) return placeholder;
   return <Component {...props} />;
@@ -62,7 +62,7 @@ const BlogPostPreviewAuthors: FunctionComponent<BlogPostAuthorsProps> = ({ class
         const authorName = authorsEntries[authorIndex][0] as AuthorName;
         // eslint-disable-next-line no-magic-numbers
         const author = authorsEntries[authorIndex][1];
-        // https://github.com/QuiiBz/next-international/issues/409
+        // {ToDo} Buggy atm - https://github.com/QuiiBz/next-international/issues/409
         const alt = globalT(`${i18ns.blogAuthors}.${authorName}.alt`) || authorName;
         const bio = globalT(`${i18ns.blogAuthors}.${authorName}.bio`);
 

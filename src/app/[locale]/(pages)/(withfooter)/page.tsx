@@ -3,7 +3,6 @@
 
 import type { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
 import type { MaybeObjectValue } from '@rtm/shared-types/CustomUtilityTypes';
-import type { Page } from 'contentlayer/generated';
 import type { I18nPageProps } from '@/types/Next';
 
 import buildPageTitle from '@rtm/shared-lib/portable/str/buildPageTitle';

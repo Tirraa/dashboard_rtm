@@ -5,7 +5,7 @@ import type { VocabKey, Locale } from '../config/translations';
 
 import { UNKNOWN_LOCALE_FALLBACK_MSG, LOCALES } from '../config/translations';
 import ArgumentsValidatorError from '../errors/ArgumentsValidatorError';
-import { prefixFeedback, foldFeedbacks } from '../lib/feedbacksMerge';
+import { prefixFeedback, foldFeedbacks } from '../lib/mergeFeedbacks';
 import formatMessage, { changeLocale } from '../config/formatMessage';
 import fileExists from '../lib/fileExists';
 import { FLAGS } from '../config';

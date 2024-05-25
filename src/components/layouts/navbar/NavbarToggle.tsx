@@ -21,7 +21,7 @@ const menuItemsGenerator = (items: NavbarItems) => {
   return items.map((item, index) => {
     return (
       <DropdownMenuItem
-        onClick={(event) => dispatchClickOnLinkOrButtonFirstChild(event.target)}
+        onClick={(e) => dispatchClickOnLinkOrButtonFirstChild(e.target)}
         key={`navbar-hamburger-menu-item-${index}`}
         textValue={globalT(item.i18nTitle)}
         className="my-1 p-0"

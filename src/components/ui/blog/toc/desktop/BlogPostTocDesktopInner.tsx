@@ -317,8 +317,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   }, [isLargeScreen, mdxBodyFromDOM, setIsMagnetized]);
 
   const onClickMagic = useCallback(
-    (event: Pick<Event, 'preventDefault'>, heading: DocumentHeading) => {
-      event.preventDefault();
+    (e: Pick<Event, 'preventDefault'>, heading: DocumentHeading) => {
+      e.preventDefault();
 
       const { slug } = heading;
       const elem = document.getElementById(slug);
@@ -355,13 +355,13 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
   );
 
   const handleMagicHeadingClick = useCallback(
-    (event: Event) => {
-      if (!event.target) return;
+    (e: Event) => {
+      if (!e.target || !(e.target instanceof HTMLElement)) return;
 
-      const anchorElement = (event.target as HTMLElement).closest('a');
+      const anchorElement = (e.target as HTMLElement).closest('a');
 
       if (anchorElement?.parentNode) {
-        onClickMagic(event, headings[slugAndIndexAssoc[(anchorElement.parentNode as HTMLElement).id]]);
+        onClickMagic(e, headings[slugAndIndexAssoc[(anchorElement.parentNode as HTMLElement).id]]);
       }
     },
     [headings, onClickMagic, slugAndIndexAssoc]
@@ -439,8 +439,8 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
       const tocInstance = getRefCurrentPtr(tocRef);
       if (!tocInstance) return;
 
-      function updateScrollOnUncollapse(event: TransitionEvent) {
-        const target = event.target as HTMLElement;
+      function updateScrollOnUncollapse(e: TransitionEvent) {
+        const target = e.target as HTMLElement;
         if (target.tagName !== 'NAV') return;
 
         const headingsInstance = getRefCurrentPtr(headingsRef);
@@ -457,7 +457,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
           behavior: 'smooth'
         });
 
-        tocInstance.removeEventListener('transitionend', (event) => updateScrollOnUncollapse(event));
+        tocInstance.removeEventListener('transitionend', (e) => updateScrollOnUncollapse(e));
       }
 
       function applyUncollapsedStyles() {
@@ -474,7 +474,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
         const idx = slugAndIndexAssoc[currentHeading];
         if (idx === undefined) return;
 
-        tocInstance.addEventListener('transitionend', (event) => updateScrollOnUncollapse(event));
+        tocInstance.addEventListener('transitionend', (e) => updateScrollOnUncollapse(e));
         return;
       }
 
@@ -628,9 +628,7 @@ const BlogPostTocDesktopInner: FunctionComponent<BlogPostTocDesktopInnerProps> =
                   // eslint-disable-next-line no-magic-numbers
                   'p-1': slugAndIndexAssoc[heading.slug] === headings.length - 1
                 })}
-                onClick={(event) => {
-                  onClickMagic(event, heading);
-                }}
+                onClick={(e) => onClickMagic(e, heading)}
                 href={`#${heading.slug}`}
                 replace
               >

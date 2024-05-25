@@ -20,7 +20,7 @@ module.exports = {
 
     'no-unreachable': ERROR,
     'require-await': ERROR,
-    'no-unused-vars': OFF,
+    'no-unused-vars': OFF, // * ... Tricky: using @typescript-eslint/no-unused-vars
     'import/first': ERROR,
     'no-eval': ERROR
   },

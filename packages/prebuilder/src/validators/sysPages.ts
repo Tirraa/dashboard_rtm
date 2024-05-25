@@ -7,7 +7,7 @@ import { MAX_PAGE_TAXONOMY_LEN, LIST_ELEMENT_PREFIX, PAGE_FILE_EXT } from '../co
 import traverseAndMapFilepaths from '../lib/traverseAndMapFilepaths';
 import buildArborescence from '../metadatas-builders/arborescence';
 import { isValidPageTaxonomy } from './taxonomyConvention';
-import { foldFeedbacks } from '../lib/feedbacksMerge';
+import { foldFeedbacks } from '../lib/mergeFeedbacks';
 import { INDEX_TOKEN } from '../config/translations';
 import formatMessage from '../config/formatMessage';
 import fileExists from '../lib/fileExists';

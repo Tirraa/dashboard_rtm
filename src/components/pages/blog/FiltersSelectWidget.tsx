@@ -61,13 +61,13 @@ const FiltersSelectWidget: FunctionComponent<FiltersSelectWidgetProps> = ({
           setSelectedFilterSwitch(true);
         }
       }}
-      onOpenChange={(isOpen: boolean) => onOpenChange(isOpen)}
+      onOpenChange={(isOpened: boolean) => onOpenChange(isOpened)}
       value={String(selectedFilter)}
       open={opened}
     >
       <SelectTrigger
         chevronClassName={cn('transition-transform', {
-          'ltr:-rotate-180 rtl:rotate-180': open
+          'ltr:-rotate-180 rtl:rotate-180': opened
         })}
         className={cn('mx-[2px] min-w-[124px] lg:min-w-[176px]', triggerClassName)}
         aria-label={globalT(`${i18ns.filters}.select-a-filter`)}

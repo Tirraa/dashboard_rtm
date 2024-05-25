@@ -117,14 +117,14 @@ const PaginationEllipsis = ({
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        onClick={(event) => {
+        onClick={(e) => {
           if (isBottomWidget) setIsOpened(false);
-          if (!(event.target instanceof HTMLAnchorElement)) return;
+          if (!(e.target instanceof HTMLAnchorElement)) return;
 
           const SCROLL_OFFSET_Y: PxValue = 35;
           const dropdownContentInstance = getRefCurrentPtr(dropdownContentRef);
           if (!dropdownContentInstance) return;
-          const targetTitle = event.target.title;
+          const targetTitle = e.target.title;
 
           let newActivePageNodeIndex = 0;
           const links = dropdownContentInstance.querySelectorAll('a');
@@ -160,8 +160,8 @@ const PaginationEllipsis = ({
         className={cn('max-h-[228px] w-fit overflow-y-auto', dropdownContentClassName, {
           'max-h-[210px] overflow-y-auto': pageNumberIndicator
         })}
-        onCloseAutoFocus={(event) => {
-          if (isBottomWidget) event.preventDefault();
+        onCloseAutoFocus={(e) => {
+          if (isBottomWidget) e.preventDefault();
         }}
         ref={dropdownContentRef}
       >

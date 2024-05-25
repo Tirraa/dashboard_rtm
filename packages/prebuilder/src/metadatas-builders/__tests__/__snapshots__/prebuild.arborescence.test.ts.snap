@@ -100,3 +100,104 @@ exports[`buildArborescence > should match snapshot 2`] = `
   },
 ]
 `;
+
+exports[`buildArborescence should match snapshot 1`] = `
+[
+  {
+    "directoriesChain": [
+      "fake-category",
+      "en",
+    ],
+    "filename": "ignore-me.FAKE_EXT",
+  },
+  {
+    "directoriesChain": [
+      "fake-category",
+      "en",
+    ],
+    "filename": "lp-00.mdx",
+  },
+  {
+    "directoriesChain": [
+      "fake-category",
+    ],
+    "filename": "ignore-me.FAKE_EXT",
+  },
+  {
+    "directoriesChain": [
+      "fake-category",
+    ],
+    "filename": "lp-00.mdx",
+  },
+  {
+    "directoriesChain": [],
+    "filename": "not-a-directory.FAKE_EXT",
+  },
+]
+`;
+
+exports[`buildArborescence should match snapshot 2`] = `
+[
+  {
+    "directoriesChain": [
+      "packages",
+      "prebuilder",
+      "src",
+      "metadatas-builders",
+      "__tests__",
+      "fake_arborescence",
+      "fake-category",
+      "en",
+    ],
+    "filename": "ignore-me.FAKE_EXT",
+  },
+  {
+    "directoriesChain": [
+      "packages",
+      "prebuilder",
+      "src",
+      "metadatas-builders",
+      "__tests__",
+      "fake_arborescence",
+      "fake-category",
+      "en",
+    ],
+    "filename": "lp-00.mdx",
+  },
+  {
+    "directoriesChain": [
+      "packages",
+      "prebuilder",
+      "src",
+      "metadatas-builders",
+      "__tests__",
+      "fake_arborescence",
+      "fake-category",
+    ],
+    "filename": "ignore-me.FAKE_EXT",
+  },
+  {
+    "directoriesChain": [
+      "packages",
+      "prebuilder",
+      "src",
+      "metadatas-builders",
+      "__tests__",
+      "fake_arborescence",
+      "fake-category",
+    ],
+    "filename": "lp-00.mdx",
+  },
+  {
+    "directoriesChain": [
+      "packages",
+      "prebuilder",
+      "src",
+      "metadatas-builders",
+      "__tests__",
+      "fake_arborescence",
+    ],
+    "filename": "not-a-directory.FAKE_EXT",
+  },
+]
+`;

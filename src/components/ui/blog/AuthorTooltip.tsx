@@ -5,12 +5,16 @@ import type { FunctionComponent, ReactNode } from 'react';
 import type { Href } from '@rtm/shared-types/Next';
 
 import { AUTHORS_MEDIAS_MAPPING } from '##/config/contentlayer/blog/authors';
+import { APPROX_120_FPS_THROTTLE_TIMING_IN_MS } from '@/config/throttling';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { AUTHOR_TOOLTIP_SIZE } from '@/config/Blog/etc';
-import { useCallback, useState, useRef } from 'react';
+import { getFooter, getNavbar } from '@/lib/html';
+import throttle from 'throttleit';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { TooltipProvider, TooltipContent, TooltipTrigger, Tooltip } from '../Tooltip';
+import { Separator } from '../Separator';
 
 export interface AuthorTooltipProps {
   hoveredElement?: {
@@ -28,11 +32,16 @@ const generateMedias = (medias: MediaEntries, setOpened: (opened: boolean) => un
       const __Icon = AUTHORS_MEDIAS_MAPPING[mediaLabel];
 
       return (
-        <li
-          className="opacity-50 transition-opacity delay-75 duration-300 hover:opacity-100 hover:delay-0 focus:opacity-100 focus:delay-0"
-          key={mediaLabel}
-        >
-          <Link onClick={() => setOpened(false)} className="relative z-[2]" target="_blank" href={href}>
+        <li className="opacity-50 hover:opacity-100 focus:opacity-100" key={mediaLabel}>
+          <Link
+            onClick={(e) => {
+              if (e.ctrlKey) return;
+              setOpened(false);
+            }}
+            className="relative z-[2]"
+            target="_blank"
+            href={href}
+          >
             <__Icon className="h-[22px] w-[22px]" fontSize={22} />
           </Link>
         </li>
@@ -42,14 +51,17 @@ const generateMedias = (medias: MediaEntries, setOpened: (opened: boolean) => un
 );
 
 const AuthorTooltip: FunctionComponent<AuthorTooltipProps> = ({ hoveredElement, author, alt, bio }) => {
-  // https://github.com/QuiiBz/next-international/issues/409
+  // {ToDo} Buggy atm - https://github.com/QuiiBz/next-international/issues/409
   const hasBio = bio !== '';
   const medias = (author.medias !== undefined ? Object.entries(author.medias) : []) as MediaEntries;
   // eslint-disable-next-line no-magic-numbers
   const hasMedias = medias.length > 0;
 
   const [opened, setOpened] = useState<boolean>(false);
+  const [footerIsVisible, setFooterIsVisible] = useState<boolean>(false);
+
   const onOpenChange = (opened: boolean) => setOpened(opened);
+  const maybeFooter = getFooter();
 
   const [nextClickOnHoveredElement, setNextClickOnHoveredElement] = useState<boolean>(false);
   const justClosedTooltip = useRef<boolean>(false);
@@ -58,6 +70,31 @@ const AuthorTooltip: FunctionComponent<AuthorTooltipProps> = ({ hoveredElement, 
     setNextClickOnHoveredElement(v);
     justClosedTooltip.current = v;
   }, []);
+
+  useEffect(() => {
+    if (maybeFooter === null) return;
+
+    function handleScroll() {
+      if (maybeFooter === null) return;
+
+      const documentHeight = document.body.scrollHeight;
+      const currentBottomPx = Math.ceil(window.scrollY + window.innerHeight);
+      const distanceFromPageBottom = Math.abs(currentBottomPx - documentHeight);
+
+      if (distanceFromPageBottom <= maybeFooter.getBoundingClientRect().height) setFooterIsVisible(true);
+      else setFooterIsVisible(false);
+    }
+
+    const throttledScrollHandler = throttle(handleScroll, APPROX_120_FPS_THROTTLE_TIMING_IN_MS);
+
+    window.addEventListener('scroll', throttledScrollHandler);
+
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', throttledScrollHandler);
+    };
+  }, [maybeFooter]);
 
   return (
     <TooltipProvider skipDelayDuration={50} delayDuration={200}>
@@ -73,8 +110,8 @@ const AuthorTooltip: FunctionComponent<AuthorTooltipProps> = ({ hoveredElement, 
 
                 if (hoveredElement !== undefined) setNextClickOnHoveredElement(false);
               }}
+              className="group-hover:relative group-hover:z-[2]"
               href={hoveredElement.href}
-              className="relative z-[2]"
             >
               <Image
                 className="relative rounded-full hover:cursor-pointer"
@@ -99,7 +136,7 @@ const AuthorTooltip: FunctionComponent<AuthorTooltipProps> = ({ hoveredElement, 
                 setNextClickOnHoveredElementAndJustClosedTooltip(true);
               }}
               onMouseEnter={() => hoveredElement !== undefined && setNextClickOnHoveredElementAndJustClosedTooltip(false)}
-              className="relative z-[2] rounded-full hover:cursor-pointer"
+              className="rounded-full hover:cursor-pointer group-hover:relative group-hover:z-[2]"
               src={author.profilePictureUrl}
               height={AUTHOR_TOOLTIP_SIZE}
               width={AUTHOR_TOOLTIP_SIZE}
@@ -109,14 +146,15 @@ const AuthorTooltip: FunctionComponent<AuthorTooltipProps> = ({ hoveredElement, 
           )}
         </TooltipTrigger>
 
-        <TooltipContent className="w-40" side="bottom">
-          <div className="flex items-center justify-center space-x-2">
-            <Image src={author.profilePictureUrl} height={AUTHOR_TOOLTIP_SIZE} width={AUTHOR_TOOLTIP_SIZE} className="rounded-full" alt={alt} />
+        <TooltipContent collisionBoundary={footerIsVisible ? [maybeFooter, getNavbar()] : undefined} className="w-40 py-2.5" side="bottom">
+          <div className="flex flex-col items-center justify-center space-y-1">
+            <Image src={author.profilePictureUrl} className="rounded-full" draggable={false} height={125} width={125} alt={alt} />
             <div className="space-y-1">
-              <h4 className="text-sm font-semibold">{alt}</h4>
+              <span className="text-md font-semibold">{alt}</span>
             </div>
           </div>
           {hasBio && <p className="mt-2 text-center text-sm">{bio}</p>}
+          {hasMedias && <Separator className="mx-auto my-1 w-full" orientation="horizontal" />}
           {hasMedias && generateMedias(medias, setOpened)}
         </TooltipContent>
       </Tooltip>
