@@ -10,12 +10,12 @@ import BlogPostCrumb from '@/components/ui/breadcrumbs/custom/BlogPostCrumb';
 import Breadcrumbs from '@/components/ui/breadcrumbs/Breadcrumbs';
 import { setStaticParamsLocale } from 'next-international/server';
 import { I18N_MIDDLEWARE_CONFIG } from '@/middlewares/withI18n';
+import countCharacter from '@/lib/portable/str/countCharacter';
 import BlogPost from '@/components/pages/blog/BlogPost';
 import BlogTaxonomy from '##/config/taxonomies/blog';
 import I18nTaxonomy from '##/config/taxonomies/i18n';
 import { getBlogPostUnstrict } from '@/lib/blog/api';
 import ROUTES_ROOTS from '##/config/routes';
-import { countCharacter } from '@/lib/str';
 import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }: BlogPostPageProps) {
@@ -41,6 +41,8 @@ export default async function Page({ params }: BlogPostPageProps) {
   const post: MaybeNull<BlogPostType> = await getBlogPostUnstrict(category, subcategory, slug, language);
   if (!post) notFound();
 
+  const { title, url } = post;
+
   // eslint-disable-next-line no-magic-numbers
   const depth = countCharacter(ROUTES_ROOTS.BLOG, '/') - 1 + CUSTOM_CRUMB_MIN_DEPTH;
 
@@ -50,7 +52,7 @@ export default async function Page({ params }: BlogPostPageProps) {
         <Breadcrumbs
           customCrumbs={[
             {
-              jsx: <BlogPostCrumb label={post.title} url={post.url} />,
+              jsx: <BlogPostCrumb label={title} url={url} />,
               depth
             }
           ]}

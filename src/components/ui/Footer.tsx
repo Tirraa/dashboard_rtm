@@ -1,6 +1,7 @@
 'use client';
 
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
+import type { PxValue } from '@rtm/shared-types/Numbers';
 import type { FunctionComponent } from 'react';
 
 import { useCallback, useEffect, useState, useRef } from 'react';
@@ -19,7 +20,7 @@ const FooterHeadline: FunctionComponent = () => {
   const [nextHeart, setNextHeart] = useState<string>('❤️');
   const [heartToggler, setHeartToggler] = useState<boolean>(true);
   // eslint-disable-next-line no-magic-numbers
-  const [heartContainerWidthInPx, setHeartContainerWidthInPx] = useState<number>(0);
+  const [heartContainerWidthInPx, setHeartContainerWidthInPx] = useState<PxValue>(0);
 
   const heartsCollectionRef = useRef<string[]>(['❤️', '🧡', '💛', '💚', '💙', '💜', '💕', '💓', '💗', '💖']);
   const heartRef = useRef<string>(heart);

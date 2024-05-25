@@ -5,13 +5,18 @@ import type { FunctionComponent, ReactNode } from 'react';
 import type { Href } from '@rtm/shared-types/Next';
 
 import { AUTHORS_MEDIAS_MAPPING } from '##/config/contentlayer/blog/authors';
-import { useState } from 'react';
+import { AUTHOR_TOOLTIP_SIZE } from '@/config/Blog/etc';
+import { useCallback, useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { TooltipProvider, TooltipContent, TooltipTrigger, Tooltip } from '../Tooltip';
 
 export interface AuthorTooltipProps {
+  hoveredElement?: {
+    title: string;
+    href: Href;
+  };
   author: Author;
   alt: string;
   bio: string;
@@ -36,7 +41,7 @@ const generateMedias = (medias: MediaEntries, setOpened: (opened: boolean) => un
   </ul>
 );
 
-const AuthorTooltip: FunctionComponent<AuthorTooltipProps> = ({ author, alt, bio }) => {
+const AuthorTooltip: FunctionComponent<AuthorTooltipProps> = ({ hoveredElement, author, alt, bio }) => {
   // https://github.com/QuiiBz/next-international/issues/409
   const hasBio = bio !== '';
   const medias = (author.medias !== undefined ? Object.entries(author.medias) : []) as MediaEntries;
@@ -46,16 +51,67 @@ const AuthorTooltip: FunctionComponent<AuthorTooltipProps> = ({ author, alt, bio
   const [opened, setOpened] = useState<boolean>(false);
   const onOpenChange = (opened: boolean) => setOpened(opened);
 
+  const [nextClickOnHoveredElement, setNextClickOnHoveredElement] = useState<boolean>(false);
+  const justClosedTooltip = useRef<boolean>(false);
+
+  const setNextClickOnHoveredElementAndJustClosedTooltip = useCallback((v: boolean) => {
+    setNextClickOnHoveredElement(v);
+    justClosedTooltip.current = v;
+  }, []);
+
   return (
     <TooltipProvider skipDelayDuration={50} delayDuration={200}>
       <Tooltip onOpenChange={onOpenChange} open={opened}>
         <TooltipTrigger asChild>
-          <Image className="relative z-[2] rounded-full" src={author.profilePictureUrl} height={40} width={40} alt={alt} />
+          {hoveredElement !== undefined && nextClickOnHoveredElement ? (
+            <Link
+              onMouseEnter={() => {
+                if (justClosedTooltip.current) {
+                  justClosedTooltip.current = false;
+                  return;
+                }
+
+                if (hoveredElement !== undefined) setNextClickOnHoveredElement(false);
+              }}
+              href={hoveredElement.href}
+              className="relative z-[2]"
+            >
+              <Image
+                className="relative rounded-full hover:cursor-pointer"
+                src={author.profilePictureUrl}
+                height={AUTHOR_TOOLTIP_SIZE}
+                width={AUTHOR_TOOLTIP_SIZE}
+                draggable={false}
+                alt={alt}
+              />
+              <span className="sr-only">{hoveredElement.title}</span>
+            </Link>
+          ) : (
+            <Image
+              onClick={() => {
+                if (hoveredElement === undefined) return;
+
+                if (nextClickOnHoveredElement) {
+                  if (opened) setNextClickOnHoveredElementAndJustClosedTooltip(false);
+                  return;
+                }
+
+                setNextClickOnHoveredElementAndJustClosedTooltip(true);
+              }}
+              onMouseEnter={() => hoveredElement !== undefined && setNextClickOnHoveredElementAndJustClosedTooltip(false)}
+              className="relative z-[2] rounded-full hover:cursor-pointer"
+              src={author.profilePictureUrl}
+              height={AUTHOR_TOOLTIP_SIZE}
+              width={AUTHOR_TOOLTIP_SIZE}
+              draggable={false}
+              alt={alt}
+            />
+          )}
         </TooltipTrigger>
 
         <TooltipContent className="w-40" side="bottom">
           <div className="flex items-center justify-center space-x-2">
-            <Image src={author.profilePictureUrl} className="rounded-full" height={40} width={40} alt={alt} />
+            <Image src={author.profilePictureUrl} height={AUTHOR_TOOLTIP_SIZE} width={AUTHOR_TOOLTIP_SIZE} className="rounded-full" alt={alt} />
             <div className="space-y-1">
               <h4 className="text-sm font-semibold">{alt}</h4>
             </div>

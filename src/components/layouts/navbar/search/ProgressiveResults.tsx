@@ -1,8 +1,8 @@
 'use client';
 
 import type { KeyboardEvent as ReactKeyboardEvent, FunctionComponent, ReactElement, RefObject } from 'react';
+import type { MsValue, Count, Limit, Index } from '@rtm/shared-types/Numbers';
 import type { SearchDocumentFlag } from '@/lib/pagefind/helpers/search';
-import type { MsValue, Count, Limit } from '@rtm/shared-types/Numbers';
 import type { MaybeNull } from '@rtm/shared-types/CustomUtilityTypes';
 
 import { SEARCH_TEXT_INITIAL_STATE, RESULTS_SLICE_LEN, THROTTLE_DELAY } from '@/config/searchMenu';
@@ -43,12 +43,12 @@ const ProgressiveResults: FunctionComponent<ProgressiveResultsProps> = ({
   const globalT = getClientSideI18n();
   const { toast } = useToast();
   // eslint-disable-next-line no-magic-numbers
-  const [currentSearchResultsSliceStartIndex, setCurrentSearchResultsSliceStartIndex] = useState<number>(0);
+  const [currentSearchResultsSliceStartIndex, setCurrentSearchResultsSliceStartIndex] = useState<Index>(0);
   const [currentSearchResults, setCurrentSearchResults] = useState<ReactElement[]>([]);
   const [displayShowMoreBtn, setDisplayShowMoreBtn] = useState<boolean>(false);
 
   const currentSearchResultsRef = useRef<ReactElement[]>(currentSearchResults);
-  const currentSearchResultsSliceStartIndexRef = useRef<number>(currentSearchResultsSliceStartIndex);
+  const currentSearchResultsSliceStartIndexRef = useRef<Index>(currentSearchResultsSliceStartIndex);
   const resultsRef = useRef<MaybeNull<ReactElement[]>>(results);
   const lastResultRef = useRef<HTMLAnchorElement>(null);
 

@@ -34,6 +34,7 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
   // eslint-disable-next-line no-magic-numbers
   const hasAuthors = post.authorsIndexes.length > 0;
   const showDraftSuffix = BlogConfig.SHOW_DRAFTS_BADGE && draft;
+  const href = getBlogPostPathWithoutI18nPart(language, url);
 
   return (
     <article>
@@ -68,7 +69,7 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
                   'pb-3': hasTags
                 })}
               >
-                {hasAuthors && <BlogPostPreviewAuthors authorsIndexes={post.authorsIndexes} />}
+                {hasAuthors && <BlogPostPreviewAuthors authorsIndexes={post.authorsIndexes} title={title} href={href} />}
                 <div className="break-word text-sm [&>*:last-child]:mb-0 [&>*]:mb-3">{descriptionSnippet}</div>
               </CardContent>
             </div>
@@ -76,7 +77,7 @@ const BlogPostPreview: FunctionComponent<BlogPostPreviewProps> = async ({ isNotO
           </div>
         </Card>
 
-        <Link className="inset-0 z-[1] hidden group-hover:absolute group-hover:inline" href={getBlogPostPathWithoutI18nPart(language, url)}>
+        <Link className="inset-0 z-[1] hidden group-hover:absolute group-hover:inline" href={href}>
           <span className="sr-only">{title}</span>
         </Link>
       </div>
