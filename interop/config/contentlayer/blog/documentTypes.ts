@@ -1,8 +1,6 @@
 import type { AtomicContentlayerDocumentConfig } from '@rtm/shared-types/ContentlayerConfig';
 import type { DocumentType } from 'contentlayer/source-files';
 
-import type { BlogDocumentsTypesMetadatas } from '../contentlayerConfigTweakers';
-
 import {
   BLOG_DOCUMENTS_COMPUTED_FIELDS as computedFields,
   DOCUMENTS_CONTENT_TYPE as contentType,
@@ -12,30 +10,19 @@ import {
   BLOG_POSTS_FOLDER
 } from '../contentlayerConfigTweakers';
 import blogDataAssocBuilder from '../../../lib/builders/blog/blogDataAssoc';
+import { blogDocumentsTypes } from '../../../../.rtm-generated/index';
 import { defineDocumentType } from '../adapters';
 
-const documentsTypesMetadatas: BlogDocumentsTypesMetadatas = {
-  TestingPost: {
-    categoryFolder: 'blog-testing-category'
-  },
-  PatchPostBis: {
-    categoryFolder: 'patch-notes-bis'
-  },
-  PatchPost: {
-    categoryFolder: 'patch-notes'
-  }
-} as const;
-
-const blogDocumentTypes: DocumentType[] = Object.entries(documentsTypesMetadatas).reduce(
-  (acc, [name, documentTypeMetadatas]) => {
-    const { categoryFolder } = documentTypeMetadatas;
+const blogDocumentTypes: DocumentType[] = Object.entries(blogDocumentsTypes).reduce(
+  (acc, [name, blogDocumentsType]) => {
+    const { categoryFolder } = blogDocumentsType;
     const filePathPattern = BLOG_POSTS_FOLDER + '/' + categoryFolder + `/**/*.${EXT}`;
     acc.push(
       defineDocumentType(
         () =>
           /* v8 ignore start */
           ({
-            name: name as keyof typeof documentsTypesMetadatas,
+            name: name as keyof typeof blogDocumentsTypes,
             filePathPattern,
             computedFields,
             contentType,
@@ -50,6 +37,6 @@ const blogDocumentTypes: DocumentType[] = Object.entries(documentsTypesMetadatas
   [defineDocumentType(() => BLOG_POST_SCHEMA_CONFIG)]
 );
 
-export const categoriesBlogDataAssoc = blogDataAssocBuilder(documentsTypesMetadatas);
+export const categoriesBlogDataAssoc = blogDataAssocBuilder(blogDocumentsTypes);
 
 export default blogDocumentTypes;

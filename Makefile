@@ -46,8 +46,7 @@ build:
 	$(PM) build
 
 # @Override
-prebuild: build-contentlayer
-	$(PM) prebuild
+prebuild: prebuild-rtm build-contentlayer
 
 # @Override
 test: initialize

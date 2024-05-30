@@ -3,12 +3,12 @@
 //!\ TESTED VIA JEST-TSD
 
 import type { DocumentContentType, ComputedFields, FieldDefs, FieldDef } from 'contentlayer/source-files';
-import type { BlogDocumentsTypesKeys } from '##/config/contentlayer/contentlayerConfigTweakers';
 import type { FieldDefType, Document } from 'contentlayer/core';
+import type { blogDocumentsTypes } from '@rtm/generated';
 
+type BlogDocumentsTypesKeys = keyof typeof blogDocumentsTypes;
 type ContentlayerContentType = { contentType: DocumentContentType };
 
-type CategoryFolder = string;
 type FilePathPattern = string;
 export type TypeName = BlogDocumentsTypesKeys;
 
@@ -52,10 +52,6 @@ type ComputedField<T extends FieldDefType = FieldDefType> = {
 type NarrowedFieldDefs = Record<string, FieldDef>;
 
 export type ComputedFieldsArtifact<T extends NarrowedFieldDefs> = Partial<{ [K in keyof T]: ComputedField<T[K]['type']> }>;
-
-export type BlogDocumentsConfigTypeMetadatas = {
-  categoryFolder: CategoryFolder;
-};
 
 // Stryker restore all
 /* v8 ignore stop */

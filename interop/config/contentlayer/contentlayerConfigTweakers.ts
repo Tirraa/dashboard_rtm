@@ -1,5 +1,4 @@
 import type {
-  BlogDocumentsConfigTypeMetadatas,
   ContentlayerDocumentsConfigType,
   MakeDocumentsAllFieldsSumType,
   ComputedFieldsArtifact,
@@ -317,9 +316,6 @@ export const PAGES_DOCUMENTS_FIELDS = {
 } as const satisfies DocumentsFields<_AllPagesFields, _PagesDocumentsComputedFieldsKeys>;
 
 type BlogPostSchemaKey = 'BlogPostSchema';
-
-export type BlogDocumentsTypesKeys = 'PatchPostBis' | 'TestingPost' | 'PatchPost';
-export type BlogDocumentsTypesMetadatas = Record<BlogDocumentsTypesKeys, BlogDocumentsConfigTypeMetadatas>;
 
 type _AllBlogFields = typeof _ALL_BLOG_FIELDS;
 type _AllPagesFields = typeof _ALL_PAGES_FIELDS;

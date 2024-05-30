@@ -53,6 +53,7 @@ export const PAGES_FROM_CODEGEN_SCHEMA_TYPE_STR: string = 'PagesFromCodegenSchem
 export const BLOG_TYPE_STR: string = 'Blog';
 export const LP_TYPE_STR: string = 'LandingPages';
 export const BLOG_ARCHITECTURE_TYPE_STR: string = 'BlogArchitecture';
+export const BLOG_DOCUMENTS_TYPES_CONST_STR: string = 'blogDocumentsTypes';
 export const BLOG_CATEGORIES_CONST_STR: string = 'blogCategories';
 export const PAGES_TITLES_CONST_STR: string = 'pagesTitles';
 export const GENERATIONS_TARGET_FOLDER: string = '.rtm-generated';

@@ -21,6 +21,7 @@ import generateBlogArchitectureType from './generators/blog/blogArchitectureType
 import { ROOT_FOLDER_RELATIVE_PATH_FROM_PREBUILDER_CTX, FLAGS } from './config';
 import generateI18nBlogCategories from './generators/blog/i18nBlogCategories';
 import sysBlogSubcategoriesValidator from './validators/sysBlogSubcategories';
+import generateBlogDocumentsTypes from './generators/blog/blogDocumentsTypes';
 import sysBlogCategoriesValidator from './validators/sysBlogCategories';
 import getLpMetadatas from './metadatas-builders/landingPagesMetadatas';
 import generateI18nPagesTitles from './generators/blog/i18nPagesTitles';
@@ -236,6 +237,7 @@ async function generateBlogCode(BLOG_POSTS_FOLDER: Path, PRETTY_CODEGEN: boolean
 
   await Promise.all([
     generateBlogArchitectureType(blogArchitecture, PRETTY_CODEGEN),
+    generateBlogDocumentsTypes(blogArchitecture, PRETTY_CODEGEN),
     generateI18nBlogCategories(blogArchitecture, PRETTY_CODEGEN),
     generateBlogType(blogArchitecture, PRETTY_CODEGEN),
     generateI18nPagesTitles(blogArchitecture, PRETTY_CODEGEN)

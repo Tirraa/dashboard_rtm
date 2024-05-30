@@ -62,22 +62,3 @@ exports[`buildBottomRightWidgets > should match snapshot 1`] = `
   />,
 ]
 `;
-
-exports[`buildBottomRightWidgets should match snapshot 1`] = `
-[
-  <NoName key="ellipsis" dropdownContentClassName="z-20" pageNumberIndicator=1 isBottomWidget=true dropdownItems=[
-      <NoName key="page-1" onClick=[Function] className="h-10 p-0">
-        <NoName className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold rounded-md bg-primary" aria-current="page" title="1" href="pathname?" />
-      </NoName>,
-      <NoName key="page-2" onClick=[Function] className="h-10 p-0">
-        <NoName className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold" aria-current=undefined title="2" href="pathname?page=2" />
-      </NoName>,
-      <NoName key="page-3" onClick=[Function] className="h-10 p-0">
-        <NoName className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold" aria-current=undefined title="3" href="pathname?page=3" />
-      </NoName>,
-      <NoName key="page-4" onClick=[Function] className="h-10 p-0">
-        <NoName className="flex h-full w-full items-center justify-center border-none px-2 text-center font-bold" aria-current=undefined title="4" href="pathname?page=4" />
-      </NoName>,
-    ] />,
-]
-`;
