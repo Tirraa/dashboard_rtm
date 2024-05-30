@@ -103,7 +103,7 @@ function buildWidgetsForBottomRight(
 }
 
 export function buildTopLeftWidgets(tagsCommandWidgetProps: {
-  memorizedPageBeforeFiltering: MutableRefObject<MaybeNull<Id>>;
+  memorizedPageBeforeChoosingTags: MutableRefObject<MaybeNull<Id>>;
   newSelectedTagsIds: MutableRefObject<MaybeNull<Id[]>>;
   setSelectedTagSwitch: (s: ETagsSwitch) => unknown;
   selectedTagsIds: BlogTagId[];
@@ -116,7 +116,7 @@ export function buildTopLeftWidgets(tagsCommandWidgetProps: {
   if (showTagsCommandWidget) {
     elements.push(
       <TagsCommandWidget
-        memorizedPageBeforeFiltering={tagsCommandWidgetProps.memorizedPageBeforeFiltering}
+        memorizedPageBeforeChoosingTags={tagsCommandWidgetProps.memorizedPageBeforeChoosingTags}
         setSelectedTagSwitch={tagsCommandWidgetProps.setSelectedTagSwitch}
         newSelectedTagsIds={tagsCommandWidgetProps.newSelectedTagsIds}
         selectedTagsIds={tagsCommandWidgetProps.selectedTagsIds}

@@ -1,9 +1,7 @@
 /* v8 ignore start */
 // Stryker disable all
 
-import type { JSPrimitives } from './CustomUtilityTypes';
-
-type JSONPrimitiveLeafs = Exclude<JSPrimitives, undefined>;
+type JSONPrimitiveLeafs = boolean | string | number | null;
 type JSONLeafs = JSONPrimitiveLeafs[] | JSONPrimitiveLeafs;
 
 export type JSONKey = string;

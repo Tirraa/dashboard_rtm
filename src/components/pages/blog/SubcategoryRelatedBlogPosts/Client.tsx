@@ -79,7 +79,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 
   const newSelectedFilter = useRef<MaybeNull<Id>>(null);
   const newSelectedTagsIds = useRef<MaybeNull<Id[]>>(null);
-  const memorizedPageBeforeFiltering = useRef<MaybeNull<Id>>(null);
+  const memorizedPageBeforeChoosingTags = useRef<MaybeNull<Id>>(null);
 
   useEffect(() => {
     if (!selectedFilterSwitch || newSelectedFilter.current === null) return;
@@ -111,7 +111,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
     const toMaybeFiltered = doGetMaybeFilteredPostsCollection(newSelectedTagsIds.current, postsCollection);
     const toSorted = getSortedPostsCollection(selectedFilter, toMaybeFiltered);
 
-    function handleSelecting(__newSelectedTagsIds: BlogTagId[]) {
+    function handleSelectingTags(__newSelectedTagsIds: BlogTagId[]) {
       const newPageIndex = computeReconciliatedPageIndex(keys, toSorted, elementsPerPage);
 
       const packedTagsIds = packIds(__newSelectedTagsIds);
@@ -122,7 +122,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       router.replace(q, { scroll: false });
     }
 
-    function handleUnselecting(__newSelectedTagsIds: BlogTagId[]) {
+    function handleUnselectingTags(__newSelectedTagsIds: BlogTagId[]) {
       const newPaginatedElements = doComputePaginatedElements(selectedFilter, toMaybeFiltered);
       const newSlice = getPaginatedElementsCurrentSlice(currentPage, elementsPerPage, newPaginatedElements);
 
@@ -131,7 +131,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
 
       const firstCommonKey: MaybeNull<ReactElementKey> = keys.find((key) => newKeys.includes(key)) ?? null;
       if (firstCommonKey === null) {
-        handleSelecting(__newSelectedTagsIds);
+        handleSelectingTags(__newSelectedTagsIds);
         return;
       }
 
@@ -143,21 +143,21 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       router.replace(q, { scroll: false });
     }
 
-    function handleClearing(__newSelectedTagsIds: BlogTagId[]) {
-      if (memorizedPageBeforeFiltering.current === null) {
-        handleUnselecting(__newSelectedTagsIds);
+    function handleClearingTags(__newSelectedTagsIds: BlogTagId[]) {
+      if (memorizedPageBeforeChoosingTags.current === null) {
+        handleUnselectingTags(__newSelectedTagsIds);
         return;
       }
 
-      const q = createURLSearchParams({ [PAGE_KEY]: memorizedPageBeforeFiltering.current, [TAGS_KEY]: null }, searchParams);
+      const q = createURLSearchParams({ [PAGE_KEY]: memorizedPageBeforeChoosingTags.current, [TAGS_KEY]: null }, searchParams);
 
       router.replace(q, { scroll: false });
     }
 
     const handlers = {
-      [ETagsSwitch.UNSELECTING]: handleUnselecting,
-      [ETagsSwitch.SELECTING]: handleSelecting,
-      [ETagsSwitch.CLEARING]: handleClearing
+      [ETagsSwitch.UNSELECTING]: handleUnselectingTags,
+      [ETagsSwitch.SELECTING]: handleSelectingTags,
+      [ETagsSwitch.CLEARING]: handleClearingTags
     } as const;
 
     handlers[selectedTagSwitch](newSelectedTagsIds.current);
@@ -167,7 +167,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
   useEffect(() => {
     // eslint-disable-next-line no-magic-numbers
     if (selectedTagsIds.length !== 0) return;
-    memorizedPageBeforeFiltering.current = getSanitizedCurrentPage(searchParams, pagesAmount, PAGE_KEY);
+    memorizedPageBeforeChoosingTags.current = getSanitizedCurrentPage(searchParams, pagesAmount, PAGE_KEY);
   }, [searchParams, selectedTagsIds, pagesAmount]);
 
   const showTopToolbar = shouldShowTopToolbar(postsCollection);
@@ -179,7 +179,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       {showTopToolbar && (
         <SubcategoryRelatedBlogPostsClientToolbar
           filtersAssoc={BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE}
-          memorizedPageBeforeFiltering={memorizedPageBeforeFiltering}
+          memorizedPageBeforeChoosingTags={memorizedPageBeforeChoosingTags}
           setSelectedFilterSwitch={setSelectedFilterSwitch}
           setSelectedTagSwitch={setSelectedTagSwitch}
           newSelectedTagsIds={newSelectedTagsIds}
@@ -197,7 +197,7 @@ const SubcategoryRelatedBlogPostsClient: FunctionComponent<SubcategoryRelatedBlo
       {showBottomToolbar && (
         <SubcategoryRelatedBlogPostsClientToolbar
           filtersAssoc={BlogConfigClient.COMPARE_FUNCTIONS_USED_TO_SORT_POSTS_ON_BLOG_SUBCATEGORY_PAGE}
-          memorizedPageBeforeFiltering={memorizedPageBeforeFiltering}
+          memorizedPageBeforeChoosingTags={memorizedPageBeforeChoosingTags}
           setSelectedFilterSwitch={setSelectedFilterSwitch}
           setSelectedTagSwitch={setSelectedTagSwitch}
           newSelectedTagsIds={newSelectedTagsIds}

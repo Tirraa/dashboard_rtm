@@ -38,7 +38,7 @@ describe('buildBottomRightWidgets', () => {
 describe('buildTopLeftWidgets', () => {
   it('should return empty list, given there is only one tag', () => {
     const tagsCommandWidgetProps = {
-      memorizedPageBeforeFiltering: createRef<MaybeNull<Id>>(),
+      memorizedPageBeforeChoosingTags: createRef<MaybeNull<Id>>(),
       newSelectedTagsIds: createRef<MaybeNull<Id[]>>(),
       setSelectedTagSwitch: () => {},
       tags: ['tag'] as any,
@@ -51,7 +51,7 @@ describe('buildTopLeftWidgets', () => {
 
   it('should return crafted top left widgets, given there is enough tags', () => {
     const tagsCommandWidgetProps = {
-      memorizedPageBeforeFiltering: createRef<MaybeNull<Id>>(),
+      memorizedPageBeforeChoosingTags: createRef<MaybeNull<Id>>(),
       newSelectedTagsIds: createRef<MaybeNull<Id[]>>(),
       tags: ['tag_one', 'tag_two', 'tag_three'] as any,
       setSelectedTagSwitch: () => {},
@@ -61,7 +61,7 @@ describe('buildTopLeftWidgets', () => {
     const topLeftWidgets = buildTopLeftWidgets(tagsCommandWidgetProps);
 
     const tagsCommandWidgetElement = createElement(TagsCommandWidget, {
-      memorizedPageBeforeFiltering: tagsCommandWidgetProps.memorizedPageBeforeFiltering,
+      memorizedPageBeforeChoosingTags: tagsCommandWidgetProps.memorizedPageBeforeChoosingTags,
 
       setSelectedTagSwitch: tagsCommandWidgetProps.setSelectedTagSwitch,
       newSelectedTagsIds: tagsCommandWidgetProps.newSelectedTagsIds,

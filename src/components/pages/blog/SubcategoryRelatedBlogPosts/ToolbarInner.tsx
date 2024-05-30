@@ -18,7 +18,7 @@ export interface SubcategoryRelatedBlogPostsClientToolbarInnerProps extends Tags
 }
 
 const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<SubcategoryRelatedBlogPostsClientToolbarInnerProps> = ({
-  memorizedPageBeforeFiltering,
+  memorizedPageBeforeChoosingTags,
   setSelectedFilterSwitch,
   setSelectedTagSwitch,
   newSelectedTagsIds,
@@ -37,7 +37,7 @@ const SubcategoryRelatedBlogPostsClientToolbarInner: FunctionComponent<Subcatego
   const pathname = usePathname();
 
   const leftWidgets: ReactElement[] = !isBottomWidget
-    ? buildTopLeftWidgets({ memorizedPageBeforeFiltering, setSelectedTagSwitch, newSelectedTagsIds, selectedTagsIds, tags })
+    ? buildTopLeftWidgets({ memorizedPageBeforeChoosingTags, setSelectedTagSwitch, newSelectedTagsIds, selectedTagsIds, tags })
     : [];
 
   const rightWidgets = !isBottomWidget

@@ -13,11 +13,15 @@ type JoinKeys<T extends string[]> = T extends []
       : never
     : never;
 
-export type MakeHomogeneousValuesObjType<Obj extends object, ObjValuesType> = {
-  [K in keyof Obj]: Obj[K] extends object ? MakeHomogeneousValuesObjType<Obj[K], ObjValuesType> : ObjValuesType;
+export type MakeHomogeneousValuesObjType<T, ObjValuesType> = {
+  [K in keyof T]: T[K] extends (infer U)[]
+    ? MakeHomogeneousValuesObjType<U, ObjValuesType>[]
+    : T[K] extends object
+      ? MakeHomogeneousValuesObjType<T[K], ObjValuesType>
+      : ObjValuesType;
 };
 
-export type JSPrimitives = undefined | boolean | string | number | null;
+export type JSPassedByValuePrimitives = undefined | boolean | string | number | null;
 // * ... https://dev.to/ankittanna/how-to-create-a-type-for-complex-json-object-in-typescript-d81
 export type JSONValue = { [k: string]: JSONValue } | Array<JSONValue> | boolean | string | number;
 

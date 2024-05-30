@@ -21,7 +21,7 @@ import { i18ns } from '##/config/i18n';
 import { ETagsSwitch } from './SubcategoryRelatedBlogPosts/helpers/enums';
 
 export interface TagsCommandWidgetProps {
-  memorizedPageBeforeFiltering: MutableRefObject<MaybeNull<Id>>;
+  memorizedPageBeforeChoosingTags: MutableRefObject<MaybeNull<Id>>;
   newSelectedTagsIds: MutableRefObject<MaybeNull<Id[]>>;
   setSelectedTagSwitch: (s: ETagsSwitch) => unknown;
   selectedTagsIds: BlogTagId[];
@@ -31,7 +31,7 @@ export interface TagsCommandWidgetProps {
 const classNameBase = 'flex h-10 items-center rounded-md px-2 py-4';
 
 const TagsCommandWidget: FunctionComponent<TagsCommandWidgetProps> = ({
-  memorizedPageBeforeFiltering,
+  memorizedPageBeforeChoosingTags,
   setSelectedTagSwitch,
   newSelectedTagsIds,
   selectedTagsIds,
@@ -88,13 +88,13 @@ const TagsCommandWidget: FunctionComponent<TagsCommandWidgetProps> = ({
   }, [isOpened]);
 
   useEffect(() => {
-    function killswitchMemorizedPageBeforeFilteringOnPaginationWidgetClick() {
+    function killswitchmemorizedPageBeforeChoosingTagsOnPaginationWidgetClick() {
       // eslint-disable-next-line no-magic-numbers
       if (isOpenedRef.current || selectedTagsIds.length === 0) return;
-      memorizedPageBeforeFiltering.current = null;
+      memorizedPageBeforeChoosingTags.current = null;
     }
-    killswitchMemorizedPageBeforeFilteringOnPaginationWidgetClick();
-  }, [searchParams, selectedTagsIds, memorizedPageBeforeFiltering]);
+    killswitchmemorizedPageBeforeChoosingTagsOnPaginationWidgetClick();
+  }, [searchParams, selectedTagsIds, memorizedPageBeforeChoosingTags]);
 
   const activeFiltersIndicator = (
     <>
