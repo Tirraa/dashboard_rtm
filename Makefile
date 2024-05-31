@@ -79,7 +79,7 @@ check-coding-style: prebuild-rtm build-contentlayer
 
 # @Override
 dev-with-rtm-tools:
-	$(PM) run concurrently "\"$(PM) run dev\"" "\"$(PM) run prebuild --watch\""
+	$(PM) concurrently "\"$(PM) run dev\"" "\"$(PM) run prebuild --watch\""
 
 # @Alias
 vercel-ci-build-command:
@@ -87,7 +87,7 @@ vercel-ci-build-command:
 
 # @Alias
 build-contentlayer:
-	$(PM) run contentlayer build
+	$(PM) contentlayer build
 	@echo "^ DON'T WORRY if you see a stupid error: https://github.com/contentlayerdev/contentlayer/issues/495"
 
 # @Alias
