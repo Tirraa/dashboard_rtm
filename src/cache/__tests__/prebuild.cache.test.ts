@@ -30,7 +30,7 @@ describe('get and set', () => {
 
   it('should set the value with a clock, then destroy the value (timed out)', () => {
     // eslint-disable-next-line no-magic-numbers
-    const [key, data, ttl] = ['key', '__VALUE__', 1];
+    const [key, data, ttl] = ['key', '__VALUE__', 1e4];
     set(key, data, ttl);
 
     vi.advanceTimersByTime(ttl);
@@ -52,7 +52,7 @@ describe('get or set', () => {
 
   it('should set the value with a clock, then destroy the value (timed out)', async () => {
     // eslint-disable-next-line no-magic-numbers
-    const [key, data, data2, ttl] = ['key', '__VALUE__', '__VALUE_2__', 1];
+    const [key, data, data2, ttl] = ['key', '__VALUE__', '__VALUE_2__', 1e4];
     // eslint-disable-next-line require-await
     await getOrSet(key, async () => data, ttl);
     const firstValue = get(key);

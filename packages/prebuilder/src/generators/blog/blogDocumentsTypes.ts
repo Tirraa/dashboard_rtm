@@ -45,7 +45,7 @@ export default async function generateBlogDocumentTypes(
 
   const initializerWriterFunction: WriterFunction = Writers.assertion(
     JSON.stringify(generateSchema(blogArchitecture), null, pretty ? TAB_SIZE : undefined),
-    'const;\n'
+    'const'
   );
 
   // console.log(generateSchema(blogArchitecture), null, pretty ? TAB_SIZE : undefined);
