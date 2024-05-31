@@ -32,7 +32,7 @@ ENV_FILE := .env
 
 # @Mirror
 %:
-	$(PM) "$@"
+	$(PM) run "$@"
 
 # @Default
 all: build
@@ -43,47 +43,47 @@ install:
 
 # @Mirror
 build:
-	$(PM) build
+	$(PM) run build
 
 # @Override
 prebuild: prebuild-rtm build-contentlayer
 
 # @Override
 test: initialize
-	$(PM) before-build:tricky-typechecks
-	$(PM) test:run
+	$(PM) run before-build:tricky-typechecks
+	$(PM) run test:run
 
 # @Override
 coverage: initialize
-	$(PM) coverage
+	$(PM) run coverage
 
 # @Override
 coverage-all: initialize
-	$(PM) coverage
+	$(PM) run coverage
 
 # @Override
 mutations-tests: clean-codegen clean-stryker-cache initialize
-	$(PM) mutations-tests:run
+	$(PM) run mutations-tests:run
 
 # @Override
 check-coding-style: prebuild-rtm build-contentlayer
 	@{ \
 	    exit_status=0; \
-	    $(PM) ci:format-check || exit_status=$$((exit_status | $$?)); \
-	    $(PM) ci:lint || exit_status=$$((exit_status | $$?)); \
-	    $(PM) ci:typecheck-project || exit_status=$$((exit_status | $$?)); \
-	    $(PM) ci:typecheck-tests || exit_status=$$((exit_status | $$?)); \
-	    $(PM) ts-prune || exit_status=$$((exit_status | $$?)); \
+	    $(PM) run ci:format-check || exit_status=$$((exit_status | $$?)); \
+	    $(PM) run ci:lint || exit_status=$$((exit_status | $$?)); \
+	    $(PM) run ci:typecheck-project || exit_status=$$((exit_status | $$?)); \
+	    $(PM) run ci:typecheck-tests || exit_status=$$((exit_status | $$?)); \
+	    $(PM) run ts-prune || exit_status=$$((exit_status | $$?)); \
       if [ $$exit_status -ne 0 ]; then exit $$exit_status; fi \
 	}
 
 # @Override
 dev-with-rtm-tools:
-	$(PM) concurrently "\"$(PM) dev\"" "\"$(PM) prebuild --watch\""
+	$(PM) concurrently "\"$(PM) run dev\"" "\"$(PM) run prebuild --watch\""
 
 # @Alias
 vercel-ci-build-command:
-	$(PM) ci:vercel-build-command
+	$(PM) run ci:vercel-build-command
 
 # @Alias
 build-contentlayer:
@@ -92,7 +92,7 @@ build-contentlayer:
 
 # @Alias
 prebuild-rtm:
-	$(PM) prebuild
+	$(PM) run prebuild
 
 #------------------
 # **** II. 2) DSL
@@ -104,7 +104,7 @@ initialize-env:
 initialize: install prebuild initialize-env
 
 watch-prebuild-rtm:
-	$(PM) prebuild --watch
+	$(PM) run prebuild --watch
 
 clean-codegen:
 	rm -rf $(NEXT_GENERATED_CODE) $(CONTENTLAYER_GENERATED_CODE) $(RTM_GENERATED_CODE)
