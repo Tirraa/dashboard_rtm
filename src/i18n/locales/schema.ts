@@ -1,7 +1,7 @@
 /* v8 ignore start */
 // Stryker disable all
 
-import type { TypedLeafsJSONData } from '@rtm/shared-types/JSON';
+import type { TypedLeafsVocabData } from '@rtm/shared-types/I18n';
 
 import { blogAuthorOptionsVocabSchema } from '##/config/contentlayer/blog/authorsMetadatas';
 import { blogTagOptionsVocabSchema } from '##/config/contentlayer/blog/blogTagsMetadatas';
@@ -29,7 +29,7 @@ export const SHARED_VOCAB_SCHEMA = {
   },
 
   'pages-titles': PAGES_TITLES
-} as const satisfies TypedLeafsJSONData<NotScanned>;
+} as const satisfies TypedLeafsVocabData<NotScanned>;
 
 export default {
   'search-menu': {
@@ -153,7 +153,7 @@ export default {
   _infos: {
     lng: '__SCANNED__'
   }
-} as const satisfies TypedLeafsJSONData<MaybeScanned>;
+} as const satisfies TypedLeafsVocabData<MaybeScanned>;
 
 type NotScanned = '';
 type Scanned = '__SCANNED__';

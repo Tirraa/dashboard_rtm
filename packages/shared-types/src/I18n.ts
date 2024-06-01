@@ -3,10 +3,10 @@
 //!\ TESTED VIA JEST-TSD
 
 import type { MakeHomogeneousValuesObjType, DeepPathToLiteralKeys, KeySeparator } from '@rtm/shared-types/CustomUtilityTypes';
-import type { TypedLeafsJSONData, JSONKey } from '@rtm/shared-types/JSON';
 import type { RemovePlural } from '@rtm/shared-types/international-types';
 import type { SHARED_VOCAB_SCHEMA } from '@/i18n/locales/schema';
 import type LanguageFlag from '@rtm/shared-types/LanguageFlag';
+import type { JSONKey } from '@rtm/shared-types/JSON';
 import type VOCAB_SCHEMA from '@/i18n/locales/schema';
 
 type AllowedVocabObjValuesTypes = string;
@@ -52,7 +52,7 @@ export type LanguageLabels = Record<LanguageFlag, string>;
 
 export type LocalesObjEntity = [LocalesObjKey, NextInternationalLazyLoadFun];
 export type LocalesObj = Record<LocalesObjKey, NextInternationalLazyLoadFun>;
-export type LocalesGetterConfigObjTypeConstraint = Record<LanguageFlag, () => Promise<TypedLeafsJSONData<VocabObjValue>>>;
+export type LocalesGetterConfigObjTypeConstraint = Record<LanguageFlag, () => Promise<TypedLeafsVocabData<VocabObjValue>>>;
 
 export type ChangeLocaleFun = (language: LanguageFlag) => void;
 
@@ -84,6 +84,10 @@ export type MakeI18nsBase<
     : I18NS_CONST extends I18nsBase<__VocabType>
       ? I18nsBaseDiff<ExpectedI18nsBaseValues<__VocabType>, GivenI18nsBaseValues<__FLIP>>
       : never;
+
+export type TypedLeafsVocabData<LeafsTypes extends VocabObjValue> = {
+  [_: VocabObjKey]: TypedLeafsVocabData<LeafsTypes> | LeafsTypes;
+};
 
 export type { LanguageFlag };
 
