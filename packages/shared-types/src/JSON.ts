@@ -11,9 +11,7 @@ export type JSONData = {
 };
 
 export type TypedLeafsJSONData<LeafsTypes extends JSONLeafs, AllowObjArrays extends 'ALLOW_OBJ_ARRAYS' = never> = {
-  [K in JSONKey]: AllowObjArrays extends 'ALLOW_OBJ_ARRAYS'
-    ? (TypedLeafsJSONData<LeafsTypes, AllowObjArrays> | LeafsTypes)[] | TypedLeafsJSONData<LeafsTypes, AllowObjArrays> | LeafsTypes
-    : TypedLeafsJSONData<LeafsTypes, AllowObjArrays> | LeafsTypes;
+  [_: JSONKey]: (AllowObjArrays extends never ? never : TypedLeafsJSONData<LeafsTypes>[]) | TypedLeafsJSONData<LeafsTypes> | LeafsTypes;
 };
 
 // Stryker restore all
