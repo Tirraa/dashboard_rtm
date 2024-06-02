@@ -46,7 +46,7 @@ const CategoryRelatedSubcategoriesAndBlogPosts: FunctionComponent<CategoryRelate
 
   return (
     <div className="w-full">
-      <h1 className="mb-2 ltr:text-left rtl:text-right">{scopedT(`${category}._title`)}</h1>
+      <h1 className="text-center">{scopedT(`${category}._title`)}</h1>
       {content}
     </div>
   );
