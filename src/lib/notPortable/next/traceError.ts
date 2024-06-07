@@ -10,7 +10,7 @@ function traceError(error: Error, additionalInfo?: JSONValue) {
 
   fetch(API_ERROR_TRACE_ENDPOINT, {
     // * ... https://goulet.dev/posts/error-serialization-in-js/
-    body: JSON.stringify(report, ['message', 'name', 'stack', 'cause', 'additionalInfo']),
+    body: JSON.stringify(report, ['message', 'name', 'stack', 'cause', 'code', 'additionalInfo']),
     headers: { 'Content-Type': 'application/json' },
     method: 'POST'
   });
