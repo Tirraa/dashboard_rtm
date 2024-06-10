@@ -112,6 +112,8 @@ def analyze() -> PrintSideEffect:
             if issues_count <= 0:
                 return
             w = "unknown ts-prune issues" if issues_count > 1 else "an unknown ts-prune issue"
+            if false_positives_count > 0 and not QUIET_CTX:
+                print()
             print(f"Found {w}:")
             for issue in issues:
                 print(issue)
