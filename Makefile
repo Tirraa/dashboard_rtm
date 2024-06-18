@@ -107,10 +107,10 @@ watch-prebuild-rtm:
 	$(PM) run prebuild --watch
 
 clean-codegen:
-	rm -rf $(NEXT_GENERATED_CODE) $(CONTENTLAYER_GENERATED_CODE) $(RTM_GENERATED_CODE)
+	$(PM) rimraf $(NEXT_GENERATED_CODE) $(CONTENTLAYER_GENERATED_CODE) $(RTM_GENERATED_CODE)
 
 clean-stryker-cache:
-	rm -rf $(STRYKER_TMP)
+	$(PM) rimraf $(STRYKER_TMP)
 
 clean-prebuilder-dist:
 	find . -type d -name "$(PREBUILDER_DIST)" -exec rm -rf {} +
@@ -119,7 +119,7 @@ clean-node-modules:
 	find . -type d -name "$(NODE_MODULES)" -exec rm -rf {} +
 
 clean-coverage-report:
-	rm -rf $(COVERAGE_GENERATED_REPORT)
+	$(PM) rimraf $(COVERAGE_GENERATED_REPORT)
 
 clean: clean-codegen clean-coverage-report
 
