@@ -5,6 +5,7 @@ import capitalize from '../capitalize';
 describe('capitalize', () => {
   it('should return capitalized string, given any string', () => {
     expect(capitalize('abc')).toBe('Abc');
+    expect(capitalize('aBc')).toBe('ABc');
     expect(capitalize('ABC')).toBe('ABC');
     expect(capitalize(' aBC')).toBe(' aBC');
   });
