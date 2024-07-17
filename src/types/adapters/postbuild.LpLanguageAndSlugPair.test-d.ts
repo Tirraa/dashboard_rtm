@@ -71,6 +71,7 @@ describe('LpLanguageAndSlugPair (Valid structure)', () => {
           | `landing-pages-testing-category-${IndexToken}`
           | 'landing-pages-testing-category-fake-lp-00';
       };
+
       'dummy-category': {
         en: 'dummy-category-en-exclusivity' | 'dummy-category-lp-00';
       } & {

@@ -19,6 +19,7 @@ const _ALL_FAKE_FIELDS = {
     required: false,
     type: 'string'
   },
+
   foo: {
     type: 'string',
     required: true
@@ -43,6 +44,7 @@ const FAKE_DOCUMENTS_TYPES_METADATAS = {
     filePathPattern: '',
     name: 'FakePost1'
   },
+
   FakePost2: {
     filePathPattern: '',
     name: 'FakePost2'
@@ -68,6 +70,7 @@ const INVALID_FAKE_DOCUMENTS_TYPES_METADATAS = {
     filePathPattern: '',
     name: '$' // <== Invalid: only the FakeDocumentsTypesKeys literals are allowed here
   },
+
   // Invalid: not allowed index. Only the FakeDocumentsTypesKeys literals are allowed here
   $: {
     filePathPattern: '',

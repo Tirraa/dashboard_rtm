@@ -76,6 +76,7 @@ describe('BlogAdapter (Valid structure)', () => {
           en: 'post-02';
         };
       };
+
       'patch-notes': {
         dashboard: {
           [_ in DefaultLanguageToken]: 'post-01';
@@ -92,6 +93,7 @@ describe('BlogAdapter (Valid structure)', () => {
           en: 'post-02'
         }
       },
+
       'patch-notes': {
         dashboard: {
           [DEFAULT_LANGUAGE]: 'post-01',
@@ -110,6 +112,7 @@ describe('BlogAdapter (Valid structure)', () => {
           en: 'post-01';
         };
       };
+
       'patch-notes': {
         dashboard: {
           [_ in DefaultLanguageToken]: 'post-01';
@@ -126,6 +129,7 @@ describe('BlogAdapter (Valid structure)', () => {
           en: 'post-01'
         }
       },
+
       'patch-notes': {
         dashboard: {
           [DEFAULT_LANGUAGE]: 'post-01',

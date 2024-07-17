@@ -13,9 +13,11 @@ describe('MakeVocabTargets', () => {
           '.bar': 'Hello!';
         };
       };
+
       hello: {
         world: 'hello world!';
       };
+
       root: 'root';
     }>;
 
@@ -42,11 +44,13 @@ describe('MakeVocabTargets', () => {
           'cows#one': 'A magic cow';
         };
       };
+
       magic: {
         'cows#other': '{count} magic cows';
         'cows#zero': 'No magic cow';
         'cows#one': 'A magic cow';
       };
+
       'cows#other': '{count} cows';
       'cows#zero': 'No cow';
       'cows#one': 'A cow';
@@ -81,9 +85,11 @@ describe('MakeVocabTargetsScopes', () => {
             '.bar': 'Hello!';
           };
         };
+
         hello: {
           world: 'hello world!';
         };
+
         root: 'root';
       }>
     >;
@@ -126,11 +132,13 @@ describe('MakeVocabTargetsScopes', () => {
             'cows#one': 'A magic cow';
           };
         };
+
         magic: {
           'cows#other': '{count} magic cows';
           'cows#zero': 'No magic cow';
           'cows#one': 'A magic cow';
         };
+
         'cows#other': '{count} cows';
         'cows#zero': 'No cow';
         'cows#one': 'A cow';
@@ -168,7 +176,9 @@ describe('MakeI18nsBase', () => {
         };
       };
     };
+
     NOT_A_NAMESPACE: "I'm NOT a namespace!";
+
     foo: {
       bar: 'bar';
     };
