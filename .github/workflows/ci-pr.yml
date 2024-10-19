@@ -207,5 +207,7 @@ jobs:
         run: |
           echo "export IGNORE_BUILD_ERRORS=true" >> $GITHUB_ENV
           echo "export IGNORE_ESLINT_DURING_BUILDS=true" >> $GITHUB_ENV
+      - name: Install project
+        run: make install
       - name: Run simulation
         run: make simulate-deploy-discarding-build-cache
