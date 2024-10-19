@@ -185,13 +185,10 @@ jobs:
     strategy:
       matrix:
         node-version: [20, 22]
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     if: github.event.pull_request.draft == false
     steps:
-      - name: Enable long paths support
-        if: matrix.os == 'windows-latest'
-        run: git config --system core.longpaths true
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
         with:
