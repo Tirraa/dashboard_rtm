@@ -37,7 +37,7 @@ const BlogPostInner: FunctionComponent<BlogPostInnerProps> = async ({ className:
         <h1>{post.title}</h1>
         <BlogPostDate suffix={draftSuffix} language={language} date={post.date} />
         {hasTags && (
-          <div className="mt-1 flex flex-wrap justify-center gap-2 md:mx-auto md:w-fit md:justify-normal">
+          <div className="mt-1 flex flex-wrap justify-center gap-2 md:mx-auto md:w-fit md:justify-normal" data-pagefind-ignore="all">
             {tagsGenerator({ ...post, scopedT: scopedT2 })}
           </div>
         )}

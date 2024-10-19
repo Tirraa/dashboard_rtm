@@ -14,7 +14,7 @@ interface BlogPostDateProps extends WithLanguage, Partial<WithClassname> {
 }
 
 const BlogPostDate: FunctionComponent<BlogPostDateProps> = ({ className: classNameValue, language, suffix, date }) => (
-  <time className={cn('text-xs', classNameValue)} dateTime={date}>
+  <time className={cn('text-xs', classNameValue)} data-pagefind-ignore="all" dateTime={date}>
     {getBlogPostFormattedDate(language, date) + (suffix ? suffix : '')}
   </time>
 );
