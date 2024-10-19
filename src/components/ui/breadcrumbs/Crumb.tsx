@@ -3,14 +3,18 @@ import type { FunctionComponent } from 'react';
 import cn from '@/lib/portable/tailwind/cn';
 import Link from 'next/link';
 
-import CrumbSeparator from './CrumbSeparator';
-
 interface CrumbProps {
   withRescueCtx?: boolean;
   isLeaf?: boolean;
   label: string;
   href: string;
 }
+
+const crumbSeparator = (
+  <span className="mx-1 select-none text-black text-opacity-50 dark:text-white" aria-hidden="true">
+    /
+  </span>
+);
 
 const Crumb: FunctionComponent<CrumbProps> = ({ isLeaf: maybeIsLeaf, label, href }) => {
   const isLeaf = Boolean(maybeIsLeaf);
@@ -28,7 +32,7 @@ const Crumb: FunctionComponent<CrumbProps> = ({ isLeaf: maybeIsLeaf, label, href
       >
         {label}
       </Link>
-      {!isLeaf && <CrumbSeparator />}
+      {!isLeaf && crumbSeparator}
     </>
   );
 };

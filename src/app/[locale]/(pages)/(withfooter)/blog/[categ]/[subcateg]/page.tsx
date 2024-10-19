@@ -25,12 +25,11 @@ export async function generateStaticParams() {
 }
 
 export default function Page({ params }: BlogSubcategoryPageProps) {
-  const language = params[I18nTaxonomy.LANGUAGE];
+  const [category, subcategory, language] = [params[BlogTaxonomy.CATEGORY], params[BlogTaxonomy.SUBCATEGORY], params[I18nTaxonomy.LANGUAGE]];
+
   setStaticParamsLocale(language);
 
-  const categ = params[BlogTaxonomy.CATEGORY];
-  const subcateg = params[BlogTaxonomy.SUBCATEGORY];
-  const pathname = buildAbsolutePathFromParts(ROUTES_ROOTS.BLOG, categ, subcateg);
+  const pathname = buildAbsolutePathFromParts(ROUTES_ROOTS.BLOG, category, subcategory);
 
   return (
     <div className="mx-8 flex flex-col items-center lg:mx-auto lg:max-w-[750px]" data-pagefind-ignore="all">

@@ -9,16 +9,11 @@ import PAGES_TITLES from '@/i18n/locales/fragments/schema/pagesTitles';
 import capitalize from '@/lib/portable/str/capitalize';
 import getPathParts from '@/lib/misc/getPathParts';
 import { getServerSideI18n } from '@/i18n/server';
-import ROUTES_ROOTS from '##/config/routes';
 import { i18ns } from '##/config/i18n';
-import { Fragment } from 'react';
 
-import HomepageCrumb from './custom/HomepageCrumb';
-import CrumbSeparator from './CrumbSeparator';
 import Crumb from './Crumb';
 
 interface BreadcrumbsProps {
-  withHomepageElement?: boolean;
   customCrumbs?: CustomCrumbs;
   className?: string;
   pathname: AppPath;
@@ -27,7 +22,6 @@ interface BreadcrumbsProps {
 function crumbsGenerator(
   pathParts: string[],
   pagesTitlesParts: string[],
-  withHomepageElement: boolean,
   customCrumbsDepths: Index[] = [],
   customCrumbs?: CustomCrumbs
 ): ReactElement[] {
@@ -38,14 +32,7 @@ function crumbsGenerator(
     return currentPath;
   }
 
-  const crumbs: ReactElement[] = withHomepageElement
-    ? [
-        <Fragment key="breadcrumbs-homepage-part">
-          <HomepageCrumb />
-          <CrumbSeparator />
-        </Fragment>
-      ]
-    : [];
+  const crumbs: ReactElement[] = [];
 
   function crumbGenerator(depth: Index, isLeaf: boolean, href: string) {
     // eslint-disable-next-line no-magic-numbers
@@ -69,17 +56,9 @@ function crumbsGenerator(
   return crumbs;
 }
 
-const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = async ({
-  withHomepageElement: maybeWithHomepageElement,
-  customCrumbs,
-  className,
-  pathname
-}) => {
+const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = async ({ customCrumbs, className, pathname }) => {
   const globalT = await getServerSideI18n();
   const customCrumbsDepths = customCrumbs?.map(({ depth }) => depth) ?? [];
-
-  const withHomepageElement = Boolean(maybeWithHomepageElement);
-  if (pathname === ROUTES_ROOTS.WEBSITE) return withHomepageElement ? <HomepageCrumb isLeaf /> : null;
 
   const pathParts = getPathParts(pathname);
   const pagesTitlesParts = pathParts.reduce((acc, part, currentIndex) => {
@@ -99,7 +78,7 @@ const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = async ({
   return (
     <nav aria-label={capitalize(globalT(`${i18ns.vocab}.breadcrumbs`))} data-pagefind-ignore="all" className={className}>
       <ol className="flex w-fit flex-wrap justify-center gap-y-1 rounded-lg bg-accent bg-opacity-75 px-3 py-2 text-center lg:justify-normal">
-        {crumbsGenerator(pathParts, pagesTitlesParts, withHomepageElement, customCrumbsDepths, customCrumbs)}
+        {crumbsGenerator(pathParts, pagesTitlesParts, customCrumbsDepths, customCrumbs)}
       </ol>
     </nav>
   );
