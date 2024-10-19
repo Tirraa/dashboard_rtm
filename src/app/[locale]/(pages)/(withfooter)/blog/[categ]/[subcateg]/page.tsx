@@ -25,9 +25,10 @@ export async function generateStaticParams() {
 }
 
 export default function Page({ params }: BlogSubcategoryPageProps) {
-  const [category, subcategory, language] = [params[BlogTaxonomy.CATEGORY], params[BlogTaxonomy.SUBCATEGORY], params[I18nTaxonomy.LANGUAGE]];
-
+  const language = params[I18nTaxonomy.LANGUAGE];
   setStaticParamsLocale(language);
+
+  const [category, subcategory] = [params[BlogTaxonomy.CATEGORY], params[BlogTaxonomy.SUBCATEGORY]];
 
   const pathname = buildAbsolutePathFromParts(ROUTES_ROOTS.BLOG, category, subcategory);
 
