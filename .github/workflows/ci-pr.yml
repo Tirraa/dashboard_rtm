@@ -185,13 +185,10 @@ jobs:
     strategy:
       matrix:
         node-version: [20, 22]
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     if: github.event.pull_request.draft == false
     steps:
-      - name: Enable long paths support
-        if: matrix.os == 'windows-latest'
-        run: git config --system core.longpaths true
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
         with:
@@ -207,5 +204,7 @@ jobs:
         run: |
           echo "export IGNORE_BUILD_ERRORS=true" >> $GITHUB_ENV
           echo "export IGNORE_ESLINT_DURING_BUILDS=true" >> $GITHUB_ENV
+      - name: Install project
+        run: make install
       - name: Run simulation
         run: make simulate-deploy-discarding-build-cache

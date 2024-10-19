@@ -57,6 +57,7 @@ export default async function Page({ params }: BlogPostPageProps) {
             }
           ]}
           className="my-4 w-fit self-start"
+          pathname={url}
         />
       </div>
       <div data-pagefind-filter={documentTypeInlineFilter('BlogPost')} className="mx-4 flex flex-col items-center lg:mx-24">
