@@ -1,19 +1,17 @@
-'use client';
-
 import type { CustomCrumbs, CustomCrumb } from '@rtm/shared-types/Breadcrumbs';
 import type { I18nVocabTarget } from '@rtm/shared-types/I18n';
 import type { FunctionComponent, ReactElement } from 'react';
 import type { Index } from '@rtm/shared-types/Numbers';
+import type { AppPath } from '@rtm/shared-types/Next';
 
 import buildAbsolutePathFromParts from '@rtm/shared-lib/portable/str/buildAbsolutePathFromParts';
 import PAGES_TITLES from '@/i18n/locales/fragments/schema/pagesTitles';
 import capitalize from '@/lib/portable/str/capitalize';
 import getPathParts from '@/lib/misc/getPathParts';
-import { getClientSideI18n } from '@/i18n/client';
-import { usePathname } from 'next/navigation';
+import { getServerSideI18n } from '@/i18n/server';
 import ROUTES_ROOTS from '##/config/routes';
-import { Fragment, useMemo } from 'react';
 import { i18ns } from '##/config/i18n';
+import { Fragment } from 'react';
 
 import HomepageCrumb from './custom/HomepageCrumb';
 import CrumbSeparator from './CrumbSeparator';
@@ -23,6 +21,7 @@ interface BreadcrumbsProps {
   withHomepageElement?: boolean;
   customCrumbs?: CustomCrumbs;
   className?: string;
+  pathname: AppPath;
 }
 
 function crumbsGenerator(
@@ -70,10 +69,14 @@ function crumbsGenerator(
   return crumbs;
 }
 
-const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = ({ withHomepageElement: maybeWithHomepageElement, customCrumbs, className }) => {
-  const pathname = usePathname();
-  const globalT = getClientSideI18n();
-  const customCrumbsDepths = useMemo(() => customCrumbs?.map(({ depth }) => depth) ?? [], [customCrumbs]);
+const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = async ({
+  withHomepageElement: maybeWithHomepageElement,
+  customCrumbs,
+  className,
+  pathname
+}) => {
+  const globalT = await getServerSideI18n();
+  const customCrumbsDepths = customCrumbs?.map(({ depth }) => depth) ?? [];
 
   const withHomepageElement = Boolean(maybeWithHomepageElement);
   if (pathname === ROUTES_ROOTS.WEBSITE) return withHomepageElement ? <HomepageCrumb isLeaf /> : null;
